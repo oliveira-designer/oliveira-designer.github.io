@@ -1,0 +1,76 @@
+/* components.css - Hope Structural Components */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 12px 24px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  border: 0.5px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-all);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn:active { transform: scale(0.98); }
+.btn:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+
+.btn--primary { background: var(--color-ancora); color: #FFFFFF; }
+.btn--primary:hover { background: var(--color-profundo); transform: translateY(-1px); }
+.btn--solar { background: var(--color-solar); color: var(--color-tinta); }
+.btn--solar:hover { background: var(--color-ambar); transform: translateY(-1px); }
+.btn--secondary { background: transparent; border-color: var(--color-ancora); color: var(--color-ancora); }
+.btn--secondary:hover { background: var(--color-ceu); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  border-radius: var(--radius-pill);
+  border: 0.5px solid transparent;
+  white-space: nowrap;
+}
+.badge--ancora  { background: var(--color-ceu);    color: var(--color-profundo); }
+.badge--solar   { background: var(--color-aurora); color: var(--color-crepusculo); }
+.badge--neutral { background: var(--color-bg-alt); color: var(--color-text-2); border-color: var(--color-border); }
+
+.card {
+  background: var(--color-bg);
+  border: var(--border-thin);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  transition: var(--transition-all);
+}
+.card:hover { border-color: var(--color-ancora); box-shadow: var(--shadow-md); }
+
+/* Case Card Structural Semantics */
+.card--case { display: grid; gap: var(--gap-component); text-align: left; }
+.card--case .overline { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-3); }
+.card--case .title { font-family: var(--font-display); font-size: 26px; font-weight: 400; line-height: 1.2; color: var(--color-text-1); }
+.card--case .description { font-family: var(--font-body); font-size: 14px; line-height: 1.75; color: var(--color-text-2); }
+.card--case .metrics { display: flex; gap: var(--space-8); padding-top: var(--space-4); border-top: var(--border-thin); }
+.card--case .metric-value { font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: var(--color-ancora); }
+[data-theme="dark"] .card--case .metric-value { color: var(--color-solar); }
+.card--case .metric-label { font-family: var(--font-body); font-size: 11px; color: var(--color-text-3); }
+
+/* Global Navigation Header */
+.site-header {
+  position: sticky; top: 0; z-index: var(--z-sticky);
+  background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: var(--border-thin);
+}
+[data-theme="dark"] .site-header { background: rgba(26, 26, 46, 0.85); }
+.site-header__inner { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-6); max-width: 1280px; margin-inline: auto; }
+.site-brand { display: flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-weight: 700; color: var(--color-text-1); text-decoration: none; }
+
+.site-nav { display: flex; align-items: center; gap: var(--space-6); }
+.site-nav__link { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--color-text-2); text-decoration: none; padding: var(--space-2) 0; transition: var(--transition-all); border-bottom: 2px solid transparent; }
+.site-nav__link:hover, .site-nav__link[aria-current="page"] { color: var(--color-text-1); border-bottom-color: var(--color-ancora); }

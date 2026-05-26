@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renan Moura — Product Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .hero { padding-block: calc(var(--space-24) * 1.5) var(--space-16); text-align: left; max-width: 800px; }
+        .hero .text-display { margin-bottom: var(--space-4); color: var(--color-text-1); }
+        .hero .lead { font-family: var(--font-body); font-size: clamp(18px, 2vw, 22px); font-weight: 300; color: var(--color-text-2); margin-bottom: var(--space-6); line-height: 1.5; }
+        .hero-badges { display: flex; gap: var(--space-2); margin-bottom: var(--space-8); flex-wrap: wrap; }
+        .section-title { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-3); margin-top: var(--space-24); border-bottom: var(--border-thin); padding-bottom: var(--space-2); }
+        .theme-toggle { background: none; border: var(--border-thin); padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 11px; color: var(--color-text-2); cursor: pointer; transition: var(--transition-all); }
+        .theme-toggle:hover { border-color: var(--color-ancora); color: var(--color-text-1); }
+        footer { margin-top: var(--space-24); padding-block: var(--space-12); border-top: var(--border-thin); text-align: center; font-family: var(--font-mono); font-size: 11px; color: var(--color-text-3); }
+    </style>
+</head>
+<body>
+
+    <a href="#main" class="skip-link">Pular para o conteúdo principal</a>
+
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a href="index.html" class="site-brand" aria-label="Renan Moura Home">
+                <span style="color: var(--color-solar)">✦</span> RENAN MOURA
+            </a>
+            <nav class="site-nav" aria-label="Navegação Principal">
+                <a href="index.html" class="site-nav__link" aria-current="page">Trabalho</a>
+                <a href="#sobre" class="site-nav__link">Sobre</a>
+                <button class="theme-toggle" id="themeBtn" aria-label="Alternar tema visual">DARK</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" id="main">
+        <section class="hero">
+            <div class="hero-badges">
+                <span class="badge badge-ancora">Product Designer Lead</span>
+                <span class="badge badge-neutral">12 Anos de Experiência</span>
+            </div>
+            <h1 class="text-display">Traduzo contextos complexos em decisões que ficam de pé.</h1>
+            <p class="lead">Especialista no design de infraestrutura e sistemas complexos para B2B e B2C. Entregando clareza editorial e precisão técnica em cada componente.</p>
+            <a href="#trabalho" class="btn btn--primary">Ver Cases de Estudo →</a>
+        </section>
+
+        <h2 class="section-title" id="trabalho">Cases em Destaque</h2>
+        
+        <div class="grid-cards">
+            <article class="card card--case">
+                <span class="overline">Sistema de Gestão · 2026</span>
+                <h3 class="title">Hotelaria e Alocação Dinâmica de Room Service</h3>
+                <p class="description">Desenho e arquitetura de um recurso que viabiliza administradores configurarem faixas de disponibilidade semanal para produtos complexos de serviço de quarto.</p>
+                <div class="metrics">
+                    <div>
+                        <div class="metric-value">+34%</div>
+                        <div class="metric-label">Eficiência Operacional</div>
+                    </div>
+                    <div>
+                        <div class="metric-value">0 erro</div>
+                        <div class="metric-label">De Conflito de Janela</div>
+                    </div>
+                </div>
+                <a href="#" class="btn btn--secondary" style="margin-top: var(--space-4)">Explorar Raciocínio →</a>
+            </article>
+
+            <article class="card card--case">
+                <span class="overline">Fintech Estrutural · 2025</span>
+                <h3 class="title">Central de Liquidação e Ledger de Alta Densidade</h3>
+                <p class="description">Redesenho completo de tabelas e fluxos analíticos de conciliação bancária de grandes volumes financeiros, reduzindo a carga cognitiva e o tempo de diagnóstico operacional.</p>
+                <div class="metrics">
+                    <div>
+                        <div class="metric-value">-52%</div>
+                        <div class="metric-label">Tempo de Análise</div>
+                    </div>
+                    <div>
+                        <div class="metric-value">WCAG</div>
+                        <div class="metric-label">Conformidade AA</div>
+                    </div>
+                </div>
+                <a href="#" class="btn btn--secondary" style="margin-top: var(--space-4)">Explorar Raciocínio →</a>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Renan Moura · Hope Design System Framework v2.0</p>
+        </div>
+    </footer>
+
+    <script>
+        const themeBtn = document.getElementById('themeBtn');
+        let currentTheme = localStorage.getItem('theme') || 'light';
+        
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = 'LIGHT';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeBtn.textContent = 'DARK';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeBtn.textContent = 'LIGHT';
+            }
+        });
+    </script>
+</body>
+</html>
