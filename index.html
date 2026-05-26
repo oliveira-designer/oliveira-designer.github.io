@@ -1,119 +1,1371 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renan Moura — Product Designer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/tokens.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/components.css">
-    <style>
-        .hero { padding-block: calc(var(--space-24) * 1.5) var(--space-16); text-align: left; max-width: 800px; }
-        .hero .text-display { margin-bottom: var(--space-4); color: var(--color-text-1); }
-        .hero .lead { font-family: var(--font-body); font-size: clamp(18px, 2vw, 22px); font-weight: 300; color: var(--color-text-2); margin-bottom: var(--space-6); line-height: 1.5; }
-        .hero-badges { display: flex; gap: var(--space-2); margin-bottom: var(--space-8); flex-wrap: wrap; }
-        .section-title { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-3); margin-top: var(--space-24); border-bottom: var(--border-thin); padding-bottom: var(--space-2); }
-        .theme-toggle { background: none; border: var(--border-thin); padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 11px; color: var(--color-text-2); cursor: pointer; transition: var(--transition-all); }
-        .theme-toggle:hover { border-color: var(--color-ancora); color: var(--color-text-1); }
-        footer { margin-top: var(--space-24); padding-block: var(--space-12); border-top: var(--border-thin); text-align: center; font-family: var(--font-mono); font-size: 11px; color: var(--color-text-3); }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Renan Moura is a product designer (UX & UI) specialized in Product Strategy. 12 years shipping B2B and consumer products across Brazil and the US." />
+  <title>Renan Moura — Product Designer</title>
+
+  <!-- Fonts via Google Fonts CDN (fallback para local) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       HOPE DESIGN SYSTEM — tokens.css
+       ============================================================ */
+    :root {
+      /* Família Solar */
+      --color-aurora:      #FEF8E0;
+      --color-madrugada:   #FAE19A;
+      --color-solar:       #F5C842;
+      --color-ambar:       #C49A1F;
+      --color-crepusculo:  #8B6914;
+
+      /* Família Âncora */
+      --color-ceu:         #E8F0F9;
+      --color-mare:        #8CB4E0;
+      --color-ancora:      #1C5FA8;
+      --color-profundo:    #144278;
+      --color-abismo:      #1A1A2E;
+
+      /* Neutras */
+      --color-nuvem:       #FFFFFF;
+      --color-superficie:  #F7F7F9;
+      --color-borda:       #E2E2E8;
+      --color-mudo:        #5F5F6E;
+      --color-sombra:      #3D3D45;
+      --color-tinta:       #0D0D0F;
+
+      /* Funcionais */
+      --color-success:     #4A9F6B;
+      --color-warning:     #C47A1F;
+      --color-error:       #B83434;
+
+      /* Superfícies — light mode */
+      --color-bg:           var(--color-nuvem);
+      --color-bg-alt:       var(--color-superficie);
+      --color-bg-inverse:   var(--color-abismo);
+      --color-border:       var(--color-borda);
+      --color-border-strong: var(--color-mudo);
+      --color-text-1:       var(--color-tinta);
+      --color-text-2:       var(--color-sombra);
+      --color-text-3:       var(--color-mudo);
+      --color-text-inverse: var(--color-nuvem);
+      --color-link:         var(--color-ancora);
+      --color-link-hover:   var(--color-profundo);
+      --color-focus-ring:   var(--color-ancora);
+
+      /* Tipografia */
+      --font-display: 'Space Mono', 'Courier New', monospace;
+      --font-body:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:    'Space Mono', 'Courier New', monospace;
+
+      --fs-display: clamp(36px, 5vw, 52px);
+      --fs-h1:      clamp(26px, 3.5vw, 32px);
+      --fs-h2:      clamp(18px, 2.5vw, 22px);
+      --fs-h3:      clamp(14px, 1.5vw, 16px);
+      --fs-body:    clamp(14px, 1.2vw, 16px);
+      --fs-body-sm: clamp(12px, 1vw, 13px);
+      --fs-label:   clamp(10px, 1vw, 11px);
+
+      /* Espaçamento base 4px */
+      --space-1:  4px;  --space-2:  8px;  --space-3:  12px;
+      --space-4:  16px; --space-5:  20px; --space-6:  24px;
+      --space-8:  32px; --space-10: 40px; --space-12: 48px;
+      --space-16: 64px; --space-20: 80px; --space-24: 96px;
+
+      --gap-tight:     var(--space-2);
+      --gap-component: var(--space-4);
+      --gap-element:   var(--space-6);
+      --gap-section:   var(--space-12);
+      --gap-page:      var(--space-24);
+
+      /* Raios */
+      --radius-xs:   4px;  --radius-sm: 8px;
+      --radius-md:   12px; --radius-lg: 16px;
+      --radius-pill: 999px;
+
+      /* Bordas */
+      --border-thin:   0.5px solid var(--color-border);
+      --border-normal: 1px solid var(--color-border);
+      --border-strong: 1px solid var(--color-border-strong);
+
+      /* Sombras */
+      --shadow-sm: 0 1px 3px rgba(13,13,15,0.06);
+      --shadow-md: 0 4px 12px rgba(13,13,15,0.08);
+      --shadow-lg: 0 8px 32px rgba(13,13,15,0.10);
+      --shadow-focus: 0 0 0 3px var(--color-focus-ring);
+
+      /* Motion */
+      --duration-fast:   100ms;
+      --duration-normal: 150ms;
+      --duration-slow:   250ms;
+      --duration-slower: 400ms;
+      --ease-out:        cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-bounce:     cubic-bezier(0.34, 1.56, 0.64, 1);
+
+      /* Z-index */
+      --z-sticky: 10;
+      --z-modal:  200;
+    }
+
+    /* Dark mode */
+    [data-theme="dark"] {
+      --color-bg:           var(--color-abismo);
+      --color-bg-alt:       #242438;
+      --color-bg-inverse:   var(--color-nuvem);
+      --color-border:       #2E2E40;
+      --color-border-strong: #4A4A60;
+      --color-text-1:       var(--color-nuvem);
+      --color-text-2:       #B4B4C8;
+      --color-text-3:       #8888A0;
+      --color-text-inverse: var(--color-tinta);
+      --color-link:         var(--color-solar);
+      --color-link-hover:   #FFD96B;
+      --color-focus-ring:   var(--color-solar);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ============================================================
+       RESET
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font-body);
+      font-size: var(--fs-body);
+      line-height: 1.75;
+      color: var(--color-text-1);
+      background-color: var(--color-bg);
+      transition: background-color var(--duration-slower) var(--ease-out),
+                  color var(--duration-slower) var(--ease-out);
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: var(--color-link); text-decoration: none; transition: color var(--duration-normal) var(--ease-out); }
+    a:hover { color: var(--color-link-hover); }
+    a:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; border-radius: var(--radius-xs); }
+    ul, ol { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    button:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; border-radius: var(--radius-xs); }
+
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;
+    }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+    @media (min-width: 768px) {
+      .container { padding: 0 var(--space-10); }
+    }
+
+    /* ============================================================
+       HEADER / NAV
+       ============================================================ */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-sticky);
+      background-color: var(--color-bg);
+      border-bottom: var(--border-thin);
+      transition: background-color var(--duration-slower) var(--ease-out),
+                  border-color var(--duration-slower) var(--ease-out);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: var(--space-6);
+    }
+
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      text-decoration: none;
+      color: var(--color-text-1);
+      font-family: var(--font-mono);
+      font-size: var(--fs-body-sm);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      transition: color var(--duration-normal) var(--ease-out);
+    }
+    .nav__logo:hover { color: var(--color-text-1); opacity: 0.7; }
+    .nav__logo-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+    }
+
+    .nav__link {
+      font-family: var(--font-body);
+      font-size: var(--fs-body-sm);
+      font-weight: 500;
+      color: var(--color-text-2);
+      transition: color var(--duration-normal) var(--ease-out);
+    }
+    .nav__link:hover { color: var(--color-text-1); }
+    .nav__link--active { color: var(--color-text-1); }
+
+    .nav__theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      color: var(--color-text-3);
+      transition: color var(--duration-normal) var(--ease-out),
+                  background-color var(--duration-normal) var(--ease-out);
+    }
+    .nav__theme-toggle:hover {
+      color: var(--color-text-1);
+      background-color: var(--color-bg-alt);
+    }
+    .nav__theme-toggle svg { width: 16px; height: 16px; }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero {
+      padding: var(--space-20) 0 var(--space-16);
+    }
+
+    .hero__overline {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-3);
+      margin-bottom: var(--space-5);
+    }
+
+    .hero__headline {
+      font-family: var(--font-display);
+      font-size: var(--fs-display);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--color-text-1);
+      max-width: 800px;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero__headline mark {
+      background: none;
+      color: var(--color-solar);
+    }
+
+    .hero__body {
+      font-family: var(--font-body);
+      font-size: clamp(15px, 1.4vw, 17px);
+      line-height: 1.7;
+      color: var(--color-text-2);
+      max-width: 560px;
+      margin-bottom: var(--space-10);
+    }
+
+    .hero__actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    /* Logo strip */
+    .logo-strip {
+      margin-top: var(--space-16);
+      padding-top: var(--space-8);
+      border-top: var(--border-thin);
+    }
+    .logo-strip__label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-3);
+      margin-bottom: var(--space-5);
+    }
+    .logo-strip__logos {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+    }
+    .logo-strip__item {
+      font-family: var(--font-mono);
+      font-size: var(--fs-body-sm);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--color-text-3);
+      opacity: 0.6;
+      transition: opacity var(--duration-normal) var(--ease-out);
+    }
+    .logo-strip__item:hover { opacity: 1; }
+
+    /* ============================================================
+       BOTÕES
+       ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-body);
+      font-size: var(--fs-body-sm);
+      font-weight: 600;
+      line-height: 1;
+      border-radius: var(--radius-sm);
+      padding: 10px 18px;
+      transition: background-color var(--duration-normal) var(--ease-out),
+                  color var(--duration-normal) var(--ease-out),
+                  border-color var(--duration-normal) var(--ease-out),
+                  transform var(--duration-fast) var(--ease-out),
+                  box-shadow var(--duration-normal) var(--ease-out);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn:focus-visible { box-shadow: var(--shadow-focus); }
+    .btn:active { transform: scale(0.98); }
+
+    .btn--primary {
+      background-color: var(--color-tinta);
+      color: var(--color-nuvem);
+      border: 1px solid var(--color-tinta);
+    }
+    .btn--primary:hover {
+      background-color: var(--color-sombra);
+      border-color: var(--color-sombra);
+      color: var(--color-nuvem);
+    }
+
+    [data-theme="dark"] .btn--primary {
+      background-color: var(--color-nuvem);
+      color: var(--color-tinta);
+      border-color: var(--color-nuvem);
+    }
+    [data-theme="dark"] .btn--primary:hover {
+      background-color: #E0E0E8;
+      border-color: #E0E0E8;
+    }
+
+    .btn--secondary {
+      background-color: transparent;
+      color: var(--color-text-1);
+      border: 1px solid var(--color-border);
+    }
+    .btn--secondary:hover {
+      border-color: var(--color-border-strong);
+      color: var(--color-text-1);
+      background-color: var(--color-bg-alt);
+    }
+
+    .btn--solar {
+      background-color: var(--color-solar);
+      color: var(--color-tinta);
+      border: 1px solid var(--color-solar);
+    }
+    .btn--solar:hover {
+      background-color: var(--color-madrugada);
+      border-color: var(--color-madrugada);
+      color: var(--color-tinta);
+    }
+
+    /* ============================================================
+       BADGES
+       ============================================================ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-body);
+      font-size: var(--fs-body-sm);
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      line-height: 1.5;
+    }
+
+    .badge--neutral {
+      background-color: var(--color-bg-alt);
+      color: var(--color-text-2);
+      border: var(--border-thin);
+    }
+    .badge--ancora {
+      background-color: var(--color-ceu);
+      color: var(--color-profundo);
+    }
+    [data-theme="dark"] .badge--ancora {
+      background-color: rgba(28,95,168,0.2);
+      color: var(--color-mare);
+    }
+    .badge--solar {
+      background-color: var(--color-aurora);
+      color: var(--color-crepusculo);
+    }
+    [data-theme="dark"] .badge--solar {
+      background-color: rgba(245,200,66,0.15);
+      color: var(--color-solar);
+    }
+
+    /* ============================================================
+       SECTION HEADERS
+       ============================================================ */
+    .section {
+      padding: var(--space-20) 0;
+    }
+    .section + .section {
+      border-top: var(--border-thin);
+    }
+
+    .section__header {
+      margin-bottom: var(--space-12);
+    }
+    .section__overline {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-3);
+      margin-bottom: var(--space-3);
+    }
+    .section__title {
+      font-family: var(--font-display);
+      font-size: var(--fs-h1);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--color-text-1);
+    }
+
+    /* ============================================================
+       CASE STUDIES GRID
+       ============================================================ */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+    @media (min-width: 768px) {
+      .cases-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .cases-grid .case-card:first-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .case-card {
+      position: relative;
+      background-color: var(--color-bg-alt);
+      border: var(--border-normal);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      transition: border-color var(--duration-normal) var(--ease-out),
+                  box-shadow var(--duration-normal) var(--ease-out),
+                  transform var(--duration-slow) var(--ease-out);
+      overflow: hidden;
+    }
+    .case-card:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .case-card__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+    .case-card__company {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-3);
+    }
+    .case-card__sep {
+      color: var(--color-border-strong);
+      font-size: var(--fs-label);
+    }
+    .case-card__year {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.12em;
+      color: var(--color-text-3);
+    }
+
+    .case-card__title {
+      font-family: var(--font-display);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--color-text-1);
+    }
+
+    .case-card__lead {
+      font-family: var(--font-body);
+      font-size: var(--fs-body);
+      line-height: 1.65;
+      color: var(--color-text-2);
+    }
+
+    .case-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .case-card__metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-6);
+      padding-top: var(--space-6);
+      border-top: var(--border-thin);
+    }
+
+    .metric {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .metric__value {
+      font-family: var(--font-mono);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--color-ancora);
+    }
+    [data-theme="dark"] .metric__value { color: var(--color-solar); }
+
+    .metric__label {
+      font-family: var(--font-body);
+      font-size: var(--fs-body-sm);
+      color: var(--color-text-3);
+      line-height: 1.4;
+    }
+
+    .case-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-top: auto;
+    }
+
+    .case-card__nda {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-3);
+    }
+    .case-card__nda svg { width: 12px; height: 12px; }
+
+    /* Card featured (primeiro) — layout horizontal em tela maior */
+    @media (min-width: 768px) {
+      .case-card--featured {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: var(--space-12);
+      }
+      .case-card--featured .case-card__content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-6);
+      }
+      .case-card--featured .case-card__visual {
+        flex-shrink: 0;
+        width: 320px;
+        height: 220px;
+        border-radius: var(--radius-md);
+        background-color: var(--color-border);
+        overflow: hidden;
+      }
+    }
+
+    .case-card__visual {
+      width: 100%;
+      height: 180px;
+      border-radius: var(--radius-md);
+      background-color: var(--color-border);
+      overflow: hidden;
+    }
+    .case-card__visual-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--color-bg-alt) 0%, var(--color-border) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .case-card__visual-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 8px,
+        rgba(255,255,255,0.03) 8px,
+        rgba(255,255,255,0.03) 16px
+      );
+    }
+    .case-card__visual-label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-3);
+      opacity: 0.5;
+      z-index: 1;
+    }
+
+    /* ============================================================
+       SKILLS GRID
+       ============================================================ */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    @media (min-width: 640px) {
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .skills-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .skill-card {
+      background-color: var(--color-bg-alt);
+      border: var(--border-normal);
+      border-radius: var(--radius-md);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      transition: border-color var(--duration-normal) var(--ease-out);
+    }
+    .skill-card:hover { border-color: var(--color-border-strong); }
+
+    .skill-card__title {
+      font-family: var(--font-mono);
+      font-size: var(--fs-body-sm);
+      font-weight: 700;
+      color: var(--color-text-1);
+      line-height: 1.4;
+    }
+    .skill-card__body {
+      font-family: var(--font-body);
+      font-size: var(--fs-body-sm);
+      line-height: 1.7;
+      color: var(--color-text-2);
+    }
+
+    /* ============================================================
+       TESTIMONIALS
+       ============================================================ */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+    @media (min-width: 768px) {
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .testimonial-card {
+      background-color: var(--color-bg-alt);
+      border: var(--border-normal);
+      border-radius: var(--radius-md);
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .testimonial-card__quote {
+      font-family: var(--font-body);
+      font-size: var(--fs-body);
+      line-height: 1.75;
+      color: var(--color-text-2);
+      flex: 1;
+    }
+
+    /* Aspas decorativas */
+    .testimonial-card__quote::before {
+      content: '"';
+      font-family: var(--font-display);
+      font-size: 48px;
+      line-height: 1;
+      color: var(--color-solar);
+      display: block;
+      margin-bottom: var(--space-3);
+      opacity: 0.8;
+    }
+
+    .testimonial-card__author {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding-top: var(--space-5);
+      border-top: var(--border-thin);
+    }
+    .testimonial-card__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--color-border);
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      color: var(--color-text-3);
+    }
+    .testimonial-card__name {
+      font-family: var(--font-body);
+      font-size: var(--fs-body-sm);
+      font-weight: 600;
+      color: var(--color-text-1);
+    }
+    .testimonial-card__role {
+      font-family: var(--font-body);
+      font-size: var(--fs-body-sm);
+      color: var(--color-text-3);
+    }
+
+    /* ============================================================
+       ABOUT SNIPPET
+       ============================================================ */
+    .about-snippet {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .about-snippet {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-16);
+      }
+    }
+
+    .about-snippet__blocks {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .about-block__label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-3);
+      margin-bottom: var(--space-2);
+    }
+    .about-block__text {
+      font-family: var(--font-body);
+      font-size: var(--fs-body);
+      line-height: 1.75;
+      color: var(--color-text-2);
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .site-footer {
+      background-color: var(--color-bg-inverse);
+      color: var(--color-text-inverse);
+      padding: var(--space-16) 0;
+      margin-top: var(--space-20);
+    }
+
+    .footer__inner {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-10);
+    }
+
+    .footer__left {}
+    .footer__tagline {
+      font-family: var(--font-display);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--color-text-inverse);
+      max-width: 360px;
+      margin-bottom: var(--space-6);
+    }
+
+    .footer__links {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    .footer__link {
+      font-family: var(--font-body);
+      font-size: var(--fs-body-sm);
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      transition: color var(--duration-normal) var(--ease-out);
+    }
+    .footer__link:hover { color: var(--color-nuvem); }
+
+    .footer__right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+    .footer__contact-label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer__email {
+      font-family: var(--font-mono);
+      font-size: var(--fs-body-sm);
+      font-weight: 700;
+      color: var(--color-solar);
+      letter-spacing: 0.02em;
+    }
+    .footer__email:hover { color: var(--color-madrugada); }
+
+    .footer__bottom {
+      margin-top: var(--space-12);
+      padding-top: var(--space-6);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+    .footer__copy {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.3);
+    }
+    .footer__system {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ============================================================
+       ANIMAÇÕES DE ENTRADA
+       ============================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-in {
+      animation: fadeUp var(--duration-slower) var(--ease-out) both;
+    }
+    .animate-in--delay-1 { animation-delay: 80ms; }
+    .animate-in--delay-2 { animation-delay: 160ms; }
+    .animate-in--delay-3 { animation-delay: 240ms; }
+    .animate-in--delay-4 { animation-delay: 320ms; }
+  </style>
 </head>
+
 <body>
 
-    <a href="#main" class="skip-link">Pular para o conteúdo principal</a>
+  <!-- Skip link -->
+  <a href="#main" class="visually-hidden">Skip to main content</a>
 
-    <header class="site-header">
-        <div class="site-header__inner">
-            <a href="index.html" class="site-brand" aria-label="Renan Moura Home">
-                <span style="color: var(--color-solar)">✦</span> RENAN MOURA
-            </a>
-            <nav class="site-nav" aria-label="Navegação Principal">
-                <a href="index.html" class="site-nav__link" aria-current="page">Trabalho</a>
-                <a href="#sobre" class="site-nav__link">Sobre</a>
-                <button class="theme-toggle" id="themeBtn" aria-label="Alternar tema visual">DARK</button>
-            </nav>
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+
+        <a href="/" class="nav__logo" aria-label="Renan Moura — Home">
+          <!-- Ícone solar SVG inline -->
+          <svg class="nav__logo-icon" viewBox="0 0 244 244" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M228.75 144.875H190.196C190.478 142.343 190.621 139.797 190.625 137.25C190.625 119.049 183.395 101.594 170.525 88.7246C157.656 75.8549 140.2 68.6248 122 68.6248C103.8 68.6248 86.3445 75.8549 73.4748 88.7246C60.6051 101.594 53.375 119.049 53.375 137.25C53.3793 139.797 53.5225 142.343 53.8039 144.875H15.25C13.2277 144.875 11.2883 145.678 9.85831 147.108C8.42835 148.538 7.625 150.477 7.625 152.5C7.625 154.522 8.42835 156.461 9.85831 157.891C11.2883 159.321 13.2277 160.125 15.25 160.125H228.75C230.772 160.125 232.712 159.321 234.142 157.891C235.572 156.461 236.375 154.522 236.375 152.5C236.375 150.477 235.572 148.538 234.142 147.108C232.712 145.678 230.772 144.875 228.75 144.875Z" fill="#F5C842"/>
+            <path d="M205.875 190.625C205.875 192.647 205.072 194.586 203.642 196.016C202.212 197.446 200.272 198.25 198.25 198.25H45.75C43.7277 198.25 41.7883 197.446 40.3583 196.016C38.9283 194.586 38.125 192.647 38.125 190.625C38.125 188.602 38.9283 186.663 40.3583 185.233C41.7883 183.803 43.7277 183 45.75 183H198.25C200.272 183 202.212 183.803 203.642 185.233C205.072 186.663 205.875 188.602 205.875 190.625Z" fill="#F5C842"/>
+          </svg>
+          Renan Moura
+        </a>
+
+        <div class="nav__links">
+          <a href="#work" class="nav__link nav__link--active">Work</a>
+          <a href="about.html" class="nav__link">About</a>
+          <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" class="nav__link" target="_blank" rel="noopener">Resume</a>
+          <button
+            class="nav__theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle dark mode"
+            type="button"
+          >
+            <!-- Sun icon (mostrado no dark) -->
+            <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <!-- Moon icon (mostrado no light) -->
+            <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
         </div>
-    </header>
 
-    <main class="container" id="main">
-        <section class="hero">
-            <div class="hero-badges">
-                <span class="badge badge-ancora">Product Designer Lead</span>
-                <span class="badge badge-neutral">12 Anos de Experiência</span>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-headline">
+      <div class="container">
+
+        <span class="hero__overline animate-in">Senior Product Designer · 12 years</span>
+
+        <h1 class="hero__headline animate-in animate-in--delay-1" id="hero-headline">
+          I absorb complex contexts.<br>
+          I design decisions<br>
+          that <mark>stick.</mark>
+        </h1>
+
+        <p class="hero__body animate-in animate-in--delay-2">
+          12 years shipping B2B and consumer products across Brazil and the US —
+          from Shell Box to New Relic. I turn ambiguous briefs into interfaces
+          that move metrics.
+        </p>
+
+        <div class="hero__actions animate-in animate-in--delay-3">
+          <a href="#work" class="btn btn--primary">View case studies</a>
+          <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--secondary">Get in touch</a>
+        </div>
+
+        <!-- Logo strip -->
+        <div class="logo-strip animate-in animate-in--delay-4">
+          <p class="logo-strip__label">Companies I've shipped for</p>
+          <div class="logo-strip__logos" role="list" aria-label="Companies">
+            <span class="logo-strip__item" role="listitem">Shell / Raízen</span>
+            <span class="logo-strip__item" role="listitem">New Relic</span>
+            <span class="logo-strip__item" role="listitem">Dotz</span>
+            <span class="logo-strip__item" role="listitem">Bradesco</span>
+            <span class="logo-strip__item" role="listitem">Belvo</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section class="section" id="work" aria-labelledby="cases-title">
+      <div class="container">
+
+        <header class="section__header">
+          <p class="section__overline">Case studies</p>
+          <h2 class="section__title" id="cases-title">Projects I've done recently</h2>
+        </header>
+
+        <div class="cases-grid" role="list">
+
+          <!-- Case 1: Shell Box — Featured -->
+          <article class="case-card case-card--featured" role="listitem">
+            <div class="case-card__content">
+              <div class="case-card__meta">
+                <span class="case-card__company">Raízen</span>
+                <span class="case-card__sep" aria-hidden="true">/</span>
+                <span class="case-card__year">2026</span>
+              </div>
+
+              <h3 class="case-card__title">Shell Box Home Redesign</h3>
+
+              <p class="case-card__lead">
+                Simplifying complex app experiences, sharpening information hierarchy,
+                and turning home screen interactions into measurable fuel conversion gains.
+              </p>
+
+              <div class="case-card__tags" role="list" aria-label="Disciplines">
+                <span class="badge badge--neutral" role="listitem">Product Strategy</span>
+                <span class="badge badge--neutral" role="listitem">Conversion Optimization</span>
+                <span class="badge badge--neutral" role="listitem">Mobile UX</span>
+              </div>
+
+              <div class="case-card__metrics" role="list" aria-label="Key results">
+                <div class="metric" role="listitem">
+                  <span class="metric__value">+21%</span>
+                  <span class="metric__label">Home-to-fuel<br>conversion rate</span>
+                </div>
+                <div class="metric" role="listitem">
+                  <span class="metric__value">+12%</span>
+                  <span class="metric__label">Exploratory<br>engagement</span>
+                </div>
+              </div>
+
+              <div class="case-card__footer">
+                <span class="case-card__nda" aria-label="Protected by NDA">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  NDA Protected — request access
+                </span>
+                <a href="mailto:rmouraolivdesigner@gmail.com?subject=Shell Box Case Study Access" class="btn btn--secondary" aria-label="Request access to Shell Box case study">
+                  Request access
+                </a>
+              </div>
             </div>
-            <h1 class="text-display">Traduzo contextos complexos em decisões que ficam de pé.</h1>
-            <p class="lead">Especialista no design de infraestrutura e sistemas complexos para B2B e B2C. Entregando clareza editorial e precisão técnica em cada componente.</p>
-            <a href="#trabalho" class="btn btn--primary">Ver Cases de Estudo →</a>
-        </section>
 
-        <h2 class="section-title" id="trabalho">Cases em Destaque</h2>
-        
-        <div class="grid-cards">
-            <article class="card card--case">
-                <span class="overline">Sistema de Gestão · 2026</span>
-                <h3 class="title">Hotelaria e Alocação Dinâmica de Room Service</h3>
-                <p class="description">Desenho e arquitetura de um recurso que viabiliza administradores configurarem faixas de disponibilidade semanal para produtos complexos de serviço de quarto.</p>
-                <div class="metrics">
-                    <div>
-                        <div class="metric-value">+34%</div>
-                        <div class="metric-label">Eficiência Operacional</div>
-                    </div>
-                    <div>
-                        <div class="metric-value">0 erro</div>
-                        <div class="metric-label">De Conflito de Janela</div>
-                    </div>
-                </div>
-                <a href="#" class="btn btn--secondary" style="margin-top: var(--space-4)">Explorar Raciocínio →</a>
-            </article>
+            <div class="case-card__visual" aria-hidden="true">
+              <div class="case-card__visual-placeholder">
+                <span class="case-card__visual-label">Shell Box · 2026</span>
+              </div>
+            </div>
+          </article>
 
-            <article class="card card--case">
-                <span class="overline">Fintech Estrutural · 2025</span>
-                <h3 class="title">Central de Liquidação e Ledger de Alta Densidade</h3>
-                <p class="description">Redesenho completo de tabelas e fluxos analíticos de conciliação bancária de grandes volumes financeiros, reduzindo a carga cognitiva e o tempo de diagnóstico operacional.</p>
-                <div class="metrics">
-                    <div>
-                        <div class="metric-value">-52%</div>
-                        <div class="metric-label">Tempo de Análise</div>
-                    </div>
-                    <div>
-                        <div class="metric-value">WCAG</div>
-                        <div class="metric-label">Conformidade AA</div>
-                    </div>
-                </div>
-                <a href="#" class="btn btn--secondary" style="margin-top: var(--space-4)">Explorar Raciocínio →</a>
-            </article>
+          <!-- Case 2: New Relic -->
+          <article class="case-card" role="listitem">
+            <div class="case-card__meta">
+              <span class="case-card__company">New Relic</span>
+              <span class="case-card__sep" aria-hidden="true">/</span>
+              <span class="case-card__year">2024</span>
+            </div>
+
+            <h3 class="case-card__title">Cloud Resources Manager</h3>
+
+            <p class="case-card__lead">
+              Researching an emerging FinOps domain, designing multi-persona cost
+              visibility for engineering teams, and delivering a structured roadmap
+              that turned cloud spend complexity into actionable infrastructure.
+            </p>
+
+            <div class="case-card__tags" role="list" aria-label="Disciplines">
+              <span class="badge badge--ancora" role="listitem">FinOps</span>
+              <span class="badge badge--neutral" role="listitem">B2B</span>
+              <span class="badge badge--neutral" role="listitem">Web UX</span>
+            </div>
+
+            <div class="case-card__metrics" role="list" aria-label="Key results">
+              <div class="metric" role="listitem">
+                <span class="metric__value">4</span>
+                <span class="metric__label">Roles surveyed</span>
+              </div>
+              <div class="metric" role="listitem">
+                <span class="metric__value">80%</span>
+                <span class="metric__label">Cited cost<br>monitoring</span>
+              </div>
+            </div>
+
+            <div class="case-card__footer">
+              <span class="case-card__nda" aria-label="Protected by NDA">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                NDA Protected
+              </span>
+              <a href="mailto:rmouraolivdesigner@gmail.com?subject=New Relic Case Study Access" class="btn btn--secondary" aria-label="Request access to New Relic case study">
+                Request access
+              </a>
+            </div>
+          </article>
+
+          <!-- Case 3: Dotz -->
+          <article class="case-card" role="listitem">
+            <div class="case-card__meta">
+              <span class="case-card__company">Dotz</span>
+              <span class="case-card__sep" aria-hidden="true">/</span>
+              <span class="case-card__year">2022</span>
+            </div>
+
+            <h3 class="case-card__title">CRM Retail Platform</h3>
+
+            <p class="case-card__lead">
+              Redesigning an internal tool for retail campaign management,
+              reducing operational overhead and improving team efficiency
+              across B2C loyalty workflows.
+            </p>
+
+            <div class="case-card__tags" role="list" aria-label="Disciplines">
+              <span class="badge badge--neutral" role="listitem">Internal Tool</span>
+              <span class="badge badge--neutral" role="listitem">B2C</span>
+              <span class="badge badge--neutral" role="listitem">Web UX</span>
+            </div>
+
+            <div class="case-card__metrics" role="list" aria-label="Key results">
+              <div class="metric" role="listitem">
+                <span class="metric__value">+10%</span>
+                <span class="metric__label">Revenue<br>increase</span>
+              </div>
+              <div class="metric" role="listitem">
+                <span class="metric__value">+20%</span>
+                <span class="metric__label">Time<br>savings</span>
+              </div>
+            </div>
+
+            <div class="case-card__footer">
+              <span class="case-card__nda" aria-label="Protected by NDA">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                NDA Protected
+              </span>
+              <a href="mailto:rmouraolivdesigner@gmail.com?subject=Dotz Case Study Access" class="btn btn--secondary" aria-label="Request access to Dotz case study">
+                Request access
+              </a>
+            </div>
+          </article>
+
         </div>
-    </main>
+      </div>
+    </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Renan Moura · Hope Design System Framework v2.0</p>
+    <!-- SKILLS -->
+    <section class="section" id="skills" aria-labelledby="skills-title">
+      <div class="container">
+
+        <header class="section__header">
+          <p class="section__overline">Skills</p>
+          <h2 class="section__title" id="skills-title">My key strengths</h2>
+        </header>
+
+        <div class="skills-grid" role="list">
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">12+ Years of Experience</h3>
+            <p class="skill-card__body">From systems analysis to senior product design, I've worked across the full product lifecycle in B2B and consumer products, for companies in Brazil and the US.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Business-Driven Design Decisions</h3>
+            <p class="skill-card__body">I connect user needs to business outcomes. Every design decision I make is tied to a metric, a constraint, or a strategic goal — not just aesthetics.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Designer with Technical Foundation</h3>
+            <p class="skill-card__body">My background in systems analysis and development means I communicate fluently with engineers, spot technical constraints early, and deliver specs that are actually buildable.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">End-to-End Product Ownership</h3>
+            <p class="skill-card__body">From discovery to delivery, I've led the entire design process solo and within cross-functional teams, including research, flows, UI, and handoff.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Fast Context Absorption</h3>
+            <p class="skill-card__body">I've consistently ramped up quickly in complex domains — fintech, energy, health, SaaS — and delivered high-quality work without long onboarding curves.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">AI-Augmented Workflow</h3>
+            <p class="skill-card__body">I integrate AI tools into my daily design process to move faster, reduce rework, and deliver more value per sprint without sacrificing quality.</p>
+          </div>
+
         </div>
-    </footer>
+      </div>
+    </section>
 
-    <script>
-        const themeBtn = document.getElementById('themeBtn');
-        let currentTheme = localStorage.getItem('theme') || 'light';
-        
-        if (currentTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeBtn.textContent = 'LIGHT';
-        }
+    <!-- TESTIMONIALS -->
+    <section class="section" id="references" aria-labelledby="references-title">
+      <div class="container">
 
-        themeBtn.addEventListener('click', () => {
-            if (document.documentElement.getAttribute('data-theme') === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-                themeBtn.textContent = 'DARK';
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-                themeBtn.textContent = 'LIGHT';
-            }
-        });
-    </script>
+        <header class="section__header">
+          <p class="section__overline">References</p>
+          <h2 class="section__title" id="references-title">Here's some feedback I received from my peers</h2>
+        </header>
+
+        <div class="testimonials-grid" role="list">
+
+          <div class="testimonial-card" role="listitem">
+            <blockquote class="testimonial-card__quote">
+              I worked with Renan at Shell Box, and from the moment he joined the team,
+              it was clear how reliable and competent he is. An organized designer with
+              excellent communication skills, strong UX expertise, and the ability to
+              lead the entire design process end to end. Beyond his solid technical skills,
+              he integrates easily into the team, learns quickly, and consistently maintains
+              a collaborative mindset. Renan raises the bar for deliverables and is the kind
+              of professional any team would want to have.
+            </blockquote>
+            <footer class="testimonial-card__author">
+              <div class="testimonial-card__avatar" aria-hidden="true">JB</div>
+              <div>
+                <p class="testimonial-card__name">
+                  <a href="https://br.linkedin.com/in/jordacheb/pt" target="_blank" rel="noopener">Jordache Burmeister</a>
+                </p>
+                <p class="testimonial-card__role">Design System Specialist @ Raízen</p>
+              </div>
+            </footer>
+          </div>
+
+          <div class="testimonial-card" role="listitem">
+            <blockquote class="testimonial-card__quote">
+              Renan was one of the best project partners I've had the pleasure of working with.
+              He is a highly precise professional when it comes to analyzing and understanding
+              the specific needs of each client and user. He's the kind of person you want on
+              a team: thoughtful, inquisitive, open to suggestions and feedback, and someone
+              who builds easy and effortless relationships with others.
+            </blockquote>
+            <footer class="testimonial-card__author">
+              <div class="testimonial-card__avatar" aria-hidden="true">IM</div>
+              <div>
+                <p class="testimonial-card__name">
+                  <a href="https://www.linkedin.com/in/izabellagouveiamaroni/" target="_blank" rel="noopener">Izabella Maroni</a>
+                </p>
+                <p class="testimonial-card__role">Senior Product Designer @ Dotz</p>
+              </div>
+            </footer>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SNIPPET -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="container">
+
+        <header class="section__header">
+          <p class="section__overline">About me</p>
+          <h2 class="section__title" id="about-title">12 years of craft, context, & impact</h2>
+        </header>
+
+        <div class="about-snippet">
+          <div class="about-snippet__blocks">
+            <div>
+              <p class="about-block__label">What I do</p>
+              <p class="about-block__text">I design digital products where strategy meets execution. From ambiguous briefs to shipped interfaces, I work across the full product lifecycle: research, flows, UI, and handoff.</p>
+            </div>
+            <div>
+              <p class="about-block__label">Background</p>
+              <p class="about-block__text">12 years in tech, starting in systems analysis and development before moving fully into product design. I've shipped work for Shell, New Relic, Bradesco, Dotz, and others across Brazil and the US. That technical foundation makes my design decisions sharper and my engineering conversations shorter.</p>
+            </div>
+            <div>
+              <p class="about-block__label">My approach</p>
+              <p class="about-block__text">I ramp up fast in complex domains, communicate clearly with cross-functional teams, and integrate AI tools into my daily workflow to deliver more value per sprint.</p>
+            </div>
+          </div>
+
+          <div>
+            <a href="about.html" class="btn btn--primary" style="margin-bottom: var(--space-4);">Learn more about me</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+
+      <div class="footer__inner">
+        <div class="footer__left">
+          <p class="footer__tagline">Let's transform user experiences together</p>
+          <nav class="footer__links" aria-label="Footer navigation">
+            <a href="about.html" class="footer__link">About</a>
+            <a href="#work" class="footer__link">Work</a>
+            <a href="https://www.linkedin.com/in/rmouraoliv/" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
+            <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" target="_blank" rel="noopener" class="footer__link">Resume</a>
+          </nav>
+        </div>
+
+        <div class="footer__right">
+          <span class="footer__contact-label">Contact</span>
+          <a href="mailto:rmouraolivdesigner@gmail.com" class="footer__email">rmouraolivdesigner@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span class="footer__copy">© 2026 Renan Moura</span>
+        <span class="footer__system">Hope Design System v2.0</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       DARK MODE JS
+       ============================================================ -->
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      const iconSun = document.getElementById('iconSun');
+      const iconMoon = document.getElementById('iconMoon');
+
+      // Lê preferência salva ou sistema
+      const saved = localStorage.getItem('hope-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+
+      applyTheme(initial);
+
+      btn.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
+
+      function applyTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('hope-theme', theme);
+        iconSun.style.display  = theme === 'dark'  ? 'block' : 'none';
+        iconMoon.style.display = theme === 'light' ? 'block' : 'none';
+      }
+    })();
+  </script>
+
 </body>
 </html>
