@@ -1,119 +1,525 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renan Moura — Product Designer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/tokens.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/components.css">
-    <style>
-        .hero { padding-block: calc(var(--space-24) * 1.5) var(--space-16); text-align: left; max-width: 800px; }
-        .hero .text-display { margin-bottom: var(--space-4); color: var(--color-text-1); }
-        .hero .lead { font-family: var(--font-body); font-size: clamp(18px, 2vw, 22px); font-weight: 300; color: var(--color-text-2); margin-bottom: var(--space-6); line-height: 1.5; }
-        .hero-badges { display: flex; gap: var(--space-2); margin-bottom: var(--space-8); flex-wrap: wrap; }
-        .section-title { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-3); margin-top: var(--space-24); border-bottom: var(--border-thin); padding-bottom: var(--space-2); }
-        .theme-toggle { background: none; border: var(--border-thin); padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 11px; color: var(--color-text-2); cursor: pointer; transition: var(--transition-all); }
-        .theme-toggle:hover { border-color: var(--color-ancora); color: var(--color-text-1); }
-        footer { margin-top: var(--space-24); padding-block: var(--space-12); border-top: var(--border-thin); text-align: center; font-family: var(--font-mono); font-size: 11px; color: var(--color-text-3); }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Renan Moura is a product designer (UX &amp; UI) specialized in Product Strategy. 12 years shipping B2B and consumer products across Brazil and the US." />
+  <title>Renan Moura — Product Designer</title>
+  <link rel="icon" type="image/svg+xml" href="logos/logo-icon.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
 </head>
+
 <body>
+<!-- Skip link -->
+  <a href="#main" class="skip-link">Skip to main content</a>
 
-    <a href="#main" class="skip-link">Pular para o conteúdo principal</a>
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" role="navigation" aria-label="Main navigation">
 
-    <header class="site-header">
-        <div class="site-header__inner">
-            <a href="index.html" class="site-brand" aria-label="Renan Moura Home">
-                <span style="color: var(--color-solar)">✦</span> RENAN MOURA
+        <!-- Logo: troca conforme tema -->
+        <a href="/" class="nav__logo" aria-label="Renan Moura — Home">
+          <img src="logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
+          <img src="logos/logo-dark-mode.svg"  alt="Renan Moura" class="nav__logo-dark"  />
+        </a>
+
+        <!-- Controles à direita: links (desktop) + toggle de tema + hambúrguer (mobile) -->
+        <div class="nav__controls">
+
+          <!-- Links de navegação — só visíveis no desktop -->
+          <div class="nav__links">
+            <a href="#work" class="nav__link nav__link--active" aria-current="page">Work</a>
+            <a href="about.html" class="nav__link">About</a>
+            <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" class="nav__link" target="_blank" rel="noopener noreferrer">
+              Resume
+              <span class="visually-hidden">(opens in a new tab)</span>
             </a>
-            <nav class="site-nav" aria-label="Navegação Principal">
-                <a href="index.html" class="site-nav__link" aria-current="page">Trabalho</a>
-                <a href="#sobre" class="site-nav__link">Sobre</a>
-                <button class="theme-toggle" id="themeBtn" aria-label="Alternar tema visual">DARK</button>
-            </nav>
-        </div>
-    </header>
+          </div>
 
-    <main class="container" id="main">
-        <section class="hero">
-            <div class="hero-badges">
-                <span class="badge badge-ancora">Product Designer Lead</span>
-                <span class="badge badge-neutral">12 Anos de Experiência</span>
+          <!-- Toggle de tema único — visível nos dois tamanhos -->
+          <button class="nav__theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+            <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+
+          <!-- Hambúrguer — só visível no mobile -->
+          <button class="nav__hamburger" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg id="iconBurger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+            <svg id="iconClose" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+
+        </div>
+
+      </nav>
+
+      <!-- Mobile menu drawer -->
+      <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+        <a href="#work"      class="nav__mobile-link nav__mobile-link--active">Work</a>
+        <a href="about.html" class="nav__mobile-link">About</a>
+        <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
+        <a href="mailto:rmouraolivdesigner@gmail.com" class="nav__mobile-link">Contact</a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-headline">
+      <div class="container">
+
+        <span class="hero__overline animate-in">Senior Product Designer · 12 years</span>
+
+        <h1 class="hero__headline animate-in animate-in--delay-1" id="hero-headline">
+          I absorb complex contexts.<br>
+          I design decisions<br>
+          that <mark>stick.</mark>
+        </h1>
+
+        <p class="hero__body animate-in animate-in--delay-2">
+          12 years shipping B2B and consumer products across Brazil and the US —
+          from Shell Box to New Relic. I turn ambiguous briefs into interfaces
+          that move metrics.
+        </p>
+
+        <div class="hero__actions animate-in animate-in--delay-3">
+          <a href="#work" class="btn btn--primary">View case studies</a>
+          <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--secondary">Get in touch</a>
+        </div>
+
+        <!-- Logo strip -->
+        <div class="logo-strip animate-in animate-in--delay-4">
+          <p class="logo-strip__label">Companies I've shipped for</p>
+          <div class="logo-strip__logos" role="list" aria-label="Companies">
+            <span class="logo-strip__item" role="listitem">Shell / Raízen</span>
+            <span class="logo-strip__item" role="listitem">New Relic</span>
+            <span class="logo-strip__item" role="listitem">Dotz</span>
+            <span class="logo-strip__item" role="listitem">Bradesco</span>
+            <span class="logo-strip__item" role="listitem">Belvo</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section class="section" id="work" aria-labelledby="cases-title">
+      <div class="container">
+
+        <header class="section__header">
+          <p class="section__overline">Case studies</p>
+          <h2 class="section__title" id="cases-title">Projects I've done recently</h2>
+        </header>
+
+        <div class="cases-grid" role="list">
+
+          <!-- Case 1: Shell Box — Featured -->
+          <article class="case-card case-card--featured" role="listitem">
+            <div class="case-card__content">
+              <div class="case-card__meta">
+                <span class="case-card__company">Raízen</span>
+                <span class="case-card__sep" aria-hidden="true">/</span>
+                <span class="case-card__year">2026</span>
+              </div>
+
+              <h3 class="case-card__title">Shell Box Home Redesign</h3>
+
+              <p class="case-card__lead">
+                Simplifying complex app experiences, sharpening information hierarchy,
+                and turning home screen interactions into measurable fuel conversion gains.
+              </p>
+
+              <div class="case-card__tags" role="list" aria-label="Disciplines">
+                <span class="badge badge--neutral" role="listitem">Product Strategy</span>
+                <span class="badge badge--neutral" role="listitem">Conversion Optimization</span>
+                <span class="badge badge--neutral" role="listitem">Mobile UX</span>
+              </div>
+
+              <div class="case-card__metrics" role="list" aria-label="Key results">
+                <div class="metric" role="listitem">
+                  <span class="metric__value">+21%</span>
+                  <span class="metric__label">Home-to-fuel<br>conversion rate</span>
+                </div>
+                <div class="metric" role="listitem">
+                  <span class="metric__value">+12%</span>
+                  <span class="metric__label">Exploratory<br>engagement</span>
+                </div>
+              </div>
+
+              <div class="case-card__footer">
+                <span class="case-card__nda" aria-label="Protected by NDA">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  NDA Protected — request access
+                </span>
+                <a href="mailto:rmouraolivdesigner@gmail.com?subject=Shell Box Case Study Access" class="btn btn--secondary" aria-label="Request access to Shell Box case study">
+                  Request access
+                </a>
+              </div>
             </div>
-            <h1 class="text-display">Traduzo contextos complexos em decisões que ficam de pé.</h1>
-            <p class="lead">Especialista no design de infraestrutura e sistemas complexos para B2B e B2C. Entregando clareza editorial e precisão técnica em cada componente.</p>
-            <a href="#trabalho" class="btn btn--primary">Ver Cases de Estudo →</a>
-        </section>
 
-        <h2 class="section-title" id="trabalho">Cases em Destaque</h2>
-        
-        <div class="grid-cards">
-            <article class="card card--case">
-                <span class="overline">Sistema de Gestão · 2026</span>
-                <h3 class="title">Hotelaria e Alocação Dinâmica de Room Service</h3>
-                <p class="description">Desenho e arquitetura de um recurso que viabiliza administradores configurarem faixas de disponibilidade semanal para produtos complexos de serviço de quarto.</p>
-                <div class="metrics">
-                    <div>
-                        <div class="metric-value">+34%</div>
-                        <div class="metric-label">Eficiência Operacional</div>
-                    </div>
-                    <div>
-                        <div class="metric-value">0 erro</div>
-                        <div class="metric-label">De Conflito de Janela</div>
-                    </div>
-                </div>
-                <a href="#" class="btn btn--secondary" style="margin-top: var(--space-4)">Explorar Raciocínio →</a>
-            </article>
+            <div class="case-card__visual" aria-hidden="true">
+              <div class="case-card__visual-placeholder">
+                <span class="case-card__visual-label">Shell Box · 2026</span>
+              </div>
+            </div>
+          </article>
 
-            <article class="card card--case">
-                <span class="overline">Fintech Estrutural · 2025</span>
-                <h3 class="title">Central de Liquidação e Ledger de Alta Densidade</h3>
-                <p class="description">Redesenho completo de tabelas e fluxos analíticos de conciliação bancária de grandes volumes financeiros, reduzindo a carga cognitiva e o tempo de diagnóstico operacional.</p>
-                <div class="metrics">
-                    <div>
-                        <div class="metric-value">-52%</div>
-                        <div class="metric-label">Tempo de Análise</div>
-                    </div>
-                    <div>
-                        <div class="metric-value">WCAG</div>
-                        <div class="metric-label">Conformidade AA</div>
-                    </div>
-                </div>
-                <a href="#" class="btn btn--secondary" style="margin-top: var(--space-4)">Explorar Raciocínio →</a>
-            </article>
+          <!-- Case 2: New Relic -->
+          <article class="case-card" role="listitem">
+            <div class="case-card__meta">
+              <span class="case-card__company">New Relic</span>
+              <span class="case-card__sep" aria-hidden="true">/</span>
+              <span class="case-card__year">2024</span>
+            </div>
+
+            <h3 class="case-card__title">Cloud Resources Manager</h3>
+
+            <p class="case-card__lead">
+              Researching an emerging FinOps domain, designing multi-persona cost
+              visibility for engineering teams, and delivering a structured roadmap
+              that turned cloud spend complexity into actionable infrastructure.
+            </p>
+
+            <div class="case-card__tags" role="list" aria-label="Disciplines">
+              <span class="badge badge--ancora" role="listitem">FinOps</span>
+              <span class="badge badge--neutral" role="listitem">B2B</span>
+              <span class="badge badge--neutral" role="listitem">Web UX</span>
+            </div>
+
+            <div class="case-card__metrics" role="list" aria-label="Key results">
+              <div class="metric" role="listitem">
+                <span class="metric__value">4</span>
+                <span class="metric__label">Roles surveyed</span>
+              </div>
+              <div class="metric" role="listitem">
+                <span class="metric__value">80%</span>
+                <span class="metric__label">Cited cost<br>monitoring</span>
+              </div>
+            </div>
+
+            <div class="case-card__footer">
+              <span class="case-card__nda" aria-label="Protected by NDA">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                NDA Protected
+              </span>
+              <a href="mailto:rmouraolivdesigner@gmail.com?subject=New Relic Case Study Access" class="btn btn--secondary" aria-label="Request access to New Relic case study">
+                Request access
+              </a>
+            </div>
+          </article>
+
+          <!-- Case 3: Dotz -->
+          <article class="case-card" role="listitem">
+            <div class="case-card__meta">
+              <span class="case-card__company">Dotz</span>
+              <span class="case-card__sep" aria-hidden="true">/</span>
+              <span class="case-card__year">2022</span>
+            </div>
+
+            <h3 class="case-card__title">CRM Retail Platform</h3>
+
+            <p class="case-card__lead">
+              Redesigning an internal tool for retail campaign management,
+              reducing operational overhead and improving team efficiency
+              across B2C loyalty workflows.
+            </p>
+
+            <div class="case-card__tags" role="list" aria-label="Disciplines">
+              <span class="badge badge--neutral" role="listitem">Internal Tool</span>
+              <span class="badge badge--neutral" role="listitem">B2C</span>
+              <span class="badge badge--neutral" role="listitem">Web UX</span>
+            </div>
+
+            <div class="case-card__metrics" role="list" aria-label="Key results">
+              <div class="metric" role="listitem">
+                <span class="metric__value">+10%</span>
+                <span class="metric__label">Revenue<br>increase</span>
+              </div>
+              <div class="metric" role="listitem">
+                <span class="metric__value">+20%</span>
+                <span class="metric__label">Time<br>savings</span>
+              </div>
+            </div>
+
+            <div class="case-card__footer">
+              <span class="case-card__nda" aria-label="Protected by NDA">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                NDA Protected
+              </span>
+              <a href="mailto:rmouraolivdesigner@gmail.com?subject=Dotz Case Study Access" class="btn btn--secondary" aria-label="Request access to Dotz case study">
+                Request access
+              </a>
+            </div>
+          </article>
+
         </div>
-    </main>
+      </div>
+    </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Renan Moura · Hope Design System Framework v2.0</p>
+    <!-- SKILLS -->
+    <section class="section" id="skills" aria-labelledby="skills-title">
+      <div class="container">
+
+        <header class="section__header">
+          <p class="section__overline">Skills</p>
+          <h2 class="section__title" id="skills-title">My key strengths</h2>
+        </header>
+
+        <div class="skills-grid" role="list">
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">12+ Years of Experience</h3>
+            <p class="skill-card__body">From systems analysis to senior product design, I've worked across the full product lifecycle in B2B and consumer products, for companies in Brazil and the US.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Business-Driven Design Decisions</h3>
+            <p class="skill-card__body">I connect user needs to business outcomes. Every design decision I make is tied to a metric, a constraint, or a strategic goal — not just aesthetics.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Designer with Technical Foundation</h3>
+            <p class="skill-card__body">My background in systems analysis and development means I communicate fluently with engineers, spot technical constraints early, and deliver specs that are actually buildable.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">End-to-End Product Ownership</h3>
+            <p class="skill-card__body">From discovery to delivery, I've led the entire design process solo and within cross-functional teams, including research, flows, UI, and handoff.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Fast Context Absorption</h3>
+            <p class="skill-card__body">I've consistently ramped up quickly in complex domains — fintech, energy, health, SaaS — and delivered high-quality work without long onboarding curves.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">AI-Augmented Workflow</h3>
+            <p class="skill-card__body">I integrate AI tools into my daily design process to move faster, reduce rework, and deliver more value per sprint without sacrificing quality.</p>
+          </div>
+
         </div>
-    </footer>
+      </div>
+    </section>
 
-    <script>
-        const themeBtn = document.getElementById('themeBtn');
-        let currentTheme = localStorage.getItem('theme') || 'light';
-        
-        if (currentTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeBtn.textContent = 'LIGHT';
-        }
+    <!-- TESTIMONIALS -->
+    <section class="section" id="references" aria-labelledby="references-title">
+      <div class="container">
 
-        themeBtn.addEventListener('click', () => {
-            if (document.documentElement.getAttribute('data-theme') === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-                themeBtn.textContent = 'DARK';
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-                themeBtn.textContent = 'LIGHT';
-            }
+        <header class="section__header">
+          <p class="section__overline">References</p>
+          <h2 class="section__title" id="references-title">Here's some feedback I received from my peers</h2>
+        </header>
+
+        <div class="testimonials-grid" role="list">
+
+          <div class="testimonial-card" role="listitem">
+            <blockquote class="testimonial-card__quote">
+              I worked with Renan at Shell Box, and from the moment he joined the team,
+              it was clear how reliable and competent he is. An organized designer with
+              excellent communication skills, strong UX expertise, and the ability to
+              lead the entire design process end to end. Beyond his solid technical skills,
+              he integrates easily into the team, learns quickly, and consistently maintains
+              a collaborative mindset. Renan raises the bar for deliverables and is the kind
+              of professional any team would want to have.
+            </blockquote>
+            <footer class="testimonial-card__author">
+              <div class="testimonial-card__avatar" aria-hidden="true">JB</div>
+              <div>
+                <p class="testimonial-card__name">
+                  <a href="https://br.linkedin.com/in/jordacheb/pt" target="_blank" rel="noopener">Jordache Burmeister</a>
+                </p>
+                <p class="testimonial-card__role">Design System Specialist @ Raízen</p>
+              </div>
+            </footer>
+          </div>
+
+          <div class="testimonial-card" role="listitem">
+            <blockquote class="testimonial-card__quote">
+              Renan was one of the best project partners I've had the pleasure of working with.
+              He is a highly precise professional when it comes to analyzing and understanding
+              the specific needs of each client and user. He's the kind of person you want on
+              a team: thoughtful, inquisitive, open to suggestions and feedback, and someone
+              who builds easy and effortless relationships with others.
+            </blockquote>
+            <footer class="testimonial-card__author">
+              <div class="testimonial-card__avatar" aria-hidden="true">IM</div>
+              <div>
+                <p class="testimonial-card__name">
+                  <a href="https://www.linkedin.com/in/izabellagouveiamaroni/" target="_blank" rel="noopener">Izabella Maroni</a>
+                </p>
+                <p class="testimonial-card__role">Senior Product Designer @ Dotz</p>
+              </div>
+            </footer>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SNIPPET -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="container">
+
+        <header class="section__header">
+          <p class="section__overline">About me</p>
+          <h2 class="section__title" id="about-title">12 years of craft, context, & impact</h2>
+        </header>
+
+        <div class="about-snippet">
+          <div class="about-snippet__blocks">
+            <div>
+              <p class="about-block__label">What I do</p>
+              <p class="about-block__text">I design digital products where strategy meets execution. From ambiguous briefs to shipped interfaces, I work across the full product lifecycle: research, flows, UI, and handoff.</p>
+            </div>
+            <div>
+              <p class="about-block__label">Background</p>
+              <p class="about-block__text">12 years in tech, starting in systems analysis and development before moving fully into product design. I've shipped work for Shell, New Relic, Bradesco, Dotz, and others across Brazil and the US. That technical foundation makes my design decisions sharper and my engineering conversations shorter.</p>
+            </div>
+            <div>
+              <p class="about-block__label">My approach</p>
+              <p class="about-block__text">I ramp up fast in complex domains, communicate clearly with cross-functional teams, and integrate AI tools into my daily workflow to deliver more value per sprint.</p>
+            </div>
+          </div>
+
+          <div>
+            <a href="about.html" class="btn btn--primary">Learn more about me</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+
+      <div class="footer__inner">
+        <div class="footer__left">
+          <p class="footer__tagline">Let's transform user experiences together</p>
+          <nav class="footer__links" aria-label="Footer navigation">
+            <a href="about.html" class="footer__link">About</a>
+            <a href="#work" class="footer__link">Work</a>
+            <a href="https://www.linkedin.com/in/rmouraoliv/" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
+            <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" target="_blank" rel="noopener" class="footer__link">Resume</a>
+          </nav>
+        </div>
+
+        <div class="footer__right">
+          <span class="footer__contact-label">Contact</span>
+          <a href="mailto:rmouraolivdesigner@gmail.com" class="footer__email">rmouraolivdesigner@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span class="footer__copy">© 2026 Renan Moura</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       DARK MODE JS
+       ============================================================ -->
+  <script>
+    (function () {
+      const html       = document.documentElement;
+      const themeBtn   = document.getElementById('themeToggle');
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconSun    = document.getElementById('iconSun');
+      const iconMoon   = document.getElementById('iconMoon');
+      const iconBurger = document.getElementById('iconBurger');
+      const iconClose  = document.getElementById('iconClose');
+
+      // Light é o default absoluto
+      const saved   = localStorage.getItem('rm-theme');
+      const initial = saved || 'light';
+      applyTheme(initial);
+
+      // Toggle de tema (único, funciona desktop + mobile)
+      themeBtn.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
+
+      // Hambúrguer — abre/fecha drawer mobile
+      menuToggle.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+        menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+        iconBurger.style.display = isOpen ? 'none'  : 'block';
+        iconClose.style.display  = isOpen ? 'block' : 'none';
+      });
+
+      // Fecha menu ao clicar em link
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Open navigation menu');
+          iconBurger.style.display = 'block';
+          iconClose.style.display  = 'none';
         });
-    </script>
+      });
+
+      // Fecha menu com Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Open navigation menu');
+          iconBurger.style.display = 'block';
+          iconClose.style.display  = 'none';
+          menuToggle.focus();
+        }
+      });
+
+      function applyTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('rm-theme', theme);
+        iconSun.style.display  = theme === 'dark'  ? 'block' : 'none';
+        iconMoon.style.display = theme === 'light' ? 'block' : 'none';
+        themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        themeBtn.setAttribute('aria-pressed', String(theme === 'dark'));
+      }
+    })();
+  </script>
 </body>
 </html>

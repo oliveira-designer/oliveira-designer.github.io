@@ -1,42 +1,52 @@
-/* tokens.css - Hope Design System Theme & Variable System */
+/* ============================================================
+   HOPE DESIGN SYSTEM — tokens.css
+   Versão 1.4 · maio de 2026
+   Fonte da verdade: DESIGN.md + DESIGN-IMPLEMENTATION.md
+   ============================================================ */
+
 :root {
-  /* --- Família Solar --- */
+  /* ----------------------------------------------------------
+     CORES — Família Solar
+     Quente, luminoso, esperançoso
+     ---------------------------------------------------------- */
   --color-aurora:      #FEF8E0;
   --color-madrugada:   #FAE19A;
   --color-solar:       #F5C842; /* ★ ACENTO MARCA */
   --color-ambar:       #C49A1F;
   --color-crepusculo:  #8B6914;
 
-  /* --- Família Âncora --- */
+  /* ----------------------------------------------------------
+     CORES — Família Âncora
+     Frio, preciso, estrutural
+     ---------------------------------------------------------- */
   --color-ceu:         #E8F0F9;
   --color-mare:        #8CB4E0;
   --color-ancora:      #1C5FA8; /* ★ ACENTO MARCA */
   --color-profundo:    #144278;
   --color-abismo:      #1A1A2E;
 
-  /* --- Neutras --- */
+  /* ----------------------------------------------------------
+     CORES — Neutras
+     ---------------------------------------------------------- */
   --color-nuvem:       #FFFFFF;
   --color-superficie:  #F7F7F9;
   --color-borda:       #E2E2E8;
-  --color-mudo:        #5F5F6E;
+  --color-mudo:        #5F5F6E; /* ajustado para WCAG AA */
   --color-sombra:      #3D3D45;
   --color-tinta:       #0D0D0F;
 
-  /* --- Funcionais (as cinco senshi) --- */
-  --color-folha-navalha: #4A9F6B;
-  --color-choque-trovao: #C47A1F;
-  --color-marte:         #B83434;
-  --color-saturno:       #634590;
-  --color-lua:           #F5A8C0;
+  /* ----------------------------------------------------------
+     CORES — Funcionais
+     ---------------------------------------------------------- */
+  --color-success:     #4A9F6B;
+  --color-warning:     #C47A1F;
+  --color-error:       #B83434;
+  --color-info:        #634590;
+  --color-celebrate:   #F5A8C0;
 
-  /* --- Aliases Semânticos --- */
-  --color-success:   var(--color-folha-navalha);
-  --color-warning:   var(--color-choque-trovao);
-  --color-error:     var(--color-marte);
-  --color-info:      var(--color-saturno);
-  --color-celebrate: var(--color-lua);
-
-  /* --- Superfícies e Tipografia (Light Mode Default) --- */
+  /* ----------------------------------------------------------
+     SUPERFÍCIES — Light mode (default)
+     ---------------------------------------------------------- */
   --color-bg:            var(--color-nuvem);
   --color-bg-alt:        var(--color-superficie);
   --color-bg-inverse:    var(--color-abismo);
@@ -50,93 +60,117 @@
   --color-link-hover:    var(--color-profundo);
   --color-focus-ring:    var(--color-ancora);
 
-  /* --- Fontes e Escala --- */
-  --font-display: 'Instrument Serif', 'Georgia', serif;
-  --font-body:    'Plus Jakarta Sans', sans-serif;
-  --font-mono:    'Space Mono', monospace;
+  /* ----------------------------------------------------------
+     TIPOGRAFIA
+     ---------------------------------------------------------- */
+  --font-display: 'Space Mono', 'Courier New', monospace;
+  --font-body:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    'Space Mono', 'Courier New', monospace;
 
-  --fs-display:  clamp(48px, 6vw, 56px);
-  --fs-h1:       clamp(36px, 4.5vw, 40px);
-  --fs-h2:       clamp(26px, 3vw, 28px);
-  --fs-h3:       clamp(14px, 1.5vw, 16px);
-  --fs-body:     clamp(14px, 1.2vw, 16px);
-  --fs-body-sm:  clamp(12px, 1vw, 13px);
-  --fs-label:    clamp(10px, 1vw, 11px);
-  --fs-metric:   clamp(24px, 2.5vw, 28px);
-  --fs-code:     clamp(13px, 1.1vw, 14px);
+  /* Escala fluida (clamp) */
+  --fs-display: clamp(36px, 5vw, 52px);
+  --fs-h1:      clamp(26px, 3.5vw, 32px);
+  --fs-h2:      clamp(18px, 2.5vw, 22px);
+  --fs-h3:      clamp(14px, 1.5vw, 16px);
+  --fs-body:    clamp(14px, 1.2vw, 16px);
+  --fs-body-sm: clamp(12px, 1vw, 13px);
+  --fs-label:   clamp(10px, 1vw, 11px);
 
-  /* --- Espaçamento --- */
+  /* ----------------------------------------------------------
+     ESPAÇAMENTO — base 4px
+     ---------------------------------------------------------- */
   --space-1:  4px;
   --space-2:  8px;
   --space-3:  12px;
   --space-4:  16px;
+  --space-5:  20px;
   --space-6:  24px;
   --space-8:  32px;
+  --space-10: 40px;
   --space-12: 48px;
   --space-16: 64px;
+  --space-20: 80px;
   --space-24: 96px;
+  --space-32: 128px;
 
+  /* Tokens semânticos */
   --gap-tight:     var(--space-2);
   --gap-component: var(--space-4);
   --gap-element:   var(--space-6);
   --gap-section:   var(--space-12);
   --gap-page:      var(--space-24);
 
-  /* --- Forma e Profundidade --- */
+  /* ----------------------------------------------------------
+     BORDAS E RAIOS
+     ---------------------------------------------------------- */
   --radius-xs:   4px;
   --radius-sm:   8px;
   --radius-md:   12px;
   --radius-lg:   16px;
+  --radius-xl:   24px;
   --radius-pill: 999px;
 
   --border-thin:   0.5px solid var(--color-border);
   --border-normal: 1px solid var(--color-border);
+  --border-strong: 1px solid var(--color-border-strong);
 
-  --shadow-sm: 0 1px 3px rgba(13, 13, 15, 0.06);
-  --shadow-md: 0 4px 12px rgba(13, 13, 15, 0.08);
+  /* ----------------------------------------------------------
+     SOMBRAS
+     ---------------------------------------------------------- */
+  --shadow-sm:    0 1px 3px rgba(13, 13, 15, 0.06);
+  --shadow-md:    0 4px 12px rgba(13, 13, 15, 0.08);
+  --shadow-lg:    0 8px 32px rgba(13, 13, 15, 0.10);
   --shadow-focus: 0 0 0 3px var(--color-focus-ring);
 
-  /* --- Motion --- */
-  --duration-fast:    100ms;
-  --duration-normal:  150ms;
-  --duration-slow:    250ms;
-  --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-all: all var(--duration-normal) var(--ease-out);
-  
-  --z-sticky:     10;
-  --z-max:        9999;
+  /* ----------------------------------------------------------
+     MOTION
+     ---------------------------------------------------------- */
+  --duration-fast:   100ms;
+  --duration-normal: 150ms;
+  --duration-slow:   250ms;
+  --duration-slower: 400ms;
+
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ----------------------------------------------------------
+     Z-INDEX
+     ---------------------------------------------------------- */
+  --z-base:    0;
+  --z-raised:  1;
+  --z-sticky:  10;
+  --z-overlay: 100;
+  --z-modal:   200;
 }
 
-/* Dark Mode Overrides (Inversão Semântica Automática) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg:           var(--color-abismo);
-    --color-bg-alt:       #242438;
-    --color-bg-inverse:   var(--color-nuvem);
-    --color-border:       #2E2E40;
-    --color-border-strong: #4A4A60;
-    --color-text-1:       var(--color-nuvem);
-    --color-text-2:       #B4B4C8;
-    --color-text-3:       #8888A0;
-    --color-text-inverse: var(--color-tinta);
-    --color-link:         var(--color-solar);
-    --color-link-hover:   #FFD96B;
-    --color-focus-ring:   var(--color-solar);
-  }
-}
-
-/* Seletor Manual de Tema */
+/* ----------------------------------------------------------
+   DARK MODE — ativado via data-theme="dark"
+   ---------------------------------------------------------- */
 [data-theme="dark"] {
-  --color-bg:           var(--color-abismo);
-  --color-bg-alt:       #242438;
-  --color-bg-inverse:   var(--color-nuvem);
-  --color-border:       #2E2E40;
+  --color-bg:            var(--color-abismo);
+  --color-bg-alt:        #242438;
+  --color-bg-inverse:    var(--color-nuvem);
+  --color-border:        #2E2E40;
   --color-border-strong: #4A4A60;
-  --color-text-1:       var(--color-nuvem);
-  --color-text-2:       #B4B4C8;
-  --color-text-3:       #8888A0;
-  --color-text-inverse: var(--color-tinta);
-  --color-link:         var(--color-solar);
-  --color-link-hover:   #FFD96B;
-  --color-focus-ring:   var(--color-solar);
+  --color-text-1:        var(--color-nuvem);
+  --color-text-2:        #B4B4C8;
+  --color-text-3:        #9090A8;  /* WCAG AA: 4.6:1 sobre cards DM */
+  --color-text-inverse:  var(--color-tinta);
+  --color-link:          var(--color-solar);
+  --color-link-hover:    #FFD96B;
+  --color-focus-ring:    var(--color-solar);
+}
+
+/* ----------------------------------------------------------
+   REDUCED MOTION — respeita preferência do sistema
+   ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:       0.01ms !important;
+    animation-iteration-count: 1     !important;
+    transition-duration:      0.01ms !important;
+    scroll-behavior:          auto   !important;
+  }
 }

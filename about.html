@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Renan Moura — Senior Product Designer with 12 years shipping B2B and consumer products across Brazil and the US." />
+  <title>About — Renan Moura</title>
+
+  <link rel="icon" type="image/svg+xml" href="logos/logo-icon.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+</head>
+
+<body>
+  <!-- Skip link -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+
+        <a href="/" class="nav__logo" aria-label="Renan Moura — Home">
+          <img src="logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
+          <img src="logos/logo-dark-mode.svg"  alt="Renan Moura" class="nav__logo-dark"  />
+        </a>
+
+        <div class="nav__controls">
+
+          <div class="nav__links">
+            <a href="index.html#work" class="nav__link">Work</a>
+            <a href="about.html" class="nav__link nav__link--active" aria-current="page">About</a>
+            <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" class="nav__link" target="_blank" rel="noopener noreferrer">
+              Resume
+              <span class="visually-hidden">(opens in a new tab)</span>
+            </a>
+          </div>
+
+          <button class="nav__theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+            <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+
+          <button class="nav__hamburger" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg id="iconBurger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+            <svg id="iconClose" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+
+        </div>
+
+      </nav>
+
+      <!-- Mobile menu drawer -->
+      <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+        <a href="index.html#work" class="nav__mobile-link">Work</a>
+        <a href="about.html"      class="nav__mobile-link nav__mobile-link--active">About</a>
+        <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
+        <a href="mailto:rmouraolivdesigner@gmail.com" class="nav__mobile-link">Contact</a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main id="main">
+
+    <!-- PAGE HEADER -->
+    <section class="hero" aria-labelledby="about-headline">
+      <div class="container">
+        <span class="hero__overline animate-in">About me</span>
+        <h1 class="hero__headline animate-in animate-in--delay-1" id="about-headline">
+          12 years of craft,<br>
+          context, &amp; <mark>impact.</mark>
+        </h1>
+        <p class="hero__body animate-in animate-in--delay-2">
+          Senior Product Designer based in Brazil. I've spent over a decade turning ambiguous briefs
+          into shipped interfaces — across fintech, energy, SaaS, and loyalty platforms.
+        </p>
+      </div>
+    </section>
+
+    <!-- BACKGROUND -->
+    <section class="section" id="background" aria-labelledby="background-title">
+      <div class="container">
+
+        <header class="section__header">
+          <p class="section__overline">Background</p>
+          <h2 class="section__title" id="background-title">Where I come from</h2>
+        </header>
+
+        <div class="about-snippet">
+          <div class="about-snippet__blocks">
+            <div>
+              <p class="about-block__label">Origin</p>
+              <p class="about-block__text">I started my career in systems analysis and software development — which means I've always understood both sides of the product. That technical foundation makes my design decisions sharper and my engineering conversations shorter.</p>
+            </div>
+            <div>
+              <p class="about-block__label">Trajectory</p>
+              <p class="about-block__text">Over 12 years I've moved from junior developer to senior product designer, working in agencies, startups, and large enterprises. I've shipped work for Shell / Raízen, New Relic, Bradesco, Dotz, and Belvo — across Brazil and the US.</p>
+            </div>
+            <div>
+              <p class="about-block__label">Today</p>
+              <p class="about-block__text">I work across the full product lifecycle: discovery, flows, UI design, and engineering handoff. I integrate AI tools into my daily workflow to move faster and deliver more value per sprint without sacrificing quality.</p>
+            </div>
+          </div>
+          <div>
+            <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--primary">Get in touch</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills" aria-labelledby="skills-title">
+      <div class="container">
+
+        <header class="section__header">
+          <p class="section__overline">Skills</p>
+          <h2 class="section__title" id="skills-title">What I bring to a team</h2>
+        </header>
+
+        <div class="skills-grid" role="list">
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Product Strategy</h3>
+            <p class="skill-card__body">I connect user needs to business outcomes. Every design decision is tied to a metric, a constraint, or a strategic goal — not just aesthetics.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">UX Research</h3>
+            <p class="skill-card__body">Interviews, usability tests, surveys, and competitive analysis. I've led end-to-end research for complex B2B domains including FinOps and loyalty platforms.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">UI Design & Systems</h3>
+            <p class="skill-card__body">High-fidelity design, component libraries, and design tokens. I've contributed to and consumed design systems at scale in Figma.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Technical Foundation</h3>
+            <p class="skill-card__body">Systems analysis and front-end background means I can read code, spot implementation constraints early, and write specs that engineers don't have to translate.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Cross-functional Leadership</h3>
+            <p class="skill-card__body">I've led design end-to-end on multi-persona products, aligning PMs, engineers, and stakeholders — from initial brief to shipped feature.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">AI-Augmented Workflow</h3>
+            <p class="skill-card__body">I integrate AI tools into research synthesis, ideation, and prototyping — not as a shortcut, but as a force multiplier that frees up headspace for harder design problems.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section" id="experience" aria-labelledby="experience-title">
+      <div class="container">
+
+        <header class="section__header">
+          <p class="section__overline">Experience</p>
+          <h2 class="section__title" id="experience-title">Companies I've shipped for</h2>
+        </header>
+
+        <div class="skills-grid" role="list">
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Shell / Raízen</h3>
+            <p class="skill-card__body">Led the redesign of Shell Box's home screen — improving fuel conversion rates and exploratory engagement across millions of active users.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">New Relic</h3>
+            <p class="skill-card__body">Researched an emerging FinOps domain and designed multi-persona cloud cost visibility for engineering and infrastructure teams.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Dotz</h3>
+            <p class="skill-card__body">Redesigned an internal retail CRM platform, cutting operational overhead and improving campaign management efficiency.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Bradesco</h3>
+            <p class="skill-card__body">Worked on consumer-facing financial product experiences for one of Brazil's largest banks.</p>
+          </div>
+
+          <div class="skill-card" role="listitem">
+            <h3 class="skill-card__title">Belvo</h3>
+            <p class="skill-card__body">Contributed to open finance and financial data infrastructure products targeting developers and fintech clients across Latin America.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" aria-label="Contact call to action">
+      <div class="container">
+        <header class="section__header">
+          <p class="section__overline">Let's work together</p>
+          <h2 class="section__title">Open to new opportunities</h2>
+        </header>
+        <div style="display:flex; gap: var(--space-4); flex-wrap: wrap;">
+          <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--primary">Send me an email</a>
+          <a href="https://www.linkedin.com/in/rmouraoliv/" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+            LinkedIn
+            <span class="visually-hidden">(opens in a new tab)</span>
+          </a>
+          <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+            Resume
+            <span class="visually-hidden">(opens in a new tab)</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+
+      <div class="footer__inner">
+        <div class="footer__left">
+          <p class="footer__tagline">Let's transform user experiences together</p>
+          <nav class="footer__links" aria-label="Footer navigation">
+            <a href="about.html" class="footer__link">About</a>
+            <a href="index.html#work" class="footer__link">Work</a>
+            <a href="https://www.linkedin.com/in/rmouraoliv/" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
+            <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" target="_blank" rel="noopener" class="footer__link">Resume</a>
+          </nav>
+        </div>
+
+        <div class="footer__right">
+          <span class="footer__contact-label">Contact</span>
+          <a href="mailto:rmouraolivdesigner@gmail.com" class="footer__email">rmouraolivdesigner@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span class="footer__copy">© 2026 Renan Moura</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       DARK MODE JS
+       ============================================================ -->
+  <script>
+    (function () {
+      const html       = document.documentElement;
+      const themeBtn   = document.getElementById('themeToggle');
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconSun    = document.getElementById('iconSun');
+      const iconMoon   = document.getElementById('iconMoon');
+      const iconBurger = document.getElementById('iconBurger');
+      const iconClose  = document.getElementById('iconClose');
+
+      const saved   = localStorage.getItem('rm-theme');
+      const initial = saved || 'light';
+      applyTheme(initial);
+
+      themeBtn.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
+
+      menuToggle.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+        menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+        iconBurger.style.display = isOpen ? 'none'  : 'block';
+        iconClose.style.display  = isOpen ? 'block' : 'none';
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Open navigation menu');
+          iconBurger.style.display = 'block';
+          iconClose.style.display  = 'none';
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Open navigation menu');
+          iconBurger.style.display = 'block';
+          iconClose.style.display  = 'none';
+          menuToggle.focus();
+        }
+      });
+
+      function applyTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('rm-theme', theme);
+        iconSun.style.display  = theme === 'dark'  ? 'block' : 'none';
+        iconMoon.style.display = theme === 'light' ? 'block' : 'none';
+        themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        themeBtn.setAttribute('aria-pressed', String(theme === 'dark'));
+      }
+    })();
+  </script>
+</body>
+</html>
