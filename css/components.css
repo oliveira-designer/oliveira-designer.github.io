@@ -150,7 +150,6 @@
   .case-card:hover {
     border-color: var(--color-border-strong);
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
   }
   
   /* Meta — empresa / ano */
@@ -282,7 +281,144 @@
   }
   
   /* Efeito Micro-interação: Zoom sutil na thumbnail ativa ao passar o mouse */
-  .case-card__visual:hover /* ----------------------------------------------------------
+  .case-card__visual:hover
+
+  /* ==========================================================================
+   LOGO STRIP TICKER — Infinite Carrousel (Logos Version)
+   ========================================================================== */
+  /* 1. Container Principal (Fora do grid container para cortar a tela 100%) */
+  .logo-strip {
+    width: 100%;
+    overflow: hidden; /* Mascara o conteúdo que passa das bordas do navegador */
+    padding: var(--space-12) 0; /* Espaçamento vertical generoso */
+  }
+
+  /* 2. Rótulo/Título da Seção */
+  .logo-strip__label {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-3);
+    margin-bottom: var(--space-8);
+  }
+
+  /* 3. O "Túnel" do Carrossel (Aplica o efeito de fade-out nas bordas) */
+  .logo-strip__ticker {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    user-select: none; /* Impede que o usuário selecione as imagens ao arrastar */
+    padding: var(--space-16) 0;
+    margin: 0;
+    
+    /* Gradiente nas pontas para suavizar a entrada e saída das logos */
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 15%,
+      black 85%,
+      transparent 100
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 15%,
+      black 85%,
+      transparent 100%
+    );
+  }
+
+  /* 4. A Esteira/Pista (Track) em Movimento */
+  .logo-strip__track {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 100%; /* Cada bloco (original e clone) ocupa no mínimo a largura da tela */
+    flex-shrink: 0;
+    gap: var(--space-24); /* Espaçamento horizontal entre as logos */
+    padding-right: var(--space-16); /* Evita o "pulo" visual no reset do loop */
+    
+    /* Chama a animação contínua (25 segundos por volta, linear e infinita) */
+    animation: ticker-scroll 25s linear infinite;
+  }
+
+  /* Pausa o carrossel quando o usuário passa o mouse em qualquer parte da esteira */
+  .logo-strip__ticker:hover .logo-strip__track {
+    animation-play-state: paused;
+  }
+
+  /* 5. Wrapper de cada Imagem/Logo */
+  .logo-strip__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* 6. Tratamento Visual das Imagens (Modo Claro Padrão) */
+  .logo-strip__item img {
+    height: 32px; /* Altura fixa para manter a consistência visual do grid */
+    width: auto;  /* Mantém a proporção nativa de cada marca */
+    
+    /* Deixa as marcas discretas e integradas ao layout */
+    opacity: 0.5;
+    filter: grayscale(100%); 
+    
+    /* Transição suave para quando o usuário interagir */
+    transition: 
+      opacity var(--duration-normal) var(--ease-out), 
+      filter var(--duration-normal) var(--ease-out);
+  }
+
+  /* Micro-interação: Traz cor e destaque para as logos ao passar o mouse */
+  .logo-strip__ticker:hover .logo-strip__item img {
+    opacity: 1;
+    filter: grayscale(0%);
+  }
+
+  /* ==========================================================================
+    VARIAÇÃO: SUPORTE AO MODO ESCURO
+    ========================================================================== */
+  [data-theme="dark"] .logo-strip__item img {
+    /* Se as suas logos forem escuras, este filtro as transforma em branco nativamente */
+    filter: brightness(0) invert(1); 
+    opacity: 0.4;
+  }
+
+  [data-theme="dark"] .logo-strip__ticker:hover .logo-strip__item img {
+    filter: brightness(0) invert(1); /* Mantém branca, mas aumenta a opacidade */
+    opacity: 0.85;
+  }
+
+/* ==========================================================================
+   KEYFRAMES — Aceleração por Hardware (GPU)
+   ========================================================================== */
+@keyframes ticker-scroll {
+  0% {
+    /* translate3d força o navegador a usar a GPU, garantindo suavidade máxima (60fps) */
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    /* Move exatamente a largura de um bloco completo antes de reiniciar o loop */
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+  /* =======================================================
+    KEYFRAMES — O Movimento Contínuo
+    ======================================================= */
+  @keyframes ticker-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0); /* Move exatamente o tamanho de um bloco completo */
+  }
+  }
+  
+  /* ----------------------------------------------------------
    CARDS — Case Studies
    ---------------------------------------------------------- */
 .case-card {
@@ -303,7 +439,7 @@
 .case-card:hover {
   border-color: var(--color-border-strong);
   box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  /*transform: translateY(-2px); */
 }
 
 /* NOVIDADE: Dá o respiro correto para os textos internos do card em destaque no mobile */

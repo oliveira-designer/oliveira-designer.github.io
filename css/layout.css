@@ -60,7 +60,7 @@
 
 /* Define a altura das logos sem interferir no 'hidden' do Tailwind */
 .nav__logo img { 
-  height: 28px !important; 
+  height: 32px !important; 
   width: auto !important; 
 }
 
@@ -230,7 +230,50 @@
    HERO
    ---------------------------------------------------------- */
 .hero {
+  /* Mantém o padding vertical que você já definiu */
   padding: var(--space-20) 0 var(--space-16);
+
+  display: flex;
+  flex-direction: column; /* Alinha o fluxo verticalmente */
+  justify-content: center; /* Centraliza verticalmente o conteúdo na tela */
+  align-items: center;     /* Centraliza o container horizontalmente na tela */
+  text-align: left;      /* Centraliza todas as linhas de texto, overline e headline */
+  
+  /* Garante o posicionamento correto caso use elementos absolutos no fundo */
+  position: relative;
+  width: 100%;
+
+  /* Faz o Hero ocupar no mínimo 100% da altura da janela de visualização do usuário */
+  min-height: 100dvh; /* 'dvh' evita problemas com a barra de navegação do Safari/Chrome no mobile */
+  
+  /* Borda inferior cruzando a tela de ponta a ponta */
+  border-bottom: var(--border-normal); 
+  
+  /* Imagem de Fundo delimitada a esta seção */
+  background-image: url('../images/Desktop\ light/golden_morning_v2_desktop.png'); /* Substitua pelo caminho da sua imagem */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+/* Suporte ao Modo Escuro: evita que o fundo estoure o contraste do texto */
+[data-theme="dark"] .hero {
+  background-image: url('../images/Desktop\ dark/desktop_bg_3.png'); /* Uma versão escura ou sutil */
+  /* Opcional: se quiser usar a mesma imagem e apenas escurecer o fundo, descomente as duas linhas abaixo: */
+  /* background-blend-mode: multiply; */
+  /* background-color: rgba(0, 0, 0, 0.4); */
+}
+
+@media (max-width: 767px) {
+  /* Responsivo: Mobile (Modo Claro) */
+  .hero {
+    background-image: url('../images/Mobile\ light/mobile_dedicated_v4.png'); 
+  }
+
+  /* Responsivo: Mobile (Modo Escuro) */
+  [data-theme="dark"] .hero {
+    background-image: url('../images/Mobile\ dark/dark_solar_v3_mobile.png');
+  }
 }
 
 .hero__overline {
@@ -240,7 +283,7 @@
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-text-3);
+  color: var(--color-text-2);
   margin-bottom: var(--space-5);
 }
 
@@ -256,6 +299,10 @@
 }
 .hero__headline mark {
   background: none;
+  color: var(--color-ancora);
+}
+
+[data-theme="dark"] .hero__headline mark { 
   color: var(--color-solar);
 }
 
@@ -275,36 +322,115 @@
   gap: var(--space-4);
 }
 
-/* Logo strip */
-.logo-strip {
-  margin-top: var(--space-16);
-  padding-top: var(--space-8);
-  border-top: var(--border-thin);
+/* ==========================================================================
+   LOGO STRIP TICKER — Infinite Carrousel (Colado no Hero)
+   ========================================================================== */
+
+   .logo-strip {
+    width: 100%;
+    overflow: hidden; /* Mascara o conteúdo nas bordas laterais */
+    
+    /* Ajuste de proximidade: colamos o topo no hero e mantemos o respiro embaixo */
+    padding-top: var(--space-2); 
+    padding-bottom: var(--space-14); 
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .logo-strip__label {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-3);
+    margin-bottom: var(--space-6);
+  }
+  
+  .logo-strip__ticker {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    user-select: none;
+    
+    /* Gradiente suave nas pontas da tela */
+    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  }
+  
+  .logo-strip__track {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 100%;
+    flex-shrink: 0;
+    gap: var(--space-16);
+    padding-right: var(--space-16);
+    animation: ticker-scroll 25s linear infinite;
+  }
+  
+  .logo-strip__ticker:hover .logo-strip__track {
+    animation-play-state: paused;
+  }
+  
+  .logo-strip__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .logo-strip__item img {
+    height: 32px;
+    width: auto;
+    opacity: 0.5;
+    filter: grayscale(100%);
+    transition: opacity var(--duration-normal) var(--ease-out), filter var(--duration-normal) var(--ease-out);
+  }
+  
+  .logo-strip__ticker:hover .logo-strip__item img {
+    opacity: 1;
+    filter: grayscale(0%);
+  }
+  
+  /* Suporte ao Modo Escuro */
+  [data-theme="dark"] .logo-strip__item img {
+    filter: brightness(0) invert(1);
+    opacity: 0.4;
+  }
+  
+  [data-theme="dark"] .logo-strip__ticker:hover .logo-strip__item img {
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+  }
+  
+  @keyframes ticker-scroll {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+  }
+
+/* ==========================================================================
+  AJUSTE DE PROXIMIDADE DO TICKER (COMPANIES)
+  ========================================================================== */
+
+/* 1. Neutraliza os paddings globais de 80px da classe .section apenas nesta id */
+#companies {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
-.logo-strip__label {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-3);
-  margin-bottom: var(--space-5);
+
+/* 2. Controla o respiro interno do ticker com precisão */
+#companies .logo-strip {
+  /* Remove qualquer espaço no topo para colar na linha/imagem do Hero */
+  padding-top: 0; 
+  
+  /* Mantém um respiro confortável em relação à seção de Case Studies abaixo */
+  padding-bottom: var(--space-12); 
+  
+  margin-top: 0;
+  margin-bottom: 0;
 }
-.logo-strip__logos {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-8);
-}
-.logo-strip__item {
-  font-family: var(--font-mono);
-  font-size: var(--fs-body-sm);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--color-text-3);
-  opacity: 0.6;
-  transition: opacity var(--duration-normal) var(--ease-out);
-}
-.logo-strip__item:hover { opacity: 1; }
+
 
 /* ----------------------------------------------------------
    GRIDS DE CONTEÚDO
