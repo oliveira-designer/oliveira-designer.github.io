@@ -4,6 +4,13 @@
    Depende de: tokens.css, reset.css, components.css
    ============================================================ */
 
+@import "tailwindcss";
+@theme {
+  --animate-*: initial;
+}
+/* Esta é a linha mágica oficial do Tailwind v4 para ler o data-theme */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* ----------------------------------------------------------
    CONTAINER
    ---------------------------------------------------------- */
@@ -39,7 +46,7 @@
   gap: var(--space-6);
 }
 
-/* Logo — troca de arquivo conforme tema */
+/* Logo — estilização do container */
 .nav__logo {
   display: flex;
   align-items: center;
@@ -47,13 +54,37 @@
   flex-shrink: 0;
   transition: opacity var(--duration-normal) var(--ease-out);
 }
-.nav__logo:hover { opacity: 0.7; }
-.nav__logo img   { height: 28px; width: auto; display: block; }
+.nav__logo:hover { 
+  opacity: 0.7; 
+}
 
-.nav__logo-light { display: block; }
-.nav__logo-dark  { display: none;  }
-[data-theme="dark"] .nav__logo-light { display: none;  }
-[data-theme="dark"] .nav__logo-dark  { display: block; }
+/* Define a altura das logos sem interferir no 'hidden' do Tailwind */
+.nav__logo img { 
+  height: 28px !important; 
+  width: auto !important; 
+}
+
+/* =======================================================
+   LÓGICA DE EXIBIÇÃO (MODO CLARO / DEFAULT)
+   ======================================================= */
+/* Por padrão, mostra a logo clara e esconde a escura */
+.nav__logo-light { 
+  display: block !important; 
+}
+.nav__logo-dark { 
+  display: none !important; 
+}
+
+/* =======================================================
+   LÓGICA DE EXIBIÇÃO (MODO ESCURO - data-theme="dark")
+   ======================================================= */
+/* Quando o tema escuro está ativo, inverte a exibição */
+[data-theme="dark"] .nav__logo-light { 
+  display: none !important; 
+}
+[data-theme="dark"] .nav__logo-dark { 
+  display: block !important; 
+}
 
 /* Wrapper dos controles à direita — links + toggle + hamburger */
 .nav__controls {
