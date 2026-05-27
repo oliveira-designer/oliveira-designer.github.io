@@ -16,7 +16,7 @@
   font-size: var(--fs-body-sm);
   font-weight: 600;
   line-height: 1;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   padding: 12px 18px;            /* +2px vert. → target ≥ 44px (WCAG 2.5.5) */
   min-height: 44px;
   white-space: nowrap;
@@ -132,6 +132,159 @@
 /* ----------------------------------------------------------
    CARDS — Case Studies
    ---------------------------------------------------------- */
+   .case-card {
+    position: relative;
+    background-color: var(--color-bg-alt);
+    border: var(--border-normal);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    overflow: hidden;
+    transition:
+      border-color var(--duration-normal) var(--ease-out),
+      box-shadow   var(--duration-normal) var(--ease-out),
+      transform    var(--duration-slow)   var(--ease-out);
+  }
+  .case-card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  
+  /* Meta — empresa / ano */
+  .case-card__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .case-card__company,
+  .case-card__year {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-3);
+  }
+  .case-card__sep {
+    color: var(--color-border-strong);
+    font-size: var(--fs-label);
+  }
+  
+  /* Título */
+  .case-card__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--color-text-1);
+  }
+  
+  /* Lead */
+  .case-card__lead {
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    line-height: 1.65;
+    color: var(--color-text-2);
+    gap: var(--space-2);
+  }
+  
+  /* Tags */
+  .case-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  
+  /* Métricas */
+  .case-card__metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: var(--border-thin);
+  }
+  
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .metric__value {
+    font-family: var(--font-mono);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-ancora);
+  }
+  [data-theme="dark"] .metric__value {
+    color: var(--color-solar);
+  }
+  .metric__label {
+    font-family: var(--font-body);
+    font-size: var(--fs-body-sm);
+    color: var(--color-text-3);
+    line-height: 1.4;
+  }
+  
+  /* Footer do card — Mobile */
+  .case-card__footer {
+    display: flex;
+    flex-direction: column; 
+    gap: var(--space-4);    
+    align-items: flex-start;
+    width: 100%;
+    margin-top: var(--space-2); /* Dá um leve respiro extra antes do footer */
+  }
+  
+  /* Força o botão a ocupar a largura total no mobile */
+  .case-card__footer .btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .case-card__nda {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-3);
+  }
+  .case-card__nda svg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  /* Case thumbnail container */
+  .case-card__visual {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: var(--color-bg-alt); 
+    position: relative;
+  }
+  
+  /* Comportamento das imagens personalizadas (Light e Dark) */
+  .case-card__img--light,
+  .case-card__img--dark {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: center; 
+    transition: transform var(--duration-normal) var(--ease-out); 
+  }
+  
+  /* Efeito Micro-interação: Zoom sutil na thumbnail ativa ao passar o mouse */
+  .case-card__visual:hover /* ----------------------------------------------------------
+   CARDS — Case Studies
+   ---------------------------------------------------------- */
 .case-card {
   position: relative;
   background-color: var(--color-bg-alt);
@@ -151,6 +304,13 @@
   border-color: var(--color-border-strong);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+}
+
+/* NOVIDADE: Dá o respiro correto para os textos internos do card em destaque no mobile */
+.case-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6); /* Aplica o espaçamento idêntico e consistente do sistema */
 }
 
 /* Meta — empresa / ano */
@@ -229,15 +389,21 @@
   line-height: 1.4;
 }
 
-/* Footer do card */
+/* Footer do card — Mobile */
 .case-card__footer {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-4);
-  margin-top: auto;
+  flex-direction: column; 
+  gap: var(--space-4);    
+  align-items: stretch;
+  width: 100%;
 }
+
+/* Força o botão a ocupar a largura total no mobile */
+.case-card__footer .btn {
+  width: 100%;
+  text-align: center;
+}
+
 .case-card__nda {
   display: inline-flex;
   align-items: center;
@@ -253,62 +419,84 @@
   height: 12px;
 }
 
-/* Visual placeholder */
+/* Case thumbnail container — Mobile */
 .case-card__visual {
   width: 100%;
-  height: 180px;
+  height: auto;
   border-radius: var(--radius-md);
   overflow: hidden;
-}
-.case-card__visual-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--color-bg-alt) 0%, var(--color-border) 100%);
+  background-color: var(--color-bg-alt); 
   position: relative;
-  overflow: hidden;
-}
-.case-card__visual-placeholder::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 8px,
-    rgba(255, 255, 255, 0.03) 8px,
-    rgba(255, 255, 255, 0.03) 16px
-  );
-}
-.case-card__visual-label {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-3);
-  opacity: 0.5;
-  z-index: 1;
 }
 
-/* Card featured — layout horizontal em desktop */
+/* Comportamento das imagens personalizadas (Light e Dark) */
+.case-card__img--light,
+.case-card__img--dark {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  object-position: center; 
+  transition: transform var(--duration-normal) var(--ease-out); 
+}
+
+/* Efeito Micro-interação: Zoom sutil ao passar o mouse */
+.case-card__visual:hover .case-card__img--light,
+.case-card__visual:hover .case-card__img--dark {
+  transform: scale(1.04);
+}
+
+/* =======================================================
+   REGRAS DE EXIBIÇÃO POR TEMA (Padrão: Modo Claro)
+   ======================================================= */
+.case-card__img--light { 
+  display: block !important; 
+}
+.case-card__img--dark { 
+  display: none !important; 
+}
+
+/* Quando o data-theme="dark" estiver ativo no site */
+[data-theme="dark"] .case-card__img--light { 
+  display: none !important; 
+}
+[data-theme="dark"] .case-card__img--dark { 
+  display: block !important; 
+}
+
+/* ----------------------------------------------------------
+   MÍDIA QUERY — Layout Responsivo Desktop
+   ---------------------------------------------------------- */
 @media (min-width: 768px) {
   .case-card--featured {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: stretch;
     gap: var(--space-12);
   }
+
   .case-card--featured .case-card__content {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
   }
+
   .case-card--featured .case-card__visual {
     flex-shrink: 0;
     width: 320px;
-    height: 220px;
+    height: auto; 
+    aspect-ratio: auto; /* Desativa a proporção do mobile no desktop */
+  }
+
+  .case-card--featured .case-card__footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; /* Empurra o rodapé para a base do card no desktop */
+    width: fit-content;
+  }
+
+  .case-card--featured .case-card__footer .btn {
+    width: fit-content;
   }
 }
 
