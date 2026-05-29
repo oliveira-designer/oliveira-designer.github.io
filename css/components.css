@@ -1,11 +1,11 @@
 /* ============================================================
    HOPE DESIGN SYSTEM — components.css
-   Versão 1.4 · maio de 2026
-   Depende de: tokens.css, reset.css (carregados antes)
+   v1.4 · May 2026
+   Requires: tokens.css, reset.css (loaded first)
    ============================================================ */
 
 /* ----------------------------------------------------------
-   BOTÕES
+   BUTTONS
    ---------------------------------------------------------- */
 .btn {
   display: inline-flex;
@@ -17,7 +17,7 @@
   font-weight: 600;
   line-height: 1;
   border-radius: var(--radius-md);
-  padding: 12px 18px;            /* +2px vert. → target ≥ 44px (WCAG 2.5.5) */
+  padding: 12px 18px;            /* +2px vertical → target ≥ 44px (WCAG 2.5.5) */
   min-height: 44px;
   white-space: nowrap;
   cursor: pointer;
@@ -132,295 +132,6 @@
 /* ----------------------------------------------------------
    CARDS — Case Studies
    ---------------------------------------------------------- */
-   .case-card {
-    position: relative;
-    background-color: var(--color-bg-alt);
-    border: var(--border-normal);
-    border-radius: var(--radius-lg);
-    padding: var(--space-8);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-    overflow: hidden;
-    transition:
-      border-color var(--duration-normal) var(--ease-out),
-      box-shadow   var(--duration-normal) var(--ease-out),
-      transform    var(--duration-slow)   var(--ease-out);
-  }
-  .case-card:hover {
-    border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-md);
-  }
-  
-  /* Meta — empresa / ano */
-  .case-card__meta {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    flex-wrap: wrap;
-  }
-  .case-card__company,
-  .case-card__year {
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-text-3);
-  }
-  .case-card__sep {
-    color: var(--color-border-strong);
-    font-size: var(--fs-label);
-  }
-  
-  /* Título */
-  .case-card__title {
-    font-family: var(--font-display);
-    font-size: var(--fs-h2);
-    font-weight: 700;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
-    color: var(--color-text-1);
-  }
-  
-  /* Lead */
-  .case-card__lead {
-    font-family: var(--font-body);
-    font-size: var(--fs-body);
-    line-height: 1.65;
-    color: var(--color-text-2);
-    gap: var(--space-2);
-  }
-  
-  /* Tags */
-  .case-card__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-  
-  /* Métricas */
-  .case-card__metrics {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-6);
-    padding-top: var(--space-6);
-    border-top: var(--border-thin);
-  }
-  
-  .metric {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-  }
-  .metric__value {
-    font-family: var(--font-mono);
-    font-size: var(--fs-h2);
-    font-weight: 700;
-    line-height: 1;
-    color: var(--color-ancora);
-  }
-  [data-theme="dark"] .metric__value {
-    color: var(--color-solar);
-  }
-  .metric__label {
-    font-family: var(--font-body);
-    font-size: var(--fs-body-sm);
-    color: var(--color-text-3);
-    line-height: 1.4;
-  }
-  
-  /* Footer do card — Mobile */
-  .case-card__footer {
-    display: flex;
-    flex-direction: column; 
-    gap: var(--space-4);    
-    align-items: flex-start;
-    width: 100%;
-    margin-top: var(--space-2); /* Dá um leve respiro extra antes do footer */
-  }
-  
-  /* Força o botão a ocupar a largura total no mobile */
-  .case-card__footer .btn {
-    width: 100%;
-    text-align: center;
-  }
-  
-  .case-card__nda {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-text-3);
-  }
-  .case-card__nda svg {
-    width: 12px;
-    height: 12px;
-  }
-  
-  /* Case thumbnail container */
-  .case-card__visual {
-    width: 100%;
-    height: 100%;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    background-color: var(--color-bg-alt); 
-    position: relative;
-  }
-  
-  /* Comportamento das imagens personalizadas (Light e Dark) */
-  .case-card__img--light,
-  .case-card__img--dark {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-    object-position: center; 
-    transition: transform var(--duration-normal) var(--ease-out); 
-  }
-  
-  /* Efeito Micro-interação: Zoom sutil na thumbnail ativa ao passar o mouse */
-  .case-card__visual:hover
-
-  /* ==========================================================================
-   LOGO STRIP TICKER — Infinite Carrousel (Logos Version)
-   ========================================================================== */
-  /* 1. Container Principal (Fora do grid container para cortar a tela 100%) */
-  .logo-strip {
-    width: 100%;
-    overflow: hidden; /* Mascara o conteúdo que passa das bordas do navegador */
-    padding: var(--space-12) 0; /* Espaçamento vertical generoso */
-  }
-
-  /* 2. Rótulo/Título da Seção */
-  .logo-strip__label {
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-text-3);
-    margin-bottom: var(--space-8);
-  }
-
-  /* 3. O "Túnel" do Carrossel (Aplica o efeito de fade-out nas bordas) */
-  .logo-strip__ticker {
-    display: flex;
-    overflow: hidden;
-    width: 100%;
-    user-select: none; /* Impede que o usuário selecione as imagens ao arrastar */
-    padding: var(--space-16) 0;
-    margin: 0;
-    
-    /* Gradiente nas pontas para suavizar a entrada e saída das logos */
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 15%,
-      black 85%,
-      transparent 100
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 15%,
-      black 85%,
-      transparent 100%
-    );
-  }
-
-  /* 4. A Esteira/Pista (Track) em Movimento */
-  .logo-strip__track {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    min-width: 100%; /* Cada bloco (original e clone) ocupa no mínimo a largura da tela */
-    flex-shrink: 0;
-    gap: var(--space-24); /* Espaçamento horizontal entre as logos */
-    padding-right: var(--space-16); /* Evita o "pulo" visual no reset do loop */
-    
-    /* Chama a animação contínua (25 segundos por volta, linear e infinita) */
-    animation: ticker-scroll 25s linear infinite;
-  }
-
-  /* Pausa o carrossel quando o usuário passa o mouse em qualquer parte da esteira */
-  .logo-strip__ticker:hover .logo-strip__track {
-    animation-play-state: paused;
-  }
-
-  /* 5. Wrapper de cada Imagem/Logo */
-  .logo-strip__item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  /* 6. Tratamento Visual das Imagens (Modo Claro Padrão) */
-  .logo-strip__item img {
-    height: 32px; /* Altura fixa para manter a consistência visual do grid */
-    width: auto;  /* Mantém a proporção nativa de cada marca */
-    
-    /* Deixa as marcas discretas e integradas ao layout */
-    opacity: 0.5;
-    filter: grayscale(100%); 
-    
-    /* Transição suave para quando o usuário interagir */
-    transition: 
-      opacity var(--duration-normal) var(--ease-out), 
-      filter var(--duration-normal) var(--ease-out);
-  }
-
-  /* Micro-interação: Traz cor e destaque para as logos ao passar o mouse */
-  .logo-strip__ticker:hover .logo-strip__item img {
-    opacity: 1;
-    filter: grayscale(0%);
-  }
-
-  /* ==========================================================================
-    VARIAÇÃO: SUPORTE AO MODO ESCURO
-    ========================================================================== */
-  [data-theme="dark"] .logo-strip__item img {
-    /* Se as suas logos forem escuras, este filtro as transforma em branco nativamente */
-    filter: brightness(0) invert(1); 
-    opacity: 0.4;
-  }
-
-  [data-theme="dark"] .logo-strip__ticker:hover .logo-strip__item img {
-    filter: brightness(0) invert(1); /* Mantém branca, mas aumenta a opacidade */
-    opacity: 0.85;
-  }
-
-/* ==========================================================================
-   KEYFRAMES — Aceleração por Hardware (GPU)
-   ========================================================================== */
-@keyframes ticker-scroll {
-  0% {
-    /* translate3d força o navegador a usar a GPU, garantindo suavidade máxima (60fps) */
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    /* Move exatamente a largura de um bloco completo antes de reiniciar o loop */
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-  /* =======================================================
-    KEYFRAMES — O Movimento Contínuo
-    ======================================================= */
-  @keyframes ticker-scroll {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-100%, 0, 0); /* Move exatamente o tamanho de um bloco completo */
-  }
-  }
-  
-  /* ----------------------------------------------------------
-   CARDS — Case Studies
-   ---------------------------------------------------------- */
 .case-card {
   position: relative;
   background-color: var(--color-bg-alt);
@@ -442,14 +153,14 @@
   /*transform: translateY(-2px); */
 }
 
-/* NOVIDADE: Dá o respiro correto para os textos internos do card em destaque no mobile */
+/* Inner text column — consistent vertical rhythm */
 .case-card__content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6); /* Aplica o espaçamento idêntico e consistente do sistema */
+  gap: var(--space-6);
 }
 
-/* Meta — empresa / ano */
+/* Company / year meta row */
 .case-card__meta {
   display: flex;
   align-items: center;
@@ -469,7 +180,6 @@
   font-size: var(--fs-label);
 }
 
-/* Título */
 .case-card__title {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
@@ -479,7 +189,6 @@
   color: var(--color-text-1);
 }
 
-/* Lead */
 .case-card__lead {
   font-family: var(--font-body);
   font-size: var(--fs-body);
@@ -487,14 +196,12 @@
   color: var(--color-text-2);
 }
 
-/* Tags */
 .case-card__tags {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
 }
 
-/* Métricas */
 .case-card__metrics {
   display: flex;
   flex-wrap: wrap;
@@ -525,16 +232,14 @@
   line-height: 1.4;
 }
 
-/* Footer do card — Mobile */
+/* Mobile: stack vertically, button fills full width */
 .case-card__footer {
   display: flex;
-  flex-direction: column; 
-  gap: var(--space-4);    
+  flex-direction: column;
+  gap: var(--space-4);
   align-items: stretch;
   width: 100%;
 }
-
-/* Força o botão a ocupar a largura total no mobile */
 .case-card__footer .btn {
   width: 100%;
   text-align: center;
@@ -555,53 +260,39 @@
   height: 12px;
 }
 
-/* Case thumbnail container — Mobile */
+/* Thumbnail container */
 .case-card__visual {
   width: 100%;
   height: auto;
   border-radius: var(--radius-md);
   overflow: hidden;
-  background-color: var(--color-bg-alt); 
+  background-color: var(--color-bg-alt);
   position: relative;
 }
 
-/* Comportamento das imagens personalizadas (Light e Dark) */
 .case-card__img--light,
 .case-card__img--dark {
   width: 100%;
   height: 100%;
-  object-fit: cover; 
-  object-position: center; 
-  transition: transform var(--duration-normal) var(--ease-out); 
+  object-fit: cover;
+  object-position: center;
+  transition: transform var(--duration-normal) var(--ease-out);
 }
 
-/* Efeito Micro-interação: Zoom sutil ao passar o mouse */
+/* Subtle zoom micro-interaction on hover */
 .case-card__visual:hover .case-card__img--light,
 .case-card__visual:hover .case-card__img--dark {
   transform: scale(1.04);
 }
 
-/* =======================================================
-   REGRAS DE EXIBIÇÃO POR TEMA (Padrão: Modo Claro)
-   ======================================================= */
-.case-card__img--light { 
-  display: block !important; 
-}
-.case-card__img--dark { 
-  display: none !important; 
-}
+/* Image visibility — light mode default */
+.case-card__img--light { display: block !important; }
+.case-card__img--dark  { display: none  !important; }
 
-/* Quando o data-theme="dark" estiver ativo no site */
-[data-theme="dark"] .case-card__img--light { 
-  display: none !important; 
-}
-[data-theme="dark"] .case-card__img--dark { 
-  display: block !important; 
-}
+[data-theme="dark"] .case-card__img--light { display: none  !important; }
+[data-theme="dark"] .case-card__img--dark  { display: block !important; }
 
-/* ----------------------------------------------------------
-   MÍDIA QUERY — Layout Responsivo Desktop
-   ---------------------------------------------------------- */
+/* Desktop: featured card becomes a side-by-side row */
 @media (min-width: 768px) {
   .case-card--featured {
     flex-direction: row;
@@ -619,15 +310,15 @@
   .case-card--featured .case-card__visual {
     flex-shrink: 0;
     width: 320px;
-    height: auto; 
-    aspect-ratio: auto; /* Desativa a proporção do mobile no desktop */
+    height: auto;
+    aspect-ratio: auto; /* disables the mobile aspect-ratio on desktop */
   }
 
   .case-card--featured .case-card__footer {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: auto; /* Empurra o rodapé para a base do card no desktop */
+    margin-top: auto; /* anchors footer to the bottom of the content column */
     width: fit-content;
   }
 
@@ -735,4 +426,92 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   color: var(--color-text-3);
+}
+
+/* ----------------------------------------------------------
+   LOGO STRIP — Infinite ticker carousel
+   ---------------------------------------------------------- */
+
+/* Outer container — clips the scrolling track on both sides */
+.logo-strip {
+  width: 100%;
+  overflow: hidden;
+  padding: var(--space-12) 0;
+}
+
+.logo-strip__label {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-6);
+}
+
+/* Ticker tunnel — fade-out mask softens both edges */
+.logo-strip__ticker {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  user-select: none;
+  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+/* Scrolling track — each clone fills one full viewport width before looping */
+.logo-strip__track {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-width: 100%;
+  flex-shrink: 0;
+  gap: var(--space-16);
+  padding-right: var(--space-16); /* prevents the visible jump at loop reset */
+  animation: ticker-scroll 25s linear infinite;
+}
+
+/* Pause animation on hover */
+.logo-strip__ticker:hover .logo-strip__track {
+  animation-play-state: paused;
+}
+
+.logo-strip__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Logos: desaturated and dimmed by default for visual restraint */
+.logo-strip__item img {
+  height: 32px;
+  width: auto;
+  opacity: 0.5;
+  filter: grayscale(100%);
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    filter  var(--duration-normal) var(--ease-out);
+}
+
+/* Reveal full color on hover */
+.logo-strip__ticker:hover .logo-strip__item img {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* Dark mode: invert dark logos to white */
+[data-theme="dark"] .logo-strip__item img {
+  filter: brightness(0) invert(1);
+  opacity: 0.4;
+}
+[data-theme="dark"] .logo-strip__ticker:hover .logo-strip__item img {
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+}
+
+/* translate3d forces GPU compositing for smooth 60fps scroll */
+@keyframes ticker-scroll {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
 }

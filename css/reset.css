@@ -1,7 +1,7 @@
 /* ============================================================
    HOPE DESIGN SYSTEM — reset.css
-   Versão 1.4 · maio de 2026
-   Depende de: tokens.css (carregado antes)
+   v1.4 · May 2026
+   Requires: tokens.css (loaded first)
    ============================================================ */
 
 /* ----------------------------------------------------------
@@ -36,7 +36,7 @@ body {
 }
 
 /* ----------------------------------------------------------
-   ELEMENTOS BASE
+   BASE ELEMENTS
    ---------------------------------------------------------- */
 img, svg, video, canvas, audio, iframe, embed, object {
   display: block;
@@ -84,10 +84,10 @@ h1, h2, h3, h4, h5, h6 {
 p { max-width: 70ch; }
 
 /* ----------------------------------------------------------
-   ACESSIBILIDADE
+   ACCESSIBILITY
    ---------------------------------------------------------- */
 
-/* Skip link — visível apenas no foco */
+/* Skip link — visible on focus only */
 .skip-link {
   position: absolute;
   top: -100%;
@@ -107,7 +107,7 @@ p { max-width: 70ch; }
   top: var(--space-4);
 }
 
-/* Visually hidden — acessível a leitores de tela */
+/* Visually hidden — accessible to screen readers */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -121,7 +121,7 @@ p { max-width: 70ch; }
 }
 
 /* ----------------------------------------------------------
-   CLASSES UTILITÁRIAS TIPOGRÁFICAS
+   TYPOGRAPHY UTILITIES
    ---------------------------------------------------------- */
 .text-display {
   font-family: var(--font-display);
@@ -180,7 +180,7 @@ p { max-width: 70ch; }
   font-size: var(--fs-body-sm);
 }
 
-/* Cores de texto */
+/* Text colors */
 .text-primary   { color: var(--color-text-1); }
 .text-secondary { color: var(--color-text-2); }
 .text-tertiary  { color: var(--color-text-3); }
@@ -188,7 +188,7 @@ p { max-width: 70ch; }
 .text-ancora    { color: var(--color-ancora); }
 
 /* ----------------------------------------------------------
-   ANIMAÇÕES DE ENTRADA
+   ENTRANCE ANIMATIONS
    ---------------------------------------------------------- */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }

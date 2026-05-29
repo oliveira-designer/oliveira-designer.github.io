@@ -1,14 +1,14 @@
 /* ============================================================
    HOPE DESIGN SYSTEM — layout.css
-   Versão 1.4 · maio de 2026
-   Depende de: tokens.css, reset.css, components.css
+   v1.4 · May 2026
+   Requires: tokens.css, reset.css, components.css (loaded first)
    ============================================================ */
 
 @import "tailwindcss";
 @theme {
   --animate-*: initial;
 }
-/* Esta é a linha mágica oficial do Tailwind v4 para ler o data-theme */
+/* Tailwind v4 custom variant — reads data-theme attribute for dark mode */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ----------------------------------------------------------
@@ -46,7 +46,7 @@
   gap: var(--space-6);
 }
 
-/* Logo — estilização do container */
+/* Logo container */
 .nav__logo {
   display: flex;
   align-items: center;
@@ -58,16 +58,16 @@
   opacity: 0.7; 
 }
 
-/* Define a altura das logos sem interferir no 'hidden' do Tailwind */
+/* Fixed height without fighting Tailwind's `hidden` utility */
 .nav__logo img { 
   height: 32px !important; 
   width: auto !important; 
 }
 
-/* =======================================================
-   LÓGICA DE EXIBIÇÃO (MODO CLARO / DEFAULT)
-   ======================================================= */
-/* Por padrão, mostra a logo clara e esconde a escura */
+/* ----------------------------------------------------------
+   LOGO VISIBILITY — Light mode (default)
+   ---------------------------------------------------------- */
+/* Show light logo, hide dark logo by default */
 .nav__logo-light { 
   display: block !important; 
 }
@@ -75,10 +75,10 @@
   display: none !important; 
 }
 
-/* =======================================================
-   LÓGICA DE EXIBIÇÃO (MODO ESCURO - data-theme="dark")
-   ======================================================= */
-/* Quando o tema escuro está ativo, inverte a exibição */
+/* ----------------------------------------------------------
+   LOGO VISIBILITY — Dark mode
+   ---------------------------------------------------------- */
+/* When dark theme is active, swap logo visibility */
 [data-theme="dark"] .nav__logo-light { 
   display: none !important; 
 }
@@ -86,15 +86,15 @@
   display: block !important; 
 }
 
-/* Wrapper dos controles à direita — links + toggle + hamburger */
+/* Right-side controls wrapper: nav links + theme toggle + hamburger */
 .nav__controls {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  margin-left: auto;  /* empurra tudo para a direita */
+  margin-left: auto;  /* pushes controls to the right */
 }
 
-/* Links de navegação — só visíveis no desktop */
+/* Nav links — desktop only */
 .nav__links {
   display: none;
   align-items: center;
@@ -116,7 +116,7 @@
 .nav__link:hover    { color: var(--color-text-1); }
 .nav__link--active  { color: var(--color-text-1); font-weight: 600; }
 
-/* Theme toggle — único, visível em todos os tamanhos */
+/* Theme toggle — shown at all breakpoints */
 .nav__theme-toggle {
   display: flex;
   align-items: center;
@@ -135,7 +135,7 @@
 }
 .nav__theme-toggle svg { width: 18px; height: 18px; }
 
-/* Hambúrguer — só visível no mobile */
+/* Hamburger — mobile only */
 .nav__hamburger {
   display: flex;
   align-items: center;
@@ -157,7 +157,7 @@
   .nav__hamburger { display: none; }
 }
 
-/* Menu drawer mobile */
+/* Mobile menu drawer */
 .nav__mobile-menu {
   display: none;
   flex-direction: column;
@@ -197,7 +197,7 @@
 }
 
 /* ----------------------------------------------------------
-   SEÇÕES
+   SECTIONS
    ---------------------------------------------------------- */
 .section {
   padding: var(--space-20) 0;
@@ -230,47 +230,44 @@
    HERO
    ---------------------------------------------------------- */
 .hero {
-  /* Mantém o padding vertical que você já definiu */
   padding: var(--space-20) 0 var(--space-16);
 
   display: flex;
-  flex-direction: column; /* Alinha o fluxo verticalmente */
-  justify-content: center; /* Centraliza verticalmente o conteúdo na tela */
-  align-items: center;     /* Centraliza o container horizontalmente na tela */
-  text-align: left;      /* Centraliza todas as linhas de texto, overline e headline */
-  
-  /* Garante o posicionamento correto caso use elementos absolutos no fundo */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+
+  /* stacking context for absolute-positioned background elements */
   position: relative;
   width: 100%;
 
-  /* Faz o Hero ocupar no mínimo 100% da altura da janela de visualização do usuário */
-  min-height: 100dvh; /* 'dvh' evita problemas com a barra de navegação do Safari/Chrome no mobile */
-  
-  /* Borda inferior cruzando a tela de ponta a ponta */
-  border-bottom: var(--border-normal); 
-  
-  /* Imagem de Fundo delimitada a esta seção */
-  background-image: url('../images/Desktop\ light/golden_morning_v2_desktop.png'); /* Substitua pelo caminho da sua imagem */
+  /* dvh avoids clipping by the mobile browser toolbar */
+  min-height: 100dvh;
+
+  border-bottom: var(--border-normal);
+
+  background-image: url('../images/Desktop\ light/golden_morning_v2_desktop.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
 }
 
-/* Suporte ao Modo Escuro: evita que o fundo estoure o contraste do texto */
+/* Dark mode background image */
 [data-theme="dark"] .hero {
-  background-image: url('../images/Desktop\ dark/desktop_bg_3.png'); /* Uma versão escura ou sutil */
-  /* Opcional: se quiser usar a mesma imagem e apenas escurecer o fundo, descomente as duas linhas abaixo: */
-  /* background-blend-mode: multiply; */
-  /* background-color: rgba(0, 0, 0, 0.4); */
+  background-image: url('../images/Desktop\ dark/desktop_bg_3.png');
+  /* Optional: darken with the same image instead of swapping:
+  background-blend-mode: multiply;
+  background-color: rgba(0, 0, 0, 0.4); */
 }
 
 @media (max-width: 767px) {
-  /* Responsivo: Mobile (Modo Claro) */
+  /* Mobile — light mode */
   .hero {
-    background-image: url('../images/Mobile\ light/mobile_dedicated_v4.png'); 
+    background-image: url('../images/Mobile\ light/mobile_dedicated_v4.png');
   }
 
-  /* Responsivo: Mobile (Modo Escuro) */
+  /* Mobile — dark mode */
   [data-theme="dark"] .hero {
     background-image: url('../images/Mobile\ dark/dark_solar_v3_mobile.png');
   }
@@ -322,118 +319,27 @@
   gap: var(--space-4);
 }
 
-/* ==========================================================================
-   LOGO STRIP TICKER — Infinite Carrousel (Colado no Hero)
-   ========================================================================== */
+/* ----------------------------------------------------------
+   LOGO STRIP — Section-specific spacing overrides
+   Base component styles live in components.css
+   ---------------------------------------------------------- */
 
-   .logo-strip {
-    width: 100%;
-    overflow: hidden; /* Mascara o conteúdo nas bordas laterais */
-    
-    /* Ajuste de proximidade: colamos o topo no hero e mantemos o respiro embaixo */
-    padding-top: var(--space-2); 
-    padding-bottom: var(--space-14); 
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  
-  .logo-strip__label {
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-text-3);
-    margin-bottom: var(--space-6);
-  }
-  
-  .logo-strip__ticker {
-    display: flex;
-    overflow: hidden;
-    width: 100%;
-    user-select: none;
-    
-    /* Gradiente suave nas pontas da tela */
-    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-  }
-  
-  .logo-strip__track {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    min-width: 100%;
-    flex-shrink: 0;
-    gap: var(--space-16);
-    padding-right: var(--space-16);
-    animation: ticker-scroll 25s linear infinite;
-  }
-  
-  .logo-strip__ticker:hover .logo-strip__track {
-    animation-play-state: paused;
-  }
-  
-  .logo-strip__item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  
-  .logo-strip__item img {
-    height: 32px;
-    width: auto;
-    opacity: 0.5;
-    filter: grayscale(100%);
-    transition: opacity var(--duration-normal) var(--ease-out), filter var(--duration-normal) var(--ease-out);
-  }
-  
-  .logo-strip__ticker:hover .logo-strip__item img {
-    opacity: 1;
-    filter: grayscale(0%);
-  }
-  
-  /* Suporte ao Modo Escuro */
-  [data-theme="dark"] .logo-strip__item img {
-    filter: brightness(0) invert(1);
-    opacity: 0.4;
-  }
-  
-  [data-theme="dark"] .logo-strip__ticker:hover .logo-strip__item img {
-    filter: brightness(0) invert(1);
-    opacity: 0.85;
-  }
-  
-  @keyframes ticker-scroll {
-    0% { transform: translate3d(0, 0, 0); }
-    100% { transform: translate3d(-100%, 0, 0); }
-  }
-
-/* ==========================================================================
-  AJUSTE DE PROXIMIDADE DO TICKER (COMPANIES)
-  ========================================================================== */
-
-/* 1. Neutraliza os paddings globais de 80px da classe .section apenas nesta id */
+/* Strip out the default .section padding from the companies ticker */
 #companies {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
 
-/* 2. Controla o respiro interno do ticker com precisão */
+/* Pin the ticker directly below the hero, comfortable space below */
 #companies .logo-strip {
-  /* Remove qualquer espaço no topo para colar na linha/imagem do Hero */
-  padding-top: 0; 
-  
-  /* Mantém um respiro confortável em relação à seção de Case Studies abaixo */
-  padding-bottom: var(--space-12); 
-  
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-12);
   margin-top: 0;
   margin-bottom: 0;
 }
 
-
 /* ----------------------------------------------------------
-   GRIDS DE CONTEÚDO
+   CONTENT GRIDS
    ---------------------------------------------------------- */
 
 /* Cases */
@@ -443,7 +349,7 @@
   gap: var(--space-6);
 }
 @media (min-width: 768px) {
-  .cases-grid { grid-template-columns: repeat(2, 1fr); }
+  .cases-grid { grid-template-columns: repeat(1, 1fr); }
   .cases-grid .case-card:first-child { grid-column: 1 / -1; }
 }
 
@@ -503,16 +409,16 @@
 
 /* ----------------------------------------------------------
    FOOTER
-   Sempre escuro — fixo em Abismo (#1A1A2E) nos dois modos.
-   No light mode: borda superior para separação do body branco.
-   No dark mode: margem de contraste via borda top sutil.
+   Always dark — fixed to Abismo (#1A1A2E) in both modes.
+   Light mode: top border separates it from the white body.
+   Dark mode: subtle top border maintains contrast margin.
    ---------------------------------------------------------- */
 .site-footer {
   background-color: #1A1A2E;
   color: #FFFFFF;
   padding: var(--space-16) 0;
   margin-top: var(--space-20);
-  border-top: 3px solid #F5C842; /* acento Solar — âncora visual nos dois modos */
+  border-top: 3px solid #F5C842; /* Solar accent — visual anchor in both modes */
 }
 
 .footer__inner {
@@ -543,7 +449,7 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.75);  /* WCAG AA: 11.5:1 */
+  color: rgba(255, 255, 255, 0.75);  /* WCAG AA — contrast 11.5:1 */
   transition: color var(--duration-normal) var(--ease-out);
 }
 .footer__link:hover { color: #FFFFFF; }
@@ -559,7 +465,7 @@
   font-size: var(--fs-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);  /* WCAG AA: 9.4:1 */
+  color: rgba(255, 255, 255, 0.7);  /* WCAG AA — contrast 9.4:1 */
 }
 .footer__email {
   font-family: var(--font-mono);
@@ -584,5 +490,5 @@
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.65);  /* WCAG AA: 7.5:1 */
+  color: rgba(255, 255, 255, 0.65);  /* WCAG AA — contrast 7.5:1 */
 }
