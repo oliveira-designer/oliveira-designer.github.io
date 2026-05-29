@@ -312,6 +312,60 @@
   gap: var(--space-4);
 }
 
+/* About page — text + portrait side by side */
+.hero--about {
+  padding: var(--space-24) 0 var(--space-16);
+  align-items: stretch;
+}
+
+.hero--about .hero__body {
+  margin-bottom: 0;
+}
+
+.hero__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: center;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .hero__layout {
+    grid-template-columns: 1fr minmax(240px, 340px);
+    gap: var(--space-12);
+  }
+}
+
+.hero__content {
+  min-width: 0;
+}
+
+.hero__portrait {
+  margin: 0;
+  width: 100%;
+  max-width: 340px;
+  justify-self: center;
+}
+
+@media (min-width: 768px) {
+  .hero__portrait {
+    justify-self: end;
+  }
+}
+
+.hero__portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: var(--radius-lg);
+  border: var(--border-normal);
+  box-shadow: var(--shadow-lg);
+}
+
 /* ----------------------------------------------------------
    LOGO STRIP — Section-specific spacing overrides
    Base component styles live in components.css
@@ -356,13 +410,88 @@
 @media (min-width: 1024px) { .skills-grid { grid-template-columns: repeat(3, 1fr); } }
 
 /* Testimonials */
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-6);
+.testimonials-carousel {
+  position: relative;
+  overflow: hidden;
 }
-@media (min-width: 768px) {
-  .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+
+.testimonials-track {
+  display: flex;
+  transition: transform 0.4s var(--ease-out);
+  will-change: transform;
+}
+
+.testimonials-track .testimonial-card {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.testimonials-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.testimonials-dots {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.testimonials-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-border);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
+}
+
+.testimonials-dot.is-active {
+  background-color: var(--color-ancora);
+  transform: scale(1.35);
+}
+
+[data-theme="dark"] .testimonials-dot.is-active {
+  background-color: var(--color-solar);
+}
+
+.testimonials-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: var(--border-normal);
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-1);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color var(--duration-normal) var(--ease-out),
+              color var(--duration-normal) var(--ease-out),
+              border-color var(--duration-normal) var(--ease-out);
+}
+
+.testimonials-btn:hover:not(:disabled) {
+  background-color: var(--color-ancora);
+  border-color: var(--color-ancora);
+  color: #fff;
+}
+
+[data-theme="dark"] .testimonials-btn:hover:not(:disabled) {
+  background-color: var(--color-solar);
+  border-color: var(--color-solar);
+  color: var(--color-bg);
+}
+
+.testimonials-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 /* ----------------------------------------------------------
@@ -503,4 +632,212 @@
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.65);
   white-space: nowrap;
+}
+
+/* ----------------------------------------------------------
+   CASE STUDY — Hero
+   ---------------------------------------------------------- */
+.case-hero {
+  padding: var(--space-20) 0 var(--space-16);
+  border-bottom: var(--border-normal);
+}
+
+.case-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .case-hero__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+  }
+}
+
+.case-hero__overline {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-4);
+}
+
+.case-hero__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--color-text-1);
+  margin-bottom: var(--space-4);
+}
+
+.case-hero__subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.7;
+  color: var(--color-text-2);
+  margin-bottom: var(--space-8);
+}
+
+.case-hero__tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.case-hero__meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.case-hero__meta > div {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: var(--border-thin);
+  align-items: baseline;
+}
+
+.case-hero__meta > div:first-child {
+  border-top: var(--border-thin);
+}
+
+.case-hero__meta dt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-3);
+}
+
+.case-hero__meta dd {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+}
+
+.case-hero__visual {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: var(--border-thin);
+  background-color: var(--color-bg-alt);
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-hero__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ----------------------------------------------------------
+   CASE STUDY — Body layout
+   ---------------------------------------------------------- */
+.case-body {
+  padding: var(--space-16) 0 var(--space-20);
+}
+
+.case-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .case-layout {
+    grid-template-columns: 220px 1fr;
+  }
+}
+
+/* ----------------------------------------------------------
+   CASE STUDY — Sidebar TOC
+   ---------------------------------------------------------- */
+/* Hidden on mobile — the in-page sections are self-navigable */
+.case-toc {
+  display: none;
+  padding: var(--space-5);
+  border: var(--border-thin);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-alt);
+}
+
+@media (min-width: 1024px) {
+  .case-sidebar {
+    position: sticky;
+    top: calc(56px + var(--space-8));
+  }
+
+  .case-toc {
+    display: block;
+  }
+}
+
+.case-toc__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-4);
+}
+
+.case-toc__list {
+  list-style: none;
+  counter-reset: toc-counter;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.case-toc__item {
+  counter-increment: toc-counter;
+}
+
+.case-toc__link {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+
+.case-toc__link::before {
+  content: counter(toc-counter, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--color-text-3);
+  flex-shrink: 0;
+}
+
+.case-toc__link:hover {
+  color: var(--color-text-1);
+  background-color: var(--color-bg);
+}
+
+/* ----------------------------------------------------------
+   CASE STUDY — Content column
+   ---------------------------------------------------------- */
+.case-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* prevent grid blowout */
 }

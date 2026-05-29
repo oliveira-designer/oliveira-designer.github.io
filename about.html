@@ -32,7 +32,7 @@
     <div class="container">
       <nav class="nav reveal reveal--from-top" data-reveal-on-load data-reveal-delay="120" role="navigation" aria-label="Main navigation">
 
-        <a href="#home" class="nav__logo" aria-label="Renan Moura — Home">
+        <a href="index.html" class="nav__logo" aria-label="Renan Moura — Home">
           <img src="logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
           <img src="logos/logo-dark-mode.svg"  alt="Renan Moura" class="nav__logo-dark"  />
         </a>
@@ -105,18 +105,30 @@
   <main id="main">
 
     <!-- PAGE HEADER -->
-    <section class="hero" aria-labelledby="about-headline">
+    <section class="hero hero--about" aria-labelledby="about-headline">
       <div class="container">
-        <div class="reveal-group" data-reveal-on-load data-reveal-delay="280">
-          <span class="hero__overline reveal-item">About me</span>
-          <h1 class="hero__headline reveal-item" id="about-headline">
-            12 years of craft,<br>
-            context, &amp; <mark>impact.</mark>
-          </h1>
-          <p class="hero__body reveal-item">
-            Senior Product Designer based in Brazil. I've spent over a decade turning ambiguous briefs
-            into shipped interfaces — across fintech, energy, SaaS, and loyalty platforms.
-          </p>
+        <div class="hero__layout reveal-group" data-reveal-on-load data-reveal-delay="280">
+          <div class="hero__content">
+            <span class="hero__overline reveal-item">About me</span>
+            <h1 class="hero__headline reveal-item" id="about-headline">
+              12 years of craft,<br>
+              context, &amp; <mark>impact.</mark>
+            </h1>
+            <p class="hero__body reveal-item">
+              Senior Product Designer based in Brazil. I've spent over a decade turning ambiguous briefs
+              into shipped interfaces — across fintech, energy, SaaS, and loyalty platforms.
+            </p>
+          </div>
+          <figure class="hero__portrait reveal-item">
+            <img
+              src="images/about/renan-moura.png"
+              alt="Portrait of Renan Moura, Senior Product Designer"
+              width="640"
+              height="640"
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
         </div>
       </div>
     </section>
