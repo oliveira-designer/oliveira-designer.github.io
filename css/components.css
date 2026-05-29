@@ -73,6 +73,7 @@
 .btn--solar:hover {
   background-color: var(--color-madrugada);
   border-color: var(--color-madrugada);
+  color: var(--color-tinta);
 }
 
 /* Ghost */
