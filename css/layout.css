@@ -4,13 +4,6 @@
    Requires: tokens.css, reset.css, components.css (loaded first)
    ============================================================ */
 
-@import "tailwindcss";
-@theme {
-  --animate-*: initial;
-}
-/* Tailwind v4 custom variant — reads data-theme attribute for dark mode */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-
 /* ----------------------------------------------------------
    CONTAINER
    ---------------------------------------------------------- */

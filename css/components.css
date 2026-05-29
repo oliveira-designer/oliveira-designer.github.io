@@ -31,6 +31,16 @@
 .btn:focus-visible { box-shadow: var(--shadow-focus); }
 .btn:active        { transform: scale(0.98); }
 
+/* ----------------------------------------------------------
+   ICONS (Tabler-compatible)
+   ---------------------------------------------------------- */
+.icon {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  stroke: currentColor;
+}
+
 /* Primary */
 .btn--primary {
   background-color: var(--color-tinta);
@@ -344,9 +354,32 @@
 .skill-card:hover {
   border-color: var(--color-border-strong);
 }
+.skill-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.skill-card__icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-nuvem);
+  color: var(--color-ancora);
+  flex: 0 0 auto;
+}
+[data-theme="dark"] .skill-card__icon {
+  background-color: color-mix(in srgb, var(--color-solar) 18%, transparent);
+  color: var(--color-solar);
+}
+.skill-card__icon .icon {
+  width: 20px;
+  height: 20px;
+}
 .skill-card__title {
-  font-family: var(--font-mono);
-  font-size: var(--fs-body-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-md);
   font-weight: 700;
   color: var(--color-text-1);
   line-height: 1.4;

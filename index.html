@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/output.css">
+  <link rel="stylesheet" href="css/output.css" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/reset.css" />
   <link rel="stylesheet" href="css/components.css" />
@@ -57,21 +56,36 @@
 
           <!-- Toggle de tema único — visível nos dois tamanhos -->
           <button class="nav__theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+            <!-- Tabler: sun -->
             <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none">
-              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+              <path d="M3 12h1" />
+              <path d="M20 12h1" />
+              <path d="M12 3v1" />
+              <path d="M12 20v1" />
+              <path d="M5.6 5.6l.7 .7" />
+              <path d="M18.4 18.4l.7 .7" />
+              <path d="M5.6 18.4l.7 -.7" />
+              <path d="M18.4 5.6l.7 -.7" />
             </svg>
+            <!-- Tabler: moon -->
             <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
             </svg>
           </button>
 
           <!-- Hambúrguer — só visível no mobile -->
           <button class="nav__hamburger" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+            <!-- Tabler: menu-2 -->
             <svg id="iconBurger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+              <path d="M4 6l16 0" />
+              <path d="M4 12l16 0" />
+              <path d="M4 18l16 0" />
             </svg>
+            <!-- Tabler: x -->
             <svg id="iconClose" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              <path d="M18 6l-12 12" />
+              <path d="M6 6l12 12" />
             </svg>
           </button>
 
@@ -369,32 +383,93 @@
         <div class="skills-grid" role="list">
 
           <div class="skill-card" role="listitem">
-            <h3 class="skill-card__title">12+ Years of Experience</h3>
+            <div class="skill-card__header">
+              <span class="skill-card__icon" aria-hidden="true">
+                <!-- Tabler: briefcase -->
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 6a3 3 0 0 1 6 0v1" />
+                  <path d="M3 13c0 1.5 2.5 3 9 3s9 -1.5 9 -3" />
+                  <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                </svg>
+              </span>
+              <h3 class="skill-card__title">12+ Years of Experience</h3>
+            </div>
             <p class="skill-card__body">From systems analysis to senior product design, I've worked across the full product lifecycle in B2B and consumer products, for companies in Brazil and the US.</p>
           </div>
 
           <div class="skill-card" role="listitem">
-            <h3 class="skill-card__title">Business-Driven Design Decisions</h3>
-            <p class="skill-card__body">I connect user needs to business outcomes. Every design decision I make is tied to a metric, a constraint, or a strategic goal — not just aesthetics.</p>
+            <div class="skill-card__header">
+              <span class="skill-card__icon" aria-hidden="true">
+                <!-- Tabler: target -->
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 12m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                  <path d="M12 12l6 -6" />
+                  <path d="M15 6h3v3" />
+                </svg>
+              </span>
+              <h3 class="skill-card__title">Business-Driven Design Decisions</h3>
+            </div>
+            <p class="skill-card__body">I connect user needs to business outcomes. Every design decision I make is tied to a metric, a constraint, or a strategic goal. Not just aesthetics.</p>
           </div>
 
           <div class="skill-card" role="listitem">
-            <h3 class="skill-card__title">Designer with Technical Foundation</h3>
+            <div class="skill-card__header">
+              <span class="skill-card__icon" aria-hidden="true">
+                <!-- Tabler: code -->
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 8l-4 4l4 4" />
+                  <path d="M17 8l4 4l-4 4" />
+                  <path d="M14 4l-4 16" />
+                </svg>
+              </span>
+              <h3 class="skill-card__title">Designer with Technical Foundation</h3>
+            </div>
             <p class="skill-card__body">My background in systems analysis and development means I communicate fluently with engineers, spot technical constraints early, and deliver specs that are actually buildable.</p>
           </div>
 
           <div class="skill-card" role="listitem">
-            <h3 class="skill-card__title">End-to-End Product Ownership</h3>
+            <div class="skill-card__header">
+              <span class="skill-card__icon" aria-hidden="true">
+                <!-- Tabler: layers -->
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2l9 5l-9 5l-9 -5l9 -5" />
+                  <path d="M3 12l9 5l9 -5" />
+                  <path d="M3 17l9 5l9 -5" />
+                </svg>
+              </span>
+              <h3 class="skill-card__title">End-to-End Product Ownership</h3>
+            </div>
             <p class="skill-card__body">From discovery to delivery, I've led the entire design process solo and within cross-functional teams, including research, flows, UI, and handoff.</p>
           </div>
 
           <div class="skill-card" role="listitem">
-            <h3 class="skill-card__title">Fast Context Absorption</h3>
-            <p class="skill-card__body">I've consistently ramped up quickly in complex domains — fintech, energy, health, SaaS — and delivered high-quality work without long onboarding curves.</p>
+            <div class="skill-card__header">
+              <span class="skill-card__icon" aria-hidden="true">
+                <!-- Tabler: bolt -->
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M13 3l-2 8h6l-8 10l2 -8h-6z" />
+                </svg>
+              </span>
+              <h3 class="skill-card__title">Fast Context Absorption</h3>
+            </div>
+            <p class="skill-card__body">I've consistently ramped up quickly in complex domains (fintech, energy, health, SaaS) and delivered high-quality work without long onboarding curves.</p>
           </div>
 
           <div class="skill-card" role="listitem">
-            <h3 class="skill-card__title">AI-Augmented Workflow</h3>
+            <div class="skill-card__header">
+              <span class="skill-card__icon" aria-hidden="true">
+                <!-- Tabler: robot -->
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 7h10a4 4 0 0 1 4 4v5a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-5a4 4 0 0 1 4 -4z" />
+                  <path d="M10 16h4" />
+                  <path d="M9 12v-1" />
+                  <path d="M15 12v-1" />
+                  <path d="M12 7v-3" />
+                </svg>
+              </span>
+              <h3 class="skill-card__title">AI-Augmented Workflow</h3>
+            </div>
             <p class="skill-card__body">I integrate AI tools into my daily design process to move faster, reduce rework, and deliver more value per sprint without sacrificing quality.</p>
           </div>
 
@@ -486,6 +561,8 @@
               <p class="about-block__text">I ramp up fast in complex domains, communicate clearly with cross-functional teams, and integrate AI tools into my daily workflow to deliver more value per sprint.</p>
             </div>
           </div>
+
+          <br>
 
           <div>
             <a href="about.html" class="btn btn--primary">Learn more about me</a>

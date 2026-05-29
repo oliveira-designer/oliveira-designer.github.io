@@ -1,0 +1,16 @@
+/* ============================================================
+   Tailwind entry — compile to css/output.css
+   npm run build:css  |  npm run dev
+   ============================================================ */
+
+@import "tailwindcss";
+
+@source "../index.html";
+@source "../about.html";
+
+@theme {
+  --animate-*: initial;
+}
+
+/* Reads data-theme attribute for dark mode utilities (dark:*) */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
