@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="css/reset.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/animations.css" />
 </head>
 
 
@@ -29,10 +30,10 @@
        ============================================================ -->
   <header class="site-header" id="home" role="banner">
     <div class="container">
-      <nav class="nav" role="navigation" aria-label="Main navigation">
+      <nav class="nav reveal reveal--from-top" data-reveal-on-load data-reveal-delay="120" role="navigation" aria-label="Main navigation">
 
         <!-- Logo: troca conforme tema -->
-        <a href="/" class="nav__logo" aria-label="Renan Moura – Home">
+        <a href="#home" class="nav__logo" aria-label="Renan Moura – Home">
           <!-- Imagem da logo para o Modo Claro -->
           <img src="logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
           
@@ -45,7 +46,7 @@
 
           <!-- Links de navegação — só visíveis no desktop -->
           <div class="nav__links">
-            <a href="#home" class="nav__link nav__link" aria-current="page">Home</a>
+            <a href="#home" class="nav__link nav__link nav__link--active" aria-current="page">Home</a>
             <a href="#work" class="nav__link nav__link" aria-current="page">Work</a>
             <a href="about.html" class="nav__link">About</a>
             <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" class="nav__link" target="_blank" rel="noopener noreferrer">
@@ -95,7 +96,7 @@
 
       <!-- Mobile menu drawer -->
       <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
-        <a href="#home"      class="nav__mobile-link">Home</a>
+        <a href="#home"      class="nav__mobile-link nav__link--active">Home</a>
         <a href="#work"      class="nav__mobile-link">Work</a>
         <a href="about.html" class="nav__mobile-link">About</a>
         <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
@@ -114,33 +115,33 @@
     <section class="hero" aria-labelledby="hero-headline">
       <div class="container">
 
-        <span class="hero__overline animate-in">Senior Product Designer · 12 years</span>
+        <div class="reveal-group" data-reveal-on-load data-reveal-delay="280">
+        <span class="hero__overline reveal-item">Senior Product Designer · 12 years</span>
 
-        <h1 class="hero__headline animate-in animate-in--delay-1" id="hero-headline">
+        <h1 class="hero__headline reveal-item" id="hero-headline">
           I absorb complex contexts.<br>
           I design decisions<br>
           that <mark>stick.</mark>
         </h1>
 
-        <p class="hero__body animate-in animate-in--delay-2">
+        <p class="hero__body reveal-item">
           12 years shipping B2B and consumer products across Brazil and the US.
           From Shell Box to New Relic. I turn ambiguous briefs into interfaces
           that move metrics.
         </p>
 
-        <div class="hero__actions animate-in animate-in--delay-3">
+        <div class="hero__actions reveal-item">
           <a href="#work" class="btn btn--primary">View case studies</a>
           <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--solar">Get in touch</a>
         </div>
-
-        
+        </div>
 
       </div>
     </section>
 
     <!-- COMPANIES -->
     <section class="section" id="companies">
-      <div class="logo-strip animate-in animate-in--delay-4">
+      <div class="logo-strip">
         
         <!-- <p class="logo-strip__label">Companies I've shipped for</p> -->
         
@@ -294,7 +295,7 @@
               </p>
           
               <div class="case-card__tags" role="list" aria-label="Disciplines">
-                <span class="badge badge--neutral" role="listitem">Internatl Tool</span>
+                <span class="badge badge--neutral" role="listitem">Internal Tool</span>
                 <span class="badge badge--neutral" role="listitem">B2B2C</span>
                 <span class="badge badge--neutral" role="listitem">Web UX</span>
               </div>
@@ -370,6 +371,10 @@
               <img src="images/case-thumbnails/sb-thumb-dark.png" alt="Shell Box Project Thumbnail" class="case-card__img--dark" loading="lazy" />
             </div>
           </article>
+
+        </div>
+      </div>
+    </section>
 
     <!-- SKILLS -->
     <section class="section" id="skills" aria-labelledby="skills-title">
@@ -476,11 +481,6 @@
         </div>
       </div>
     </section>
-          </article>
-
-        </div>
-      </div>
-    </section>
 
     <!-- TESTIMONIALS -->
     <section class="section" id="references" aria-labelledby="references-title">
@@ -507,7 +507,17 @@
               <div class="testimonial-card__avatar" aria-hidden="true">JB</div>
               <div>
                 <p class="testimonial-card__name">
-                  <a href="https://br.linkedin.com/in/jordacheb/pt" target="_blank" rel="noopener">Jordache Burmeister</a>
+                  <a href="https://br.linkedin.com/in/jordacheb/pt" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
+                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <path d="M8 11v5" />
+                      <path d="M8 8v.01" />
+                      <path d="M12 12v5" />
+                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
+                    </svg>
+                    Jordache Burmeister
+                    <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
+                  </a>
                 </p>
                 <p class="testimonial-card__role">Design System Specialist @ Raízen</p>
               </div>
@@ -526,7 +536,17 @@
               <div class="testimonial-card__avatar" aria-hidden="true">IM</div>
               <div>
                 <p class="testimonial-card__name">
-                  <a href="https://www.linkedin.com/in/izabellagouveiamaroni/" target="_blank" rel="noopener">Izabella Maroni</a>
+                  <a href="https://www.linkedin.com/in/izabellagouveiamaroni/" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
+                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <path d="M8 11v5" />
+                      <path d="M8 8v.01" />
+                      <path d="M12 12v5" />
+                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
+                    </svg>
+                    Izabella Maroni
+                    <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
+                  </a>
                 </p>
                 <p class="testimonial-card__role">Senior Product Designer @ Dotz</p>
               </div>
@@ -574,35 +594,34 @@
 
   </main>
 
-      </div>
-    </section>
-
-  </main>
-
   <!-- ============================================================
        FOOTER
        ============================================================ -->
   <footer class="site-footer" role="contentinfo">
     <div class="container">
 
-      <div class="footer__inner">
-        <div class="footer__left">
-          <p class="footer__tagline">Let's transform user experiences together</p>
-          <nav class="footer__links" aria-label="Footer navigation">
-            <a href="about.html" class="footer__link">About</a>
-            <a href="#work" class="footer__link">Work</a>
-            <a href="https://www.linkedin.com/in/rmouraoliv/" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
-            <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" target="_blank" rel="noopener" class="footer__link">Resume</a>
-          </nav>
-        </div>
-
-        <div class="footer__right">
-          <span class="footer__contact-label">Contact</span>
-          <a href="mailto:rmouraolivdesigner@gmail.com" class="footer__email">rmouraolivdesigner@gmail.com</a>
-        </div>
+      <div class="footer__connect reveal">
+          <h2 class="footer__heading">Let's connect</h2>
+          <p class="footer__lede">Open to product design roles, freelance projects, and conversations about complex B2B and consumer work.</p>
+          <div class="footer__actions">
+            <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--solar">Get in touch</a>
+            <a href="https://www.linkedin.com/in/rmouraoliv/" class="btn btn--secondary btn--footer" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+              <span class="visually-hidden">(opens in a new tab)</span>
+            </a>
+          </div>
       </div>
 
       <div class="footer__bottom">
+        <p class="footer__motto">
+          Made with
+          <span class="footer__heart" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false">
+              <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+            </svg>
+          </span>
+          by Renan Moura
+        </p>
         <span class="footer__copy">© 2026 Renan Moura</span>
       </div>
 
@@ -676,5 +695,6 @@
       }
     })();
   </script>
+  <script src="js/animations.js" defer></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="About Renan Moura — Senior Product Designer with 12 years shipping B2B and consumer products across Brazil and the US." />
-  <title>About — Renan Moura</title>
+  <title>Renan Moura | UI, UX & Product Design Portfolio</title>
 
   <link rel="icon" type="image/svg+xml" href="logos/logo-icon.svg" />
 
@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="css/reset.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/animations.css" />
 </head>
 
 <body>
@@ -29,9 +30,9 @@
        ============================================================ -->
   <header class="site-header" role="banner">
     <div class="container">
-      <nav class="nav" role="navigation" aria-label="Main navigation">
+      <nav class="nav reveal reveal--from-top" data-reveal-on-load data-reveal-delay="120" role="navigation" aria-label="Main navigation">
 
-        <a href="/" class="nav__logo" aria-label="Renan Moura — Home">
+        <a href="#home" class="nav__logo" aria-label="Renan Moura — Home">
           <img src="logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
           <img src="logos/logo-dark-mode.svg"  alt="Renan Moura" class="nav__logo-dark"  />
         </a>
@@ -39,6 +40,8 @@
         <div class="nav__controls">
 
           <div class="nav__links">
+            <a href="index.html#home" class="nav__link nav__link" aria-current="page">Home</a>
+
             <a href="index.html#work" class="nav__link">Work</a>
             <a href="about.html" class="nav__link nav__link--active" aria-current="page">About</a>
             <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" class="nav__link" target="_blank" rel="noopener noreferrer">
@@ -86,9 +89,10 @@
 
       <!-- Mobile menu drawer -->
       <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
-        <a href="index.html#work" class="nav__mobile-link">Work</a>
+        <a href="index.html#home"      class="nav__mobile-link">Home</a>
+        <a href="index.html#work" class="nav__mobile-link nav__link--active">Work</a>
         <a href="about.html"      class="nav__mobile-link nav__mobile-link--active">About</a>
-        <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
+        <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
         <a href="mailto:rmouraolivdesigner@gmail.com" class="nav__mobile-link">Contact</a>
       </div>
 
@@ -103,15 +107,17 @@
     <!-- PAGE HEADER -->
     <section class="hero" aria-labelledby="about-headline">
       <div class="container">
-        <span class="hero__overline animate-in">About me</span>
-        <h1 class="hero__headline animate-in animate-in--delay-1" id="about-headline">
-          12 years of craft,<br>
-          context, &amp; <mark>impact.</mark>
-        </h1>
-        <p class="hero__body animate-in animate-in--delay-2">
-          Senior Product Designer based in Brazil. I've spent over a decade turning ambiguous briefs
-          into shipped interfaces — across fintech, energy, SaaS, and loyalty platforms.
-        </p>
+        <div class="reveal-group" data-reveal-on-load data-reveal-delay="280">
+          <span class="hero__overline reveal-item">About me</span>
+          <h1 class="hero__headline reveal-item" id="about-headline">
+            12 years of craft,<br>
+            context, &amp; <mark>impact.</mark>
+          </h1>
+          <p class="hero__body reveal-item">
+            Senior Product Designer based in Brazil. I've spent over a decade turning ambiguous briefs
+            into shipped interfaces — across fintech, energy, SaaS, and loyalty platforms.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -261,24 +267,28 @@
   <footer class="site-footer" role="contentinfo">
     <div class="container">
 
-      <div class="footer__inner">
-        <div class="footer__left">
-          <p class="footer__tagline">Let's transform user experiences together</p>
-          <nav class="footer__links" aria-label="Footer navigation">
-            <a href="about.html" class="footer__link">About</a>
-            <a href="index.html#work" class="footer__link">Work</a>
-            <a href="https://www.linkedin.com/in/rmouraoliv/" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
-            <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" target="_blank" rel="noopener" class="footer__link">Resume</a>
-          </nav>
-        </div>
-
-        <div class="footer__right">
-          <span class="footer__contact-label">Contact</span>
-          <a href="mailto:rmouraolivdesigner@gmail.com" class="footer__email">rmouraolivdesigner@gmail.com</a>
-        </div>
+      <div class="footer__connect reveal">
+          <h2 class="footer__heading">Let's connect</h2>
+          <p class="footer__lede">Open to product design roles, freelance projects, and conversations about complex B2B and consumer work.</p>
+          <div class="footer__actions">
+            <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--solar">Contact me</a>
+            <a href="https://www.linkedin.com/in/rmouraoliv/" class="btn btn--secondary btn--footer" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+              <span class="visually-hidden">(opens in a new tab)</span>
+            </a>
+          </div>
       </div>
 
       <div class="footer__bottom">
+        <p class="footer__motto">
+          Made with
+          <span class="footer__heart" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false">
+              <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+            </svg>
+          </span>
+          by Renan Moura
+        </p>
         <span class="footer__copy">© 2026 Renan Moura</span>
       </div>
 
@@ -347,5 +357,6 @@
       }
     })();
   </script>
+  <script src="js/animations.js" defer></script>
 </body>
 </html>

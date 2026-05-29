@@ -448,13 +448,30 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   font-weight: 600;
-  color: var(--color-text-1);
 }
-.testimonial-card__name a {
-  color: inherit;
-}
-.testimonial-card__name a:hover {
+
+.testimonial-card__profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   color: var(--color-link);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-link) 40%, transparent);
+  text-underline-offset: 3px;
+  transition:
+    color                var(--duration-normal) var(--ease-out),
+    text-decoration-color var(--duration-normal) var(--ease-out);
+}
+
+.testimonial-card__profile-link:hover {
+  color: var(--color-link-hover);
+  text-decoration-color: var(--color-link-hover);
+}
+
+.testimonial-card__linkedin-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 .testimonial-card__role {
   font-family: var(--font-body);
