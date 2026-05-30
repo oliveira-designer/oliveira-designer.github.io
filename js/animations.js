@@ -68,9 +68,33 @@
     elements.forEach((el) => observer.observe(el));
   }
 
+  function initTextHighlights() {
+    const highlights = document.querySelectorAll('.text-highlight');
+    if (!highlights.length) return;
+
+    if (prefersReduced) {
+      highlights.forEach((el) => el.classList.add('is-active'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-active');
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    highlights.forEach((el) => observer.observe(el));
+  }
+
   function init() {
     initLoadReveals();
     initScrollReveals();
+    initTextHighlights();
   }
 
   // Expose init so external callers (e.g. auth gate) can replay animations

@@ -223,7 +223,7 @@
    HERO
    ---------------------------------------------------------- */
 .hero {
-  padding: var(--space-20) 0 var(--space-16);
+  padding: var(--space-20) 0;
 
   display: flex;
   flex-direction: column;
@@ -240,7 +240,7 @@
 
   border-bottom: var(--border-normal);
 
-  background-image: url('../images/Desktop\ light/golden_morning_v2_desktop.png');
+  background-image: url('../images/Desktop\ light/golden_morning_v3_desktop.jpg');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -248,7 +248,7 @@
 
 /* Dark mode background image */
 [data-theme="dark"] .hero {
-  background-image: url('../images/Desktop\ dark/desktop_bg_3.png');
+  background-image: url('../images/Desktop\ dark/desktop_bg_4.jpg');
   /* Optional: darken with the same image instead of swapping:
   background-blend-mode: multiply;
   background-color: rgba(0, 0, 0, 0.4); */
@@ -312,9 +312,22 @@
   gap: var(--space-4);
 }
 
+@media (max-width: 767px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* About page — text + portrait side by side */
 .hero--about {
-  padding: var(--space-24) 0 var(--space-16);
+  padding: var(--space-20) 0;
   align-items: stretch;
 }
 
@@ -327,10 +340,23 @@
   margin-top: var(--space-10);
 }
 
-/* On hero sections (image backgrounds) secondary button borders must be visible
-   regardless of theme. currentColor = --color-text-1 which is white in dark mode. */
+/* Hero glass buttons — frosted over the background illustration */
 .hero .btn--secondary {
-  border-color: color-mix(in srgb, currentColor 32%, transparent);
+  background: rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
+  border-color: color-mix(in srgb, currentColor 35%, transparent);
+}
+.hero .btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.52);
+  border-color: color-mix(in srgb, currentColor 55%, transparent);
+}
+
+[data-theme="dark"] .hero .btn--secondary {
+  background: rgba(0, 0, 0, 0.20);
+}
+[data-theme="dark"] .hero .btn--secondary:hover {
+  background: rgba(0, 0, 0, 0.36);
 }
 
 .hero__layout {
