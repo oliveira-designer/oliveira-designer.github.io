@@ -382,18 +382,50 @@
    Base component styles live in components.css
    ---------------------------------------------------------- */
 
-/* Strip out the default .section padding from the companies ticker */
+/* Social proof strip — between Work and Testimonials */
 #companies {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-8);
 }
 
-/* Pin the ticker directly below the hero, comfortable space below */
-#companies .logo-strip {
-  padding-top: var(--space-12);
-  padding-bottom: var(--space-12);
-  margin-top: 0;
-  margin-bottom: 0;
+.companies__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+}
+
+.companies__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+  line-height: 1.55;
+  flex: 0 0 auto;
+  width: clamp(120px, 18%, 180px);
+}
+
+.companies__row .logo-strip {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+}
+
+@media (max-width: 767px) {
+  .companies__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .companies__label {
+    width: auto;
+  }
+
+  .companies__row .logo-strip {
+    width: 100%;
+  }
 }
 
 /* ----------------------------------------------------------
@@ -420,89 +452,37 @@
 @media (min-width: 640px)  { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .skills-grid { grid-template-columns: repeat(3, 1fr); } }
 
-/* Testimonials */
-.testimonials-carousel {
-  position: relative;
+/* Testimonials — infinite horizontal ticker */
+.testimonials-ticker {
+  display: flex;
   overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
 .testimonials-track {
   display: flex;
-  transition: transform 0.4s var(--ease-out);
-  will-change: transform;
-}
-
-.testimonials-track .testimonial-card {
-  flex: 0 0 100%;
-  min-width: 0;
-}
-
-.testimonials-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-5);
-  margin-top: var(--space-6);
-}
-
-.testimonials-dots {
-  display: flex;
-  gap: var(--space-2);
-}
-
-.testimonials-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--color-border);
-  cursor: pointer;
-  padding: 0;
-  transition: background-color var(--duration-normal) var(--ease-out),
-              transform var(--duration-normal) var(--ease-out);
-}
-
-.testimonials-dot.is-active {
-  background-color: var(--color-ancora);
-  transform: scale(1.35);
-}
-
-[data-theme="dark"] .testimonials-dot.is-active {
-  background-color: var(--color-solar);
-}
-
-.testimonials-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: var(--border-normal);
-  background-color: var(--color-bg-alt);
-  color: var(--color-text-1);
-  cursor: pointer;
   flex-shrink: 0;
-  transition: background-color var(--duration-normal) var(--ease-out),
-              color var(--duration-normal) var(--ease-out),
-              border-color var(--duration-normal) var(--ease-out);
+  gap: var(--space-6);
+  padding-right: var(--space-6);
+  animation: testimonials-scroll 55s linear infinite;
 }
 
-.testimonials-btn:hover:not(:disabled) {
-  background-color: var(--color-ancora);
-  border-color: var(--color-ancora);
-  color: #fff;
+.testimonials-ticker:hover .testimonials-track {
+  animation-play-state: paused;
 }
 
-[data-theme="dark"] .testimonials-btn:hover:not(:disabled) {
-  background-color: var(--color-solar);
-  border-color: var(--color-solar);
-  color: var(--color-bg);
+.testimonials-ticker .testimonial-card {
+  width: 380px;
+  flex-shrink: 0;
+  margin-bottom: 0;
+  align-self: flex-start;
 }
 
-.testimonials-btn:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
+@keyframes testimonials-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-100%, 0, 0); }
 }
 
 /* ----------------------------------------------------------
@@ -643,6 +623,66 @@
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.65);
   white-space: nowrap;
+}
+
+/* ----------------------------------------------------------
+   ABOUT BRIDGE
+   ---------------------------------------------------------- */
+#references {
+  padding-bottom: var(--space-12);
+}
+
+.about-bridge {
+  padding: var(--space-12) 0;
+}
+
+.about-bridge__inner {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.about-bridge__eyebrow {
+  margin-bottom: 0;
+}
+
+.about-bridge__headline {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--color-text-1);
+}
+
+.about-bridge__body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--color-text-2);
+  line-height: 1.75;
+  max-width: 500px;
+}
+
+.about-bridge__cta {
+  margin-top: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.about-bridge__cta .icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.about-bridge__cta:hover .icon {
+  transform: translateX(4px);
 }
 
 /* ----------------------------------------------------------
@@ -1048,6 +1088,14 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   color: var(--color-text-2);
+  margin-top: var(--space-1);
+}
+
+.experience-item__highlight {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  line-height: 1.45;
   margin-top: var(--space-1);
 }
 

@@ -15,6 +15,7 @@
     '.about-snippet > div:last-child',
     '.footer__connect',
     '.case-section',
+    '.about-bridge__inner',
   ];
 
   function show(el) {
