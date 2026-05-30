@@ -1,0 +1,324 @@
+/* ============================================================
+   HOPE DESIGN SYSTEM — auth.css
+   NDA modal gate — load only on protected case study pages.
+   Load order: tokens.css → reset.css → components.css → auth.css
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   CONTENT LOCK — applied synchronously before first paint
+   Hides all page content while auth-gated is active.
+   The modal overlay (.auth-gate) is a sibling of these elements
+   so it is completely unaffected by these opacity rules.
+   ---------------------------------------------------------- */
+html.auth-gated {
+  overflow: hidden; /* prevent scroll while modal is up */
+}
+
+html.auth-gated .site-header,
+html.auth-gated main,
+html.auth-gated .site-footer,
+html.auth-gated .skip-link {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Smooth reveal when auth-gated is removed on correct password.
+   Only active on pages that load auth.css (protected pages only). */
+.site-header,
+main,
+.site-footer {
+  transition: opacity 0.45s var(--ease-out);
+}
+
+/* ----------------------------------------------------------
+   BACKDROP OVERLAY
+   Full-screen, sits above page content with glassmorphic blur.
+   ---------------------------------------------------------- */
+.auth-gate {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  box-sizing: border-box;
+
+  /* Semi-transparent dark overlay — works on both light and dark pages */
+  background-color: rgba(13, 13, 15, 0.52);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+
+  /* Entrance: fade-in the backdrop */
+  animation: auth-backdrop-in 0.25s var(--ease-out) both;
+}
+
+[data-theme="dark"] .auth-gate {
+  background-color: rgba(13, 13, 15, 0.68);
+}
+
+@keyframes auth-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ----------------------------------------------------------
+   MODAL CARD
+   ---------------------------------------------------------- */
+.auth-gate__card {
+  position: relative; /* anchor for the absolute X button */
+  width: 100%;
+  max-width: 480px;
+  border-radius: var(--radius-xl);
+  padding: var(--space-12) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  box-sizing: border-box;
+
+  /* Light mode: near-opaque white glass card */
+  background-color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 24px 64px rgba(13, 13, 15, 0.18),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+
+  /* Card entrance: slide up from below */
+  animation: auth-card-in 0.32s var(--ease-out) 0.05s both;
+}
+
+[data-theme="dark"] .auth-gate__card {
+  /* Dark mode: deep glass card */
+  background-color: rgba(28, 28, 48, 0.90);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.50),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+@keyframes auth-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ----------------------------------------------------------
+   CLOSE BUTTON — top-right of card
+   ---------------------------------------------------------- */
+.auth-gate__close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-3);
+  flex-shrink: 0;
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+.auth-gate__close:hover {
+  color: var(--color-text-1);
+  background-color: color-mix(in srgb, var(--color-text-1) 8%, transparent);
+}
+.auth-gate__close:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* ----------------------------------------------------------
+   HEADER — icon + title + subtitle
+   ---------------------------------------------------------- */
+.auth-gate__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.auth-gate__icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in srgb, var(--color-text-1) 7%, transparent);
+  color: var(--color-text-3);
+  border: var(--border-thin);
+  flex-shrink: 0;
+}
+
+.auth-gate__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-1);
+  margin: 0;
+}
+
+.auth-gate__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  color: var(--color-text-2);
+  margin: var(--space-2) 0 0;
+}
+
+.auth-gate__email {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-link) 40%, transparent);
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition:
+    color                 var(--duration-normal) var(--ease-out),
+    text-decoration-color var(--duration-normal) var(--ease-out);
+}
+.auth-gate__email:hover {
+  color: var(--color-link-hover);
+  text-decoration-color: var(--color-link-hover);
+}
+
+/* ----------------------------------------------------------
+   DIVIDER
+   ---------------------------------------------------------- */
+.auth-gate__divider {
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+/* ----------------------------------------------------------
+   FORM
+   ---------------------------------------------------------- */
+.auth-gate__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.auth-gate__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.auth-gate__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  color: var(--color-text-1);
+}
+
+/* ----------------------------------------------------------
+   INPUT + EYE TOGGLE
+   ---------------------------------------------------------- */
+.auth-gate__input-wrap {
+  position: relative;
+}
+
+.auth-gate__input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  padding: 12px 48px 12px var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  background-color: var(--color-bg);
+  color: var(--color-text-1);
+  box-sizing: border-box;
+  min-height: 44px;
+  transition:
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow   var(--duration-normal) var(--ease-out);
+}
+.auth-gate__input::placeholder {
+  color: var(--color-text-3);
+}
+.auth-gate__input:focus {
+  border-color: var(--color-ancora);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ancora) 15%, transparent);
+}
+[data-theme="dark"] .auth-gate__input:focus {
+  border-color: var(--color-solar);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-solar) 15%, transparent);
+}
+.auth-gate__input--error,
+.auth-gate__input--error:focus {
+  border-color: var(--color-error) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-error) 15%, transparent) !important;
+}
+
+.auth-gate__eye {
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: var(--color-text-3);
+  transition: color var(--duration-normal) var(--ease-out);
+}
+.auth-gate__eye:hover       { color: var(--color-text-2); }
+.auth-gate__eye:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-xs);
+}
+
+/* ----------------------------------------------------------
+   ERROR MESSAGE
+   ---------------------------------------------------------- */
+.auth-gate__error {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.4;
+  color: var(--color-error);
+  margin: 0;
+  min-height: 1.2em;
+}
+
+/* ----------------------------------------------------------
+   ACTIONS STACK — Unlock on top, Close below, both full-width
+   ---------------------------------------------------------- */
+.auth-gate__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.auth-gate__actions .btn {
+  width: 100%;
+}
+
+.auth-gate__submit {
+  gap: var(--space-2);
+}
+
+/* ----------------------------------------------------------
+   MODAL EXIT — fade out on unlock
+   ---------------------------------------------------------- */
+.auth-gate--exiting {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-in);
+}
+

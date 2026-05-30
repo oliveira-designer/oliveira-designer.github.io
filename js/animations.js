@@ -14,6 +14,7 @@
     '.logo-strip',
     '.about-snippet > div:last-child',
     '.footer__connect',
+    '.case-section',
   ];
 
   function show(el) {
@@ -70,6 +71,10 @@
     initLoadReveals();
     initScrollReveals();
   }
+
+  // Expose init so external callers (e.g. auth gate) can replay animations
+  window.HopeDS = window.HopeDS || {};
+  window.HopeDS.initAnimations = init;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

@@ -97,6 +97,19 @@
   background-color: var(--color-bg-alt);
 }
 
+/* Disabled state — applies to any variant */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-3);
+  border-color: var(--color-border);
+  opacity: 0.65;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
+}
+
 /* ----------------------------------------------------------
    BADGES
    ---------------------------------------------------------- */
@@ -138,6 +151,20 @@
 .badge--success {
   background-color: rgba(74, 159, 107, 0.12);
   color: var(--color-success);
+}
+
+.badge--draft {
+  background-color: var(--color-superficie);
+  color: var(--color-mudo);
+  border: var(--border-thin);
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+[data-theme="dark"] .badge--draft {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-3);
+  border-color: var(--color-border);
 }
 
 /* ----------------------------------------------------------
@@ -338,6 +365,33 @@
   }
 }
 
+/* Placeholder / Coming Soon variant */
+.case-card--placeholder {
+  background-color: var(--color-bg);
+  cursor: default;
+}
+.case-card--placeholder:hover {
+  border-color: var(--color-border);
+  box-shadow: none;
+}
+.case-card--placeholder .metric__value {
+  color: var(--color-text-3);
+}
+[data-theme="dark"] .case-card--placeholder .metric__value {
+  color: var(--color-text-3);
+}
+.case-card--placeholder .case-card__tags .badge {
+  opacity: 0.5;
+}
+.case-card--placeholder .case-card__visual {
+  opacity: 0.38;
+  filter: grayscale(35%);
+}
+.case-card--placeholder .case-card__visual:hover .case-card__img--light,
+.case-card--placeholder .case-card__visual:hover .case-card__img--dark {
+  transform: none;
+}
+
 /* ----------------------------------------------------------
    CARDS — Skills
    ---------------------------------------------------------- */
@@ -426,8 +480,8 @@
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  padding-top: var(--space-5);
-  border-top: var(--border-thin);
+  padding-bottom: var(--space-5);
+  border-bottom: var(--border-thin);
 }
 .testimonial-card__avatar {
   width: 40px;

@@ -322,6 +322,17 @@
   margin-bottom: 0;
 }
 
+/* Restore vertical breathing room between body text and action buttons */
+.hero--about .hero__actions {
+  margin-top: var(--space-10);
+}
+
+/* On hero sections (image backgrounds) secondary button borders must be visible
+   regardless of theme. currentColor = --color-text-1 which is white in dark mode. */
+.hero .btn--secondary {
+  border-color: color-mix(in srgb, currentColor 32%, transparent);
+}
+
 .hero__layout {
   display: grid;
   grid-template-columns: 1fr;
@@ -769,9 +780,19 @@
 .case-toc {
   display: none;
   padding: var(--space-5);
-  border: var(--border-thin);
-  border-radius: var(--radius-md);
+  border: var(--border-normal);
+  border-radius: var(--radius-lg);
   background-color: var(--color-bg-alt);
+  box-shadow: var(--shadow-sm);
+  transition:
+    background-color var(--duration-slower) var(--ease-out),
+    border-color     var(--duration-slower) var(--ease-out),
+    box-shadow       var(--duration-slower) var(--ease-out);
+}
+
+[data-theme="dark"] .case-toc {
+  box-shadow: none;
+  border-color: var(--color-border-strong);
 }
 
 @media (min-width: 1024px) {
@@ -791,7 +812,9 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--color-text-3);
-  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-3);
+  border-bottom: var(--border-thin);
 }
 
 .case-toc__list {
@@ -809,28 +832,64 @@
 .case-toc__link {
   display: flex;
   align-items: baseline;
-  gap: var(--space-3);
+  gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
+  line-height: 1.4;
   color: var(--color-text-2);
   transition:
     color            var(--duration-normal) var(--ease-out),
-    background-color var(--duration-normal) var(--ease-out);
+    background-color var(--duration-normal) var(--ease-out),
+    box-shadow       var(--duration-normal) var(--ease-out);
 }
 
+/* Section number — mono, muted by default, transitions to accent */
 .case-toc__link::before {
   content: counter(toc-counter, decimal-leading-zero);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   color: var(--color-text-3);
   flex-shrink: 0;
+  transition: color var(--duration-normal) var(--ease-out);
 }
 
+/* Hover — subtle accent tint + left indicator */
 .case-toc__link:hover {
   color: var(--color-text-1);
-  background-color: var(--color-bg);
+  background-color: color-mix(in srgb, var(--color-ancora) 8%, transparent);
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--color-ancora) 45%, transparent);
+}
+.case-toc__link:hover::before {
+  color: var(--color-ancora);
+}
+
+[data-theme="dark"] .case-toc__link:hover {
+  background-color: color-mix(in srgb, var(--color-solar) 10%, transparent);
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--color-solar) 45%, transparent);
+}
+[data-theme="dark"] .case-toc__link:hover::before {
+  color: var(--color-solar);
+}
+
+/* Active — full accent indicator, stronger bg, bold text */
+.case-toc__link.is-active {
+  color: var(--color-text-1);
+  font-weight: 600;
+  background-color: color-mix(in srgb, var(--color-ancora) 10%, transparent);
+  box-shadow: inset 3px 0 0 var(--color-ancora);
+}
+.case-toc__link.is-active::before {
+  color: var(--color-ancora);
+}
+
+[data-theme="dark"] .case-toc__link.is-active {
+  background-color: color-mix(in srgb, var(--color-solar) 12%, transparent);
+  box-shadow: inset 3px 0 0 var(--color-solar);
+}
+[data-theme="dark"] .case-toc__link.is-active::before {
+  color: var(--color-solar);
 }
 
 /* ----------------------------------------------------------
@@ -840,4 +899,165 @@
   display: flex;
   flex-direction: column;
   min-width: 0; /* prevent grid blowout */
+}
+
+/* ----------------------------------------------------------
+   ABOUT — Asymmetrical split: quote left / blocks right
+   ---------------------------------------------------------- */
+.about-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .about-split {
+    grid-template-columns: 2fr 3fr;
+    gap: var(--space-16);
+    align-items: center;
+  }
+}
+
+/* Decorative opening quotation mark using brand accent */
+.about-split__quote::before {
+  content: '\201C';
+  display: block;
+  font-family: var(--font-display);
+  font-size: 64px;
+  line-height: 0.75;
+  color: var(--color-ancora);
+  margin-bottom: var(--space-3);
+}
+[data-theme="dark"] .about-split__quote::before {
+  color: var(--color-solar);
+}
+
+.about-split__quote-text {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.4vw, 26px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: var(--color-text-1);
+}
+
+.about-split__attribution {
+  display: block;
+  margin-top: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+}
+
+/* Stacked narrative blocks — right column */
+.about-split__blocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.about-split__block {
+  background-color: var(--color-bg-alt);
+  border: var(--border-normal);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-6);
+  transition:
+    background-color var(--duration-slower) var(--ease-out),
+    border-color     var(--duration-slower) var(--ease-out);
+}
+
+/* ----------------------------------------------------------
+   ABOUT — Experience pipeline list
+   ---------------------------------------------------------- */
+.experience-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.experience-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-5) 0;
+  border-bottom: var(--border-thin);
+}
+
+.experience-item:first-child {
+  border-top: var(--border-thin);
+}
+
+/* Logo box */
+.experience-item__logo {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-thin);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-alt);
+  overflow: hidden;
+  transition:
+    background-color var(--duration-slower) var(--ease-out),
+    border-color     var(--duration-slower) var(--ease-out);
+}
+
+.experience-item__logo img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.55;
+}
+
+[data-theme="dark"] .experience-item__logo img {
+  filter: brightness(0) invert(1);
+  opacity: 0.45;
+}
+
+/* Text monogram fallback for companies without a logo file */
+.experience-item__logo-mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text-3);
+  user-select: none;
+}
+
+/* Company + role info */
+.experience-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.experience-item__company {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  color: var(--color-text-1);
+  line-height: 1.3;
+}
+
+.experience-item__role {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+  margin-top: var(--space-1);
+}
+
+/* Date range — far right, monospaced */
+.experience-item__dates {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.08em;
+  color: var(--color-text-3);
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-align: right;
 }

@@ -5,19 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="CRM Retail Platform — Case study by Renan Moura. Helping retail partners manage marketing campaigns at Dotz, a B2B2C retail fidelity company." />
   <title>CRM Retail Platform — Renan Moura</title>
-  <link rel="icon" type="image/svg+xml" href="logos/logo-icon.svg" />
+  <link rel="icon" type="image/svg+xml" href="../logos/logo-icon.svg" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/output.css" />
-  <link rel="stylesheet" href="css/tokens.css" />
-  <link rel="stylesheet" href="css/reset.css" />
-  <link rel="stylesheet" href="css/components.css" />
-  <link rel="stylesheet" href="css/layout.css" />
-  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="../css/output.css" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+
+  <!-- NDA gate — remove these three lines to make the page public -->
+  <link rel="stylesheet" href="../css/auth.css" />
+  <script>window.AUTH_RETURN = '../index.html';</script>
+  <script src="../js/auth.js"></script>
 </head>
 
 <body>
@@ -31,17 +36,17 @@
     <div class="container">
       <nav class="nav reveal reveal--from-top" data-reveal-on-load data-reveal-delay="120" role="navigation" aria-label="Main navigation">
 
-        <a href="index.html" class="nav__logo" aria-label="Renan Moura — Home">
-          <img src="logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
-          <img src="logos/logo-dark-mode.svg"  alt="Renan Moura" class="nav__logo-dark"  />
+        <a href="../index.html" class="nav__logo" aria-label="Renan Moura — Home">
+          <img src="../logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
+          <img src="../logos/logo-dark-mode.svg"  alt="Renan Moura" class="nav__logo-dark"  />
         </a>
 
         <div class="nav__controls">
 
           <div class="nav__links">
-            <a href="index.html#home" class="nav__link">Home</a>
-            <a href="index.html#work" class="nav__link nav__link--active" aria-current="page">Work</a>
-            <a href="about.html" class="nav__link">About</a>
+            <a href="../index.html#home" class="nav__link">Home</a>
+            <a href="../index.html#work" class="nav__link nav__link--active" aria-current="page">Work</a>
+            <a href="../about.html" class="nav__link">About</a>
             <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" class="nav__link" target="_blank" rel="noopener noreferrer">
               Resume
               <span class="visually-hidden">(opens in a new tab)</span>
@@ -79,9 +84,9 @@
 
       <!-- Mobile menu drawer -->
       <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
-        <a href="index.html#home" class="nav__mobile-link">Home</a>
-        <a href="index.html#work" class="nav__mobile-link nav__mobile-link--active">Work</a>
-        <a href="about.html"      class="nav__mobile-link">About</a>
+        <a href="../index.html#home" class="nav__mobile-link">Home</a>
+        <a href="../index.html#work" class="nav__mobile-link nav__mobile-link--active">Work</a>
+        <a href="../about.html"      class="nav__mobile-link">About</a>
         <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
         <a href="mailto:rmouraolivdesigner@gmail.com" class="nav__mobile-link">Contact</a>
       </div>
@@ -745,6 +750,7 @@
       }
     })();
   </script>
-  <script src="js/animations.js" defer></script>
+  <script src="../js/animations.js" defer></script>
+  <script src="../js/case-toc.js" defer></script>
 </body>
 </html>
