@@ -91,10 +91,29 @@
     highlights.forEach((el) => observer.observe(el));
   }
 
+  function initContentProtection() {
+    // Block right-click context menu (prevents save-image on hero illustrations)
+    window.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    // Block clipboard events at the document level
+    ['copy', 'cut', 'paste'].forEach((evt) => {
+      document.addEventListener(evt, (e) => e.preventDefault());
+    });
+
+    // Block modifier-key shortcuts: Ctrl/Cmd + C, V, X, U, S
+    const BLOCKED = new Set(['c', 'v', 'x', 'u', 's']);
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && BLOCKED.has(e.key.toLowerCase())) {
+        e.preventDefault();
+      }
+    });
+  }
+
   function init() {
     initLoadReveals();
     initScrollReveals();
     initTextHighlights();
+    initContentProtection();
   }
 
   // Expose init so external callers (e.g. auth gate) can replay animations
