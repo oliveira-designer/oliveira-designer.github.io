@@ -7,5 +7,8 @@
     "@tailwindcss/cli": "^4.3.0",
     "@vercel/analytics": "^2.0.1",
     "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.60.0"
   }
 }

@@ -4,6 +4,28 @@
    Requires: tokens.css
    ============================================================ */
 
+/* ----------------------------------------------------------
+   GLOBAL THEME TRANSITION
+   Restricts to paint-only properties (no layout, no transform)
+   so the browser can handle theme switches on the compositor
+   thread without triggering reflow.
+   ---------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  transition:
+    background-color  var(--duration-slow) var(--ease-in-out),
+    color             var(--duration-slow) var(--ease-in-out),
+    border-color      var(--duration-slow) var(--ease-in-out),
+    box-shadow        var(--duration-slow) var(--ease-in-out);
+}
+
+/* The hero dark-image layer uses its own opacity transition —
+   exclude it from the global rule to avoid accidental overrides. */
+.hero::after {
+  transition: opacity var(--duration-slow) var(--ease-in-out) !important;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   /* Scroll-triggered & load-triggered base */
   .reveal {
@@ -46,10 +68,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .reveal-group .reveal-item {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+  /* Snap all animations and transitions for users who prefer reduced motion */
+  *,
+  *::before,
+  *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+    scroll-behavior:           auto   !important;
   }
 }

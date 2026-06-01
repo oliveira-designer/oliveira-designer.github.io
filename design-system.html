@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hope Design System — v1.4</title>
+  <link rel="icon" type="image/svg+xml" href="logos/logo-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+
+  <style>
+    /* ============================================================
+       DS PAGE — layout & documentation-specific styles only.
+       All component rendering uses the linked project CSS files.
+       ============================================================ */
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--color-bg);
+      color: var(--color-text-1);
+      font-family: var(--font-body);
+    }
+
+    /* ── Top bar ──────────────────────────────────────────── */
+    .ds-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-8);
+      height: 56px;
+      background: var(--color-bg);
+      border-bottom: var(--border-thin);
+      gap: var(--space-6);
+    }
+    .ds-topbar__brand {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-3);
+    }
+    .ds-topbar__title {
+      font-family: var(--font-display);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      color: var(--color-text-1);
+    }
+    .ds-topbar__badge {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-3);
+      background: var(--color-bg-alt);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      border: var(--border-thin);
+    }
+    .ds-topbar__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .ds-back-link {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-3);
+      text-decoration: none;
+      transition: color var(--duration-normal) var(--ease-out);
+    }
+    .ds-back-link:hover { color: var(--color-text-1); }
+    .ds-theme-btn {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-2);
+      background: var(--color-bg-alt);
+      border: var(--border-normal);
+      border-radius: var(--radius-pill);
+      padding: var(--space-2) var(--space-4);
+      cursor: pointer;
+      transition:
+        background-color var(--duration-normal) var(--ease-out),
+        color var(--duration-normal) var(--ease-out);
+    }
+    .ds-theme-btn:hover {
+      background: var(--color-border);
+      color: var(--color-text-1);
+    }
+
+    /* ── Two-column layout ─────────────────────────────────── */
+    .ds-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: calc(100vh - 56px);
+    }
+
+    /* ── Sidebar ───────────────────────────────────────────── */
+    .ds-sidebar {
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+      border-right: var(--border-thin);
+      padding: var(--space-8) var(--space-5);
+    }
+    .ds-nav-group { margin-bottom: var(--space-6); }
+    .ds-nav-group__label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-3);
+      padding: 0 var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+    .ds-nav-link {
+      display: block;
+      font-size: var(--fs-body-sm);
+      color: var(--color-text-2);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition:
+        color var(--duration-normal) var(--ease-out),
+        background-color var(--duration-normal) var(--ease-out);
+    }
+    .ds-nav-link:hover {
+      color: var(--color-text-1);
+      background: var(--color-bg-alt);
+    }
+
+    /* ── Content ───────────────────────────────────────────── */
+    .ds-content {
+      padding: var(--space-12);
+      max-width: 960px;
+    }
+
+    /* Chapter */
+    .ds-chapter { margin-bottom: var(--space-20); }
+    .ds-chapter__header {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-4);
+      padding-bottom: var(--space-5);
+      border-bottom: var(--border-normal);
+      margin-bottom: var(--space-12);
+    }
+    .ds-chapter__index {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-3);
+    }
+    .ds-chapter__title {
+      font-family: var(--font-display);
+      font-size: var(--fs-h1);
+      font-weight: 700;
+      color: var(--color-text-1);
+    }
+
+    /* Section */
+    .ds-section { margin-bottom: var(--space-16); }
+    .ds-section__title {
+      font-family: var(--font-display);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      color: var(--color-text-1);
+      margin-bottom: var(--space-2);
+    }
+    .ds-section__desc {
+      font-size: var(--fs-body-sm);
+      color: var(--color-text-3);
+      margin-bottom: var(--space-8);
+    }
+    .ds-section__desc code {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      background: var(--color-bg-alt);
+      padding: 1px 5px;
+      border-radius: var(--radius-xs);
+      border: var(--border-thin);
+    }
+
+    /* Subsection label */
+    .ds-sub {
+      font-size: var(--fs-body-sm);
+      font-weight: 600;
+      color: var(--color-text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: var(--space-8) 0 var(--space-4);
+    }
+
+    /* ── Color swatches ───────────────────────────────────── */
+    .ds-swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+    .ds-swatch { width: 120px; }
+    .ds-swatch__chip {
+      height: 64px;
+      border-radius: var(--radius-sm);
+      border: var(--border-thin);
+      margin-bottom: var(--space-2);
+    }
+    .ds-swatch__token {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      color: var(--color-text-1);
+      margin-bottom: 2px;
+      word-break: break-all;
+    }
+    .ds-swatch__hex {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-3);
+    }
+    .ds-swatch__note {
+      display: block;
+      font-size: var(--fs-label);
+      color: var(--color-solar);
+      font-style: italic;
+    }
+
+    /* Semantic chips — react to theme toggle */
+    .ds-semantic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--space-3);
+    }
+    .ds-sem {
+      padding: var(--space-4);
+      border: var(--border-thin);
+      border-radius: var(--radius-sm);
+      background: var(--color-bg-alt);
+    }
+    .ds-sem__dot {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-xs);
+      border: var(--border-thin);
+      margin-bottom: var(--space-3);
+    }
+    .ds-sem__token {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      color: var(--color-text-1);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .ds-sem__note {
+      font-size: var(--fs-label);
+      color: var(--color-text-3);
+    }
+
+    /* ── Typography scale ─────────────────────────────────── */
+    .ds-type-scale { display: flex; flex-direction: column; }
+    .ds-type-row {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: var(--space-4);
+      align-items: center;
+      padding: var(--space-5) 0;
+      border-bottom: var(--border-thin);
+    }
+    .ds-type-row__token {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      color: var(--color-text-1);
+    }
+    .ds-type-row__clamp {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-3);
+    }
+    .ds-type-row__family {
+      display: inline-block;
+      margin-top: 4px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-3);
+      background: var(--color-bg-alt);
+      border: var(--border-thin);
+      border-radius: var(--radius-xs);
+      padding: 1px 6px;
+    }
+    .ds-type-row__sample { overflow: hidden; }
+
+    /* ── Spacing ──────────────────────────────────────────── */
+    .ds-spacing-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .ds-space-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .ds-space-row__meta {
+      width: 140px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-2);
+      flex-shrink: 0;
+    }
+    .ds-space-row__bar {
+      height: 14px;
+      background: var(--color-solar);
+      border-radius: var(--radius-xs);
+      opacity: 0.75;
+    }
+
+    /* ── Radius ───────────────────────────────────────────── */
+    .ds-radius-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-6);
+      align-items: flex-end;
+    }
+    .ds-radius-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
+    .ds-radius-item__box {
+      width: 56px;
+      height: 56px;
+      background: var(--color-bg-alt);
+      border: 2px solid var(--color-ancora);
+    }
+    [data-theme="dark"] .ds-radius-item__box { border-color: var(--color-solar); }
+    .ds-radius-item__label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-2);
+      text-align: center;
+    }
+
+    /* ── Motion ───────────────────────────────────────────── */
+    .ds-motion-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: var(--space-3);
+    }
+    .ds-motion-item {
+      background: var(--color-bg-alt);
+      border: var(--border-thin);
+      border-radius: var(--radius-sm);
+      padding: var(--space-4);
+    }
+    .ds-motion-item__token {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      color: var(--color-text-1);
+      margin-bottom: 2px;
+    }
+    .ds-motion-item__val {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-3);
+    }
+
+    /* ── Component section ────────────────────────────────── */
+    .ds-component { margin-bottom: var(--space-12); }
+    .ds-component__title {
+      font-family: var(--font-display);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      color: var(--color-text-1);
+      margin-bottom: var(--space-2);
+    }
+    .ds-component__desc {
+      font-size: var(--fs-body-sm);
+      color: var(--color-text-3);
+      margin-bottom: var(--space-6);
+    }
+
+    /* Preview containers */
+    .ds-preview {
+      border: var(--border-normal);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .ds-preview--padded { padding: var(--space-8); background: var(--color-bg); }
+    .ds-preview--row {
+      padding: var(--space-8);
+      background: var(--color-bg);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      align-items: center;
+    }
+
+    /* Nav preview: transform creates a new containing block so
+       position:fixed children act as position:absolute within it. */
+    .ds-preview--nav {
+      height: 100px;
+      position: relative;
+      transform: translate(0);
+      padding: 0;
+      /* Gradient backdrop shows off the glassmorphism */
+      background: linear-gradient(135deg, #FEF8E0 0%, #E8F0F9 50%, #8CB4E0 100%);
+    }
+    [data-theme="dark"] .ds-preview--nav {
+      background: linear-gradient(135deg, #1A1A2E 0%, #144278 60%, #1C5FA8 100%);
+    }
+
+    /* Card preview */
+    .ds-preview--card {
+      padding: var(--space-6);
+      background: var(--color-bg);
+    }
+
+    /* Code disclosure */
+    details.ds-code { margin-top: var(--space-5); }
+    details.ds-code > summary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-3);
+      cursor: pointer;
+      padding: var(--space-2) var(--space-3);
+      border: var(--border-thin);
+      border-radius: var(--radius-sm);
+      background: var(--color-bg-alt);
+      list-style: none;
+      transition:
+        color var(--duration-normal) var(--ease-out),
+        background-color var(--duration-normal) var(--ease-out);
+    }
+    details.ds-code > summary::-webkit-details-marker { display: none; }
+    details.ds-code > summary::before { content: '</> '; font-weight: 700; }
+    details.ds-code > summary:hover { color: var(--color-text-1); }
+    details.ds-code[open] > summary {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .ds-code__block {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      line-height: 1.7;
+      white-space: pre;
+      overflow-x: auto;
+      margin: 0;
+      padding: var(--space-6);
+      background: var(--color-bg-alt);
+      border: var(--border-thin);
+      border-top: none;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      color: var(--color-text-2);
+    }
+
+    /* Misc helpers */
+    .ds-divider { border: none; border-top: var(--border-thin); margin: var(--space-10) 0; }
+    .ds-kv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--space-3);
+    }
+    .ds-kv {
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-alt);
+      border: var(--border-thin);
+      border-radius: var(--radius-sm);
+    }
+    .ds-kv__key {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      color: var(--color-text-1);
+    }
+    .ds-kv__val {
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      color: var(--color-text-3);
+    }
+
+    @media (max-width: 860px) {
+      .ds-layout { grid-template-columns: 1fr; }
+      .ds-sidebar { display: none; }
+      .ds-content { padding: var(--space-6); }
+      .ds-type-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Top bar ──────────────────────────────────────────────── -->
+  <div class="ds-topbar">
+    <div class="ds-topbar__brand">
+      <span class="ds-topbar__title">Hope DS</span>
+      <span class="ds-topbar__badge">v1.4 · May 2026</span>
+    </div>
+    <div class="ds-topbar__actions">
+      <a href="index.html" class="ds-back-link">← Portfolio</a>
+      <button class="ds-theme-btn" id="dsThemeToggle" type="button">☾ Dark mode</button>
+    </div>
+  </div>
+
+  <div class="ds-layout">
+
+    <!-- ── Sidebar ──────────────────────────────────────────── -->
+    <aside class="ds-sidebar">
+      <nav aria-label="Design system sections">
+        <div class="ds-nav-group">
+          <p class="ds-nav-group__label">Foundations</p>
+          <a href="#colors"     class="ds-nav-link">Colors</a>
+          <a href="#typography" class="ds-nav-link">Typography</a>
+          <a href="#spacing"    class="ds-nav-link">Spacing</a>
+          <a href="#borders"    class="ds-nav-link">Borders & Radius</a>
+          <a href="#motion"     class="ds-nav-link">Motion</a>
+        </div>
+        <div class="ds-nav-group">
+          <p class="ds-nav-group__label">Components</p>
+          <a href="#buttons"  class="ds-nav-link">Buttons</a>
+          <a href="#badges"   class="ds-nav-link">Badges</a>
+          <a href="#comp-nav" class="ds-nav-link">Navigation</a>
+          <a href="#cards"    class="ds-nav-link">Case Cards</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- ── Content ──────────────────────────────────────────── -->
+    <main class="ds-content">
+
+
+      <!-- ════════════════════════════════════════════════════
+           01  FOUNDATIONS
+           ════════════════════════════════════════════════════ -->
+      <div class="ds-chapter">
+        <div class="ds-chapter__header">
+          <span class="ds-chapter__index">01</span>
+          <h1 class="ds-chapter__title">Foundations</h1>
+        </div>
+
+        <!-- ─── COLORS ─────────────────────────────────────── -->
+        <section class="ds-section" id="colors">
+          <div class="ds-section__title">Color Tokens</div>
+          <p class="ds-section__desc">
+            All primitives live in <code>tokens.css</code>. Semantic surface tokens
+            (<code>--color-bg</code>, <code>--color-text-1</code>, etc.) remap automatically
+            under <code>[data-theme="dark"]</code>. Toggle the theme above to see them shift.
+          </p>
+
+          <p class="ds-sub">Solar Family — warm, luminous, hopeful</p>
+          <div class="ds-swatches">
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#FEF8E0"></div>
+              <code class="ds-swatch__token">--color-aurora</code>
+              <span class="ds-swatch__hex">#FEF8E0</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#FAE19A"></div>
+              <code class="ds-swatch__token">--color-madrugada</code>
+              <span class="ds-swatch__hex">#FAE19A</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#F5C842"></div>
+              <code class="ds-swatch__token">--color-solar</code>
+              <span class="ds-swatch__hex">#F5C842</span>
+              <span class="ds-swatch__note">★ Brand Accent</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#C49A1F"></div>
+              <code class="ds-swatch__token">--color-ambar</code>
+              <span class="ds-swatch__hex">#C49A1F</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#8B6914"></div>
+              <code class="ds-swatch__token">--color-crepusculo</code>
+              <span class="ds-swatch__hex">#8B6914</span>
+            </div>
+          </div>
+
+          <p class="ds-sub">Anchor Family — cool, precise, structural</p>
+          <div class="ds-swatches">
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#E8F0F9"></div>
+              <code class="ds-swatch__token">--color-ceu</code>
+              <span class="ds-swatch__hex">#E8F0F9</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#8CB4E0"></div>
+              <code class="ds-swatch__token">--color-mare</code>
+              <span class="ds-swatch__hex">#8CB4E0</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#1C5FA8"></div>
+              <code class="ds-swatch__token">--color-ancora</code>
+              <span class="ds-swatch__hex">#1C5FA8</span>
+              <span class="ds-swatch__note">★ Brand Accent</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#144278"></div>
+              <code class="ds-swatch__token">--color-profundo</code>
+              <span class="ds-swatch__hex">#144278</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#1A1A2E"></div>
+              <code class="ds-swatch__token">--color-abismo</code>
+              <span class="ds-swatch__hex">#1A1A2E</span>
+            </div>
+          </div>
+
+          <p class="ds-sub">Neutrals</p>
+          <div class="ds-swatches">
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#FFFFFF; border-color: #E2E2E8;"></div>
+              <code class="ds-swatch__token">--color-nuvem</code>
+              <span class="ds-swatch__hex">#FFFFFF</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#F7F7F9"></div>
+              <code class="ds-swatch__token">--color-superficie</code>
+              <span class="ds-swatch__hex">#F7F7F9</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#E2E2E8"></div>
+              <code class="ds-swatch__token">--color-borda</code>
+              <span class="ds-swatch__hex">#E2E2E8</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#5F5F6E"></div>
+              <code class="ds-swatch__token">--color-mudo</code>
+              <span class="ds-swatch__hex">#5F5F6E</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#3D3D45"></div>
+              <code class="ds-swatch__token">--color-sombra</code>
+              <span class="ds-swatch__hex">#3D3D45</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#0D0D0F"></div>
+              <code class="ds-swatch__token">--color-tinta</code>
+              <span class="ds-swatch__hex">#0D0D0F</span>
+            </div>
+          </div>
+
+          <p class="ds-sub">Functional</p>
+          <div class="ds-swatches">
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#4A9F6B"></div>
+              <code class="ds-swatch__token">--color-success</code>
+              <span class="ds-swatch__hex">#4A9F6B</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#C47A1F"></div>
+              <code class="ds-swatch__token">--color-warning</code>
+              <span class="ds-swatch__hex">#C47A1F</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#B83434"></div>
+              <code class="ds-swatch__token">--color-error</code>
+              <span class="ds-swatch__hex">#B83434</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#634590"></div>
+              <code class="ds-swatch__token">--color-info</code>
+              <span class="ds-swatch__hex">#634590</span>
+            </div>
+            <div class="ds-swatch">
+              <div class="ds-swatch__chip" style="background:#F5A8C0"></div>
+              <code class="ds-swatch__token">--color-celebrate</code>
+              <span class="ds-swatch__hex">#F5A8C0</span>
+            </div>
+          </div>
+
+          <p class="ds-sub">Semantic Surface Tokens — toggle theme to watch these adapt</p>
+          <div class="ds-semantic-grid">
+            <div class="ds-sem">
+              <div class="ds-sem__dot" style="background: var(--color-bg)"></div>
+              <code class="ds-sem__token">--color-bg</code>
+              <span class="ds-sem__note">Page background</span>
+            </div>
+            <div class="ds-sem">
+              <div class="ds-sem__dot" style="background: var(--color-bg-alt)"></div>
+              <code class="ds-sem__token">--color-bg-alt</code>
+              <span class="ds-sem__note">Card / alt surface</span>
+            </div>
+            <div class="ds-sem">
+              <div class="ds-sem__dot" style="background: var(--color-border)"></div>
+              <code class="ds-sem__token">--color-border</code>
+              <span class="ds-sem__note">Default border</span>
+            </div>
+            <div class="ds-sem">
+              <div class="ds-sem__dot" style="background: var(--color-border-strong)"></div>
+              <code class="ds-sem__token">--color-border-strong</code>
+              <span class="ds-sem__note">Emphasis border</span>
+            </div>
+            <div class="ds-sem">
+              <div class="ds-sem__dot" style="background: var(--color-text-1)"></div>
+              <code class="ds-sem__token">--color-text-1</code>
+              <span class="ds-sem__note">Primary text</span>
+            </div>
+            <div class="ds-sem">
+              <div class="ds-sem__dot" style="background: var(--color-text-2)"></div>
+              <code class="ds-sem__token">--color-text-2</code>
+              <span class="ds-sem__note">Secondary text</span>
+            </div>
+            <div class="ds-sem">
+              <div class="ds-sem__dot" style="background: var(--color-text-3)"></div>
+              <code class="ds-sem__token">--color-text-3</code>
+              <span class="ds-sem__note">Muted / label</span>
+            </div>
+            <div class="ds-sem">
+              <div class="ds-sem__dot" style="background: var(--color-link)"></div>
+              <code class="ds-sem__token">--color-link</code>
+              <span class="ds-sem__note">Interactive link</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── TYPOGRAPHY ─────────────────────────────────── -->
+        <section class="ds-section" id="typography">
+          <div class="ds-section__title">Typography Scale</div>
+          <p class="ds-section__desc">
+            Fluid sizes use <code>clamp()</code> — they scale between a min and max with the viewport.
+            Display and Mono roles use <code>Space Mono</code>; Body uses <code>Plus Jakarta Sans</code>.
+          </p>
+          <div class="ds-type-scale">
+
+            <div class="ds-type-row">
+              <div>
+                <span class="ds-type-row__token">--fs-display</span>
+                <span class="ds-type-row__clamp">clamp(36px, 5vw, 52px)</span>
+                <span class="ds-type-row__family">Space Mono</span>
+              </div>
+              <div class="ds-type-row__sample" style="font-size:var(--fs-display);font-family:var(--font-display);font-weight:700;line-height:1.1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                I design decisions
+              </div>
+            </div>
+
+            <div class="ds-type-row">
+              <div>
+                <span class="ds-type-row__token">--fs-h1</span>
+                <span class="ds-type-row__clamp">clamp(26px, 3.5vw, 32px)</span>
+                <span class="ds-type-row__family">Space Mono</span>
+              </div>
+              <div class="ds-type-row__sample" style="font-size:var(--fs-h1);font-family:var(--font-display);font-weight:700;line-height:1.2;">
+                Shell Box Home Redesign
+              </div>
+            </div>
+
+            <div class="ds-type-row">
+              <div>
+                <span class="ds-type-row__token">--fs-h2</span>
+                <span class="ds-type-row__clamp">clamp(18px, 2.5vw, 22px)</span>
+                <span class="ds-type-row__family">Space Mono</span>
+              </div>
+              <div class="ds-type-row__sample" style="font-size:var(--fs-h2);font-family:var(--font-display);font-weight:700;line-height:1.25;">
+                Cloud Resources Manager
+              </div>
+            </div>
+
+            <div class="ds-type-row">
+              <div>
+                <span class="ds-type-row__token">--fs-h3</span>
+                <span class="ds-type-row__clamp">clamp(14px, 1.5vw, 16px)</span>
+                <span class="ds-type-row__family">Space Mono</span>
+              </div>
+              <div class="ds-type-row__sample" style="font-size:var(--fs-h3);font-family:var(--font-display);font-weight:700;line-height:1.3;">
+                CRM Retail Platform
+              </div>
+            </div>
+
+            <div class="ds-type-row">
+              <div>
+                <span class="ds-type-row__token">--fs-body</span>
+                <span class="ds-type-row__clamp">clamp(14px, 1.2vw, 16px)</span>
+                <span class="ds-type-row__family">Plus Jakarta Sans</span>
+              </div>
+              <div class="ds-type-row__sample" style="font-size:var(--fs-body);font-family:var(--font-body);line-height:1.65;color:var(--color-text-2);">
+                Redesigning an internal tool for retail campaign management, reducing operational overhead
+                and improving team efficiency across B2C loyalty workflows.
+              </div>
+            </div>
+
+            <div class="ds-type-row">
+              <div>
+                <span class="ds-type-row__token">--fs-body-sm</span>
+                <span class="ds-type-row__clamp">clamp(12px, 1vw, 13px)</span>
+                <span class="ds-type-row__family">Plus Jakarta Sans</span>
+              </div>
+              <div class="ds-type-row__sample" style="font-size:var(--fs-body-sm);font-family:var(--font-body);line-height:1.6;color:var(--color-text-2);">
+                20% faster campaign creation time · Zero manual configurations
+              </div>
+            </div>
+
+            <div class="ds-type-row">
+              <div>
+                <span class="ds-type-row__token">--fs-label</span>
+                <span class="ds-type-row__clamp">clamp(10px, 1vw, 11px)</span>
+                <span class="ds-type-row__family">Space Mono</span>
+              </div>
+              <div class="ds-type-row__sample" style="font-size:var(--fs-label);font-family:var(--font-mono);letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-3);">
+                RAÍZEN · CASE STUDIES · B2B2C
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ─── SPACING ────────────────────────────────────── -->
+        <section class="ds-section" id="spacing">
+          <div class="ds-section__title">Spacing Scale</div>
+          <p class="ds-section__desc">4px base scale. Use semantic aliases (<code>--gap-tight</code>, <code>--gap-component</code>, etc.) for layout decisions.</p>
+          <div class="ds-spacing-list">
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-1 · 4px</span>  <div class="ds-space-row__bar" style="width:4px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-2 · 8px</span>  <div class="ds-space-row__bar" style="width:8px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-3 · 12px</span> <div class="ds-space-row__bar" style="width:12px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-4 · 16px</span> <div class="ds-space-row__bar" style="width:16px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-5 · 20px</span> <div class="ds-space-row__bar" style="width:20px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-6 · 24px</span> <div class="ds-space-row__bar" style="width:24px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-8 · 32px</span> <div class="ds-space-row__bar" style="width:32px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-10 · 40px</span><div class="ds-space-row__bar" style="width:40px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-12 · 48px</span><div class="ds-space-row__bar" style="width:48px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-16 · 64px</span><div class="ds-space-row__bar" style="width:64px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-20 · 80px</span><div class="ds-space-row__bar" style="width:80px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-24 · 96px</span><div class="ds-space-row__bar" style="width:96px"></div></div>
+            <div class="ds-space-row"><span class="ds-space-row__meta">--space-32 · 128px</span><div class="ds-space-row__bar" style="width:128px"></div></div>
+          </div>
+        </section>
+
+        <!-- ─── BORDERS & RADIUS ───────────────────────────── -->
+        <section class="ds-section" id="borders">
+          <div class="ds-section__title">Borders & Radius</div>
+          <p class="ds-section__desc">Three border weights and six radius steps. The pill value (999px) is used for tags and the floating nav.</p>
+
+          <p class="ds-sub">Border weights</p>
+          <div class="ds-kv-grid">
+            <div class="ds-kv"><div class="ds-kv__key">--border-thin</div>   <div class="ds-kv__val">0.5px solid border</div></div>
+            <div class="ds-kv"><div class="ds-kv__key">--border-normal</div> <div class="ds-kv__val">1px solid border</div></div>
+            <div class="ds-kv"><div class="ds-kv__key">--border-strong</div> <div class="ds-kv__val">1px solid border-strong</div></div>
+          </div>
+
+          <p class="ds-sub">Radius steps</p>
+          <div class="ds-radius-row">
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__box" style="border-radius:4px"></div>
+              <span class="ds-radius-item__label">--radius-xs<br>4px</span>
+            </div>
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__box" style="border-radius:8px"></div>
+              <span class="ds-radius-item__label">--radius-sm<br>8px</span>
+            </div>
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__box" style="border-radius:12px"></div>
+              <span class="ds-radius-item__label">--radius-md<br>12px</span>
+            </div>
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__box" style="border-radius:16px"></div>
+              <span class="ds-radius-item__label">--radius-lg<br>16px</span>
+            </div>
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__box" style="border-radius:24px"></div>
+              <span class="ds-radius-item__label">--radius-xl<br>24px</span>
+            </div>
+            <div class="ds-radius-item">
+              <div class="ds-radius-item__box" style="border-radius:999px"></div>
+              <span class="ds-radius-item__label">--radius-pill<br>999px</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── MOTION ─────────────────────────────────────── -->
+        <section class="ds-section" id="motion">
+          <div class="ds-section__title">Motion Tokens</div>
+          <p class="ds-section__desc">All transitions must use these duration + easing pairs. Reduced-motion is respected globally via <code>@media (prefers-reduced-motion)</code> in <code>tokens.css</code>.</p>
+
+          <p class="ds-sub">Durations</p>
+          <div class="ds-motion-grid">
+            <div class="ds-motion-item"><div class="ds-motion-item__token">--duration-fast</div>   <div class="ds-motion-item__val">100ms</div></div>
+            <div class="ds-motion-item"><div class="ds-motion-item__token">--duration-normal</div> <div class="ds-motion-item__val">150ms</div></div>
+            <div class="ds-motion-item"><div class="ds-motion-item__token">--duration-slow</div>   <div class="ds-motion-item__val">250ms</div></div>
+            <div class="ds-motion-item"><div class="ds-motion-item__token">--duration-slower</div> <div class="ds-motion-item__val">400ms</div></div>
+          </div>
+
+          <p class="ds-sub">Easing curves</p>
+          <div class="ds-motion-grid">
+            <div class="ds-motion-item"><div class="ds-motion-item__token">--ease-out</div>    <div class="ds-motion-item__val">cubic-bezier(0.16, 1, 0.3, 1)</div></div>
+            <div class="ds-motion-item"><div class="ds-motion-item__token">--ease-in</div>     <div class="ds-motion-item__val">cubic-bezier(0.7, 0, 0.84, 0)</div></div>
+            <div class="ds-motion-item"><div class="ds-motion-item__token">--ease-in-out</div> <div class="ds-motion-item__val">cubic-bezier(0.65, 0, 0.35, 1)</div></div>
+            <div class="ds-motion-item"><div class="ds-motion-item__token">--ease-bounce</div> <div class="ds-motion-item__val">cubic-bezier(0.34, 1.56, 0.64, 1)</div></div>
+          </div>
+        </section>
+
+      </div><!-- /chapter 01 -->
+
+
+      <!-- ════════════════════════════════════════════════════
+           02  COMPONENTS
+           ════════════════════════════════════════════════════ -->
+      <div class="ds-chapter">
+        <div class="ds-chapter__header">
+          <span class="ds-chapter__index">02</span>
+          <h2 class="ds-chapter__title">Components</h2>
+        </div>
+
+        <!-- ─── BUTTONS ────────────────────────────────────── -->
+        <section class="ds-section" id="buttons">
+          <div class="ds-section__title">Buttons</div>
+          <p class="ds-section__desc">All variants share the same <code>.btn</code> base. Min-height is 44px (WCAG 2.5.5). The arrow icon animates on hover.</p>
+
+          <div class="ds-component">
+            <div class="ds-preview ds-preview--row">
+              <button class="btn btn--primary">Primary</button>
+              <button class="btn btn--secondary">Secondary</button>
+              <button class="btn btn--solar">Solar</button>
+              <button class="btn btn--ghost">Ghost</button>
+              <button class="btn btn--primary" disabled aria-disabled="true">Disabled</button>
+              <button class="btn btn--primary">
+                With Arrow
+                <svg class="icon icon--arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+
+            <details class="ds-code">
+              <summary>HTML Blueprint</summary>
+<pre class="ds-code__block">&lt;button class="btn btn--primary"&gt;Primary&lt;/button&gt;
+&lt;button class="btn btn--secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="btn btn--solar"&gt;Solar&lt;/button&gt;
+&lt;button class="btn btn--ghost"&gt;Ghost&lt;/button&gt;
+&lt;button class="btn btn--primary" disabled aria-disabled="true"&gt;Disabled&lt;/button&gt;
+
+&lt;!-- With arrow icon --&gt;
+&lt;button class="btn btn--primary"&gt;
+  Label
+  &lt;svg class="icon icon--arrow" viewBox="0 0 24 24" ...&gt;
+    &lt;path d="M5 12h14"/&gt;&lt;path d="M13 6l6 6-6 6"/&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;</pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- ─── BADGES ─────────────────────────────────────── -->
+        <section class="ds-section" id="badges">
+          <div class="ds-section__title">Badges</div>
+          <p class="ds-section__desc">Inline status / category labels. Use <code>.badge--draft</code> for "Coming Soon" indicators.</p>
+
+          <div class="ds-component">
+            <div class="ds-preview ds-preview--row">
+              <span class="badge badge--neutral">Neutral</span>
+              <span class="badge badge--ancora">Ancora</span>
+              <span class="badge badge--solar">Solar</span>
+              <span class="badge badge--success">Success</span>
+              <span class="badge badge--draft">Coming Soon</span>
+            </div>
+
+            <details class="ds-code">
+              <summary>HTML Blueprint</summary>
+<pre class="ds-code__block">&lt;span class="badge badge--neutral"&gt;Neutral&lt;/span&gt;
+&lt;span class="badge badge--ancora"&gt;Ancora&lt;/span&gt;
+&lt;span class="badge badge--solar"&gt;Solar&lt;/span&gt;
+&lt;span class="badge badge--success"&gt;Success&lt;/span&gt;
+&lt;span class="badge badge--draft"&gt;Coming Soon&lt;/span&gt;</pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- ─── NAVIGATION ─────────────────────────────────── -->
+        <section class="ds-section" id="comp-nav">
+          <div class="ds-section__title">Floating Glass Navigation</div>
+          <p class="ds-section__desc">
+            Fixed pill using <code>backdrop-filter: blur(20px)</code>. The preview container uses
+            <code>transform: translate(0)</code> to create a new containing block, pinning the
+            fixed-position header within the preview frame.
+          </p>
+
+          <div class="ds-component">
+            <!-- Nav preview: transform trick contains the fixed header -->
+            <div class="ds-preview ds-preview--nav" aria-label="Floating navigation preview">
+              <header class="site-header" role="banner" style="top: 16px;">
+                <nav class="nav" role="navigation" aria-label="Main navigation">
+                  <a href="index.html" class="nav__logo" aria-label="Renan Moura — Home">
+                    <img src="logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
+                    <img src="logos/logo-dark-mode.svg"  alt="Renan Moura" class="nav__logo-dark"  />
+                  </a>
+                  <div class="nav__controls">
+                    <div class="nav__links">
+                      <a href="#" class="nav__link nav__link--active">Home</a>
+                      <a href="#" class="nav__link">Case studies</a>
+                      <a href="#" class="nav__link">About</a>
+                      <a href="#" class="nav__link">Resume</a>
+                    </div>
+                    <button class="nav__theme-toggle" type="button" aria-label="Toggle theme">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/></svg>
+                    </button>
+                  </div>
+                </nav>
+              </header>
+            </div>
+
+            <details class="ds-code">
+              <summary>HTML Blueprint</summary>
+<pre class="ds-code__block">&lt;header class="site-header" id="home" role="banner"&gt;
+  &lt;nav class="nav" role="navigation" aria-label="Main navigation"&gt;
+
+    &lt;a href="index.html" class="nav__logo" aria-label="Brand — Home"&gt;
+      &lt;img src="logos/logo-light-mode.svg" class="nav__logo-light" /&gt;
+      &lt;img src="logos/logo-dark-mode.svg"  class="nav__logo-dark"  /&gt;
+    &lt;/a&gt;
+
+    &lt;div class="nav__controls"&gt;
+      &lt;div class="nav__links"&gt;
+        &lt;a href="#home" class="nav__link nav__link--active"&gt;Home&lt;/a&gt;
+        &lt;a href="#work" class="nav__link"&gt;Work&lt;/a&gt;lt;a href="#work" class="nav__link"&lt;a href="#work" class="nav__link"&gt;Work&lt;/a&gt;gt;Case studies&lt;a href="#work" class="nav__link"&gt;Work&lt;/a&gt;lt;/a&lt;a href="#work" class="nav__link"&gt;Work&lt;/a&gt;gt;
+        &lt;a href="about.html" class="nav__link"&gt;About&lt;/a&gt;
+        &lt;a href="resume.pdf" class="nav__link" target="_blank"&gt;Resume&lt;/a&gt;
+      &lt;/div&gt;
+
+      &lt;button class="nav__theme-toggle" id="themeToggle" type="button"
+              aria-label="Switch theme" aria-pressed="false"&gt;
+        &lt;!-- moon / sun SVG icons --&gt;
+      &lt;/button&gt;
+
+      &lt;button class="nav__hamburger" id="menuToggle" type="button"
+              aria-label="Open menu" aria-expanded="false"&gt;
+        &lt;!-- burger / close SVG icons --&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+
+  &lt;/nav&gt;
+
+  &lt;!-- Mobile drawer — absolute glass panel below the pill --&gt;
+  &lt;div class="nav__mobile-menu" id="mobileMenu"&gt;
+    &lt;a href="#home"      class="nav__mobile-link"&gt;Home&lt;/a&gt;
+    &lt;a href="#work"      class="nav__mobile-link"&gt;Work&lt;/a&gt;lt;a href="#work"      class="nav__mobile-link"&lt;a href="#work"      class="nav__mobile-link"&gt;Work&lt;/a&gt;gt;Case studies&lt;a href="#work"      class="nav__mobile-link"&gt;Work&lt;/a&gt;lt;/a&lt;a href="#work"      class="nav__mobile-link"&gt;Work&lt;/a&gt;gt;
+    &lt;a href="about.html" class="nav__mobile-link"&gt;About&lt;/a&gt;
+    &lt;a href="resume.pdf" class="nav__mobile-link"&gt;Resume&lt;/a&gt;
+  &lt;/div&gt;
+
+&lt;/header&gt;</pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- ─── CASE CARDS ──────────────────────────────────── -->
+        <section class="ds-section" id="cards">
+          <div class="ds-section__title">50/50 Editorial Case Card</div>
+          <p class="ds-section__desc">
+            CSS grid <code>1fr 1fr</code> split. Visual half uses <code>object-fit: contain</code>
+            with padding. Content half inherits <code>var(--color-bg-alt)</code> — adapts to both
+            themes. Add <code>.case-card--flip</code> to alternate visual/content order.
+          </p>
+
+          <div class="ds-component">
+            <div class="ds-preview ds-preview--card">
+              <article class="case-card case-card--featured" role="listitem">
+                <div class="case-card__visual" aria-hidden="true">
+                  <img src="images/case-thumbnails/dotz-thumb-light.png" alt="Dotz CRM interface" class="case-card__img--light" />
+                  <img src="images/case-thumbnails/dotz-thumb-dark.png"  alt="Dotz CRM interface" class="case-card__img--dark"  />
+                </div>
+                <div class="case-card__content">
+                  <p class="case-card__client">Dotz</p>
+                  <h3 class="case-card__title">CRM Retail Platform</h3>
+                  <div class="case-card__tags">
+                    <span class="case-card__tag">Internal Tool</span>
+                    <span class="case-card__tag">B2B2C</span>
+                    <span class="case-card__tag">Web UX</span>
+                  </div>
+                  <p class="case-card__lead">
+                    Redesigning an internal tool for retail campaign management, reducing
+                    operational overhead and improving team efficiency across B2C loyalty workflows.
+                  </p>
+                  <div class="case-card__metrics" role="list" aria-label="Key results">
+                    <div class="metric" role="listitem">
+                      <span class="metric__value">20% Faster</span>
+                      <span class="metric__label">Campaign creation time</span>
+                    </div>
+                    <div class="metric" role="listitem">
+                      <span class="metric__value">Zero</span>
+                      <span class="metric__label">Manual configurations</span>
+                    </div>
+                  </div>
+                  <div class="case-card__footer">
+                    <a href="case-studies/dotz.html" class="case-card__action">View case study →</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <details class="ds-code">
+              <summary>HTML Blueprint</summary>
+<pre class="ds-code__block">&lt;!-- Standard: visual left, content right --&gt;
+&lt;article class="case-card case-card--featured" role="listitem"&gt;
+
+  &lt;div class="case-card__visual" aria-hidden="true"&gt;
+    &lt;img src="..." alt="..." class="case-card__img--light" loading="lazy" /&gt;
+    &lt;img src="..." alt="..." class="case-card__img--dark"  loading="lazy" /&gt;
+  &lt;/div&gt;
+
+  &lt;div class="case-card__content"&gt;
+    &lt;p class="case-card__client"&gt;Client Name&lt;/p&gt;
+    &lt;h3 class="case-card__title"&gt;Project Title&lt;/h3&gt;
+
+    &lt;div class="case-card__tags"&gt;
+      &lt;span class="case-card__tag"&gt;Tag 1&lt;/span&gt;
+      &lt;span class="case-card__tag"&gt;Tag 2&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;p class="case-card__lead"&gt;Short description of the work.&lt;/p&gt;
+
+    &lt;div class="case-card__metrics" role="list" aria-label="Key results"&gt;
+      &lt;div class="metric" role="listitem"&gt;
+        &lt;span class="metric__value"&gt;XX%&lt;/span&gt;
+        &lt;span class="metric__label"&gt;Metric label&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="case-card__footer"&gt;
+      &lt;a href="..." class="case-card__action"&gt;View case study →&lt;/a&gt;
+      &lt;!-- NDA: use mailto: link + "Request access →" --&gt;
+      &lt;!-- Placeholder: use span.case-card__action.case-card__action--disabled --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+&lt;/article&gt;
+
+&lt;!-- Flip variant: add .case-card--flip to alternate visual to the right --&gt;
+&lt;article class="case-card case-card--featured case-card--flip" role="listitem"&gt;
+  ...
+&lt;/article&gt;</pre>
+            </details>
+          </div>
+        </section>
+
+      </div><!-- /chapter 02 -->
+
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const root   = document.documentElement;
+      const btn    = document.getElementById('dsThemeToggle');
+
+      function sync() {
+        const dark = root.dataset.theme === 'dark';
+        btn.textContent = dark ? '☀ Light mode' : '☾ Dark mode';
+      }
+
+      btn.addEventListener('click', function () {
+        root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        sync();
+      });
+
+      sync();
+    })();
+  </script>
+
+</body>
+</html>

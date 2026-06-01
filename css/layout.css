@@ -18,28 +18,53 @@
 }
 
 /* ----------------------------------------------------------
-   HEADER / NAV
+   SCROLL OFFSET — compensates for fixed floating header
+   ---------------------------------------------------------- */
+html {
+  scroll-padding-top: var(--space-24);
+}
+
+/* ----------------------------------------------------------
+   HEADER / NAV — floating glass pill
    ---------------------------------------------------------- */
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: var(--z-sticky);
-  background-color: var(--color-bg);
-  border-bottom: var(--border-thin);
+  position: fixed;
+  top: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - var(--space-8));
+  max-width: 1200px;
+  z-index: var(--z-overlay);
+  border-radius: var(--radius-pill);
+  padding: var(--space-3) var(--space-6);
+
+  /* Glassmorphism — light mode */
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-md);
+
   transition:
-    background-color var(--duration-slower) var(--ease-out),
-    border-color     var(--duration-slower) var(--ease-out);
+    background    var(--duration-slower) var(--ease-out),
+    border-color  var(--duration-slower) var(--ease-out),
+    box-shadow    var(--duration-slower) var(--ease-out);
+}
+
+/* Glassmorphism — dark mode */
+[data-theme="dark"] .site-header {
+  background: rgba(26, 26, 46, 0.4);
+  border-color: rgba(74, 74, 96, 0.3);
 }
 
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 56px;
   gap: var(--space-6);
 }
 
-/* Logo container */
+/* Logo */
 .nav__logo {
   display: flex;
   align-items: center;
@@ -47,52 +72,32 @@
   flex-shrink: 0;
   transition: opacity var(--duration-normal) var(--ease-out);
 }
-.nav__logo:hover { 
-  opacity: 0.7; 
+.nav__logo:hover { opacity: 0.7; }
+.nav__logo img {
+  height: 28px !important;
+  width: auto !important;
 }
 
-/* Fixed height without fighting Tailwind's `hidden` utility */
-.nav__logo img { 
-  height: 32px !important; 
-  width: auto !important; 
-}
+/* Logo visibility — light/dark swap */
+.nav__logo-light { display: block !important; }
+.nav__logo-dark  { display: none  !important; }
+[data-theme="dark"] .nav__logo-light { display: none  !important; }
+[data-theme="dark"] .nav__logo-dark  { display: block !important; }
 
-/* ----------------------------------------------------------
-   LOGO VISIBILITY — Light mode (default)
-   ---------------------------------------------------------- */
-/* Show light logo, hide dark logo by default */
-.nav__logo-light { 
-  display: block !important; 
-}
-.nav__logo-dark { 
-  display: none !important; 
-}
-
-/* ----------------------------------------------------------
-   LOGO VISIBILITY — Dark mode
-   ---------------------------------------------------------- */
-/* When dark theme is active, swap logo visibility */
-[data-theme="dark"] .nav__logo-light { 
-  display: none !important; 
-}
-[data-theme="dark"] .nav__logo-dark { 
-  display: block !important; 
-}
-
-/* Right-side controls wrapper: nav links + theme toggle + hamburger */
+/* Right-side controls wrapper */
 .nav__controls {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  margin-left: auto;  /* pushes controls to the right */
+  gap: var(--space-2);
+  margin-left: auto;
 }
 
 /* Nav links — desktop only */
 .nav__links {
   display: none;
   align-items: center;
-  gap: var(--space-6);
-  margin-right: var(--space-3);
+  gap: var(--space-5);
+  margin-right: var(--space-2);
 }
 @media (min-width: 768px) {
   .nav__links { display: flex; }
@@ -103,20 +108,20 @@
   font-size: var(--fs-body-sm);
   font-weight: 500;
   color: var(--color-text-2);
-  padding: var(--space-2) 0;
+  padding: var(--space-1) 0;
   transition: color var(--duration-normal) var(--ease-out);
 }
-.nav__link:hover    { color: var(--color-text-1); }
-.nav__link--active  { color: var(--color-text-1); font-weight: 600; }
+.nav__link:hover   { color: var(--color-text-1); }
+.nav__link--active { color: var(--color-text-1); font-weight: 600; }
 
-/* Theme toggle — shown at all breakpoints */
+/* Theme toggle — all breakpoints */
 .nav__theme-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-sm);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
   color: var(--color-text-2);
   transition:
     color            var(--duration-normal) var(--ease-out),
@@ -124,18 +129,21 @@
 }
 .nav__theme-toggle:hover {
   color: var(--color-text-1);
-  background-color: var(--color-bg-alt);
+  background-color: rgba(0, 0, 0, 0.07);
 }
-.nav__theme-toggle svg { width: 18px; height: 18px; }
+[data-theme="dark"] .nav__theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+.nav__theme-toggle svg { width: 17px; height: 17px; }
 
 /* Hamburger — mobile only */
 .nav__hamburger {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-sm);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
   color: var(--color-text-2);
   transition:
     color            var(--duration-normal) var(--ease-out),
@@ -143,22 +151,42 @@
 }
 .nav__hamburger:hover {
   color: var(--color-text-1);
-  background-color: var(--color-bg-alt);
+  background-color: rgba(0, 0, 0, 0.07);
 }
-.nav__hamburger svg { width: 22px; height: 22px; }
+[data-theme="dark"] .nav__hamburger:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+.nav__hamburger svg { width: 20px; height: 20px; }
 @media (min-width: 768px) {
   .nav__hamburger { display: none; }
 }
 
-/* Mobile menu drawer */
+/* Mobile menu — absolute glass panel below the pill */
 .nav__mobile-menu {
   display: none;
   flex-direction: column;
-  background-color: var(--color-bg);
-  border-bottom: var(--border-thin);
-  padding: var(--space-4) 0 var(--space-6);
   gap: var(--space-1);
-  transition: background-color var(--duration-slower) var(--ease-out);
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  right: 0;
+
+  /* Glass panel */
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-3);
+
+  transition:
+    background   var(--duration-slower) var(--ease-out),
+    border-color var(--duration-slower) var(--ease-out);
+}
+[data-theme="dark"] .nav__mobile-menu {
+  background: rgba(26, 26, 46, 0.88);
+  border-color: rgba(74, 74, 96, 0.35);
 }
 .nav__mobile-menu.is-open { display: flex; }
 @media (min-width: 768px) {
@@ -172,17 +200,19 @@
   font-size: var(--fs-body);
   font-weight: 500;
   color: var(--color-text-2);
-  padding: var(--space-3) var(--space-6);
-  min-height: 44px;  /* WCAG 2.5.5 target size */
+  padding: var(--space-3) var(--space-4);
+  min-height: 44px;
   border-radius: var(--radius-sm);
-  margin: 0 var(--space-4);
   transition:
     color            var(--duration-normal) var(--ease-out),
     background-color var(--duration-normal) var(--ease-out);
 }
 .nav__mobile-link:hover {
   color: var(--color-text-1);
-  background-color: var(--color-bg-alt);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+[data-theme="dark"] .nav__mobile-link:hover {
+  background-color: rgba(255, 255, 255, 0.07);
 }
 .nav__mobile-link--active {
   color: var(--color-text-1);
@@ -224,6 +254,7 @@
    ---------------------------------------------------------- */
 .hero {
   padding: var(--space-20) 0;
+  padding-top: calc(var(--space-20) + var(--space-16));
 
   display: flex;
   flex-direction: column;
@@ -238,30 +269,54 @@
   /* dvh avoids clipping by the mobile browser toolbar */
   min-height: 100dvh;
 
-  border-bottom: var(--border-normal);
-
+  /* Light-mode background — always loaded, never swapped */
   background-image: url('../images/Desktop\ light/golden_morning_v3_desktop.jpg');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
 }
 
-/* Dark mode background image */
-[data-theme="dark"] .hero {
+/* ── Dark-image cross-fade layer ─────────────────────────
+   ::after holds ALL dark-mode backgrounds. It starts fully
+   transparent and fades in when data-theme="dark" is set.
+   Because only opacity changes (a compositor-only property)
+   the browser avoids repainting the background-image entirely,
+   eliminating the white-flash on theme swap.
+   ---------------------------------------------------------- */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
   background-image: url('../images/Desktop\ dark/desktop_bg_4.jpg');
-  /* Optional: darken with the same image instead of swapping:
-  background-blend-mode: multiply;
-  background-color: rgba(0, 0, 0, 0.4); */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  opacity: 0;
+  /* transition is set via the .hero::after !important rule in animations.css */
+  pointer-events: none;
+}
+
+/* Fade in the dark layer — no background-image swap, no flicker */
+[data-theme="dark"] .hero::after {
+  opacity: 1;
+}
+
+/* Lift content above the ::after overlay layer */
+.hero > .container {
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 767px) {
-  /* Mobile — light mode */
   .hero {
     background-image: url('../images/Mobile\ light/mobile_dedicated_v4.png');
   }
 
-  /* Mobile — dark mode */
-  [data-theme="dark"] .hero {
+  /* Swap the ::after source for the mobile dark image */
+  .hero::after {
     background-image: url('../images/Mobile\ dark/mobile_bg_final_brand.png');
   }
 }
@@ -462,11 +517,7 @@
 .cases-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-6);
-}
-@media (min-width: 768px) {
-  .cases-grid { grid-template-columns: repeat(1, 1fr); }
-  .cases-grid .case-card:first-child { grid-column: 1 / -1; }
+  gap: var(--space-4);
 }
 
 /* Skills */
@@ -880,30 +931,20 @@
 
 /* ----------------------------------------------------------
    CASE STUDY — Sidebar TOC
+   Matches the DS sidebar geometry exactly.
    ---------------------------------------------------------- */
-/* Hidden on mobile — the in-page sections are self-navigable */
 .case-toc {
   display: none;
-  padding: var(--space-5);
+  padding: var(--space-5) var(--space-4);
   border: var(--border-normal);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   background-color: var(--color-bg-alt);
-  box-shadow: var(--shadow-sm);
-  transition:
-    background-color var(--duration-slower) var(--ease-out),
-    border-color     var(--duration-slower) var(--ease-out),
-    box-shadow       var(--duration-slower) var(--ease-out);
-}
-
-[data-theme="dark"] .case-toc {
-  box-shadow: none;
-  border-color: var(--color-border-strong);
 }
 
 @media (min-width: 1024px) {
   .case-sidebar {
     position: sticky;
-    top: calc(56px + var(--space-8));
+    top: var(--space-24); /* clears the floating glass nav */
   }
 
   .case-toc {
@@ -911,15 +952,15 @@
   }
 }
 
+/* "INDEX" group header — mono label, same as DS sidebar group labels */
 .case-toc__label {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--color-text-3);
-  padding-bottom: var(--space-3);
-  margin-bottom: var(--space-3);
-  border-bottom: var(--border-thin);
+  padding: 0 var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
 .case-toc__list {
@@ -934,64 +975,63 @@
   counter-increment: toc-counter;
 }
 
+/* Link row — flex, centered, matching DS sidebar link geometry */
 .case-toc__link {
   display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
+  align-items: center;
+  gap: var(--space-3);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
+  font-weight: 500;
   line-height: 1.4;
   color: var(--color-text-2);
   transition:
     color            var(--duration-normal) var(--ease-out),
-    background-color var(--duration-normal) var(--ease-out),
-    box-shadow       var(--duration-normal) var(--ease-out);
+    background-color var(--duration-normal) var(--ease-out);
 }
 
-/* Section number — mono, muted by default, transitions to accent */
+/* Sequential number — same size as link text, muted mono weight */
 .case-toc__link::before {
   content: counter(toc-counter, decimal-leading-zero);
   font-family: var(--font-mono);
-  font-size: var(--fs-label);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
   color: var(--color-text-3);
   flex-shrink: 0;
   transition: color var(--duration-normal) var(--ease-out);
 }
 
-/* Hover — subtle accent tint + left indicator */
+/* Hover — text shifts to full contrast, no border indicators */
 .case-toc__link:hover {
   color: var(--color-text-1);
-  background-color: color-mix(in srgb, var(--color-ancora) 8%, transparent);
-  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--color-ancora) 45%, transparent);
+  background-color: rgba(28, 95, 168, 0.05);
 }
 .case-toc__link:hover::before {
   color: var(--color-ancora);
 }
 
 [data-theme="dark"] .case-toc__link:hover {
-  background-color: color-mix(in srgb, var(--color-solar) 10%, transparent);
-  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--color-solar) 45%, transparent);
+  background-color: rgba(245, 200, 66, 0.07);
 }
 [data-theme="dark"] .case-toc__link:hover::before {
   color: var(--color-solar);
 }
 
-/* Active — full accent indicator, stronger bg, bold text */
+/* Active — capsule pill tint, high-contrast text, no left bar */
 .case-toc__link.is-active {
   color: var(--color-text-1);
   font-weight: 600;
-  background-color: color-mix(in srgb, var(--color-ancora) 10%, transparent);
-  box-shadow: inset 3px 0 0 var(--color-ancora);
+  background-color: rgba(28, 95, 168, 0.08);
 }
 .case-toc__link.is-active::before {
   color: var(--color-ancora);
+  font-weight: 700;
 }
 
 [data-theme="dark"] .case-toc__link.is-active {
-  background-color: color-mix(in srgb, var(--color-solar) 12%, transparent);
-  box-shadow: inset 3px 0 0 var(--color-solar);
+  background-color: rgba(245, 200, 66, 0.10);
 }
 [data-theme="dark"] .case-toc__link.is-active::before {
   color: var(--color-solar);

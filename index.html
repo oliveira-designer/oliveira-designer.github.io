@@ -29,7 +29,6 @@
        HEADER
        ============================================================ -->
   <header class="site-header" id="home" role="banner">
-    <div class="container">
       <nav class="nav reveal reveal--from-top" data-reveal-on-load data-reveal-delay="120" role="navigation" aria-label="Main navigation">
 
         <!-- Logo: troca conforme tema -->
@@ -47,7 +46,7 @@
           <!-- Links de navegação — só visíveis no desktop -->
           <div class="nav__links">
             <a href="#home" class="nav__link nav__link nav__link--active" aria-current="page">Home</a>
-            <a href="#work" class="nav__link nav__link" aria-current="page">Work</a>
+            <a href="#work" class="nav__link nav__link" aria-current="page">Case studies</a>
             <a href="about.html" class="nav__link">About</a>
             <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" class="nav__link" target="_blank" rel="noopener noreferrer">
               Resume
@@ -97,13 +96,12 @@
       <!-- Mobile menu drawer -->
       <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
         <a href="#home"      class="nav__mobile-link nav__link--active">Home</a>
-        <a href="#work"      class="nav__mobile-link">Work</a>
+        <a href="#work"      class="nav__mobile-link">Case studies</a>
         <a href="about.html" class="nav__mobile-link">About</a>
         <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
         <a href="mailto:rmouraolivdesigner@gmail.com" class="nav__mobile-link">Contact</a>
       </div>
 
-    </div>
   </header>
 
   <!-- ============================================================
@@ -116,7 +114,7 @@
       <div class="container">
 
         <div class="reveal-group" data-reveal-on-load data-reveal-delay="280">
-        <span class="hero__overline reveal-item">Senior Product Designer · 12 years</span>
+        <span class="hero__overline reveal-item">Hi, I'm Renan</span>
 
         <h1 class="hero__headline reveal-item" id="hero-headline">
           I absorb complex contexts.<br>
@@ -163,73 +161,59 @@
 
           <!-- Case 1: Shell Box — Featured -->
           <article class="case-card case-card--featured" role="listitem">
+            <div class="case-card__visual" aria-hidden="true">
+              <img src="images/case-thumbnails/sb-thumb-light.png" alt="Shell Box app interface" class="case-card__img--light" loading="lazy" />
+              <img src="images/case-thumbnails/sb-thumb-dark.png" alt="Shell Box app interface" class="case-card__img--dark" loading="lazy" />
+            </div>
+
             <div class="case-card__content">
-              <div class="case-card__meta">
-                <span class="case-card__company">Raízen</span>
-              </div>
-          
+              <p class="case-card__client">Raízen</p>
               <h3 class="case-card__title">Shell Box Home Redesign</h3>
-          
+              <div class="case-card__tags">
+                <span class="case-card__tag">Product Strategy</span>
+                <span class="case-card__tag">Conversion Opt.</span>
+                <span class="case-card__tag">Mobile UX</span>
+              </div>
               <p class="case-card__lead">
                 Simplifying complex app experiences, sharpening information hierarchy,
                 and turning home screen interactions into measurable fuel conversion gains.
               </p>
-          
-              <div class="case-card__tags" role="list" aria-label="Disciplines">
-                <span class="badge badge--neutral" role="listitem">Product Strategy</span>
-                <span class="badge badge--neutral" role="listitem">Conversion Optimization</span>
-                <span class="badge badge--neutral" role="listitem">Mobile UX</span>
-              </div>
-          
               <div class="case-card__metrics" role="list" aria-label="Key results">
                 <div class="metric" role="listitem">
-                  <!-- <span class="metric__value">+21%</span> -->
                   <span class="metric__value">XX</span>
                   <span class="metric__label">Home-to-fuel conversion rate</span>
                 </div>
                 <div class="metric" role="listitem">
-                  <!-- <span class="metric__value">+12%</span> -->
                   <span class="metric__value">XX</span>
                   <span class="metric__label">Exploratory engagement</span>
                 </div>
               </div>
-          
               <div class="case-card__footer">
-                <span>
-                  <a href="mailto:rmouraolivdesigner@gmail.com?subject=Shell Box Case Study Access" class="btn btn--secondary" aria-label="Request access to Shell Box case study">
-                    Request access
-                  </a>
-                </span>
+                <a href="mailto:rmouraolivdesigner@gmail.com?subject=Shell Box Case Study Access" class="btn btn--secondary" aria-label="Request access to Shell Box case study">Request access</a>
               </div>
-            </div>
-          
-            <div class="case-card__visual" aria-hidden="true">
-              <img src="images/case-thumbnails/sb-thumb-light.png" alt="Shell Box Project Thumbnail" class="case-card__img--light" loading="lazy" />
-              <img src="images/case-thumbnails/sb-thumb-dark.png" alt="Shell Box Project Thumbnail" class="case-card__img--dark" loading="lazy" />
             </div>
           </article>
 
           <!-- Case 2: New Relic -->
-          <article class="case-card case-card--featured" role="listitem">
+          <article class="case-card case-card--featured case-card--flip" role="listitem">
+            <div class="case-card__visual" aria-hidden="true">
+              <img src="images/case-thumbnails/nr-thumb-light.png" alt="New Relic Cloud Resources Manager interface" class="case-card__img--light" loading="lazy" />
+              <img src="images/case-thumbnails/nr-thumb-dark.png" alt="New Relic Cloud Resources Manager interface" class="case-card__img--dark" loading="lazy" />
+            </div>
+
             <div class="case-card__content">
-              <div class="case-card__meta">
-                <span class="case-card__company">New Relic</span>
-              </div>
-          
+              <p class="case-card__client">New Relic</p>
               <h3 class="case-card__title">Cloud Resources Manager</h3>
-          
+              <div class="case-card__tags">
+                <span class="case-card__tag">FinOps</span>
+                <span class="case-card__tag">B2B</span>
+                <span class="case-card__tag">Web UX</span>
+              </div>
               <p class="case-card__lead">
-                Researching an emerging FinOps domain, designing multi-persona cost 
-                visibility for engineering teams, and delivering a structured roadmap 
+                Researching an emerging FinOps domain, designing multi-persona cost
+                visibility for engineering teams, and delivering a structured roadmap
                 that turned cloud spend complexity into actionable infrastructure.
               </p>
-          
-              <div class="case-card__tags" role="list" aria-label="Disciplines">
-                <span class="badge badge--neutral" role="listitem">FinOps</span>
-                <span class="badge badge--neutral" role="listitem">B2B</span>
-                <span class="badge badge--neutral" role="listitem">Web UX</span>
-              </div>
-          
               <div class="case-card__metrics" role="list" aria-label="Key results">
                 <div class="metric" role="listitem">
                   <span class="metric__value">4</span>
@@ -240,42 +224,31 @@
                   <span class="metric__label">Cited cost monitoring</span>
                 </div>
               </div>
-          
               <div class="case-card__footer">
-                <span>
-                  <a href="mailto:rmouraolivdesigner@gmail.com?subject=New Relic Case Study Access" class="btn btn--secondary" aria-label="Request access to New Relic case study">
-                    Request access
-                  </a>
-                </span>
+                <a href="mailto:rmouraolivdesigner@gmail.com?subject=New Relic Case Study Access" class="btn btn--secondary" aria-label="Request access to New Relic case study">Request access</a>
               </div>
-            </div>
-          
-            <div class="case-card__visual" aria-hidden="true">
-              <img src="images/case-thumbnails/nr-thumb-light.png" alt="New Relic Project Thumbnail" class="case-card__img--light" loading="lazy" />
-              <img src="images/case-thumbnails/nr-thumb-dark.png" alt="New Relic Project Thumbnail" class="case-card__img--dark" loading="lazy" />
             </div>
           </article>
 
           <!-- Case 3: Dotz -->
           <article class="case-card case-card--featured" role="listitem">
+            <div class="case-card__visual" aria-hidden="true">
+              <img src="images/case-thumbnails/dotz-thumb-light.png" alt="Dotz CRM Retail Platform interface" class="case-card__img--light" loading="lazy" />
+              <img src="images/case-thumbnails/dotz-thumb-dark.png" alt="Dotz CRM Retail Platform interface" class="case-card__img--dark" loading="lazy" />
+            </div>
+
             <div class="case-card__content">
-              <div class="case-card__meta">
-                <span class="case-card__company">Dotz</span>
-              </div>
-          
+              <p class="case-card__client">Dotz</p>
               <h3 class="case-card__title">CRM Retail Platform</h3>
-          
+              <div class="case-card__tags">
+                <span class="case-card__tag">Internal Tool</span>
+                <span class="case-card__tag">B2B2C</span>
+                <span class="case-card__tag">Web UX</span>
+              </div>
               <p class="case-card__lead">
-                Redesigning an internal tool for retail campaign management, reducing 
+                Redesigning an internal tool for retail campaign management, reducing
                 operational overhead and improving team efficiency across B2C loyalty workflows.
               </p>
-          
-              <div class="case-card__tags" role="list" aria-label="Disciplines">
-                <span class="badge badge--neutral" role="listitem">Internal Tool</span>
-                <span class="badge badge--neutral" role="listitem">B2B2C</span>
-                <span class="badge badge--neutral" role="listitem">Web UX</span>
-              </div>
-          
               <div class="case-card__metrics" role="list" aria-label="Key results">
                 <div class="metric" role="listitem">
                   <span class="metric__value">20% Faster</span>
@@ -286,43 +259,31 @@
                   <span class="metric__label">Manual configurations</span>
                 </div>
               </div>
-
               <div class="case-card__footer">
-                <span>
-                  <a href="case-studies/dotz.html" class="btn btn--primary" aria-label="View CRM Retail Platform case study">
-                    View case study
-                  </a>
-                </span>
+                <a href="case-studies/dotz.html" class="btn btn--secondary" aria-label="View CRM Retail Platform case study">View case study</a>
               </div>
-            </div>
-          
-            <div class="case-card__visual" aria-hidden="true">
-              <img src="images/case-thumbnails/dotz-thumb-light.png" alt="Dotz Project Thumbnail" class="case-card__img--light" loading="lazy" />
-              <img src="images/case-thumbnails/dotz-thumb-dark.png" alt="Dotz Box Project Thumbnail" class="case-card__img--dark" loading="lazy" />
             </div>
           </article>
 
           <!-- Case 4: Gas Stations Map — Coming Soon -->
-          <article class="case-card case-card--featured case-card--placeholder" role="listitem" aria-label="Gas Stations Map — case study coming soon">
+          <article class="case-card case-card--featured case-card--placeholder case-card--flip" role="listitem" aria-label="Gas Stations Map — case study coming soon">
+            <div class="case-card__visual" aria-hidden="true">
+              <img src="images/case-thumbnails/map-thumb-light.png" alt="" class="case-card__img--light" loading="lazy" />
+              <img src="images/case-thumbnails/map-thumb-dark.png" alt="" class="case-card__img--dark" loading="lazy" />
+            </div>
+
             <div class="case-card__content">
-              <div class="case-card__meta">
-                <span class="case-card__company">Raízen</span>
-                <span class="badge badge--draft">Coming Soon</span>
-              </div>
-
+              <p class="case-card__client">Raízen <span class="case-card__status">— Coming Soon</span></p>
               <h3 class="case-card__title">Gas Stations Map</h3>
-
-              <p class="case-card__lead">
-                Redesigning an internal tool for retail campaign management, reducing
-                operational overhead and improving team efficiency across B2C loyalty workflows.
-              </p>
-
-              <div class="case-card__tags" role="list" aria-label="Disciplines">
-                <span class="badge badge--neutral" role="listitem">Internal Tool</span>
-                <span class="badge badge--neutral" role="listitem">B2B2C</span>
-                <span class="badge badge--neutral" role="listitem">Web UX</span>
+              <div class="case-card__tags">
+                <span class="case-card__tag">Internal Tool</span>
+                <span class="case-card__tag">B2B2C</span>
+                <span class="case-card__tag">Web UX</span>
               </div>
-
+              <p class="case-card__lead">
+                Designing an internal geolocation tool to optimise fuel station discovery,
+                route planning and fleet operations for Raízen field teams.
+              </p>
               <div class="case-card__metrics" role="list" aria-label="Key results">
                 <div class="metric" role="listitem">
                   <span class="metric__value">+10%</span>
@@ -333,19 +294,9 @@
                   <span class="metric__label">Time savings</span>
                 </div>
               </div>
-
               <div class="case-card__footer">
-                <span>
-                  <button type="button" class="btn btn--secondary" disabled aria-disabled="true">
-                    Coming Soon
-                  </button>
-                </span>
+                <button class="btn btn--secondary" disabled aria-disabled="true">Case study in progress</button>
               </div>
-            </div>
-
-            <div class="case-card__visual" aria-hidden="true">
-              <img src="images/case-thumbnails/map-thumb-light.png" alt="" class="case-card__img--light" loading="lazy" />
-              <img src="images/case-thumbnails/map-thumb-dark.png" alt="" class="case-card__img--dark" loading="lazy" />
             </div>
           </article>
 
