@@ -195,15 +195,15 @@
   border-color: transparent;
 }
 
-/* ── Visual half ─────────────────────────────────────────── */
+/* ── Visual half — full-bleed studio canvas ──────────────── */
 .case-card__visual {
   overflow: hidden;
   background-color: var(--color-bg-alt);
   aspect-ratio: 4/3;
   display: flex;
-  align-items: center;
+  align-items: flex-end;   /* ground the mockup at the bottom */
   justify-content: center;
-  padding: var(--space-6) var(--space-4);
+  padding: 0;              /* full-bleed: bg fills all four edges */
 }
 [data-theme="dark"] .case-card__visual {
   background-color: var(--color-abismo);
@@ -211,11 +211,13 @@
 
 .case-card__img--light,
 .case-card__img--dark {
+  display: block;
   max-height: 100%;
   max-width: 100%;
   width: auto;
   height: auto;
   object-fit: contain;
+  object-position: bottom center;
   transition: transform var(--duration-slower) var(--ease-out);
 }
 .case-card:hover .case-card__img--light,
@@ -235,15 +237,21 @@
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-4);
 }
 
-/* Client / company label */
-.case-card__client {
+/* Company eyebrow + title — grouped heading block */
+.case-card__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.case-card__eyebrow {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   color: var(--color-text-3);
 }
 .case-card__status {
@@ -285,12 +293,13 @@
   border-color: rgba(255, 255, 255, 0.10);
 }
 
-/* Description prose */
+/* Description prose — margin-top:auto pushes this + metrics + footer to the bottom */
 .case-card__lead {
   font-family: var(--font-body);
   font-size: var(--fs-body);
   line-height: 1.70;
   color: var(--color-text-2);
+  margin-top: auto;
 }
 
 /* Metrics — separated by a subtle rule */
@@ -323,9 +332,8 @@
   line-height: 1.4;
 }
 
-/* Footer — inline text action link, anchored at the bottom */
+/* Footer — sits naturally after metrics, no extra push needed */
 .case-card__footer {
-  margin-top: auto;
   padding-top: var(--space-4);
 }
 .case-card__action {
@@ -587,14 +595,14 @@
   justify-content: space-around;
   min-width: 100%;
   flex-shrink: 0;
-  gap: var(--space-16);
-  padding-right: var(--space-16); /* prevents the visible jump at loop reset */
+  gap: var(--space-24);
+  padding-right: var(--space-24); /* prevents the visible jump at loop reset */
   animation: ticker-scroll 25s linear infinite;
 }
 
 /* Pause animation on hover */
 .logo-strip__ticker:hover .logo-strip__track {
-  animation-play-state: paused;
+  animation-play-state: running;
 }
 
 .logo-strip__item {
