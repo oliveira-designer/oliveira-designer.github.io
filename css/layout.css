@@ -40,9 +40,8 @@ html {
 
   /* Glassmorphism — light mode */
   background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px) saturate(1.6);
+  backdrop-filter: blur(30px) saturate(1.6);
   -webkit-backdrop-filter: blur(20px) saturate(1.6);
-  /* border: 1px solid rgba(255, 255, 255, 0.3); */
   border: 1px solid var(--color-superficie);
   box-shadow: var(--shadow-sm);
 
@@ -172,12 +171,17 @@ html {
   left: 0;
   right: 0;
 
-  /* Glass panel */
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(20px) saturate(1.6);
-  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  /* Own compositor layer — bypasses parent backdrop-filter stacking
+     restriction on iOS Safari / Chrome mobile. */
+  isolation: isolate;
+  transform: translate3d(0, 0, 0);
+
+  /* Glass panel — milkier tint keeps text readable while blur settles */
+  background: rgba(255, 255, 255, 1);
+  -webkit-backdrop-filter: blur(50px) saturate(1.6);
+          backdrop-filter: blur(50px) saturate(1.6);
   border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   padding: var(--space-3);
 
@@ -186,7 +190,9 @@ html {
     border-color var(--duration-slower) var(--ease-out);
 }
 [data-theme="dark"] .nav__mobile-menu {
-  background: rgba(26, 26, 46, 0.88);
+  background: rgba(26, 26, 46, 1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+          backdrop-filter: blur(20px) saturate(1.6);
   border-color: rgba(74, 74, 96, 0.35);
 }
 .nav__mobile-menu.is-open { display: flex; }
@@ -210,10 +216,10 @@ html {
 }
 .nav__mobile-link:hover {
   color: var(--color-text-1);
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.04);
 }
 [data-theme="dark"] .nav__mobile-link:hover {
-  background-color: rgba(255, 255, 255, 0.07);
+  background-color: rgba(255, 255, 255, 0.06);
 }
 .nav__mobile-link--active {
   color: var(--color-text-1);
@@ -803,21 +809,35 @@ html {
 }
 
 /* ----------------------------------------------------------
-   CASE STUDY — Hero (full-viewport, bottom-anchored)
+   CASE STUDY — Hero
+   Solid surface, floating header clearance at top, showcase
+   image anchors the bottom of the text block.
    ---------------------------------------------------------- */
 .case-hero {
-  min-height: 100dvh;
-  padding: 0 0 var(--space-16);
-  border-bottom: var(--border-normal);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  background: var(--color-bg);
+  color: var(--color-text-1);
+  padding-top: calc(var(--space-24) + var(--space-8));
+  padding-bottom: var(--space-12);
 }
 
 .case-hero__inner {
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
+  margin-bottom: var(--space-12);
+}
+
+/* Showcase image — spans full container width below the text block */
+.case-hero__showcase-media {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.case-hero__showcase-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
 }
 
 .case-hero__overline {
@@ -919,10 +939,12 @@ html {
 }
 
 @media (min-width: 1024px) {
-  /* 3 cols sidebar · 7 cols content · 2 cols editorial negative space */
+  /* 2-column: stable 240px sidebar · content fills remaining 1fr.
+     Removes the fixed right void track that clashed with max-width on
+     .case-content, causing unanchored whitespace on wider viewports. */
   .case-layout {
-    grid-template-columns: 3fr 7fr 2fr;
-    column-gap: var(--space-10);
+    grid-template-columns: 240px 1fr;
+    column-gap: var(--space-12);
   }
 }
 
@@ -991,14 +1013,11 @@ html {
 
 /* ----------------------------------------------------------
    CASE STUDY — Sidebar TOC
-   Matches the DS sidebar geometry exactly.
+   Floats directly over the page background — no card box.
+   Active capsule pill provides the only surface treatment.
    ---------------------------------------------------------- */
 .case-toc {
   display: none;
-  padding: var(--space-5) var(--space-4);
-  border: var(--border-normal);
-  border-radius: var(--radius-md);
-  background-color: var(--color-bg-alt);
 }
 
 @media (min-width: 1024px) {
@@ -1099,11 +1118,33 @@ html {
 
 /* ----------------------------------------------------------
    CASE STUDY — Content column
+   Left padding optically aligns the text with the visible content
+   inside the showcase image, which carries internal graphic padding.
    ---------------------------------------------------------- */
 .case-content {
   display: flex;
   flex-direction: column;
-  min-width: 0; /* prevent grid blowout */
+  min-width: 0;
+  padding-left: var(--space-12);
+  max-width: 68ch;
+  margin-right: auto;
+}
+
+/* ----------------------------------------------------------
+   CASE STUDY — Full-bleed figure breakout
+   Snaps the figure to 100vw regardless of parent column width.
+   Use for service blueprints, large process maps, hero mockups.
+   Works inside any container depth via the 50% left + translateX trick.
+   ---------------------------------------------------------- */
+.cs-figure--full-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  max-width: none;
 }
 
 /* ----------------------------------------------------------
