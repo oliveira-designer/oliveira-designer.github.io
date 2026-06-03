@@ -10,7 +10,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="../css/output.css" />
   <link rel="stylesheet" href="../css/tokens.css" />
@@ -197,13 +197,70 @@
                 
                 <p>I will also share some notable results from this phase.</p>
 
-                <p>Involved teams: Commercial · CRM · Analytics · Data Engineering · Retail (My squad)</p>
+                <div class="team-section">
+                  <p class="team-section__title">Involved teams</p>
+                  <div class="team-grid">
+
+                    <div class="team-card">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M19 13l-7 7l-7 -7a7 7 0 0 1 14 0z" />
+                        <path d="M12 20v-17" />
+                        <path d="M12 12l6 -6" />
+                        <path d="M12 12l-6 -6" />
+                      </svg>
+                      <span class="team-card__name">Commercial</span>
+                    </div>
+
+                    <div class="team-card">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.55 -4.521a2 2 0 0 1 -.45 -1.228v-2.751z" />
+                      </svg>
+                      <span class="team-card__name">CRM</span>
+                    </div>
+
+                    <div class="team-card">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M21 7l-9 9l-4 -4l-5 5" />
+                        <path d="M21 7h-5" />
+                        <path d="M21 7v5" />
+                      </svg>
+                      <span class="team-card__name">Analytics</span>
+                    </div>
+
+                    <div class="team-card">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <ellipse cx="12" cy="6" rx="8" ry="3"/>
+                        <path d="M4 6v6a8 3 0 0 0 16 0v-6" />
+                        <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
+                      </svg>
+                      <span class="team-card__name">Data Engineering</span>
+                    </div>
+
+                    <div class="team-card team-card--mine">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 21l18 0" />
+                        <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+                        <path d="M5 21l0 -10.15" />
+                        <path d="M19 21l0 -10.15" />
+                        <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+                      </svg>
+                      <span class="team-card__name">Retail (My squad)</span>
+                    </div>
+
+                  </div>
+                </div>
               </div>
             </section>
 
             <!-- ======================================================
                  02. CHALLENGES
                  ====================================================== -->
+                
             <section id="challenges" class="case-section reveal">
               <header class="case-section__header">
                 <span class="case-section__number">02</span>
@@ -211,7 +268,12 @@
               </header>
               <div class="case-section__body">
 
-                <div class="skills-grid">
+                <figure class="cs-figure">
+                  <img src="../images/case-assets/dotz/old-ui.png" alt="Screenshot of the old interface" />
+                  <figcaption>Old interface: the starting point before the discovery process</figcaption>
+                </figure>
+
+                <div class="challenges-grid">
 
                   <article class="skill-card">
                     <div class="skill-card__header">
@@ -243,10 +305,7 @@
 
                 </div>
 
-                <figure class="cs-figure">
-                  <img src="" alt="Screenshot of the old interface" />
-                  <figcaption>Old interface — the starting point before any discovery process</figcaption>
-                </figure>
+                
 
               </div>
             </section>
@@ -260,26 +319,34 @@
                 <h2 class="case-section__title">Expected results</h2>
               </header>
               <div class="case-section__body">
-                <p>We wanted a means by which it would be possible to <strong>hire marketing and CRM actions</strong> and understand the effectiveness of these actions on the retail partner's business. Increasing sales revenue was the main goal.</p>
+                <p class="case-lead-text">We wanted a means by which it would be possible to <strong>hire marketing and CRM actions</strong> and understand the effectiveness of these actions on the retail partner's business. Increasing sales revenue was the main goal.</p>
 
-                <dl class="case-hero__meta">
-                  <div>
-                    <dt>Revenue</dt>
-                    <dd>We planned to increase revenue with this project by making the platform a support tool for commercial executives, streamlining sales to retail partners.</dd>
-                  </div>
-                  <div>
-                    <dt>Sales</dt>
-                    <dd>Directly related to revenue, this goal was tied to the objectives of the commercial executives: they needed to reach the sales targets set by the company.</dd>
-                  </div>
-                  <div>
-                    <dt>Cross-selling</dt>
-                    <dd>We wanted to promote cross-selling by encouraging partners to purchase as many actions as needed to support their business.</dd>
-                  </div>
-                  <div>
-                    <dt>Strengthening relationships</dt>
-                    <dd>Dotz aimed to keep its partners increasingly closer. The platform should serve not only as a workspace but also as a showcase to attract partners.</dd>
-                  </div>
-                </dl>
+                <div class="results-grid">
+                  <article class="skill-card">
+                    <div class="skill-card__header">
+                      <h3 class="skill-card__title">Revenue</h3>
+                    </div>
+                    <p class="skill-card__body">We planned to increase revenue with this project by making the platform a support tool for commercial executives, streamlining sales to retail partners.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header">
+                      <h3 class="skill-card__title">Sales</h3>
+                    </div>
+                    <p class="skill-card__body">Directly related to revenue, this goal was tied to the objectives of the commercial executives: they needed to reach the sales targets set by the company.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header">
+                      <h3 class="skill-card__title">Cross-selling</h3>
+                    </div>
+                    <p class="skill-card__body">We wanted to promote cross-selling by encouraging partners to purchase as many actions as needed to support their business.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header">
+                      <h3 class="skill-card__title">Strengthening relationships</h3>
+                    </div>
+                    <p class="skill-card__body">Dotz aimed to keep its partners increasingly closer. The platform should serve not only as a workspace but also as a showcase to attract partners.</p>
+                  </article>
+                </div>
               </div>
             </section>
 

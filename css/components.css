@@ -86,6 +86,29 @@
   color: var(--color-text-1);
 }
 
+/* Secondary Hero */
+.btn--secondary-hero {
+  background-color: rgba(255, 255, 255, 0.45);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.2);
+  color: var(--color-text-1);
+  transition: background-color var(--duration-normal), border-color var(--duration-normal), color var(--duration-normal);
+}
+.btn--secondary-hero:hover {
+  border-color: var(--color-border-strong);
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-1);
+}
+[data-theme="dark"] .btn--secondary-hero {
+  background-color: rgba(0, 0, 0, 0.25);
+  color: var(--color-text-1);
+}
+[data-theme="dark"] .btn--secondary-hero:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: var(--color-text-1);
+}
+
 /* Solar */
 .btn--solar {
   background-color: var(--color-solar);
@@ -703,6 +726,17 @@
   font-size: var(--fs-body);
   line-height: 1.75;
   color: var(--color-text-2);
+}
+
+/* Lead paragraph — large intro statement, overrides the base body style */
+.case-lead-text {
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  color: var(--color-text-1);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-12);
 }
 
 .case-section__body ul {

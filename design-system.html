@@ -7,7 +7,7 @@
   <link rel="icon" type="image/svg+xml" href="logos/logo-icon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/reset.css" />
   <link rel="stylesheet" href="css/components.css" />
@@ -526,6 +526,11 @@
           <a href="#comp-nav" class="ds-nav-link">Navigation</a>
           <a href="#cards"    class="ds-nav-link">Case Cards</a>
         </div>
+        <div class="ds-nav-group">
+          <p class="ds-nav-group__label">Layout</p>
+          <a href="#layout-grid"   class="ds-nav-link">Reading Grid</a>
+          <a href="#content-grids" class="ds-nav-link">Content Grids</a>
+        </div>
       </nav>
     </aside>
 
@@ -723,8 +728,11 @@
         <section class="ds-section" id="typography">
           <div class="ds-section__title">Typography Scale</div>
           <p class="ds-section__desc">
-            Fluid sizes use <code>clamp()</code> — they scale between a min and max with the viewport.
-            Display and Mono roles use <code>Space Mono</code>; Body uses <code>Plus Jakarta Sans</code>.
+            Fluid sizes use <code>clamp()</code>. Two families only: <code>Geist</code> (geometric sans)
+            drives all display headings (<code>--font-display</code>) and technical micro-labels
+            (<code>--font-mono</code>); <code>Plus Jakarta Sans</code> handles body copy. Mono-style
+            labels simulate the technical register with <code>text-transform: uppercase</code> +
+            <code>letter-spacing: 0.08em</code> — no typewriter face required.
           </p>
           <div class="ds-type-scale">
 
@@ -732,7 +740,7 @@
               <div>
                 <span class="ds-type-row__token">--fs-display</span>
                 <span class="ds-type-row__clamp">clamp(36px, 5vw, 52px)</span>
-                <span class="ds-type-row__family">Space Mono</span>
+                <span class="ds-type-row__family">Geist · --font-display · wt 700</span>
               </div>
               <div class="ds-type-row__sample" style="font-size:var(--fs-display);font-family:var(--font-display);font-weight:700;line-height:1.1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
                 I design decisions
@@ -743,7 +751,7 @@
               <div>
                 <span class="ds-type-row__token">--fs-h1</span>
                 <span class="ds-type-row__clamp">clamp(26px, 3.5vw, 32px)</span>
-                <span class="ds-type-row__family">Space Mono</span>
+                <span class="ds-type-row__family">Geist · --font-display · wt 700</span>
               </div>
               <div class="ds-type-row__sample" style="font-size:var(--fs-h1);font-family:var(--font-display);font-weight:700;line-height:1.2;">
                 Shell Box Home Redesign
@@ -754,7 +762,7 @@
               <div>
                 <span class="ds-type-row__token">--fs-h2</span>
                 <span class="ds-type-row__clamp">clamp(18px, 2.5vw, 22px)</span>
-                <span class="ds-type-row__family">Space Mono</span>
+                <span class="ds-type-row__family">Geist · --font-display · wt 700</span>
               </div>
               <div class="ds-type-row__sample" style="font-size:var(--fs-h2);font-family:var(--font-display);font-weight:700;line-height:1.25;">
                 Cloud Resources Manager
@@ -765,7 +773,7 @@
               <div>
                 <span class="ds-type-row__token">--fs-h3</span>
                 <span class="ds-type-row__clamp">clamp(14px, 1.5vw, 16px)</span>
-                <span class="ds-type-row__family">Space Mono</span>
+                <span class="ds-type-row__family">Geist · --font-display · wt 700</span>
               </div>
               <div class="ds-type-row__sample" style="font-size:var(--fs-h3);font-family:var(--font-display);font-weight:700;line-height:1.3;">
                 CRM Retail Platform
@@ -776,7 +784,7 @@
               <div>
                 <span class="ds-type-row__token">--fs-body</span>
                 <span class="ds-type-row__clamp">clamp(14px, 1.2vw, 16px)</span>
-                <span class="ds-type-row__family">Plus Jakarta Sans</span>
+                <span class="ds-type-row__family">Plus Jakarta Sans · --font-body</span>
               </div>
               <div class="ds-type-row__sample" style="font-size:var(--fs-body);font-family:var(--font-body);line-height:1.65;color:var(--color-text-2);">
                 Redesigning an internal tool for retail campaign management, reducing operational overhead
@@ -788,7 +796,7 @@
               <div>
                 <span class="ds-type-row__token">--fs-body-sm</span>
                 <span class="ds-type-row__clamp">clamp(12px, 1vw, 13px)</span>
-                <span class="ds-type-row__family">Plus Jakarta Sans</span>
+                <span class="ds-type-row__family">Plus Jakarta Sans · --font-body</span>
               </div>
               <div class="ds-type-row__sample" style="font-size:var(--fs-body-sm);font-family:var(--font-body);line-height:1.6;color:var(--color-text-2);">
                 20% faster campaign creation time · Zero manual configurations
@@ -799,9 +807,9 @@
               <div>
                 <span class="ds-type-row__token">--fs-label</span>
                 <span class="ds-type-row__clamp">clamp(10px, 1vw, 11px)</span>
-                <span class="ds-type-row__family">Space Mono</span>
+                <span class="ds-type-row__family">Geist · --font-mono · uppercase + tracking</span>
               </div>
-              <div class="ds-type-row__sample" style="font-size:var(--fs-label);font-family:var(--font-mono);letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-3);">
+              <div class="ds-type-row__sample" style="font-size:var(--fs-label);font-family:var(--font-mono);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-3);">
                 RAÍZEN · CASE STUDIES · B2B2C
               </div>
             </div>
@@ -929,15 +937,35 @@
 &lt;button class="btn btn--secondary"&gt;Secondary&lt;/button&gt;
 &lt;button class="btn btn--solar"&gt;Solar&lt;/button&gt;
 &lt;button class="btn btn--ghost"&gt;Ghost&lt;/button&gt;
-&lt;button class="btn btn--primary" disabled aria-disabled="true"&gt;Disabled&lt;/button&gt;
+&lt;button class="btn btn--primary" disabled aria-disabled="true"&gt;Disabled&lt;/button&gt;</pre>
+            </details>
+          </div>
 
-&lt;!-- With arrow icon --&gt;
-&lt;button class="btn btn--primary"&gt;
-  Label
-  &lt;svg class="icon icon--arrow" viewBox="0 0 24 24" ...&gt;
-    &lt;path d="M5 12h14"/&gt;&lt;path d="M13 6l6 6-6 6"/&gt;
-  &lt;/svg&gt;
-&lt;/button&gt;</pre>
+          <p class="ds-sub">Glassmorphic Hero Button — .btn--secondary-hero</p>
+          <p class="ds-section__desc">Used over hero background images. Frosted glass fill with alpha background so the illustration shows through. Requires the hero's own background image to be visible beneath it.</p>
+
+          <div class="ds-component">
+            <div class="ds-preview ds-preview--row" style="background: linear-gradient(135deg, #FEF8E0 0%, #8CB4E0 100%);">
+              <a href="#" class="btn btn--secondary-hero">Send me an email</a>
+            </div>
+
+            <details class="ds-code">
+              <summary>CSS Spec</summary>
+<pre class="ds-code__block">/* Light mode */
+.btn--secondary-hero {
+  background-color: rgba(255, 255, 255, 0.45);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+          backdrop-filter: blur(12px) saturate(1.2);
+  color: var(--color-text-1);
+  border: 1px solid var(--color-border);
+}
+
+/* Dark mode */
+[data-theme="dark"] .btn--secondary-hero {
+  background-color: rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--color-text-1);
+}</pre>
             </details>
           </div>
         </section>
@@ -971,14 +999,17 @@
         <section class="ds-section" id="comp-nav">
           <div class="ds-section__title">Floating Glass Navigation</div>
           <p class="ds-section__desc">
-            Fixed pill using <code>backdrop-filter: blur(20px)</code>. The preview container uses
-            <code>transform: translate(0)</code> to create a new containing block, pinning the
-            fixed-position header within the preview frame.
+            Fixed pill at <code>position: fixed; top: var(--space-4)</code> with
+            <code>backdrop-filter: blur(30px) saturate(1.6)</code>. Max-width 1200px — slightly
+            wider than the 1120px content container. The preview container uses
+            <code>transform: translate(0)</code> to pin the fixed-position header within the frame.
+            The <code>.header__status-badge</code> micro-component hangs below the pill via
+            <code>position: absolute; top: calc(100% + var(--space-2))</code>.
           </p>
 
           <div class="ds-component">
             <!-- Nav preview: transform trick contains the fixed header -->
-            <div class="ds-preview ds-preview--nav" aria-label="Floating navigation preview">
+            <div class="ds-preview ds-preview--nav" aria-label="Floating navigation preview" style="height: 130px;">
               <header class="site-header" role="banner" style="top: 16px;">
                 <nav class="nav" role="navigation" aria-label="Main navigation">
                   <a href="index.html" class="nav__logo" aria-label="Renan Moura — Home">
@@ -997,6 +1028,11 @@
                     </button>
                   </div>
                 </nav>
+                <!-- Status badge micro-component -->
+                <div class="header__status-badge" role="status" aria-label="Portfolio status">
+                  <span class="status-pulse" aria-hidden="true"></span>
+                  Portfolio under construction
+                </div>
               </header>
             </div>
 
@@ -1034,12 +1070,46 @@
   &lt;!-- Mobile drawer — absolute glass panel below the pill --&gt;
   &lt;div class="nav__mobile-menu" id="mobileMenu"&gt;
     &lt;a href="#home"      class="nav__mobile-link"&gt;Home&lt;/a&gt;
-    &lt;a href="#work"      class="nav__mobile-link"&gt;Work&lt;/a&gt;lt;a href="#work"      class="nav__mobile-link"&lt;a href="#work"      class="nav__mobile-link"&gt;Work&lt;/a&gt;gt;Case studies&lt;a href="#work"      class="nav__mobile-link"&gt;Work&lt;/a&gt;lt;/a&lt;a href="#work"      class="nav__mobile-link"&gt;Work&lt;/a&gt;gt;
+    &lt;a href="#work"      class="nav__mobile-link"&gt;Case studies&lt;/a&gt;
     &lt;a href="about.html" class="nav__mobile-link"&gt;About&lt;/a&gt;
     &lt;a href="resume.pdf" class="nav__mobile-link"&gt;Resume&lt;/a&gt;
   &lt;/div&gt;
 
-&lt;/header&gt;</pre>
+  &lt;!-- Status badge — position:absolute anchored below pill right edge --&gt;
+  &lt;div class="header__status-badge" role="status" aria-label="Portfolio status"&gt;
+    &lt;span class="status-pulse" aria-hidden="true"&gt;&lt;/span&gt;
+    Portfolio under construction
+  &lt;/div&gt;
+
+&lt;/header&gt;
+
+&lt;!-- CSS spec (in components.css) --&gt;
+&lt;!--
+.header__status-badge {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: var(--space-6);
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;
+  background: rgba(255,255,255,0.70); border: 1px solid rgba(0,0,0,0.05);
+  color: var(--color-text-2); backdrop-filter: blur(8px);
+}
+[data-theme="dark"] .header__status-badge {
+  background: rgba(26,26,46,0.60); border-color: rgba(255,255,255,0.08);
+  color: var(--color-text-3);
+}
+.status-pulse {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--color-ambar);
+  animation: status-pulse 2.4s ease-in-out infinite;
+}
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+}
+--&gt;</pre>
             </details>
           </div>
         </section>
@@ -1135,6 +1205,118 @@
         </section>
 
       </div><!-- /chapter 02 -->
+
+
+      <!-- ════════════════════════════════════════════════════
+           03  LAYOUT SYSTEM
+           ════════════════════════════════════════════════════ -->
+      <div class="ds-chapter">
+        <div class="ds-chapter__header">
+          <span class="ds-chapter__index">03</span>
+          <h2 class="ds-chapter__title">Layout System</h2>
+        </div>
+
+        <!-- ─── CASE STUDY GRID ───────────────────────────── -->
+        <section class="ds-section" id="layout-grid">
+          <div class="ds-section__title">Case Study Reading Grid</div>
+          <p class="ds-section__desc">
+            The case body uses a stable 2-column grid: a fixed <code>240px</code> sidebar column
+            for the vertical index TOC, and a <code>1fr</code> content column. The fixed pixel
+            sidebar guarantees its left edge always matches the showcase image's left edge — no
+            fractional drift on different viewport widths. <code>.case-content</code> is capped at
+            <code>68ch</code> with <code>margin-right: auto</code> so any leftover <code>1fr</code>
+            space sits gracefully on the right.
+          </p>
+
+          <details class="ds-code">
+            <summary>CSS Spec</summary>
+<pre class="ds-code__block">/* Outer wrapper — zero horizontal padding */
+.case-body {
+  padding: var(--space-16) 0 var(--space-20);
+}
+
+/* 2-column grid — desktop only */
+.case-layout {
+  display: grid;
+  grid-template-columns: 1fr; /* mobile: stacked */
+  gap: var(--space-12);
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .case-layout {
+    grid-template-columns: 240px 1fr;
+    column-gap: var(--space-12);
+  }
+}
+
+/* Reading column — comfortable line length, left-aligned */
+.case-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 68ch;
+  margin-right: auto;
+}</pre>
+          </details>
+        </section>
+
+        <!-- ─── CONTENT GRIDS ─────────────────────────────── -->
+        <section class="ds-section" id="content-grids">
+          <div class="ds-section__title">Content Grids</div>
+          <p class="ds-section__desc">
+            Named grid utilities for text-heavy case study sections. All break to single-column on mobile.
+            Use <code>.challenges-grid</code> and <code>.results-grid</code> for 2-column card layouts
+            that appear inside the <code>.case-content</code> column — not the outer layout grid.
+          </p>
+
+          <p class="ds-sub">challenges-grid · results-grid</p>
+
+          <details class="ds-code">
+            <summary>CSS Spec</summary>
+<pre class="ds-code__block">/* .challenges-grid — for challenge / obstacle card sets */
+.challenges-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+@media (min-width: 768px) {
+  .challenges-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+/* .results-grid — for expected / actual result card sets */
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  margin-top: var(--space-10);
+}
+@media (min-width: 768px) {
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+}</pre>
+          </details>
+
+          <p class="ds-sub">Live preview</p>
+          <div class="ds-preview ds-preview--padded">
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-6);">
+              <article class="skill-card">
+                <div class="skill-card__header"><h3 class="skill-card__title">Revenue</h3></div>
+                <p class="skill-card__body">Platform as a support tool for commercial executives, streamlining campaign sales to retail partners.</p>
+              </article>
+              <article class="skill-card">
+                <div class="skill-card__header"><h3 class="skill-card__title">Cross-selling</h3></div>
+                <p class="skill-card__body">Encouraging partners to purchase multiple actions to support their business goals.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /chapter 03 -->
 
     </main>
   </div>

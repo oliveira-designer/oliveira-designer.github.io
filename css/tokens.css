@@ -63,9 +63,9 @@
   /* ----------------------------------------------------------
      TYPOGRAPHY
      ---------------------------------------------------------- */
-  --font-display: 'Space Mono', 'Courier New', monospace;
+  --font-display: 'Geist', 'Plus Jakarta Sans', sans-serif;
   --font-body:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono:    'Space Mono', 'Courier New', monospace;
+  --font-mono:    'Geist', var(--font-body);
 
   /* Fluid type scale (clamp) */
   --fs-display: clamp(36px, 5vw, 52px);

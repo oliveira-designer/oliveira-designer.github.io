@@ -530,11 +530,40 @@ html {
 /* Skills */
 .skills-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-4);
 }
 @media (min-width: 640px)  { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .skills-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* Challenges */
+.challenges-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .challenges-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+/* Expected results */
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  margin-top: var(--space-10);
+}
+
+@media (min-width: 768px) {
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+}
 
 /* Testimonials — infinite horizontal ticker */
 .testimonials-ticker {
@@ -1118,16 +1147,74 @@ html {
 
 /* ----------------------------------------------------------
    CASE STUDY — Content column
-   Left padding optically aligns the text with the visible content
-   inside the showcase image, which carries internal graphic padding.
    ---------------------------------------------------------- */
 .case-content {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding-left: var(--space-12);
   max-width: 68ch;
   margin-right: auto;
+}
+
+/* ----------------------------------------------------------
+   CASE STUDY — Involved teams component
+   ---------------------------------------------------------- */
+.team-section {
+  margin-top: var(--space-6);
+}
+
+.team-section__title {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-6);
+}
+
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  align-items: flex-start;
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+  min-width: 72px;
+}
+
+.team-card svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-text-2);
+  flex-shrink: 0;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.team-card__name {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+  line-height: 1.35;
+}
+
+/* "My squad" emphasis — icon + label in brand accent */
+.team-card--mine svg {
+  color: var(--color-ancora);
+}
+
+[data-theme="dark"] .team-card--mine svg {
+  color: var(--color-solar);
+}
+
+.team-card--mine .team-card__name {
+  color: var(--color-text-1);
+  font-weight: 600;
 }
 
 /* ----------------------------------------------------------
