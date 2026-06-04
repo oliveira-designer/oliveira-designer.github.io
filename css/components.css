@@ -954,6 +954,14 @@
   gap: var(--space-6);
 }
 
+/* Groups a subtitle + paragraph as a single prose block.
+   Internal gap (8px) is tighter than the outer gap (24px) between items. */
+.case-section__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
 .case-section__body p {
   font-family: var(--font-body);
   font-size: var(--fs-body);
@@ -1022,6 +1030,47 @@
   font-size: var(--fs-body-sm);
   color: var(--color-text-3);
   border-top: var(--border-thin);
+}
+
+/* Slot variant — empty placeholder box for images not yet available */
+.cs-figure--slot {
+  min-height: 260px;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-bg-alt);
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.cs-figure--slot::after {
+  content: 'Image';
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+}
+.cs-figure--slot img { display: none; }
+
+/* Bare variant — image + caption only, no card frame */
+.cs-figure--bare {
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  background-color: transparent;
+}
+.cs-figure--bare img {
+  border-radius: var(--radius-md);
+}
+.cs-figure--bare figcaption {
+  border-top: none;
+  padding: var(--space-3) 0;
+  text-align: center;
+}
+
+/* Centered section header — number + title flush-centered above content */
+.case-section__header--center {
+  text-align: center;
 }
 
 /* ----------------------------------------------------------
@@ -1256,4 +1305,215 @@
 @keyframes status-pulse {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.3; }
+}
+
+/* ----------------------------------------------------------
+   CASE STUDY — Lead split (text + image side by side)
+   ---------------------------------------------------------- */
+.case-lead-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .case-lead-split { grid-template-columns: 1fr; }
+}
+/* Slightly larger font size within the split context */
+.case-lead-split .case-lead-text {
+  font-size: clamp(16px, 1.7vw, 19px);
+  margin-bottom: 0;
+}
+
+/* ----------------------------------------------------------
+   CASE STUDY — Result cards (glassmorphism + icon + hover lift)
+   ---------------------------------------------------------- */
+.result-card {
+  padding:        var(--space-6);
+  border-radius:  var(--radius-lg);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+  /* Glassmorphism — same recipe as site nav */
+  background: rgba(255, 255, 255, 0.60);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+          backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.70);
+  box-shadow:
+    0 4px 16px rgba(13, 13, 15, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.90);
+  /* Hover lift */
+  transition:
+    transform    var(--duration-slow) var(--ease-out),
+    box-shadow   var(--duration-slow) var(--ease-out),
+    border-color var(--duration-slow) var(--ease-out);
+}
+.result-card:hover {
+  transform:    translateY(-4px);
+  box-shadow:
+    0 12px 32px rgba(13, 13, 15, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.90);
+  border-color: rgba(255, 255, 255, 0.85);
+}
+[data-theme="dark"] .result-card {
+  background: rgba(26, 26, 46, 0.52);
+  border-color: rgba(74, 74, 96, 0.32);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+[data-theme="dark"] .result-card:hover {
+  transform:    translateY(-4px);
+  border-color: rgba(245, 200, 66, 0.30);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.38),
+    0 0   0  1px rgba(245, 200, 66, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Icon chip — Âncora blue in light, Solar gold tint in dark */
+.result-card__icon {
+  width:         40px;
+  height:        40px;
+  border-radius: var(--radius-sm);
+  display:       grid;
+  place-items:   center;
+  flex-shrink:   0;
+  background-color: var(--color-ceu);
+  color:            var(--color-ancora);
+}
+[data-theme="dark"] .result-card__icon {
+  background-color: rgba(245, 200, 66, 0.14);
+  color:            var(--color-solar);
+}
+
+.result-card__title {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-h3);
+  font-weight:    700;
+  color:          var(--color-text-1);
+  line-height:    1.3;
+}
+.result-card__body {
+  font-family: var(--font-body);
+  font-size:   var(--fs-body-sm);
+  line-height: 1.70;
+  color:       var(--color-text-2);
+}
+
+/* ----------------------------------------------------------
+   LIGHTBOX — full-screen image zoom modal
+   ---------------------------------------------------------- */
+
+/* Zoomable image hint */
+.is-zoomable {
+  cursor: zoom-in;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+.is-zoomable:hover { opacity: 0.88; }
+
+/* Overlay shell — covers the viewport */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  /* Hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity    var(--duration-slow) var(--ease-out),
+    visibility 0s linear           var(--duration-slow);
+}
+.lightbox[hidden] { display: none; }
+
+/* Open state */
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity    var(--duration-slow) var(--ease-out),
+    visibility 0s linear           0s;
+}
+
+/* Frosted dark backdrop */
+.lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 13, 15, 0.88);
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
+}
+
+/* Content panel — image + caption, animated scale */
+.lightbox__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: min(92vw, 1280px);
+  /* Closed: slightly shrunk and dropped */
+  transform: scale(0.92) translateY(12px);
+  transition: transform var(--duration-slower) var(--ease-out);
+}
+.lightbox.is-open .lightbox__panel {
+  transform: scale(1) translateY(0);
+}
+
+/* Image */
+.lightbox__img {
+  display: block;
+  max-width: 100%;
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.60);
+}
+
+/* Caption */
+.lightbox__caption {
+  font-family: var(--font-body);
+  font-size:   var(--fs-body-sm);
+  color:       rgba(255, 255, 255, 0.55);
+  text-align:  center;
+  max-width:   60ch;
+  line-height: 1.5;
+}
+
+/* Close button — top-right corner of the panel */
+.lightbox__close {
+  position: absolute;
+  top:   calc(-1 * var(--space-10));
+  right: 0;
+  display: grid;
+  place-items: center;
+  width:  36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.80);
+  cursor: pointer;
+  transition:
+    background var(--duration-normal) var(--ease-out),
+    color      var(--duration-normal) var(--ease-out);
+}
+.lightbox__close:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+.lightbox__close:focus-visible {
+  outline: 2px solid var(--color-solar);
+  outline-offset: 3px;
+}
+
+/* Reduced-motion: skip the scale, keep the fade */
+@media (prefers-reduced-motion: reduce) {
+  .lightbox__panel { transform: none !important; transition: none !important; }
 }

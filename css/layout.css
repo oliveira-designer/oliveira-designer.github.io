@@ -610,6 +610,18 @@ html {
 }
 
 /* Expected results */
+/* Ambient gradient — gives the glassmorphism cards something to blur against */
+#expected-results {
+  background:
+    radial-gradient(ellipse 65% 50% at 8% 20%,  var(--color-ceu)    0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 75%,  var(--color-aurora) 0%, transparent 55%);
+}
+[data-theme="dark"] #expected-results {
+  background:
+    radial-gradient(ellipse 65% 50% at 8% 20%,  rgba(28, 95, 168, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 75%,  rgba(245, 200, 66, 0.06) 0%, transparent 55%);
+}
+
 .results-grid {
   display: grid;
   grid-template-columns: 1fr;
