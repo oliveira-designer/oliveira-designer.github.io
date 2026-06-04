@@ -40,14 +40,16 @@ body {
   user-select: none;
 }
 
-/* Restore selection only where users need to type */
-input,
-textarea,
-select {
-  -webkit-user-select: auto;
-  -moz-user-select: auto;
-  -ms-user-select: auto;
-  user-select: auto;
+/* Restore selection for readable content and form fields */
+p, h1, h2, h3, h4, h5, h6,
+li, td, th, dt, dd,
+blockquote, pre, code,
+figcaption, label, span, a,
+input, textarea, select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
 /* ----------------------------------------------------------
