@@ -1032,6 +1032,63 @@
   border-top: var(--border-thin);
 }
 
+/* Inline results block — glassmorphism metric cards + legend caption */
+.case-section__results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Three equal-width glass cards spanning the full container */
+.case-section__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+@media (max-width: 640px) {
+  .case-section__metrics { grid-template-columns: 1fr; }
+}
+
+/* Individual metric glass card */
+.case-metric-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.60);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+          backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.70);
+  box-shadow:
+    0 4px 16px rgba(13, 13, 15, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.90);
+}
+[data-theme="dark"] .case-metric-card {
+  background: rgba(26, 26, 46, 0.52);
+  border-color: rgba(74, 74, 96, 0.32);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Legend — more specific selector to win over .case-section__body p */
+.case-section__body .case-section__results-legend {
+  font-family: var(--font-body);
+  font-size:   var(--fs-body-sm);
+  color:       var(--color-text-3);
+  line-height: 1.5;
+  text-align:  center;
+  /* Visually centered under the three cards */
+  width: 100%;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Slot variant — empty placeholder box for images not yet available */
 .cs-figure--slot {
   min-height: 260px;

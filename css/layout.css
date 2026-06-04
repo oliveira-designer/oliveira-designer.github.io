@@ -925,6 +925,7 @@ html {
   flex-direction: column;
   gap: var(--space-8);
   margin-bottom: var(--space-12);
+  min-width: 0; /* prevents flex children from overflowing their track */
 }
 
 /* Showcase image — spans full container width below the text block */

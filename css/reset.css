@@ -33,6 +33,9 @@ body {
     color            var(--duration-slower) var(--ease-out);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent any rogue element from creating horizontal scroll.
+     overflow-x: clip (unlike hidden) does not break position: sticky. */
+  overflow-x: clip;
   /* Disable text selection globally */
   -webkit-user-select: none;
   -moz-user-select: none;
