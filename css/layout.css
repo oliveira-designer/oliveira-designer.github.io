@@ -1076,8 +1076,6 @@ html {
    ---------------------------------------------------------- */
 .case-callout {
   padding: var(--space-10) 0;
-  border-top: var(--border-thin);
-  border-bottom: var(--border-thin);
   margin: var(--space-8) 0;
 }
 
@@ -1087,7 +1085,7 @@ html {
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.02em;
-  color: var(--color-ancora);
+  color: var(--color-abismo);
   max-width: 820px;
 }
 [data-theme="dark"] .case-callout__text {
@@ -1097,7 +1095,7 @@ html {
 .case-callout__attribution {
   display: block;
   margin-top: var(--space-5);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   letter-spacing: 0.1em;
   text-transform: uppercase;

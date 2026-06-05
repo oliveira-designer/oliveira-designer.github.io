@@ -910,7 +910,6 @@
    ---------------------------------------------------------- */
 .case-section {
   padding: var(--space-12) 0;
-  border-bottom: var(--border-thin);
   min-width: 0; /* prevent flex item from expanding beyond case-content */
 }
 .case-section:last-child {
@@ -1367,9 +1366,30 @@
   50%       { opacity: 0.3; }
 }
 
+.pivot {
+  display: flex;
+  align-items: center;
+}
+
+.pivot .pivot-lead-text{
+  font-size: clamp(16px, 1.7vw, 19px);
+  margin-top: var(--space-8);
+  margin-bottom: 0;
+}
+
 /* ----------------------------------------------------------
    CASE STUDY — Lead split (text + image side by side)
    ---------------------------------------------------------- */
+
+.case-lead {
+  display: flex;
+  align-items: center;
+}
+.case-lead .case-lead-text {
+  font-size: clamp(16px, 1.7vw, 19px);
+  margin-bottom: 0;
+}
+
 .case-lead-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
