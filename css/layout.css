@@ -1240,9 +1240,14 @@ html {
 .team-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-8);
-  align-items: flex-start;
+  flex-direction: row;
+  gap: var(--space-10);
+  align-items: center;
+  align-content: center;
+  width: 100%;
 }
+
+
 
 .team-card {
   display: flex;
@@ -1251,6 +1256,7 @@ html {
   gap: var(--space-3);
   text-align: center;
   min-width: 72px;
+  width: fit-content;
 }
 
 .team-card svg {

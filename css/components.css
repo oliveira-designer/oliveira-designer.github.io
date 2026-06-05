@@ -727,7 +727,7 @@
           box-decoration-break: clone;
   padding: 0 2px;
   border-radius: 2px;
-  transition: background-size 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: background-size 1.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .text-highlight.is-active {
@@ -975,7 +975,7 @@
 /* Lead paragraph — large intro statement, overrides the base body style */
 .case-lead-text {
   font-family: var(--font-body);
-  font-size: var(--fs-h3);
+  font-size: var(--fs-h5);
   font-weight: 500;
   color: var(--color-text-1);
   line-height: 1.4;
