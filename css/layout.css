@@ -589,7 +589,7 @@ html {
 /* Skills */
 .skills-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: var(--space-4);
 }
 @media (min-width: 640px)  { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -607,19 +607,6 @@ html {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-8);
   }
-}
-
-/* Expected results */
-/* Ambient gradient — gives the glassmorphism cards something to blur against */
-#expected-results {
-  background:
-    radial-gradient(ellipse 65% 50% at 8% 20%,  var(--color-ceu)    0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 90% 75%,  var(--color-aurora) 0%, transparent 55%);
-}
-[data-theme="dark"] #expected-results {
-  background:
-    radial-gradient(ellipse 65% 50% at 8% 20%,  rgba(28, 95, 168, 0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 90% 75%,  rgba(245, 200, 66, 0.06) 0%, transparent 55%);
 }
 
 .results-grid {
@@ -1037,15 +1024,20 @@ html {
   grid-template-columns: 1fr;
   gap: var(--space-12);
   align-items: start;
+  width: 100%;
 }
 
 @media (min-width: 1024px) {
   /* 2-column: stable 240px sidebar · content fills remaining 1fr.
-     Removes the fixed right void track that clashed with max-width on
-     .case-content, causing unanchored whitespace on wider viewports. */
+     max-width caps the grid at sidebar + gap + content-max so the
+     margin-inline: auto centres the whole sidebar+content block inside
+     the container, giving equal left and right gutters. */
   .case-layout {
     grid-template-columns: 240px 1fr;
     column-gap: var(--space-12);
+    /*max-width: calc(240px + var(--space-12) + 68ch);*/
+    margin-inline: auto;
+    width: 100%;
   }
 }
 
@@ -1225,7 +1217,8 @@ html {
   flex-direction: column;
   min-width: 0;
   max-width: 68ch;
-  margin-right: auto;
+  margin-inline: auto;
+  width: 100%;
 }
 
 /* ----------------------------------------------------------
@@ -1293,17 +1286,45 @@ html {
    CASE STUDY — Full-bleed figure breakout
    Snaps the figure to 100vw regardless of parent column width.
    Use for service blueprints, large process maps, hero mockups.
-   Works inside any container depth via the 50% left + translateX trick.
+
+   Uses negative margin-left rather than position/left/transform so the
+   breakout math stays correct even inside the sidebar+content grid.
+   The "left: 50% + translateX(-50%)" trick centres relative to the
+   content COLUMN, not the viewport — when a sidebar is present the
+   column centre is right-of-viewport-centre, causing rightward overflow.
+
+   Mobile  (<768px)  : undo the 24 px (--space-6) container padding.
+   Tablet  (768–1023): case-content is centred via margin-inline:auto, so
+                       content left = 50vw − 34ch.  margin-left = 34ch − 50vw.
+   Desktop (≥1024px) : with the layout CENTRED inside the container, the
+                       content column's left edge from the viewport is
+                       exactly (50vw − 128px) at every desktop width.
+                       128 = 1120/2 − (padding 40 + grid-centering 104 +
+                             sidebar 240 + gap 48) = 560 − 432
+                       So margin-left = 128px − 50vw (always negative ≥ 1024px).
    ---------------------------------------------------------- */
 .cs-figure--full-bleed {
   width: 100vw;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-left: calc(-1 * var(--space-6));
   border-left: none;
   border-right: none;
   border-radius: 0;
   max-width: none;
+}
+@media (min-width: 768px) {
+  .cs-figure--full-bleed {
+    /* case-content has margin-inline:auto, so it is centred inside the grid
+       track at any viewport where 68ch < (viewport - 2×padding).
+       Content left edge from viewport = 50vw − 34ch (half-viewport minus
+       half the content column).  margin-left = 34ch − 50vw puts the figure
+       flush with the viewport left edge on any width in this range. */
+    margin-left: calc(34ch - 50vw);
+  }
+}
+@media (min-width: 1024px) {
+  .cs-figure--full-bleed {
+    margin-left: calc(128px - 50vw);
+  }
 }
 
 /* ----------------------------------------------------------

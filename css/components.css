@@ -911,6 +911,7 @@
 .case-section {
   padding: var(--space-12) 0;
   border-bottom: var(--border-thin);
+  min-width: 0; /* prevent flex item from expanding beyond case-content */
 }
 .case-section:last-child {
   border-bottom: none;
@@ -952,6 +953,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
+  min-width: 0; /* prevent overflow from intrinsic-width children */
 }
 
 /* Groups a subtitle + paragraph as a single prose block.
@@ -967,6 +969,7 @@
   font-size: var(--fs-body);
   line-height: 1.75;
   color: var(--color-text-2);
+  max-width: 100%; /* override global p{max-width:70ch} — let layout control width */
 }
 
 /* Lead paragraph — large intro statement, overrides the base body style */
@@ -977,7 +980,7 @@
   color: var(--color-text-1);
   line-height: 1.4;
   letter-spacing: -0.01em;
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-6);
 }
 
 .case-section__body ul {
@@ -1379,7 +1382,6 @@
 /* Slightly larger font size within the split context */
 .case-lead-split .case-lead-text {
   font-size: clamp(16px, 1.7vw, 19px);
-  margin-bottom: 0;
 }
 
 /* ----------------------------------------------------------
