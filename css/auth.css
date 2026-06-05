@@ -232,7 +232,7 @@ main,
 .auth-gate__input {
   width: 100%;
   font-family: var(--font-body);
-  font-size: var(--fs-body);
+  font-size: max(16px, var(--fs-body)); /* 16px floor prevents iOS Safari auto-zoom on focus */
   line-height: 1.5;
   padding: 12px 48px 12px var(--space-4);
   border: 1px solid var(--color-border);
