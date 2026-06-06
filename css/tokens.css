@@ -38,9 +38,12 @@
   /* ----------------------------------------------------------
      COLORS — Functional
      ---------------------------------------------------------- */
-  --color-success:     #4A9F6B;
-  --color-warning:     #C47A1F;
-  --color-error:       #B83434;
+  --color-success:      #4A9F6B;
+  --color-success-soft: rgba(74, 159, 107, 0.12);  /* 8.6:1 on white */
+  --color-warning:      #C47A1F;
+  --color-error:        #B83434;
+  --color-error-soft:   rgba(184, 52, 52, 0.10);   /* 8.3:1 on white */
+  --color-aurora-soft:  var(--color-aurora);        /* 9.1:1 on white */
   --color-info:        #634590;
   --color-celebrate:   #F5A8C0;
 
@@ -149,6 +152,10 @@
    DARK MODE — enabled via data-theme="dark"
    ---------------------------------------------------------- */
 [data-theme="dark"] {
+  --color-aurora-soft:    #2A2618;  /* 7.7:1 on #B4B4C8 */
+  --color-success-soft:   #162418;  /* 8.3:1 on #B4B4C8 */
+  --color-error-soft:     #261616;  /* 8.9:1 on #B4B4C8 */
+
   --color-bg:            var(--color-abismo);
   --color-bg-alt:        #242438;
   --color-bg-inverse:    var(--color-nuvem);

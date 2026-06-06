@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
@@ -160,7 +160,7 @@
                 <li class="case-toc__item"><a class="case-toc__link" href="#research-plan">Research plan</a></li>
                 <li class="case-toc__item"><a class="case-toc__link" href="#user-interviews">User interviews</a></li>
                 <li class="case-toc__item"><a class="case-toc__link" href="#csd-matrix">CSD Matrix</a></li>
-                <li class="case-toc__item"><a class="case-toc__link" href="#personas">Personas</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#personas">Persona</a></li>
                 <li class="case-toc__item"><a class="case-toc__link" href="#service-blueprint">Service blueprint</a></li>
                 <li class="case-toc__item"><a class="case-toc__link" href="#benchmark">Benchmark</a></li>
                 <li class="case-toc__item"><a class="case-toc__link" href="#usability-testing">Usability testing</a></li>
@@ -360,7 +360,8 @@
                   </div>
 
                   <figure class="cs-figure cs-figure--bare">
-                    <img src="../images/case-assets/other/target.png" alt="Man shooting target"/>
+                    <img class="img--light" src="../images/case-assets/other/target.png" alt="Man shooting target"/>
+                    <img class="img--dark"  src="../images/case-assets/other/target-dark.png" alt="Man shooting target"/>
                   </figure>
                 </div>
 
@@ -488,7 +489,8 @@
                   </div>
                   
                   <figure class="cs-figure cs-figure--bare">
-                    <img src="../images/case-assets/other/interview.png" alt="Screenshot of the old interface"/>
+                    <img class="img--light" src="../images/case-assets/other/interview.png" alt="Screenshot of the old interface"/>
+                    <img class="img--dark"  src="../images/case-assets/other/interview-dark.png" alt="Screenshot of the old interface"/>
                   </figure>                  
                 </div>
                 
@@ -560,7 +562,8 @@
                   </div>
                   
                   <figure class="cs-figure cs-figure--bare">
-                    <img src="../images/case-assets/other/solution.png" alt="Person putting warning puzzle piece into the right place"/>
+                    <img class="img--light" src="../images/case-assets/other/solution.png" alt="Person putting warning puzzle piece into the right place"/>
+                    <img class="img--dark"  src="../images/case-assets/other/solution-dark.png" alt="Person putting warning puzzle piece into the right place"/>
                   </figure>                  
                 </div>
               </div>
@@ -580,21 +583,31 @@
             <section id="personas" class="case-section reveal">
               <header class="case-section__header">
                 <span class="case-section__number">08</span>
-                <h2 class="case-section__title">Personas</h2>
+                <h2 class="case-section__title">Persona</h2>
               </header>
               <div class="case-section__body">
-                <p>The earlier stages provided valuable inputs for developing personas involved in the campaign creation process. I categorized these personas into primary (daily platform users) and secondary (those who benefit from or are influenced by the platform's usage). Below is the primary persona that guided the rest of my process.</p>
+                <p>
+                  Discovery pointed to one primary user the original product had ignored: 
+                  <span class="text-highlight"> <strong>Dotz's commercial consultant</strong></span> 
+                  , who would operate the platform daily. </p>
+                <p>
+                  I built the primary 
+                  persona around him: <span class="text-highlight">the person every downstream design 
+                  decision had to serve.</span>
+                </p>
 
                 <article class="persona" aria-labelledby="persona-name">
 
                   <header class="persona__header">
-                    <div class="persona__avatar" aria-hidden="true">A</div>
+                    <div class="persona__avatar" aria-hidden="true">
+                      <img src="../images/case-assets/dotz/persona-avatar.png" alt="Avatar - Dotz Consultant">
+                    </div>
                     <div>
                       <h3 class="persona__name" id="persona-name">Afonso Moreira</h3>
-                      <p class="persona__role">Dotz Consultant — Account Executive</p>
+                      <p class="persona__role">Dotz Consultant / Account Executive</p>
                       <dl class="persona__meta">
                         <dt>Age</dt>        <dd>29</dd>
-                        <dt>Location</dt>   <dd>Campinas — São Paulo</dd>
+                        <dt>Location</dt>   <dd>Campinas / São Paulo</dd>
                         <dt>Education</dt>  <dd>Bachelor's in Business Management</dd>
                       </dl>
                     </div>
@@ -603,22 +616,45 @@
                   <div class="persona__body">
 
                     <section class="persona__section" aria-labelledby="persona-bio-title">
-                      <span class="persona__section-title" id="persona-bio-title">Bio</span>
-                      <p>Afonso, account executive at Dotz for over a year, supports the Savegnago supermarket in São Paulo's interior. Part of a small but efficient team, <strong>he manages CRM campaigns for regional retail partners.</strong></p>
-                      <p>His demanding role involves presenting results to top management and frequently creating spreadsheets to share campaign outcomes with suppliers, making the process manual and time-consuming. Afonso dreams of a centralized system to streamline campaign result analysis and simplify his work.</p>
+                      <span class="persona__section-title" id="persona-bio-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
+                        Bio
+                      </span>
+                      <p>
+                        Afonso, account executive at Dotz for over a year, supports the Savegnago supermarket 
+                        in São Paulo's interior. Part of a small but efficient team, 
+                        <strong>he manages CRM campaigns for regional retail partners.</strong>
+                      </p> <br>
+                      <p>His demanding role involves presenting results to top management and frequently 
+                        creating spreadsheets to share campaign outcomes with suppliers, making the process 
+                        manual and time-consuming. Afonso dreams of a centralized system to streamline campaign 
+                        result analysis and simplify his work.
+                      </p>
                     </section>
 
                     <section class="persona__section" aria-labelledby="persona-goals-title">
-                      <span class="persona__section-title" id="persona-goals-title">Goals</span>
-                      <ul>
-                        <li>Support the relationship manager by identifying and recommending business opportunities in structured retail.</li>
-                        <li>Analyze and develop business strategies tailored to each partner.</li>
-                        <li>Coordinate with suppliers to create campaigns aligned with budgets from both partners and suppliers.</li>
-                      </ul>
+                      <span class="persona__section-title" id="persona-goals-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 7a5 5 0 1 0 5 5" /><path d="M13 3.055a9 9 0 1 0 7.941 7.945" /><path d="M15 6v3h3l3 -3h-3v-3z" /><path d="M15 9l-3 3" /></svg>
+                        Goals
+                      </span>
+                      <div class="persona__goal-grid">
+                        <div class="persona__goal-card">
+                          Identify and recommend business opportunities for the RM in structured retail
+                        </div>
+                        <div class="persona__goal-card">
+                          Analyze and build strategies tailored to each partner
+                        </div>
+                        <div class="persona__goal-card">
+                          Create campaigns aligned with partner and supplier budgets
+                        </div>
+                      </div>
                     </section>
 
                     <section class="persona__section" aria-labelledby="persona-needs-title">
-                      <span class="persona__section-title" id="persona-needs-title">Needs &amp; expectations</span>
+                      <span class="persona__section-title" id="persona-needs-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
+                        Needs &amp; expectations
+                      </span>
                       <ul>
                         <li>Gain a clear and concise understanding of the large retailer's business status.</li>
                         <li>Quickly assist the retailer in selecting relevant campaigns.</li>
@@ -629,7 +665,10 @@
                     </section>
 
                     <section class="persona__section" aria-labelledby="persona-pains-title">
-                      <span class="persona__section-title" id="persona-pains-title">Pain points &amp; frustrations</span>
+                      <span class="persona__section-title" id="persona-pains-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 9v4" /><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /><path d="M12 16h.01" /></svg>
+                        Pain points &amp; frustrations
+                      </span>
                       <ul>
                         <li>Creating numerous spreadsheets for campaign results increases workload.</li>
                         <li>Campaign selection is slow, relying on analyses from other Dotz areas, delaying responses to partners.</li>
@@ -641,7 +680,10 @@
                   </div>
 
                   <div class="persona__quotes" aria-labelledby="persona-quotes-title">
-                    <span class="persona__quotes-label" id="persona-quotes-title">Memorable quotes</span>
+                    <span class="persona__quotes-label" id="persona-quotes-title">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5" /><path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5" /></svg>
+                      Memorable quotes
+                    </span>
                     <ul class="persona__quotes-list">
                       <li class="persona__quote"><p>"The drive for sales to the industry is directly linked to the partner's adoption of the platform."</p></li>
                       <li class="persona__quote"><p>"Visualizing SKU availability is very important to us because it helps us segment actions and sell to the industry. In the industry, we have to sell all the time."</p></li>
@@ -666,9 +708,8 @@
                 <p class="case-section__subtitle">User journey map — "As is"</p>
               </header>
               <div class="case-section__body">
-                <p>In addition to creating product personas, I conducted an in-depth mapping of the journey for offering and contracting campaigns. I used a Service Blueprint to represent the journey, as it effectively highlights the touchpoints between the platform, the business, and the supporting processes.</p>
-                <p>I used FigJam to create this tool, adapting it to align with the specific needs of our project. My goal was to make it highly visual for stakeholders, incorporating images of each persona at the points in the flow where they play a role.</p>
-                <figure class="cs-figure cs-figure--full-bleed">
+                <p>I mapped the full as-is journey for offering and contracting a campaign — every touchpoint across the platform, the business, and the back-office processes behind them. Plotting it end to end exposed where the process broke down: handoffs between departments where partner information was lost, and manual steps that slowed every campaign down. These failure points became the targets the redesign had to resolve.</p>
+                <figure class="cs-figure cs-figure--bare">
                   <img src="" alt="Service blueprint — as-is user journey" />
                   <figcaption>Service blueprint: offering and contracting campaign journey (as-is)</figcaption>
                 </figure>
@@ -684,7 +725,7 @@
                 <h2 class="case-section__title">Benchmark</h2>
               </header>
               <div class="case-section__body">
-                <p>To design an effective solution, I conducted a business and visual benchmark analysis to explore market approaches to CRM campaign management and identify gaps for differentiation. To achieve this, I reached out to and analyzed several companies in the field.</p>
+                <p>I studied how other players handled campaign creation — visually and at the flow level — to map the most common path for building a campaign and decide where to follow convention versus differentiate. Working with stakeholders who knew these competitors well, that reference is what let us lock the flow direction for the platform.</p>
                 <figure class="cs-figure">
                   <img src="" alt="Benchmark — companies analyzed for CRM campaign management" />
                   <figcaption>Benchmark: companies analyzed in the CRM campaign management space</figcaption>
@@ -715,8 +756,29 @@
                 <h2 class="case-section__title">Usability testing</h2>
               </header>
               <div class="case-section__body">
-                <p>To validate the collected information, I conducted usability tests with users previously interviewed during the discovery phase. These tests utilized low-fidelity prototypes designed based on discovery findings.</p>
-                <p>I used Maze for this process, as it offers detailed reports with valuable insights. Additionally, I leveraged the opportunity to gather behavioral data from users.</p>
+                <p>I tested low-fidelity prototypes with the same consultants I'd interviewed in discovery — deliberately validating the flow before committing engineering effort to a high-fidelity build. Five users, qualitative, run to confirm direction early.</p>
+
+                <!-- IMAGE SLOT 1 — Maze mission metrics strip (testers / misclick / duration / success / bounce) -->
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="" alt="Usability test — mission task metrics: 5 testers, success rate, misclick rate, average duration" />
+                  <figcaption>Usability test — task-level metrics from the campaign-creation mission</figcaption>
+                </figure>
+
+                <p>The test earned its place. Task success sat at 60%, with high misclick rates and long completion times concentrated on the campaign-setup screens — findability problems worth catching before build, not after.</p>
+
+                <!-- IMAGE SLOT 2 — single heatmap of the campaign-setup screen -->
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="" alt="Usability test — heatmap showing click concentration on the campaign-setup screen" />
+                  <figcaption>Heatmap — click dispersion on the campaign-setup screen</figcaption>
+                </figure>
+
+                <p>The open-ended responses were sharper than the metrics. Unprompted, consultants kept asking for the same things: a summary to review a campaign before sending it, a forecast of investment and expected return, and a log of past campaigns to validate parameters against. Those requests became explicit priorities for the high-fidelity flow.</p>
+
+                <!-- IMAGE SLOT 3 — open-ended responses from testers -->
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="" alt="Usability test — open-ended tester responses requesting a campaign summary, ROI forecast, and history log" />
+                  <figcaption>Open-ended responses — testers asking for a pre-send summary, ROI forecast, and campaign history</figcaption>
+                </figure>
               </div>
             </section>
 
@@ -729,15 +791,15 @@
                 <h2 class="case-section__title">Hi-Fi Mockups</h2>
               </header>
               <div class="case-section__body">
-                <figure class="cs-figure cs-figure--full-bleed">
+                <figure class="cs-figure cs-figure--bare">
                   <img src="" alt="High-fidelity mockup — campaign creation flow" />
                   <figcaption>High-fidelity mockup — campaign creation flow</figcaption>
                 </figure>
-                <figure class="cs-figure">
+                <figure class="cs-figure cs-figure--bare">
                   <img src="" alt="High-fidelity mockup — partner dashboard" />
                   <figcaption>High-fidelity mockup — partner dashboard</figcaption>
                 </figure>
-                <figure class="cs-figure">
+                <figure class="cs-figure cs-figure--bare">
                   <img src="" alt="High-fidelity mockup — campaign results view" />
                   <figcaption>High-fidelity mockup — campaign results view</figcaption>
                 </figure>

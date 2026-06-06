@@ -1450,6 +1450,12 @@ html {
   opacity: 0.45;
 }
 
+/* Light/dark image pairs (used in dotz case study) */
+.img--light { display: block; }
+.img--dark  { display: none !important; }
+[data-theme="dark"] .img--light { display: none  !important; }
+[data-theme="dark"] .img--dark  { display: block !important; }
+
 /* Text monogram fallback for companies without a logo file */
 .experience-item__logo-mono {
   font-family: var(--font-mono);

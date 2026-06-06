@@ -1228,20 +1228,29 @@
 
 .persona__section:last-child { border-bottom: none; }
 
-/* Right border on odd sections when in 2-col layout */
+/* Bio + Goals span full width; Needs + Pains share the last row */
 @media (min-width: 640px) {
-  .persona__section:nth-child(odd)         { border-right: var(--border-thin); }
-  .persona__section:nth-last-child(-n+2)   { border-bottom: none; }
+  .persona__section:nth-child(-n+2)      { grid-column: 1 / -1; }
+  .persona__section:nth-child(3)         { border-right: var(--border-thin); }
+  .persona__section:nth-last-child(-n+2) { border-bottom: none; }
 }
 
 .persona__section-title {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--color-text-3);
   margin-bottom: var(--space-4);
+}
+
+.persona__section-title svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
 
 .persona__section ul {
@@ -1251,7 +1260,7 @@
   gap: var(--space-2);
 }
 
-.persona__section li {
+.persona .persona__section li {
   display: flex;
   align-items: baseline;
   gap: var(--space-2);
@@ -1264,17 +1273,44 @@
 .persona__section li::before {
   content: '–';
   font-family: var(--font-mono);
-  font-size: var(--fs-label);
+  font-size: var(--fs-body-sm);
   color: var(--color-text-3);
   flex-shrink: 0;
 }
 
-.persona__section p {
+.persona .persona__section p {
   font-family: var(--font-body);
-  font-size: var(--fs-body-sm);
+  font-size: var(--fs-body-md);
   line-height: 1.75;
   color: var(--color-text-2);
-  max-width: none; /* override the global 70ch on <p> */
+  max-width: none;
+}
+
+.persona__goal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .persona__goal-grid { grid-template-columns: 1fr; }
+}
+
+.persona__goal-card {
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  line-height: 1.65;
+  color: var(--color-text-2);
+  text-align: left;
+}
+
+[data-theme="dark"] .persona__goal-card {
+  background-color: var(--color-abismo);
+  color: var(--color-text-1);
 }
 
 .persona__quotes {
@@ -1283,7 +1319,9 @@
 }
 
 .persona__quotes-label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   text-transform: uppercase;
@@ -1292,17 +1330,33 @@
   margin-bottom: var(--space-5);
 }
 
+.persona__quotes-label svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
 .persona__quotes-list {
   list-style: none;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-3);
 }
 
-.persona__quote {
-  padding: var(--space-3) var(--space-4);
-  border-left: 2px solid var(--color-solar);
+@media (max-width: 640px) {
+  .persona__quotes-list { grid-template-columns: 1fr; }
 }
+
+.persona .persona__quotes li::before { content: none; }
+
+.persona__quote {
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-md);
+  background-color: var(--color-aurora-soft);
+}
+
+.persona__quotes-list .persona__quote:nth-child(4)    { background-color: var(--color-success-soft); }
+.persona__quotes-list .persona__quote:nth-child(n+5)  { background-color: var(--color-error-soft); }
 
 .persona__quote p {
   font-family: var(--font-body);
