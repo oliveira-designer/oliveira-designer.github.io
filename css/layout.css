@@ -593,7 +593,6 @@ html {
   gap: var(--space-4);
 }
 @media (min-width: 640px)  { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .skills-grid { grid-template-columns: repeat(3, 1fr); } }
 
 /* Challenges */
 .challenges-grid {
