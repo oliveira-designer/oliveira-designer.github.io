@@ -48,6 +48,11 @@
   --color-celebrate:   #F5A8C0;
 
   /* ----------------------------------------------------------
+     SEMANTIC EXTRAS
+     ---------------------------------------------------------- */
+  --color-borda-dark: #E0E0E8;  /* dark mode btn--primary hover surface */
+
+  /* ----------------------------------------------------------
      SURFACES — Light mode (default)
      ---------------------------------------------------------- */
   --color-bg:            var(--color-nuvem);
@@ -68,7 +73,7 @@
      ---------------------------------------------------------- */
   --font-display: 'Geist Sans', 'Plus Jakarta Sans', sans-serif;
   --font-body:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono:    'Geist', var(--font-body);
+  --font-mono:    'Geist Sans', 'Plus Jakarta Sans', sans-serif;
 
   /* Fluid type scale (clamp) */
   --fs-display: clamp(36px, 5vw, 52px);
@@ -77,6 +82,8 @@
   --fs-h3:      clamp(14px, 1.5vw, 16px);
   --fs-body:    clamp(14px, 1.2vw, 16px);
   --fs-body-sm: clamp(12px, 1vw, 13px);
+  --fs-body-lg: clamp(15px, 1.4vw, 17px);   /* hero body, case hero subtitle */
+  --fs-body-xl: clamp(16px, 1.7vw, 19px);   /* case lead text, pivot lead text */
   --fs-label:   clamp(10px, 1vw, 11px);
 
   /* ----------------------------------------------------------

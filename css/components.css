@@ -70,8 +70,8 @@
   border-color: var(--color-nuvem);
 }
 [data-theme="dark"] .btn--primary:hover {
-  background-color: #E0E0E8;
-  border-color: #E0E0E8;
+  background-color: var(--color-borda-dark);
+  border-color: var(--color-borda-dark);
 }
 
 /* Secondary */
@@ -340,7 +340,7 @@
 .metric {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 2px; /* no DS token — below 4px scale minimum */
 }
 .metric__value {
   font-family: var(--font-mono);
@@ -425,7 +425,7 @@
 }
 
 /* ======================================================================
-   CASE CARD — .case-card--hope (portrait gallery card)
+   CASE CARD — .case-card--glass (portrait gallery card)
    Vertical layout: frosted-glass shell · inset gradient canvas ·
    paginator chrome dots (folder look) · frosted year pill ·
    bold pipe-split title · muted mono meta line · native badges ·
@@ -434,7 +434,7 @@
    ====================================================================== */
 
 /* ── Card shell — glassmorphism matching the site nav pill ──────────── */
-.case-card--hope {
+.case-card--glass {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -456,9 +456,9 @@
 }
 /* Neutralise the base @media(min-width:768px){grid-template-columns:1fr 1fr} */
 @media (min-width: 768px) {
-  .case-card--hope { min-height: 0; }
+  .case-card--glass { min-height: 0; }
 }
-.case-card--hope:hover {
+.case-card--glass:hover {
   transform:    translateY(-4px);
   box-shadow:
     var(--shadow-lg),
@@ -466,7 +466,7 @@
   border-color: rgba(255, 255, 255, 0.80);
 }
 
-[data-theme="dark"] .case-card--hope {
+[data-theme="dark"] .case-card--glass {
   background: rgba(26, 26, 46, 0.50);
   -webkit-backdrop-filter: blur(30px) saturate(1.6);
           backdrop-filter: blur(30px) saturate(1.6);
@@ -476,7 +476,7 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 /* Dark hover: deep shadow + Solar glow ring */
-[data-theme="dark"] .case-card--hope:hover {
+[data-theme="dark"] .case-card--glass:hover {
   background: rgba(26, 26, 46, 0.65);
   border-color: rgba(245, 200, 66, 0.35);
   box-shadow:
@@ -489,7 +489,7 @@
 /* ── Canvas — inset rounded panel with iridescent gradient ──────────── */
 /* display:block + position:relative gives a clean stacking context for the
    absolutely-placed chrome, year pill, and full-bleed images.            */
-.case-card--hope .case-card__visual {
+.case-card--glass .case-card__visual {
   display: block;
   position: relative;
   aspect-ratio: 4 / 3;
@@ -501,9 +501,9 @@
     linear-gradient(150deg, var(--color-ceu) 0%, var(--color-mare) 100%);
 }
 @media (min-width: 768px) {
-  .case-card--hope .case-card__visual { aspect-ratio: 4 / 3; }
+  .case-card--glass .case-card__visual { aspect-ratio: 4 / 3; }
 }
-[data-theme="dark"] .case-card--hope .case-card__visual {
+[data-theme="dark"] .case-card--glass .case-card__visual {
   background:
     radial-gradient(120% 120% at 15% 0%,  rgba(28, 95, 168, 0.45) 0%, transparent 55%),
     radial-gradient(120% 120% at 90% 12%, rgba(245, 200, 66, 0.20) 0%, transparent 50%),
@@ -511,8 +511,8 @@
 }
 
 /* Images fill the full canvas — absolute so height:100% is unambiguous */
-.case-card--hope .case-card__img--light,
-.case-card--hope .case-card__img--dark {
+.case-card--glass .case-card__img--light,
+.case-card--glass .case-card__img--dark {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -530,13 +530,13 @@
   transform: translateX(-50%);
   z-index:   var(--z-raised);
   display:   flex;
-  gap:       4px;
+  gap:       var(--space-1);
   pointer-events: none;
 }
 .case-card__chrome span {
-  width:  6px;
-  height: 6px;
-  border-radius: 1.5px;
+  width:  6px;   /* no DS token — sub-pixel chrome dot */
+  height: 6px;   /* no DS token — sub-pixel chrome dot */
+  border-radius: 1.5px; /* no DS token — sub-pixel chrome dot */
   border: 1.5px solid rgba(13, 13, 15, 0.22);
   background: transparent;
 }
@@ -578,7 +578,7 @@
 }
 
 /* ── Content stack ──────────────────────────────────────────────────── */
-.case-card--hope .case-card__content {
+.case-card--glass .case-card__content {
   background-color: transparent;
   flex: 1;
   padding: var(--space-2) var(--space-3) var(--space-3);
@@ -586,7 +586,7 @@
 }
 
 /* ── Title — bold, pipe-separated ───────────────────────────────────── */
-.case-card--hope .case-card__title {
+.case-card--glass .case-card__title {
   font-size:      var(--fs-h2);
   letter-spacing: -0.02em;
   line-height:    1.2;
@@ -607,10 +607,10 @@
 }
 
 /* ── Tags ────────────────────────────────────────────────────────────── */
-.case-card--hope .case-card__tags { margin-top: var(--space-1); }
+.case-card--glass .case-card__tags { margin-top: var(--space-1); }
 
 /* ── Lead description — reintroduced below tags ─────────────────────── */
-.case-card--hope .case-card__lead {
+.case-card--glass .case-card__lead {
   margin-top: 0;    /* override the base margin-top:auto */
   font-size:  var(--fs-body-sm);
   line-height: 1.65;
@@ -618,40 +618,40 @@
 }
 
 /* Accent flip: .badge--ancora → Solar gold in dark mode */
-[data-theme="dark"] .case-card--hope .badge--ancora {
+[data-theme="dark"] .case-card--glass .badge--ancora {
   background-color: rgba(245, 200, 66, 0.15);
   color: var(--color-solar);
 }
 
 /* ── Metrics ─────────────────────────────────────────────────────────── */
-.case-card--hope .case-card__metrics {
+.case-card--glass .case-card__metrics {
   margin-top:  var(--space-2);
   padding-top: var(--space-4);
   gap:         var(--space-6);
   border-top:  var(--border-normal);
 }
-[data-theme="dark"] .case-card--hope .case-card__metrics {
+[data-theme="dark"] .case-card--glass .case-card__metrics {
   border-color: var(--color-border);
 }
-.case-card--hope .metric__value { font-size: var(--fs-h2); }
+.case-card--glass .metric__value { font-size: var(--fs-h2); }
 
 /* ── Footer — full-width CTA, no glyph ───────────────────────────────── */
-.case-card--hope .case-card__footer {
+.case-card--glass .case-card__footer {
   margin-top:  auto;
   padding-top: var(--space-4);
 }
 /* Button fills the full footer width */
-.case-card--hope .case-card__footer .btn {
+.case-card--glass .case-card__footer .btn {
   width: 100%;
 }
 
 /* ── Coming-soon variant — inert, no lift or glow ────────────────────── */
-.case-card--hope.case-card--placeholder:hover {
+.case-card--glass.case-card--placeholder:hover {
   transform:    none;
   box-shadow:   0 4px 24px rgba(13, 13, 15, 0.06), inset 0 1px 0 rgba(255,255,255,0.85);
   border-color: rgba(255, 255, 255, 0.65);
 }
-[data-theme="dark"] .case-card--hope.case-card--placeholder:hover {
+[data-theme="dark"] .case-card--glass.case-card--placeholder:hover {
   background:   rgba(26, 26, 46, 0.50);
   border-color: rgba(74, 74, 96, 0.30);
   box-shadow:   0 4px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.05);
@@ -698,7 +698,7 @@
 }
 .skill-card__title {
   font-family: var(--font-body);
-  font-size: var(--fs-body-md);
+  font-size: var(--fs-body);
   font-weight: 700;
   color: var(--color-text-1);
   line-height: 1.4;
@@ -738,7 +738,7 @@
 
 .skill-card--metric .metric-desc {
   font-family: var(--font-body);
-  font-size: var(--fs-body-md);
+  font-size: var(--fs-body-sm);
   color: var(--color-text-3);
   line-height: 1.5;
   margin: 0;
@@ -1008,9 +1008,9 @@
 }
 
 /* Lead paragraph — large intro statement, overrides the base body style */
-.case-lead-text {
+.case-lead__text {
   font-family: var(--font-body);
-  font-size: var(--fs-h5);
+  font-size: var(--fs-body-xl);
   font-weight: 500;
   color: var(--color-text-1);
   line-height: 1.4;
@@ -1093,24 +1093,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: var(--space-1);
   padding: var(--space-6) var(--space-4);
   border-radius: var(--radius-lg);
   text-align: center;
-  background: rgba(255, 255, 255, 0.60);
+  background: rgba(255, 255, 255, 0.60);      /* no DS token — rgba transparency */
   -webkit-backdrop-filter: blur(24px) saturate(1.5);
           backdrop-filter: blur(24px) saturate(1.5);
-  border: 1px solid rgba(255, 255, 255, 0.70);
+  border: 1px solid rgba(255, 255, 255, 0.70); /* no DS token — rgba transparency */
   box-shadow:
-    0 4px 16px rgba(13, 13, 15, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.90);
+    0 4px 16px rgba(13, 13, 15, 0.06),         /* no DS token — rgba transparency */
+    inset 0 1px 0 rgba(255, 255, 255, 0.90);   /* no DS token — rgba transparency */
 }
 [data-theme="dark"] .case-metric-card {
-  background: rgba(26, 26, 46, 0.52);
-  border-color: rgba(74, 74, 96, 0.32);
+  background: rgba(26, 26, 46, 0.52);          /* no DS token — rgba transparency */
+  border-color: rgba(74, 74, 96, 0.32);        /* no DS token — rgba transparency */
   box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 4px 16px rgba(0, 0, 0, 0.22),            /* no DS token — rgba transparency */
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);   /* no DS token — rgba transparency */
 }
 
 /* Legend — more specific selector to win over .case-section__body p */
@@ -1316,7 +1316,7 @@
 
 .persona .persona__section p {
   font-family: var(--font-body);
-  font-size: var(--fs-body-md);
+  font-size: var(--fs-body);
   line-height: 1.75;
   color: var(--color-text-2);
   max-width: none;
@@ -1456,17 +1456,6 @@
   50%       { opacity: 0.3; }
 }
 
-.pivot {
-  display: flex;
-  align-items: center;
-}
-
-.pivot .pivot-lead-text{
-  font-size: clamp(16px, 1.7vw, 19px);
-  margin-top: var(--space-8);
-  margin-bottom: 0;
-}
-
 /* ----------------------------------------------------------
    CASE STUDY — Lead split (text + image side by side)
    ---------------------------------------------------------- */
@@ -1475,23 +1464,23 @@
   display: flex;
   align-items: center;
 }
-.case-lead .case-lead-text {
-  font-size: clamp(16px, 1.7vw, 19px);
+.case-lead .case-lead__text {
+  font-size: var(--fs-body-xl);
   margin-bottom: 0;
 }
 
-.case-lead-split {
+.case-lead__split {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-10);
   align-items: center;
 }
 @media (max-width: 768px) {
-  .case-lead-split { grid-template-columns: 1fr; }
+  .case-lead__split { grid-template-columns: 1fr; }
 }
 /* Slightly larger font size within the split context */
-.case-lead-split .case-lead-text {
-  font-size: clamp(16px, 1.7vw, 19px);
+.case-lead__split .case-lead__text {
+  font-size: var(--fs-body-xl);
 }
 
 /* ----------------------------------------------------------
@@ -1675,7 +1664,7 @@
 }
 .lightbox__close:hover {
   background: rgba(255, 255, 255, 0.22);
-  color: #fff;
+  color: var(--color-nuvem);
 }
 .lightbox__close:focus-visible {
   outline: 2px solid var(--color-solar);

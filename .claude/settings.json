@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($basePath = \"$env:APPDATA\\\\npm-cache\\\\_npx\"; Get-ChildItem $basePath | ForEach-Object { $hash = $_.Name; $modPath = Join-Path $basePath \"$hash\\\\node_modules\"; $pkgs = Get-ChildItem $modPath -ErrorAction SilentlyContinue; if \\($pkgs\\) { Write-Host \"$hash -> $\\($pkgs.Name -join ', '\\)\" } })",
+      "PowerShell($basePath = \"$env:LOCALAPPDATA\\\\npm-cache\\\\_npx\"; Get-ChildItem $basePath | ForEach-Object { $hash = $_.Name; $modPath = Join-Path $basePath \"$hash\\\\node_modules\"; $pkgs = Get-ChildItem $modPath -ErrorAction SilentlyContinue; if \\($pkgs\\) { Write-Host \"$hash -> $\\($pkgs.Name -join ', '\\)\" } })"
+    ]
+  }
+}

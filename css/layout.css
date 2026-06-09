@@ -177,7 +177,7 @@ html {
   transform: translate3d(0, 0, 0);
 
   /* Glass panel — milkier tint keeps text readable while blur settles */
-  background: rgba(255, 255, 255, 1);
+  background: var(--color-nuvem);
   -webkit-backdrop-filter: blur(50px) saturate(1.6);
           backdrop-filter: blur(50px) saturate(1.6);
   border: 1px solid rgba(255, 255, 255, 0.35);
@@ -190,7 +190,7 @@ html {
     border-color var(--duration-slower) var(--ease-out);
 }
 [data-theme="dark"] .nav__mobile-menu {
-  background: rgba(26, 26, 46, 1);
+  background: var(--color-abismo);
   -webkit-backdrop-filter: blur(20px) saturate(1.6);
           backdrop-filter: blur(20px) saturate(1.6);
   border-color: rgba(74, 74, 96, 0.35);
@@ -294,7 +294,7 @@ html {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: var(--z-base);
 
   background-image: url('../images/Desktop\ dark/desktop_bg_4.jpg');
   background-repeat: no-repeat;
@@ -314,7 +314,7 @@ html {
 /* Lift content above the ::after overlay layer */
 .hero > .container {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
 }
 
 @media (max-width: 767px) {
@@ -360,7 +360,7 @@ html {
 
 .hero__body {
   font-family: var(--font-body);
-  font-size: clamp(15px, 1.4vw, 17px);
+  font-size: var(--fs-body-lg);
   line-height: 1.7;
   color: var(--color-text-1);
   max-width: 560px;
@@ -391,7 +391,7 @@ html {
 }
 
 /* Avatar — fixed 32×32, flush inside the pill's left edge */
-.hero__greeting__avatar {
+.hero__greeting-avatar {
   width:         32px;
   height:        32px;
   border-radius: 50%;
@@ -401,7 +401,7 @@ html {
 }
 
 /* Label text */
-.hero__greeting__text {
+.hero__greeting-text {
   font-family: var(--font-body);
   font-size:   var(--fs-body-sm);
   font-weight: 500;
@@ -831,7 +831,7 @@ html {
           mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
   opacity: 0.04;
   pointer-events: none;
-  z-index: 0;
+  z-index: var(--z-base);
 }
 
 .about-bridge__inner {
@@ -843,7 +843,7 @@ html {
   align-items: center;
   gap: var(--space-5);
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
 }
 
 .about-bridge__eyebrow {
@@ -950,7 +950,7 @@ html {
 
 .case-hero__subtitle {
   font-family: var(--font-body);
-  font-size: clamp(15px, 1.4vw, 17px);
+  font-size: var(--fs-body-lg);
   line-height: 1.7;
   color: var(--color-text-2);
   margin-bottom: var(--space-8);
