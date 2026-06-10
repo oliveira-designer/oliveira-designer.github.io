@@ -120,7 +120,7 @@
 
           <!-- Showcase image — full container width, visual anchor below the text block -->
         <div class="case-hero__showcase-media">
-          <img src="../images/case-assets/cci/cci-hero.png" alt="Cloud Cost Intelligence dashboard interface" />
+          <img src="../images/case-assets/cloud-cost-intelligence/dashboard-interface.png" alt="Cloud Cost Intelligence dashboard interface" />
         </div>
 
           <dl class="case-hero__meta">
@@ -152,15 +152,15 @@
             <nav class="case-toc" aria-label="Case study sections">
               <!--<p class="case-toc__label">Index</p>-->
               <ol class="case-toc__list">
-                <li class="case-toc__item"><a class="case-toc__link" href="#project-overview">Project Overview</a></li>
-                <li class="case-toc__item"><a class="case-toc__link" href="#challenges">Constraints I Led</a></li>
-                <li class="case-toc__item"><a class="case-toc__link" href="#expected-results">Business Objectives</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#project-overview">Project overview</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#challenges">Constraints I led</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#expected-results">Business objectives</a></li>
                 <li class="case-toc__item"><a class="case-toc__link" href="#research">Research</a></li>
                 <li class="case-toc__item"><a class="case-toc__link" href="#findings">Findings</a></li>
                 <li class="case-toc__item"><a class="case-toc__link" href="#benchmark">Benchmark</a></li>
-                <li class="case-toc__item"><a class="case-toc__link" href="#design-decisions">Design Decisions</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#design-decisions">Design decisions</a></li>
                 <li class="case-toc__item"><a class="case-toc__link" href="#outcome">Outcome</a></li>
-                <li class="case-toc__item"><a class="case-toc__link" href="#next-steps">Next Steps</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#next-steps">Next steps</a></li>
               </ol>
             </nav>
           </aside>
@@ -174,7 +174,7 @@
             <section id="project-overview" class="case-section reveal">
               <header class="case-section__header">
                 <span class="case-section__number">01</span>
-                <h2 class="case-section__title">Project Overview</h2>
+                <h2 class="case-section__title">Project overview</h2>
               </header>
               <div class="case-section__body">
 
@@ -205,7 +205,7 @@
             <section id="challenges" class="case-section reveal">
               <header class="case-section__header">
                 <span class="case-section__number">02</span>
-                <h2 class="case-section__title">Constraints I Led</h2>
+                <h2 class="case-section__title">Constraints I led</h2>
               </header>
               <div class="case-section__body">
 
@@ -248,7 +248,7 @@
             <section id="expected-results" class="case-section reveal">
               <header class="case-section__header">
                 <span class="case-section__number">03</span>
-                <h2 class="case-section__title">Business Objectives</h2>
+                <h2 class="case-section__title">Business objectives</h2>
               </header>
               <div class="case-section__body">
 
@@ -303,10 +303,11 @@
               <div class="case-section__body">
 
                 <div class="case-lead">
-                  <p class="case-lead__text">With direct user access restricted, I built and ran a qualitative and
-                    quantitative survey across a diverse group at the client, working closely with the project's
-                    researcher. It went to project managers, software engineers, program managers, and telemetry
-                    pipeline engineers.</p>
+                  <p class="case-lead__text">With direct user access restricted, I built and ran a structured survey with
+                    the project's researcher, targeting five departments: CPS PM, CPS Engineering, Telemetry
+                    Pipelines Engineering, DIA Engineering, and Program Management. 41 people were invited;
+                    10 responded over three weeks in June 2024. Small sample, internal only, no external
+                    clients involved. The findings were directional, not conclusive, and I used them that way.</p>
                 </div>
 
                 <div class="case-section__item">
@@ -421,8 +422,9 @@
                 </p>
                 <p>
                   Two demands ran through all of them: proactive control over cost, and the ability to read that
-                  cost at very different levels of detail depending on who was looking. Those two demands set the
-                  direction for every design decision that followed.
+                  cost at very different levels of detail depending on who was looking. The sample was small and
+                  internal only, so I treated these as directional signals, not hard requirements. They set the
+                  direction; the design decisions had to validate the read.
                 </p>
 
               </div>
@@ -439,10 +441,11 @@
               <div class="case-section__body">
 
                 <p>
-                  The survey made the competitive picture concrete. Datadog was the perceived benchmark, yet no
-                  one had actually used it; the tools users knew were CloudZero and CloudWatch. <span class="text-highlight">I
-                  studied how these handled cost visualization and forecasting to decide where to follow the conventions
-                  users already expected and where the platform needed to do better.</span>
+                  The survey overturned the starting assumption. Datadog was the perceived benchmark going in,
+                  but none of the respondents had ever used it for cost management. The tools they actually knew
+                  were CloudZero (90%) and AWS CloudWatch (70%). <span class="text-highlight">That finding redirected
+                  the benchmark: the conventions worth studying were the ones users already had opinions about,
+                  not the one they had only heard of.</span>
                 </p>
                 <p>
                   Working with stakeholders who knew these tools well, that reference is what let us lock the
@@ -501,13 +504,15 @@
             <section id="design-decisions" class="case-section reveal">
               <header class="case-section__header">
                 <span class="case-section__number">07</span>
-                <h2 class="case-section__title">Design Decisions</h2>
+                <h2 class="case-section__title">Design decisions</h2>
               </header>
               <div class="case-section__body">
 
                 <p>
-                  The discovery pointed in one direction: a surface that could carry dense, technical cost data
-                  and stay readable for people who were not technical. Here are the decisions that shaped it.
+                  The survey clustered into six consistent needs: better visualization, cost allocation,
+                  anomaly detection, system recommendations, tool references, and AWS integration. Those
+                  six clusters mapped directly to the platform's core capabilities. Here are the decisions
+                  that followed from them.
                 </p>
 
                 <div class="case-section__item">
@@ -644,7 +649,7 @@
             <section id="next-steps" class="case-section reveal">
               <header class="case-section__header">
                 <span class="case-section__number">09</span>
-                <h2 class="case-section__title">Next Steps</h2>
+                <h2 class="case-section__title">Next steps</h2>
               </header>
               <div class="case-section__body">
 
