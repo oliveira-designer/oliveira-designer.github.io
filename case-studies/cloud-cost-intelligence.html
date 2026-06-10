@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cloud Cost Intelligence: Case study by Renan Moura. Designing multi-persona cloud cost visibility at New Relic." />
+  <title>Cloud Cost Intelligence: Renan Moura | UI, UX & Product Design Portfolio</title>
+  <link rel="icon" type="image/svg+xml" href="../logos/logo-icon.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/output.css" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+
+  <!-- NDA gate — remove these three lines to make the page public -->
+  <link rel="stylesheet" href="../css/auth.css" />
+  <script>window.AUTH_RETURN = '../index.html';</script>
+  <script src="../js/auth.js"></script>
+</head>
+
+<body>
+  <!-- Skip link -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="site-header" role="banner">
+      <nav class="nav reveal reveal--from-top" data-reveal-on-load data-reveal-delay="120" role="navigation" aria-label="Main navigation">
+
+        <a href="../index.html" class="nav__logo" aria-label="Renan Moura — Home">
+          <img src="../logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
+          <img src="../logos/logo-dark-mode.svg"  alt="Renan Moura" class="nav__logo-dark"  />
+        </a>
+
+        <div class="nav__controls">
+
+          <div class="nav__links">
+            <a href="../index.html#home" class="nav__link">Home</a>
+            <a href="../index.html#work" class="nav__link nav__link--active" aria-current="page">Case studies</a>
+            <a href="../about.html" class="nav__link">About</a>
+            <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" class="nav__link" target="_blank" rel="noopener noreferrer">
+              Resume
+              <span class="visually-hidden">(opens in a new tab)</span>
+            </a>
+          </div>
+
+          <button class="nav__theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+            <!-- Tabler: sun -->
+            <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none">
+              <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+              <path d="M3 12h1" /><path d="M20 12h1" />
+              <path d="M12 3v1" /><path d="M12 20v1" />
+              <path d="M5.6 5.6l.7 .7" /><path d="M18.4 18.4l.7 .7" />
+              <path d="M5.6 18.4l.7 -.7" /><path d="M18.4 5.6l.7 -.7" />
+            </svg>
+            <!-- Tabler: moon -->
+            <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+            </svg>
+          </button>
+
+          <button class="nav__hamburger" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+            <!-- Tabler: menu-2 -->
+            <svg id="iconBurger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" />
+            </svg>
+            <!-- Tabler: x -->
+            <svg id="iconClose" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none">
+              <path d="M18 6l-12 12" /><path d="M6 6l12 12" />
+            </svg>
+          </button>
+
+        </div>
+      </nav>
+
+      <!-- Mobile menu drawer -->
+      <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+        <a href="../index.html#home" class="nav__mobile-link">Home</a>
+        <a href="../index.html#work" class="nav__mobile-link nav__mobile-link--active">Case studies</a>
+        <a href="../about.html"      class="nav__mobile-link">About</a>
+        <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
+      </div>
+
+  </header>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main id="main">
+
+    <!-- ============================================================
+         CASE HERO
+         ============================================================ -->
+    <section class="case-hero reveal" data-reveal-on-load data-reveal-delay="60" aria-labelledby="case-title">
+      <div class="container">
+
+        <!-- Text block: title → description → tags → metadata -->
+        <div class="case-hero__inner">
+
+          <div class="case-hero__content">
+            <span class="case-hero__overline">New Relic</span>
+            <h1 class="case-hero__title" id="case-title">Cloud Cost Intelligence</h1>
+            <p class="case-hero__subtitle">Designing multi-persona cost visibility that helped New Relic turn cloud spend into an observable, controllable metric.</p>
+
+            <ul class="case-hero__tags" aria-label="Disciplines">
+              <li><span class="badge badge--neutral">FinOps</span></li>
+              <li><span class="badge badge--neutral">Product Design</span></li>
+              <li><span class="badge badge--neutral">B2B SaaS</span></li>
+            </ul>
+          </div>
+
+          <!-- Showcase image — full container width, visual anchor below the text block -->
+        <div class="case-hero__showcase-media">
+          <img src="../images/case-assets/cci/cci-hero.png" alt="Cloud Cost Intelligence dashboard interface" />
+        </div>
+
+          <dl class="case-hero__meta">
+            <div><dt>Industry</dt><dd>Technology</dd></div>
+            <div><dt>Client</dt><dd>New Relic</dd></div>
+            <div><dt>Platform</dt><dd>Web</dd></div>
+            <div><dt>Period</dt><dd>6 months</dd></div>
+            <div><dt>My role</dt><dd>Product Designer</dd></div>
+            <div><dt>Lead Designer</dt><dd>Álison Ramos</dd></div>
+            <div><dt>PM</dt><dd>Vinay Sadhu</dd></div>
+            <div><dt>FinOps Director</dt><dd>Kate Penne</dd></div>
+          </dl>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CASE BODY — Sidebar TOC + Content
+         ============================================================ -->
+    <section class="section" id="content" aria-labelledby="cas">
+      <div class="container">
+        <div class="case-layout">
+
+          <!-- Sidebar TOC — visible on desktop only -->
+          <aside class="case-sidebar">
+            <nav class="case-toc" aria-label="Case study sections">
+              <!--<p class="case-toc__label">Index</p>-->
+              <ol class="case-toc__list">
+                <li class="case-toc__item"><a class="case-toc__link" href="#project-overview">Project Overview</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#challenges">Constraints I Led</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#expected-results">Business Objectives</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#research">Research</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#findings">Findings</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#benchmark">Benchmark</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#design-decisions">Design Decisions</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#outcome">Outcome</a></li>
+                <li class="case-toc__item"><a class="case-toc__link" href="#next-steps">Next Steps</a></li>
+              </ol>
+            </nav>
+          </aside>
+
+          <!-- Content column -->
+          <div class="case-content">
+
+            <!-- ======================================================
+                 01. PROJECT OVERVIEW
+                 ====================================================== -->
+            <section id="project-overview" class="case-section reveal">
+              <header class="case-section__header">
+                <span class="case-section__number">01</span>
+                <h2 class="case-section__title">Project Overview</h2>
+              </header>
+              <div class="case-section__body">
+
+                <div class="case-lead">
+                  <p class="case-lead__text">
+                    I designed the first version of New Relic's cloud cost management platform, the product the
+                    company now ships publicly as Cloud Cost Intelligence (CCI).
+                  </p>
+                </div>
+
+                <p>
+                  The brief looked simple: give engineering and finance teams a way to see and control cloud
+                  spend. The reality was a new domain with almost no design precedent. FinOps had only emerged
+                  around the COVID-19 pandemic, there was little public reference for how it worked inside
+                  companies beyond the FinOps Foundation, and access to the end users was restricted.
+                </p>
+                <p>
+                  I walk through how I structured the problem and the decisions behind the platform's core
+                  screen, using the cost overview dashboard as the reference flow.
+                </p>
+
+              </div>
+            </section>
+
+            <!-- ======================================================
+                 02. CONSTRAINTS I LED
+                 ====================================================== -->
+            <section id="challenges" class="case-section reveal">
+              <header class="case-section__header">
+                <span class="case-section__number">02</span>
+                <h2 class="case-section__title">Constraints I Led</h2>
+              </header>
+              <div class="case-section__body">
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">A domain with no map</h3>
+                  <p>FinOps was new. It had emerged with the pandemic, and there was little documented practice for
+                    how companies actually applied it. <span class="text-highlight">I could not lean on convention,
+                    so I treated the discovery itself as the way to build the missing map.</span></p>
+                </div>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">Three users, three levels of granularity</h3>
+                  <p>The platform served development managers, but the client also needed it to work for developers
+                    and financial analysts. Developers wanted highly detailed data. Analysts wanted generic
+                    breakdowns for billing reconciliation. <span class="text-highlight">Designing one surface for
+                    both was the central tension of the project.</span></p>
+                </div>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">Restricted access to the people I was designing for</h3>
+                  <p>Credential restrictions limited my contact with development managers. <span class="text-highlight">With
+                    direct access to the end users constrained, I leaned on a structured survey and constant work with
+                    the researcher</span> to capture needs I could not observe firsthand.</p>
+                </div>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">No Product Owner</h3>
+                  <p>The client assigned no Product Owner. <span class="text-highlight">With no single figure setting
+                    priorities, I drove prioritization and direction in the open</span>, aligning decisions with the
+                    team against a shared read of the goals. I designed every screen of the platform during my time
+                    on the project.</p>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- ======================================================
+                 03. BUSINESS OBJECTIVES
+                 ====================================================== -->
+            <section id="expected-results" class="case-section reveal">
+              <header class="case-section__header">
+                <span class="case-section__number">03</span>
+                <h2 class="case-section__title">Business Objectives</h2>
+              </header>
+              <div class="case-section__body">
+
+                <div class="case-lead">
+                  <p class="case-lead__text">The primary goal was to give each engineering manager a single place to
+                    see and act on cloud cost: baselines, allocation, tagging, budgeting, forecasting, monitoring,
+                    alerts, and actionable insights. Below, what success looked like for the client.</p>
+                </div>
+
+                <div class="skills-grid">
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Cloud spend to date</h3></div>
+                    <p class="skill-card__body">An accurate, real-time view of accumulated cloud spend, so teams could
+                      monitor cost continuously instead of waiting for the monthly bill.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Historical cost trends</h3></div>
+                    <p class="skill-card__body">Annual, monthly, weekly, and daily comparisons, so users could spot the
+                      patterns and changes behind their spend.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Costs by dimension</h3></div>
+                    <p class="skill-card__body">A granular breakdown by product or service, showing exactly where
+                      resources were being consumed.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Costs allocated by usage</h3></div>
+                    <p class="skill-card__body">Spend tied to actual resource usage, so each team, product, or service
+                      was accountable for what it consumed.</p>
+                  </article>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════════════════
+                 PHASE BREAK — DISCOVERY
+                 ══════════════════════════════════════════════════════ -->
+            <div class="case-phase-break" aria-hidden="true">
+              <span class="case-phase-break__label">Phase 1: Discovery</span>
+              <div class="case-phase-break__rule"></div>
+            </div>
+
+            <!-- ======================================================
+                 04. RESEARCH
+                 ====================================================== -->
+            <section id="research" class="case-section reveal">
+              <header class="case-section__header">
+                <span class="case-section__number">04</span>
+                <h2 class="case-section__title">Research</h2>
+              </header>
+              <div class="case-section__body">
+
+                <div class="case-lead">
+                  <p class="case-lead__text">With direct user access restricted, I built and ran a qualitative and
+                    quantitative survey across a diverse group at the client, working closely with the project's
+                    researcher. It went to project managers, software engineers, program managers, and telemetry
+                    pipeline engineers.</p>
+                </div>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">Initial goals</h3>
+                </div>
+
+                <div class="skills-grid">
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Evaluating cloud resource efficiency</h3></div>
+                    <p class="skill-card__body">How teams judged efficiency, and what they focused on.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Analyzing competitors</h3></div>
+                    <p class="skill-card__body">How rival solutions compared, and where we could differentiate.</p>
+                  </article>
+                </div>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">Hypotheses to validate</h3>
+                </div>
+
+                <div class="skills-grid">
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Familiarity with cloud management tools</h3></div>
+                    <p class="skill-card__body">Users know these tools and have views on improving them.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Prioritizing data security</h3></div>
+                    <p class="skill-card__body">Users weigh protection of financial and operational data heavily.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Datadog as the perceived competitor</h3></div>
+                    <p class="skill-card__body">Seen as the main rival, with solutions users find attractive.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">The weight of cost-benefit perception</h3></div>
+                    <p class="skill-card__body">Adoption depends on visible savings and measurable ROI.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Essential features</h3></div>
+                    <p class="skill-card__body">Real-time insights, detailed reporting, automated optimization recommendations.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Integration capabilities</h3></div>
+                    <p class="skill-card__body">Connecting to AWS, Azure, GCP, and DevOps tools is a critical factor.</p>
+                  </article>
+                </div>
+
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="../images/case-assets/cci/survey-setup.png" alt="Survey structure and distribution" />
+                  <figcaption>Survey structure and distribution</figcaption>
+                </figure>
+
+              </div>
+            </section>
+
+            <!-- ======================================================
+                 05. FINDINGS
+                 ====================================================== -->
+            <section id="findings" class="case-section reveal">
+              <header class="case-section__header">
+                <span class="case-section__number">05</span>
+                <h2 class="case-section__title">Findings</h2>
+              </header>
+              <div class="case-section__body">
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">Who responded</h3>
+                  <p><span class="text-highlight">Principal Software Engineers were 40% of responses</span>; the rest
+                    were Directors, Managers, and LSEs.</p>
+                </div>
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="../images/case-assets/cci/finding-demographics.png" alt="Respondent job titles" />
+                  <figcaption>Respondent job titles</figcaption>
+                </figure>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">No prior Datadog experience</h3>
+                  <p><span class="text-highlight">None had used Datadog for cost management.</span> 90% had used
+                    CloudZero, and 70% had used AWS CloudWatch.</p>
+                </div>
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="../images/case-assets/cci/finding-tools.png" alt="Tools used before for cloud cost management" />
+                  <figcaption>Tools used before for cloud cost management</figcaption>
+                </figure>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">What competitors got right</h3>
+                  <p><span class="text-highlight">Data visibility, forecasting, and robust monitoring drew the most
+                    attention</span>, and 40% cited good support for FinOps practices.</p>
+                </div>
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="../images/case-assets/cci/finding-features.png" alt="Most valued competitor features" />
+                  <figcaption>Most valued competitor features</figcaption>
+                </figure>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">What users expected</h3>
+                  <p>The top three expectations: <span class="text-highlight">easily monitor cost changes over time
+                    (80%), identify the most costly services (60%), and apply FinOps practices (50%).</span> Users
+                    also wanted spend visible by product and team, at a granular level.</p>
+                </div>
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="../images/case-assets/cci/finding-expectations.png" alt="User expectations for a cost management tool" />
+                  <figcaption>User expectations for a cost management tool</figcaption>
+                </figure>
+
+                <p>
+                  Clustering the open responses surfaced six consistent needs: better data visualization, cost
+                  allocation and budgeting, anomaly detection and alerts, system recommendations, references to
+                  tools like AWS Trusted Advisor, and alignment with AWS's Well-Architected framework.
+                </p>
+                <p>
+                  Two demands ran through all of them: proactive control over cost, and the ability to read that
+                  cost at very different levels of detail depending on who was looking. Those two demands set the
+                  direction for every design decision that followed.
+                </p>
+
+              </div>
+            </section>
+
+            <!-- ======================================================
+                 06. BENCHMARK
+                 ====================================================== -->
+            <section id="benchmark" class="case-section reveal">
+              <header class="case-section__header">
+                <span class="case-section__number">06</span>
+                <h2 class="case-section__title">Benchmark</h2>
+              </header>
+              <div class="case-section__body">
+
+                <p>
+                  The survey made the competitive picture concrete. Datadog was the perceived benchmark, yet no
+                  one had actually used it; the tools users knew were CloudZero and CloudWatch. <span class="text-highlight">I
+                  studied how these handled cost visualization and forecasting to decide where to follow the conventions
+                  users already expected and where the platform needed to do better.</span>
+                </p>
+                <p>
+                  Working with stakeholders who knew these tools well, that reference is what let us lock the
+                  direction for the core experience.
+                </p>
+
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="../images/case-assets/cci/benchmark.png" alt="Tools analyzed in the cloud cost management space" />
+                  <figcaption>Tools analyzed in the cloud cost management space</figcaption>
+                </figure>
+
+              </div>
+            </section>
+
+            <!-- ======================================================
+                 THE REFRAME — key insight callout (after section 06)
+                 ====================================================== -->
+            <div class="case-callout">
+
+              <header class="case-section__header">
+                <h2 class="case-section__title">This is where the project stopped being a dashboard problem</h2>
+              </header>
+
+              <div class="case-lead">
+                <div>
+
+                  <blockquote class="case-callout__text">
+                    <span class="text-highlight">The stakeholders briefing me were not a business team. They were
+                    engineers who wanted raw tables. But the people who would live in this product every day also
+                    included FinOps managers with no technical background.</span>
+                  </blockquote>
+
+                  <p class="case-lead__text">The real problem was not building a dashboard. It was making highly
+                    technical cost data legible across the gap between engineering and finance. That reframe drove
+                    every decision in the build.</p>
+
+                </div>
+
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="../images/case-assets/cci/reframe.png" alt="Reframing the problem across the engineering and finance gap" />
+                </figure>
+              </div>
+            </div>
+
+            <!-- ══════════════════════════════════════════════════════
+                 PHASE BREAK — EXECUTION
+                 ══════════════════════════════════════════════════════ -->
+            <div class="case-phase-break" aria-hidden="true">
+              <span class="case-phase-break__label">Phase 2: Execution</span>
+              <div class="case-phase-break__rule"></div>
+            </div>
+
+            <!-- ======================================================
+                 07. DESIGN DECISIONS
+                 ====================================================== -->
+            <section id="design-decisions" class="case-section reveal">
+              <header class="case-section__header">
+                <span class="case-section__number">07</span>
+                <h2 class="case-section__title">Design Decisions</h2>
+              </header>
+              <div class="case-section__body">
+
+                <p>
+                  The discovery pointed in one direction: a surface that could carry dense, technical cost data
+                  and stay readable for people who were not technical. Here are the decisions that shaped it.
+                </p>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">A dashboard, not the tables they asked for</h3>
+                  <p>The technical stakeholders' first instinct was tables. I pushed back. For data this dense,
+                    across this many services, tables would bury the signal. <span class="text-highlight">I designed
+                    the surface as a dashboard built around charts and indicators, so a user could read the state of
+                    their spend at a glance</span> before drilling in. This was a deliberate bet against the initial
+                    ask, and the survey backed it: users ranked clear visualization and monitoring above everything else.</p>
+                </div>
+
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="../images/case-assets/cci/cci-overview.png" alt="The cost overview dashboard with spend stacked by application, summary indicators, filters, and customization controls" />
+                  <figcaption>The cost overview dashboard: spend stacked by application over the selected period, with
+                    summary indicators, filters, and customization controls</figcaption>
+                </figure>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">The cost-over-time chart as the core</h3>
+                  <p>After dozens of conversations with the stakeholders, and with the survey results in hand, one
+                    thing was clear: <span class="text-highlight">the consumption chart was the heart of the product.</span>
+                    Everything else supported it. I designed it to be immediately readable and complete enough to carry
+                    the full cost story on its own, with spend stacked by application across the selected period.</p>
+                </div>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">Two summary indicators on top</h3>
+                  <p>I anchored the screen with Total cost and Average cost per day for the selected period. A
+                    manager could open the platform and immediately know how much their context was spending, then
+                    use the chart to see which product or team was driving it. <span class="text-highlight">A headline
+                    number paired with the breakdown beneath it is what turns the screen from a report into a decision
+                    tool.</span></p>
+                </div>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">Customization controls to serve three different users</h3>
+                  <p>This is where the engineering-to-finance gap got solved. Rather than design three screens, I
+                    gave one screen a set of controls: Group by, Show in legend, Cost type, and a time granularity
+                    toggle for hourly, daily, weekly, and monthly views. A developer could drill into raw, detailed
+                    cost. A FinOps manager with no technical knowledge could roll the same data up into something
+                    legible. <span class="text-highlight">One surface, calibrated by the user to their own level of
+                    detail.</span></p>
+                </div>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">Filtering, with AWS as the default</h3>
+                  <p>Users needed to narrow the view to the slice that mattered to them, so I designed a filtering
+                    layer at the top of the screen that extends the same logic of customization. Because New Relic
+                    ran on AWS, the stakeholders asked for Cloud Provider equals AWS to load by default. <span class="text-highlight">A
+                    small decision, but the kind that shows the product was designed for the client's real context,
+                    not a generic one.</span></p>
+                </div>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">Custom dimensions through a YAML upload</h3>
+                  <p>Teams needed to define their own cost dimensions, the logic that groups raw resources into
+                    meaningful categories. Aligned with the stakeholders, we landed on <span class="text-highlight">a
+                    YAML upload so teams could version and manage that logic as a file</span>, with a full history of
+                    changes and the ability to restore a previous version. I designed the upload flow and the version
+                    history around that decision.</p>
+                </div>
+
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="../images/case-assets/cci/custom-dimensions.png" alt="Custom dimensions interface where teams manage grouping logic as a versioned YAML file" />
+                  <figcaption>Custom dimensions: teams manage their grouping logic as a versioned YAML file</figcaption>
+                </figure>
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="../images/case-assets/cci/upload-history.png" alt="Version history showing tracked and restorable dimension updates" />
+                  <figcaption>Version history: every dimension update is tracked and restorable</figcaption>
+                </figure>
+
+                <div class="case-section__item">
+                  <h3 class="case-section__subtitle">Threshold alerts, closing the loop on proactive control</h3>
+                  <p>The survey was explicit: users wanted to be warned before a cost ran away, not after. I built
+                    that into each product's detail view. A user sets a cost threshold over a chosen date window,
+                    adds recipients, and the platform sends an email alert when spend crosses the line. <span class="text-highlight">This
+                    is the proactive control the research asked for, made concrete.</span></p>
+                </div>
+
+                <figure class="cs-figure cs-figure--bare">
+                  <img src="../images/case-assets/cci/alert-trigger.png" alt="Threshold alert configuration that emails recipients when cost crosses a defined limit" />
+                  <figcaption>Threshold alerts: an email trigger when a product or team's cost crosses a defined limit</figcaption>
+                </figure>
+
+              </div>
+            </section>
+
+            <!-- ======================================================
+                 08. OUTCOME
+                 ====================================================== -->
+            <section id="outcome" class="case-section reveal">
+              <header class="case-section__header">
+                <span class="case-section__number">08</span>
+                <h2 class="case-section__title">Outcome</h2>
+              </header>
+              <div class="case-section__body">
+
+                <p>
+                  The platform shipped and kept evolving after I rolled off the project. <span class="text-highlight">The
+                  work I designed became the foundation New Relic now ships publicly as Cloud Cost Intelligence.</span>
+                </p>
+
+                <p>
+                  In December 2025, New Relic published how its FinOps practice drove a
+                  <span class="text-highlight">60% reduction in internal cloud production cost per GB, sustained
+                  across several quarters</span>. That reduction is New Relic's engineering result, not a design
+                  metric. What the design contributed is the surface where that practice becomes legible: the
+                  place where engineers and FinOps managers see spend, spot anomalies, and act on it.
+                </p>
+
+                <p>
+                  Designing the first version of that surface, in a domain with no map and no assigned Product
+                  Owner, is the work I am proudest of in this project.
+                </p>
+
+                <p>
+                  The product New Relic ships today reflects the same directions the discovery defined: unifying
+                  engineering and FinOps teams on a single cost surface, attributing spend by team and service,
+                  and making forecasting part of the workflow before costs hit the bill.
+                </p>
+
+                <p>
+                  <a href="https://newrelic.com/blog/observability/when-observability-meets-finops-how-we-engineered-60-cloud-cost-reduction-at-new-relic" target="_blank" rel="noopener noreferrer">New Relic Engineering, "When observability meets FinOps" (December 2025)</a>
+                  &middot;
+                  <a href="https://newrelic.com/platform/cloud-cost-intelligence" target="_blank" rel="noopener noreferrer">Cloud Cost Intelligence on newrelic.com</a>
+                </p>
+
+              </div>
+            </section>
+
+            <!-- ======================================================
+                 09. NEXT STEPS
+                 ====================================================== -->
+            <section id="next-steps" class="case-section reveal">
+              <header class="case-section__header">
+                <span class="case-section__number">09</span>
+                <h2 class="case-section__title">Next Steps</h2>
+              </header>
+              <div class="case-section__body">
+
+                <p>
+                  Discovery surfaced more than one release could hold. I handed off a focused roadmap of the
+                  highest-value extensions.
+                </p>
+
+                <div class="skills-grid">
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Comprehensive data integration</h3></div>
+                    <p class="skill-card__body">Ingest entities like Kubernetes and load balancers so the cost picture
+                      covers the full stack.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Advanced cost visualizations</h3></div>
+                    <p class="skill-card__body">Add raw, amortized, blended, and discounted cost views to reflect how
+                      spend is really charged.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Budgeting</h3></div>
+                    <p class="skill-card__body">Give teams budgets to manage and optimize spend against, not just
+                      observe it.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Performance KPIs per team</h3></div>
+                    <p class="skill-card__body">Surface cost efficiency ratio, savings from optimization initiatives,
+                      and budget variance by team.</p>
+                  </article>
+                  <article class="skill-card">
+                    <div class="skill-card__header"><h3 class="skill-card__title">Deeper Jira integration</h3></div>
+                    <p class="skill-card__body">Automated ticket creation when a cost anomaly or investigation is
+                      triggered.</p>
+                  </article>
+                </div>
+
+              </div>
+            </section>
+
+          </div><!-- /.case-content -->
+        </div><!-- /.case-layout -->
+      </div><!-- /.container -->
+    </section><!-- /.section -->
+
+    <!-- ============================================================
+         NEXT CASE TEASER
+         ============================================================ -->
+    <section class="section reveal" aria-label="Next case study">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__overline">Next case</span>
+        </div>
+        <article class="case-card">
+          <div class="case-card__content">
+            <div class="case-card__tags">
+              <span class="badge badge--neutral">Retail</span>
+              <span class="badge badge--neutral">B2B</span>
+              <span class="badge badge--neutral">Web UX</span>
+              <span class="badge badge--neutral">Product Design</span>
+            </div>
+            <h2 class="case-card__title">CRM Retail Platform</h2>
+            <p class="case-card__lead">Helping retail partners manage marketing campaigns at Dotz</p>
+            <div class="case-card__footer">
+              <a href="dotz.html" class="btn btn--secondary">View case study</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+       <footer class="site-footer" role="contentinfo">
+        <div class="container">
+
+          <div class="footer__connect reveal">
+            <h2 class="footer__heading">Let's connect</h2>
+            <p class="footer__lede">Open to product design roles, freelance projects, and conversations about complex B2B and consumer work.</p>
+            <div class="footer__actions">
+              <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--secondary btn--footer">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
+                  <path d="M3 7l9 6l9 -6" />
+                </svg>
+                Send me an email
+              </a>
+              <a href="https://www.linkedin.com/in/rmouraoliv/" class="btn btn--secondary btn--footer" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                  <path d="M8 11l0 5" /><path d="M8 8l0 .01" />
+                  <path d="M12 16l0 -5" />
+                  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+                </svg>
+                View my LinkedIn
+                <span class="visually-hidden">(opens in a new tab)</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer__bottom">
+            <p class="footer__motto">
+              Made with
+              <span class="footer__heart" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false">
+                  <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                </svg>
+              </span>
+              by Renan Moura
+            </p>
+            <span class="footer__copy">© 2026 Renan Moura</span>
+          </div>
+
+        </div>
+      </footer>
+
+  <!-- ============================================================
+       DARK MODE JS
+       ============================================================ -->
+  <script>
+    (function () {
+      const html       = document.documentElement;
+      const themeBtn   = document.getElementById('themeToggle');
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconSun    = document.getElementById('iconSun');
+      const iconMoon   = document.getElementById('iconMoon');
+      const iconBurger = document.getElementById('iconBurger');
+      const iconClose  = document.getElementById('iconClose');
+
+      const saved   = localStorage.getItem('rm-theme');
+      const initial = saved || 'light';
+      applyTheme(initial);
+
+      themeBtn.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
+
+      menuToggle.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+        menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+        iconBurger.style.display = isOpen ? 'none'  : 'block';
+        iconClose.style.display  = isOpen ? 'block' : 'none';
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Open navigation menu');
+          iconBurger.style.display = 'block';
+          iconClose.style.display  = 'none';
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Open navigation menu');
+          iconBurger.style.display = 'block';
+          iconClose.style.display  = 'none';
+          menuToggle.focus();
+        }
+      });
+
+      function applyTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('rm-theme', theme);
+        iconSun.style.display  = theme === 'dark'  ? 'block' : 'none';
+        iconMoon.style.display = theme === 'light' ? 'block' : 'none';
+        themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        themeBtn.setAttribute('aria-pressed', String(theme === 'dark'));
+      }
+    })();
+  </script>
+  <script src="../js/animations.js" defer></script>
+  <script src="../js/case-toc.js" defer></script>
+  <script src="../js/lightbox.js" defer></script>
+  <script src="../js/counter.js" defer></script>
+</body>
+</html>
