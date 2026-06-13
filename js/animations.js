@@ -91,10 +91,46 @@
     highlights.forEach((el) => observer.observe(el));
   }
 
+  function initHeaderHide() {
+    const header = document.querySelector('.site-header');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (!header || prefersReduced) return;
+    header.style.transition = 'transform 0.3s ease-in-out';
+
+    const HIDE_THRESHOLD = 80;
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    function onScroll() {
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > lastScrollY;
+      const menuOpen = mobileMenu && mobileMenu.classList.contains('is-open');
+
+      if (currentScrollY <= HIDE_THRESHOLD || menuOpen) {
+        header.classList.remove('site-header--hidden');
+      } else if (scrollingDown) {
+        header.classList.add('site-header--hidden');
+      } else {
+        header.classList.remove('site-header--hidden');
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
   function init() {
     initLoadReveals();
     initScrollReveals();
     initTextHighlights();
+    initHeaderHide();
   }
 
   // Expose init so external callers (e.g. auth gate) can replay animations
