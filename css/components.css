@@ -1001,6 +1001,13 @@
   gap: var(--space-2);
 }
 
+.case-section__row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
 .case-section__body p {
   font-family: var(--font-body);
   font-size: var(--fs-body);
@@ -1056,6 +1063,7 @@
   overflow: hidden;
   border: var(--border-normal);
   background-color: var(--color-bg-alt);
+  text-align: center;
 }
 
 .cs-figure img {
@@ -1117,14 +1125,6 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.05);   /* no DS token — rgba transparency */
 }
 
-
-.case-section__test {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: var(--space-4);
-}
-
 /* Highlight card */
 .highlight-card {
   width: 100%;
@@ -1157,6 +1157,10 @@
 
 [data-theme="dark"] .highlight-card h3{
   color: var(--color-solar);
+}
+
+.highlight-card p {
+  font-weight: 700;
 }
 
 /* Legend — more specific selector to win over .case-section__body p */
