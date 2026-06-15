@@ -346,7 +346,7 @@
   font-family: var(--font-mono);
   font-size: var(--fs-h2);
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.4;
   color: var(--color-ancora);
 }
 [data-theme="dark"] .metric__value {
@@ -712,6 +712,27 @@
   color: var(--color-text-2);
 }
 
+.small-note {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-6);
+
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm) !important;
+  line-height: 1.7;
+
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-3) !important;
+  
+  transition:
+    transform    var(--duration-slow) var(--ease-out),
+    box-shadow   var(--duration-slow) var(--ease-out),
+    border-color var(--duration-slow) var(--ease-out);
+  ;
+}
+
 /* ── Metric card variant (Results section) ───────────────── */
 .skill-card--metric {
   background-color: var(--color-bg-alt);
@@ -742,7 +763,7 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   color: var(--color-text-3);
-  line-height: 1.5;
+  line-height: 1.8;
   margin: 0;
 }
 
