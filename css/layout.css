@@ -650,6 +650,13 @@ html {
   to   { transform: translate3d(-100%, 0, 0); }
 }
 
+.card__title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
 /* ----------------------------------------------------------
    ABOUT SNIPPET
    ---------------------------------------------------------- */
