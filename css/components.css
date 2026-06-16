@@ -1520,7 +1520,7 @@
   position: absolute;
   top: calc(100% + var(--space-2));
   right: var(--space-6);
-  display: flex;
+  display: none;
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-1) var(--space-3);
