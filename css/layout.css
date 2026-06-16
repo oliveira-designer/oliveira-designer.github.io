@@ -568,16 +568,11 @@ html {
    CONTENT GRIDS
    ---------------------------------------------------------- */
 
-/* Cases — portrait gallery: 1-up mobile, 2-up ≥640px.
-   A lone last card on an odd row spans both columns. */
+/* Cases — always 1 column; horizontal card layout handles visual/content split */
 .cases-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-6);
-}
-@media (min-width: 640px) {
-  .cases-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .cases-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 
 
