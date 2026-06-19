@@ -334,22 +334,22 @@
                   <h3 class="case-section__subtitle">Three users, three levels of granularity</h3>
                   <p>The platform had to serve development managers, but the client also needed it to work for developers
                     and financial analysts. Developers wanted highly detailed data. Analysts wanted generic
-                    breakdowns for billing reconciliation. <span class="text-highlight">Designing one surface for
-                    both was the central tension of the project.</span></p>
+                    breakdowns for billing reconciliation. <strong>Designing one surface for
+                    both was the central tension of the project.</strong></p>
                 </div>
 
                 <div class="case-section__item">
                   <h3 class="case-section__subtitle">Restricted access to the people I was designing for</h3>
                   <p>Credential restrictions limited my contact with development managers. 
-                    <span class="text-highlight">With direct access to the end users constrained, I 
+                    <strong>With direct access to the end users constrained, I 
                     leaned on a structured survey and constant work with the researcher
-                  </span> to capture needs I could not observe firsthand.</p>
+                    </strong> to capture needs I could not observe firsthand.</p>
                 </div>
 
                 <div class="case-section__item">
                   <h3 class="case-section__subtitle">No Product Owner</h3>
-                  <p>The client assigned no Product Owner. <span class="text-highlight">With no single figure setting
-                    priorities, I drove prioritization and direction in the open</span>, aligning decisions with the
+                  <p>The client assigned no Product Owner. <strong>With no single figure setting
+                    priorities, I drove prioritization and direction in the open</strong>, aligning decisions with the
                     team against a shared read of the goals. I designed every screen of the platform during my time
                     on the project.</p>
                 </div>
@@ -507,10 +507,8 @@
                 </p>
 
                 <p>
-                  <span class="text-highlight">
-                    The findings were directional, not conclusive, 
-                    and I used them that way.
-                  </span>
+                  The findings were directional, not conclusive, 
+                  and I used them that way.
                 </p>
 
                 <div class="case-section__item">
@@ -723,9 +721,9 @@
                 </p>
                 <p>
                   The tools they actually knew
-                  were <strong>CloudZero (90%)</strong> and <strong>AWS CloudWatch (70%)</strong>. <span class="text-highlight">That finding redirected
+                  were CloudZero (90%) and AWS CloudWatch (70%). <strong>That finding redirected
                   the benchmark: the conventions worth studying were the ones users already had opinions about,
-                  not the one they had only heard of.</span>
+                  not the one they had only heard of.</strong>
                 </p>
                 <p>
                   Working with stakeholders who knew these tools well, that reference is what let us lock the
@@ -746,7 +744,7 @@
             <div class="case-callout">
 
               <header class="case-section__header">
-                <h2 class="case-section__title">This is where the project stopped being a dashboard problem</h2>
+                <h2 class="case-section__title">This is where the project stopped being a dashboard problem.</h2>
               </header>
 
               <div class="case-lead">
@@ -822,9 +820,9 @@
                 <div class="case-section__item">
                   <h3 class="case-section__subtitle">A dashboard, not the tables they asked for</h3>
                   <p>The technical stakeholders' first instinct was tables. I pushed back. For data this dense,
-                    across this many services, tables would bury the signal. <span class="text-highlight">I designed
+                    across this many services, tables would bury the signal. <strong>I designed
                     the surface as a dashboard built around charts and indicators, so a user could read the state of
-                    their spend at a glance</span> before drilling in. This was a deliberate bet against the initial
+                    their spend at a glance</strong> before drilling in. This was a deliberate bet against the initial
                     ask, and the survey backed it: users ranked clear visualization and monitoring above everything else.</p>
                 </div>
 
@@ -837,7 +835,7 @@
                 <div class="case-section__item">
                   <h3 class="case-section__subtitle">The cost-over-time chart as the core</h3>
                   <p>After dozens of conversations with the stakeholders, and with the survey results in hand, one
-                    thing was clear: <span class="text-highlight">the consumption chart was the heart of the product.</span>
+                    thing was clear: <strong>the consumption chart was the heart of the product.</strong>
                     Everything else supported it. I designed it to be immediately readable and complete enough to carry
                     the full cost story on its own, with spend stacked by application across the selected period.</p>
                 </div>
@@ -846,9 +844,9 @@
                   <h3 class="case-section__subtitle">Two summary indicators on top</h3>
                   <p>I anchored the screen with <strong>Total cost</strong> and <strong>Average cost per day</strong> for the selected period. A
                     manager could open the platform and immediately know how much their context was spending, then
-                    use the chart to see which product or team was driving it. <span class="text-highlight">A headline
+                    use the chart to see which product or team was driving it. <strong>A headline
                     number paired with the breakdown beneath it is what turns the screen from a report into a decision
-                    tool.</span></p>
+                    tool.</strong></p>
                 </div>
 
                 <div class="case-section__item">
@@ -857,24 +855,22 @@
                     gave one screen a set of controls: Group by, Show in legend, Cost type, and a time granularity
                     toggle for hourly, daily, weekly, and monthly views. A developer could drill into raw, detailed
                     cost. A FinOps manager with no technical knowledge could roll the same data up into something
-                    legible. <span class="text-highlight">One surface, calibrated by the user to their own level of
-                    detail.</span></p>
+                    legible. <strong>One surface, calibrated by the user to their own level of
+                    detail.</strong></p>
                 </div>
 
                 <div class="case-section__item">
                   <h3 class="case-section__subtitle">Filtering, with AWS as the default</h3>
-                  <p>Users needed to narrow the view to the slice that mattered to them, so I designed a filtering
-                    layer at the top of the screen that extends the same logic of customization. Because New Relic
-                    ran on AWS, the stakeholders asked for Cloud Provider equals AWS to load by default. <span class="text-highlight">A
-                    small decision, but the kind that shows the product was designed for the client's real context,
-                    not a generic one.</span></p>
+                  <p>Users needed to narrow the view to the slice that mattered to them, so I designed a <strong>filtering
+                    layer at the top of the screen</strong> that extends the same logic of customization. Because New Relic
+                    ran on AWS, the stakeholders asked for Cloud Provider equals AWS to load by default.</p>
                 </div>
 
                 <div class="case-section__item">
                   <h3 class="case-section__subtitle">Custom dimensions through a YAML upload</h3>
                   <p>Teams needed to define their own cost dimensions, the logic that groups raw resources into
-                    meaningful categories. Aligned with the stakeholders, we landed on <span class="text-highlight">a
-                    YAML upload so teams could version and manage that logic as a file</span>, with a full history of
+                    meaningful categories. Aligned with the stakeholders, we landed on <strong>a
+                    YAML upload so teams could version and manage that logic as a file</strong>, with a full history of
                     changes and the ability to restore a previous version. I designed the upload flow and the version
                     history around that decision.</p>
                 </div>
@@ -892,8 +888,8 @@
                   <h3 class="case-section__subtitle">Threshold alerts, closing the loop on proactive control</h3>
                   <p>The survey was explicit: users wanted to be warned before a cost ran away, not after. I built
                     that into each product's detail view. A user sets a cost threshold over a chosen date window,
-                    adds recipients, and the platform sends an email alert when spend crosses the line. <span class="text-highlight">This
-                    is the proactive control the research asked for, made concrete.</span></p>
+                    adds recipients, and the platform sends an email alert when spend crosses the line. <strong>This
+                    is the proactive control the research asked for, made concrete.</strong></p>
                 </div>
 
                 <figure class="cs-figure cs-figure--bare">
@@ -942,7 +938,7 @@
                 </div>
 
                 <p class="small-note">
-                  That 60% cost reduction is New Relic's engineering result, not a design metric. 
+                  *That 60% cost reduction is New Relic's engineering result, not a design metric. 
                   What the design contributed is 
                   the surface where that practice becomes legible: the place where engineers 
                   and FinOps managers see spend, spot anomalies, and act on it.
@@ -954,8 +950,7 @@
                 </p>
 
                 <p>
-                  <span class="text-highlight">The design direction I established in V1 is the same one 
-                    New Relic ships today</span>: 
+                  The design direction I established in V1 is the same one New Relic ships today: 
                   <strong>dashboard over tables, cost-over-time as the core chart, customization controls to 
                   bridge engineering and finance</strong>.
                 </p>
