@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="../css/layout.css" />
   <link rel="stylesheet" href="../css/animations.css" />
 
+  <script src="/config.js"></script>
+
   <!-- NDA gate — remove these three lines to make the page public -->
   <link rel="stylesheet" href="../css/auth.css" />
   <script>window.AUTH_RETURN = '../index.html';</script>
@@ -46,7 +48,7 @@
           <a href="../index.html#home" class="nav__link">Home</a>
           <a href="../index.html#work" class="nav__link nav__link--active" aria-current="page">Case studies</a>
           <a href="../about.html" class="nav__link">About</a>
-          <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" class="nav__link" target="_blank" rel="noopener noreferrer">
+          <a href="#" data-resume-link="true" class="nav__link" target="_blank" rel="noopener noreferrer">
             Resume
             <span class="visually-hidden">(opens in a new tab)</span>
           </a>
@@ -86,7 +88,7 @@
       <a href="../index.html#home" class="nav__mobile-link">Home</a>
       <a href="../index.html#work" class="nav__mobile-link nav__mobile-link--active">Case studies</a>
       <a href="../about.html"      class="nav__mobile-link">About</a>
-      <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
+      <a href="#" data-resume-link="true" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
     </div>
 
   </header>
@@ -178,15 +180,23 @@
 
                 <div class="case-lead">
                   <p class="case-lead__text">
-                    Shell Box is Shell's official fueling and loyalty app in Brazil. Its home screen is the product's most critical touchpoint: the place where users initiate refueling, access loyalty benefits, and discover features.
+                    Shell Box is Shell's official fueling and loyalty app in Brazil. 
+                    Its home screen is the product's most critical touchpoint: the place where users initiate 
+                    refueling, access loyalty benefits, and discover features.
                   </p>
                 </div>
 
                 <p>
-                  I led the full redesign of this screen, partnering with Product, Engineering, Architecture, Legal, and Analytics teams to align on both user needs and technical constraints. Working under LGPD restrictions that limited access to external user testing, I structured the discovery process around internal usability sessions and behavioral data analysis.
+                  I led the full redesign of this screen, owning decisions across user needs and technical constraints. 
+                  Working under LGPD restrictions that limited 
+                  access to external user testing, I structured the discovery process around internal 
+                  usability sessions and behavioral data analysis.
                 </p>
                 <p>
-                  I also integrated AI at three deliberate points in the process, using it to move faster without compromising the quality of decisions: <span class="text-highlight"><strong>research synthesis, ideation acceleration, and developer handoff documentation.</strong></span>
+                  I also integrated AI at three deliberate points in the process, using it to move faster 
+                  without compromising the quality of decisions: 
+                  <span class="text-highlight"><strong>research synthesis, ideation acceleration, and 
+                  developer handoff documentation.</strong></span>
                 </p>
 
                 <div class="case-section__results">
@@ -1037,5 +1047,10 @@
   <script src="../js/case-toc.js" defer></script>
   <script src="../js/lightbox.js" defer></script>
   <script src="../js/counter.js" defer></script>
+  <script>
+    document.querySelectorAll('[data-resume-link]').forEach(function(el) {
+      el.href = PORTFOLIO_CONFIG.resumeUrl;
+    });
+  </script>
 </body>
 </html>

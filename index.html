@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/animations.css" />
+  <script src="/config.js"></script>
 </head>
 
 
@@ -48,7 +49,7 @@
             <a href="#home" class="nav__link nav__link nav__link--active" aria-current="page">Home</a>
             <a href="#work" class="nav__link nav__link" aria-current="page">Case studies</a>
             <a href="about.html" class="nav__link">About</a>
-            <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" class="nav__link" target="_blank" rel="noopener noreferrer">
+            <a href="#" data-resume-link="true" class="nav__link" target="_blank" rel="noopener noreferrer">
               Resume
               <span class="visually-hidden">(opens in a new tab)</span>
             </a>
@@ -98,7 +99,7 @@
         <a href="#home"      class="nav__mobile-link nav__link--active">Home</a>
         <a href="#work"      class="nav__mobile-link">Case studies</a>
         <a href="about.html" class="nav__mobile-link">About</a>
-        <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
+        <a href="#" data-resume-link="true" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
         <!-- <a href="mailto:rmouraolivdesigner@gmail.com" class="nav__mobile-link">Contact</a> -->
       </div>
 
@@ -855,5 +856,10 @@
   </script>
   <script src="js/animations.js" defer></script>
   <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+    document.querySelectorAll('[data-resume-link]').forEach(function(el) {
+      el.href = PORTFOLIO_CONFIG.resumeUrl;
+    });
+  </script>
 </body>
 </html>

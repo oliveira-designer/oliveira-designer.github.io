@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/animations.css" />
+  <script src="/config.js"></script>
 </head>
 
 <body>
@@ -41,7 +42,7 @@
             <a href="index.html" class="nav__link">Home</a>
             <a href="index.html#work" class="nav__link">Case studies</a>
             <a href="about.html" class="nav__link nav__link--active" aria-current="page">About</a>
-            <a href="https://drive.google.com/file/d/1gYGNErQPOq0VAqA9gy-IHgEJ8Ou-hkin/view" class="nav__link" target="_blank" rel="noopener noreferrer">
+            <a href="#" data-resume-link="true" class="nav__link" target="_blank" rel="noopener noreferrer">
               Resume
               <span class="visually-hidden">(opens in a new tab)</span>
             </a>
@@ -76,7 +77,7 @@
         <a href="index.html"      class="nav__mobile-link">Home</a>
         <a href="index.html#work" class="nav__mobile-link">Case studies</a>
         <a href="about.html"      class="nav__mobile-link nav__mobile-link--active" aria-current="page">About</a>
-        <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
+        <a href="#" data-resume-link="true" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
       </div>
 
       <!-- Status badge — remove once portfolio is live -->
@@ -141,7 +142,7 @@
                 View my LinkedIn
                 <span class="visually-hidden">(opens in a new tab)</span>
               </a>
-              <a href="https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn btn--secondary-hero">
+              <a href="#" data-resume-link="true" target="_blank" rel="noopener noreferrer" class="btn btn--secondary-hero">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                   <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
                   <path d="M7 11l5 5l5 -5" />
@@ -517,5 +518,10 @@
   </script>
   <script src="js/animations.js" defer></script>
   <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+    document.querySelectorAll('[data-resume-link]').forEach(function(el) {
+      el.href = PORTFOLIO_CONFIG.resumeUrl;
+    });
+  </script>
 </body>
 </html>
