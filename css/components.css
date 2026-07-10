@@ -1827,6 +1827,44 @@
 }
 
 /* ----------------------------------------------------------
+   BANNER
+   ---------------------------------------------------------- */
+.banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-body-sm);
+  font-family: var(--font-body);
+  line-height: 1.4;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: var(--space-6);
+}
+
+.banner--wip {
+  background-color: var(--color-aurora-soft);
+  color: var(--color-crepusculo);
+  border: 1px solid var(--color-ambar);
+}
+
+[data-theme="dark"] .banner--wip {
+  background-color: var(--color-aurora-soft);
+  color: var(--color-madrugada);
+  border-color: var(--color-ambar);
+}
+
+.banner__icon {
+  flex-shrink: 0;
+  font-size: var(--fs-body);
+}
+
+.banner__text {
+  flex: 1;
+}
+
+/* ----------------------------------------------------------
    FIGURE — BALANCED
    Image matches the natural height of its sibling text column.
    Requires the parent grid to use align-items: stretch (layout-2col
