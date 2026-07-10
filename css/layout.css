@@ -568,6 +568,44 @@ html {
    CONTENT GRIDS
    ---------------------------------------------------------- */
 
+/* Generic layout wrappers — column count only, no padding, no max-width */
+.layout-1col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: stretch;
+  width: 100%;
+}
+
+.layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: stretch;
+  width: 100%;
+}
+
+.layout-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-8);
+  align-items: stretch;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .layout-2col,
+  .layout-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .layout-3col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 /* Cases — always 1 column; horizontal card layout handles visual/content split */
 .cases-grid {
   display: grid;

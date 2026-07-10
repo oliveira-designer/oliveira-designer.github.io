@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+
 /* ============================================================
    HOPE DESIGN SYSTEM — components.css
    v1.4 · May 2026
@@ -1782,4 +1784,88 @@
 /* Reduced-motion: skip the scale, keep the fade */
 @media (prefers-reduced-motion: reduce) {
   .lightbox__panel { transform: none !important; transition: none !important; }
+}
+
+/* ----------------------------------------------------------
+   BRAND LIST
+   ---------------------------------------------------------- */
+.brand-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-tinta);
+}
+
+.brand-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.brand-list li::before {
+  content: "→";
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--color-ancora);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .brand-list {
+  color: var(--color-superficie);
+}
+
+[data-theme="dark"] .brand-list li::before {
+  color: var(--color-solar);
+}
+
+/* ----------------------------------------------------------
+   FIGURE — BALANCED
+   Image matches the natural height of its sibling text column.
+   Requires the parent grid to use align-items: stretch (layout-2col
+   already does this). Do not set a fixed height on this element —
+   height: 100% only works because the grid stretches the cell.
+   ---------------------------------------------------------- */
+.figure-balanced {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  min-height: 0;
+  max-height: 480px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  gap: var(--space-2);
+}
+
+.figure-balanced img {
+  display: block;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center top;
+  border-radius: inherit;
+}
+
+.figure-balanced figcaption {
+  flex-shrink: 0;
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  line-height: 1.4;
+}
+
+@media (max-width: 767px) {
+  .figure-balanced {
+    height: 280px;
+    align-self: auto;
+  }
 }
