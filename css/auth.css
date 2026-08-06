@@ -178,9 +178,9 @@ main,
 }
 
 .auth-gate__email {
-  color: var(--color-link);
+  color: var(--color-text-brand-primary);
   text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--color-link) 40%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--color-text-brand-primary) 40%, transparent);
   text-underline-offset: 3px;
   font-weight: 500;
   transition:
@@ -188,8 +188,8 @@ main,
     text-decoration-color var(--duration-normal) var(--ease-out);
 }
 .auth-gate__email:hover {
-  color: var(--color-link-hover);
-  text-decoration-color: var(--color-link-hover);
+  color: var(--color-text-brand-primary-hover);
+  text-decoration-color: var(--color-text-brand-primary-hover);
 }
 
 /* ----------------------------------------------------------
@@ -250,8 +250,8 @@ main,
   color: var(--color-text-3);
 }
 .auth-gate__input:focus {
-  border-color: var(--color-ancora);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ancora) 15%, transparent);
+  border-color: var(--color-anchor);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-anchor) 15%, transparent);
 }
 [data-theme="dark"] .auth-gate__input:focus {
   border-color: var(--color-solar);

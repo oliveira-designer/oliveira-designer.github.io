@@ -39,11 +39,12 @@ html {
   border-radius: var(--radius-lg);
   padding: var(--space-3) var(--space-6);
 
-  /* Glassmorphism — light mode */
-  background: rgba(255, 255, 255, 0.4);
+  /* Glassmorphism — light mode. Bg/border on the unified Material recipe;
+     nav pill keeps its own blur/shadow personality. */
+  background: var(--color-material-bg);
   backdrop-filter: blur(30px) saturate(1.6);
   -webkit-backdrop-filter: blur(20px) saturate(1.6);
-  border: 1px solid var(--color-superficie);
+  border: 1px solid var(--color-material-border);
   box-shadow: var(--shadow-sm);
 
   transition:
@@ -59,8 +60,8 @@ html {
 
 /* Glassmorphism — dark mode */
 [data-theme="dark"] .site-header {
-  background: rgba(26, 26, 46, 0.4);
-  border-color: rgba(74, 74, 96, 0.3);
+  background: var(--color-material-bg);
+  border-color: var(--color-material-border);
 }
 
 .nav {
@@ -183,7 +184,7 @@ html {
   transform: translate3d(0, 0, 0);
 
   /* Glass panel — milkier tint keeps text readable while blur settles */
-  background: var(--color-nuvem);
+  background: var(--color-cloud);
   -webkit-backdrop-filter: blur(50px) saturate(1.6);
           backdrop-filter: blur(50px) saturate(1.6);
   border: 1px solid rgba(255, 255, 255, 0.35);
@@ -196,7 +197,7 @@ html {
     border-color var(--duration-slower) var(--ease-out);
 }
 [data-theme="dark"] .nav__mobile-menu {
-  background: var(--color-abismo);
+  background: var(--color-abyss);
   -webkit-backdrop-filter: blur(20px) saturate(1.6);
           backdrop-filter: blur(20px) saturate(1.6);
   border-color: rgba(74, 74, 96, 0.35);
@@ -246,7 +247,7 @@ html {
   margin-bottom: var(--space-12);
 }
 .section__overline {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -336,7 +337,7 @@ html {
 
 .hero__overline {
   display: inline-block;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   font-weight: 400;
   letter-spacing: 0.12em;
@@ -357,7 +358,7 @@ html {
 }
 .hero__headline mark {
   background: none;
-  color: var(--color-ancora);
+  color: var(--color-anchor);
 }
 
 [data-theme="dark"] .hero__headline mark { 
@@ -531,7 +532,7 @@ html {
 }
 
 .companies__label {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -711,7 +712,7 @@ html {
   gap: var(--space-6);
 }
 .about-block__label {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -727,14 +728,14 @@ html {
 
 /* ----------------------------------------------------------
    FOOTER
-   Always Abismo — connect CTA + bottom bar
+   Always Background/Brand/Strong — connect CTA + bottom bar
    ---------------------------------------------------------- */
 .site-footer {
-  background-color: var(--color-abismo);
-  color: var(--color-nuvem);
+  background-color: var(--color-bg-brand-strong);
+  color: var(--color-text-on-brand-strong);
   padding: var(--space-20) 0 var(--space-10);
   margin-top: var(--space-20);
-  border-top: 3px solid var(--color-solar);
+  border-top: 3px solid var(--color-border-accent-strong);
 }
 
 .footer__connect {
@@ -751,7 +752,7 @@ html {
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
-  color: var(--color-nuvem);
+  color: var(--color-cloud);
 }
 
 .footer__lede {
@@ -771,12 +772,12 @@ html {
 
 /* Secondary button on dark footer */
 .site-footer .btn--footer {
-  color: var(--color-nuvem);
+  color: var(--color-cloud);
   border-color: rgba(255, 255, 255, 0.35);
   background-color: transparent;
 }
 .site-footer .btn--footer:hover {
-  color: var(--color-nuvem);
+  color: var(--color-cloud);
   border-color: rgba(255, 255, 255, 0.65);
   background-color: rgba(255, 255, 255, 0.08);
 }
@@ -823,7 +824,7 @@ html {
 }
 
 .footer__copy {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.65);
@@ -964,7 +965,7 @@ html {
 
 .case-hero__overline {
   display: inline-block;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   font-weight: 400;
   letter-spacing: 0.12em;
@@ -1016,7 +1017,7 @@ html {
 }
 
 .case-hero__meta dt {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -1088,7 +1089,7 @@ html {
 }
 
 .case-phase-break__label {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   font-weight: 700;
   text-transform: uppercase;
@@ -1119,7 +1120,7 @@ html {
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.02em;
-  color: var(--color-abismo);
+  color: var(--color-abyss);
   max-width: 820px;
 }
 [data-theme="dark"] .case-callout__text {
@@ -1158,7 +1159,7 @@ html {
 
 /* "INDEX" group header — mono label, same as DS sidebar group labels */
 .case-toc__label {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -1199,7 +1200,7 @@ html {
 /* Sequential number — same size as link text, muted mono weight */
 .case-toc__link::before {
   content: counter(toc-counter, decimal-leading-zero);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   font-weight: 500;
   color: var(--color-text-3);
@@ -1213,7 +1214,7 @@ html {
   background-color: rgba(28, 95, 168, 0.05);
 }
 .case-toc__link:hover::before {
-  color: var(--color-ancora);
+  color: var(--color-anchor);
 }
 
 [data-theme="dark"] .case-toc__link:hover {
@@ -1230,7 +1231,7 @@ html {
   background-color: rgba(28, 95, 168, 0.08);
 }
 .case-toc__link.is-active::before {
-  color: var(--color-ancora);
+  color: var(--color-anchor);
   font-weight: 700;
 }
 
@@ -1261,7 +1262,7 @@ html {
 }
 
 .team-section__title {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -1308,7 +1309,7 @@ html {
 
 /* "My squad" emphasis — icon + label in brand accent */
 .team-card--mine svg {
-  color: var(--color-ancora);
+  color: var(--color-anchor);
 }
 
 [data-theme="dark"] .team-card--mine svg {
@@ -1390,7 +1391,7 @@ html {
   font-family: var(--font-display);
   font-size: 64px;
   line-height: 0.75;
-  color: var(--color-ancora);
+  color: var(--color-anchor);
   margin-bottom: var(--space-3);
 }
 [data-theme="dark"] .about-split__quote::before {
@@ -1410,7 +1411,7 @@ html {
 .about-split__attribution {
   display: block;
   margin-top: var(--space-5);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1492,7 +1493,7 @@ html {
 
 /* Text monogram fallback for companies without a logo file */
 .experience-item__logo-mono {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -1531,7 +1532,7 @@ html {
 
 /* Date range — far right, monospaced */
 .experience-item__dates {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   letter-spacing: 0.08em;
   color: var(--color-text-3);

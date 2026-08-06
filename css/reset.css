@@ -71,13 +71,13 @@ img, svg, video, canvas, audio, iframe, embed, object {
 }
 
 a {
-  color: var(--color-link);
+  color: var(--color-text-brand-primary);
   text-decoration: none;
   transition: color var(--duration-normal) var(--ease-out);
 }
-a:hover { color: var(--color-link-hover); }
+a:hover { color: var(--color-text-brand-primary-hover); }
 a:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
+  outline: 2px solid var(--color-border-focus-ring);
   outline-offset: 3px;
   border-radius: var(--radius-xs);
 }
@@ -93,7 +93,7 @@ button {
   color: inherit;
 }
 button:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
+  outline: 2px solid var(--color-border-focus-ring);
   outline-offset: 3px;
   border-radius: var(--radius-xs);
 }
@@ -194,7 +194,7 @@ p { max-width: 70ch; }
 }
 
 .text-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
   font-weight: 400;
   line-height: 1.4;
@@ -203,7 +203,7 @@ p { max-width: 70ch; }
 }
 
 .text-mono {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-body-sm);
 }
 
@@ -212,7 +212,7 @@ p { max-width: 70ch; }
 .text-secondary { color: var(--color-text-2); }
 .text-tertiary  { color: var(--color-text-3); }
 .text-solar     { color: var(--color-solar);  }
-.text-ancora    { color: var(--color-ancora); }
+.text-ancora    { color: var(--color-anchor); }
 
 /* ----------------------------------------------------------
    ENTRANCE ANIMATIONS

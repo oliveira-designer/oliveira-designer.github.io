@@ -9,71 +9,114 @@
      COLORS — Solar Family
      Warm, luminous, hopeful
      ---------------------------------------------------------- */
-  --color-aurora:      #FEF8E0;
-  --color-madrugada:   #FAE19A;
-  --color-solar:       #F5C842; /* ★ BRAND ACCENT */
-  --color-ambar:       #C49A1F;
-  --color-crepusculo:  #8B6914;
+  --color-aurora:   #FEF8E0;
+  --color-daybreak: #FAE19A;
+  --color-solar:    #F5C842; /* ★ BRAND ACCENT */
+  --color-amber:    #C49A1F;
+  --color-dusk:     #8B6914;
 
   /* ----------------------------------------------------------
      COLORS — Anchor Family
      Cool, precise, structural
      ---------------------------------------------------------- */
-  --color-ceu:         #E8F0F9;
-  --color-mare:        #8CB4E0;
-  --color-ancora:      #1C5FA8; /* ★ BRAND ACCENT */
-  --color-profundo:    #144278;
-  --color-abismo:      #1A1A2E;
+  --color-sky:      #E8F0F9;
+  --color-tide:     #8CB4E0;
+  --color-anchor:   #1C5FA8; /* ★ BRAND ACCENT */
+  --color-deep:     #144278;
+  --color-abyss:    #1A1A2E;
 
   /* ----------------------------------------------------------
      COLORS — Neutrals
      ---------------------------------------------------------- */
-  --color-nuvem:       #FFFFFF;
-  --color-superficie:  #F7F7F9;
-  --color-borda:       #E2E2E8;
-  --color-mudo:        #5F5F6E; /* adjusted for WCAG AA */
-  --color-sombra:      #3D3D45;
-  --color-tinta:       #0D0D0F;
+  --color-cloud:       #FFFFFF;
+  --color-surface:     #F7F7F9;
+  --color-border-base: #E2E2E8;
+  --color-muted:       #5F5F6E; /* adjusted for WCAG AA */
+  --color-shadow:      #3D3D45;
+  --color-ink:         #0D0D0F;
 
   /* ----------------------------------------------------------
      COLORS — Functional
      ---------------------------------------------------------- */
   --color-success:      #4A9F6B;
-  --color-success-soft: rgba(74, 159, 107, 0.12);  /* 8.6:1 on white */
+  --color-bg-positive-soft: rgba(74, 159, 107, 0.12);  /* 8.6:1 on white */
   --color-warning:      #C47A1F;
   --color-error:        #B83434;
-  --color-error-soft:   rgba(184, 52, 52, 0.10);   /* 8.3:1 on white */
-  --color-aurora-soft:  var(--color-aurora);        /* 9.1:1 on white */
+  --color-bg-danger-soft:   rgba(184, 52, 52, 0.10);   /* 8.3:1 on white */
+  --color-bg-accent-soft:  var(--color-aurora);        /* 9.1:1 on white */
   --color-info:        #634590;
   --color-celebrate:   #F5A8C0;
 
   /* ----------------------------------------------------------
-     SEMANTIC EXTRAS
+     COLORS — Night Family (dark-mode ramp)
      ---------------------------------------------------------- */
-  --color-borda-dark: #E0E0E8;  /* dark mode btn--primary hover surface */
+  --color-night-800:          #242438;
+  --color-night-700:          #2E2E40;
+  --color-night-600:          #4A4A60;
+  --color-night-400:          #9090A8;
+  --color-night-300:          #B4B4C8;
+  --color-night-accent-hover: #FFD96B;
+  --color-night-aurora-soft:  #2A2618;
+  --color-night-success-soft: #162418;
+  --color-night-error-soft:   #261616;
 
   /* ----------------------------------------------------------
      SURFACES — Light mode (default)
      ---------------------------------------------------------- */
-  --color-bg:            var(--color-nuvem);
-  --color-bg-alt:        var(--color-superficie);
-  --color-bg-inverse:    var(--color-abismo);
-  --color-border:        var(--color-borda);
-  --color-border-strong: var(--color-mudo);
-  --color-text-1:        var(--color-tinta);
-  --color-text-2:        var(--color-sombra);
-  --color-text-3:        var(--color-mudo);
-  --color-text-inverse:  var(--color-nuvem);
-  --color-link:          var(--color-ancora);
-  --color-link-hover:    var(--color-profundo);
-  --color-focus-ring:    var(--color-ancora);
+  --color-bg:            var(--color-cloud);
+  --color-bg-alt:        var(--color-surface);
+  --color-bg-inverse:    var(--color-abyss);
+  --color-border:        var(--color-border-base);
+  --color-border-strong: var(--color-muted);
+  --color-text-1:        var(--color-ink);
+  --color-text-2:        var(--color-shadow);
+  --color-text-3:        var(--color-muted);
+  --color-text-inverse:  var(--color-cloud);
+  --color-text-brand-primary:          var(--color-anchor);
+  --color-text-brand-primary-hover:    var(--color-deep);
+  --color-border-focus-ring:    var(--color-anchor);
+
+  /* ----------------------------------------------------------
+     COMPONENT TOKENS — Light mode (default)
+     ---------------------------------------------------------- */
+  --color-bg-neutral-default:     var(--color-ink);
+  --color-bg-neutral-hover:       var(--color-shadow);
+  --color-text-on-neutral:        var(--color-cloud);
+
+  --color-bg-brand-secondary:     var(--color-sky);
+  --color-text-brand-secondary:   var(--color-deep);
+
+  --color-bg-accent-secondary:    var(--color-aurora);
+  --color-text-accent-secondary:  var(--color-dusk);
+
+  --color-bg-neutral-secondary:   var(--color-surface);
+  --color-text-neutral-secondary: var(--color-muted);
+
+  --color-bg-brand-strong:        var(--color-abyss);
+  --color-border-accent-strong:   var(--color-solar);
+  --color-text-on-brand-strong:   var(--color-cloud);
+
+  --color-bg-icon-chip: var(--color-sky);
+
+  /* ----------------------------------------------------------
+     MATERIAL — unified glassmorphism recipe
+     Figma effect styles: Glass/rest = --blur-glass +
+     --color-material-shadow-drop + inset highlight; Glass/hover =
+     --blur-glass + --color-material-shadow-drop-hover + inset highlight.
+     ---------------------------------------------------------- */
+  --blur-glass: blur(24px) saturate(1.5);
+  --color-material-bg:                rgba(255, 255, 255, 0.60);
+  --color-material-border:            rgba(255, 255, 255, 0.70);
+  --color-material-border-hover:      rgba(255, 255, 255, 0.85);
+  --color-material-shadow-drop:       0 4px 16px rgba(13, 13, 15, 0.06);
+  --color-material-shadow-drop-hover: 0 12px 32px rgba(13, 13, 15, 0.10);
+  --color-material-shadow-inset:      rgba(255, 255, 255, 0.90);
 
   /* ----------------------------------------------------------
      TYPOGRAPHY
      ---------------------------------------------------------- */
-  --font-display: 'Geist Sans', 'Plus Jakarta Sans', sans-serif;
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono:    'Geist Sans', 'Plus Jakarta Sans', sans-serif;
 
   /* Fluid type scale (clamp) */
   --fs-display: clamp(36px, 5vw, 52px);
@@ -105,8 +148,8 @@
 
   /* Semantic spacing tokens */
   --gap-tight:     var(--space-2);
-  --gap-component: var(--space-4);
-  --gap-element:   var(--space-6);
+  --gap-element:   var(--space-4);
+  --gap-component: var(--space-6);
   --gap-section:   var(--space-12);
   --gap-page:      var(--space-24);
 
@@ -130,7 +173,7 @@
   --shadow-sm:    0 1px 3px rgba(13, 13, 15, 0.06);
   --shadow-md:    0 4px 12px rgba(13, 13, 15, 0.08);
   --shadow-lg:    0 8px 32px rgba(13, 13, 15, 0.10);
-  --shadow-focus: 0 0 0 3px var(--color-focus-ring);
+  --shadow-focus: 0 0 0 3px var(--color-border-focus-ring);
 
   /* ----------------------------------------------------------
      MOTION
@@ -164,22 +207,44 @@
    DARK MODE — enabled via data-theme="dark"
    ---------------------------------------------------------- */
 [data-theme="dark"] {
-  --color-aurora-soft:    #2A2618;  /* 7.7:1 on #B4B4C8 */
-  --color-success-soft:   #162418;  /* 8.3:1 on #B4B4C8 */
-  --color-error-soft:     #261616;  /* 8.9:1 on #B4B4C8 */
+  --color-bg-accent-soft:   var(--color-night-aurora-soft);   /* 7.7:1 on #B4B4C8 */
+  --color-bg-positive-soft: var(--color-night-success-soft);  /* 8.3:1 on #B4B4C8 */
+  --color-bg-danger-soft:   var(--color-night-error-soft);    /* 8.9:1 on #B4B4C8 */
 
-  --color-bg:            var(--color-abismo);
-  --color-bg-alt:        #242438;
-  --color-bg-inverse:    var(--color-nuvem);
-  --color-border:        #2E2E40;
-  --color-border-strong: #4A4A60;
-  --color-text-1:        var(--color-nuvem);
-  --color-text-2:        #B4B4C8;
-  --color-text-3:        #9090A8;  /* WCAG AA: 4.6:1 on dark mode cards */
-  --color-text-inverse:  var(--color-tinta);
-  --color-link:          var(--color-solar);
-  --color-link-hover:    #FFD96B;
-  --color-focus-ring:    var(--color-solar);
+  --color-bg:            var(--color-abyss);
+  --color-bg-alt:        var(--color-night-800);
+  --color-bg-inverse:    var(--color-cloud);
+  --color-border:        var(--color-night-700);
+  --color-border-strong: var(--color-night-600);
+  --color-text-1:        var(--color-cloud);
+  --color-text-2:        var(--color-night-300);
+  --color-text-3:        var(--color-night-400);  /* WCAG AA: 4.6:1 on dark mode cards */
+  --color-text-inverse:  var(--color-ink);
+  --color-text-brand-primary:          var(--color-solar);
+  --color-text-brand-primary-hover:    var(--color-night-accent-hover);
+  --color-border-focus-ring:    var(--color-solar);
+
+  --color-bg-neutral-default:     var(--color-cloud);
+  --color-bg-neutral-hover:       var(--color-border-base);
+  --color-text-on-neutral:        var(--color-ink);
+
+  --color-bg-brand-secondary:     rgba(28, 95, 168, 0.2);
+  --color-text-brand-secondary:   var(--color-tide);
+
+  --color-bg-accent-secondary:    rgba(245, 200, 66, 0.15);
+  --color-text-accent-secondary:  var(--color-solar);
+
+  --color-bg-neutral-secondary:   rgba(255, 255, 255, 0.05);
+  --color-text-neutral-secondary: var(--color-text-3);
+
+  --color-bg-icon-chip: rgba(245, 200, 66, 0.14);
+
+  --color-material-bg:                rgba(26, 26, 46, 0.52);
+  --color-material-border:            rgba(74, 74, 96, 0.32);
+  --color-material-border-hover:      rgba(245, 200, 66, 0.30);
+  --color-material-shadow-drop:       0 4px 16px rgba(0, 0, 0, 0.22);
+  --color-material-shadow-drop-hover: 0 12px 32px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(245, 200, 66, 0.10);
+  --color-material-shadow-inset:      rgba(255, 255, 255, 0.05);
 }
 
 /* ----------------------------------------------------------
