@@ -28,7 +28,10 @@
       "Bash(mkdir -p \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/phosphor\")",
       "Bash(cp /tmp/phosphor/*.svg \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/phosphor/\")",
       "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/sun.svg\")",
-      "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2.1.1/assets/fill/sun-fill.svg\")"
+      "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2.1.1/assets/fill/sun-fill.svg\")",
+      "Bash(npx --yes skills add emilkowalski/skill)",
+      "Bash(echo \"exit code: $?\")",
+      "Bash(curl -s -o /dev/null -w \"index.html retry: %{http_code}\\\\n\" http://localhost:8765/index.html)"
     ]
   }
 }

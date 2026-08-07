@@ -262,3 +262,26 @@
     scroll-behavior:          auto   !important;
   }
 }
+
+/* ----------------------------------------------------------
+   REDUCED TRANSPARENCY — frosts glass surfaces to solid,
+   drops blur. Overrides the Material recipe tokens (css/tokens.css
+   §COMPONENT TOKENS) so every glass surface (site header, case
+   cards, result cards, metric cards) degrades consistently from
+   one place. Placed after [data-theme="dark"] so it wins the
+   cascade in both themes.
+   ---------------------------------------------------------- */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --blur-glass:                  none;
+    --color-material-bg:           var(--color-cloud);
+    --color-material-border:       var(--color-border-base);
+    --color-material-border-hover: var(--color-border-strong);
+  }
+  [data-theme="dark"] {
+    --blur-glass:                  none;
+    --color-material-bg:           var(--color-night-800);
+    --color-material-border:       var(--color-night-700);
+    --color-material-border-hover: var(--color-night-600);
+  }
+}
