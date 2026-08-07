@@ -358,11 +358,7 @@ html {
 }
 .hero__headline mark {
   background: none;
-  color: var(--color-anchor);
-}
-
-[data-theme="dark"] .hero__headline mark { 
-  color: var(--color-solar);
+  color: var(--color-accent);
 }
 
 .hero__body {
@@ -1120,11 +1116,8 @@ html {
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.02em;
-  color: var(--color-abyss);
+  color: var(--color-accent);
   max-width: 820px;
-}
-[data-theme="dark"] .case-callout__text {
-  color: var(--color-solar);
 }
 
 .case-callout__attribution {
@@ -1231,15 +1224,12 @@ html {
   background-color: rgba(28, 95, 168, 0.08);
 }
 .case-toc__link.is-active::before {
-  color: var(--color-anchor);
+  color: var(--color-accent);
   font-weight: 700;
 }
 
 [data-theme="dark"] .case-toc__link.is-active {
   background-color: rgba(245, 200, 66, 0.10);
-}
-[data-theme="dark"] .case-toc__link.is-active::before {
-  color: var(--color-solar);
 }
 
 /* ----------------------------------------------------------
@@ -1309,11 +1299,7 @@ html {
 
 /* "My squad" emphasis — icon + label in brand accent */
 .team-card--mine svg {
-  color: var(--color-anchor);
-}
-
-[data-theme="dark"] .team-card--mine svg {
-  color: var(--color-solar);
+  color: var(--color-accent);
 }
 
 .team-card--mine .team-card__name {

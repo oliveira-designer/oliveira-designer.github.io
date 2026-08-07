@@ -75,6 +75,7 @@
   --color-text-brand-primary:          var(--color-anchor);
   --color-text-brand-primary-hover:    var(--color-deep);
   --color-border-focus-ring:    var(--color-anchor);
+  --color-accent:               var(--color-anchor);
 
   /* ----------------------------------------------------------
      COMPONENT TOKENS — Light mode (default)
@@ -178,10 +179,12 @@
   /* ----------------------------------------------------------
      MOTION
      ---------------------------------------------------------- */
-  --duration-fast:   100ms;
-  --duration-normal: 150ms;
-  --duration-slow:   250ms;
-  --duration-slower: 400ms;
+  --duration-instant:    0ms;
+  --duration-fast:     100ms;
+  --duration-normal:   150ms;
+  --duration-slow:     250ms;
+  --duration-slower:   400ms;
+  --duration-deliberate: 600ms;
 
   --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
@@ -223,6 +226,7 @@
   --color-text-brand-primary:          var(--color-solar);
   --color-text-brand-primary-hover:    var(--color-night-accent-hover);
   --color-border-focus-ring:    var(--color-solar);
+  --color-accent:               var(--color-solar);
 
   --color-bg-neutral-default:     var(--color-cloud);
   --color-bg-neutral-hover:       var(--color-border-base);

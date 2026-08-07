@@ -354,10 +354,7 @@
   font-size: var(--fs-h2);
   font-weight: 700;
   line-height: 1.4;
-  color: var(--color-anchor);
-}
-[data-theme="dark"] .metric__value {
-  color: var(--color-solar);
+  color: var(--color-accent);
 }
 .metric__label {
   font-family: var(--font-body);
@@ -1196,11 +1193,7 @@
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  color: var(--color-anchor);
-}
-
-[data-theme="dark"] .highlight-card h3{
-  color: var(--color-solar);
+  color: var(--color-accent);
 }
 
 .highlight-card p {
