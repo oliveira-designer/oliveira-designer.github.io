@@ -1207,14 +1207,11 @@ html {
   background-color: rgba(28, 95, 168, 0.05);
 }
 .case-toc__link:hover::before {
-  color: var(--color-anchor);
+  color: var(--color-accent);
 }
 
 [data-theme="dark"] .case-toc__link:hover {
   background-color: rgba(245, 200, 66, 0.07);
-}
-[data-theme="dark"] .case-toc__link:hover::before {
-  color: var(--color-solar);
 }
 
 /* Active — capsule pill tint, high-contrast text, no left bar */

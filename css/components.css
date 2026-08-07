@@ -47,13 +47,13 @@
 }
 
 /* ----------------------------------------------------------
-   ICONS (Tabler-compatible)
+   ICONS (Phosphor — regular weight, filled silhouette)
    ---------------------------------------------------------- */
 .icon {
   width: 1em;
   height: 1em;
   flex: 0 0 auto;
-  stroke: currentColor;
+  fill: currentColor;
 }
 
 /* Primary */

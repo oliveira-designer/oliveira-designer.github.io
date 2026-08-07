@@ -59,37 +59,18 @@
 
           <!-- Toggle de tema único — visível nos dois tamanhos -->
           <button class="nav__theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
-            <!-- Tabler: sun -->
-            <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none">
-              <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-              <path d="M3 12h1" />
-              <path d="M20 12h1" />
-              <path d="M12 3v1" />
-              <path d="M12 20v1" />
-              <path d="M5.6 5.6l.7 .7" />
-              <path d="M18.4 18.4l.7 .7" />
-              <path d="M5.6 18.4l.7 -.7" />
-              <path d="M18.4 5.6l.7 -.7" />
-            </svg>
-            <!-- Tabler: moon -->
-            <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
-            </svg>
+            <!-- Phosphor: sun -->
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconSun" aria-hidden="true" focusable="false" style="display:none"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg>
+            <!-- Phosphor: moon -->
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconMoon" aria-hidden="true" focusable="false"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg>
           </button>
 
           <!-- Hambúrguer — só visível no mobile -->
           <button class="nav__hamburger" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
-            <!-- Tabler: menu-2 -->
-            <svg id="iconBurger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M4 6l16 0" />
-              <path d="M4 12l16 0" />
-              <path d="M4 18l16 0" />
-            </svg>
-            <!-- Tabler: x -->
-            <svg id="iconClose" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none">
-              <path d="M18 6l-12 12" />
-              <path d="M6 6l12 12" />
-            </svg>
+            <!-- Phosphor: list -->
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconBurger" aria-hidden="true" focusable="false"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg>
+            <!-- Phosphor: x -->
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconClose" aria-hidden="true" focusable="false" style="display:none"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
           </button>
 
         </div>
@@ -150,15 +131,10 @@
         <div class="hero__actions reveal-item">
           <a href="#work" class="btn btn--primary">
             View case studies
-            <svg class="icon icon--arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M5 12h14" /><path d="M13 6l6 6l-6 6" />
-            </svg>
+            <svg viewBox="0 0 256 256" fill="currentColor" class="icon icon--arrow" aria-hidden="true" focusable="false"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
           </a>
           <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--secondary-hero">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
-              <path d="M3 7l9 6l9 -6" />
-            </svg>
+            <svg viewBox="0 0 256 256" fill="currentColor" class="icon" aria-hidden="true" focusable="false"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"/></svg>
             Send me an email
           </a>
         </div>
@@ -258,14 +234,14 @@
               <!--<div class="case-card__footer">
                 <a href="case-studies/sb-home-redesign.html" class="btn btn--dprimary" aria-label="View Shell Box Home Redesign case study">
                   View case study
-                  <svg class="icon icon--arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg viewBox="0 0 256 256" fill="currentColor" class="icon icon--arrow" width="16" height="16" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
                 </a>
               </div> -->
 
               <div class="case-card__footer">
                 <a href="case-studies/sb-home-redesign.html" class="btn btn--primary" aria-label="View Shell Box Home Redesign case study">
                   View case study
-                  <svg class="icon icon--arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg viewBox="0 0 256 256" fill="currentColor" class="icon icon--arrow" width="16" height="16" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
                 </a>
               </div>
 
@@ -311,7 +287,7 @@
               <div class="case-card__footer">
                 <a href="case-studies/cloud-cost-intelligence.html" class="btn btn--primary" aria-label="View Cloud Cost Intelligence case study">
                   View case study
-                  <svg class="icon icon--arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg viewBox="0 0 256 256" fill="currentColor" class="icon icon--arrow" width="16" height="16" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
                 </a>
               </div>
             </div>
@@ -355,7 +331,7 @@
               <div class="case-card__footer">
                 <a href="case-studies/dotz.html" class="btn btn--primary" aria-label="View CRM Retail Platform case study">
                   View case study
-                  <svg class="icon icon--arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg viewBox="0 0 256 256" fill="currentColor" class="icon icon--arrow" width="16" height="16" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
                 </a>
               </div>
             </div>
@@ -426,11 +402,7 @@
               <div>
                 <p class="testimonial-card__name">
                   <a href="https://www.linkedin.com/in/sarah-camelo-freire/" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
-                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                      <path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 12v5" />
-                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
-                    </svg>
+                    <svg viewBox="0 0 256 256" fill="currentColor" class="icon testimonial-card__linkedin-icon" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
                     Sarah Camêlo
                     <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
                   </a>
@@ -455,11 +427,7 @@
               <div>
                 <p class="testimonial-card__name">
                   <a href="https://www.linkedin.com/in/luizalaus/" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
-                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                      <path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 12v5" />
-                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
-                    </svg>
+                    <svg viewBox="0 0 256 256" fill="currentColor" class="icon testimonial-card__linkedin-icon" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
                     Luiza Laus
                     <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
                   </a>
@@ -482,11 +450,7 @@
               <div>
                 <p class="testimonial-card__name">
                   <a href="https://www.linkedin.com/in/carlacarboni/" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
-                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                      <path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 12v5" />
-                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
-                    </svg>
+                    <svg viewBox="0 0 256 256" fill="currentColor" class="icon testimonial-card__linkedin-icon" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
                     Carla Carboni
                     <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
                   </a>
@@ -510,11 +474,7 @@
               <div>
                 <p class="testimonial-card__name">
                   <a href="https://br.linkedin.com/in/jordacheb/pt" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
-                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                      <path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 12v5" />
-                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
-                    </svg>
+                    <svg viewBox="0 0 256 256" fill="currentColor" class="icon testimonial-card__linkedin-icon" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
                     Jordache Burmeister
                     <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
                   </a>
@@ -539,11 +499,7 @@
               <div>
                 <p class="testimonial-card__name">
                   <a href="https://www.linkedin.com/in/izabellagouveiamaroni/" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
-                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                      <path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 12v5" />
-                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
-                    </svg>
+                    <svg viewBox="0 0 256 256" fill="currentColor" class="icon testimonial-card__linkedin-icon" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
                     Izabella Maroni
                     <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
                   </a>
@@ -571,11 +527,7 @@
               <div>
                 <p class="testimonial-card__name">
                   <a href="https://www.linkedin.com/in/sarah-camelo-freire/" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
-                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                      <path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 12v5" />
-                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
-                    </svg>
+                    <svg viewBox="0 0 256 256" fill="currentColor" class="icon testimonial-card__linkedin-icon" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
                     Sarah Camêlo
                     <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
                   </a>
@@ -600,11 +552,7 @@
               <div>
                 <p class="testimonial-card__name">
                   <a href="https://www.linkedin.com/in/luizalaus/" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
-                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                      <path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 12v5" />
-                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
-                    </svg>
+                    <svg viewBox="0 0 256 256" fill="currentColor" class="icon testimonial-card__linkedin-icon" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
                     Luiza Laus
                     <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
                   </a>
@@ -627,11 +575,7 @@
               <div>
                 <p class="testimonial-card__name">
                   <a href="https://www.linkedin.com/in/carlacarboni/" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
-                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                      <path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 12v5" />
-                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
-                    </svg>
+                    <svg viewBox="0 0 256 256" fill="currentColor" class="icon testimonial-card__linkedin-icon" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
                     Carla Carboni
                     <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
                   </a>
@@ -655,11 +599,7 @@
               <div>
                 <p class="testimonial-card__name">
                   <a href="https://br.linkedin.com/in/jordacheb/pt" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
-                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                      <path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 12v5" />
-                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
-                    </svg>
+                    <svg viewBox="0 0 256 256" fill="currentColor" class="icon testimonial-card__linkedin-icon" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
                     Jordache Burmeister
                     <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
                   </a>
@@ -684,11 +624,7 @@
               <div>
                 <p class="testimonial-card__name">
                   <a href="https://www.linkedin.com/in/izabellagouveiamaroni/" class="testimonial-card__profile-link" target="_blank" rel="noopener noreferrer">
-                    <svg class="icon testimonial-card__linkedin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                      <path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 12v5" />
-                      <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                      <path d="M6 6h12a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2" />
-                    </svg>
+                    <svg viewBox="0 0 256 256" fill="currentColor" class="icon testimonial-card__linkedin-icon" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
                     Izabella Maroni
                     <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
                   </a>
@@ -733,10 +669,7 @@
           </p>
           <a href="about.html" class="btn btn--primary about-bridge__cta">
             Learn more about my trajectory
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M5 12h14" />
-              <path d="M13 6l6 6l-6 6" />
-            </svg>
+            <svg viewBox="0 0 256 256" fill="currentColor" class="icon" aria-hidden="true" focusable="false"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
           </a>
         </div>
       </div>
@@ -755,19 +688,11 @@
             <p class="footer__lede">Open to product design roles, freelance projects, and conversations about complex B2B and consumer work.</p>
             <div class="footer__actions">
               <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--secondary btn--footer">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                  <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
-                  <path d="M3 7l9 6l9 -6" />
-                </svg>
+                <svg viewBox="0 0 256 256" fill="currentColor" class="icon" aria-hidden="true" focusable="false"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"/></svg>
                 Send me an email
               </a>
               <a href="https://www.linkedin.com/in/rmouraoliv/" class="btn btn--secondary btn--footer" target="_blank" rel="noopener noreferrer">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
-                  <path d="M8 11l0 5" /><path d="M8 8l0 .01" />
-                  <path d="M12 16l0 -5" />
-                  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                </svg>
+                <svg viewBox="0 0 256 256" fill="currentColor" class="icon" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
                 View my LinkedIn
                 <span class="visually-hidden">(opens in a new tab)</span>
               </a>
@@ -778,9 +703,7 @@
             <p class="footer__motto">
               Made with
               <span class="footer__heart" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false">
-                  <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                </svg>
+                <svg viewBox="0 0 256 256" fill="currentColor" class="icon" aria-hidden="true" focusable="false"><path d="M240,102c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,228.66,16,172,16,102A62.07,62.07,0,0,1,78,40c20.65,0,38.73,8.88,50,23.89C139.27,48.88,157.35,40,178,40A62.07,62.07,0,0,1,240,102Z"/></svg>
               </span>
               by Renan Moura
             </p>

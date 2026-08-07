@@ -2,7 +2,33 @@
   "permissions": {
     "allow": [
       "PowerShell($basePath = \"$env:APPDATA\\\\npm-cache\\\\_npx\"; Get-ChildItem $basePath | ForEach-Object { $hash = $_.Name; $modPath = Join-Path $basePath \"$hash\\\\node_modules\"; $pkgs = Get-ChildItem $modPath -ErrorAction SilentlyContinue; if \\($pkgs\\) { Write-Host \"$hash -> $\\($pkgs.Name -join ', '\\)\" } })",
-      "PowerShell($basePath = \"$env:LOCALAPPDATA\\\\npm-cache\\\\_npx\"; Get-ChildItem $basePath | ForEach-Object { $hash = $_.Name; $modPath = Join-Path $basePath \"$hash\\\\node_modules\"; $pkgs = Get-ChildItem $modPath -ErrorAction SilentlyContinue; if \\($pkgs\\) { Write-Host \"$hash -> $\\($pkgs.Name -join ', '\\)\" } })"
+      "PowerShell($basePath = \"$env:LOCALAPPDATA\\\\npm-cache\\\\_npx\"; Get-ChildItem $basePath | ForEach-Object { $hash = $_.Name; $modPath = Join-Path $basePath \"$hash\\\\node_modules\"; $pkgs = Get-ChildItem $modPath -ErrorAction SilentlyContinue; if \\($pkgs\\) { Write-Host \"$hash -> $\\($pkgs.Name -join ', '\\)\" } })",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"https://unpkg.com/@phosphor-icons/core@2/assets/regular/sun.svg\")",
+      "Bash(curl -s \"https://unpkg.com/@phosphor-icons/core@2/assets/regular/sun.svg\")",
+      "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2/assets/regular/sun.svg\")",
+      "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2/assets/regular/moon.svg\")",
+      "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2/assets/regular/x.svg\")",
+      "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2/assets/regular/list.svg\")",
+      "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2/assets/regular/linkedin-logo.svg\")",
+      "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2/assets/fill/linkedin-logo-fill.svg\")",
+      "Bash(curl -sL -w \"\\\\nHTTP:%{http_code}\\\\n\" \"https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/quotes.svg\")",
+      "Bash(curl -sL -o /tmp/phosphor/heart.svg \"https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/heart.svg\")",
+      "Read(//tmp/phosphor/**)",
+      "Read(//tmp/**)",
+      "Bash(python3 -c ' *)",
+      "Bash(node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/catalog-icons.js\")",
+      "Bash(node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/catalog-icons2.js\")",
+      "Read(//c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/**)",
+      "Bash(curl -sL -o /tmp/phosphor/mountains.svg -w \"%{http_code}\\\\n\" \"https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/mountains.svg\")",
+      "Bash(curl -sL -o /tmp/phosphor/browser.svg -w \"%{http_code}\\\\n\" \"https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/browser.svg\")",
+      "Bash(node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/apply-icons.js\" --dry)",
+      "Bash(node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/apply-icons.js\")",
+      "Bash(xargs -n1 basename)",
+      "Bash(node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/final-swap.js\")",
+      "Bash(mkdir -p \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/phosphor\")",
+      "Bash(cp /tmp/phosphor/*.svg \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/phosphor/\")",
+      "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/sun.svg\")",
+      "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2.1.1/assets/fill/sun-fill.svg\")"
     ]
   }
 }
