@@ -728,8 +728,9 @@
       const iconClose  = document.getElementById('iconClose');
 
       // Light é o default absoluto
-      const saved   = localStorage.getItem('rm-theme');
-      const initial = saved || 'light';
+      // Dark mode paused: toggle hidden, ignore any saved preference so a
+      // returning visitor with dark cached in localStorage doesn't get stuck.
+      const initial = 'light';
       applyTheme(initial);
 
       // Toggle de tema (único, funciona desktop + mobile)

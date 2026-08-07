@@ -1021,8 +1021,9 @@
       const iconBurger = document.getElementById('iconBurger');
       const iconClose  = document.getElementById('iconClose');
 
-      const saved   = localStorage.getItem('rm-theme');
-      const initial = saved || 'light';
+      // Dark mode paused: toggle hidden, ignore any saved preference so a
+      // returning visitor with dark cached in localStorage doesn't get stuck.
+      const initial = 'light';
       applyTheme(initial);
 
       themeBtn.addEventListener('click', () => {
@@ -1073,6 +1074,7 @@
   <script src="../js/case-toc.js" defer></script>
   <script src="../js/lightbox.js" defer></script>
   <script src="../js/counter.js" defer></script>
+  <script defer src="/_vercel/insights/script.js"></script>
   <script>
     document.querySelectorAll('[data-resume-link]').forEach(function(el) {
       el.href = PORTFOLIO_CONFIG.resumeUrl;

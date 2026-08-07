@@ -31,7 +31,30 @@
       "Bash(curl -sL \"https://unpkg.com/@phosphor-icons/core@2.1.1/assets/fill/sun-fill.svg\")",
       "Bash(npx --yes skills add emilkowalski/skill)",
       "Bash(echo \"exit code: $?\")",
-      "Bash(curl -s -o /dev/null -w \"index.html retry: %{http_code}\\\\n\" http://localhost:8765/index.html)"
+      "Bash(curl -s -o /dev/null -w \"index.html retry: %{http_code}\\\\n\" http://localhost:8765/index.html)",
+      "Bash(npx playwright *)",
+      "Bash(node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/screenshot.js\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/screenshot.js\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/scroll-shots.js\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/ds-nav-shot.js\")",
+      "Bash(cat \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/tasks/bbilwg43x.output\" 2>/dev/null; echo \"---\"; ls \"C:/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/shots\" | grep revealed)",
+      "Read(//c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/tasks/**)",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/zoom-shot.js\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/zoom2.js\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/zoom3.js\")",
+      "Bash(cat \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/tasks/bbilwg43x.output\" 2>/dev/null | tail -20)",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" timeout 40 node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/one-page.js\" \"http://localhost:8765/case-studies/dotz.html\" \"dotz-dark-force\" \"dark\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" timeout 45 node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/segments.js\" \"http://localhost:8765/case-studies/dotz.html\" \"dotz-dark\" \"dark\")",
+      "Bash(find \"/c/Users/rmour/AppData/Local/ms-playwright/chromium-1223\" -iname \"*.exe\" 2>/dev/null)",
+      "Read(//c/Users/rmour/AppData/Local/ms-playwright/chromium-1223/**)",
+      "Bash(sed -i \"s|const browser = await chromium.launch\\(\\);|const browser = await chromium.launch\\({ executablePath: 'C:/Users/rmour/AppData/Local/ms-playwright/chromium-1223/chrome-win64/chrome.exe', args: ['--headless=new'] }\\);|\" \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/segments.js\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" timeout 45 node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/segments.js\" \"http://localhost:8765/case-studies/sb-home-redesign.html\" \"sbhome-light\" \"light\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" timeout 45 node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/segments.js\" \"http://localhost:8765/case-studies/sb-home-redesign.html\" \"sbhome-dark\" \"dark\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" timeout 45 node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/segments.js\" \"http://localhost:8765/case-studies/cloud-cost-intelligence.html\" \"cloudcost-light\" \"light\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" timeout 45 node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/segments.js\" \"http://localhost:8765/case-studies/cloud-cost-intelligence.html\" \"cloudcost-dark\" \"dark\")",
+      "Bash(sed -i \"s|const browser = await chromium.launch\\(\\);|const browser = await chromium.launch\\({ executablePath: 'C:/Users/rmour/AppData/Local/ms-playwright/chromium-1223/chrome-win64/chrome.exe' }\\);|\" \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/zoom3.js\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" timeout 60 node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/zoom3.js\")",
+      "Bash(NODE_PATH=\"$\\(pwd\\)/node_modules\" timeout 30 node \"/c/Users/rmour/AppData/Local/Temp/claude/c--Users-rmour-Documents--Carreira-Marca-pessoal-portfolio/3e03d35c-0484-4a6c-a165-3532b5fae7e0/scratchpad/mobile-shot.js\")"
     ]
   }
 }

@@ -134,6 +134,13 @@ html {
     color            var(--duration-normal) var(--ease-out),
     background-color var(--duration-normal) var(--ease-out);
 }
+/* Dark mode paused — hide the live toggle only (id-scoped so the
+   design-system.html component showcase, which has no #themeToggle,
+   still documents what the control looks like). Underlying dark-mode
+   CSS is untouched. */
+#themeToggle {
+  display: none;
+}
 .nav__theme-toggle:hover {
   color: var(--color-text-1);
   background-color: rgba(0, 0, 0, 0.07);
