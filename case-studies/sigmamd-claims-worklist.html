@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Claims Worklist — SigmaMD</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #1A1A1C;
+    background: #F4F0EA;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* ============================================================
+     APP SHELL
+     ============================================================ */
+  .sm-app {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar ─────────────────────────────────────────────── */
+  .sm-sidebar {
+    width: 74px;
+    flex-shrink: 0;
+    background: #FFFFFF;
+    border-right: 1px solid #E3DFD6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+  }
+
+  .sm-sidebar__mark {
+    display: block;
+    max-width: 32px;
+    max-height: 32px;
+    width: auto;
+    height: auto;
+    margin-bottom: 32px;
+  }
+
+  .sm-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .sm-sidebar__item {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6B6B6B;
+    background: transparent;
+    border: none;
+  }
+
+  .sm-sidebar__item svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .sm-sidebar__item--active {
+    background: #91006D;
+    color: #FFFFFF;
+  }
+
+  .sm-sidebar__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ECE7DE;
+    color: #6B6B6B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 12px;
+  }
+
+  /* ── Main column ─────────────────────────────────────────── */
+  .sm-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Top bar ─────────────────────────────────────────────── */
+  .sm-topbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 40px;
+    border-bottom: 1px solid #E3DFD6;
+    background: #F4F0EA;
+  }
+
+  .sm-back-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid #E3DFD6;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1A1A1C;
+    flex-shrink: 0;
+  }
+
+  .sm-back-btn svg { width: 18px; height: 18px; }
+
+  .sm-topbar__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sm-topbar__title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1A1A1C;
+  }
+
+  .sm-breadcrumb {
+    font-size: 13px;
+    color: #6B6B6B;
+  }
+
+  .sm-topbar__spacer {
+    flex: 1;
+  }
+
+  .sm-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid #E3DFD6;
+    background: #FFFFFF;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1A1A1C;
+    box-shadow: 0 1px 2px rgba(26, 26, 28, 0.04);
+  }
+
+  .sm-dropdown svg { width: 14px; height: 14px; color: #6B6B6B; }
+
+  /* ── Content ─────────────────────────────────────────────── */
+  .sm-content {
+    padding: 32px 40px 48px;
+    flex: 1;
+  }
+
+  /* ── Metric cards ────────────────────────────────────────── */
+  .sm-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .sm-metric-card {
+    background: #FFFFFF;
+    border: 1px solid #E3DFD6;
+    border-radius: 16px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .sm-metric-card__value {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #1A1A1C;
+  }
+
+  .sm-metric-card__value--danger { color: #C23B3B; }
+  .sm-metric-card__value--success { color: #3F9142; }
+
+  .sm-metric-card__label {
+    font-size: 13px;
+    color: #6B6B6B;
+    font-weight: 500;
+  }
+
+  .sm-metric-card__caption-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .sm-metric-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #91006D;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .sm-metric-card__link svg { width: 14px; height: 14px; }
+
+  /* ── Filters row ─────────────────────────────────────────── */
+  .sm-filters {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+
+  .sm-tabs {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .sm-tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 12px 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  .sm-tab__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #6B6B6B;
+    transition: color 150ms ease;
+  }
+
+  .sm-tab:hover:not(.sm-tab--active) .sm-tab__label {
+    color: #1A1A1C;
+  }
+
+  .sm-tab__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #EFEAE2;
+    color: #6B6B6B;
+  }
+
+  .sm-tab--active {
+    border-bottom-color: #91006D;
+  }
+
+  .sm-tab--active .sm-tab__label {
+    color: #91006D;
+    font-weight: 700;
+  }
+
+  .sm-tab--active .sm-tab__count {
+    background: #91006D;
+    color: #FFFFFF;
+  }
+
+  .sm-filters__spacer { flex: 1; }
+
+  .sm-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    border-radius: 10px;
+    border: 1px solid #E3DFD6;
+    background: #FFFFFF;
+    margin-bottom: 12px;
+    min-width: 240px;
+  }
+
+  .sm-search svg { width: 15px; height: 15px; color: #6B6B6B; flex-shrink: 0; }
+
+  .sm-search input {
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+    color: #1A1A1C;
+    width: 100%;
+    background: transparent;
+  }
+
+  .sm-search input::placeholder { color: #6B6B6B; }
+
+  /* ── Table card ──────────────────────────────────────────── */
+  .sm-table-card {
+    background: #FFFFFF;
+    border: 1px solid #E3DFD6;
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgba(26, 26, 28, 0.03), 0 4px 12px rgba(26, 26, 28, 0.03);
+    overflow: hidden;
+  }
+
+  table.sm-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .sm-table thead th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6B6B6B;
+    padding: 14px 20px;
+    border-bottom: 1px solid #E3DFD6;
+    background: #FBFAF7;
+  }
+
+  .sm-table thead th.sm-num { text-align: left; }
+
+  .sm-table tbody td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #EFEBE2;
+    font-size: 13px;
+    vertical-align: middle;
+  }
+
+  .sm-table tbody tr:last-child td { border-bottom: none; }
+  .sm-table tbody tr {
+    transition: background-color 150ms ease;
+  }
+  .sm-table tbody tr:hover { background: #FBFAF7; }
+
+  .sm-row--linked {
+    cursor: pointer;
+  }
+  .sm-row--linked:hover { background: #FBFAF7; }
+  .sm-row--linked:focus-visible {
+    outline: 2px solid #91006D;
+    outline-offset: -2px;
+  }
+
+  .sm-table td.sm-num { text-align: left; font-weight: 500; }
+  .sm-table td.sm-num--danger { color: #C23B3B; font-weight: 700; }
+
+  .sm-patient-cell__name {
+    font-weight: 700;
+    color: #1A1A1C;
+    line-height: 1.4;
+  }
+
+  .sm-patient-cell__meta {
+    font-size: 12px;
+    color: #6B6B6B;
+  }
+
+  .sm-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .sm-badge--danger { background: #FBEAEA; color: #C23B3B; }
+  .sm-badge--warning { background: #FEF8E0; color: #8B6914; }
+  .sm-badge--info { background: #E8F0F9; color: #144278; }
+
+  .sm-chevron-cell { text-align: right; color: #6B6B6B; width: 32px; }
+  .sm-chevron-cell svg { width: 16px; height: 16px; }
+
+  /* ── Table footer ────────────────────────────────────────── */
+  .sm-table-footer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-top: 1px solid #E3DFD6;
+  }
+
+  .sm-per-page {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: none;
+    background: #F4F0EA;
+    font-size: 12px;
+    font-weight: 500;
+    color: #1A1A1C;
+  }
+
+  .sm-per-page svg { width: 12px; height: 12px; color: #6B6B6B; }
+
+  .sm-table-footer__spacer { flex: 1; }
+
+  .sm-page-info {
+    font-size: 12px;
+    color: #6B6B6B;
+  }
+
+  .sm-pagination {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sm-page-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid #E3DFD6;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1A1A1C;
+  }
+
+  .sm-page-btn svg { width: 14px; height: 14px; }
+
+  .sm-page-btn[disabled] {
+    color: #C9C3B6;
+    border-color: #EFEBE2;
+    background: #FBFAF7;
+    cursor: default;
+  }
+</style>
+</head>
+<body>
+
+<div class="sm-app">
+
+  <!-- ============================================================
+       SIDEBAR — icon-only, ~74px
+       ============================================================ -->
+  <aside class="sm-sidebar">
+    <img class="sm-sidebar__mark" src="../images/case-assets/sigmamd-logo.png" alt="SigmaMD logo" />
+
+    <nav class="sm-sidebar__nav">
+      <button class="sm-sidebar__item" aria-label="Home" title="Home">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"/></svg>
+      </button>
+      <button class="sm-sidebar__item" aria-label="Patients" title="Patients">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z"/></svg>
+      </button>
+      <button class="sm-sidebar__item" aria-label="Calendar" title="Calendar">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-96-88v64a8,8,0,0,1-16,0V132.94l-4.42,2.22a8,8,0,0,1-7.16-14.32l16-8A8,8,0,0,1,112,120Zm59.16,30.45L152,176h16a8,8,0,0,1,0,16H136a8,8,0,0,1-6.4-12.8l28.78-38.37A8,8,0,1,0,145.07,132a8,8,0,1,1-13.85-8A24,24,0,0,1,176,136,23.76,23.76,0,0,1,171.16,150.45Z"/></svg>
+      </button>
+      <button class="sm-sidebar__item" aria-label="Charts" title="Charts">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M168,152a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,152Zm-8-40H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16Zm56-64V216a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V48A16,16,0,0,1,56,32H92.26a47.92,47.92,0,0,1,71.48,0H200A16,16,0,0,1,216,48ZM96,64h64a32,32,0,0,0-64,0ZM200,48H173.25A47.93,47.93,0,0,1,176,64v8a8,8,0,0,1-8,8H88a8,8,0,0,1-8-8V64a47.93,47.93,0,0,1,2.75-16H56V216H200Z"/></svg>
+      </button>
+      <button class="sm-sidebar__item" aria-label="Inventory" title="Inventory">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"/></svg>
+      </button>
+      <button class="sm-sidebar__item" aria-label="Notes" title="Notes">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"/></svg>
+      </button>
+      <button class="sm-sidebar__item sm-sidebar__item--active" aria-label="Billing" title="Billing" aria-current="page">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M152,120H136V56h8a32,32,0,0,1,32,32,8,8,0,0,0,16,0,48.05,48.05,0,0,0-48-48h-8V24a8,8,0,0,0-16,0V40h-8a48,48,0,0,0,0,96h8v64H104a32,32,0,0,1-32-32,8,8,0,0,0-16,0,48.05,48.05,0,0,0,48,48h16v16a8,8,0,0,0,16,0V216h16a48,48,0,0,0,0-96Zm-40,0a32,32,0,0,1,0-64h8v64Zm40,80H136V136h16a32,32,0,0,1,0,64Z"/></svg>
+      </button>
+    </nav>
+
+    <div class="sm-sidebar__avatar">RM</div>
+  </aside>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <div class="sm-main">
+
+    <header class="sm-topbar">
+      <button class="sm-back-btn" aria-label="Go back">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"/></svg>
+      </button>
+
+      <div class="sm-topbar__titles">
+        <span class="sm-topbar__title">Claims Worklist</span>
+        <span class="sm-breadcrumb">Billing &rsaquo; Insurance Claims</span>
+      </div>
+
+      <div class="sm-topbar__spacer"></div>
+
+      <button class="sm-dropdown">
+        This month
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg>
+      </button>
+    </header>
+
+    <div class="sm-content">
+
+      <!-- ── Metric cards ─────────────────────────────────────── -->
+      <div class="sm-metrics">
+
+        <div class="sm-metric-card">
+          <span class="sm-metric-card__value">19</span>
+          <span class="sm-metric-card__label">Open items</span>
+        </div>
+
+        <div class="sm-metric-card">
+          <span class="sm-metric-card__value">8</span>
+          <span class="sm-metric-card__label">Average days open</span>
+        </div>
+
+        <div class="sm-metric-card">
+          <span class="sm-metric-card__value sm-metric-card__value--danger">$4,230</span>
+          <span class="sm-metric-card__label">Amount at risk</span>
+        </div>
+
+        <div class="sm-metric-card">
+          <span class="sm-metric-card__value sm-metric-card__value--success">42</span>
+          <div class="sm-metric-card__caption-row">
+            <span class="sm-metric-card__label">Paid claims</span>
+            <a href="#" class="sm-metric-card__link">
+              View payment history
+              <svg viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Filters ──────────────────────────────────────────── -->
+      <div class="sm-filters">
+        <nav class="sm-tabs">
+          <button class="sm-tab sm-tab--active">
+            <span class="sm-tab__label">All</span>
+            <span class="sm-tab__count">19</span>
+          </button>
+          <button class="sm-tab">
+            <span class="sm-tab__label">Rejected</span>
+            <span class="sm-tab__count">2</span>
+          </button>
+          <button class="sm-tab">
+            <span class="sm-tab__label">Denied</span>
+            <span class="sm-tab__count">2</span>
+          </button>
+          <button class="sm-tab">
+            <span class="sm-tab__label">Waiting</span>
+            <span class="sm-tab__count">12</span>
+          </button>
+          <button class="sm-tab">
+            <span class="sm-tab__label">Needs investigation</span>
+            <span class="sm-tab__count">2</span>
+          </button>
+          <button class="sm-tab">
+            <span class="sm-tab__label">Needs correction</span>
+            <span class="sm-tab__count">1</span>
+          </button>
+        </nav>
+
+        <div class="sm-filters__spacer"></div>
+
+        <div class="sm-search">
+          <svg viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg>
+          <input type="text" placeholder="Search by patient name..." />
+        </div>
+      </div>
+
+      <!-- ── Table ────────────────────────────────────────────── -->
+      <div class="sm-table-card">
+        <table class="sm-table">
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Payer</th>
+              <th class="sm-num">Total billed</th>
+              <th class="sm-num">Amount at risk</th>
+              <th class="sm-num">Days open</th>
+              <th>Status</th>
+              <th aria-hidden="true"></th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr class="sm-row--linked" data-href="sigmamd-claim-detail.html" tabindex="0" role="link" aria-label="View claim detail for Phillip Fassett, claim #176Z15050">
+              <td>
+                <div class="sm-patient-cell__name">Phillip Fassett</div>
+                <div class="sm-patient-cell__meta">#176Z15050 &middot; 99202</div>
+              </td>
+              <td>Blue Cross CA</td>
+              <td class="sm-num">$250.00</td>
+              <td class="sm-num sm-num--danger">$130.00</td>
+              <td class="sm-num sm-num--danger">14 days</td>
+              <td><span class="sm-badge sm-badge--danger">Rejected</span></td>
+              <td class="sm-chevron-cell">
+                <svg viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="sm-patient-cell__name">Grace Chen</div>
+                <div class="sm-patient-cell__meta">#237Z15050 &middot; 99215</div>
+              </td>
+              <td>Blue Cross CA</td>
+              <td class="sm-num">$150.00</td>
+              <td class="sm-num sm-num--danger">$100.00</td>
+              <td class="sm-num sm-num--danger">9 days</td>
+              <td><span class="sm-badge sm-badge--danger">Rejected</span></td>
+              <td class="sm-chevron-cell">
+                <svg viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="sm-patient-cell__name">Grace Chen</div>
+                <div class="sm-patient-cell__meta">#237Z15060 &middot; 99215</div>
+              </td>
+              <td>Blue Cross CA</td>
+              <td class="sm-num">$150.00</td>
+              <td class="sm-num sm-num--danger">$100.00</td>
+              <td class="sm-num sm-num--danger">9 days</td>
+              <td><span class="sm-badge sm-badge--danger">Denied</span></td>
+              <td class="sm-chevron-cell">
+                <svg viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="sm-patient-cell__name">Cynthia Garrett</div>
+                <div class="sm-patient-cell__meta">#219Z15050 &middot; 99214</div>
+              </td>
+              <td>State Farm</td>
+              <td class="sm-num">$150.00</td>
+              <td class="sm-num sm-num--danger">$150.00</td>
+              <td class="sm-num">3 days</td>
+              <td><span class="sm-badge sm-badge--warning">Needs investigation</span></td>
+              <td class="sm-chevron-cell">
+                <svg viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="sm-patient-cell__name">John Cantrell</div>
+                <div class="sm-patient-cell__meta">#176Z15050 &middot; 99202</div>
+              </td>
+              <td>CA Medicare B</td>
+              <td class="sm-num">&ndash;</td>
+              <td class="sm-num">&ndash;</td>
+              <td class="sm-num">1 day</td>
+              <td><span class="sm-badge sm-badge--info">Waiting</span></td>
+              <td class="sm-chevron-cell">
+                <svg viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <div class="sm-table-footer">
+          <button class="sm-per-page">
+            5 per page
+            <svg viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg>
+          </button>
+
+          <div class="sm-table-footer__spacer"></div>
+
+          <span class="sm-page-info">1&ndash;5 of 19</span>
+
+          <div class="sm-pagination">
+            <button class="sm-page-btn" disabled aria-label="Previous page">
+              <svg viewBox="0 0 256 256" fill="currentColor"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"/></svg>
+            </button>
+            <button class="sm-page-btn" aria-label="Next page">
+              <svg viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.sm-row--linked').forEach(function (row) {
+    var go = function () { window.location.href = row.dataset.href; };
+    row.addEventListener('click', go);
+    row.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        go();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
