@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/case-studies/sigmamd-claims-worklist.html",
+      "destination": "/#work",
+      "statusCode": 301
+    },
+    {
+      "source": "/case-studies/sigmamd-claim-detail.html",
+      "destination": "/#work",
+      "statusCode": 301
+    }
+  ]
+}
