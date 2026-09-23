@@ -81,6 +81,19 @@ html {
   margin: 0 auto;
   padding: var(--space-3) var(--space-4);
 }
+/* Without this, .nav (a flex item of .site-header with no explicit
+   width) shrinks to fit its own content and the margin: 0 auto above
+   then centers that shrunk box in the header, instead of the logo and
+   controls spreading to the header's true left/right edges. width:
+   100% forces it to fill the header so its own justify-content:
+   space-between actually reaches both edges. Desktop already gets an
+   explicit width from the media query below, so it is unaffected. */
+@media (max-width: 767px) {
+  .nav {
+    width: 100%;
+    margin: 0;
+  }
+}
 @media (min-width: 768px) {
   /* Same capped-width-plus-minimum-gutter formula as .container, so the
      header's inner content lines up with every section's content edge. */
@@ -195,7 +208,10 @@ html {
   .nav__hamburger { display: none; }
 }
 
-/* LinkedIn icon button — circular, all breakpoints */
+/* LinkedIn icon button — circular, desktop only. On mobile it is
+   replaced by a "LinkedIn" text link inside the hamburger menu (see
+   .nav__mobile-menu), so it does not compete with the hamburger for
+   space in the mobile header bar. */
 .nav__linkedin {
   display: flex;
   align-items: center;
@@ -216,6 +232,9 @@ html {
   background-color: rgba(255, 255, 255, 0.10);
 }
 .nav__linkedin svg { width: 17px; height: 17px; }
+@media (max-width: 767px) {
+  .nav__linkedin { display: none; }
+}
 
 /* Mobile menu — absolute glass panel below the pill */
 .nav__mobile-menu {
@@ -470,6 +489,14 @@ html {
   gap: var(--space-6);
   margin-bottom: var(--space-6);
 }
+/* Mobile: avatar stacks above the headline as two centered rows,
+   instead of sitting inline to its left. Desktop keeps the row
+   layout untouched. */
+@media (max-width: 767px) {
+  .hero__headline-row {
+    flex-direction: column;
+  }
+}
 
 /* Avatar — fixed 115x115, per Figma */
 .hero__avatar {
@@ -510,6 +537,24 @@ html {
   color: var(--color-accent);
 }
 
+/* Mobile: the hard <br> above forces "who" and "absorbs" onto separate
+   lines on any width, desktop included. That is the intended two-line
+   split on desktop, but combined with mobile's much narrower column it
+   adds a third forced break on top of the natural wrap, splitting
+   "who" and "absorbs" apart in a spot that reads awkwardly. Hiding the
+   break here lets the whole headline wrap naturally on mobile, and
+   .hero__nowrap-pair (below) keeps "who" and "absorbs" specifically
+   from ever landing on separate lines once that natural wrap takes
+   over. Desktop keeps the existing hard break, untouched. */
+@media (max-width: 767px) {
+  .hero__headline-break {
+    display: none;
+  }
+  .hero__nowrap-pair {
+    white-space: nowrap;
+  }
+}
+
 /* Two separate lines by design (Figma node 43:3914), not a natural text
    wrap: "...across Brazil and the US." and "I turn ambiguous briefs..."
    are two <p> tags in the markup so the break holds at any width instead
@@ -527,6 +572,18 @@ html {
 }
 .hero__body-group {
   margin-bottom: var(--space-10);
+}
+/* Mobile: the two sentences are separate <p> tags so the line break
+   between them holds at desktop widths, but on mobile that same forced
+   break plus the narrow column produces an awkward three-line wrap with
+   an orphaned word. display: inline joins them into one flowing block
+   of text (the whitespace between the tags in the markup still gives a
+   normal space between sentences), wrapping naturally at this width.
+   Scoped to Home only, About's three-paragraph body is untouched. */
+@media (max-width: 767px) {
+  .hero--home .hero__body-group .hero__body {
+    display: inline;
+  }
 }
 
 /* ── Home hero — centered layout, no background image ────────────────
@@ -553,6 +610,15 @@ html {
   .hero__actions {
     flex-direction: column;
     align-items: stretch;
+    /* The buttons' own width: 100% (below, and in components.css) only
+       stretches them to fill this element's own box. That box was
+       itself shrink-wrapped to the buttons' combined content width by
+       align-items: center on the ancestor .reveal-group (the same
+       shrink-wrap behavior that also affects the headline row and body
+       group, fine for those, but not what we want here), so the
+       buttons never actually reached the container's full width.
+       width: 100% here breaks it out of that shrink-wrap. */
+    width: 100%;
     gap: var(--space-3);
   }
 
