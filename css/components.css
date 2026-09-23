@@ -493,8 +493,16 @@
    the card's text and image aligned with the rest of the page's content
    edges (the Featured Projects title above it) now that the outer band
    itself is full-bleed. ─────────────────────────────────────────────── */
+/* width/padding here matches .container's own mobile-to-desktop
+   formula exactly (--space-6 gutter on mobile, switching to the
+   capped-width-plus-minimum-gutter formula at 768px), instead of
+   using the desktop --space-20 gutter unconditionally. That mismatch
+   was giving the card roughly 56px of extra inset on each side versus
+   the "Featured Projects" title above it, which uses .container. */
 .case-card__inner {
-  width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+  width: 100%;
+  max-width: 1120px;
+  padding: 0 var(--space-6);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -502,6 +510,9 @@
 }
 @media (min-width: 768px) {
   .case-card__inner {
+    width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+    max-width: none;
+    padding: 0;
     flex-direction: row;
     /* Column gap per Figma (node 43:3926): --space-10 (40px), not the
        base --space-4 used for the mobile stacked gap. */
