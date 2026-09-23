@@ -155,6 +155,24 @@
   --gap-page:      var(--space-24);
 
   /* ----------------------------------------------------------
+     CONTENT WIDTH — shared cap for section inner content.
+     Gutter formula (see .container in layout.css): width shrinks
+     to keep exactly --space-20 (80px) on each side up to the
+     width where the cap takes over, so the minimum gutter never
+     drops below 80px on any desktop width.
+     ---------------------------------------------------------- */
+  --content-max-width: 1280px;
+
+  /* ----------------------------------------------------------
+     HEADER HEIGHT — fixed height of the sticky site header.
+     Kept as an explicit token (not left to content auto-sizing)
+     so anything that needs to line up flush against the header's
+     bottom edge, like the Featured Projects sticky section header,
+     can reference the exact same value instead of guessing at it.
+     ---------------------------------------------------------- */
+  --header-height: 64px;
+
+  /* ----------------------------------------------------------
      BORDERS & RADIUS
      ---------------------------------------------------------- */
   --radius-xs:   4px;

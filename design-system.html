@@ -941,33 +941,6 @@
             </details>
           </div>
 
-          <p class="ds-sub">Glassmorphic Hero Button — .btn--secondary-hero</p>
-          <p class="ds-section__desc">Used over hero background images. Frosted glass fill with alpha background so the illustration shows through. Requires the hero's own background image to be visible beneath it.</p>
-
-          <div class="ds-component">
-            <div class="ds-preview ds-preview--row" style="background: linear-gradient(135deg, #FEF8E0 0%, #8CB4E0 100%);">
-              <a href="#" class="btn btn--secondary-hero">Send me an email</a>
-            </div>
-
-            <details class="ds-code">
-              <summary>CSS Spec</summary>
-<pre class="ds-code__block">/* Light mode */
-.btn--secondary-hero {
-  background-color: rgba(255, 255, 255, 0.45);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-          backdrop-filter: blur(12px) saturate(1.2);
-  color: var(--color-text-1);
-  border: 1px solid var(--color-border);
-}
-
-/* Dark mode */
-[data-theme="dark"] .btn--secondary-hero {
-  background-color: rgba(0, 0, 0, 0.25);
-  border-color: rgba(255, 255, 255, 0.15);
-  color: var(--color-text-1);
-}</pre>
-            </details>
-          </div>
         </section>
 
         <!-- ─── BADGES ─────────────────────────────────────── -->
@@ -999,11 +972,14 @@
         <section class="ds-section" id="comp-nav">
           <div class="ds-section__title">Floating Glass Navigation</div>
           <p class="ds-section__desc">
-            Fixed pill at <code>position: fixed; top: var(--space-4)</code> with
-            <code>backdrop-filter: blur(30px) saturate(1.6)</code>. Max-width 1200px — slightly
-            wider than the 1120px content container. The preview container uses
+            Full-bleed bar at <code>position: fixed; top: 0</code> with
+            <code>backdrop-filter: blur(30px) saturate(1.6)</code>. The bar itself spans the full
+            viewport width; its inner <code>.nav</code> is capped at
+            <code>--content-max-width</code> (1280px), the same shared cap every section
+            <code>.container</code> uses, with an enforced 80px minimum gutter on each side.
+            The preview container uses
             <code>transform: translate(0)</code> to pin the fixed-position header within the frame.
-            The <code>.header__status-badge</code> micro-component hangs below the pill via
+            The <code>.header__status-badge</code> micro-component hangs below the bar via
             <code>position: absolute; top: calc(100% + var(--space-2))</code>.
           </p>
 
@@ -1020,9 +996,12 @@
                     <div class="nav__links">
                       <a href="#" class="nav__link nav__link--active">Home</a>
                       <a href="#" class="nav__link">Case studies</a>
-                      <a href="#" class="nav__link">About</a>
+                      <a href="#" class="nav__link">About me</a>
                       <a href="#" class="nav__link">Resume</a>
                     </div>
+                    <a href="#" class="nav__linkedin" aria-label="LinkedIn">
+                      <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
+                    </a>
                     <button class="nav__theme-toggle" type="button" aria-label="Toggle theme">
                       <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg>
                     </button>
@@ -1050,7 +1029,7 @@
       &lt;div class="nav__links"&gt;
         &lt;a href="#home" class="nav__link nav__link--active"&gt;Home&lt;/a&gt;
         &lt;a href="#work" class="nav__link"&gt;Work&lt;/a&gt;lt;a href="#work" class="nav__link"&lt;a href="#work" class="nav__link"&gt;Work&lt;/a&gt;gt;Case studies&lt;a href="#work" class="nav__link"&gt;Work&lt;/a&gt;lt;/a&lt;a href="#work" class="nav__link"&gt;Work&lt;/a&gt;gt;
-        &lt;a href="about.html" class="nav__link"&gt;About&lt;/a&gt;
+        &lt;a href="about.html" class="nav__link"&gt;About me&lt;/a&gt;
         &lt;a href="resume.pdf" class="nav__link" target="_blank"&gt;Resume&lt;/a&gt;
       &lt;/div&gt;
 
@@ -1071,7 +1050,7 @@
   &lt;div class="nav__mobile-menu" id="mobileMenu"&gt;
     &lt;a href="#home"      class="nav__mobile-link"&gt;Home&lt;/a&gt;
     &lt;a href="#work"      class="nav__mobile-link"&gt;Case studies&lt;/a&gt;
-    &lt;a href="about.html" class="nav__mobile-link"&gt;About&lt;/a&gt;
+    &lt;a href="about.html" class="nav__mobile-link"&gt;About me&lt;/a&gt;
     &lt;a href="resume.pdf" class="nav__mobile-link"&gt;Resume&lt;/a&gt;
   &lt;/div&gt;
 
@@ -1320,7 +1299,7 @@
         <section class="ds-section" id="case-card-glass">
           <div class="ds-section__title">case-card--glass</div>
           <p class="ds-section__desc">
-            Modificador do <code>.case-card</code>. Shell glassmórfico com canvas de gradiente, chrome de paginação, pill de ano frosted e CTA full-width. Dark mode troca o acento Âncora → Solar e adiciona glow ring. Use apenas na <code>.cases-grid</code> da home.
+            Modificador do <code>.case-card</code>. Shell glassmórfico, coluna de imagem full-bleed (sem caixa cinza, sem chrome de paginação, sem pill de ano) e CTA full-width. Empresa e ano ficam juntos numa linha só sob o título ("Cliente &bull; Ano"). Dark mode troca o acento Âncora → Solar e adiciona glow ring. Use apenas na <code>.cases-grid</code> da home.
           </p>
 
           <p class="ds-sub">Live preview</p>
@@ -1328,16 +1307,10 @@
             <div style="max-width:340px;">
               <article class="case-card case-card--glass">
                 <a class="case-card__visual" href="#" tabindex="-1" aria-hidden="true">
-                  <div class="case-card__chrome">
-                    <span class="is-filled"></span><span class="is-filled"></span>
-                    <span class="is-filled"></span><span class="is-filled"></span>
-                    <span></span><span></span><span></span>
-                  </div>
-                  <div class="case-card__year">2024</div>
                 </a>
                 <div class="case-card__content">
                   <h2 class="case-card__title">Hope <span class="case-card__title-sep">|</span> Design System</h2>
-                  <p class="case-card__meta">Marca pessoal · 2024 · Brand &amp; Systems</p>
+                  <p class="case-card__meta">Marca pessoal &bull; 2024</p>
                   <div class="case-card__tags"><span class="badge badge--ancora">Design System</span></div>
                   <p class="case-card__lead">Sistema de design pessoal que documenta tokens, componentes e regras para o portfólio.</p>
                   <div class="case-card__footer"><a href="#" class="btn btn--secondary">Ver case</a></div>
@@ -1350,17 +1323,12 @@
             <summary>Estrutura HTML</summary>
 <pre class="ds-code__block">&lt;article class="case-card case-card--glass"&gt;
   &lt;a class="case-card__visual" href="..."&gt;
-    &lt;div class="case-card__chrome"&gt;
-      &lt;span class="is-filled"&gt;&lt;/span&gt;&lt;!-- ×4 --&gt;
-      &lt;span&gt;&lt;/span&gt;&lt;!-- ×3 hollow --&gt;
-    &lt;/div&gt;
-    &lt;div class="case-card__year"&gt;2024&lt;/div&gt;
     &lt;img class="case-card__img--light" src="..." alt=""&gt;
     &lt;img class="case-card__img--dark"  src="..." alt=""&gt;
   &lt;/a&gt;
   &lt;div class="case-card__content"&gt;
-    &lt;h2 class="case-card__title"&gt;Título &lt;span class="case-card__title-sep"&gt;|&lt;/span&gt; Cliente&lt;/h2&gt;
-    &lt;p class="case-card__meta"&gt;Cliente · Ano · Disciplina&lt;/p&gt;
+    &lt;h2 class="case-card__title"&gt;Título&lt;/h2&gt;
+    &lt;p class="case-card__meta"&gt;Cliente &amp;bull; Ano&lt;/p&gt;
     &lt;div class="case-card__tags"&gt;&lt;!-- badges --&gt;&lt;/div&gt;
     &lt;p class="case-card__lead"&gt;Descrição breve.&lt;/p&gt;
     &lt;div class="case-card__footer"&gt;&lt;a href="..." class="btn btn--secondary"&gt;Ver case&lt;/a&gt;&lt;/div&gt;
@@ -1612,7 +1580,7 @@
         <section class="ds-section" id="cs-figure-full-bleed">
           <div class="ds-section__title">cs-figure--full-bleed</div>
           <p class="ds-section__desc">
-            Modificador que rompe uma <code>&lt;figure&gt;</code> para cobrir 100vw usando margens negativas calculadas. O cálculo é acoplado às constantes de layout: sidebar 240px · max-width 1120px · padding 40px · coluna de conteúdo 68ch.
+            Modificador que rompe uma <code>&lt;figure&gt;</code> para cobrir 100vw usando margens negativas calculadas. O cálculo é acoplado às constantes de layout: sidebar 240px · gutter mínimo 80px (--space-20) · gap 48px · coluna de conteúdo 68ch.
             <strong>Não altere sem recalcular os três breakpoints.</strong>
           </p>
 

@@ -6,6 +6,16 @@
 
 /* ----------------------------------------------------------
    CONTAINER
+   Capped content width with an enforced minimum gutter. The
+   parent section stays full width (its own background/border
+   is never capped here), and this element only centres and
+   sizes the INNER content.
+
+   Desktop: width is min(--content-max-width, 100% - 2 * 80px),
+   so the gutter is exactly --space-20 (80px) on each side for
+   any viewport up to the point the cap takes over, then the
+   leftover space becomes extra margin beyond that 80px floor.
+   It never shrinks below 80px on a desktop width.
    ---------------------------------------------------------- */
 .container {
   width: 100%;
@@ -14,7 +24,11 @@
   padding: 0 var(--space-6);
 }
 @media (min-width: 768px) {
-  .container { padding: 0 var(--space-10); }
+  .container {
+    width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+    max-width: none;
+    padding: 0;
+  }
 }
 
 /* ----------------------------------------------------------
@@ -25,37 +39,31 @@ html {
 }
 
 /* ----------------------------------------------------------
-   HEADER / NAV — floating glass pill
+   HEADER / NAV — full-bleed glass bar, inner content capped at
+   --content-max-width (same shared cap as every section .container)
    ---------------------------------------------------------- */
 .site-header {
   position: fixed;
-  top: var(--space-4);
-  left: 50%;
-  transform: translate3d(-50%, 0, 0);
-  will-change: transform;
-  width: calc(100% - var(--space-8));
-  max-width: 1200px;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
   z-index: var(--z-overlay);
-  border-radius: var(--radius-lg);
-  padding: var(--space-3) var(--space-6);
 
-  /* Glassmorphism — light mode. Bg/border on the unified Material recipe;
-     nav pill keeps its own blur/shadow personality. */
+  /* Glassmorphism — light mode. Bg/border on the unified Material recipe. */
   background: var(--color-material-bg);
   backdrop-filter: blur(30px) saturate(1.6);
   -webkit-backdrop-filter: blur(20px) saturate(1.6);
-  border: 1px solid var(--color-material-border);
-  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--color-material-border);
+  box-shadow: 0 1px 1.5px rgba(13, 13, 15, 0.06);
 
   transition:
-    background    var(--duration-slower) var(--ease-out),
-    border-color  var(--duration-slower) var(--ease-out),
-    box-shadow    var(--duration-slower) var(--ease-out),
-    transform     0.3s ease-in-out;
-}
-
-.site-header--hidden {
-  transform: translate3d(-50%, calc(-100% - var(--space-4)), 0);
+    background   var(--duration-slower) var(--ease-out),
+    border-color var(--duration-slower) var(--ease-out),
+    box-shadow   var(--duration-slower) var(--ease-out);
 }
 
 /* Glassmorphism — dark mode */
@@ -69,6 +77,18 @@ html {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4);
+}
+@media (min-width: 768px) {
+  /* Same capped-width-plus-minimum-gutter formula as .container, so the
+     header's inner content lines up with every section's content edge. */
+  .nav {
+    width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+    max-width: none;
+    padding-inline: 0;
+  }
 }
 
 /* Logo */
@@ -175,6 +195,28 @@ html {
   .nav__hamburger { display: none; }
 }
 
+/* LinkedIn icon button — circular, all breakpoints */
+.nav__linkedin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-2);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+.nav__linkedin:hover {
+  color: var(--color-text-1);
+  background-color: rgba(0, 0, 0, 0.07);
+}
+[data-theme="dark"] .nav__linkedin:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+.nav__linkedin svg { width: 17px; height: 17px; }
+
 /* Mobile menu — absolute glass panel below the pill */
 .nav__mobile-menu {
   display: none;
@@ -182,8 +224,8 @@ html {
   gap: var(--space-1);
   position: absolute;
   top: calc(100% + var(--space-2));
-  left: 0;
-  right: 0;
+  left: var(--space-4);
+  right: var(--space-4);
 
   /* Own compositor layer — bypasses parent backdrop-filter stacking
      restriction on iOS Safari / Chrome mobile. */
@@ -253,6 +295,65 @@ html {
 .section__header {
   margin-bottom: var(--space-12);
 }
+
+/* #work carries its top breathing room on .section__header itself (see
+   below) instead of on the section wrapper. */
+#work {
+  padding-top: 0;
+}
+
+/* CASE STUDIES / Featured Projects — top breathing room.
+   --space-12 (48px), reduced by user decision from the Figma frame's own
+   --space-20 (80px), one step further down the Hope DS scale than the
+   prior --space-16 (64px) pass. Kept on the header itself (not on #work)
+   for consistency with the rest of this section's spacing. */
+#work .section__header {
+  padding-top: var(--space-12);
+
+  /* Single source of the gap to the first case card below, --space-20
+     (80px). Overrides the base .section__header's margin-bottom
+     (--space-12, 48px): that base value was combining with the first
+     case card's own header-clearance padding-top (see .cases-grid >
+     .case-card:first-child below), producing a much larger, viewport-
+     height-dependent gap instead of one clear, fixed value. */
+  margin-bottom: var(--space-20);
+}
+
+/* ── Featured Projects — sub-header (desktop only) ─────────────────────
+   Sticky positioning was tried here (pinning the heading while cards
+   scrolled past beneath it) and rolled back along with the scroll-snap
+   and internal-scroll experiments for this section. The heading now
+   scrolls in normal document flow with the rest of the page, like any
+   other section heading.
+
+   position: relative is kept, not removed, so the full-bleed background
+   band below (::before) still anchors to this element instead of
+   escalating to a further, unpositioned ancestor. It no longer carries
+   any sticky-specific offset or stacking order.
+
+   The background itself is still full-bleed. Breaks out of the capped
+   .container the same way .cs-figure--full-bleed does: the pseudo spans
+   100vw regardless of how narrow or wide the header's own box is, so it
+   always touches both browser edges. --color-bg matches the page
+   background (same token body uses), not a hardcoded white. */
+@media (min-width: 1024px) {
+  #work .section__header {
+    position: relative;
+    padding-bottom: var(--space-4);
+  }
+
+  #work .section__header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100vw;
+    height: 100%;
+    margin-left: -50vw;
+    background: var(--color-bg);
+    z-index: -1;
+  }
+}
 .section__overline {
   font-family: var(--font-body);
   font-size: var(--fs-label);
@@ -272,6 +373,12 @@ html {
 
 /* ----------------------------------------------------------
    HERO
+   The centered headline/paragraph/buttons group and the logo carousel
+   both live inside this one full-viewport block now, instead of the
+   carousel being a separate section further down the page. .hero itself
+   no longer centers its content directly, .hero > .container does that
+   job internally so the centered group and the bottom-anchored carousel
+   can be positioned independently within the same viewport height.
    ---------------------------------------------------------- */
 .hero {
   padding: var(--space-20) 0;
@@ -279,67 +386,67 @@ html {
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   text-align: left;
 
-  /* stacking context for absolute-positioned background elements */
   position: relative;
   width: 100%;
 
-  /* dvh avoids clipping by the mobile browser toolbar */
+  /* dvh avoids clipping by the mobile browser toolbar. min-height, not
+     height: if the centered group plus the logo carousel ever need more
+     room than one viewport at a given height (a short browser window,
+     landscape phone), the section grows past 100dvh instead of clipping
+     or cramming content. */
   min-height: 100dvh;
 
-  /* Light-mode background — always loaded, never swapped */
-  background-image: url('../images/Desktop\ light/golden_morning_v3_desktop.jpg');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+  background: var(--color-bg);
+
+  /* Hairline divider between the Hero block and the section that
+     follows (Case Studies). This used to come from the general
+     .section + .section rule below, which only fires when a .section
+     is immediately preceded by another .section: #work got it for
+     free because #companies (a .section) used to sit right before it.
+     Now that the logo carousel lives inside .hero (no longer its own
+     #companies section), #work has nothing before it, so that rule
+     stopped matching and the divider disappeared. Setting it directly
+     here, after the logo carousel since it is the last thing in this
+     block, does not depend on what section happens to follow. Same
+     token the rule below already used, --border-thin, not a new value. */
+  border-bottom: var(--border-thin);
 }
 
-/* ── Dark-image cross-fade layer ─────────────────────────
-   ::after holds ALL dark-mode backgrounds. It starts fully
-   transparent and fades in when data-theme="dark" is set.
-   Because only opacity changes (a compositor-only property)
-   the browser avoids repainting the background-image entirely,
-   eliminating the white-flash on theme swap.
-   ---------------------------------------------------------- */
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: var(--z-base);
-
-  background-image: url('../images/Desktop\ dark/desktop_bg_4.jpg');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-
-  opacity: 0;
-  /* transition is set via the .hero::after !important rule in animations.css */
-  pointer-events: none;
-}
-
-/* Fade in the dark layer — no background-image swap, no flicker */
-[data-theme="dark"] .hero::after {
-  opacity: 1;
-}
-
-/* Lift content above the ::after overlay layer */
 .hero > .container {
   position: relative;
   z-index: var(--z-raised);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-@media (max-width: 767px) {
-  .hero {
-    background-image: url('../images/Mobile\ light/mobile_dedicated_v4.png');
-  }
+/* The existing headline/paragraph/buttons group. flex:1 makes it fill
+   whatever vertical space is left after the logo carousel below takes
+   its own natural height, and centers its own content within that
+   space, the same visual centering .hero used to do directly.
+   Scoped to .hero--home only: About's .hero__layout also carries the
+   reveal-group class (for the same scroll-reveal animation hook), and
+   this rule's display:flex was overriding .hero__layout's own
+   display:grid, collapsing the About page's two-column layout into a
+   single centered column. */
+.hero--home .reveal-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
 
-  /* Swap the ::after source for the mobile dark image */
-  .hero::after {
-    background-image: url('../images/Mobile\ dark/mobile_bg_final_brand.png');
-  }
+/* Logo carousel, anchored to the bottom of the Hero block. flex: 0 0
+   auto keeps it at its own natural height instead of stretching, and
+   margin-top gives it breathing room from the centered group above
+   without being part of that group's own vertical centering. */
+.hero .logo-strip {
+  flex: 0 0 auto;
+  margin-top: var(--space-16);
 }
 
 .hero__overline {
@@ -353,6 +460,37 @@ html {
   margin-bottom: var(--space-5);
 }
 
+/* ── Headline row — avatar and headline merged into one centered row,
+   per the simplified Figma Hero (node 43:3914). Replaces the separate
+   floating greeting bubble and the standalone headline block. ───────── */
+.hero__headline-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+/* Avatar — fixed 115x115, per Figma */
+.hero__avatar {
+  width:         115px;
+  height:        115px;
+  border-radius: 50%;
+  object-fit:    cover;
+  display:       block;
+  flex-shrink:   0;
+}
+
+/* The line break is a hard <br> in the markup (matches the pattern
+   already used for the About headline and Hero body), not a natural
+   wrap. Without it, the browser's own wrap point sizes this box using
+   its single-line preferred width clamped to max-width, which can be
+   much wider than either actual rendered line, leaving slack on the
+   right of a left-aligned line. That slack pulled the avatar + headline
+   visual mass off the center axis shared with the paragraph and buttons
+   below. With a hard break, the box hugs the wider of the two actual
+   lines, and text-align: center keeps the shorter line centered under
+   it, so the visible glyphs stay symmetric around the box's own center. */
 .hero__headline {
   font-family: var(--font-display);
   font-size: var(--fs-display);
@@ -361,62 +499,47 @@ html {
   letter-spacing: -0.02em;
   color: var(--color-text-1);
   max-width: 800px;
-  margin-bottom: var(--space-6);
+}
+/* Scoped to Home: this class is shared with About's headline, which
+   must stay left-aligned per its own Figma spec. */
+.hero--home .hero__headline {
+  text-align: center;
 }
 .hero__headline mark {
   background: none;
   color: var(--color-accent);
 }
 
+/* Two separate lines by design (Figma node 43:3914), not a natural text
+   wrap: "...across Brazil and the US." and "I turn ambiguous briefs..."
+   are two <p> tags in the markup so the break holds at any width instead
+   of depending on where the browser happens to wrap the text.
+   No text-align here: left is the base .hero default, and About's body
+   paragraphs should stay left-aligned too. Home centers its own copy
+   via .hero--home .hero__body below. */
 .hero__body {
   font-family: var(--font-body);
   font-size: var(--fs-body-lg);
   line-height: 1.7;
   color: var(--color-text-1);
   max-width: 560px;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+.hero__body-group {
   margin-bottom: var(--space-10);
 }
 
-/* ── Greeting pill — avatar + name anchor above the headline ─────────── */
-.hero__greeting {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  /* Pill padding: 4px all round, then extra right to balance the avatar flush */
-  padding: var(--space-1) var(--space-5) var(--space-1) var(--space-1);
-  border-radius: var(--radius-pill);
-  /* Glass recipe — same as site nav pill */
-  background: rgba(255, 255, 255, 0.55);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
-          backdrop-filter: blur(20px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.70);
-  box-shadow: 0 2px 8px rgba(13, 13, 15, 0.06);
-  /* Space below before the headline */
-  margin-bottom: var(--space-6);
+/* ── Home hero — centered layout, no background image ────────────────
+   Scoped modifier so .hero--about (which stays left-aligned, two-column)
+   is untouched. */
+.hero--home {
+  text-align: center;
 }
-[data-theme="dark"] .hero__greeting {
-  background: rgba(26, 26, 46, 0.50);
-  border-color: rgba(74, 74, 96, 0.35);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20);
+.hero--home .hero__body {
+  text-align: center;
 }
-
-/* Avatar — fixed 32×32, flush inside the pill's left edge */
-.hero__greeting-avatar {
-  width:         32px;
-  height:        32px;
-  border-radius: 50%;
-  object-fit:    cover;
-  display:       block;
-  flex-shrink:   0;
-}
-
-/* Label text */
-.hero__greeting-text {
-  font-family: var(--font-body);
-  font-size:   var(--fs-body-sm);
-  font-weight: 500;
-  color:       var(--color-text-2);
-  white-space: nowrap;
+.hero--home .hero__actions {
+  justify-content: center;
 }
 
 .hero__actions {
@@ -445,32 +568,44 @@ html {
   align-items: stretch;
 }
 
+/* Same gap as the description-to-buttons spacing below (--space-10),
+   applied above the description too so both gaps match. */
+.hero--about .hero__headline {
+  margin-bottom: var(--space-10);
+}
+
+/* Vertically centers the hero__layout row within the full viewport
+   height .hero already provides (min-height: 100dvh, on the shared
+   base .hero rule above). Same full-viewport-fill technique the Home
+   hero uses, just centered directly on this container instead of on an
+   inner flex:1 group, since About has no logo carousel anchored below
+   it that needs separate positioning. Horizontal alignment (left) is
+   untouched, this only affects the vertical axis. */
+.hero--about > .container {
+  justify-content: center;
+}
+
+/* Overrides the base .hero__body max-width (560px, a readable line
+   length meant for Home's narrower centered column). About's content
+   column is fluid width, filling the space up to the portrait, so the
+   paragraphs should reflow to that same width instead of staying
+   capped at the old fixed-column reading width. */
 .hero--about .hero__body {
   margin-bottom: 0;
+  max-width: none;
+}
+
+/* Paragraph break between the first and second body paragraphs only,
+   per the updated Figma. --space-6 (24px) is close to one line's worth
+   of height at this text's line-height, reading as an empty line. The
+   second and third paragraphs stay flush, as before. */
+.hero--about .hero__body:first-of-type {
+  margin-bottom: var(--space-6);
 }
 
 /* Restore vertical breathing room between body text and action buttons */
 .hero--about .hero__actions {
   margin-top: var(--space-10);
-}
-
-/* Hero glass buttons — frosted over the background illustration */
-.hero .btn--secondary {
-  background: rgba(255, 255, 255, 0.35);
-  -webkit-backdrop-filter: blur(12px);
-          backdrop-filter: blur(12px);
-  border-color: color-mix(in srgb, currentColor 35%, transparent);
-}
-.hero .btn--secondary:hover {
-  background: rgba(255, 255, 255, 0.52);
-  border-color: color-mix(in srgb, currentColor 55%, transparent);
-}
-
-[data-theme="dark"] .hero .btn--secondary {
-  background: rgba(0, 0, 0, 0.20);
-}
-[data-theme="dark"] .hero .btn--secondary:hover {
-  background: rgba(0, 0, 0, 0.36);
 }
 
 .hero__layout {
@@ -481,9 +616,13 @@ html {
   width: 100%;
 }
 
-@media (min-width: 768px) {
+/* Fluid content column, fixed 340px portrait column, per the updated
+   Figma (node 152:1139, Hero About). The content column (1fr) grows to
+   fill whatever space is left after the fixed portrait and the 48px
+   gap, instead of staying locked at a fixed width itself. */
+@media (min-width: 1200px) {
   .hero__layout {
-    grid-template-columns: 1fr minmax(240px, 340px);
+    grid-template-columns: 1fr 340px;
     gap: var(--space-12);
   }
 }
@@ -499,17 +638,20 @@ html {
   justify-self: center;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   .hero__portrait {
     justify-self: end;
   }
 }
 
+/* aspect-ratio 340/318 (not a square 1:1) matches the Figma portrait's
+   fixed 340x318 box. Kept as a ratio rather than a hardcoded height so
+   it still scales correctly on mobile, where the column is fluid. */
 .hero__portrait img {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 1;
+  aspect-ratio: 340 / 318;
   object-fit: cover;
   object-position: center top;
   border-radius: var(--radius-lg);
@@ -519,54 +661,11 @@ html {
 
 /* ----------------------------------------------------------
    LOGO STRIP — Section-specific spacing overrides
-   Base component styles live in components.css
+   Base component styles live in components.css. The logo carousel now
+   lives inside the Hero (see .hero .logo-strip above); #companies,
+   .companies__row and .companies__label were the wrapper for its old
+   standalone section and are no longer used anywhere.
    ---------------------------------------------------------- */
-
-/* Social proof strip — between Work and Testimonials */
-#companies {
-  padding-top: var(--space-8);
-  padding-bottom: var(--space-8);
-}
-
-.companies__row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-10);
-}
-
-.companies__label {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-3);
-  line-height: 1.55;
-  flex: 0 0 auto;
-  width: clamp(120px, 18%, 180px);
-}
-
-.companies__row .logo-strip {
-  flex: 1;
-  min-width: 0;
-  padding: 0;
-}
-
-@media (max-width: 767px) {
-  .companies__row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-4);
-  }
-
-  .companies__label {
-    width: auto;
-  }
-
-  .companies__row .logo-strip {
-    width: 100%;
-  }
-}
 
 /* ----------------------------------------------------------
    CONTENT GRIDS
@@ -610,11 +709,13 @@ html {
   }
 }
 
-/* Cases — always 1 column; horizontal card layout handles visual/content split */
+/* Cases — always 1 column; horizontal card layout handles visual/content split.
+   gap is --space-32 (128px) per the Figma spec, the vertical distance
+   between consecutive case cards. */
 .cases-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-6);
+  gap: var(--space-32);
 }
 
 
@@ -1227,6 +1328,12 @@ html {
   font-weight: 600;
   background-color: rgba(28, 95, 168, 0.08);
 }
+/* Uses --color-accent (Anchor light / Solar dark). Dark mode is currently
+   hidden from users (toggle removed), so this isn't a live contradiction
+   of the portfolio's black=action/blue=highlight/Solar=logo-only rule —
+   but if dark mode is ever re-enabled, this would show Solar on a
+   non-logo element. Revisit this token choice before re-enabling, don't
+   let it slide back in unreviewed. */
 .case-toc__link.is-active::before {
   color: var(--color-accent);
   font-weight: 700;
@@ -1325,11 +1432,16 @@ html {
    Mobile  (<768px)  : undo the 24 px (--space-6) container padding.
    Tablet  (768–1023): case-content is centred via margin-inline:auto, so
                        content left = 50vw − 34ch.  margin-left = 34ch − 50vw.
-   Desktop (≥1024px) : with the layout CENTRED inside the container, the
-                       content column's left edge from the viewport is
-                       exactly (50vw − 128px) at every desktop width.
-                       128 = 1120/2 − (padding 40 + grid-centering 104 +
-                             sidebar 240 + gap 48) = 560 − 432
+   Desktop (≥1024px) : .container now uses a capped-width-plus-minimum-
+                       gutter formula (see .container), so its left edge
+                       sits at a constant 80px from the viewport for any
+                       width up to the 1280px cap (1440px viewport), not
+                       a fixed pixel box. Working through the chain
+                       (container edge 80, sidebar 240, gap 48, then the
+                       68ch case-content re-centring inside the remaining
+                       1fr track) the viewport-width terms cancel out and
+                       the constant lands back at 128:
+                       content left = 50vw − 128px.
                        So margin-left = 128px − 50vw (always negative ≥ 1024px).
    ---------------------------------------------------------- */
 .cs-figure--full-bleed {

@@ -50,12 +50,18 @@
           <div class="nav__links">
             <a href="#home" class="nav__link nav__link nav__link--active" aria-current="page">Home</a>
             <a href="#work" class="nav__link nav__link" aria-current="page">Case studies</a>
-            <a href="about.html" class="nav__link">About</a>
+            <a href="about.html" class="nav__link">About me</a>
             <a href="#" data-resume-link="true" class="nav__link" target="_blank" rel="noopener noreferrer">
               Resume
               <span class="visually-hidden">(opens in a new tab)</span>
             </a>
           </div>
+
+          <!-- LinkedIn icon button -->
+          <a href="https://www.linkedin.com/in/rmouraoliv/" class="nav__linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" focusable="false"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></svg>
+            <span class="visually-hidden">(opens LinkedIn in a new tab)</span>
+          </a>
 
           <!-- Toggle de tema único — visível nos dois tamanhos -->
           <button class="nav__theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
@@ -81,7 +87,7 @@
       <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
         <a href="#home"      class="nav__mobile-link nav__link--active">Home</a>
         <a href="#work"      class="nav__mobile-link">Case studies</a>
-        <a href="about.html" class="nav__mobile-link">About</a>
+        <a href="about.html" class="nav__mobile-link">About me</a>
         <a href="#" data-resume-link="true" class="nav__mobile-link" target="_blank" rel="noopener">Resume</a>
         <!-- <a href="mailto:rmouraolivdesigner@gmail.com" class="nav__mobile-link">Contact</a> -->
       </div>
@@ -100,88 +106,107 @@
   <main id="main">
 
     <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-headline">
+    <section class="hero hero--home" aria-labelledby="hero-headline">
       <div class="container">
 
         <div class="reveal-group" data-reveal-on-load data-reveal-delay="280">
 
-          <div class="hero__greeting reveal-item">
+          <div class="hero__headline-row reveal-item">
             <img
-              class="hero__greeting-avatar"
+              class="hero__avatar"
               src="images/about/renan-moura.png"
               alt="Renan Moura"
-              width="32"
-              height="32"
+              width="115"
+              height="115"
             />
-            <span class="hero__greeting-text">Hi, I'm Renan</span>
+            <h1 class="hero__headline" id="hero-headline">
+              Hi, I'm Renan, a designer who<br>
+              absorbs <mark>complex contexts</mark>.
+            </h1>
           </div>
 
-        <h1 class="hero__headline reveal-item" id="hero-headline">
-          I absorb complex contexts.<br>
-          I design decisions<br>
-          that <mark>stick.</mark>
-        </h1>
-
-        <p class="hero__body reveal-item">
-          12 years shipping B2B and consumer products across Brazil and the US.
-          From Shell Box to New Relic. I turn ambiguous briefs into interfaces
-          that move metrics.
-        </p>
+        <div class="hero__body-group reveal-item">
+          <p class="hero__body">12 years shipping B2B and B2C products across Brazil and the US.</p>
+          <p class="hero__body">I turn ambiguous briefs into interfaces that move metrics.</p>
+        </div>
 
         <div class="hero__actions reveal-item">
           <a href="#work" class="btn btn--primary">
             View case studies
             <svg viewBox="0 0 256 256" fill="currentColor" class="icon icon--arrow" aria-hidden="true" focusable="false"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
           </a>
-          <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--secondary-hero">
+          <a href="mailto:rmouraolivdesigner@gmail.com" class="btn btn--secondary">
             <svg viewBox="0 0 256 256" fill="currentColor" class="icon" aria-hidden="true" focusable="false"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"/></svg>
             Send me an email
           </a>
         </div>
         </div>
 
-      </div>
-    </section>
-
-    <!-- COMPANIES -->
-    <section class="section" id="companies" aria-labelledby="companies-label">
-      <div class="container">
-        <div class="companies__row">
-
-          <!-- <p class="companies__label" id="companies-label">Trusted by<br>leading teams</p> -->
-
-          <div class="logo-strip">
-            <div class="logo-strip__ticker">
-              <div class="logo-strip__track" role="list" aria-label="Companies I've shipped for">
-                <div class="logo-strip__item" role="listitem"><img src="images/company-logos/raizen.png" alt="Raízen"></div>
-                <div class="logo-strip__item" role="listitem"><img src="images/company-logos/new_relic.png" alt="New Relic"></div>
-                <div class="logo-strip__item" role="listitem"><img src="images/company-logos/dotz.png" alt="Dotz"></div>
-                <div class="logo-strip__item" role="listitem"><img src="images/company-logos/bradesco_seguros.png" alt="Bradesco"></div>
-                <div class="logo-strip__item" role="listitem"><img src="images/company-logos/faeth.png" alt="Faeth"></div>
-                <div class="logo-strip__item" role="listitem"><img src="images/company-logos/sankhya.png" alt="Sankhya"></div>
-                <div class="logo-strip__item" role="listitem"><img src="images/company-logos/stefanini.png" alt="Stefanini"></div>
-                <div class="logo-strip__item" role="listitem"><img src="images/company-logos/encora.png" alt="Encora"></div>
-                <div class="logo-strip__item" role="listitem"><img src="images/company-logos/furukawa-electric.png" alt="Furukawa"></div>
-                <div class="logo-strip__item" role="listitem"><img src="images/company-logos/logo-vega.webp" alt="Vega"></div>
-              </div>
-              <div class="logo-strip__track" aria-hidden="true">
-                <div class="logo-strip__item"><img src="images/company-logos/raizen.png" alt=""></div>
-                <div class="logo-strip__item"><img src="images/company-logos/new_relic.png" alt=""></div>
-                <div class="logo-strip__item"><img src="images/company-logos/dotz.png" alt=""></div>
-                <div class="logo-strip__item"><img src="images/company-logos/bradesco_seguros.png" alt=""></div>
-                <div class="logo-strip__item"><img src="images/company-logos/faeth.png" alt=""></div>
-                <div class="logo-strip__item"><img src="images/company-logos/sankhya.png" alt=""></div>
-                <div class="logo-strip__item"><img src="images/company-logos/stefanini.png" alt=""></div>
-                <div class="logo-strip__item"><img src="images/company-logos/encora.png" alt=""></div>
-                <div class="logo-strip__item"><img src="images/company-logos/furukawa-electric.png" alt=""></div>
-                <div class="logo-strip__item"><img src="images/company-logos/logo-vega.webp" alt=""></div>
-              </div>
+        <!-- Logo carousel, anchored to the bottom of the Hero's full-viewport block -->
+        <div class="logo-strip">
+          <div class="logo-strip__ticker">
+            <div class="logo-strip__track" role="list" aria-label="Companies I've shipped for">
+              <div class="logo-strip__item" role="listitem"><img src="images/company-logos/raizen.png" alt="Raízen"></div>
+              <div class="logo-strip__item" role="listitem"><img src="images/company-logos/new_relic.png" alt="New Relic"></div>
+              <div class="logo-strip__item" role="listitem"><img src="images/company-logos/dotz.png" alt="Dotz"></div>
+              <div class="logo-strip__item" role="listitem"><img src="images/company-logos/bradesco_seguros.png" alt="Bradesco"></div>
+              <div class="logo-strip__item" role="listitem"><img src="images/company-logos/faeth.png" alt="Faeth"></div>
+              <div class="logo-strip__item" role="listitem"><img src="images/company-logos/sankhya.png" alt="Sankhya"></div>
+              <div class="logo-strip__item" role="listitem"><img src="images/company-logos/stefanini.png" alt="Stefanini"></div>
+              <div class="logo-strip__item" role="listitem"><img src="images/company-logos/encora.png" alt="Encora"></div>
+              <div class="logo-strip__item" role="listitem"><img src="images/company-logos/furukawa-electric.png" alt="Furukawa"></div>
+              <div class="logo-strip__item" role="listitem"><img src="images/company-logos/logo-vega.webp" alt="Vega"></div>
+            </div>
+            <div class="logo-strip__track" aria-hidden="true">
+              <div class="logo-strip__item"><img src="images/company-logos/raizen.png" alt=""></div>
+              <div class="logo-strip__item"><img src="images/company-logos/new_relic.png" alt=""></div>
+              <div class="logo-strip__item"><img src="images/company-logos/dotz.png" alt=""></div>
+              <div class="logo-strip__item"><img src="images/company-logos/bradesco_seguros.png" alt=""></div>
+              <div class="logo-strip__item"><img src="images/company-logos/faeth.png" alt=""></div>
+              <div class="logo-strip__item"><img src="images/company-logos/sankhya.png" alt=""></div>
+              <div class="logo-strip__item"><img src="images/company-logos/stefanini.png" alt=""></div>
+              <div class="logo-strip__item"><img src="images/company-logos/encora.png" alt=""></div>
+              <div class="logo-strip__item"><img src="images/company-logos/furukawa-electric.png" alt=""></div>
+              <div class="logo-strip__item"><img src="images/company-logos/logo-vega.webp" alt=""></div>
             </div>
           </div>
-
         </div>
+
       </div>
     </section>
+
+    <script>
+      (function () {
+        var TAB_COPY = {
+          who: "12 years shipping B2B and B2C products across Brazil and the US. I turn ambiguous briefs into interfaces that move metrics.",
+          how: "Systems analyst before product designer — I read code, catch implementation constraints early, and speak the language developers use. Design decisions grounded in what's actually buildable.",
+          believe: "Design isn't what ships. It's how you get there. Every decision traces back to a constraint, a metric, or a user need — never aesthetics for their own sake.",
+          shipped: "Raízen, New Relic, Dotz, Bradesco. Real products, real metrics — not portfolio-only prototypes that never left Figma."
+        };
+        var tabs = document.querySelectorAll('.hero__tab');
+        var body = document.getElementById('hero-tab-body');
+        if (!tabs.length || !body) return;
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            if (tab.classList.contains('is-active')) return;
+            tabs.forEach(function (t) {
+              t.classList.remove('is-active');
+              t.setAttribute('aria-selected', 'false');
+            });
+            tab.classList.add('is-active');
+            tab.setAttribute('aria-selected', 'true');
+            body.setAttribute('aria-labelledby', tab.id);
+
+            body.style.opacity = '0';
+            window.setTimeout(function () {
+              body.textContent = TAB_COPY[tab.dataset.tab];
+              body.style.opacity = '1';
+            }, 100); // matches --duration-fast
+          });
+        });
+      })();
+    </script>
 
     <!-- CASE STUDIES -->
     <section class="section" id="work" aria-labelledby="cases-title">
@@ -196,26 +221,28 @@
 
           <!-- ── Shell Box — pos 1/4 ────────────────────────────────────── -->
           <article class="case-card case-card--glass" role="listitem">
-            <div class="case-card__visual" aria-hidden="true">
-              <span class="case-card__chrome" aria-hidden="true"><span class="is-filled"></span><span></span><span></span><span></span></span>
-              <span class="case-card__year">2026</span>
-              <img src="images/case-thumbnails/sb-thumb-light.png" alt="Shell Box app home screen redesign" class="case-card__img--light" loading="lazy" />
-              <img src="images/case-thumbnails/sb-thumb-dark.png"  alt="Shell Box app home screen redesign" class="case-card__img--dark"  loading="lazy" />
+           <div class="case-card__inner">
+            <div class="case-card__visual">
+              <a href="case-studies/sb-home-redesign.html" class="case-card__visual-link" aria-label="View case study: Shell Box Home Redesign">
+                <div class="case-card__canvas" aria-hidden="true">
+                  <img src="images/case-thumbnails/sb-thumb-light.png" alt="Shell Box app home screen redesign" class="case-card__img--light" loading="lazy" />
+                  <img src="images/case-thumbnails/sb-thumb-dark.png"  alt="Shell Box app home screen redesign" class="case-card__img--dark"  loading="lazy" />
+                </div>
+              </a>
+              <div class="case-card__tags" role="list" aria-label="Disciplines">
+                <span class="badge badge--ancora" role="listitem">Product Strategy</span>
+                <span class="badge badge--ancora" role="listitem">Conversion Optimization</span>
+                <span class="badge badge--ancora" role="listitem">Mobile UX</span>
+              </div>
             </div>
 
             <div class="case-card__content">
               <h3 class="case-card__title">Shell Box Home Redesign</h3>
-              <p class="case-card__meta">Raízen</p>
-
-              <div class="case-card__tags" role="list" aria-label="Disciplines">
-                <span class="badge badge--neutral" role="listitem">Product Strategy</span>
-                <span class="badge badge--neutral" role="listitem">Conversion Optimization</span>
-                <span class="badge badge--neutral" role="listitem">Mobile UX</span>
-              </div>
+              <p class="case-card__meta">Raízen &bull; 2026</p>
 
               <p class="case-card__lead">
-                A high-traffic mobile home screen with a conversion problem. I led the end-to-end 
-                redesign, restructuring a monolithic architecture into a modular system under legal 
+                A high-traffic mobile home screen with a conversion problem. I led the end-to-end
+                redesign, restructuring a monolithic architecture into a modular system under legal
                 and technical constraints.<br>
                 The result: measurable lifts in both conversion and engagement.
               </p>
@@ -231,13 +258,6 @@
                 </div>
               </div>
 
-              <!--<div class="case-card__footer">
-                <a href="case-studies/sb-home-redesign.html" class="btn btn--dprimary" aria-label="View Shell Box Home Redesign case study">
-                  View case study
-                  <svg viewBox="0 0 256 256" fill="currentColor" class="icon icon--arrow" width="16" height="16" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
-                </a>
-              </div> -->
-
               <div class="case-card__footer">
                 <a href="case-studies/sb-home-redesign.html" class="btn btn--primary" aria-label="View Shell Box Home Redesign case study">
                   View case study
@@ -246,26 +266,29 @@
               </div>
 
             </div>
+           </div>
           </article>
 
           <!-- ── New Relic — pos 2/4 ────────────────────────────────────── -->
           <article class="case-card case-card--glass" role="listitem">
-            <div class="case-card__visual" aria-hidden="true">
-              <span class="case-card__chrome" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span></span><span></span></span>
-              <span class="case-card__year">2024</span>
-              <img src="images/case-thumbnails/nr-thumb-light.png" alt="New Relic Cloud Cost Intelligence interface" class="case-card__img--light" loading="lazy" />
-              <img src="images/case-thumbnails/nr-thumb-dark.png"  alt="New Relic Cloud Cost Intelligence interface" class="case-card__img--dark"  loading="lazy" />
-            </div>
-
-            <div class="case-card__content">
-              <h3 class="case-card__title">Cloud Cost Intelligence</h3>
-              <p class="case-card__meta">New Relic</p>
-
+           <div class="case-card__inner">
+            <div class="case-card__visual">
+              <a href="case-studies/cloud-cost-intelligence.html" class="case-card__visual-link" aria-label="View case study: Cloud Cost Intelligence">
+                <div class="case-card__canvas" aria-hidden="true">
+                  <img src="images/case-thumbnails/nr-thumb-light.png" alt="New Relic Cloud Cost Intelligence interface" class="case-card__img--light" loading="lazy" />
+                  <img src="images/case-thumbnails/nr-thumb-dark.png"  alt="New Relic Cloud Cost Intelligence interface" class="case-card__img--dark"  loading="lazy" />
+                </div>
+              </a>
               <div class="case-card__tags" role="list" aria-label="Disciplines">
                 <span class="badge badge--ancora" role="listitem">FinOps</span>
                 <span class="badge badge--ancora" role="listitem">B2B</span>
                 <span class="badge badge--ancora" role="listitem">Web UX</span>
               </div>
+            </div>
+
+            <div class="case-card__content">
+              <h3 class="case-card__title">Cloud Cost Intelligence</h3>
+              <p class="case-card__meta">New Relic &bull; 2024</p>
 
               <p class="case-card__lead">
                 Designing the first version of New Relic's cloud cost platform: multi-persona
@@ -291,26 +314,29 @@
                 </a>
               </div>
             </div>
+           </div>
           </article>
 
           <!-- ── Dotz — pos 3/4 ─────────────────────────────────────────── -->
           <article class="case-card case-card--glass" role="listitem">
-            <div class="case-card__visual" aria-hidden="true">
-              <span class="case-card__chrome" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span></span>
-              <span class="case-card__year">2022</span>
-              <img src="images/case-thumbnails/dotz-thumb-light.png" alt="Dotz CRM Retail Platform interface" class="case-card__img--light" loading="lazy" />
-              <img src="images/case-thumbnails/dotz-thumb-dark.png"  alt="Dotz CRM Retail Platform interface" class="case-card__img--dark"  loading="lazy" />
-            </div>
-
-            <div class="case-card__content">
-              <h3 class="case-card__title">CRM Retail Platform</h3>
-              <p class="case-card__meta">Dotz</p>
-
+           <div class="case-card__inner">
+            <div class="case-card__visual">
+              <a href="case-studies/dotz.html" class="case-card__visual-link" aria-label="View case study: CRM Retail Platform">
+                <div class="case-card__canvas" aria-hidden="true">
+                  <img src="images/case-thumbnails/dotz-thumb-light.png" alt="Dotz CRM Retail Platform interface" class="case-card__img--light" loading="lazy" />
+                  <img src="images/case-thumbnails/dotz-thumb-dark.png"  alt="Dotz CRM Retail Platform interface" class="case-card__img--dark"  loading="lazy" />
+                </div>
+              </a>
               <div class="case-card__tags" role="list" aria-label="Disciplines">
                 <span class="badge badge--ancora" role="listitem">Internal Tool</span>
                 <span class="badge badge--ancora" role="listitem">B2B2C</span>
                 <span class="badge badge--ancora" role="listitem">Web UX</span>
               </div>
+            </div>
+
+            <div class="case-card__content">
+              <h3 class="case-card__title">CRM Retail Platform</h3>
+              <p class="case-card__meta">Dotz &bull; 2022</p>
 
               <p class="case-card__lead">
                 Redesigning an internal tool for retail campaign management, reducing
@@ -335,26 +361,27 @@
                 </a>
               </div>
             </div>
+           </div>
           </article>
 
           <!-- ── Gas Stations Map — Coming Soon — pos 4/4 ──────────────── -->
           <article class="case-card case-card--glass case-card--placeholder" role="listitem" aria-label="Gas Stations Map — case study coming soon">
-            <div class="case-card__visual" aria-hidden="true">
-              <span class="case-card__chrome" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span></span>
-              <span class="case-card__year">2025</span>
-              <img src="images/case-thumbnails/map-thumb-light.png" alt="" class="case-card__img--light" loading="lazy" />
-              <img src="images/case-thumbnails/map-thumb-dark.png"  alt="" class="case-card__img--dark"  loading="lazy" />
-            </div>
-
-            <div class="case-card__content">
-              <h3 class="case-card__title">Gas Stations Map</h3>
-              <p class="case-card__meta">Raízen</p>
-
+           <div class="case-card__inner">
+            <div class="case-card__visual">
+              <div class="case-card__canvas" aria-hidden="true">
+                <img src="images/case-thumbnails/map-thumb-light.png" alt="" class="case-card__img--light" loading="lazy" />
+                <img src="images/case-thumbnails/map-thumb-dark.png"  alt="" class="case-card__img--dark"  loading="lazy" />
+              </div>
               <div class="case-card__tags" role="list" aria-label="Disciplines">
                 <span class="badge badge--neutral" role="listitem">Internal Tool</span>
                 <span class="badge badge--neutral" role="listitem">B2B2C</span>
                 <span class="badge badge--neutral" role="listitem">Web UX</span>
               </div>
+            </div>
+
+            <div class="case-card__content">
+              <h3 class="case-card__title">Gas Stations Map</h3>
+              <p class="case-card__meta">Raízen &bull; 2025</p>
 
               <p class="case-card__lead">
                 Designing an internal geolocation tool to optimise fuel station discovery,
@@ -376,6 +403,7 @@
                 <button class="btn btn--primary" disabled aria-disabled="true">Coming soon</button>
               </div>
             </div>
+           </div>
           </article>
 
         </div>

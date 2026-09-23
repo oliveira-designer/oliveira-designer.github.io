@@ -20,12 +20,6 @@
     box-shadow        var(--duration-slow) var(--ease-in-out);
 }
 
-/* The hero dark-image layer uses its own opacity transition —
-   exclude it from the global rule to avoid accidental overrides. */
-.hero::after {
-  transition: opacity var(--duration-slow) var(--ease-in-out) !important;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   /* Scroll-triggered & load-triggered base */
   .reveal {

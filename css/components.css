@@ -80,29 +80,6 @@
   color: var(--color-text-1);
 }
 
-/* Secondary Hero */
-.btn--secondary-hero {
-  background-color: rgba(255, 255, 255, 0.45);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  backdrop-filter: blur(12px) saturate(1.2);
-  color: var(--color-text-1);
-  transition: background-color var(--duration-normal), border-color var(--duration-normal), color var(--duration-normal);
-}
-.btn--secondary-hero:hover {
-  border-color: var(--color-border-strong);
-  background-color: var(--color-bg-alt);
-  color: var(--color-text-1);
-}
-[data-theme="dark"] .btn--secondary-hero {
-  background-color: rgba(0, 0, 0, 0.25);
-  color: var(--color-text-1);
-}
-[data-theme="dark"] .btn--secondary-hero:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.25);
-  color: var(--color-text-1);
-}
-
 /* Solar */
 .btn--solar {
   background-color: var(--color-solar);
@@ -257,6 +234,24 @@
 .case-card:hover .case-card__img--light,
 .case-card:hover .case-card__img--dark {
   transform: scale(1.04);
+}
+
+/* Visual half as its own link, sibling to the footer's "View case study"
+   button, so the image is clickable without nesting an anchor inside one.
+   display:contents keeps the anchor out of the box tree entirely, so the
+   canvas below stays a direct flex item of .case-card__visual and keeps
+   the exact sizing (flex:1, aspect-ratio, the desktop fixed height) it
+   had before this link wrapped it. */
+.case-card__visual-link {
+  display: contents;
+}
+.case-card__visual-link .case-card__canvas {
+  cursor: pointer;
+}
+.case-card__visual-link:hover .case-card__img--light,
+.case-card__visual-link:hover .case-card__img--dark {
+  transform: scale(1.04);
+  opacity: 0.92;
 }
 
 /* Image visibility — light mode default */
@@ -414,7 +409,7 @@
 .case-card--placeholder:hover .case-card__img--dark {
   transform: none;
 }
-.case-card--placeholder .case-card__visual {
+.case-card--placeholder .case-card__canvas {
   filter: grayscale(55%);
   opacity: 0.50;
 }
@@ -429,72 +424,140 @@
 }
 
 /* ======================================================================
-   CASE CARD — .case-card--glass (portrait gallery card)
-   Vertical layout: frosted-glass shell · inset gradient canvas ·
-   paginator chrome dots (folder look) · frosted year pill ·
-   bold pipe-split title · muted mono meta line · native badges ·
-   impact metrics · full-width CTA button.
-   Dark mode flips the accent (Âncora → Solar) and adds a glow ring.
+   CASE CARD — .case-card--glass
+   Full-bleed, flat band per case study (Figma: Portfolio file, node
+   43:3926, adapted to behave like the Hero section). No glass material,
+   no border, no rounded corners, matching Hero's own flat full-width
+   look. Fixed 381px content column at desktop, company/year merged into
+   one meta line, centered tags below the image, impact metrics,
+   content-hugging CTA button.
    ====================================================================== */
 
-/* ── Card shell — unified Material glass recipe (same as .result-card) ── */
+/* ── Outer band — full-bleed width at every breakpoint, matching the
+   Hero/sub-header full-bleed technique: this element's own left/right
+   edges break out of the capped .container to touch the browser edges.
+   --color-bg is the same token Hero uses for its own background; there
+   is no separate per-case color decision recorded anywhere for this
+   section, so all four cards share it. ─────────────────────────────── */
 .case-card--glass {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  background: var(--color-bg);
+  border: none;
+  border-radius: 0;
+  transition: background-color var(--duration-slower) var(--ease-out);
+}
+/* Blocks the base .case-card:hover box-shadow (lower specificity, still
+   matches since this element carries both classes) from showing on a
+   flat full-bleed band that no longer has a shadow-bearing surface. */
+.case-card--glass:hover {
+  box-shadow: none;
+}
+
+/* ── Full viewport height, desktop only, matching how Hero clears the
+   fixed site header (padding-top: var(--header-height)) and fills the
+   screen (min-height: 100dvh). Scoped to the breakpoint where the
+   content column locks to its fixed Figma width and the image gets a
+   fixed height (see below), so tablet and phone keep their existing
+   normal-flow, auto-height stacked layout untouched. ────────────────── */
+@media (min-width: 1024px) {
+  .case-card--glass {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100dvh;
+    padding-top: var(--header-height);
+  }
+
+  /* The first card sits directly below the "Featured Projects" header,
+     not scrolled to on its own, so it does not need this header-
+     clearance padding, or the full-viewport centering that comes with
+     it (that centering leaves extra empty space above the card's
+     visible content, on top of the padding, and that space grows with
+     the viewport's height). Both were stacking with the header's own
+     margin-bottom above, producing a gap far larger than the intended
+     --space-20 and one that changed with browser window height. Later
+     cards keep the full-viewport slide treatment unchanged. */
+  .cases-grid > .case-card:first-child {
+    min-height: 0;
+    padding-top: 0;
+    justify-content: flex-start;
+  }
+}
+
+/* ── Inner content — capped width, standard page gutter (--space-20),
+   centered, holds the visual/content column split. This is what keeps
+   the card's text and image aligned with the rest of the page's content
+   edges (the Featured Projects title above it) now that the outer band
+   itself is full-bleed. ─────────────────────────────────────────────── */
+.case-card__inner {
+  width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  background: var(--color-material-bg);
-  -webkit-backdrop-filter: var(--blur-glass);
-          backdrop-filter: var(--blur-glass);
-  border: 1px solid var(--color-material-border);
-  box-shadow:
-    var(--color-material-shadow-drop),
-    inset 0 1px 0 var(--color-material-shadow-inset);
-  border-radius: var(--radius-xl);
-  padding: var(--space-4);
-  height: 100%;
-  transition:
-    box-shadow   var(--duration-slow) var(--ease-out),
-    border-color var(--duration-slow) var(--ease-out),
-    transform    var(--duration-slow) var(--ease-out);
 }
-/* Neutralise the base @media(min-width:768px){grid-template-columns:1fr 1fr} */
 @media (min-width: 768px) {
-  .case-card--glass {
-    min-height: 0;
+  .case-card__inner {
     flex-direction: row;
+    /* Column gap per Figma (node 43:3926): --space-10 (40px), not the
+       base --space-4 used for the mobile stacked gap. */
+    gap: var(--space-10);
   }
 
-}
-.case-card--glass:hover {
-  transform:    translateY(-4px);
-  box-shadow:
-    var(--color-material-shadow-drop-hover),
-    inset 0 1px 0 var(--color-material-shadow-inset);
-  border-color: var(--color-material-border-hover);
-}
-
-[data-theme="dark"] .case-card--glass {
-  background: var(--color-material-bg);
-  -webkit-backdrop-filter: var(--blur-glass);
-          backdrop-filter: var(--blur-glass);
-  border-color: var(--color-material-border);
-  box-shadow:
-    var(--color-material-shadow-drop),
-    inset 0 1px 0 var(--color-material-shadow-inset);
-}
-[data-theme="dark"] .case-card--glass:hover {
-  box-shadow:
-    var(--color-material-shadow-drop-hover),
-    inset 0 1px 0 var(--color-material-shadow-inset);
-  border-color: var(--color-material-border-hover);
+  /* Content column first (left), visual column second (right), per Figma
+     (node 43:3926). Markup order is visual then content (image column
+     stays first in the DOM for a sane reading order without a visible
+     image), so the swap is done here with order rather than in the
+     HTML. Scoped to this row-layout breakpoint only, the stacked
+     mobile order below it is unaffected. */
+  .case-card--glass .case-card__content {
+    order: 1;
+  }
+  .case-card--glass .case-card__visual {
+    order: 2;
+  }
 }
 
-/* ── Canvas — inset rounded panel with iridescent gradient ──────────── */
-/* display:block + position:relative gives a clean stacking context for the
-   absolutely-placed chrome, year pill, and full-bleed images.            */
+/* ── Visual column — canvas + tags stacked underneath ────────────────── */
+/* background-color:transparent overrides the base .case-card__visual gray
+   fill (var(--color-bg-alt)). That fill is meant for the base card, where
+   the visual is a padded inset box; here the canvas already fills the
+   column full-bleed, so the base color only ever showed as a gray band
+   behind the tag row below it. The tags sit directly on the page
+   background instead. */
 .case-card--glass .case-card__visual {
+  display: flex;
+  flex-direction: column;
+  /* Overrides the base .case-card__visual align-items:flex-end and
+     justify-content:center (meant for the base card's row layout, where
+     they ground a single mockup image). Left as-is here, both canvas and
+     the tag row below it shrink to their own content width and get
+     pushed to one side instead of spanning the column, which is why the
+     tag row was not actually centered under the image. */
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: var(--space-4);
+  background-color: transparent;
+}
+[data-theme="dark"] .case-card--glass .case-card__visual {
+  background-color: transparent;
+}
+
+/* ── Canvas — full-bleed image panel, no gray inset box ──────────────── */
+/* display:block + position:relative gives a clean stacking context for the
+   full-bleed images. aspect-ratio holds a sensible shape on mobile/tablet;
+   at desktop (see below) it's dropped so the panel fills the card's full
+   height instead, per Figma (node 43:3926 visual column: flex:1, no fixed
+   ratio). */
+.case-card--glass .case-card__canvas {
   display: block;
   position: relative;
+  width: 100%;
+  flex: 1;
   aspect-ratio: 4 / 3;
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -504,9 +567,26 @@
     linear-gradient(150deg, var(--color-sky) 0%, var(--color-tide) 100%);
 }
 @media (min-width: 768px) {
-  .case-card--glass .case-card__visual { aspect-ratio: 4 / 3; }
+  .case-card--glass .case-card__canvas { aspect-ratio: 4 / 3; }
 }
-[data-theme="dark"] .case-card--glass .case-card__visual {
+@media (min-width: 1024px) {
+  /* No aspect-ratio at desktop, and no longer flex:1 (grow to whatever
+     height the row happens to be): a fixed height instead, so the image
+     stops growing or shrinking with content, sized to comfortably fit
+     within the card's own fixed viewport height (min-height: 100dvh
+     minus the fixed header and --space-32 of top/bottom breathing room,
+     see .case-card--glass above). width:100% is explicit, not left to
+     cross-axis stretch alone: with no in-flow content (the images
+     inside are position:absolute), the box has nothing else to size
+     its width from and can otherwise collapse to 0. */
+  .case-card--glass .case-card__canvas {
+    aspect-ratio: unset;
+    width: 100%;
+    height: calc(100dvh - var(--header-height) - var(--space-32));
+    flex: none;
+  }
+}
+[data-theme="dark"] .case-card--glass .case-card__canvas {
   background:
     radial-gradient(120% 120% at 15% 0%,  rgba(28, 95, 168, 0.45) 0%, transparent 55%),
     radial-gradient(120% 120% at 90% 12%, rgba(245, 200, 66, 0.20) 0%, transparent 50%),
@@ -524,68 +604,38 @@
   object-position: center; /* keep the UI — phone status bar — in view */
 }
 
-/* ── Paginator chrome — top-center, folder-tab feel ────────────────── */
-/* 4 filled + 3 hollow squares mimics the reference's progress/tab row  */
-.case-card__chrome {
-  position: absolute;
-  top:       var(--space-3);
-  left:      50%;
-  transform: translateX(-50%);
-  z-index:   var(--z-raised);
-  display:   flex;
-  gap:       var(--space-1);
-  pointer-events: none;
-}
-.case-card__chrome span {
-  width:  6px;   /* no DS token — sub-pixel chrome dot */
-  height: 6px;   /* no DS token — sub-pixel chrome dot */
-  border-radius: 1.5px; /* no DS token — sub-pixel chrome dot */
-  border: 1.5px solid rgba(13, 13, 15, 0.22);
-  background: transparent;
-}
-.case-card__chrome span.is-filled {
-  background: rgba(13, 13, 15, 0.28);
-  border-color: rgba(13, 13, 15, 0.28);
-}
-[data-theme="dark"] .case-card__chrome span {
-  border-color: rgba(255, 255, 255, 0.32);
-}
-[data-theme="dark"] .case-card__chrome span.is-filled {
-  background:   rgba(255, 255, 255, 0.55);
-  border-color: rgba(255, 255, 255, 0.55);
-}
-
-/* ── Year pill — frosted overlay, top-right of canvas ───────────────── */
-.case-card__year {
-  position: absolute;
-  top:   var(--space-3);
-  right: var(--space-3);
-  z-index: var(--z-raised);
-  pointer-events: none;
-  font-family:    var(--font-body);
-  font-size:      var(--fs-label);
-  font-weight:    600;
-  letter-spacing: 0.08em;
-  padding:        var(--space-1) var(--space-3);
-  border-radius:  var(--radius-pill);
-  background-color: rgba(247, 247, 249, 0.82);
-  border: 1px solid rgba(13, 13, 15, 0.08);
-  color:  var(--color-text-2);
-  -webkit-backdrop-filter: blur(8px);
-          backdrop-filter: blur(8px);
-}
-[data-theme="dark"] .case-card__year {
-  background-color: rgba(26, 26, 46, 0.80);
-  border-color:     rgba(255, 255, 255, 0.10);
-  color:            var(--color-text-3);
-}
-
 /* ── Content stack ──────────────────────────────────────────────────── */
+/* No horizontal padding: with the card's own outer padding gone, this is
+   what keeps the text flush with the card's left edge (and so with the
+   Featured Projects title above it). Top/bottom padding and the gap
+   between children are untouched.
+
+   justify-content: flex-start groups title, meta, description,
+   separator, metrics and button as one tight block and top-aligns that
+   block within the column's full height, so the title lines up with
+   the top of the image beside it. Leftover space from a shorter
+   description (Shell Box, New Relic) collects below the button instead
+   of being split above and below the block. */
 .case-card--glass .case-card__content {
   background-color: transparent;
   flex: 1;
-  padding: var(--space-2) var(--space-3) var(--space-3);
+  padding: var(--space-2) 0 var(--space-3);
   gap:     var(--space-3);
+  justify-content: flex-start;
+}
+/* Desktop: content column locks to the Figma spec's fixed 381px, image
+   column takes the rest. Below this, content and image keep sharing the
+   row 50/50 (existing tablet fallback), since the fixed width is only
+   specified for the desktop frame. Comes after the flex:1 rule above so
+   it wins on equal specificity. */
+@media (min-width: 1024px) {
+  .case-card--glass .case-card__content {
+    width: 381px;
+    flex: 0 0 381px;
+  }
+  .case-card--glass .case-card__visual {
+    flex: 1 1 0%;
+  }
 }
 
 /* ── Title — bold, pipe-separated ───────────────────────────────────── */
@@ -609,15 +659,48 @@
   margin-top:     calc(-1 * var(--space-1));
 }
 
-/* ── Tags ────────────────────────────────────────────────────────────── */
-.case-card--glass .case-card__tags { margin-top: var(--space-1); }
+/* Company + year merged into one plain line under the title, per Figma
+   (43:3926): "Raízen • 2026" instead of a separate floating year badge. */
+.case-card--glass .case-card__meta {
+  font-size:  var(--fs-body);
+  color:      var(--color-text-2);
+  margin-top: 0;
+}
+
+/* ── Tags — centered row underneath the canvas, not in the text column ── */
+.case-card--glass .case-card__tags {
+  justify-content: center;
+}
 
 /* ── Lead description — reintroduced below tags ─────────────────────── */
 .case-card--glass .case-card__lead {
-  margin-top: 0;    /* override the base margin-top:auto */
-  font-size:  var(--fs-body-sm);
-  line-height: 1.65;
-  color: var(--color-text-2);
+  margin-top:  0;    /* override the base margin-top:auto */
+  font-size:   var(--fs-body);
+  line-height: 1.75;
+  color:       var(--color-text-1);
+}
+/* Clamped to a fixed number of lines, desktop only, matching the card's
+   own fixed viewport height (see .case-card--glass above): the full
+   text stays in the DOM for SEO and screen readers, only the visual
+   display truncates with an ellipsis past this many lines. Same value
+   on every card regardless of how long each case's actual description
+   is, so the row of title, meta, description, separator, metrics and
+   button always takes up the same vertical space next to the image.
+
+   7 lines, measured against the actual available height (content
+   column height minus title, meta, separator, metrics and the tightened
+   button gap, all measured live, not guessed) and against the longest
+   of the four descriptions: Shell Box's full text (not Dotz's, which
+   turned out shorter) wraps to exactly 7 lines at this column width, so
+   7 shows it in full with no truncation and still leaves comfortable
+   slack in the column before the block needs recentring. */
+@media (min-width: 1024px) {
+  .case-card--glass .case-card__lead {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 /* Deliberate accent flip, not a stray duplicate: inside .case-card--glass,
@@ -647,27 +730,24 @@
 }
 .case-card--glass .metric__value { font-size: var(--fs-h2); }
 
-/* ── Footer — full-width CTA, no glyph ───────────────────────────────── */
-.case-card--glass .case-card__footer {
-  margin-top:  auto;
-  padding-top: var(--space-4);
-}
-/* Button fills the full footer width */
-.case-card--glass .case-card__footer .btn {
-  width: 100%;
-}
+/* ── Footer ────────────────────────────────────────────────────────── */
+/* Fixed --space-8 (32px) total gap from the metrics row above, per
+   Figma (node 43:3926), not margin-top: auto. The button now stays
+   grouped with the rest of the content as one block (see
+   justify-content: center on .case-card__content above) instead of
+   being pushed to the bottom of the column regardless of how much
+   space is left.
 
-/* ── Coming-soon variant — inert, no lift or glow ────────────────────── */
-.case-card--glass.case-card--placeholder:hover {
-  transform:    none;
-  box-shadow:   var(--color-material-shadow-drop), inset 0 1px 0 var(--color-material-shadow-inset);
-  border-color: var(--color-material-border);
+   padding-top is --space-8 minus --space-3, not --space-8 outright:
+   .case-card__content already puts a --space-3 flex gap between every
+   child including this one, so this padding only needs to make up the
+   remaining distance to reach --space-8 total, not add on top of it. */
+.case-card--glass .case-card__footer {
+  padding-top: calc(var(--space-8) - var(--space-3));
 }
-[data-theme="dark"] .case-card--glass.case-card--placeholder:hover {
-  background:   var(--color-material-bg);
-  border-color: var(--color-material-border);
-  box-shadow:   var(--color-material-shadow-drop), inset 0 1px 0 var(--color-material-shadow-inset);
-}
+/* Button sizes to its own content (label plus arrow icon), the default
+   .btn behavior (display: inline-flex), left-aligned in the footer. */
+
 
 /* ----------------------------------------------------------
    CARDS — Skills
