@@ -212,7 +212,7 @@ p { max-width: 70ch; }
 .text-secondary { color: var(--color-text-2); }
 .text-tertiary  { color: var(--color-text-3); }
 .text-solar     { color: var(--color-solar);  }
-.text-ancora    { color: var(--color-anchor); }
+.text-anchor    { color: var(--color-anchor); }
 
 /* ----------------------------------------------------------
    ENTRANCE ANIMATIONS

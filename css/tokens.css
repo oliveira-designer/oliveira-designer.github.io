@@ -47,6 +47,13 @@
   --color-info:        #634590;
   --color-celebrate:   #F5A8C0;
 
+  /* Contrast variants (Figma Foundation v2.2): same hue as the
+     functional color, adjusted so text passes WCAG 1.4.3 (4.5:1). */
+  --color-success-deep: #2A7347;  /* success text on light: 5.77:1 on white */
+  --color-warning-deep: #94540A;  /* warning text on light: 5.94:1 on white */
+  --color-error-light:  #F28585;  /* error text/border on dark: 6.88:1 on abyss */
+  --color-info-light:   #B89EDB;  /* info text on dark: 7.3:1 on abyss */
+
   /* ----------------------------------------------------------
      COLORS — Night Family (dark-mode ramp)
      ---------------------------------------------------------- */
@@ -59,6 +66,9 @@
   --color-night-aurora-soft:  #2A2618;
   --color-night-success-soft: #162418;
   --color-night-error-soft:   #261616;
+  --color-night-500:          #69697E;  /* disabled text/icon/stroke and control outline in dark mode */
+  --color-night-warning-soft: #2A1E10;
+  --color-night-info-soft:    #1E182A;
 
   /* ----------------------------------------------------------
      SURFACES — Light mode (default)
@@ -76,6 +86,51 @@
   --color-text-brand-primary-hover:    var(--color-deep);
   --color-border-focus-ring:    var(--color-anchor);
   --color-accent:               var(--color-anchor);
+
+  /* ----------------------------------------------------------
+     STATE + STATUS TOKENS — Light mode (Figma Foundation v2.2)
+     Disabled comes from tokens, never from opacity.
+     ---------------------------------------------------------- */
+  --color-bg-disabled:       var(--color-border-base);
+  --color-text-disabled:     var(--color-night-400);
+  --color-text-on-disabled:  var(--color-night-400);
+  --color-border-disabled:   var(--color-border-base);
+
+  --color-bg-scrim: rgba(13, 13, 15, 0.5);  /* behind modals/drawers; not the glass overlay */
+
+  --color-bg-warning:       var(--color-warning);
+  --color-bg-warning-soft:  rgba(196, 122, 31, 0.12);
+  --color-text-warning:     var(--color-warning-deep);
+  --color-text-on-warning:  var(--color-ink);
+  --color-border-warning:   var(--color-warning);
+
+  --color-bg-info:          var(--color-info);
+  --color-bg-info-soft:     rgba(99, 69, 144, 0.10);
+  --color-text-info:        var(--color-info);
+  --color-text-on-info:     var(--color-cloud);
+  --color-border-info:      var(--color-info);
+
+  --color-text-success:     var(--color-success-deep);
+  --color-text-error:       var(--color-error);
+  --color-border-success:   var(--color-success);
+  --color-border-error:     var(--color-error);
+
+  /* ----------------------------------------------------------
+     ICON COLOR — Figma "Hope · Icon" / Icon/Color (10 modes).
+     Each role aliases a semantic text token, so dark mode follows
+     automatically. Icons still inherit currentColor by default;
+     use .icon--<role> (components.css) to pick a role.
+     ---------------------------------------------------------- */
+  --icon-color-default:     var(--color-text-1);
+  --icon-color-secondary:   var(--color-text-2);
+  --icon-color-tertiary:    var(--color-text-3);
+  --icon-color-on-neutral:  var(--color-text-on-neutral);
+  --icon-color-brand-hover: var(--color-text-brand-primary-hover);
+  --icon-color-disabled:    var(--color-text-disabled);
+  --icon-color-danger:      var(--color-text-error);
+  --icon-color-positive:    var(--color-text-success);
+  --icon-color-warning:     var(--color-text-warning);
+  --icon-color-info:        var(--color-text-info);
 
   /* ----------------------------------------------------------
      COMPONENT TOKENS — Light mode (default)
@@ -236,7 +291,7 @@
   --color-bg-alt:        var(--color-night-800);
   --color-bg-inverse:    var(--color-cloud);
   --color-border:        var(--color-night-700);
-  --color-border-strong: var(--color-night-600);
+  --color-border-strong: var(--color-night-500);  /* 3.19:1 on abyss (WCAG 1.4.11) */
   --color-text-1:        var(--color-cloud);
   --color-text-2:        var(--color-night-300);
   --color-text-3:        var(--color-night-400);  /* WCAG AA: 4.6:1 on dark mode cards */
@@ -245,6 +300,21 @@
   --color-text-brand-primary-hover:    var(--color-night-accent-hover);
   --color-border-focus-ring:    var(--color-solar);
   --color-accent:               var(--color-solar);
+
+  --color-bg-disabled:       var(--color-night-700);
+  --color-text-disabled:     var(--color-night-500);
+  --color-text-on-disabled:  var(--color-night-500);
+  --color-border-disabled:   var(--color-night-700);
+
+  --color-bg-scrim: rgba(0, 0, 0, 0.65);
+
+  --color-bg-warning-soft:  var(--color-night-warning-soft);
+  --color-text-warning:     var(--color-warning);
+  --color-bg-info-soft:     var(--color-night-info-soft);
+  --color-text-info:        var(--color-info-light);
+  --color-text-success:     var(--color-success);
+  --color-text-error:       var(--color-error-light);
+  --color-border-error:     var(--color-error-light);
 
   --color-bg-neutral-default:     var(--color-cloud);
   --color-bg-neutral-hover:       var(--color-border-base);

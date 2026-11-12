@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hope Design System — Demo · Renan Moura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================
+       HOPE DESIGN SYSTEM — Demo v2.0
+       Instrument Serif (display) + Plus Jakarta Sans (body) + Space Mono (técnico)
+       ============================================ */
+
+    :root {
+      /* Família Solar */
+      --color-aurora:     #FEF8E0;
+      --color-madrugada:  #FAE19A;
+      --color-solar:      #F5C842;
+      --color-ambar:      #C49A1F;
+      --color-crepusculo: #8B6914;
+
+      /* Família Âncora */
+      --color-ceu:        #E8F0F9;
+      --color-mare:       #8CB4E0;
+      --color-ancora:     #1C5FA8;
+      --color-profundo:   #144278;
+      --color-abismo:     #1A1A2E;
+
+      /* Neutras */
+      --color-nuvem:      #FFFFFF;
+      --color-superficie: #F7F7F9;
+      --color-borda:      #E2E2E8;
+      --color-mudo:       #5F5F6E;
+      --color-sombra:     #3D3D45;
+      --color-tinta:      #0D0D0F;
+
+      /* Senshi */
+      --color-folha-navalha: #4A9F6B;
+      --color-choque-trovao: #C47A1F;
+      --color-marte:         #B83434;
+      --color-saturno:       #634590;
+      --color-lua:           #F5A8C0;
+
+      /* Slots semânticos light */
+      --bg: var(--color-nuvem);
+      --bg-alt: var(--color-superficie);
+      --text-1: var(--color-tinta);
+      --text-2: var(--color-sombra);
+      --text-3: var(--color-mudo);
+      --border: var(--color-borda);
+      --link: var(--color-ancora);
+
+      /* Tipografia */
+      --font-display: 'Instrument Serif', 'Georgia', serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+
+      /* Espaçamento */
+      --space-1: 4px;  --space-2: 8px;  --space-3: 12px;
+      --space-4: 16px; --space-5: 20px; --space-6: 24px;
+      --space-8: 32px; --space-12: 48px; --space-16: 64px;
+      --space-24: 96px;
+
+      /* Radius */
+      --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-pill: 999px;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --d-fast: 100ms; --d-normal: 150ms; --d-slow: 250ms;
+    }
+
+    [data-theme="dark"] {
+      --bg: var(--color-abismo);
+      --bg-alt: #242438;
+      --text-1: var(--color-nuvem);
+      --text-2: #B4B4C8;
+      --text-3: #8888A0;
+      --border: #2E2E40;
+      --link: var(--color-solar);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text-1);
+      background: var(--bg);
+      transition: background var(--d-slow) var(--ease-out), color var(--d-slow) var(--ease-out);
+    }
+
+    ::selection { background: var(--color-solar); color: var(--color-tinta); }
+
+    /* ============================================
+       LAYOUT
+       ============================================ */
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin-inline: auto;
+      padding-inline: var(--space-6);
+    }
+
+    @media (min-width: 768px) {
+      .container { padding-inline: var(--space-12); }
+    }
+
+    /* ============================================
+       HEADER STICKY
+       ============================================ */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+      transition: background var(--d-slow) var(--ease-out);
+    }
+
+    .site-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+      padding-block: var(--space-4);
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      text-decoration: none;
+      color: var(--text-1);
+    }
+
+    .logo__icon {
+      width: 32px;
+      height: 32px;
+      color: var(--color-solar);
+    }
+
+    .logo__wordmark {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+    }
+
+    .site-nav__link {
+      font-size: 11px;
+      font-weight: 400;
+      font-family: var(--font-mono);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      text-decoration: none;
+      padding-block: var(--space-2);
+      border-bottom: 1.5px solid transparent;
+      transition: color var(--d-normal) var(--ease-out), border-color var(--d-normal) var(--ease-out);
+    }
+
+    .site-nav__link:hover, .site-nav__link.active {
+      color: var(--text-1);
+      border-bottom-color: var(--color-solar);
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--r-pill);
+      border: 0.5px solid var(--border);
+      background: transparent;
+      color: var(--text-2);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--d-normal) var(--ease-out), color var(--d-normal) var(--ease-out);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--color-ancora);
+      color: var(--color-ancora);
+    }
+
+    [data-theme="dark"] .theme-toggle:hover {
+      border-color: var(--color-solar);
+      color: var(--color-solar);
+    }
+
+    /* ============================================
+       HERO
+       ============================================ */
+
+    .hero {
+      padding-block: var(--space-24) var(--space-16);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero__overline {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: var(--space-6);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .hero__overline::before {
+      content: "";
+      width: 32px;
+      height: 0.5px;
+      background: var(--color-solar);
+    }
+
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 7vw, 80px);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+      color: var(--text-1);
+      max-width: 14ch;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero__title em {
+      font-style: italic;
+      color: var(--color-ancora);
+    }
+
+    [data-theme="dark"] .hero__title em {
+      color: var(--color-solar);
+    }
+
+    .hero__lead {
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text-2);
+      max-width: 55ch;
+      margin-bottom: var(--space-8);
+    }
+
+    .hero__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-6);
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .hero__meta-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--color-solar);
+    }
+
+    /* ============================================
+       SECTION SHARED
+       ============================================ */
+
+    section[id] { scroll-margin-top: var(--space-16); }
+
+    .section {
+      padding-block: var(--space-24);
+      border-top: 0.5px solid var(--border);
+    }
+
+    .section__label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: var(--space-6);
+    }
+
+    .section__label::before {
+      content: "";
+      width: 24px;
+      height: 0.5px;
+      background: var(--color-solar);
+    }
+
+    .section__title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--text-1);
+      max-width: 22ch;
+      margin-bottom: var(--space-6);
+    }
+
+    .section__title em {
+      font-style: italic;
+      color: var(--color-ancora);
+    }
+
+    [data-theme="dark"] .section__title em {
+      color: var(--color-solar);
+    }
+
+    .section__intro {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-2);
+      max-width: 65ch;
+      margin-bottom: var(--space-12);
+    }
+
+    /* ============================================
+       COLORS GRID
+       ============================================ */
+
+    .color-family { margin-bottom: var(--space-12); }
+
+    .color-family__name {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      color: var(--text-1);
+      margin-bottom: var(--space-1);
+    }
+
+    .color-family__caption {
+      font-size: 13px;
+      color: var(--text-3);
+      margin-bottom: var(--space-5);
+      font-family: var(--font-body);
+      font-style: italic;
+    }
+
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--space-3);
+    }
+
+    .swatch {
+      border: 0.5px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      transition: transform var(--d-normal) var(--ease-out);
+    }
+
+    .swatch:hover { transform: translateY(-2px); }
+
+    .swatch__chip { height: 80px; width: 100%; }
+
+    .swatch__chip--star { position: relative; }
+    .swatch__chip--star::after {
+      content: "★";
+      position: absolute;
+      top: var(--space-2);
+      right: var(--space-2);
+      font-size: 11px;
+    }
+    .swatch__star-light::after { color: rgba(0,0,0,0.7); }
+    .swatch__star-dark::after { color: rgba(255,255,255,0.7); }
+
+    .swatch__info {
+      padding: var(--space-3);
+      background: var(--bg);
+    }
+
+    .swatch__name {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 2px;
+    }
+
+    .swatch__hex {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-3);
+      letter-spacing: 0.04em;
+    }
+
+    .swatch__role {
+      font-size: 10px;
+      color: var(--text-3);
+      margin-top: var(--space-1);
+      font-family: var(--font-body);
+    }
+
+    /* ============================================
+       TYPOGRAPHY SHOWCASE
+       ============================================ */
+
+    .type-scale {
+      display: grid;
+      gap: 0;
+    }
+
+    .type-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-8);
+      align-items: baseline;
+      padding-block: var(--space-6);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    @media (max-width: 640px) {
+      .type-row { grid-template-columns: 1fr; gap: var(--space-2); }
+    }
+
+    .type-row:first-child { border-top: 0.5px solid var(--border); }
+
+    .type-meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      line-height: 1.6;
+    }
+
+    .type-meta strong {
+      display: block;
+      color: var(--text-1);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .type-display {
+      font-family: var(--font-display);
+      font-size: 56px;
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+      color: var(--text-1);
+    }
+
+    .type-h1 {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+    }
+
+    .type-h2 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      color: var(--text-1);
+    }
+
+    .type-h3 {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+
+    .type-body {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--text-2);
+    }
+
+    .type-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .type-metric {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.0;
+      color: var(--color-ancora);
+    }
+
+    [data-theme="dark"] .type-metric {
+      color: var(--color-solar);
+    }
+
+    /* ============================================
+       BUTTONS
+       ============================================ */
+
+    .btn-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 12px 24px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1;
+      border-radius: var(--r-sm);
+      border: 0.5px solid transparent;
+      cursor: pointer;
+      transition: background var(--d-normal) var(--ease-out),
+                  border-color var(--d-normal) var(--ease-out),
+                  color var(--d-normal) var(--ease-out),
+                  transform var(--d-fast) var(--ease-out);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn:active { transform: scale(0.98); }
+    .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-ceu); }
+
+    .btn--primary {
+      background: var(--color-ancora);
+      border-color: var(--color-ancora);
+      color: var(--color-nuvem);
+    }
+
+    .btn--primary:hover {
+      background: var(--color-profundo);
+      border-color: var(--color-profundo);
+      transform: translateY(-1px);
+    }
+
+    .btn--solar {
+      background: var(--color-solar);
+      border-color: var(--color-solar);
+      color: var(--color-tinta);
+    }
+
+    .btn--solar:hover {
+      background: var(--color-ambar);
+      border-color: var(--color-ambar);
+      transform: translateY(-1px);
+    }
+
+    .btn--secondary {
+      background: transparent;
+      border-color: var(--color-ancora);
+      color: var(--color-ancora);
+    }
+
+    .btn--secondary:hover { background: var(--color-ceu); }
+
+    [data-theme="dark"] .btn--secondary {
+      border-color: var(--color-solar);
+      color: var(--color-solar);
+    }
+
+    [data-theme="dark"] .btn--secondary:hover {
+      background: rgba(245, 200, 66, 0.1);
+    }
+
+    .btn--tertiary {
+      background: var(--bg-alt);
+      border-color: var(--border);
+      color: var(--text-1);
+    }
+
+    .btn--tertiary:hover { background: var(--border); }
+
+    .btn--ghost {
+      background: transparent;
+      border-color: transparent;
+      color: var(--link);
+      padding-inline: var(--space-1);
+    }
+
+    .btn--ghost:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ============================================
+       BADGES
+       ============================================ */
+
+    .badge-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.4;
+      border-radius: var(--r-pill);
+      border: 0.5px solid transparent;
+    }
+
+    .badge--ancora { background: var(--color-ceu); color: var(--color-profundo); border-color: var(--color-mare); }
+    .badge--solar { background: var(--color-aurora); color: var(--color-crepusculo); border-color: var(--color-madrugada); }
+    .badge--success { background: #E8F2EB; color: #1A5938; border-color: #A8D4B5; }
+    .badge--warning { background: #FAEDD8; color: #6B3F0A; border-color: #E8B775; }
+    .badge--error { background: #F8E0E0; color: #6E1818; border-color: #D89494; }
+    .badge--info { background: #ECE5F2; color: #2D1F50; border-color: #B5A0CC; }
+    .badge--lua { background: #FBEBF1; color: #6B2640; border-color: #ECBFCF; }
+    .badge--neutral { background: var(--bg-alt); color: var(--text-2); border-color: var(--border); }
+
+    /* ============================================
+       CARD DE CASE STUDY
+       ============================================ */
+
+    .cards-grid {
+      display: grid;
+      gap: var(--space-6);
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    }
+
+    .case-card {
+      display: grid;
+      gap: var(--space-4);
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--r-md);
+      padding: var(--space-8);
+      transition: border-color var(--d-normal) var(--ease-out),
+                  box-shadow var(--d-normal) var(--ease-out);
+    }
+
+    .case-card:hover {
+      border-color: var(--color-ancora);
+      box-shadow: 0 4px 24px rgba(13, 13, 15, 0.06);
+    }
+
+    [data-theme="dark"] .case-card:hover {
+      border-color: var(--color-solar);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .case-card__overline {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .case-card__title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      color: var(--text-1);
+    }
+
+    .case-card__description {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-2);
+    }
+
+    .case-card__tags {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .case-card__metrics {
+      display: flex;
+      gap: var(--space-6);
+      padding-top: var(--space-4);
+      border-top: 0.5px solid var(--border);
+    }
+
+    .case-card__metric-value {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--color-ancora);
+      line-height: 1;
+    }
+
+    [data-theme="dark"] .case-card__metric-value {
+      color: var(--color-solar);
+    }
+
+    .case-card__metric-label {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    /* ============================================
+       MOTION PRESETS DEMO
+       ============================================ */
+
+    .motion-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .motion-card {
+      padding: var(--space-6);
+      background: var(--bg-alt);
+      border: 0.5px solid var(--border);
+      border-radius: var(--r-md);
+      cursor: pointer;
+      transition: transform var(--d-normal) var(--ease-out);
+    }
+
+    .motion-card__name {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: var(--space-2);
+    }
+
+    .motion-card__spec {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      color: var(--color-ancora);
+      margin-bottom: var(--space-3);
+    }
+
+    [data-theme="dark"] .motion-card__spec {
+      color: var(--color-solar);
+    }
+
+    .motion-card__desc {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text-2);
+    }
+
+    .motion-card:hover { transform: translateY(-4px); }
+
+    /* ============================================
+       SPACING SCALE
+       ============================================ */
+
+    .spacing-scale {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-3);
+      padding-block: var(--space-8);
+      flex-wrap: wrap;
+    }
+
+    .spacing-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .spacing-box {
+      background: var(--color-ancora);
+      border-radius: var(--r-sm);
+    }
+
+    [data-theme="dark"] .spacing-box {
+      background: var(--color-solar);
+    }
+
+    .spacing-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-3);
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+
+    .site-footer {
+      background: var(--color-abismo);
+      color: var(--color-nuvem);
+      padding: var(--space-16) 0 var(--space-8);
+      margin-top: var(--space-24);
+    }
+
+    .site-footer__top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-8);
+      align-items: end;
+      padding-bottom: var(--space-12);
+    }
+
+    @media (max-width: 640px) {
+      .site-footer__top { grid-template-columns: 1fr; align-items: start; }
+    }
+
+    .site-footer__statement {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--color-nuvem);
+      max-width: 18ch;
+    }
+
+    .site-footer__statement em {
+      font-style: italic;
+      color: var(--color-solar);
+    }
+
+    .site-footer__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      padding-top: var(--space-8);
+      border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ============================================
+       FADE-IN ANIMATION
+       ============================================ */
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up { animation: fadeUp 600ms var(--ease-out) backwards; }
+    .fade-up:nth-child(1) { animation-delay: 0ms; }
+    .fade-up:nth-child(2) { animation-delay: 80ms; }
+    .fade-up:nth-child(3) { animation-delay: 160ms; }
+    .fade-up:nth-child(4) { animation-delay: 240ms; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="#" class="logo" aria-label="Renan Moura — Hope Design System">
+        <svg class="logo__icon" viewBox="0 0 244 244" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M228.75 144.875H190.196C190.478 142.343 190.621 139.797 190.625 137.25C190.625 119.049 183.395 101.594 170.525 88.7246C157.656 75.8549 140.2 68.6248 122 68.6248C103.8 68.6248 86.3445 75.8549 73.4748 88.7246C60.6051 101.594 53.375 119.049 53.375 137.25C53.3793 139.797 53.5225 142.343 53.8039 144.875H15.25C13.2277 144.875 11.2883 145.678 9.85831 147.108C8.42835 148.538 7.625 150.477 7.625 152.5C7.625 154.522 8.42835 156.461 9.85831 157.891C11.2883 159.321 13.2277 160.125 15.25 160.125H228.75C230.772 160.125 232.712 159.321 234.142 157.891C235.572 156.461 236.375 154.522 236.375 152.5C236.375 150.477 235.572 148.538 234.142 147.108C232.712 145.678 230.772 144.875 228.75 144.875ZM68.625 137.25C68.611 129.91 70.111 122.646 73.0313 115.912C75.9517 109.178 80.2295 103.119 85.5975 98.1126C90.9655 93.1067 97.3083 89.2617 104.23 86.818C111.151 84.3743 118.502 83.3843 125.823 83.91C133.144 84.4357 140.278 86.4658 146.779 89.8733C153.28 93.2808 159.008 97.9926 163.606 103.714C168.204 109.436 171.572 116.044 173.5 123.126C175.428 130.208 175.875 137.612 174.813 144.875H69.1873C68.8183 142.35 68.6304 139.802 68.625 137.25ZM205.875 190.625C205.875 192.647 205.072 194.586 203.642 196.016C202.212 197.446 200.272 198.25 198.25 198.25H45.75C43.7277 198.25 41.7883 197.446 40.3583 196.016C38.9283 194.586 38.125 192.647 38.125 190.625C38.125 188.602 38.9283 186.663 40.3583 185.233C41.7883 183.803 43.7277 183 45.75 183H198.25C200.272 183 202.212 183.803 203.642 185.233C205.072 186.663 205.875 188.602 205.875 190.625ZM69.4256 41.537C68.5207 39.727 68.3717 37.6317 69.0117 35.712C69.6516 33.7923 71.0279 32.2054 72.8378 31.3004C74.6478 30.3954 76.7431 30.2465 78.6628 30.8864C80.5825 31.5263 82.1694 32.9026 83.0744 34.7126L90.6994 49.9626C91.1475 50.8588 91.4147 51.8344 91.4857 52.8339C91.5567 53.8333 91.4302 54.837 91.1133 55.7875C90.7965 56.7381 90.2955 57.6169 89.639 58.3739C88.9825 59.1308 88.1834 59.751 87.2872 60.1991C86.391 60.6472 85.4153 60.9144 84.4159 60.9855C83.4164 61.0565 82.4128 60.93 81.4622 60.6131C80.5117 60.2963 79.6328 59.7953 78.8759 59.1388C78.1189 58.4823 77.4987 57.6831 77.0506 56.787L69.4256 41.537ZM16.0506 88.0876C16.4991 87.1918 17.1196 86.3931 17.8769 85.7372C18.6341 85.0813 19.5132 84.5811 20.4638 84.2651C21.4145 83.9491 22.4181 83.8235 23.4173 83.8956C24.4165 83.9676 25.3917 84.2358 26.2872 84.6849L41.5372 92.3099C43.3459 93.2149 44.721 94.8013 45.36 96.7201C45.999 98.6389 45.8496 100.733 44.9446 102.542C44.0396 104.35 42.4532 105.725 40.5344 106.365C38.6156 107.004 36.5215 106.854 34.7128 105.949L19.4628 98.3241C18.5662 97.8765 17.7666 97.2566 17.1097 96.4997C16.4529 95.7428 15.9516 94.8639 15.6347 93.9132C15.3178 92.9625 15.1914 91.9586 15.2628 90.959C15.3342 89.9594 15.6019 88.9836 16.0506 88.0876ZM199.051 102.537C198.147 100.728 197.999 98.6348 198.639 96.7169C199.279 94.7991 200.654 93.2139 202.463 92.3099L217.713 84.6849C218.608 84.2368 219.583 83.9695 220.582 83.8982C221.581 83.827 222.584 83.9531 223.534 84.2696C224.485 84.586 225.363 85.0864 226.12 85.7423C226.876 86.3982 227.497 87.1968 227.945 88.0923C228.393 88.9879 228.66 89.963 228.731 90.9618C228.803 91.9607 228.676 92.9638 228.36 93.9139C228.044 94.864 227.543 95.7425 226.887 96.4992C226.231 97.2559 225.433 97.876 224.537 98.3241L209.287 105.949C208.391 106.398 207.415 106.666 206.416 106.737C205.416 106.808 204.412 106.682 203.462 106.365C202.511 106.048 201.632 105.547 200.875 104.89C200.118 104.233 199.498 103.434 199.051 102.537ZM153.301 49.9626L160.926 34.7126C161.831 32.9026 163.417 31.5263 165.337 30.8864C167.257 30.2465 169.352 30.3954 171.162 31.3004C172.972 32.2054 174.348 33.7923 174.988 35.712C175.628 37.6317 175.479 39.727 174.574 41.537L166.949 56.787C166.044 58.5969 164.458 59.9732 162.538 60.6131C160.618 61.253 158.523 61.1041 156.713 60.1991C154.903 59.2942 153.527 57.7073 152.887 55.7875C152.247 53.8678 152.396 51.7725 153.301 49.9626Z" fill="currentColor"/>
+        </svg>
+        <span class="logo__wordmark">Renan Moura</span>
+      </a>
+      <nav class="site-nav" aria-label="Demo sections">
+        <a href="#colors" class="site-nav__link">Cores</a>
+        <a href="#typography" class="site-nav__link">Tipografia</a>
+        <a href="#components" class="site-nav__link">Componentes</a>
+        <a href="#motion" class="site-nav__link">Motion</a>
+      </nav>
+      <button class="theme-toggle" aria-label="Alternar tema" onclick="toggleTheme()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path><path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path><path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="fade-up">
+        <p class="hero__overline">Hope Design System · v2.0 · 2026</p>
+      </div>
+      <div class="fade-up">
+        <h1 class="hero__title">Decisões que <em>ficam de pé</em>.</h1>
+      </div>
+      <div class="fade-up">
+        <p class="hero__lead">
+          Esta página é o Hope em execução — não uma descrição dele. Cada cor, espaçamento,
+          componente e transição aqui consome os tokens definidos em DESIGN.md. Se algo parece
+          coerente, é porque o sistema está funcionando.
+        </p>
+      </div>
+      <div class="fade-up">
+        <div class="hero__meta">
+          <span>Instrument Serif · Plus Jakarta Sans · Space Mono</span>
+          <span class="hero__meta-dot"></span>
+          <span>0 erros · 18 warnings intencionais</span>
+          <span class="hero__meta-dot"></span>
+          <span>4 documentos · 69 cores · 30 componentes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLORS -->
+  <section class="section" id="colors">
+    <div class="container">
+      <p class="section__label">01 · Cores</p>
+      <h2 class="section__title">Quatro famílias,<br>dois <em>acentos</em>.</h2>
+      <p class="section__intro">
+        Solar (esperança) e Âncora (estrutura) são os dois acentos da marca — coexistem sem disputar.
+        Neutras sustentam a leitura. As cinco senshi carregam significado semântico com referência
+        afetiva aos animes 90s.
+      </p>
+
+      <div class="color-family">
+        <h3 class="color-family__name">Solar</h3>
+        <p class="color-family__caption">Do amanhecer ao crepúsculo · quente, luminoso, esperançoso</p>
+        <div class="color-grid">
+          <div class="swatch"><div class="swatch__chip" style="background:#FEF8E0"></div><div class="swatch__info"><div class="swatch__name">Aurora</div><div class="swatch__hex">#FEF8E0</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#FAE19A"></div><div class="swatch__info"><div class="swatch__name">Madrugada</div><div class="swatch__hex">#FAE19A</div></div></div>
+          <div class="swatch"><div class="swatch__chip swatch__chip--star swatch__star-light" style="background:#F5C842"></div><div class="swatch__info"><div class="swatch__name">Solar</div><div class="swatch__hex">#F5C842</div><div class="swatch__role">acento da marca</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#C49A1F"></div><div class="swatch__info"><div class="swatch__name">Âmbar</div><div class="swatch__hex">#C49A1F</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#8B6914"></div><div class="swatch__info"><div class="swatch__name">Crepúsculo</div><div class="swatch__hex">#8B6914</div></div></div>
+        </div>
+      </div>
+
+      <div class="color-family">
+        <h3 class="color-family__name">Âncora</h3>
+        <p class="color-family__caption">Profundidades · frio, preciso, estrutural</p>
+        <div class="color-grid">
+          <div class="swatch"><div class="swatch__chip" style="background:#E8F0F9"></div><div class="swatch__info"><div class="swatch__name">Céu</div><div class="swatch__hex">#E8F0F9</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#8CB4E0"></div><div class="swatch__info"><div class="swatch__name">Maré</div><div class="swatch__hex">#8CB4E0</div></div></div>
+          <div class="swatch"><div class="swatch__chip swatch__chip--star swatch__star-dark" style="background:#1C5FA8"></div><div class="swatch__info"><div class="swatch__name">Âncora</div><div class="swatch__hex">#1C5FA8</div><div class="swatch__role">acento da marca</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#144278"></div><div class="swatch__info"><div class="swatch__name">Profundo</div><div class="swatch__hex">#144278</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#1A1A2E"></div><div class="swatch__info"><div class="swatch__name">Abismo</div><div class="swatch__hex">#1A1A2E</div></div></div>
+        </div>
+      </div>
+
+      <div class="color-family">
+        <h3 class="color-family__name">Neutras</h3>
+        <p class="color-family__caption">Escala editorial · sustentação da leitura</p>
+        <div class="color-grid">
+          <div class="swatch"><div class="swatch__chip" style="background:#FFFFFF; border-bottom: 0.5px solid #E2E2E8"></div><div class="swatch__info"><div class="swatch__name">Nuvem</div><div class="swatch__hex">#FFFFFF</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#F7F7F9"></div><div class="swatch__info"><div class="swatch__name">Superfície</div><div class="swatch__hex">#F7F7F9</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#E2E2E8"></div><div class="swatch__info"><div class="swatch__name">Borda</div><div class="swatch__hex">#E2E2E8</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#5F5F6E"></div><div class="swatch__info"><div class="swatch__name">Mudo</div><div class="swatch__hex">#5F5F6E</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#3D3D45"></div><div class="swatch__info"><div class="swatch__name">Sombra</div><div class="swatch__hex">#3D3D45</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#0D0D0F"></div><div class="swatch__info"><div class="swatch__name">Tinta</div><div class="swatch__hex">#0D0D0F</div></div></div>
+        </div>
+      </div>
+
+      <div class="color-family">
+        <h3 class="color-family__name">As cinco senshi</h3>
+        <p class="color-family__caption">Funcionais · referência camada aos animes 90s</p>
+        <div class="color-grid">
+          <div class="swatch"><div class="swatch__chip" style="background:#4A9F6B"></div><div class="swatch__info"><div class="swatch__name">Folha Navalha</div><div class="swatch__hex">#4A9F6B</div><div class="swatch__role">sucesso</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#C47A1F"></div><div class="swatch__info"><div class="swatch__name">Choque do Trovão</div><div class="swatch__hex">#C47A1F</div><div class="swatch__role">alerta</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#B83434"></div><div class="swatch__info"><div class="swatch__name">Marte</div><div class="swatch__hex">#B83434</div><div class="swatch__role">erro</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#634590"></div><div class="swatch__info"><div class="swatch__name">Saturno</div><div class="swatch__hex">#634590</div><div class="swatch__role">info</div></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background:#F5A8C0"></div><div class="swatch__info"><div class="swatch__name">Lua</div><div class="swatch__hex">#F5A8C0</div><div class="swatch__role">marcos</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section class="section" id="typography">
+    <div class="container">
+      <p class="section__label">02 · Tipografia</p>
+      <h2 class="section__title">Três fontes,<br><em>três territórios</em>.</h2>
+      <p class="section__intro">
+        Instrument Serif carrega headlines de impacto. Plus Jakarta Sans sustenta leitura e UI.
+        Space Mono assina os territórios técnicos — overlines, metadata e métricas. Nenhuma
+        substitui a outra; cada uma serve um propósito distinto.
+      </p>
+
+      <div class="type-scale">
+        <div class="type-row">
+          <div class="type-meta"><strong>Display</strong>Instrument Serif · 400 · 48-56px · -0.025em</div>
+          <div class="type-display">Hope.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>H1</strong>Instrument Serif · 400 · 36-40px · -0.02em</div>
+          <div class="type-h1">Shell Box Home Redesign</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>H2</strong>Instrument Serif · 400 · 26-28px · -0.015em</div>
+          <div class="type-h2">Contexto e problema</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>H3</strong>Plus Jakarta Sans · 600 · 14-16px</div>
+          <div class="type-h3">Decisões de design</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>Body</strong>Plus Jakarta Sans · 400 · 14-16px · lh 1.75</div>
+          <div class="type-body">Traduzo contextos complexos em decisões que ficam de pé. A competência central não é fazer interfaces — é traduzir complexidade em decisões executáveis.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>Label</strong>Space Mono · 400 · 10-11px · 0.12em · uppercase</div>
+          <div class="type-label">Seção · Metadata · 2026</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>Metric</strong>Space Mono · 700 · 24-28px · Âncora</div>
+          <div class="type-metric">+21%</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section class="section" id="components">
+    <div class="container">
+      <p class="section__label">03 · Componentes</p>
+      <h2 class="section__title">Botões, badges<br>e <em>cards</em>.</h2>
+      <p class="section__intro">
+        Cinco variantes de botão hierárquicas. Badges semânticos e narrativos. O card de case study —
+        o componente mais usado no portfólio — em execução real, com tipografia atualizada.
+      </p>
+
+      <h3 style="font-family: var(--font-display); font-size: 28px; font-weight: 400; letter-spacing: -0.015em; color: var(--text-1); margin-bottom: var(--space-4);">Botões</h3>
+      <div class="btn-grid" style="margin-bottom: var(--space-12)">
+        <a href="#" class="btn btn--primary">View Case Study →</a>
+        <a href="#" class="btn btn--solar">Hope System</a>
+        <a href="#" class="btn btn--secondary">Saiba mais</a>
+        <a href="#" class="btn btn--tertiary">Baixar CV</a>
+        <a href="#" class="btn btn--ghost">← Voltar</a>
+      </div>
+
+      <h3 style="font-family: var(--font-display); font-size: 28px; font-weight: 400; letter-spacing: -0.015em; color: var(--text-1); margin-bottom: var(--space-4);">Badges</h3>
+      <div class="badge-grid" style="margin-bottom: var(--space-12)">
+        <span class="badge badge--ancora">Product Strategy</span>
+        <span class="badge badge--ancora">Mobile UX</span>
+        <span class="badge badge--solar">Hope Design System</span>
+        <span class="badge badge--success">+21% conversão</span>
+        <span class="badge badge--warning">Em revisão</span>
+        <span class="badge badge--error">Bloqueado</span>
+        <span class="badge badge--info">Novo framework</span>
+        <span class="badge badge--lua">★ Lançamento</span>
+        <span class="badge badge--neutral">12 anos de exp.</span>
+      </div>
+
+      <h3 style="font-family: var(--font-display); font-size: 28px; font-weight: 400; letter-spacing: -0.015em; color: var(--text-1); margin-bottom: var(--space-4);">Cards de case study</h3>
+      <div class="cards-grid">
+        <article class="case-card">
+          <p class="case-card__overline">Raízen · 2026</p>
+          <h4 class="case-card__title">Shell Box Home Redesign</h4>
+          <p class="case-card__description">
+            Simplificando experiências complexas, afiando hierarquia de informação e transformando
+            interações na home em ganhos mensuráveis de conversão.
+          </p>
+          <div class="case-card__tags">
+            <span class="badge badge--ancora">Product Strategy</span>
+            <span class="badge badge--ancora">Mobile UX</span>
+          </div>
+          <div class="case-card__metrics">
+            <div>
+              <div class="case-card__metric-value">+21%</div>
+              <div class="case-card__metric-label">Conversão home→abast.</div>
+            </div>
+            <div>
+              <div class="case-card__metric-value">+12%</div>
+              <div class="case-card__metric-label">Engajamento</div>
+            </div>
+          </div>
+          <a href="#" class="btn btn--primary">View Case Study →</a>
+        </article>
+
+        <article class="case-card">
+          <p class="case-card__overline">New Relic · 2025</p>
+          <h4 class="case-card__title">Observability Dashboard</h4>
+          <p class="case-card__description">
+            Redesenhando o core de observabilidade para reduzir tempo de investigação em incidentes
+            críticos e aumentar confiança dos times de engenharia.
+          </p>
+          <div class="case-card__tags">
+            <span class="badge badge--ancora">B2B Product</span>
+            <span class="badge badge--ancora">Data Visualization</span>
+          </div>
+          <div class="case-card__metrics">
+            <div>
+              <div class="case-card__metric-value">-40%</div>
+              <div class="case-card__metric-label">Tempo de investigação</div>
+            </div>
+            <div>
+              <div class="case-card__metric-value">+18%</div>
+              <div class="case-card__metric-label">NPS internos</div>
+            </div>
+          </div>
+          <a href="#" class="btn btn--primary">View Case Study →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOTION -->
+  <section class="section" id="motion">
+    <div class="container">
+      <p class="section__label">04 · Motion</p>
+      <h2 class="section__title">Funcional,<br><em>não decorativo</em>.</h2>
+      <p class="section__intro">
+        Motion existe para comunicar mudança de estado, não para impressionar. Saída rápida (100ms),
+        entrada generosa (250ms). Hover passa o mouse para ver — o sistema responde com a curva
+        certa.
+      </p>
+
+      <div class="motion-grid">
+        <div class="motion-card">
+          <div class="motion-card__name">duration-fast</div>
+          <div class="motion-card__spec">100ms · ease-out</div>
+          <div class="motion-card__desc">Press, click, saídas. Resposta imediata sem ser brusca.</div>
+        </div>
+        <div class="motion-card">
+          <div class="motion-card__name">duration-normal</div>
+          <div class="motion-card__spec">150ms · ease-out</div>
+          <div class="motion-card__desc">Default para hover. Cor, background, border.</div>
+        </div>
+        <div class="motion-card">
+          <div class="motion-card__name">duration-slow</div>
+          <div class="motion-card__spec">250ms · ease-out</div>
+          <div class="motion-card__desc">Modais, popovers, entrada de elementos.</div>
+        </div>
+        <div class="motion-card">
+          <div class="motion-card__name">duration-deliberate</div>
+          <div class="motion-card__spec">600ms · ease-in-out</div>
+          <div class="motion-card__desc">Backgrounds atmosféricos. Momentos cinemáticos. Uso raro.</div>
+        </div>
+      </div>
+
+      <h3 style="font-family: var(--font-display); font-size: 28px; font-weight: 400; letter-spacing: -0.015em; color: var(--text-1); margin-block: var(--space-12) var(--space-4);">Escala de espaçamento</h3>
+      <div class="spacing-scale">
+        <div class="spacing-item"><div class="spacing-box" style="width:4px;height:4px"></div><span class="spacing-label">4</span></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:8px;height:8px"></div><span class="spacing-label">8</span></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:12px;height:12px"></div><span class="spacing-label">12</span></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:16px;height:16px"></div><span class="spacing-label">16</span></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:24px;height:24px"></div><span class="spacing-label">24</span></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:32px;height:32px"></div><span class="spacing-label">32</span></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:48px;height:48px"></div><span class="spacing-label">48</span></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:64px;height:64px"></div><span class="spacing-label">64</span></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:96px;height:96px"></div><span class="spacing-label">96</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__top">
+        <div class="site-footer__statement">
+          Design não é o que se entrega.<br><em>É como se chega lá.</em>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:var(--space-3); align-items:flex-end">
+          <svg width="40" height="40" viewBox="0 0 244 244" fill="none" aria-hidden="true">
+            <path d="M228.75 144.875H190.196C190.478 142.343 190.621 139.797 190.625 137.25C190.625 119.049 183.395 101.594 170.525 88.7246C157.656 75.8549 140.2 68.6248 122 68.6248C103.8 68.6248 86.3445 75.8549 73.4748 88.7246C60.6051 101.594 53.375 119.049 53.375 137.25C53.3793 139.797 53.5225 142.343 53.8039 144.875H15.25C13.2277 144.875 11.2883 145.678 9.85831 147.108C8.42835 148.538 7.625 150.477 7.625 152.5C7.625 154.522 8.42835 156.461 9.85831 157.891C11.2883 159.321 13.2277 160.125 15.25 160.125H228.75C230.772 160.125 232.712 159.321 234.142 157.891C235.572 156.461 236.375 154.522 236.375 152.5C236.375 150.477 235.572 148.538 234.142 147.108C232.712 145.678 230.772 144.875 228.75 144.875ZM68.625 137.25C68.611 129.91 70.111 122.646 73.0313 115.912C75.9517 109.178 80.2295 103.119 85.5975 98.1126C90.9655 93.1067 97.3083 89.2617 104.23 86.818C111.151 84.3743 118.502 83.3843 125.823 83.91C133.144 84.4357 140.278 86.4658 146.779 89.8733C153.28 93.2808 159.008 97.9926 163.606 103.714C168.204 109.436 171.572 116.044 173.5 123.126C175.428 130.208 175.875 137.612 174.813 144.875H69.1873C68.8183 142.35 68.6304 139.802 68.625 137.25ZM205.875 190.625C205.875 192.647 205.072 194.586 203.642 196.016C202.212 197.446 200.272 198.25 198.25 198.25H45.75C43.7277 198.25 41.7883 197.446 40.3583 196.016C38.9283 194.586 38.125 192.647 38.125 190.625C38.125 188.602 38.9283 186.663 40.3583 185.233C41.7883 183.803 43.7277 183 45.75 183H198.25C200.272 183 202.212 183.803 203.642 185.233C205.072 186.663 205.875 188.602 205.875 190.625Z" fill="#F5C842"/>
+          </svg>
+          <span style="font-family:var(--font-display); font-size:20px; font-weight:400; color:#FFFFFF; letter-spacing:-0.01em">Renan Moura</span>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>Hope Design System · v2.0 · 2026</span>
+        <span>renanmoura.framer.website</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    }
+
+    const navLinks = document.querySelectorAll('.site-nav__link');
+    const sections = document.querySelectorAll('section[id]');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
