@@ -5,6 +5,38 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.3 · 18 de novembro de 2026 · Escala tipográfica alinhada ao Figma (docs e código, PATCH)
+
+Decisão de 18/11/2026: a escala tipográfica segue os estilos de texto do Figma Foundation em todo lugar. Display 52px/110%/-2%, H1 32px/120%/-1%, H2 22px/130%/-1%, H3 16px/140%/0 Bold, Body 16px/175%, Body lg (`size/lead`) 19px/170%, Body sm 13px/160%, Body xs 11px/160%, Label caps 11px/140%/12% uppercase Regular, Metric 22px Bold 140% no tamanho `size/h2`.
+
+**Conferido no código, sem mudança**
+- Máximos dos tokens: `--fs-display` 52px, `--fs-h1` 32px, `--fs-h2` 22px, `--fs-h3` 16px, `--fs-body` 16px, `--fs-body-sm` 13px, `--fs-body-xl` 19px, `--fs-label` 11px. Display com line height 1,1 e tracking -0,02em, como no Figma.
+- Metric: `.metric__value` já usava `--fs-h2`, peso 700 e line height 1,4. Não existe `--fs-metric` e não foi criado.
+- `.text-label` (`reset.css`) já era 11px, peso 400, line height 1,4 e 0,12em. É a classe compartilhada de label caps; não foi criada outra.
+
+**Docs**
+- `DESIGN.md` v2.6.3: display 3,5rem para 3,25rem (52px), H2 1,5rem para 1,375rem (22px), H3 em Bold, label-caps 500/0,08em para 400/0,12em, metric 1,625rem/line height 1,0 para 1,375rem/1,4 no tamanho do H2, Body xs adicionado, `body-lg` com line height 1,7 (como no CSS), tabela com os estilos de texto do Figma.
+- `DESIGN-IMPLEMENTATION.md` v2.6.3: tabela e bloco `clamp` iguais ao `tokens.css` (display 36 a 52px, H2 18 a 22px), `--fs-metric` removido, `.text-label` e `.text-metric` corrigidos, CSS de exemplo das labels uppercase em 0,12em.
+- `hope-demo.html` e `design-system.html` mostram os valores corrigidos. A demo usa as classes reais `.text-label` e `.metric__value`.
+
+**Código (só tracking, para 0,12em)**
+- 0,1em para 0,12em: `.case-card__eyebrow`, `.persona__meta dt`, `.case-hero__meta dt`, `.case-callout__attribution`, `.about-split__attribution`.
+- 0,14em para 0,12em: `.case-phase-break__label` (fica mais apertado).
+- 0,08em para 0,12em: `.badge--draft`.
+- 0,05em para 0,12em: `.header__status-badge`, em commit separado. No `components.css` ele tem `display: none`, então não aparece nas páginas; só muda o trecho de CSS mostrado em `design-system.html`.
+- Já estavam em 0,12em e não mudaram: `.text-label`, `.section__overline`, `.hero__overline`, `.case-hero__overline`, `.about-block__label`, `.case-toc__label`, `.team-section__title`, `.logo-strip__label`, `.case-section__number`, `.persona__section-title`, `.persona__quotes-label`, `.cs-figure--slot`.
+
+**Débitos abertos (diferenças de código contra o Figma, aguardam decisão)**
+- `.text-h3` (`reset.css`) usa peso 600. O Figma é Bold. Os docs já dizem 700.
+- `--fs-body-lg` (15 a 17px, usado em `.hero__body` e `.case-hero__subtitle`) não existe no Figma. O Body lg do Figma (19px) é o `--fs-body-xl` do código. Decidir: manter, renomear ou migrar os dois usos.
+- Body xs (11px, 160%) não tem token `--fs-*`. `--fs-label` vai de 10 a 11px, e o Figma é fixo em 11px.
+- Tracking de títulos: `.footer__heading`, `.case-hero__title` e `.case-callout__text` (tamanho H1) e `.case-card--glass .case-card__title` (tamanho H2) usam -0,02em. O Figma é -1% (-0,01em).
+- Line height de títulos: `.footer__heading` 1,15 e `.case-callout__text` 1,25 (H1 do Figma é 1,2); `.case-card__title` 1,2, `.case-section__title` 1,25 e `.skill-card--metric .metric-value` 1,1 (H2 do Figma é 1,3; Metric é 1,4).
+- Peso das labels uppercase: `.case-card__eyebrow` 500, `.case-phase-break__label` 700 e `.header__status-badge` 600 em 10px. O Label caps do Figma é Regular.
+- Fora do padrão label caps por não serem uppercase, mantidos: `.experience-item__dates` (0,08em), `.footer__copy` (0,06em) e `.experience-item__logo-mono` (0,05em).
+
+---
+
 ## v2.6.2 · 18 de novembro de 2026 · Badge Warning como alias do Solar (docs, PATCH)
 
 - Decisão de 18/11/2026: o `.badge--warning` segue o badge Solar exatamente, com os mesmos tokens (`Accent/Secondary`: `--color-bg-accent-secondary` e `--color-text-accent-secondary`, sem borda). Não há token novo.
@@ -196,4 +228,4 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.6.2 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.6.3 · novembro de 2026 · Renan Moura*
