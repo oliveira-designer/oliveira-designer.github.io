@@ -170,7 +170,7 @@
   color: var(--color-text-neutral-secondary);
   border: var(--border-thin);
   font-family: var(--font-body);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 [data-theme="dark"] .badge--draft {
@@ -290,7 +290,7 @@
   font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: var(--color-text-3);
 }
 .case-card__status {
@@ -1424,7 +1424,7 @@
   font-family: var(--font-body);
   font-size: var(--fs-label);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: var(--color-text-3);
 }
 
