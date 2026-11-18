@@ -173,7 +173,7 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
 | `--fs-h2` | Plus Jakarta Sans | 18–22px | 700 | 1.3 | -0.01em | Subtítulo de seção. Também é o tamanho de Metric |
 | `--fs-h3` | Plus Jakarta Sans | 14–16px | 700 | 1.4 | 0 | Subseção, label de grupo |
 | `--fs-body` | Plus Jakarta Sans | 14–16px | 400 | 1.75 | 0 | Parágrafos, texto corrido. Também `.hero__body` e `.case-hero__subtitle`, de propósito (não usam Body lg) |
-| `--fs-body-xl` | Plus Jakarta Sans | 16–19px | 400 | 1.7 | 0 | Case lead text. É o Body lg (`size/lead`, 19px) do Figma |
+| `--fs-body-xl` | Plus Jakarta Sans | 16–19px | 400 (o `.case-lead__text` usa 500) | 1.7 | -0.01em | Case lead text. É o Body xl (`size/lead`, 19px, tracking -1%) do Figma |
 | `--fs-body-sm` | Plus Jakarta Sans | 12–13px | 400 | 1.6 | 0 | Body em UI compacta |
 | `--fs-body-xs` | Plus Jakarta Sans | 11px fixo | 400 | 1.6 | 0 | Texto mínimo (Body xs do Figma) |
 | `--fs-label` | Plus Jakarta Sans | 11px fixo | 400 | 1.4 | 0.12em | Label caps: overlines, metadata (uppercase) |
