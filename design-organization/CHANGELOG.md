@@ -5,6 +5,42 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.8 · 18 de novembro de 2026 · Body fixo em 16px, headline do about no H1 e line height dos parágrafos (docs e código, PATCH)
+
+**Versão escolhida: PATCH (2.6.7 para 2.6.8).** A convenção do `GOVERNANCE.md` (seção 3) define PATCH como ajuste de valor sem mudar a estrutura. Nenhum token foi criado, removido ou renomeado, e o papel de cada um segue igual. MINOR é para componente, família de tokens ou cor nova, e MAJOR para quebra de compatibilidade. O item 2 muda o tamanho do texto de todas as páginas em celular e tablet (14 para 16px), o que é visível, mas continua sendo um ajuste de valor do `--fs-body`, como as mudanças de tamanho das versões 2.6.4 e 2.6.6. Quem preferir contar o impacto visual como mudança funcional pode tratar como 2.7.0.
+
+**1. `.about-bridge__headline` no H1**
+- `font-size` de `clamp(24px, 3.5vw, 36px)` para `var(--fs-h1)`, tracking de -0,02em para -0,01em, line height 1,2 (já era). Só no `index`.
+- Medido: 390px 24 para 26px, altura 55,9 para 60,5px (4,6px mais alto); 1024px 35,84 para 32px, 83,4 para 74,5px; 1280px 36 para 32px, 83,8 para 74,5px. Sempre 2 linhas, sem overflow. Altura da página `index`: +4px, -9px e -10px.
+
+**2. `--fs-body` fixo em 16px**
+- `tokens.css`: de `clamp(14px, 1.2vw, 16px)` para `16px`. Nenhum outro token mudou. O texto de corpo sobe 2px em 390 e 1024px (14 para 16) e 0,64px em 1280px (15,36 para 16).
+
+| Página | 390px | 1024px | 1280px |
+|--------|-------|--------|--------|
+| `index` | +301px (5,0%), 21 elementos ganham linha | +150px (2,2%), 22 | +52px (0,8%), 10 |
+| `about` | +369px (6,3%), 7 | +82px (1,9%), 0 | +72px (1,7%), 3 |
+| `dotz` | +1158px (6,3%), 24 | +566px (3,4%), 10 | +182px (1,0%), 1 |
+| `sb-home-redesign` | +1721px (10,8%), 33 | +1118px (8,3%), 27 | +239px (1,7%), 0 |
+| `cloud-cost-intelligence` | +1686px (8,8%), 35 | +943px (5,7%), 21 | +265px (1,5%), 2 |
+
+- Elementos que ganham linha em 390px: parágrafos sem classe (64), `strong` (15), `.skill-card__body` (12), `.testimonial-card__quote` (10), `.text-highlight` (7), `.case-section__subtitle` (4), `.skill-card__title` (4), `.case-card__lead` (2), `.about-bridge__body` (1) e `.hero__body` (1). Elementos aninhados (`strong`, `.text-highlight`) contam à parte do parágrafo. Alguns elementos também perdem linha (por exemplo 4 em 390px no `index` e 8 em 1280px no `dotz`), por causa de quebras diferentes.
+- Conferido sem quebra: nenhum elemento passou a cortar conteúdo, truncar texto ou vazar uma linha `nowrap`. A altura do header não mudou. O menu mobile (390px) fica com links de 16px e 52px de altura (eram 14px e 48,5px) e o painel cresce 17,5px no `index` e no `about` e 14px nos cases, sem cortar. Cards (`.case-card`, `.skill-card`, `.testimonial-card`, `.persona`) conferidos nas capturas. Nenhuma regra precisou de ajuste.
+- Overflow horizontal: nenhum, com ou sem a mudança, com movimento normal.
+
+**3. Line height de `.case-section__body p`**
+- A regra definia `line-height: 1.75`, o que sobrescrevia o valor próprio dos componentes dentro das seções dos cases. A declaração foi removida. Os parágrafos comuns continuam em 1,75 (herdado do `body`; o Body do Figma é 175%) e os componentes voltam ao seu: `.case-lead__text` 1,75 para 1,7 (Body xl), `.skill-card__body` e `.small-note` 1,75 para 1,7, `.result-card__title` 1,75 para 1,4. Ficou 1,75 nos parágrafos, e não 1,7, porque o Body do Figma é 1,75; o 1,7 é do Body xl.
+- Altura das páginas dos cases: 390px dotz -11px, sb-home-redesign -58px, cloud-cost-intelligence -59px; 1024px -7, -46 e -39px; 1280px -8, -32 e -31px. `index` e `about` sem mudança. Nenhum elemento mudou de número de linhas.
+
+**Débitos que seguem abertos**
+- **A discutir:** peso das labels uppercase (500, 600 e 700 em alguns rótulos). Ver a entrada v2.6.7.
+- `.about-split__quote-text`: regra órfã (sem uso nas páginas), itálico. Decisão pendente, provavelmente remover.
+- `.team-section__title` renderiza em 16px (era 15,36px antes da v2.6.8), e não nos 11px de Label caps, porque `.case-section__body p` (especificidade 0,1,1) vence `.team-section__title` (0,1,0) em tamanho e cor (vira `--color-text-2`, e não `--color-text-3`). Usado nos 3 cases ("Impact", "Involved teams", "Team Composition"). Sem o override seria 11px, `--color-text-3` (contraste 6,27:1 contra 10,76:1 hoje) e 8,5px mais baixo por título, com line height 1,75 (o Label caps do Figma é 1,4). A mesma regra força o tamanho de outros componentes dentro das seções dos cases: o `.skill-card__body` renderiza em 16px lá e em 12,8px no `about`.
+- Pilha monoespaçada padrão do Tailwind no `css/output.css` (preflight de `code, kbd, samp, pre`), sem efeito visual.
+- Com `prefers-reduced-motion`, o `.logo-strip__track` do `index` vaza para o lado e cria rolagem horizontal (3725px de largura de rolagem). Já acontecia antes desta versão e não depende dela. Sem movimento reduzido não há overflow.
+
+---
+
 ## v2.6.7 · 18 de novembro de 2026 · Mapeamento do lead dos cases e rebuild do output.css (docs e código, PATCH)
 
 **`.case-lead__text` é o Body xl do Figma**
@@ -19,10 +55,10 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 **Débitos (só relatório, sem alteração)**
 - **A discutir:** peso das labels uppercase. Em uso: 400 na maioria (overlines, `dt`, números de seção, rótulos do `persona`), 500 no `.case-card__eyebrow` (só no `design-system.html`) e no `.badge--draft` (12,8px), 600 no `.header__status-badge` (10px, oculto) e 700 no `.case-phase-break__label` (nos 3 cases, 9 rótulos), o único em negrito em páginas de produção. `.team-section__title` renderiza em 15,36px (uppercase com 0,12em), não 11px, por causa de uma regra mais específica.
-- **`--fs-body` fluido contra o Body fixo de 16px do Figma.** Hoje `clamp(14px, 1.2vw, 16px)`: 14px até cerca de 1167px e 16px só a partir de cerca de 1333px. Fixar em 16px aumenta a página em 5 a 11% de altura em 390px e faz até 35 elementos por página ganharem linha. Sem overflow horizontal. Medições completas no relatório desta entrega.
-- `.about-bridge__headline` (só no `index`): 36 / 24px, tracking -0,02em. Como `--fs-h1` (32 / 26px, 1,2, -0,01em) ficaria com as mesmas 2 linhas em 390, 1024 e 1280px, sem overflow. A altura muda de 55,9 para 60,5px em 390px (4,6px mais alto, porque 24 vira 26px) e de 83,5 / 83,8 para 74,5px em 1024 / 1280px (cerca de 9px mais baixo).
+- ~~**`--fs-body` fluido contra o Body fixo de 16px do Figma.** Hoje `clamp(14px, 1.2vw, 16px)`: 14px até cerca de 1167px e 16px só a partir de cerca de 1333px. Fixar em 16px aumenta a página em 5 a 11% de altura em 390px e faz até 35 elementos por página ganharem linha. Sem overflow horizontal. Medições completas no relatório desta entrega.~~ Resolvido em 18 de novembro de 2026 (v2.6.8): `--fs-body` fixo em 16px.
+- ~~`.about-bridge__headline` (só no `index`): 36 / 24px, tracking -0,02em. Como `--fs-h1` (32 / 26px, 1,2, -0,01em) ficaria com as mesmas 2 linhas em 390, 1024 e 1280px, sem overflow. A altura muda de 55,9 para 60,5px em 390px (4,6px mais alto, porque 24 vira 26px) e de 83,5 / 83,8 para 74,5px em 1024 / 1280px (cerca de 9px mais baixo).~~ Resolvido em 18 de novembro de 2026 (v2.6.8): mapeado para `--fs-h1`.
 - `.about-split__quote-text` (sem uso nas páginas): 18 a 26px, peso 400, **itálico**, line height 1,55, tracking -0,01em. O itálico contradiz a regra "Itálico nunca" dos docs.
-- `.case-lead__text`: line height renderizado 1,75 contra 1,7 do Figma (ver acima).
+- ~~`.case-lead__text`: line height renderizado 1,75 contra 1,7 do Figma (ver acima).~~ Resolvido em 18 de novembro de 2026 (v2.6.8): `.case-section__body p` não define mais line height.
 
 ---
 
@@ -336,4 +372,4 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.6.7 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.6.8 · novembro de 2026 · Renan Moura*
