@@ -1,5 +1,5 @@
 ---
-version: v2.6.4
+version: v2.6.5
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -197,19 +197,13 @@ typography:
     fontSize: 1.375rem  # 22px. Usa o mesmo token de tamanho do h2 (--fs-h2). Não existe --fs-metric
     fontWeight: 700
     lineHeight: 1.4
-  body-lg:
-    fontFamily: Plus Jakarta Sans
-    fontSize: 17px
-    fontWeight: 400
-    lineHeight: 1.7
-    # Fluid: clamp(15px, 1.4vw, 17px). Token --fs-body-lg. Use for hero body, case hero subtitle.
   body-xl:
     fontFamily: Plus Jakarta Sans
     fontSize: 19px
     fontWeight: 400
     lineHeight: 1.7
-    # Fluid: clamp(16px, 1.7vw, 19px). Token --fs-body-xl. Use for case lead text.
-    # É o valor do estilo Body lg (size/lead) do Figma: 19px, 170%.
+    # Fluid: clamp(16px, 1.7vw, 19px). Token --fs-body-xl. Use for hero body, case hero subtitle and case lead text.
+    # É o estilo Body lg (size/lead) do Figma: 19px, 170%. O --fs-body-lg (17px) foi removido na v2.6.5.
   code:
     fontFamily: "Plus Jakarta Sans, sans-serif"
     fontSize: 0.875rem
@@ -673,8 +667,7 @@ Uma fonte, um papel. Plus Jakarta Sans cobre tudo — display, headlines, body, 
 | `h3` | Plus Jakarta Sans | Subseção, label de grupo |
 | `body` | Plus Jakarta Sans | Parágrafos, texto corrido |
 | `body-sm` | Plus Jakarta Sans | Corpo em UI compacta, botões |
-| `body-lg` | Plus Jakarta Sans | Hero body, case hero subtitle — `clamp(15px, 1.4vw, 17px)` |
-| `body-xl` | Plus Jakarta Sans | Case lead text — `clamp(16px, 1.7vw, 19px)` |
+| `body-xl` | Plus Jakarta Sans | Lead (Body lg do Figma): hero body, case hero subtitle, case lead text, `clamp(16px, 1.7vw, 19px)` |
 | `body-xs` | Plus Jakarta Sans | Texto mínimo, 11px fixo (`--fs-body-xs`) |
 | `label-caps` | Plus Jakarta Sans | Overline, metadata (uppercase, 400, 0.12em) |
 | `metric` | Plus Jakarta Sans | Números, métricas (+21%, +12%), 700 em Âncora/Solar, no tamanho do `--fs-h2` |
@@ -697,7 +690,7 @@ Valores de referência. O tamanho é o máximo: no código, os tokens `--fs-*` s
 | Label caps | 11px | 140% | 12%, uppercase | Regular | `--fs-label` (11px fixo) |
 | Metric | 22px | 140% | | Bold | `--fs-h2`, sem token próprio |
 
-O Figma não tem o equivalente do `--fs-body-lg` do código (17px). A decisão sobre ele está aberta no CHANGELOG.
+O `--fs-body-lg` (17px) não existia no Figma e foi removido na v2.6.5. Os textos que o usavam (`.hero__body` e `.case-hero__subtitle`) passaram a `--fs-body-xl`.
 
 ### Regras
 
@@ -1037,4 +1030,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.6.4 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.6.5 · novembro de 2026 · Renan Moura*

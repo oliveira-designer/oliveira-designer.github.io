@@ -5,9 +5,33 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.5 · 18 de novembro de 2026 · Lead de 19px no hero e nos cases, `--fs-body-lg` removido (docs e código, PATCH)
+
+Decisão de 18/11/2026 (opção A): `.hero__body` e `.case-hero__subtitle` passam de `--fs-body-lg` para `--fs-body-xl`, o lead de 19px do Figma (Body lg, `size/lead`), com o mesmo line height 1,7 e o mesmo comportamento fluido do token (`clamp(16px, 1.7vw, 19px)`). O `--fs-body-lg` (17px no desktop) foi removido de `tokens.css`, porque o Figma não tem esse tamanho. Era usado só por essas duas regras.
+
+**Antes e depois (tamanho e número de linhas)**
+
+| Página | 390px | 1024px | 1280px |
+|--------|-------|--------|--------|
+| `index` (2 parágrafos do hero) | 15 para 16px, 2L e 2L, igual | 15 para 17,4px, 1L e 1L, igual | 17 para 19px: **1º parágrafo 1L para 2L**, 2º igual (1L) |
+| `about` (3 parágrafos) | 15 para 16px, 5L, 5L e 3L, igual | 15 para 17,4px: **1º 2L para 3L, 2º 2L para 3L**, 3º igual (1L) | 17 para 19px, 3L, 3L e 2L, igual |
+| `dotz` (subtítulo) | 15 para 16px, 4L, igual | 15 para 17,4px, 2L, igual | 17 para 19px, 2L, igual |
+| `sb-home-redesign` (subtítulo) | 15 para 16px, 4L, igual | 15 para 17,4px, 2L, igual | 17 para 19px, 2L, igual |
+| `cloud-cost-intelligence` (subtítulo) | 15 para 16px, 3L, igual | 15 para 17,4px, 2L, igual | 17 para 19px, 2L, igual |
+
+- Linhas novas: 3 parágrafos no total (índice a 1280px e `about` a 1024px). Sem overflow horizontal, sem erros de console, sem mudança de cor nem de line height.
+- Em 390px o aumento é de 1px (15 para 16px) e nenhuma página muda de número de linhas.
+
+**Docs**
+- `DESIGN.md`, `DESIGN-IMPLEMENTATION.md` e `hope-demo.html` v2.6.5: `body-lg` removido do YAML, das tabelas e do bloco `clamp`; `body-xl` descrito como o lead (Body lg do Figma) usado no hero, no subtítulo dos cases e no lead dos cases. A demo não tinha mais o token e não resolvia `--fs-body-lg`, então a linha foi removida. `design-system.html` ganhou a linha do `--fs-body-xl`.
+
+**Débitos:** o item "em decisão" (`--fs-body-lg`) está fechado. Segue aberto, "a discutir", o peso das labels uppercase.
+
+---
+
 ## v2.6.4 · 18 de novembro de 2026 · H3 Bold, Body xs, label fixo e títulos no estilo do Figma (docs e código, PATCH)
 
-Decisões de 18/11/2026: seguir o Figma Foundation nos quatro itens abaixo. O peso das labels uppercase (eyebrow 500, phase break 700, status badge 600) ficou fora do escopo e segue em aberto, "a discutir". O item 2 (`--fs-body-lg`) está em decisão e não foi alterado.
+Decisões de 18/11/2026: seguir o Figma Foundation nos quatro itens abaixo. O peso das labels uppercase (eyebrow 500, phase break 700, status badge 600) ficou fora do escopo e segue em aberto, "a discutir". O item 2 (`--fs-body-lg`) estava em decisão e foi resolvido na v2.6.5.
 
 **1. H3 em Bold**
 - `.text-h3` (`reset.css`) e `.case-section__subtitle` (o `<h3>` de 16px usado nos cases) de 600 para 700. `.persona__name`, `.result-card__title` e `.skill-card__title` já eram 700.
@@ -68,7 +92,7 @@ Decisão de 18/11/2026: a escala tipográfica segue os estilos de texto do Figma
 
 **Débitos abertos (diferenças de código contra o Figma, aguardam decisão)**
 - ~~`.text-h3` (`reset.css`) usa peso 600. O Figma é Bold. Os docs já dizem 700.~~ Resolvido em 18 de novembro de 2026 (v2.6.4): peso 700.
-- **Em decisão (v2.6.4):** `--fs-body-lg` (15 a 17px, usado em `.hero__body` e `.case-hero__subtitle`) não existe no Figma. O Body lg do Figma (19px) é o `--fs-body-xl` do código. Decidir: manter, renomear ou migrar os dois usos.
+- ~~`--fs-body-lg` (15 a 17px, usado em `.hero__body` e `.case-hero__subtitle`) não existe no Figma. O Body lg do Figma (19px) é o `--fs-body-xl` do código. Decidir: manter, renomear ou migrar os dois usos.~~ Resolvido em 18 de novembro de 2026 (v2.6.5): migrado para `--fs-body-xl` e removido.
 - ~~Body xs (11px, 160%) não tem token `--fs-*`. `--fs-label` vai de 10 a 11px, e o Figma é fixo em 11px.~~ Resolvido em 18 de novembro de 2026 (v2.6.4): `--fs-body-xs` e `--fs-label` em 11px fixo.
 - ~~Tracking de títulos: `.footer__heading`, `.case-hero__title` e `.case-callout__text` (tamanho H1) e `.case-card--glass .case-card__title` (tamanho H2) usam -0,02em. O Figma é -1% (-0,01em).~~ Resolvido em 18 de novembro de 2026 (v2.6.4), com 3 regras fora do mapeamento (ver v2.6.4).
 - ~~Line height de títulos: `.footer__heading` 1,15 e `.case-callout__text` 1,25 (H1 do Figma é 1,2); `.case-card__title` 1,2, `.case-section__title` 1,25 e `.skill-card--metric .metric-value` 1,1 (H2 do Figma é 1,3; Metric é 1,4).~~ Resolvido em 18 de novembro de 2026 (v2.6.4).
@@ -268,4 +292,4 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.6.4 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.6.5 · novembro de 2026 · Renan Moura*
