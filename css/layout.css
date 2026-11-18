@@ -1067,10 +1067,10 @@ html {
 
 .about-bridge__headline {
   font-family: var(--font-display);
-  font-size: clamp(24px, 3.5vw, 36px);
+  font-size: var(--fs-h1);
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: var(--color-text-1);
 }
 
