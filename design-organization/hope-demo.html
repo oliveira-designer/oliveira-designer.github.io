@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   Hope Design System demo
-  Derived demo, 18/11/2026. Reflects DESIGN.md v2.6.8 and DESIGN-IMPLEMENTATION.md v2.6.8.
+  Derived demo, 18/11/2026. Reflects DESIGN.md v2.6.9 and DESIGN-IMPLEMENTATION.md v2.6.9.
   Links the real css/tokens.css, css/reset.css and css/components.css.
   Only the demo's own layout styles live inline (classes prefixed "demo-").
   Token values shown on the page are read from tokens.css at load, not copied.
@@ -167,7 +167,7 @@
       align-items: center;
     }
     @media (max-width: 640px) { .demo-states { grid-template-columns: 1fr; } }
-    .demo-states__head { font-size: var(--fs-label); font-weight: 700; color: var(--color-text-3); text-transform: uppercase; letter-spacing: 0.08em; }
+    .demo-states__head { font-size: var(--fs-label); font-weight: 400; color: var(--color-text-3); text-transform: uppercase; letter-spacing: 0.12em; }
     .demo-states__row { font-size: var(--fs-body-sm); font-weight: 600; color: var(--color-text-1); }
     .demo-focus { box-shadow: var(--shadow-focus); outline: 2px solid var(--color-border-focus-ring); outline-offset: 3px; border-radius: var(--radius-md); }
 
@@ -210,7 +210,7 @@
     <div class="demo-wrap">
       <h1 class="demo-title">Hope Design System demo</h1>
       <div class="demo-note">
-        <p><strong>Derived demo.</strong> Date: 18/11/2026. Reflects <code>DESIGN.md</code> v2.6.8 and <code>DESIGN-IMPLEMENTATION.md</code> v2.6.8.</p>
+        <p><strong>Derived demo.</strong> Date: 18/11/2026. Reflects <code>DESIGN.md</code> v2.6.9 and <code>DESIGN-IMPLEMENTATION.md</code> v2.6.9.</p>
         <p>Links the real <code>css/tokens.css</code>, <code>css/reset.css</code> and <code>css/components.css</code>. Token values on this page are read from them at load. If this page and the CSS disagree, the CSS wins. Light theme only.</p>
         <noscript><p><strong>JavaScript is off.</strong> Swatches and contrast ratios are built from the live tokens and will not appear.</p></noscript>
       </div>
@@ -318,7 +318,7 @@
           <div class="demo-type-sample" style="font-size: var(--fs-body-xs); font-weight: 400; line-height: 1.6; color: var(--color-text-2);">Smallest text: captions and fine print.</div>
         </div>
         <div class="demo-type-row">
-          <div class="demo-type-meta"><strong>label-caps</strong>--fs-label (11px fixed), 400, lh 1.4, 0.12em, uppercase. Class: .text-label<br><span class="demo-type-size"></span></div>
+          <div class="demo-type-meta"><strong>label-caps</strong>--fs-label (11px fixed), 400, lh 1.4, 0.12em, uppercase. Always Regular, no bold label variant. Class: .text-label<br><span class="demo-type-size"></span></div>
           <div class="demo-type-sample text-label" style="color: var(--color-text-3);">Overline and metadata</div>
         </div>
         <div class="demo-type-row">
@@ -499,7 +499,7 @@
   </main>
 
   <footer class="demo-footer">
-    <div class="demo-wrap">Hope Design System demo. Derived from DESIGN.md v2.6.8 and DESIGN-IMPLEMENTATION.md v2.6.8. 18/11/2026.</div>
+    <div class="demo-wrap">Hope Design System demo. Derived from DESIGN.md v2.6.9 and DESIGN-IMPLEMENTATION.md v2.6.9. 18/11/2026.</div>
   </footer>
 
   <script>

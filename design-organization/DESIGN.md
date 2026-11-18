@@ -1,5 +1,5 @@
 ---
-version: v2.6.8
+version: v2.6.9
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -699,6 +699,7 @@ O `--fs-body-lg` (17px) não existia no Figma e foi removido na v2.6.5. Os texto
 ### Regras
 
 - **Plus Jakarta Sans**: tudo — display, headlines, body, UI, overlines, labels, métricas, code
+- **Label caps é sempre Regular (400).** Não existe variante bold de label: overlines, metadata, números de seção e separadores de fase usam 400, 11px, uppercase, 0.12em. Hierarquia vem de posição, cor e tamanho, não de peso
 - **Itálico nunca** — ênfase é feita por peso (bold) ou cor (Âncora), nunca por inclinação
 - Métricas (+21%, +12%) sempre em Plus Jakarta Sans 700 com cor Âncora (light) ou Solar (dark), no tamanho `--fs-h2` e line height 1.4. Não existe `--fs-metric`
 - Em mobile, Display, H1, H2, H3, Body sm e Body xl reduzem via `clamp()`. Body (`--fs-body`), Body xs e Label caps são fixos e não reduzem
@@ -707,7 +708,7 @@ O `--fs-body-lg` (17px) não existia no Figma e foi removido na v2.6.5. Os texto
 
 O skill `apple-design` (§15) recomenda tracking específico por tamanho: negativo em display/headlines (letras "respiram" demais quando grandes), positivo em labels pequenas (legibilidade). **A prática já existe no CSS** — `layout.css`/`components.css` usam `letter-spacing: -0.01em` a `-0.02em` em títulos grandes e `0.12em` nas labels uppercase (Label caps do Figma, alinhado em 18/11/2026; antes variava de `0.05em` a `0.14em`). O que falta é formalizar isso como tokens amarrados à escala `--fs-*` (ex.: `--tracking-display`, `--tracking-label-caps`), em vez de repetir o valor em cada seletor.
 
-**Títulos (v2.6.4):** cada título usa o tracking e o line height do estilo do Figma que corresponde ao seu tamanho renderizado: Display -0.02em e 1.1, H1 -0.01em e 1.2, H2 -0.01em e 1.3, H3 0 e 1.4, Metric 1.4. Tracking em código sempre em `em` (-2% é -0.02em, -1% é -0.01em). `.case-lead__text` é o Body xl do Figma (19px, tracking -1%, que no código é -0.01em) e já estava assim. O Body do Figma tem variantes Regular, Medium, SemiBold e Bold, então o peso 500 dessa regra é válido. `.about-bridge__headline` passou a H1 (`--fs-h1`, 1.2, -0.01em) na v2.6.8: 32px em 1024 e 1280px e 26px em 390px (antes 36 e 24px, com -0.02em). Uma regra não cabe em um estilo só e ficou como estava: `.about-split__quote-text` (citação em itálico, sem uso nas páginas hoje). Desde a v2.6.8, `.case-section__body p` não define mais line height: os parágrafos herdam o 1.75 do Body e os componentes mantêm o seu (`.case-lead__text` 1.7, como no Body xl do Figma).
+**Títulos (v2.6.4):** cada título usa o tracking e o line height do estilo do Figma que corresponde ao seu tamanho renderizado: Display -0.02em e 1.1, H1 -0.01em e 1.2, H2 -0.01em e 1.3, H3 0 e 1.4, Metric 1.4. Tracking em código sempre em `em` (-2% é -0.02em, -1% é -0.01em). `.case-lead__text` é o Body xl do Figma (19px, tracking -1%, que no código é -0.01em) e já estava assim. O Body do Figma tem variantes Regular, Medium, SemiBold e Bold, então o peso 500 dessa regra é válido. `.about-bridge__headline` passou a H1 (`--fs-h1`, 1.2, -0.01em) na v2.6.8: 32px em 1024 e 1280px e 26px em 390px (antes 36 e 24px, com -0.02em). A regra órfã `.about-split__quote-text` (citação em itálico) foi removida na v2.6.9, com a aspa decorativa e a atribuição que só existiam para ela. Desde a v2.6.8, `.case-section__body p` não define mais line height: os parágrafos herdam o 1.75 do Body e os componentes mantêm o seu (`.case-lead__text` 1.7, como no Body xl do Figma).
 
 Não formalizado nesta fase — os valores hand-tuned atuais já seguem a régua certa e uma tokenização recolheria ~20 declarações espalhadas em `layout.css` sozinho; vale como item futuro, não como correção de algo errado hoje.
 
@@ -1034,4 +1035,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.6.8 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.6.9 · novembro de 2026 · Renan Moura*

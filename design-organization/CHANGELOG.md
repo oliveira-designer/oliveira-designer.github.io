@@ -5,6 +5,37 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.9 · 18 de novembro de 2026 · Labels em Regular, título do time como Label caps e regras órfãs removidas (docs e código, PATCH)
+
+**Versão escolhida: PATCH (2.6.8 para 2.6.9).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre correção e ajuste de valor sem mudar a estrutura. Nenhum token, componente ou classe usada por alguma página foi criado, removido ou renomeado. As regras removidas no item 1 não eram usadas em nenhum HTML nem JS, então não quebram compatibilidade. O peso das labels (item 3) e o título do time (item 2) são ajustes de valor para alinhar ao Figma.
+
+**1. Regras órfãs do `.about-split` removidas**
+- Busca em todo HTML, JS, CSS e docs: nenhuma página nem script referencia qualquer classe `about-split`. Removidos de `layout.css`: `.about-split__quote-text` (itálico, contradizia "Itálico nunca"), `.about-split__quote::before` (aspa decorativa, com a variante dark) e `.about-split__attribution` (a atribuição da citação). O comentário da seção foi ajustado.
+- Sem efeito visual (nenhum elemento usava as regras).
+- Também sem uso, mantidas por não existirem só para a citação: `.about-split` (grid), `.about-split__blocks` e `.about-split__block`. Ver débitos.
+
+**2. `.team-section__title` como Label caps**
+- Seletor de `.team-section__title` para `.case-section__body .team-section__title` (0,2,0 contra 0,1,1 do `.case-section__body p`, sem `!important`) e `line-height: 1.4`. Usado só dentro de `.case-section__body`, nos 3 cases.
+- Medido nos 3 cases, em 390, 1024 e 1280px (6 títulos por largura, resultado igual em todos): tamanho 16 para 11px, peso 400, line height 1,75 para 1,4, cor `--color-text-2` (rgb 61,61,69) para `--color-text-3` (rgb 95,95,110), contraste 10,76:1 para 6,27:1 (passa 4,5:1), altura 28 para 15,4px, 1 linha. Altura de cada página de case: -25px nas três larguras.
+
+**3. Todas as labels uppercase em Regular (400)**
+- `.case-phase-break__label` (era 700), `.case-card__eyebrow` (500) e `.header__status-badge` (600): declaração de peso removida, herdam 400. `.badge--draft` (500): `font-weight: 400` explícito, porque herdaria 500 do `.badge`. Tamanho, tracking e cor não mudaram. Conferido no navegador: todo elemento uppercase renderiza em 400, exceto `.ds-sub` (ver débitos).
+- `.case-phase-break__label` nos 3 cases (8 rótulos: 3 no dotz, 3 no sb-home-redesign, 2 no cloud-cost-intelligence; mais 1 no `design-system.html`), 390 / 1024 / 1280px: largura do rótulo 137,8 para 134,6px no primeiro e 138,8 para 136,0 no mais largo; a régua ao lado ganha 3,2px (184,2 para 187,4 / 418,2 para 421,4 / 638,6 para 641,8px); altura 19,3px e 1 linha, sem mudança; linha inteira 91,3px, sem mudança; sem quebra; altura das páginas sem mudança; contraste 6,27:1, igual.
+- Leitura como divisor: continua rótulo uppercase à esquerda, régua de 1px preenchendo a linha e 64px de respiro acima. O rótulo fica um pouco mais leve e quieto, na mesma cor, tamanho e posição. A hierarquia depende da posição, da régua e do espaço, não do peso, então não há perda de função. Nada nas páginas depende do negrito para contraste (a cor não mudou).
+- `.case-card__eyebrow` e `.badge--draft` só aparecem no `design-system.html`. `.header__status-badge` está com `display: none` nas páginas, sem mudança visível.
+- **Labels são Regular no Hope e não existe variante bold de label.** Registrado em `DESIGN.md` e `DESIGN-IMPLEMENTATION.md`, e na descrição de tipografia do `design-system.html` e da demo.
+
+**Verificação:** 5 páginas, 390 / 1024 / 1280px. Sem erro de console, sem clipping nem truncamento novos, nenhum elemento ganha ou perde linha. As únicas mudanças de altura são as -25px por título do item 2.
+
+**Débitos que seguem abertos**
+- **Escopo de `.case-section__body p` (achado, sem alteração).** A regra (0,1,1) força `font-size`, `color`, `font-family` e `max-width: 100%` em todo `<p>` dentro de `.case-section__body`. Os parágrafos de texto sem classe dependem disso e é intencional. Mas ela também vence componentes com regra própria de uma classe (0,1,0). Hoje contra o valor da regra própria, em 1280px: `.skill-card__body` (sb-home-redesign 13, cloud-cost-intelligence 17) 16px contra 12,8px (12px em 390px); `.persona__role` (dotz) 16px e `--color-text-2` contra 12,8px e `--color-text-3`; `.case-lead__text` (6 no total) cor `--color-text-2` contra `--color-text-1`; `.result-card__title` (cloud) cor `--color-text-2` contra `--color-text-1` (e 16px contra 14px em 390px). Não são vencidos, porque a regra própria é mais específica ou usa `!important`: `.metric-desc`, `.case-section__results-legend`, `.small-note`, `.persona .persona__section p` e `.team-section__title` (corrigido no item 2). Trocar por `.case-section__body > p` **não** serve: os parágrafos aninhados (a maior parte do texto) perderiam `--color-text-2` (viram `--color-text-1`) e `max-width: 100%` (viram 70ch). Recomendado: `:where(.case-section__body) p`, que mantém o escopo com especificidade 0 e deixa cada componente usar o próprio valor. Simulado, só mudam os componentes citados, e os parágrafos comuns ficam iguais: altura das páginas 1280 / 390px, dotz -5 / -14px, sb-home-redesign -342 / -734px, cloud-cost-intelligence -190 / -434px, `about` sem mudança.
+- `.about-split`, `.about-split__blocks` e `.about-split__block` seguem em `layout.css` sem nenhum uso nas páginas. Decidir se saem.
+- `.ds-sub` (títulos de subseção do próprio `design-system.html`, uppercase, peso 600) é chrome da página, não um componente do Hope, e não foi alterado.
+- Pilha monoespaçada padrão do Tailwind no `css/output.css` (preflight de `code, kbd, samp, pre`), sem efeito visual.
+- Com `prefers-reduced-motion`, o `.logo-strip__track` do `index` vaza para o lado e cria rolagem horizontal. Já acontecia antes e não depende destas mudanças. Sem movimento reduzido não há overflow.
+
+---
+
 ## v2.6.8 · 18 de novembro de 2026 · Body fixo em 16px, headline do about no H1 e line height dos parágrafos (docs e código, PATCH)
 
 **Versão escolhida: PATCH (2.6.7 para 2.6.8).** A convenção do `GOVERNANCE.md` (seção 3) define PATCH como ajuste de valor sem mudar a estrutura. Nenhum token foi criado, removido ou renomeado, e o papel de cada um segue igual. MINOR é para componente, família de tokens ou cor nova, e MAJOR para quebra de compatibilidade. O item 2 muda o tamanho do texto de todas as páginas em celular e tablet (14 para 16px), o que é visível, mas continua sendo um ajuste de valor do `--fs-body`, como as mudanças de tamanho das versões 2.6.4 e 2.6.6. Quem preferir contar o impacto visual como mudança funcional pode tratar como 2.7.0.
@@ -33,9 +64,9 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 - Altura das páginas dos cases: 390px dotz -11px, sb-home-redesign -58px, cloud-cost-intelligence -59px; 1024px -7, -46 e -39px; 1280px -8, -32 e -31px. `index` e `about` sem mudança. Nenhum elemento mudou de número de linhas.
 
 **Débitos que seguem abertos**
-- **A discutir:** peso das labels uppercase (500, 600 e 700 em alguns rótulos). Ver a entrada v2.6.7.
-- `.about-split__quote-text`: regra órfã (sem uso nas páginas), itálico. Decisão pendente, provavelmente remover.
-- `.team-section__title` renderiza em 16px (era 15,36px antes da v2.6.8), e não nos 11px de Label caps, porque `.case-section__body p` (especificidade 0,1,1) vence `.team-section__title` (0,1,0) em tamanho e cor (vira `--color-text-2`, e não `--color-text-3`). Usado nos 3 cases ("Impact", "Involved teams", "Team Composition"). Sem o override seria 11px, `--color-text-3` (contraste 6,27:1 contra 10,76:1 hoje) e 8,5px mais baixo por título, com line height 1,75 (o Label caps do Figma é 1,4). A mesma regra força o tamanho de outros componentes dentro das seções dos cases: o `.skill-card__body` renderiza em 16px lá e em 12,8px no `about`.
+- ~~**A discutir:** peso das labels uppercase (500, 600 e 700 em alguns rótulos). Ver a entrada v2.6.7.~~ Resolvido em 18 de novembro de 2026 (v2.6.9): todas as labels uppercase em Regular (400).
+- ~~`.about-split__quote-text`: regra órfã (sem uso nas páginas), itálico. Decisão pendente, provavelmente remover.~~ Resolvido em 18 de novembro de 2026 (v2.6.9): regras órfãs removidas.
+- ~~`.team-section__title` renderiza em 16px (era 15,36px antes da v2.6.8), e não nos 11px de Label caps, porque `.case-section__body p` (especificidade 0,1,1) vence `.team-section__title` (0,1,0) em tamanho e cor (vira `--color-text-2`, e não `--color-text-3`). Usado nos 3 cases ("Impact", "Involved teams", "Team Composition"). Sem o override seria 11px, `--color-text-3` (contraste 6,27:1 contra 10,76:1 hoje) e 8,5px mais baixo por título, com line height 1,75 (o Label caps do Figma é 1,4). A mesma regra força o tamanho de outros componentes dentro das seções dos cases: o `.skill-card__body` renderiza em 16px lá e em 12,8px no `about`.~~ Resolvido em 18 de novembro de 2026 (v2.6.9): Label caps de 11px.
 - Pilha monoespaçada padrão do Tailwind no `css/output.css` (preflight de `code, kbd, samp, pre`), sem efeito visual.
 - Com `prefers-reduced-motion`, o `.logo-strip__track` do `index` vaza para o lado e cria rolagem horizontal (3725px de largura de rolagem). Já acontecia antes desta versão e não depende dela. Sem movimento reduzido não há overflow.
 
@@ -54,10 +85,10 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 - A pilha monoespaçada padrão do Tailwind **continua** no arquivo (3 linhas, no tema e no preflight de `code, kbd, samp, pre`). O rebuild não a remove, e mesmo com `--font-mono` e `--default-mono-font-family` redefinidos em `@theme` o preflight mantém o valor de reserva escrito (fica sem efeito, porque a variável existe). Nenhuma página renderiza fonte mono. Fica registrado como débito.
 
 **Débitos (só relatório, sem alteração)**
-- **A discutir:** peso das labels uppercase. Em uso: 400 na maioria (overlines, `dt`, números de seção, rótulos do `persona`), 500 no `.case-card__eyebrow` (só no `design-system.html`) e no `.badge--draft` (12,8px), 600 no `.header__status-badge` (10px, oculto) e 700 no `.case-phase-break__label` (nos 3 cases, 9 rótulos), o único em negrito em páginas de produção. `.team-section__title` renderiza em 15,36px (uppercase com 0,12em), não 11px, por causa de uma regra mais específica.
+- ~~**A discutir:** peso das labels uppercase. Em uso: 400 na maioria (overlines, `dt`, números de seção, rótulos do `persona`), 500 no `.case-card__eyebrow` (só no `design-system.html`) e no `.badge--draft` (12,8px), 600 no `.header__status-badge` (10px, oculto) e 700 no `.case-phase-break__label` (nos 3 cases, 9 rótulos), o único em negrito em páginas de produção. `.team-section__title` renderiza em 15,36px (uppercase com 0,12em), não 11px, por causa de uma regra mais específica.~~ Resolvido em 18 de novembro de 2026 (v2.6.9): todas as labels uppercase em Regular (400).
 - ~~**`--fs-body` fluido contra o Body fixo de 16px do Figma.** Hoje `clamp(14px, 1.2vw, 16px)`: 14px até cerca de 1167px e 16px só a partir de cerca de 1333px. Fixar em 16px aumenta a página em 5 a 11% de altura em 390px e faz até 35 elementos por página ganharem linha. Sem overflow horizontal. Medições completas no relatório desta entrega.~~ Resolvido em 18 de novembro de 2026 (v2.6.8): `--fs-body` fixo em 16px.
 - ~~`.about-bridge__headline` (só no `index`): 36 / 24px, tracking -0,02em. Como `--fs-h1` (32 / 26px, 1,2, -0,01em) ficaria com as mesmas 2 linhas em 390, 1024 e 1280px, sem overflow. A altura muda de 55,9 para 60,5px em 390px (4,6px mais alto, porque 24 vira 26px) e de 83,5 / 83,8 para 74,5px em 1024 / 1280px (cerca de 9px mais baixo).~~ Resolvido em 18 de novembro de 2026 (v2.6.8): mapeado para `--fs-h1`.
-- `.about-split__quote-text` (sem uso nas páginas): 18 a 26px, peso 400, **itálico**, line height 1,55, tracking -0,01em. O itálico contradiz a regra "Itálico nunca" dos docs.
+- ~~`.about-split__quote-text` (sem uso nas páginas): 18 a 26px, peso 400, **itálico**, line height 1,55, tracking -0,01em. O itálico contradiz a regra "Itálico nunca" dos docs.~~ Resolvido em 18 de novembro de 2026 (v2.6.9): regras órfãs removidas.
 - ~~`.case-lead__text`: line height renderizado 1,75 contra 1,7 do Figma (ver acima).~~ Resolvido em 18 de novembro de 2026 (v2.6.8): `.case-section__body p` não define mais line height.
 
 ---
@@ -176,7 +207,7 @@ Decisão de 18/11/2026: a escala tipográfica segue os estilos de texto do Figma
 - ~~Body xs (11px, 160%) não tem token `--fs-*`. `--fs-label` vai de 10 a 11px, e o Figma é fixo em 11px.~~ Resolvido em 18 de novembro de 2026 (v2.6.4): `--fs-body-xs` e `--fs-label` em 11px fixo.
 - ~~Tracking de títulos: `.footer__heading`, `.case-hero__title` e `.case-callout__text` (tamanho H1) e `.case-card--glass .case-card__title` (tamanho H2) usam -0,02em. O Figma é -1% (-0,01em).~~ Resolvido em 18 de novembro de 2026 (v2.6.4), com 3 regras fora do mapeamento (ver v2.6.4).
 - ~~Line height de títulos: `.footer__heading` 1,15 e `.case-callout__text` 1,25 (H1 do Figma é 1,2); `.case-card__title` 1,2, `.case-section__title` 1,25 e `.skill-card--metric .metric-value` 1,1 (H2 do Figma é 1,3; Metric é 1,4).~~ Resolvido em 18 de novembro de 2026 (v2.6.4).
-- **A discutir (fora do escopo da v2.6.4):** peso das labels uppercase: `.case-card__eyebrow` 500, `.case-phase-break__label` 700 e `.header__status-badge` 600 em 10px. O Label caps do Figma é Regular.
+- ~~**A discutir (fora do escopo da v2.6.4):** peso das labels uppercase: `.case-card__eyebrow` 500, `.case-phase-break__label` 700 e `.header__status-badge` 600 em 10px. O Label caps do Figma é Regular.~~ Resolvido em 18 de novembro de 2026 (v2.6.9): todas as labels uppercase em Regular (400).
 - Fora do padrão label caps por não serem uppercase, mantidos: `.experience-item__dates` (0,08em), `.footer__copy` (0,06em) e `.experience-item__logo-mono` (0,05em).
 
 ---
@@ -372,4 +403,4 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.6.8 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.6.9 · novembro de 2026 · Renan Moura*
