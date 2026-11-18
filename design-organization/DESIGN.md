@@ -170,7 +170,7 @@ typography:
   h3:
     fontFamily: Plus Jakarta Sans
     fontSize: 1rem
-    fontWeight: 700  # Figma: Bold. O CSS de .text-h3 ainda usa 600 (diferença registrada no CHANGELOG)
+    fontWeight: 700  # Figma: Bold. O CSS (.text-h3, .case-section__subtitle) usa 700 desde a v2.6.4
     lineHeight: 1.4
   body:
     fontFamily: Plus Jakarta Sans

@@ -1285,7 +1285,7 @@ pre.code-block code {
 .text-h3 {
   font-family: var(--font-body);
   font-size: var(--fs-h3);
-  font-weight: 700; /* Figma: Bold. O reset.css do site ainda usa 600 (decisão aberta no CHANGELOG) */
+  font-weight: 700; /* Figma: Bold. Igual ao reset.css do site desde a v2.6.4 */
   line-height: 1.4;
   color: var(--color-text-1);
 }
