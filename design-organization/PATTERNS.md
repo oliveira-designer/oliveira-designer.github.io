@@ -1,8 +1,10 @@
 # PATTERNS.md
 # Hope Design System — Padrões de Página
-# Versão 1.1 · novembro de 2026
+# Versão 1.1.1 · novembro de 2026
 
-**Changelog v1.1**: métricas do Case Study passam a citar Plus Jakarta Sans. Nenhum padrão depende dos componentes Case Callout e Lightbox removidos do Figma; o `callout-anchor` citado no padrão Article é outro componente e continua válido.
+**Changelog v1.1.1 (PATCH)**: corrigida a frase do v1.1 que dizia que Case Callout e Lightbox foram removidos do Figma. Os dois foram recriados em 13 de novembro de 2026: o Case Callout em Hope DS | Portfolio Components e o Lightbox em Hope DS | Core Components (página `└ Lightbox`, com o token Scrim Strong). Nenhum padrão daqui passa a depender deles.
+
+**Changelog v1.1**: métricas do Case Study passam a citar Plus Jakarta Sans. Nenhum padrão depende dos componentes Case Callout e Lightbox; o `callout-anchor` citado no padrão Article é outro componente e continua válido.
 
 Este arquivo documenta **estruturas de página reutilizáveis** para o portfólio de Renan Moura. Não são componentes (esses estão em `DESIGN.md` e `DESIGN-IMPLEMENTATION.md`) — são **anatomias completas de página** que combinam componentes em ordens específicas para servir um propósito narrativo.
 
@@ -287,4 +289,4 @@ Se um padrão aqui conflitar com algo no DESIGN.md, o DESIGN.md vence. Padrões 
 
 ---
 
-*Hope Design System · PATTERNS.md · v1.1 · novembro de 2026 · Renan Moura*
+*Hope Design System · PATTERNS.md · v1.1.1 · novembro de 2026 · Renan Moura*

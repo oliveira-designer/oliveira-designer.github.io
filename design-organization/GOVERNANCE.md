@@ -1,6 +1,8 @@
 # GOVERNANCE.md
 # Hope Design System — Regras de Evolução
-# Versão 1.4 · novembro de 2026
+# Versão 1.4.1 · novembro de 2026
+
+**Changelog v1.4.1 (PATCH)**: corrigida a frase da seção 12.6 que dizia que Case Callout e Lightbox foram removidos do Figma. Os dois foram recriados em 13 de novembro de 2026; só o Highlight Card legacy segue removido.
 
 **Changelog v1.4**: seção 12.7 adicionada (separação das bibliotecas do Figma: Core fica só com componentes genéricos e os componentes do portfólio vão para Hope DS | Portfolio Components) e convenção de nome de páginas. Aprovada por Renan em 13 de novembro de 2026.
 
@@ -476,7 +478,7 @@ Descrições citam tokens e valores que existem hoje. Texto de contexto de outro
 
 ### 12.6 Componentes em revisão
 
-Componente sem decisão fica numa seção "Em revisão", com o nome sufixado `(legacy)` se houver um sucessor com o mesmo nome, e com descrição que diga o que decidir (manter, mesclar ou remover). Dois componentes com o mesmo nome na mesma biblioteca não são permitidos. Se a decisão demorar, aplicar o teste da seção 8: sem uso real, remover. (Em novembro de 2026 a seção foi esvaziada: Highlight Card legacy, Case Callout e Lightbox foram removidos.)
+Componente sem decisão fica numa seção "Em revisão", com o nome sufixado `(legacy)` se houver um sucessor com o mesmo nome, e com descrição que diga o que decidir (manter, mesclar ou remover). Dois componentes com o mesmo nome na mesma biblioteca não são permitidos. Se a decisão demorar, aplicar o teste da seção 8: sem uso real, remover. (Em novembro de 2026 a seção foi esvaziada: o Highlight Card legacy foi removido. Case Callout e Lightbox voltaram ao Figma em 13 de novembro de 2026, porque o site os usa: o Case Callout mora em Hope DS | Portfolio Components e o Lightbox em Hope DS | Core Components, página `└ Lightbox`, com o token Scrim Strong.)
 
 ### 12.7 Bibliotecas e páginas
 
@@ -494,4 +496,4 @@ Componente sem decisão fica numa seção "Em revisão", com o nome sufixado `(l
 
 ---
 
-*Hope Design System · GOVERNANCE.md · v1.4 · novembro de 2026 · Renan Moura*
+*Hope Design System · GOVERNANCE.md · v1.4.1 · novembro de 2026 · Renan Moura*

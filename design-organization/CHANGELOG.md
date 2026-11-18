@@ -5,6 +5,13 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.1 · novembro de 2026 · Correção de texto sobre Case Callout e Lightbox (docs, PATCH)
+
+- `GOVERNANCE.md` v1.4.1 (seção 12.6) e `PATTERNS.md` v1.1.1: a frase que dizia que Case Callout e Lightbox foram removidos do Figma foi corrigida. Decisão de 13 de novembro de 2026: os dois foram recriados porque o site os usa. Case Callout em Hope DS | Portfolio Components; Lightbox em Hope DS | Core Components, página `└ Lightbox`, com o token Scrim Strong. O Highlight Card legacy segue removido.
+- Sem mudança em código nem em tokens.
+
+---
+
 ## v2.6 · 13 de novembro de 2026 · Warning na família Solar e Scrim Strong (Figma, código e docs)
 
 Espelhamento no código e nos docs das mudanças do Figma Foundation de 13/11/2026 (MINOR).
@@ -179,4 +186,4 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.6 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.6.1 · novembro de 2026 · Renan Moura*
