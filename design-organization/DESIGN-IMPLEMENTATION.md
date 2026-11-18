@@ -170,8 +170,8 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
 | `--fs-body-xl` | Plus Jakarta Sans | 16–19px | 400 | 1.7 | 0 | Case lead text. É o Body lg (`size/lead`, 19px) do Figma |
 | `--fs-body-lg` | Plus Jakarta Sans | 15–17px | 400 | 1.7 | 0 | Hero body, case hero subtitle. Sem equivalente no Figma |
 | `--fs-body-sm` | Plus Jakarta Sans | 12–13px | 400 | 1.6 | 0 | Body em UI compacta |
-| (sem token) Body xs | Plus Jakarta Sans | 11px | 400 | 1.6 | 0 | Estilo do Figma, sem token `--fs-*` ainda |
-| `--fs-label` | Plus Jakarta Sans | 10–11px | 400 | 1.4 | 0.12em | Label caps: overlines, metadata (uppercase) |
+| `--fs-body-xs` | Plus Jakarta Sans | 11px fixo | 400 | 1.6 | 0 | Texto mínimo (Body xs do Figma) |
+| `--fs-label` | Plus Jakarta Sans | 11px fixo | 400 | 1.4 | 0.12em | Label caps: overlines, metadata (uppercase) |
 | Metric (usa `--fs-h2`) | Plus Jakarta Sans | 18–22px | 700 | 1.4 | 0 | Métricas (+21%, +12%). Não existe `--fs-metric` |
 | `--fs-code` | Plus Jakarta Sans | 13–14px | 400 | 1.6 | 0 | Code inline e blocks (ainda não existe em `tokens.css`) |
 
@@ -185,7 +185,8 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
   --fs-body-sm:  clamp(12px, 1vw, 13px);
   --fs-body-lg:  clamp(15px, 1.4vw, 17px);
   --fs-body-xl:  clamp(16px, 1.7vw, 19px);
-  --fs-label:    clamp(10px, 1vw, 11px);
+  --fs-body-xs:  11px;
+  --fs-label:    11px;
 }
 ```
 

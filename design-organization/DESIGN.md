@@ -184,11 +184,11 @@ typography:
     lineHeight: 1.6
   body-xs:
     fontFamily: Plus Jakarta Sans
-    fontSize: 0.6875rem  # 11px. Estilo do Figma (Body xs). Sem token --fs-* no código ainda
+    fontSize: 0.6875rem  # 11px fixo. Estilo do Figma (Body xs). Token --fs-body-xs desde a v2.6.4
     lineHeight: 1.6
   label-caps:
     fontFamily: Plus Jakarta Sans
-    fontSize: 0.6875rem  # 11px. Fluido no código: --fs-label, clamp(10px, 1vw, 11px)
+    fontSize: 0.6875rem  # 11px fixo. Token --fs-label (fixo em 11px desde a v2.6.4, antes clamp(10px, 1vw, 11px))
     fontWeight: 400
     lineHeight: 1.4
     letterSpacing: 0.12em  # Figma: 12%. Sempre uppercase. Classe pronta: .text-label (reset.css)
@@ -675,7 +675,7 @@ Uma fonte, um papel. Plus Jakarta Sans cobre tudo — display, headlines, body, 
 | `body-sm` | Plus Jakarta Sans | Corpo em UI compacta, botões |
 | `body-lg` | Plus Jakarta Sans | Hero body, case hero subtitle — `clamp(15px, 1.4vw, 17px)` |
 | `body-xl` | Plus Jakarta Sans | Case lead text — `clamp(16px, 1.7vw, 19px)` |
-| `body-xs` | Plus Jakarta Sans | Texto mínimo (11px). Sem token `--fs-*` ainda |
+| `body-xs` | Plus Jakarta Sans | Texto mínimo, 11px fixo (`--fs-body-xs`) |
 | `label-caps` | Plus Jakarta Sans | Overline, metadata (uppercase, 400, 0.12em) |
 | `metric` | Plus Jakarta Sans | Números, métricas (+21%, +12%), 700 em Âncora/Solar, no tamanho do `--fs-h2` |
 | `code` | Plus Jakarta Sans | Code inline e blocks |
@@ -693,8 +693,8 @@ Valores de referência. O tamanho é o máximo: no código, os tokens `--fs-*` s
 | Body | 16px | 175% | | | `--fs-body` (14 a 16px) |
 | Body lg (`size/lead`) | 19px | 170% | | | `--fs-body-xl` (16 a 19px) |
 | Body sm | 13px | 160% | | | `--fs-body-sm` (12 a 13px) |
-| Body xs | 11px | 160% | | | nenhum |
-| Label caps | 11px | 140% | 12%, uppercase | Regular | `--fs-label` (10 a 11px) |
+| Body xs | 11px | 160% | | | `--fs-body-xs` (11px fixo) |
+| Label caps | 11px | 140% | 12%, uppercase | Regular | `--fs-label` (11px fixo) |
 | Metric | 22px | 140% | | Bold | `--fs-h2`, sem token próprio |
 
 O Figma não tem o equivalente do `--fs-body-lg` do código (17px). A decisão sobre ele está aberta no CHANGELOG.
