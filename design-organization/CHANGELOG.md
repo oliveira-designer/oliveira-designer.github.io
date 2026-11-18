@@ -5,6 +5,24 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.5 (Figma) · novembro de 2026 · Separação da biblioteca de portfólio
+
+Escopo desta entrada: **Figma**. Sem mudança em código.
+
+- Novo arquivo **Hope DS | Portfolio Components**, com os 19 componentes do portfólio mais Greeting Badge (22 componentes locais, contando Header Link e Side Navigation Item). Consome Foundation, Core Components, Phosphor Icons e Helper Components.
+- Decisão de escopo revista: a entrada v2.2 abaixo mantinha os padrões do portfólio no Core. Passam a morar no arquivo próprio, para não poluir o Core ao trabalhar em outros produtos. Banner e Icon Button ficam no Core.
+- Conferido na migração: tamanhos iguais aos originais, instâncias aninhadas religadas aos componentes locais, 270 de 278 preenchimentos sólidos ligados a variáveis do Foundation (as outras 8 são invisíveis ou vetores do logo), imagens preservadas.
+- Páginas renomeadas nos dois arquivos: seção com prefixo `📁 ` (nomes em inglês) e componentes com prefixo `└ ` (regra em `GOVERNANCE.md`, seção 12.7). Os emojis de status (✅) saíram do nome das páginas.
+- Arquivo de design **Portfolio** religado em 13 de novembro de 2026: 168 instâncias de nível superior (Desktop V1 e Archive V2) trocadas dos componentes do Core pelos da biblioteca nova. Teste prévio em clones (tamanho, textos e valores de propriedade iguais) e nenhuma instância antiga restante. Os componentes aninhados vieram junto, porque cada componente novo já usa os irmãos locais.
+- Removidos do **Core**: a página temporária `_EXPORT-PORTFOLIO`, a seção Portfolio patterns com as 19 páginas de componente e o Greeting Badge da página Badge. Antes, conferido que nenhum outro componente do Core usava esses componentes.
+- Nomes de seção do Core traduzidos para inglês (Primitives, Forms, Feedback, Navigation, Overlays and data).
+- Decisão de 13 de novembro de 2026: **Case Callout** e **Lightbox** voltam ao Figma, porque os dois estão em uso no site (Lightbox em toda imagem de `.case-section`, nos 4 cases; Case Callout em Dotz e Cloud Cost Intelligence). Case Callout entra no Portfolio Components (página `└ Case Callout`, propriedades Quote, Attribution e Show attribution). Lightbox entra no Core (página `└ Lightbox`, em Overlays and data; propriedades Caption e Show caption). O marca-texto Solar do Case Callout segue só no código (`.text-highlight`). O fundo do Lightbox usa Neutral/ink a 88% com blur de 12px, como o CSS, e não o token Scrim (50% no Light), porque a imagem é o foco; se isso virar regra, vale criar um token de scrim forte no Foundation.
+- Pendente, a cargo de Renan: publicar o Portfolio Components e o Core de novo para os dois componentes ficarem disponíveis nas bibliotecas.
+- Confirmado por Renan em 13 de novembro de 2026: Core republicado, biblioteca atualizada no arquivo Portfolio, sem atualização pendente nem instância desligada.
+- Documento `claude/REVISAO-GERAL-2026-11.md` arquivado e removido do projeto em 13 de novembro de 2026. O histórico da revisão está nas entradas v2.2 e v2.5; os débitos abertos estão na entrada v2.4 e em "Débitos conhecidos do Figma".
+
+---
+
 ## v2.4 · novembro de 2026 · Nomes em inglês, tipografia única e ícones (código e docs)
 
 Espelhamento do Figma v2.2/v2.3 no código e na documentação, mais as decisões de limpeza de 12/11/2026.
@@ -24,7 +42,7 @@ Espelhamento do Figma v2.2/v2.3 no código e na documentação, mais as decisõe
 - Não existe mais `--font-mono`. Nenhum documento cita outra família além da Plus Jakarta Sans.
 
 **Débitos que seguem abertos**
-- Case Callout e Lightbox: removidos do Figma, ativos no código. Decidir na revisão geral.
+- ~~Case Callout e Lightbox: removidos do Figma, ativos no código.~~ Resolvido em 13 de novembro de 2026 (v2.5): recriados no Figma.
 - Brandbook (PDF): incluir `Night/500`, famílias de status, scrim, `error-light`, `success-deep` e os nomes em inglês. Será refeito no Figma, em arquivo próprio (a fazer depois).
 - Componentes novos do Figma (Alert, Toast, Modal, Tabs etc.) ainda sem CSS; entram quando houver uso.
 - Verificar visualmente `.btn:disabled` e o dark mode (oculto no site) depois de subir o código.
@@ -111,7 +129,7 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 - Descrições de componente preenchidas ou corrigidas (Icon Button, Link, Greeting Badge, Separator, Checkbox, Radio, Switch, Banner, Header Link, Footer, Side Navigation Item, Button, Input, Badge, Modal).
 - **Removido:** a seção "Em revisão" (Highlight Card legacy, Case Callout, Lightbox). Se algum voltar, passa pelos quatro testes da seção 9 do `GOVERNANCE.md`.
 
-**Organização:** páginas-divisória (Primitivos, Formulários, Feedback, Navegação, Overlays e dados, Padrões do portfólio). Padrão de documentação (painel Info + specimen) aplicado a todas as páginas ✅ do Core; o Info é um componente no arquivo Hope DS | Helper Components.
+**Organização:** páginas-divisória (Primitives, Forms, Feedback, Navigation, Overlays and data, Portfolio patterns; nomes traduzidos para inglês em 13 de novembro de 2026). Padrão de documentação (painel Info + specimen) aplicado a todas as páginas ✅ do Core; o Info é um componente no arquivo Hope DS | Helper Components.
 
 ### Débitos conhecidos do Figma
 
@@ -121,7 +139,9 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 - Banner com eixo de valor único (`Notice`): remover o eixo se não surgir um segundo tipo (regra 12.2 do `GOVERNANCE.md`).
 - Select sem variante aberta e Menu item sem ícone à esquerda: só entram quando houver uso.
 - Table e Card genérico: adiados por decisão de Renan.
+- Lightbox usa Neutral/ink a 88% e não o token Scrim: decidir se vale criar um token de scrim forte no Foundation.
+- Confirmar que o Foundation com `Functional/success-deep` foi publicado (a revisão geral deixou isso como passo de publicação).
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.4 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.5 · novembro de 2026 · Renan Moura*

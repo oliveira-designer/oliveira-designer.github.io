@@ -1,6 +1,8 @@
 # GOVERNANCE.md
 # Hope Design System — Regras de Evolução
-# Versão 1.3 · novembro de 2026
+# Versão 1.4 · novembro de 2026
+
+**Changelog v1.4**: seção 12.7 adicionada (separação das bibliotecas do Figma: Core fica só com componentes genéricos e os componentes do portfólio vão para Hope DS | Portfolio Components) e convenção de nome de páginas. Aprovada por Renan em 13 de novembro de 2026.
 
 **Changelog v1.3**: seção 12 adicionada (convenções dos componentes no Figma): nome de propriedades, State e seleção, nada cru dentro de componente, cor de ícone, documentação mínima e componentes em revisão. Aprovada por Renan em 12 de novembro de 2026, a partir da revisão geral do Core.
 
@@ -416,7 +418,7 @@ Isso é proposital. Compatibilidade reversa por design.
 
 ## 12. Convenções dos componentes no Figma
 
-Vale para o arquivo Hope DS | Core Components e para quem o consome. Origem: revisão geral de novembro de 2026.
+Vale para os arquivos Hope DS | Core Components e Hope DS | Portfolio Components, e para quem os consome. Origem: revisão geral de novembro de 2026.
 
 ### 12.1 Nome das propriedades
 
@@ -463,7 +465,7 @@ Exceção aceita e registrada: gap de 2px entre linhas de metadados (Work Experi
 
 ### 12.5 Documentação mínima de um componente
 
-Um componente só entra na lista ✅ do Core com:
+Um componente só é considerado pronto, no Core ou no Portfolio, com:
 
 1. painel **Info** como instância do componente Info (Helper Components), com título, descrição, tags e link;
 2. **descrição do componente** (o campo do Figma), citando estilos, estados, regras de uso e a diferença para o componente mais parecido;
@@ -476,6 +478,20 @@ Descrições citam tokens e valores que existem hoje. Texto de contexto de outro
 
 Componente sem decisão fica numa seção "Em revisão", com o nome sufixado `(legacy)` se houver um sucessor com o mesmo nome, e com descrição que diga o que decidir (manter, mesclar ou remover). Dois componentes com o mesmo nome na mesma biblioteca não são permitidos. Se a decisão demorar, aplicar o teste da seção 8: sem uso real, remover. (Em novembro de 2026 a seção foi esvaziada: Highlight Card legacy, Case Callout e Lightbox foram removidos.)
 
+### 12.7 Bibliotecas e páginas
+
+**Quem mora onde**
+- **Hope DS | Core Components**: só componentes genéricos, que servem a qualquer produto (Button, Icon Button, Link, Badge, Input, Modal, Tabs e afins). Banner e Icon Button ficam aqui.
+- **Hope DS | Portfolio Components**: componentes específicos do site renanmoura.dev (Header, Footer, Hero, Case Card, Persona e os demais). Consome Foundation, Core Components, Phosphor Icons e Helper Components como bibliotecas.
+- Regra de dependência: o Core nunca usa componente do Portfolio. O Portfolio pode usar o Core.
+- Critério para um componente novo: se faria sentido em outro produto sem mudança, é Core. Se carrega conteúdo ou layout do portfólio, é Portfolio.
+- Mudança de escopo em relação à decisão anterior de manter tudo no Core: motivo é evitar confusão ao trabalhar em outro produto, onde os padrões do portfólio apareciam na biblioteca.
+
+**Nome das páginas** (nos dois arquivos)
+- Página de seção: prefixo `📁 ` e o nome, sem traços nem outros adornos (ex.: `📁 Primitives`), em inglês nos dois arquivos. O emoji é só para diferenciar a seção dos itens.
+- Página de componente: prefixo `└ ` e o nome do componente (ex.: `└ Button`), sem emoji, logo abaixo da seção a que pertence.
+- `Cover` fica sozinha no topo.
+
 ---
 
-*Hope Design System · GOVERNANCE.md · v1.3 · novembro de 2026 · Renan Moura*
+*Hope Design System · GOVERNANCE.md · v1.4 · novembro de 2026 · Renan Moura*
