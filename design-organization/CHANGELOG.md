@@ -5,6 +5,46 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.4 · 18 de novembro de 2026 · H3 Bold, Body xs, label fixo e títulos no estilo do Figma (docs e código, PATCH)
+
+Decisões de 18/11/2026: seguir o Figma Foundation nos quatro itens abaixo. O peso das labels uppercase (eyebrow 500, phase break 700, status badge 600) ficou fora do escopo e segue em aberto, "a discutir". O item 2 (`--fs-body-lg`) está em decisão e não foi alterado.
+
+**1. H3 em Bold**
+- `.text-h3` (`reset.css`) e `.case-section__subtitle` (o `<h3>` de 16px usado nos cases) de 600 para 700. `.persona__name`, `.result-card__title` e `.skill-card__title` já eram 700.
+- Visual: `.text-h3` não é usado em nenhuma página. `.case-section__subtitle` (34 elementos nos 3 cases) fica mais pesado. Em 390px, um título quebra em 2 linhas em vez de 1: "Restricted access to the people I was designing for" (cloud-cost-intelligence).
+
+**3. `--fs-body-xs` e `--fs-label` fixos em 11px**
+- `tokens.css`: novo `--fs-body-xs: 11px`. `--fs-label` passou de `clamp(10px, 1vw, 11px)` para `11px`.
+- Visual: em 390px, todo texto que usava `--fs-label` vai de 10px para 11px (entre 1000 e 1100px de largura também sobe, de forma gradual). Afeta os overlines, `dt` dos metadados, `.case-phase-break__label`, `.case-section__number`, `.footer__copy`, `.persona__*` e as páginas do próprio design system. Em 1280px não muda nada. Nenhum texto ganhou linha em 390px nem 1280px.
+- `.header__status-badge` mantém 10px fixo (não usa o token, e não aparece nas páginas).
+
+**4. Tracking e line height dos títulos pelo estilo do Figma**
+
+| Regra | Tamanho 1280 / 390 | Estilo do Figma | Antes (lh, tracking) | Depois (lh, tracking) |
+|-------|--------------------|-----------------|----------------------|-----------------------|
+| `.footer__heading` | 32 / 26px | H1 | 1,15 e -0,02em | 1,2 e -0,01em |
+| `.case-hero__title` | 32 / 26px | H1 | 1,2 e -0,02em | 1,2 e -0,01em |
+| `.case-callout__text` | 32 / 26px | H1 | 1,25 e -0,02em | 1,2 e -0,01em |
+| `.case-card__title` | 22 / 18px | H2 | 1,2 e -0,01em | 1,3 e -0,01em |
+| `.case-card--glass .case-card__title` | 22 / 18px | H2 | 1,2 e -0,02em | 1,3 e -0,01em |
+| `.case-section__title` | 22 / 18px | H2 | 1,25 e -0,01em | 1,3 e -0,01em |
+| `.case-section__subtitle` | 15,4 / 14px | H3 | 1,5 e 0 | 1,4 e 0 |
+| `.persona__name` | 16 / 14px | H3 | 1,3 e 0 | 1,4 e 0 |
+| `.result-card__title` | 16 / 14px | H3 | 1,3 e 0 | 1,4 e 0 |
+| `.skill-card--metric .metric-value` | 22 / 18px | Metric | 1,1 | 1,4 |
+
+- Altura por linha (1280px): `.footer__heading` +1,6px, `.case-section__title` +1,1px, `.case-card__title` +2,2px, `.case-callout__text` -1,6px, `.case-section__subtitle` -1,5px. Tracking de -0,02em para -0,01em deixa cada letra 0,32px (H1) ou 0,22px (H2) mais larga.
+- Sem mapeamento claro, mantidos: `.about-bridge__headline` (36px no desktop, entre H1 e Display), `.about-split__quote-text` (citação em itálico) e `.case-lead__text` (Body lg com -0,01em; o Figma não define tracking para Body lg).
+
+**Verificação (Chrome, 7 páginas, 390px e 1280px)**
+- Sem erros de console, sem overflow horizontal. Nenhuma cor nem fundo mudou (contraste igual).
+- Única linha nova: o título de cloud-cost-intelligence citado no item 1, em 390px.
+
+**Docs**
+- `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` v2.6.4: H3 Bold já refletia o Figma; tokens `--fs-body-xs` e `--fs-label` fixos, regra de títulos por estilo, exemplos de CSS com os novos line height e tracking. `hope-demo.html` e `design-system.html` mostram `--fs-body-xs` e o label fixo.
+
+---
+
 ## v2.6.3 · 18 de novembro de 2026 · Escala tipográfica alinhada ao Figma (docs e código, PATCH)
 
 Decisão de 18/11/2026: a escala tipográfica segue os estilos de texto do Figma Foundation em todo lugar. Display 52px/110%/-2%, H1 32px/120%/-1%, H2 22px/130%/-1%, H3 16px/140%/0 Bold, Body 16px/175%, Body lg (`size/lead`) 19px/170%, Body sm 13px/160%, Body xs 11px/160%, Label caps 11px/140%/12% uppercase Regular, Metric 22px Bold 140% no tamanho `size/h2`.
@@ -27,12 +67,12 @@ Decisão de 18/11/2026: a escala tipográfica segue os estilos de texto do Figma
 - Já estavam em 0,12em e não mudaram: `.text-label`, `.section__overline`, `.hero__overline`, `.case-hero__overline`, `.about-block__label`, `.case-toc__label`, `.team-section__title`, `.logo-strip__label`, `.case-section__number`, `.persona__section-title`, `.persona__quotes-label`, `.cs-figure--slot`.
 
 **Débitos abertos (diferenças de código contra o Figma, aguardam decisão)**
-- `.text-h3` (`reset.css`) usa peso 600. O Figma é Bold. Os docs já dizem 700.
-- `--fs-body-lg` (15 a 17px, usado em `.hero__body` e `.case-hero__subtitle`) não existe no Figma. O Body lg do Figma (19px) é o `--fs-body-xl` do código. Decidir: manter, renomear ou migrar os dois usos.
-- Body xs (11px, 160%) não tem token `--fs-*`. `--fs-label` vai de 10 a 11px, e o Figma é fixo em 11px.
-- Tracking de títulos: `.footer__heading`, `.case-hero__title` e `.case-callout__text` (tamanho H1) e `.case-card--glass .case-card__title` (tamanho H2) usam -0,02em. O Figma é -1% (-0,01em).
-- Line height de títulos: `.footer__heading` 1,15 e `.case-callout__text` 1,25 (H1 do Figma é 1,2); `.case-card__title` 1,2, `.case-section__title` 1,25 e `.skill-card--metric .metric-value` 1,1 (H2 do Figma é 1,3; Metric é 1,4).
-- Peso das labels uppercase: `.case-card__eyebrow` 500, `.case-phase-break__label` 700 e `.header__status-badge` 600 em 10px. O Label caps do Figma é Regular.
+- ~~`.text-h3` (`reset.css`) usa peso 600. O Figma é Bold. Os docs já dizem 700.~~ Resolvido em 18 de novembro de 2026 (v2.6.4): peso 700.
+- **Em decisão (v2.6.4):** `--fs-body-lg` (15 a 17px, usado em `.hero__body` e `.case-hero__subtitle`) não existe no Figma. O Body lg do Figma (19px) é o `--fs-body-xl` do código. Decidir: manter, renomear ou migrar os dois usos.
+- ~~Body xs (11px, 160%) não tem token `--fs-*`. `--fs-label` vai de 10 a 11px, e o Figma é fixo em 11px.~~ Resolvido em 18 de novembro de 2026 (v2.6.4): `--fs-body-xs` e `--fs-label` em 11px fixo.
+- ~~Tracking de títulos: `.footer__heading`, `.case-hero__title` e `.case-callout__text` (tamanho H1) e `.case-card--glass .case-card__title` (tamanho H2) usam -0,02em. O Figma é -1% (-0,01em).~~ Resolvido em 18 de novembro de 2026 (v2.6.4), com 3 regras fora do mapeamento (ver v2.6.4).
+- ~~Line height de títulos: `.footer__heading` 1,15 e `.case-callout__text` 1,25 (H1 do Figma é 1,2); `.case-card__title` 1,2, `.case-section__title` 1,25 e `.skill-card--metric .metric-value` 1,1 (H2 do Figma é 1,3; Metric é 1,4).~~ Resolvido em 18 de novembro de 2026 (v2.6.4).
+- **A discutir (fora do escopo da v2.6.4):** peso das labels uppercase: `.case-card__eyebrow` 500, `.case-phase-break__label` 700 e `.header__status-badge` 600 em 10px. O Label caps do Figma é Regular.
 - Fora do padrão label caps por não serem uppercase, mantidos: `.experience-item__dates` (0,08em), `.footer__copy` (0,06em) e `.experience-item__logo-mono` (0,05em).
 
 ---
@@ -228,4 +268,4 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.6.3 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.6.4 · novembro de 2026 · Renan Moura*

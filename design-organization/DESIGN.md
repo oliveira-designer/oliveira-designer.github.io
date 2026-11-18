@@ -1,5 +1,5 @@
 ---
-version: v2.6.3
+version: v2.6.4
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -710,6 +710,8 @@ O Figma não tem o equivalente do `--fs-body-lg` do código (17px). A decisão s
 
 O skill `apple-design` (§15) recomenda tracking específico por tamanho: negativo em display/headlines (letras "respiram" demais quando grandes), positivo em labels pequenas (legibilidade). **A prática já existe no CSS** — `layout.css`/`components.css` usam `letter-spacing: -0.01em` a `-0.02em` em títulos grandes e `0.12em` nas labels uppercase (Label caps do Figma, alinhado em 18/11/2026; antes variava de `0.05em` a `0.14em`). O que falta é formalizar isso como tokens amarrados à escala `--fs-*` (ex.: `--tracking-display`, `--tracking-label-caps`), em vez de repetir o valor em cada seletor.
 
+**Títulos (v2.6.4):** cada título usa o tracking e o line height do estilo do Figma que corresponde ao seu tamanho renderizado: Display -0.02em e 1.1, H1 -0.01em e 1.2, H2 -0.01em e 1.3, H3 0 e 1.4, Metric 1.4. Tracking em código sempre em `em` (-2% é -0.02em, -1% é -0.01em). Três regras não cabem em um estilo só e ficaram como estavam: `.about-bridge__headline` (36px no desktop, entre H1 e Display), `.about-split__quote-text` (citação em itálico) e `.case-lead__text` (tamanho de Body lg com -0.01em, e o Figma não define tracking para Body lg).
+
 Não formalizado nesta fase — os valores hand-tuned atuais já seguem a régua certa e uma tokenização recolheria ~20 declarações espalhadas em `layout.css` sozinho; vale como item futuro, não como correção de algo errado hoje.
 
 ## Layout
@@ -1035,4 +1037,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.6.3 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.6.4 · novembro de 2026 · Renan Moura*

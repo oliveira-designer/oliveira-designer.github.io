@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.6.3 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.6.4 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.6.4 (PATCH, 18/11/2026)**: H3 em Bold no CSS (`.text-h3`, `.case-section__subtitle`). Novo `--fs-body-xs` (11px) e `--fs-label` fixo em 11px (antes `clamp(10px, 1vw, 11px)`). Títulos com o tracking e o line height do estilo do Figma do seu tamanho (H1 1,2 e -0,01em; H2 1,3 e -0,01em; H3 1,4). `--fs-body-lg` segue em decisão.
 
 **Changelog v2.6.3 (PATCH, 18/11/2026)**: a escala tipográfica segue os estilos de texto do Figma Foundation. Display 36–52px (máximo 52), H2 18–22px (máximo 22), H3 em Bold, Label caps com peso 400 e 0,12em, Metric no tamanho `--fs-h2` com line height 1.4 (removido o `--fs-metric`, que nunca existiu em `tokens.css`). Tracking das labels uppercase alinhado em 0,12em no CSS do site (`.badge--draft`, `.case-card__eyebrow`, `.persona__meta dt`, `.case-hero__meta dt`, `.case-phase-break__label`, `.case-callout__attribution`, `.about-split__attribution`, `.header__status-badge`).
 
@@ -196,6 +198,7 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
 
 - **Plus Jakarta Sans**: tudo — display, headlines, body, UI, overlines, labels, badges, botões, métricas, code
 - **Itálico nunca** — ênfase por peso (bold) ou cor (Âncora), nunca por inclinação
+- Títulos seguem o estilo do Figma do seu tamanho: Display 1.1 e -0.02em, H1 1.2 e -0.01em, H2 1.3 e -0.01em, H3 1.4 e 0. Tracking sempre em `em`
 - Métricas (+21%, +12%) sempre em `--fs-h2` / Plus Jakarta Sans 700 / line height 1.4. Não existe `--fs-metric`: o Figma reusa o tamanho `size/h2`
 - Os estilos `Label/label-caps` e `Metric/metric` do Figma usam Plus Jakarta Sans desde 13/11/2026 (antes Geist). `label-caps` é uppercase, peso 400, 0,12em de tracking e line height 1.4, como em `--fs-label` acima. A classe pronta é `.text-label`
 
@@ -695,7 +698,7 @@ Uso mínimo. O sistema é flat por princípio.
   font-family: var(--font-display);
   font-size: clamp(18px, 2vw, 22px);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.3;
   letter-spacing: -0.01em;
   color: var(--color-text-1);
 }
@@ -1969,8 +1972,8 @@ Cartão de case glassmórfico com canvas de gradiente, chrome de paginação, pi
 }
 .case-card--glass .case-card__title {
   font-size:      var(--fs-h2);
-  letter-spacing: -0.02em;
-  line-height:    1.2;
+  letter-spacing: -0.01em;
+  line-height:    1.3;
 }
 .case-card__title-sep {
   margin:      0 calc(var(--space-2) + 2px);
@@ -2221,7 +2224,7 @@ Cartão de case glassmórfico com canvas de gradiente, chrome de paginação, pi
   font-size:   var(--fs-h3);
   font-weight: 700;
   color:       var(--color-text-1);
-  line-height: 1.3;
+  line-height: 1.4;
 }
 .result-card__body {
   font-family: var(--font-body);
@@ -2355,7 +2358,7 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
   font-size: var(--fs-h2);
   font-weight: 700;
   color: var(--color-text-2);
-  line-height: 1.1;
+  line-height: 1.4;
   margin: 0;
 }
 .skill-card--metric .metric-desc {
@@ -2412,8 +2415,8 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
   font-family: var(--font-display);
   font-size: var(--fs-h1);
   font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   color: var(--color-abyss);
   max-width: 820px;
 }
@@ -2506,5 +2509,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.3 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.4 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*
