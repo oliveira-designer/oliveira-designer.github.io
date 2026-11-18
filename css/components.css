@@ -1151,7 +1151,6 @@
 .case-section__body p {
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  line-height: 1.75;
   color: var(--color-text-2);
   max-width: 100%; /* override global p{max-width:70ch} — let layout control width */
 }
