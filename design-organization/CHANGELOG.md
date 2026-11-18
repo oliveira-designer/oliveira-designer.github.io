@@ -11,6 +11,7 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 - `DESIGN.md` v2.6.2: `badge-warning` no YAML aponta para Aurora e Crepúsculo, como o `badge-solar`; texto sobre os badges escurecidos sem o #6B3F0A; seção Badges explica o alias.
 - `DESIGN-IMPLEMENTATION.md` v2.6.2: `.badge--warning` agrupado com `.badge--solar` (alias, só na documentação), no lugar dos tons de laranja (#FAEDD8, #6B3F0A, #E8B775). O bloco de `.badge--solar` passou a espelhar o `components.css` (tokens, sem borda).
 - Sem mudança em `css/`: nenhuma página do site usa `.badge--warning`, então a classe não foi criada no CSS.
+- `hope-demo.html` regenerado em 18/11/2026 como demo derivada do v2.6.2: liga os `css/tokens.css`, `css/reset.css` e `css/components.css` reais, usa só Plus Jakarta Sans (fonte local de `fonts/`) e lê os valores dos tokens ao carregar. Mostra primitivos, status, o conjunto Warning na família Solar, Scrim e Scrim Strong, a escala tipográfica e só os componentes que existem no CSS (Button, Badge com o alias Warning, Banner, ícones, cards, Lightbox). O que não tem CSS (Alert, Input, Badge error, info e lua e outros) está listado em "Figma only". Só tema claro, sem alternador de tema.
 
 ---
 
@@ -52,7 +53,7 @@ Espelhamento no código e nos docs das mudanças do Figma Foundation de 13/11/20
 - `.banner--wip` no dark usa `--color-daybreak` como texto; o novo `--color-text-warning` no dark é Solar. Migrar o Banner para os tokens de Warning muda essa cor no dark.
 - `--fs-metric` está documentado no `DESIGN-IMPLEMENTATION.md` mas não existe em `tokens.css` (nenhum CSS o usa).
 - `css/output.css` (gerado pelo Tailwind) traz a pilha monoespaçada padrão do Tailwind no preflight de `code, kbd, samp, pre`. Nenhuma página a usa (as classes do site definem `--font-body`), e o arquivo está defasado em relação a `tailwind.css`, então não foi regenerado.
-- `design-organization/hope-demo.html` segue com Instrument Serif, Space Mono e o laranja como Choque do Trovão (demo da v1, fora do escopo).
+- ~~`design-organization/hope-demo.html` segue com Instrument Serif, Space Mono e o laranja como Choque do Trovão (demo da v1, fora do escopo).~~ Resolvido em 18 de novembro de 2026 (v2.6.2): demo regenerada.
 
 ---
 
