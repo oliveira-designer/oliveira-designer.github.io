@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.6.2 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.6.3 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.6.3 (PATCH, 18/11/2026)**: a escala tipográfica segue os estilos de texto do Figma Foundation. Display 36–52px (máximo 52), H2 18–22px (máximo 22), H3 em Bold, Label caps com peso 400 e 0,12em, Metric no tamanho `--fs-h2` com line height 1.4 (removido o `--fs-metric`, que nunca existiu em `tokens.css`). Tracking das labels uppercase alinhado em 0,12em no CSS do site (`.badge--draft`, `.case-card__eyebrow`, `.persona__meta dt`, `.case-hero__meta dt`, `.case-phase-break__label`, `.case-callout__attribution`, `.about-split__attribution`, `.header__status-badge`).
 
 **Changelog v2.6.2 (PATCH, 18/11/2026)**: `.badge--warning` passa a ser alias do `.badge--solar` na documentação (tokens `--color-bg-accent-secondary` e `--color-text-accent-secondary`, sem borda), no lugar dos tons de laranja. O bloco de `.badge--solar` agora espelha o `components.css`. Sem mudança de CSS no site.
 
@@ -156,27 +158,34 @@ Variable font (peso 200–800). Cobre todos os papéis: display, headlines, body
 
 | Token | Fonte | Tamanho | Peso | Line Height | Letter Spacing | Uso |
 |-------|-------|---------|------|-------------|----------------|-----|
-| `--fs-display` | Plus Jakarta Sans | 40–56px | 700 | 1.1 | -0.02em | Hero, capa, nome da marca |
-| `--fs-h1` | Plus Jakarta Sans | 28–32px | 700 | 1.2 | -0.01em | Título de página, case study |
-| `--fs-h2` | Plus Jakarta Sans | 20–24px | 700 | 1.3 | -0.01em | Subtítulo de seção |
-| `--fs-h3` | Plus Jakarta Sans | 14–16px | 600 | 1.4 | 0 | Subseção, label de grupo |
+A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026). O máximo de cada faixa é o tamanho do Figma; o mínimo vem do `tokens.css`.
+
+| Token | Fonte | Tamanho | Peso | Line Height | Letter Spacing | Uso |
+|-------|-------|---------|------|-------------|----------------|-----|
+| `--fs-display` | Plus Jakarta Sans | 36–52px | 700 | 1.1 | -0.02em | Hero, capa, nome da marca |
+| `--fs-h1` | Plus Jakarta Sans | 26–32px | 700 | 1.2 | -0.01em | Título de página, case study |
+| `--fs-h2` | Plus Jakarta Sans | 18–22px | 700 | 1.3 | -0.01em | Subtítulo de seção. Também é o tamanho de Metric |
+| `--fs-h3` | Plus Jakarta Sans | 14–16px | 700 | 1.4 | 0 | Subseção, label de grupo |
 | `--fs-body` | Plus Jakarta Sans | 14–16px | 400 | 1.75 | 0 | Parágrafos, texto corrido |
+| `--fs-body-xl` | Plus Jakarta Sans | 16–19px | 400 | 1.7 | 0 | Case lead text. É o Body lg (`size/lead`, 19px) do Figma |
+| `--fs-body-lg` | Plus Jakarta Sans | 15–17px | 400 | 1.7 | 0 | Hero body, case hero subtitle. Sem equivalente no Figma |
 | `--fs-body-sm` | Plus Jakarta Sans | 12–13px | 400 | 1.6 | 0 | Body em UI compacta |
-| `--fs-label` | Plus Jakarta Sans | 10–11px | 500 | 1.4 | 0.08em | Overlines, metadata (uppercase) |
-| `--fs-metric` | Plus Jakarta Sans | 24–28px | 700 | 1.0 | 0 | Métricas (+21%, +12%) |
-| `--fs-code` | Plus Jakarta Sans | 13–14px | 400 | 1.6 | 0 | Code inline e blocks |
+| (sem token) Body xs | Plus Jakarta Sans | 11px | 400 | 1.6 | 0 | Estilo do Figma, sem token `--fs-*` ainda |
+| `--fs-label` | Plus Jakarta Sans | 10–11px | 400 | 1.4 | 0.12em | Label caps: overlines, metadata (uppercase) |
+| Metric (usa `--fs-h2`) | Plus Jakarta Sans | 18–22px | 700 | 1.4 | 0 | Métricas (+21%, +12%). Não existe `--fs-metric` |
+| `--fs-code` | Plus Jakarta Sans | 13–14px | 400 | 1.6 | 0 | Code inline e blocks (ainda não existe em `tokens.css`) |
 
 ```css
 :root {
-  --fs-display:  clamp(40px, 5vw, 56px);
-  --fs-h1:       clamp(28px, 3.5vw, 32px);
-  --fs-h2:       clamp(20px, 2.5vw, 24px);
+  --fs-display:  clamp(36px, 5vw, 52px);
+  --fs-h1:       clamp(26px, 3.5vw, 32px);
+  --fs-h2:       clamp(18px, 2.5vw, 22px);
   --fs-h3:       clamp(14px, 1.5vw, 16px);
   --fs-body:     clamp(14px, 1.2vw, 16px);
   --fs-body-sm:  clamp(12px, 1vw, 13px);
+  --fs-body-lg:  clamp(15px, 1.4vw, 17px);
+  --fs-body-xl:  clamp(16px, 1.7vw, 19px);
   --fs-label:    clamp(10px, 1vw, 11px);
-  --fs-metric:   clamp(24px, 2.5vw, 28px);
-  --fs-code:     clamp(13px, 1.1vw, 14px);
 }
 ```
 
@@ -186,8 +195,8 @@ Variable font (peso 200–800). Cobre todos os papéis: display, headlines, body
 
 - **Plus Jakarta Sans**: tudo — display, headlines, body, UI, overlines, labels, badges, botões, métricas, code
 - **Itálico nunca** — ênfase por peso (bold) ou cor (Âncora), nunca por inclinação
-- Métricas (+21%, +12%) sempre em `--fs-metric` / Plus Jakarta Sans 700
-- Os estilos `Label/label-caps` e `Metric/metric` do Figma usam Plus Jakarta Sans desde 13/11/2026 (antes Geist). `label-caps` é uppercase com 0,08em de tracking, como em `--fs-label` acima
+- Métricas (+21%, +12%) sempre em `--fs-h2` / Plus Jakarta Sans 700 / line height 1.4. Não existe `--fs-metric`: o Figma reusa o tamanho `size/h2`
+- Os estilos `Label/label-caps` e `Metric/metric` do Figma usam Plus Jakarta Sans desde 13/11/2026 (antes Geist). `label-caps` é uppercase, peso 400, 0,12em de tracking e line height 1.4, como em `--fs-label` acima. A classe pronta é `.text-label`
 
 ### Anti-padrões
 
@@ -704,10 +713,10 @@ Uso mínimo. O sistema é flat por princípio.
 }
 .card--case .metric-value {
   font-family: var(--font-body);
-  font-size: clamp(22px, 2.5vw, 28px);
+  font-size: var(--fs-h2);
   font-weight: 700;
   color: var(--color-anchor);
-  line-height: 1;
+  line-height: 1.4;
 }
 .card--case .metric-label {
   font-family: var(--font-body);
@@ -1074,7 +1083,7 @@ blockquote.quote cite {
   font-family: var(--font-body);
   font-size: 11px;
   font-style: normal;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-3);
   margin-top: var(--space-3);
@@ -1276,7 +1285,7 @@ pre.code-block code {
 .text-h3 {
   font-family: var(--font-body);
   font-size: var(--fs-h3);
-  font-weight: 600;
+  font-weight: 700; /* Figma: Bold. O reset.css do site ainda usa 600 (decisão aberta no CHANGELOG) */
   line-height: 1.4;
   color: var(--color-text-1);
 }
@@ -1297,16 +1306,17 @@ pre.code-block code {
 .text-label {
   font-family: var(--font-body);
   font-size: var(--fs-label);
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-3);
 }
 .text-metric {
   font-family: var(--font-display);
-  font-size: var(--fs-metric);
+  font-size: var(--fs-h2); /* Figma: Metric reusa size/h2. Não existe --fs-metric */
   font-weight: 700;
-  line-height: 1.0;
+  line-height: 1.4;
   color: var(--color-anchor);
 }
 [data-theme="dark"] .text-metric {
@@ -2376,7 +2386,7 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
   font-size: var(--fs-label);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   color: var(--color-text-3);
   white-space: nowrap;
   flex-shrink: 0;
@@ -2412,7 +2422,7 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
   margin-top: var(--space-5);
   font-family: var(--font-body);
   font-size: var(--fs-label);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-3);
 }
@@ -2463,7 +2473,7 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
   font-family: var(--font-body);
   font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.70);
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -2495,5 +2505,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.2 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.3 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

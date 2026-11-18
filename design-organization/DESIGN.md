@@ -201,7 +201,7 @@ typography:
     fontFamily: Plus Jakarta Sans
     fontSize: 17px
     fontWeight: 400
-    lineHeight: 1.75
+    lineHeight: 1.7
     # Fluid: clamp(15px, 1.4vw, 17px). Token --fs-body-lg. Use for hero body, case hero subtitle.
   body-xl:
     fontFamily: Plus Jakarta Sans
