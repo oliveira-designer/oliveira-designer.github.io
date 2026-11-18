@@ -5,6 +5,41 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6 · 13 de novembro de 2026 · Warning na família Solar e Scrim Strong (Figma, código e docs)
+
+Espelhamento no código e nos docs das mudanças do Figma Foundation de 13/11/2026 (MINOR).
+
+**Figma (Hope DS | Foundation)**
+- Warning passa para a família Solar. Light: `Background/Warning/Default` Solar #F5C842, `Background/Warning/Soft` Aurora #FEF8E0, `Text/Warning/Secondary` Dusk #8B6914, `Border/Warning/Default` Amber #C49A1F, `Text/Warning/On Warning` Ink. Dark: Default Solar, Soft `Night/aurora-soft` #2A2618, texto Solar, borda Amber.
+- O laranja #C47A1F fica só como primitivo `Functional/warning` (cor de status da marca), não é mais a cor do componente Warning.
+- Trade-off aceito: a borda Amber dá cerca de 2,5:1 sobre Aurora, abaixo de 3:1. A borda é decorativa.
+- Novo token `Background/Utilities/Scrim Strong`: #0D0D0F a 88%, igual em light e dark. O Scrim existente segue em 50% (light) e 65% (dark).
+- Choque do Trovão (senshi de atenção) passa de #E89A3D para Solar #F5C842. Os nomes poéticos são narrativa de marca, não nomes de token.
+- Estilos `Label/label-caps` e `Metric/metric` migram de Geist para Plus Jakarta Sans (Display, H1, H2, H3 e body-sm já tinham migrado).
+
+**Código (`css/`)**
+- `tokens.css`: `--color-bg-warning` Solar, `--color-bg-warning-soft` Aurora, `--color-text-warning` Dusk, `--color-border-warning` Amber; no dark, `--color-bg-warning-soft` passa a `--color-night-aurora-soft` e `--color-text-warning` a Solar. `--color-warning` e `--color-warning-deep` ficam como primitivos.
+- `tokens.css`: novo `--color-bg-scrim-strong` (rgba(13, 13, 15, 0.88)).
+- `components.css`: `.lightbox__backdrop` usa `--color-bg-scrim-strong` no lugar de `rgba(13, 13, 15, 0.88)` escrito à mão. Era o único uso desse valor.
+- Sem mudança visual no site: nenhum componente consome os tokens de Warning (só `.icon--warning`, sem uso nas páginas), e o `.banner--wip` já usava Aurora, Dusk e Amber. O Lightbox fica visualmente igual.
+- Conferido, sem mudança: nenhum Geist, Space Mono ou `--font-mono` nos CSS escritos à mão; Rampa Night (800 a 300) e Functional/derivadas já batiam com o Figma.
+
+**Documentação**
+- `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` v2.6: YAML e CSS de Warning e scrim, rampa Night completa no YAML, seção "Figma sync v2.6", Choque do Trovão igual ao Solar.
+- Regra de uso do Solar reescrita (decidida em 13/11/2026): acento da marca e do logo, e também permitido em elementos Warning, no Banner e no Solar Badge. Substitui "Solar só na marca/logo".
+- Contraste na família Solar documentado: Tinta sobre Solar 12,2:1 (o texto anterior dizia 11,5:1), Crepúsculo sobre Aurora 4,78:1, Crepúsculo sobre Solar 3,2:1 (não usar como texto).
+
+**Débitos que seguem abertos**
+- ~~Lightbox usa Neutral/ink a 88% e não o token Scrim.~~ Resolvido nesta versão com `Scrim Strong`.
+- O `badge-warning` do `DESIGN.md` e o `.badge--warning` do `DESIGN-IMPLEMENTATION.md` seguem em tons de laranja (#FAEDD8, #6B3F0A, #E8B775). Não há CSS equivalente no site. Decidir se o Badge Warning também vai para a família Solar.
+- Scrim escuro: o `tokens.css` usa rgba(0, 0, 0, 0.65) (como o CHANGELOG v2.2). Confirmar no Figma se o valor é esse ou #0D0D0F a 65%.
+- `.banner--wip` no dark usa `--color-daybreak` como texto; o novo `--color-text-warning` no dark é Solar. Migrar o Banner para os tokens de Warning muda essa cor no dark.
+- `--fs-metric` está documentado no `DESIGN-IMPLEMENTATION.md` mas não existe em `tokens.css` (nenhum CSS o usa).
+- `css/output.css` (gerado pelo Tailwind) traz a pilha monoespaçada padrão do Tailwind no preflight de `code, kbd, samp, pre`. Nenhuma página a usa (as classes do site definem `--font-body`), e o arquivo está defasado em relação a `tailwind.css`, então não foi regenerado.
+- `design-organization/hope-demo.html` segue com Instrument Serif, Space Mono e o laranja como Choque do Trovão (demo da v1, fora do escopo).
+
+---
+
 ## v2.5 (Figma) · novembro de 2026 · Separação da biblioteca de portfólio
 
 Escopo desta entrada: **Figma**. Sem mudança em código.
@@ -139,9 +174,9 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 - Banner com eixo de valor único (`Notice`): remover o eixo se não surgir um segundo tipo (regra 12.2 do `GOVERNANCE.md`).
 - Select sem variante aberta e Menu item sem ícone à esquerda: só entram quando houver uso.
 - Table e Card genérico: adiados por decisão de Renan.
-- Lightbox usa Neutral/ink a 88% e não o token Scrim: decidir se vale criar um token de scrim forte no Foundation.
+- ~~Lightbox usa Neutral/ink a 88% e não o token Scrim: decidir se vale criar um token de scrim forte no Foundation.~~ Resolvido em 13 de novembro de 2026 (v2.6): token `Scrim Strong`.
 - Confirmar que o Foundation com `Functional/success-deep` foi publicado (a revisão geral deixou isso como passo de publicação).
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.5 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.6 · novembro de 2026 · Renan Moura*
