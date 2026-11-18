@@ -1,5 +1,5 @@
 ---
-version: v2.4
+version: v2.6
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -31,7 +31,7 @@ colors:
 
   # --- Funcionais ---
   success: "#4A9F6B"
-  warning: "#C47A1F"
+  warning: "#C47A1F"  # v2.6: primitivo Functional/warning apenas. A família Warning dos componentes usa Solar
   error: "#B83434"
   info: "#634590"
   celebrate: "#F5A8C0"
@@ -94,7 +94,14 @@ colors:
 
   # --- v2.3 (Figma sync, nov/2026): primitivos novos ---
   # Nomes em inglês, como no Figma (Hope · Primitives) e em css/tokens.css.
+  # Rampa Night completa (dark mode), valores do Figma Foundation:
+  night-800: "#242438"
+  night-700: "#2E2E40"
+  night-600: "#4A4A60"
   night-500: "#69697E"
+  night-400: "#9090A8"
+  night-300: "#B4B4C8"
+  night-aurora-soft: "#2A2618"  # v2.6: fundo soft do Warning no dark
   night-warning-soft: "#2A1E10"
   night-info-soft: "#1E182A"
   success-deep: "#2A7347"
@@ -108,11 +115,13 @@ colors:
   text-on-disabled: "#9090A8"
   border-disabled: "{colors.border-base}"
   bg-scrim: "rgba(13, 13, 15, 0.5)"
-  bg-warning: "{colors.warning}"
-  bg-warning-soft: "rgba(196, 122, 31, 0.12)"
-  text-warning: "{colors.warning-deep}"
+  bg-scrim-strong: "rgba(13, 13, 15, 0.88)"  # v2.6: igual em light e dark. Usado no Lightbox
+  # v2.6: Warning na família Solar (decisão de 13/11/2026)
+  bg-warning: "{colors.solar}"
+  bg-warning-soft: "{colors.aurora}"
+  text-warning: "{colors.dusk}"
   text-on-warning: "{colors.ink}"
-  border-warning: "{colors.warning}"
+  border-warning: "{colors.amber}"  # cerca de 2,5:1 sobre Aurora: aceito, a borda é decorativa
   bg-info: "{colors.info}"
   bg-info-soft: "rgba(99, 69, 144, 0.10)"
   text-info: "{colors.info}"
@@ -129,8 +138,8 @@ colors:
   text-on-disabled-dark: "{colors.night-500}"
   border-disabled-dark: "#2E2E40"
   bg-scrim-dark: "rgba(0, 0, 0, 0.65)"
-  bg-warning-soft-dark: "{colors.night-warning-soft}"
-  text-warning-dark: "{colors.warning}"
+  bg-warning-soft-dark: "{colors.night-aurora-soft}"
+  text-warning-dark: "{colors.solar}"
   bg-info-soft-dark: "{colors.night-info-soft}"
   text-info-dark: "{colors.info-light}"
   text-success-dark: "{colors.success}"
@@ -246,7 +255,7 @@ motion:
   transition-atmospheric: opacity 600ms cubic-bezier(0.65, 0, 0.35, 1)
 
 components:
-  # --- Botões (como no CSS: preto é a ação primária; Solar só na marca) ---
+  # --- Botões (como no CSS: preto é a ação primária; Solar é acento de marca, ver regra de uso do Solar em Colors) ---
   button-primary:
     backgroundColor: "{colors.ink}"
     textColor: "{colors.cloud}"
@@ -413,7 +422,7 @@ components:
   # Full-screen image zoom modal. .is-zoomable triggers; .is-open toggles.
   # prefers-reduced-motion: skip scale, keep fade.
   lightbox:
-    backgroundColor: "rgba(13,13,15,0.88)"
+    backgroundColor: "{colors.bg-scrim-strong}"
 
   # --- skill-card--metric ---
   # Dark-bg metric card. Sprint 2 spec: background-color: var(--color-ink);
@@ -516,7 +525,7 @@ A paleta é organizada em quatro famílias nomeadas. Cada cor tem papel — não
 **Funcionais** — as cinco senshi (referência camada a animes 90s).
 
 - **Folha Navalha (#4A9F6B):** sucesso, confirmação
-- **Choque do Trovão (#C47A1F):** atenção, alerta
+- **Choque do Trovão (#F5C842, igual ao Solar):** atenção, alerta. Desde 13/11/2026 a senshi de atenção é o Solar (antes #E89A3D, depois #C47A1F). O laranja #C47A1F segue só como primitivo `Functional/warning`, cor de status da marca, e não é mais a cor dos componentes Warning
 - **Marte (#B83434):** erro, crítico
 - **Saturno (#634590):** informação, contexto
 - **Lua (#F5A8C0):** celebração, marcos. Uso raro — quando aparece, significa algo
@@ -527,6 +536,8 @@ A paleta é organizada em quatro famílias nomeadas. Cada cor tem papel — não
 - **Lua nunca como cor de texto** — apenas fundo de badges ou destaques
 - Solar e Âncora coexistem mas não competem em uma mesma seção
 - Em dark mode, Solar substitui Âncora como cor de link (melhor contraste sobre Abismo)
+- **Uso do Solar** (decidido em 13/11/2026; substitui a regra "Solar só na marca/logo"): Solar é o acento da marca e do logo, e também pode aparecer em elementos Warning, no Banner e no Solar Badge. Fora desses casos, Solar não vira cor de UI funcional: o preto segue como ação primária e o Âncora como estrutura
+- Contraste na família Solar: Tinta sobre Solar 12,2:1 e Crepúsculo sobre Aurora 4,78:1 passam para texto de corpo. Crepúsculo sobre Solar dá só 3,2:1, então não use como texto sobre Solar. Texto sobre Solar ou Aurora é sempre Tinta ou Crepúsculo (este só sobre Aurora ou branco)
 
 ### Cores de família — uso narrativo
 
@@ -924,21 +935,29 @@ Estados obrigatórios: `default`, `hover` (borda mais escura), `focus-visible` (
 
 Sempre acompanhado de label visível ou `aria-label`. Helper text e error message em `body-sm`.
 
-## Figma sync v2.3 e v2.4 (novembro de 2026)
+## Figma sync v2.3, v2.4 e v2.6 (novembro de 2026)
 
 Esta seção espelha o que mudou no Figma (Hope DS | Foundation e Core Components) e já está refletido em `css/tokens.css`. O histórico completo está em `CHANGELOG.md`.
 
 ### Tokens novos
 
 - **Estados disabled:** `bg-disabled`, `text-disabled`, `text-on-disabled`, `border-disabled` e o primitivo `night-500` (#69697E). O estado disabled vem destes tokens, nunca de `opacity`. Migrado no CSS (`.btn:disabled`, `.case-card__action--disabled`).
-- **Status:** famílias Warning e Info completas (fundo sólido, fundo soft, texto, texto sobre sólido, borda), mais `text-success`, `text-error`, `border-success` e `border-error`. Fundos sólidos de Warning e Info não mudam entre temas, porque o texto "On" é fixo.
-- **Scrim:** `bg-scrim` (Light rgba(13,13,15,0.5), Dark rgba(0,0,0,0.65)) para o fundo atrás de modais e drawers. O `Overlay` de vidro (glass) não serve como scrim.
+- **Status:** famílias Warning e Info completas (fundo sólido, fundo soft, texto, texto sobre sólido, borda), mais `text-success`, `text-error`, `border-success` e `border-error`. Fundos sólidos de Warning e Info não mudam entre temas, porque o texto "On" é fixo. A família Warning passou para o Solar na v2.6 (ver abaixo).
+- **Scrim:** `bg-scrim` (Light rgba(13,13,15,0.5), Dark rgba(0,0,0,0.65)) para o fundo atrás de modais e drawers. O `Overlay` de vidro (glass) não serve como scrim. Desde a v2.6 existe também `bg-scrim-strong` (88%) para foco em imagem.
 - **Correções de contraste (calculadas, WCAG):**
   - Dark, texto e borda de erro: `error-light` (#F28585), 6,88:1 sobre o fundo padrão (antes 2,91:1).
   - Dark, contorno de controle (`border-strong-dark`): `night-500`, 3,19:1 sobre o fundo padrão (antes 1,98:1). Sobre o fundo secundário dá 2,83:1, abaixo de 3:1 (débito conhecido).
   - Light, texto de sucesso: `success-deep` (#2A7347), 5,77:1 sobre branco (antes 3,25:1). Aplicado no `.badge--success`.
-  - Light, texto de warning: `warning-deep` (#94540A), 5,94:1. Dark, texto de info: `info-light` (#B89EDB).
+  - Light, texto de warning: era `warning-deep` (#94540A, 5,94:1), passou a `dusk` (#8B6914) na v2.6, 4,78:1 sobre Aurora. Dark, texto de info: `info-light` (#B89EDB).
 - **Cor de ícone (`--icon-color`):** no Figma, os ícones Phosphor usam uma variável única `Icon/Color` (coleção `Hope · Icon`, 10 modos que apontam para tokens de texto). O modo é definido no contêiner do ícone, nunca na instância. No CSS ainda não há equivalente; os SVGs herdam `currentColor`, então definir `color` no contêiner basta.
+
+### Figma sync v2.6 (13 de novembro de 2026)
+
+- **Warning na família Solar.** Light: fundo `solar` (#F5C842), soft `aurora` (#FEF8E0), texto `dusk` (#8B6914), borda `amber` (#C49A1F), texto sobre Warning `ink`. Dark: fundo `solar`, soft `night-aurora-soft` (#2A2618), texto `solar`, borda `amber`. O laranja #C47A1F fica só como primitivo `Functional/warning`. A borda Amber dá cerca de 2,5:1 sobre Aurora, abaixo de 3:1: trade-off aceito, a borda é decorativa.
+- **Scrim Strong.** `bg-scrim-strong` = #0D0D0F a 88%, igual em light e dark, ao lado do `bg-scrim` (50% no light, 65% no dark). O Lightbox usa este token, no lugar de Tinta com 0,88 de opacidade. Era o único uso desse valor.
+- **Choque do Trovão = Solar.** A senshi de atenção deixou de ser laranja. Os nomes poéticos (Folha Navalha, Choque do Trovão, Marte, Saturno, Lua) são narrativa de marca, não nomes de token.
+- **Tipografia.** Os estilos de texto `Label/label-caps` e `Metric/metric` do Figma migraram de Geist para Plus Jakarta Sans (Display, H1, H2, H3 e body-sm já tinham migrado). O código já usava só Plus Jakarta Sans, então não houve mudança de CSS.
+- **Conferência de valores (sem mudança).** Rampa Night (800 a 300) e famílias Functional e derivadas (`success-deep`, `error-light`, `info-light`, `warning-deep`) já existiam em `tokens.css` com os mesmos valores do Figma.
 
 ### Componentes novos no Figma (sem CSS ainda)
 
@@ -984,4 +1003,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.4 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.6 · novembro de 2026 · Renan Moura*
