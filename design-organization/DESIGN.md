@@ -1,5 +1,5 @@
 ---
-version: v2.6.2
+version: v2.6.3
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -147,9 +147,11 @@ colors:
   border-error-dark: "{colors.error-light}"
 
 typography:
+  # v2.6.3 (18/11/2026): a escala segue os estilos de texto do Figma Foundation.
+  # Os tamanhos abaixo são o valor máximo do Figma. No código, os tokens --fs-* são fluidos (clamp) e chegam a esse máximo.
   display:
     fontFamily: Plus Jakarta Sans
-    fontSize: 3.5rem
+    fontSize: 3.25rem  # 52px. Fluido no código: clamp(36px, 5vw, 52px)
     fontWeight: 700
     lineHeight: 1.1
     letterSpacing: -0.02em
@@ -161,14 +163,14 @@ typography:
     letterSpacing: -0.01em
   h2:
     fontFamily: Plus Jakarta Sans
-    fontSize: 1.5rem
+    fontSize: 1.375rem  # 22px. Fluido no código: clamp(18px, 2.5vw, 22px)
     fontWeight: 700
     lineHeight: 1.3
     letterSpacing: -0.01em
   h3:
     fontFamily: Plus Jakarta Sans
     fontSize: 1rem
-    fontWeight: 600
+    fontWeight: 700  # Figma: Bold. O CSS de .text-h3 ainda usa 600 (diferença registrada no CHANGELOG)
     lineHeight: 1.4
   body:
     fontFamily: Plus Jakarta Sans
@@ -180,17 +182,21 @@ typography:
     fontSize: 0.8125rem
     fontWeight: 400
     lineHeight: 1.6
+  body-xs:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 0.6875rem  # 11px. Estilo do Figma (Body xs). Sem token --fs-* no código ainda
+    lineHeight: 1.6
   label-caps:
     fontFamily: Plus Jakarta Sans
-    fontSize: 0.6875rem
-    fontWeight: 500
+    fontSize: 0.6875rem  # 11px. Fluido no código: --fs-label, clamp(10px, 1vw, 11px)
+    fontWeight: 400
     lineHeight: 1.4
-    letterSpacing: 0.08em
+    letterSpacing: 0.12em  # Figma: 12%. Sempre uppercase. Classe pronta: .text-label (reset.css)
   metric:
     fontFamily: Plus Jakarta Sans
-    fontSize: 1.625rem
+    fontSize: 1.375rem  # 22px. Usa o mesmo token de tamanho do h2 (--fs-h2). Não existe --fs-metric
     fontWeight: 700
-    lineHeight: 1.0
+    lineHeight: 1.4
   body-lg:
     fontFamily: Plus Jakarta Sans
     fontSize: 17px
@@ -203,6 +209,7 @@ typography:
     fontWeight: 400
     lineHeight: 1.7
     # Fluid: clamp(16px, 1.7vw, 19px). Token --fs-body-xl. Use for case lead text.
+    # É o valor do estilo Body lg (size/lead) do Figma: 19px, 170%.
   code:
     fontFamily: "Plus Jakarta Sans, sans-serif"
     fontSize: 0.875rem
@@ -652,7 +659,9 @@ Cada tema novo é apenas mais um conjunto de valores para os mesmos slots semân
 
 Uma fonte, um papel. Plus Jakarta Sans cobre tudo — display, headlines, body, UI, métricas, labels e code.
 
-**Plus Jakarta Sans** — sans-serif humanista e calorosa. Variable font (peso 200–800), disponível como `PlusJakartaSans-VariableFont_wght.ttf`. Labels técnicas (overline, métricas) usam `text-transform: uppercase` + `letter-spacing: 0.08em` para simular o registro técnico, sem precisar de uma face monoespaçada.
+**Plus Jakarta Sans** — sans-serif humanista e calorosa. Variable font (peso 200–800), disponível como `PlusJakartaSans-VariableFont_wght.ttf`. Labels técnicas (overline, metadata) usam `text-transform: uppercase` + `letter-spacing: 0.12em` (Label caps do Figma) para simular o registro técnico, sem precisar de uma face monoespaçada.
+
+**A escala tipográfica segue os estilos de texto do Figma Foundation** (decisão de 18/11/2026). Onde o Figma e este arquivo divergirem, vale o Figma.
 
 ### Escala
 
@@ -666,20 +675,40 @@ Uma fonte, um papel. Plus Jakarta Sans cobre tudo — display, headlines, body, 
 | `body-sm` | Plus Jakarta Sans | Corpo em UI compacta, botões |
 | `body-lg` | Plus Jakarta Sans | Hero body, case hero subtitle — `clamp(15px, 1.4vw, 17px)` |
 | `body-xl` | Plus Jakarta Sans | Case lead text — `clamp(16px, 1.7vw, 19px)` |
-| `label-caps` | Plus Jakarta Sans | Overline, metadata (uppercase, 500) |
-| `metric` | Plus Jakarta Sans | Números, métricas (+21%, +12%) — 700 em Âncora/Solar |
+| `body-xs` | Plus Jakarta Sans | Texto mínimo (11px). Sem token `--fs-*` ainda |
+| `label-caps` | Plus Jakarta Sans | Overline, metadata (uppercase, 400, 0.12em) |
+| `metric` | Plus Jakarta Sans | Números, métricas (+21%, +12%), 700 em Âncora/Solar, no tamanho do `--fs-h2` |
 | `code` | Plus Jakarta Sans | Code inline e blocks |
+
+### Estilos de texto do Figma (Foundation)
+
+Valores de referência. O tamanho é o máximo: no código, os tokens `--fs-*` são fluidos e chegam a esse valor.
+
+| Estilo | Tamanho | Line height | Tracking | Peso | Token de tamanho no código |
+|--------|---------|-------------|----------|------|----------------------------|
+| Display | 52px | 110% | -2% | Bold | `--fs-display` (36 a 52px) |
+| H1 | 32px | 120% | -1% | Bold | `--fs-h1` (26 a 32px) |
+| H2 | 22px | 130% | -1% | Bold | `--fs-h2` (18 a 22px) |
+| H3 | 16px | 140% | 0 | Bold | `--fs-h3` (14 a 16px) |
+| Body | 16px | 175% | | | `--fs-body` (14 a 16px) |
+| Body lg (`size/lead`) | 19px | 170% | | | `--fs-body-xl` (16 a 19px) |
+| Body sm | 13px | 160% | | | `--fs-body-sm` (12 a 13px) |
+| Body xs | 11px | 160% | | | nenhum |
+| Label caps | 11px | 140% | 12%, uppercase | Regular | `--fs-label` (10 a 11px) |
+| Metric | 22px | 140% | | Bold | `--fs-h2`, sem token próprio |
+
+O Figma não tem o equivalente do `--fs-body-lg` do código (17px). A decisão sobre ele está aberta no CHANGELOG.
 
 ### Regras
 
 - **Plus Jakarta Sans**: tudo — display, headlines, body, UI, overlines, labels, métricas, code
 - **Itálico nunca** — ênfase é feita por peso (bold) ou cor (Âncora), nunca por inclinação
-- Métricas (+21%, +12%) sempre em Plus Jakarta Sans 700 com cor Âncora (light) ou Solar (dark)
+- Métricas (+21%, +12%) sempre em Plus Jakarta Sans 700 com cor Âncora (light) ou Solar (dark), no tamanho `--fs-h2` e line height 1.4. Não existe `--fs-metric`
 - Em mobile, todas as escalas reduzem proporcionalmente via `clamp()`
 
 ### Tracking (letter-spacing) — nota do skill `apple-design`
 
-O skill `apple-design` (§15) recomenda tracking específico por tamanho: negativo em display/headlines (letras "respiram" demais quando grandes), positivo em labels pequenas (legibilidade). **A prática já existe no CSS** — `layout.css`/`components.css` usam `letter-spacing: -0.01em` a `-0.02em` em títulos grandes e `0.05em` a `0.14em` em overlines/labels uppercase, caso a caso. O que falta é formalizar isso como tokens amarrados à escala `--fs-*` (ex.: `--tracking-display`, `--tracking-label-caps`), em vez de repetir o valor em cada seletor.
+O skill `apple-design` (§15) recomenda tracking específico por tamanho: negativo em display/headlines (letras "respiram" demais quando grandes), positivo em labels pequenas (legibilidade). **A prática já existe no CSS** — `layout.css`/`components.css` usam `letter-spacing: -0.01em` a `-0.02em` em títulos grandes e `0.12em` nas labels uppercase (Label caps do Figma, alinhado em 18/11/2026; antes variava de `0.05em` a `0.14em`). O que falta é formalizar isso como tokens amarrados à escala `--fs-*` (ex.: `--tracking-display`, `--tracking-label-caps`), em vez de repetir o valor em cada seletor.
 
 Não formalizado nesta fase — os valores hand-tuned atuais já seguem a régua certa e uma tokenização recolheria ~20 declarações espalhadas em `layout.css` sozinho; vale como item futuro, não como correção de algo errado hoje.
 
@@ -1006,4 +1035,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.6.2 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.6.3 · novembro de 2026 · Renan Moura*
