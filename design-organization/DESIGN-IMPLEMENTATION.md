@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.4 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.6 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.6 (MINOR, 13/11/2026)**: Warning passa para a família Solar (`--color-bg-warning` Solar, `--color-bg-warning-soft` Aurora, `--color-text-warning` Dusk, `--color-border-warning` Amber; no dark, soft `--color-night-aurora-soft` e texto Solar). `--color-warning` (#C47A1F) fica só como primitivo Functional. Novo token `--color-bg-scrim-strong` (#0D0D0F a 88%, igual nos dois temas), usado pelo `.lightbox__backdrop`. Regra de uso do Solar reescrita (marca, Warning, Banner, Solar Badge). Tipografia: `label-caps` e `metric` do Figma migraram de Geist para Plus Jakarta Sans, sem mudança de CSS.
 
 **Changelog v2.4 (MINOR, nov/2026)**: Tokens `--icon-color-*` e classes `.icon--<papel>` (equivalente do `Icon/Color` do Figma). Tipografia reescrita para uma única família (Plus Jakarta Sans). Nomes de tokens e classes em inglês (`--color-anchor`, `.badge--anchor`, `--color-bg-neutral-hover`), alinhados ao CSS e ao Figma. `--font-mono` removido dos exemplos.
 
@@ -183,6 +185,7 @@ Variable font (peso 200–800). Cobre todos os papéis: display, headlines, body
 - **Plus Jakarta Sans**: tudo — display, headlines, body, UI, overlines, labels, badges, botões, métricas, code
 - **Itálico nunca** — ênfase por peso (bold) ou cor (Âncora), nunca por inclinação
 - Métricas (+21%, +12%) sempre em `--fs-metric` / Plus Jakarta Sans 700
+- Os estilos `Label/label-caps` e `Metric/metric` do Figma usam Plus Jakarta Sans desde 13/11/2026 (antes Geist). `label-caps` é uppercase com 0,08em de tracking, como em `--fs-label` acima
 
 ### Anti-padrões
 
@@ -221,7 +224,7 @@ Variable font (peso 200–800). Cobre todos os papéis: display, headlines, body
 
   /* --- Funcionais (cinco senshi) --- */
   --color-success: #4A9F6B; /* AJUSTADO de #6BBF8A para contraste */
-  --color-warning: #C47A1F; /* AJUSTADO de #E89A3D para contraste */
+  --color-warning: #C47A1F; /* AJUSTADO de #E89A3D para contraste. Primitivo Functional apenas desde 13/11/2026: a família Warning dos componentes usa Solar */
   --color-error:         #B83434; /* AJUSTADO de #D44545 para contraste */
   --color-info:       #634590; /* AJUSTADO de #7B5BA8 para contraste */
   --color-celebrate:           #F5A8C0; /* Mantida — uso só em destaque, não em texto */
@@ -310,7 +313,11 @@ Variable font (peso 200–800). Cobre todos os papéis: display, headlines, body
 | Nuvem sobre Âncora | 6.2:1 | AA |
 | Nuvem sobre Abismo | 16.8:1 | AAA |
 | Solar sobre Abismo | 11.2:1 | AAA |
-| Tinta sobre Solar | 11.5:1 | AAA |
+| Tinta sobre Solar | 12.2:1 | AAA |
+| Crepúsculo (#8B6914) sobre Aurora | 4.78:1 | AA |
+| Solar sobre Night/aurora-soft (#2A2618) | 9.52:1 | AAA |
+| Crepúsculo sobre Solar | 3.2:1 | Não usar como texto |
+| Âmbar (#C49A1F) sobre Aurora | 2.47:1 | Só borda decorativa (aceito) |
 
 **Regras de contraste**:
 - Texto em corpo nunca abaixo de 4.5:1 (use Sombra, Mudo ajustado ou Tinta)
@@ -320,6 +327,7 @@ Variable font (peso 200–800). Cobre todos os papéis: display, headlines, body
 
 ### Filosofia
 - **Solar** representa esperança e movimento — quente, luminoso, o novo dia
+- **Uso do Solar** (decidido em 13/11/2026): acento da marca e do logo, e também permitido em elementos Warning, no Banner e no Solar Badge. Não vira cor de UI funcional fora disso (o preto é a ação primária)
 - **Âncora** representa estrutura e sistema — frio, preciso, permanente
 - Os dois acentos coexistem sem disputar
 - **Lua** é reservada para marcos e celebrações — aparece raramente
@@ -336,7 +344,7 @@ Espelham o Figma (Hope DS | Foundation). Valores em `css/tokens.css`.
 --color-night-warning-soft: #2A1E10;
 --color-night-info-soft:    #1E182A;
 --color-success-deep: #2A7347;  /* texto de sucesso no light, 5,77:1 sobre branco */
---color-warning-deep: #94540A;  /* texto de warning no light, 5,94:1 */
+--color-warning-deep: #94540A;  /* derivado do Functional/warning, 5,94:1 sobre branco. Não é mais o texto do Warning (v2.6) */
 --color-error-light:  #F28585;  /* texto e borda de erro no dark, 6,88:1 */
 --color-info-light:   #B89EDB;  /* texto de info no dark, 7,3:1 */
 
@@ -346,12 +354,21 @@ Espelham o Figma (Hope DS | Foundation). Valores em `css/tokens.css`.
 --color-text-on-disabled: var(--color-night-400);     /* dark: night-500 */
 --color-border-disabled:  var(--color-border-base);   /* dark: night-700 */
 --color-bg-scrim: rgba(13, 13, 15, 0.5);              /* dark: rgba(0,0,0,0.65) */
+--color-bg-scrim-strong: rgba(13, 13, 15, 0.88);      /* v2.6: igual nos dois temas. Foco em imagem (Lightbox) */
+
+/* Warning na família Solar (v2.6) */
+--color-bg-warning:      var(--color-solar);          /* igual nos dois temas */
+--color-bg-warning-soft: var(--color-aurora);         /* dark: night-aurora-soft (#2A2618) */
+--color-text-warning:    var(--color-dusk);           /* dark: solar */
+--color-text-on-warning: var(--color-ink);
+--color-border-warning:  var(--color-amber);          /* cerca de 2,5:1 sobre Aurora: aceito, decorativo */
+
 --color-text-success: var(--color-success-deep);      /* dark: success */
 --color-text-error:   var(--color-error);             /* dark: error-light */
 --color-border-error: var(--color-error);             /* dark: error-light */
 ```
 
-Regras: disabled nunca usa `opacity`; texto de status usa `--color-text-*`, não o primitivo `--color-success` ou `--color-error`; scrim é `--color-bg-scrim`, não `--color-material-*` (que é vidro).
+Regras: disabled nunca usa `opacity`; texto de status usa `--color-text-*`, não o primitivo `--color-success` ou `--color-error`; scrim é `--color-bg-scrim` (modais e drawers) ou `--color-bg-scrim-strong` (quando a imagem é o foco, como no Lightbox), nunca `--color-material-*` (que é vidro). Não escreva `rgba(13, 13, 15, 0.88)` à mão.
 
 ---
 
@@ -2233,7 +2250,7 @@ JS: adiciona `.is-open` para abrir; `.is-zoomable` nas imagens aciona cursor zoo
 .lightbox__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(13, 13, 15, 0.88);
+  background: var(--color-bg-scrim-strong);
   -webkit-backdrop-filter: blur(12px);
           backdrop-filter: blur(12px);
 }
@@ -2473,5 +2490,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.4 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*
