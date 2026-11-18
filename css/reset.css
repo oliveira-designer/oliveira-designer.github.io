@@ -177,7 +177,7 @@ p { max-width: 70ch; }
 .text-h3 {
   font-family: var(--font-body);
   font-size: var(--fs-h3);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.4;
 }
 
