@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.6.5 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.6.6 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.6.6 (PATCH, 18/11/2026)**: `.hero__body` e `.case-hero__subtitle` passam de `--fs-body-xl` para `--fs-body` (Body, 16px no máximo, line height 1,75). Decisão de 18/11/2026: o lead de 19px ficou grande demais no hero. As duas regras usam Body, não Body lg, de propósito. `--fs-body` não foi alterado.
 
 **Changelog v2.6.5 (PATCH, 18/11/2026)**: `.hero__body` e `.case-hero__subtitle` passam de `--fs-body-lg` para `--fs-body-xl` (lead de 19px, line height 1,7). `--fs-body-lg` removido, porque o Figma não tem 17px. O changelog v2.2 abaixo cita o token como era na época.
 
@@ -170,8 +172,8 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
 | `--fs-h1` | Plus Jakarta Sans | 26–32px | 700 | 1.2 | -0.01em | Título de página, case study |
 | `--fs-h2` | Plus Jakarta Sans | 18–22px | 700 | 1.3 | -0.01em | Subtítulo de seção. Também é o tamanho de Metric |
 | `--fs-h3` | Plus Jakarta Sans | 14–16px | 700 | 1.4 | 0 | Subseção, label de grupo |
-| `--fs-body` | Plus Jakarta Sans | 14–16px | 400 | 1.75 | 0 | Parágrafos, texto corrido |
-| `--fs-body-xl` | Plus Jakarta Sans | 16–19px | 400 | 1.7 | 0 | Lead: hero body, case hero subtitle, case lead text. É o Body lg (`size/lead`, 19px) do Figma |
+| `--fs-body` | Plus Jakarta Sans | 14–16px | 400 | 1.75 | 0 | Parágrafos, texto corrido. Também `.hero__body` e `.case-hero__subtitle`, de propósito (não usam Body lg) |
+| `--fs-body-xl` | Plus Jakarta Sans | 16–19px | 400 | 1.7 | 0 | Case lead text. É o Body lg (`size/lead`, 19px) do Figma |
 | `--fs-body-sm` | Plus Jakarta Sans | 12–13px | 400 | 1.6 | 0 | Body em UI compacta |
 | `--fs-body-xs` | Plus Jakarta Sans | 11px fixo | 400 | 1.6 | 0 | Texto mínimo (Body xs do Figma) |
 | `--fs-label` | Plus Jakarta Sans | 11px fixo | 400 | 1.4 | 0.12em | Label caps: overlines, metadata (uppercase) |
@@ -2509,5 +2511,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.5 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.6 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

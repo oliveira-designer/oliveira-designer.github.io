@@ -5,6 +5,29 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.6 · 18 de novembro de 2026 · Hero e subtítulo dos cases em Body, não em Body lg (docs e código, PATCH)
+
+Decisão de 18/11/2026: o lead de 19px (`--fs-body-xl`) ficou grande demais no hero. `.hero__body` e `.case-hero__subtitle` passam de `--fs-body-xl` para `--fs-body`, com line height 1,75 (era 1,7). **Essas duas regras usam Body, não Body lg, de propósito.** O `--fs-body` não foi alterado: `clamp(14px, 1.2vw, 16px)`, fluido, mínimo 14px (até cerca de 1167px de largura) e máximo 16px (a partir de cerca de 1333px). Em 1280px renderiza 15,36px. O `--fs-body-xl` continua existindo e vale para o lead dos cases (`.case-lead__text`). Isso substitui a migração da v2.6.5 para essas duas regras.
+
+**Antes (v2.6.5, `--fs-body-xl`) e depois (`--fs-body`): tamanho e número de linhas**
+
+| Página | 390px | 1024px | 1280px |
+|--------|-------|--------|--------|
+| `index` (2 parágrafos do hero) | 16 para 14px, 2L e 2L, igual | 17,4 para 14px, 1L e 1L, igual | 19 para 15,4px: **1º parágrafo 2L para 1L**, 2º igual (1L) |
+| `about` (3 parágrafos) | 16 para 14px: 5L e 5L iguais, **3º 3L para 2L** | 17,4 para 14px: **1º e 2º 3L para 2L**, 3º igual (1L) | 19 para 15,4px: 3L e 3L iguais, **3º 2L para 1L** |
+| `dotz` (subtítulo) | 16 para 14px, 4L, igual | 17,4 para 14px, 2L, igual | 19 para 15,4px, 2L, igual |
+| `sb-home-redesign` (subtítulo) | 16 para 14px, 4L, igual | 17,4 para 14px, 2L, igual | 19 para 15,4px, 2L, igual |
+| `cloud-cost-intelligence` (subtítulo) | 16 para 14px, 3L, igual | 17,4 para 14px, 2L, igual | 19 para 15,4px, 2L, igual |
+
+- Tamanho renderizado agora: 14px em 390px e em 1024px, 15,36px em 1280px, com line height 1,75. Em relação ao original (antes da v2.6.5, `--fs-body-lg`) fica 1px menor em 390px e 1024px (15 para 14px) e 1,64px menor em 1280px (17 para 15,36px).
+- Linhas: 5 parágrafos perdem uma linha (index e `about`) e nenhum ganha. Sem overflow horizontal, sem erros de console, sem mudança de cor.
+
+**Docs:** `DESIGN.md`, `DESIGN-IMPLEMENTATION.md`, `hope-demo.html` e `design-system.html` v2.6.6: `body-xl` volta a ser só o lead dos cases; `body` registra que o hero e o subtítulo dos cases usam Body de propósito. No `design-system.html`, a amostra do `--fs-body` passou de line height 1,65 para 1,75 (Figma Body).
+
+**Débitos:** sem mudança. Segue aberto, "a discutir", o peso das labels uppercase.
+
+---
+
 ## v2.6.5 · 18 de novembro de 2026 · Lead de 19px no hero e nos cases, `--fs-body-lg` removido (docs e código, PATCH)
 
 Decisão de 18/11/2026 (opção A): `.hero__body` e `.case-hero__subtitle` passam de `--fs-body-lg` para `--fs-body-xl`, o lead de 19px do Figma (Body lg, `size/lead`), com o mesmo line height 1,7 e o mesmo comportamento fluido do token (`clamp(16px, 1.7vw, 19px)`). O `--fs-body-lg` (17px no desktop) foi removido de `tokens.css`, porque o Figma não tem esse tamanho. Era usado só por essas duas regras.
@@ -292,4 +315,4 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.6.5 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.6.6 · novembro de 2026 · Renan Moura*
