@@ -186,7 +186,8 @@
   --fs-body-sm: clamp(12px, 1vw, 13px);
   --fs-body-lg: clamp(15px, 1.4vw, 17px);   /* hero body, case hero subtitle */
   --fs-body-xl: clamp(16px, 1.7vw, 19px);   /* case lead text, pivot lead text */
-  --fs-label:   clamp(10px, 1vw, 11px);
+  --fs-body-xs: 11px;                       /* Figma Body xs: fixed, not fluid */
+  --fs-label:   11px;                       /* Figma Label caps: fixed, not fluid */
 
   /* ----------------------------------------------------------
      SPACING — 4px base scale
