@@ -19,8 +19,8 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 **Débitos (só relatório, sem alteração)**
 - **A discutir:** peso das labels uppercase. Em uso: 400 na maioria (overlines, `dt`, números de seção, rótulos do `persona`), 500 no `.case-card__eyebrow` (só no `design-system.html`) e no `.badge--draft` (12,8px), 600 no `.header__status-badge` (10px, oculto) e 700 no `.case-phase-break__label` (nos 3 cases, 9 rótulos), o único em negrito em páginas de produção. `.team-section__title` renderiza em 15,36px (uppercase com 0,12em), não 11px, por causa de uma regra mais específica.
-- **`--fs-body` fluido contra o Body fixo de 16px do Figma.** Hoje `clamp(14px, 1.2vw, 16px)`: 14px até cerca de 1167px e 16px só a partir de cerca de 1333px. Fixar em 16px aumenta a página em 4 a 10% de altura em 390px e faz até 35 elementos por página ganharem linha. Sem overflow horizontal. Medições completas no relatório desta entrega.
-- `.about-bridge__headline` (só no `index`): 36 / 24px, tracking -0,02em. Como `--fs-h1` (32 / 26px, 1,2, -0,01em) ficaria com as mesmas 2 linhas em 390, 1024 e 1280px, 4 a 9px mais baixo e sem overflow.
+- **`--fs-body` fluido contra o Body fixo de 16px do Figma.** Hoje `clamp(14px, 1.2vw, 16px)`: 14px até cerca de 1167px e 16px só a partir de cerca de 1333px. Fixar em 16px aumenta a página em 5 a 11% de altura em 390px e faz até 35 elementos por página ganharem linha. Sem overflow horizontal. Medições completas no relatório desta entrega.
+- `.about-bridge__headline` (só no `index`): 36 / 24px, tracking -0,02em. Como `--fs-h1` (32 / 26px, 1,2, -0,01em) ficaria com as mesmas 2 linhas em 390, 1024 e 1280px, sem overflow. A altura muda de 55,9 para 60,5px em 390px (4,6px mais alto, porque 24 vira 26px) e de 83,5 / 83,8 para 74,5px em 1024 / 1280px (cerca de 9px mais baixo).
 - `.about-split__quote-text` (sem uso nas páginas): 18 a 26px, peso 400, **itálico**, line height 1,55, tracking -0,01em. O itálico contradiz a regra "Itálico nunca" dos docs.
 - `.case-lead__text`: line height renderizado 1,75 contra 1,7 do Figma (ver acima).
 
