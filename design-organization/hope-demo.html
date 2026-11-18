@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   Hope Design System demo
-  Derived demo, 18/11/2026. Reflects DESIGN.md v2.6.2 and DESIGN-IMPLEMENTATION.md v2.6.2.
+  Derived demo, 18/11/2026. Reflects DESIGN.md v2.6.3 and DESIGN-IMPLEMENTATION.md v2.6.3.
   Links the real css/tokens.css, css/reset.css and css/components.css.
   Only the demo's own layout styles live inline (classes prefixed "demo-").
   Token values shown on the page are read from tokens.css at load, not copied.
@@ -152,22 +152,6 @@
     @media (max-width: 640px) { .demo-type-row { grid-template-columns: 1fr; gap: var(--space-2); } }
     .demo-type-meta { font-size: var(--fs-label); line-height: 1.6; color: var(--color-text-3); }
     .demo-type-meta strong { display: block; font-size: var(--fs-body-sm); color: var(--color-text-1); font-weight: 700; }
-    .demo-label-caps {
-      font-family: var(--font-body);
-      font-size: var(--fs-label);
-      font-weight: 500;
-      line-height: 1.4;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-text-3);
-    }
-    .demo-metric {
-      font-family: var(--font-body);
-      font-size: 1.625rem;
-      font-weight: 700;
-      line-height: 1;
-      color: var(--color-accent);
-    }
     .demo-code-sample {
       font-family: var(--font-body);
       font-size: 0.875rem;
@@ -226,7 +210,7 @@
     <div class="demo-wrap">
       <h1 class="demo-title">Hope Design System demo</h1>
       <div class="demo-note">
-        <p><strong>Derived demo.</strong> Date: 18/11/2026. Reflects <code>DESIGN.md</code> v2.6.2 and <code>DESIGN-IMPLEMENTATION.md</code> v2.6.2.</p>
+        <p><strong>Derived demo.</strong> Date: 18/11/2026. Reflects <code>DESIGN.md</code> v2.6.3 and <code>DESIGN-IMPLEMENTATION.md</code> v2.6.3.</p>
         <p>Links the real <code>css/tokens.css</code>, <code>css/reset.css</code> and <code>css/components.css</code>. Token values on this page are read from them at load. If this page and the CSS disagree, the CSS wins. Light theme only.</p>
         <noscript><p><strong>JavaScript is off.</strong> Swatches and contrast ratios are built from the live tokens and will not appear.</p></noscript>
       </div>
@@ -299,7 +283,7 @@
     <section class="demo-section" id="typography" aria-labelledby="type-title">
       <div class="demo-wrap">
         <h2 class="demo-h2" id="type-title">Typography</h2>
-        <p class="demo-caption">Plus Jakarta Sans is the only typeface. Sizes come from the fluid <code>--fs-*</code> tokens, so the pixel size shown is for the current window. Weight, line height and tracking follow <code>DESIGN.md</code>.</p>
+        <p class="demo-caption">Plus Jakarta Sans is the only typeface. Sizes come from the fluid <code>--fs-*</code> tokens, which reach the Figma size at their maximum, so the pixel size shown is for the current window. Weight, line height and tracking follow the Figma Foundation text styles as written in <code>DESIGN.md</code>.</p>
 
         <div class="demo-type-row">
           <div class="demo-type-meta"><strong>display</strong>--fs-display, 700, lh 1.1, -0.02em<br><span class="demo-type-size"></span></div>
@@ -314,11 +298,11 @@
           <div class="demo-type-sample" style="font-family: var(--font-display); font-size: var(--fs-h2); font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; color: var(--color-text-1);">Heading two</div>
         </div>
         <div class="demo-type-row">
-          <div class="demo-type-meta"><strong>h3</strong>--fs-h3, 600, lh 1.4<br><span class="demo-type-size"></span></div>
-          <div class="demo-type-sample" style="font-family: var(--font-body); font-size: var(--fs-h3); font-weight: 600; line-height: 1.4; color: var(--color-text-1);">Heading three</div>
+          <div class="demo-type-meta"><strong>h3</strong>--fs-h3, 700, lh 1.4<br><span class="demo-type-size"></span></div>
+          <div class="demo-type-sample" style="font-family: var(--font-body); font-size: var(--fs-h3); font-weight: 700; line-height: 1.4; color: var(--color-text-1);">Heading three</div>
         </div>
         <div class="demo-type-row">
-          <div class="demo-type-meta"><strong>body-xl</strong>--fs-body-xl, 400, lh 1.7<br><span class="demo-type-size"></span></div>
+          <div class="demo-type-meta"><strong>body-xl</strong>--fs-body-xl, 400, lh 1.7 (Figma Body lg, lead)<br><span class="demo-type-size"></span></div>
           <div class="demo-type-sample" style="font-size: var(--fs-body-xl); font-weight: 400; line-height: 1.7; color: var(--color-text-2);">Lead text for case studies.</div>
         </div>
         <div class="demo-type-row">
@@ -334,18 +318,18 @@
           <div class="demo-type-sample" style="font-size: var(--fs-body-sm); font-weight: 400; line-height: 1.6; color: var(--color-text-2);">Compact UI text and button labels.</div>
         </div>
         <div class="demo-type-row">
-          <div class="demo-type-meta"><strong>label-caps</strong>--fs-label, 500, lh 1.4, 0.08em, uppercase<br><span class="demo-type-size"></span></div>
-          <div class="demo-type-sample demo-label-caps">Overline and metadata</div>
+          <div class="demo-type-meta"><strong>label-caps</strong>--fs-label, 400, lh 1.4, 0.12em, uppercase. Class: .text-label<br><span class="demo-type-size"></span></div>
+          <div class="demo-type-sample text-label" style="color: var(--color-text-3);">Overline and metadata</div>
         </div>
         <div class="demo-type-row">
-          <div class="demo-type-meta"><strong>metric</strong>1.625rem, 700, lh 1.0, Anchor<br><span class="demo-type-size"></span></div>
-          <div class="demo-type-sample demo-metric">+21%</div>
+          <div class="demo-type-meta"><strong>metric</strong>--fs-h2 (no --fs-metric), 700, lh 1.4, Anchor. Class: .metric__value<br><span class="demo-type-size"></span></div>
+          <div class="demo-type-sample"><span class="metric__value">+21%</span></div>
         </div>
         <div class="demo-type-row">
           <div class="demo-type-meta"><strong>code</strong>0.875rem, 400, lh 1.6, no mono face<br><span class="demo-type-size"></span></div>
           <div class="demo-type-sample demo-code-sample">font-family: var(--font-body);</div>
         </div>
-        <p class="demo-caption" style="margin-top: var(--space-4);"><code>label-caps</code> and <code>metric</code> have no utility class in <code>components.css</code>. Their specimens use demo-only classes built from the tokens above.</p>
+        <p class="demo-caption" style="margin-top: var(--space-4);">The type scale follows the Figma Foundation text styles. <code>label-caps</code> uses the real <code>.text-label</code> class from <code>reset.css</code>. <code>metric</code> uses the real <code>.metric__value</code> class from <code>components.css</code>.</p>
       </div>
     </section>
 
@@ -515,7 +499,7 @@
   </main>
 
   <footer class="demo-footer">
-    <div class="demo-wrap">Hope Design System demo. Derived from DESIGN.md v2.6.2 and DESIGN-IMPLEMENTATION.md v2.6.2. 18/11/2026.</div>
+    <div class="demo-wrap">Hope Design System demo. Derived from DESIGN.md v2.6.3 and DESIGN-IMPLEMENTATION.md v2.6.3. 18/11/2026.</div>
   </footer>
 
   <script>
