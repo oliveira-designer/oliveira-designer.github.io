@@ -1261,7 +1261,6 @@ html {
 .case-phase-break__label {
   font-family: var(--font-body);
   font-size: var(--fs-label);
-  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--color-text-3);
