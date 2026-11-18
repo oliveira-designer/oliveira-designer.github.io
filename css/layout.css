@@ -1428,9 +1428,11 @@ html {
   margin-top: var(--space-6);
 }
 
-.team-section__title {
+/* Scoped to out-rank .case-section__body p (0,1,1), which would force body size and color */
+.case-section__body .team-section__title {
   font-family: var(--font-body);
   font-size: var(--fs-label);
+  line-height: 1.4;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--color-text-3);
