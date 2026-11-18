@@ -5,6 +5,15 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.2 · 18 de novembro de 2026 · Badge Warning como alias do Solar (docs, PATCH)
+
+- Decisão de 18/11/2026: o `.badge--warning` segue o badge Solar exatamente, com os mesmos tokens (`Accent/Secondary`: `--color-bg-accent-secondary` e `--color-text-accent-secondary`, sem borda). Não há token novo.
+- `DESIGN.md` v2.6.2: `badge-warning` no YAML aponta para Aurora e Crepúsculo, como o `badge-solar`; texto sobre os badges escurecidos sem o #6B3F0A; seção Badges explica o alias.
+- `DESIGN-IMPLEMENTATION.md` v2.6.2: `.badge--warning` agrupado com `.badge--solar` (alias, só na documentação), no lugar dos tons de laranja (#FAEDD8, #6B3F0A, #E8B775). O bloco de `.badge--solar` passou a espelhar o `components.css` (tokens, sem borda).
+- Sem mudança em `css/`: nenhuma página do site usa `.badge--warning`, então a classe não foi criada no CSS.
+
+---
+
 ## v2.6.1 · novembro de 2026 · Correção de texto sobre Case Callout e Lightbox (docs, PATCH)
 
 - `GOVERNANCE.md` v1.4.1 (seção 12.6) e `PATTERNS.md` v1.1.1: a frase que dizia que Case Callout e Lightbox foram removidos do Figma foi corrigida. Decisão de 13 de novembro de 2026: os dois foram recriados porque o site os usa. Case Callout em Hope DS | Portfolio Components; Lightbox em Hope DS | Core Components, página `└ Lightbox`, com o token Scrim Strong. O Highlight Card legacy segue removido.
@@ -38,7 +47,7 @@ Espelhamento no código e nos docs das mudanças do Figma Foundation de 13/11/20
 
 **Débitos que seguem abertos**
 - ~~Lightbox usa Neutral/ink a 88% e não o token Scrim.~~ Resolvido nesta versão com `Scrim Strong`.
-- O `badge-warning` do `DESIGN.md` e o `.badge--warning` do `DESIGN-IMPLEMENTATION.md` seguem em tons de laranja (#FAEDD8, #6B3F0A, #E8B775). Não há CSS equivalente no site. Decidir se o Badge Warning também vai para a família Solar.
+- ~~O `badge-warning` do `DESIGN.md` e o `.badge--warning` do `DESIGN-IMPLEMENTATION.md` seguem em tons de laranja (#FAEDD8, #6B3F0A, #E8B775). Não há CSS equivalente no site. Decidir se o Badge Warning também vai para a família Solar.~~ Resolvido em 18 de novembro de 2026 (v2.6.2): alias do Badge Solar.
 - Scrim escuro: o `tokens.css` usa rgba(0, 0, 0, 0.65) (como o CHANGELOG v2.2). Confirmar no Figma se o valor é esse ou #0D0D0F a 65%.
 - `.banner--wip` no dark usa `--color-daybreak` como texto; o novo `--color-text-warning` no dark é Solar. Migrar o Banner para os tokens de Warning muda essa cor no dark.
 - `--fs-metric` está documentado no `DESIGN-IMPLEMENTATION.md` mas não existe em `tokens.css` (nenhum CSS o usa).
@@ -186,4 +195,4 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.6.1 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.6.2 · novembro de 2026 · Renan Moura*

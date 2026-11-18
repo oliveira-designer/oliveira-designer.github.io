@@ -1,5 +1,5 @@
 ---
-version: v2.6
+version: v2.6.2
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -322,9 +322,11 @@ components:
     typography: "{typography.label-caps}"
     rounded: "{rounded.pill}"
     padding: 3px 10px
+  # v2.6.2 (decisão de 18/11/2026): badge-warning é alias do badge-solar, mesmos tokens
+  # (Accent/Secondary: fundo e texto, sem borda). Sem valores próprios, sem token novo.
   badge-warning:
-    backgroundColor: "#FAEDD8"
-    textColor: "#6B3F0A"
+    backgroundColor: "{colors.aurora}"
+    textColor: "{colors.dusk}"
     typography: "{typography.label-caps}"
     rounded: "{rounded.pill}"
     padding: 3px 10px
@@ -561,7 +563,7 @@ As cinco cores funcionais (**Folha Navalha**, **Choque do Trovão**, **Marte**, 
 
 **Uso incorreto**:
 - Texto sobre fundo claro — não passam no contraste WCAG AA
-- Para badges de texto sobre fundo claro, use as versões escurecidas (#1A5938, #6B3F0A, #6E1818, #2D1F50, #6B2640) que já estão aplicadas nos componentes `badge-*`
+- Para badges de texto sobre fundo claro, use as versões escurecidas (#1A5938, #6E1818, #2D1F50, #6B2640) que já estão aplicadas nos componentes `badge-*`. O `badge-warning` não tem cor própria: é alias do `badge-solar` (Crepúsculo sobre Aurora, 4,78:1)
 
 Linter warnings de "orphaned tokens" para essas cores são esperados e intencionais — elas existem como cores de marca, não como cores de componente.
 
@@ -913,7 +915,8 @@ Badges são pequenas, mas comunicam categoria, status ou métrica:
 
 - **Ancora:** categorias técnicas (Product Strategy, Mobile UX)
 - **Solar:** destaques especiais, "novo", "Hope Design System"
-- **Success/Warning/Error/Info:** status semânticos
+- **Success/Error/Info:** status semânticos
+- **Warning:** alias do badge Solar (decidido em 18/11/2026). Usa os mesmos tokens do Solar, `Accent/Secondary` (`--color-bg-accent-secondary` e `--color-text-accent-secondary`), sem borda. Só existe na documentação: o CSS do site não tem `.badge--warning`, e as páginas usam `.badge--solar`
 - **Lua:** marcos raros — celebração de lançamento, conquista
 
 ### Card
@@ -1003,4 +1006,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.6 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.6.2 · novembro de 2026 · Renan Moura*

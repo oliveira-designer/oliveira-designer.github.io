@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.6 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.6.2 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.6.2 (PATCH, 18/11/2026)**: `.badge--warning` passa a ser alias do `.badge--solar` na documentação (tokens `--color-bg-accent-secondary` e `--color-text-accent-secondary`, sem borda), no lugar dos tons de laranja. O bloco de `.badge--solar` agora espelha o `components.css`. Sem mudança de CSS no site.
 
 **Changelog v2.6 (MINOR, 13/11/2026)**: Warning passa para a família Solar (`--color-bg-warning` Solar, `--color-bg-warning-soft` Aurora, `--color-text-warning` Dusk, `--color-border-warning` Amber; no dark, soft `--color-night-aurora-soft` e texto Solar). `--color-warning` (#C47A1F) fica só como primitivo Functional. Novo token `--color-bg-scrim-strong` (#0D0D0F a 88%, igual nos dois temas), usado pelo `.lightbox__backdrop`. Regra de uso do Solar reescrita (marca, Warning, Banner, Solar Badge). Tipografia: `label-caps` e `metric` do Figma migraram de Geist para Plus Jakarta Sans, sem mudança de CSS.
 
@@ -640,9 +642,12 @@ Uso mínimo. O sistema é flat por princípio.
 }
 
 .badge--anchor  { background: var(--color-sky);    color: var(--color-deep); border-color: var(--color-tide); }
-.badge--solar   { background: var(--color-aurora); color: var(--color-dusk); border-color: var(--color-daybreak); }
+/* Solar, como no components.css: tokens Accent/Secondary, sem borda.
+   .badge--warning é alias do .badge--solar (decisão de 18/11/2026), só na documentação:
+   o CSS do site não tem a classe porque nenhuma página a usa. */
+.badge--solar,
+.badge--warning { background: var(--color-bg-accent-secondary); color: var(--color-text-accent-secondary); }
 .badge--success { background: #E8F2EB; color: #1A5938; border-color: #A8D4B5; }
-.badge--warning { background: #FAEDD8; color: #6B3F0A; border-color: #E8B775; }
 .badge--error   { background: #F8E0E0; color: #6E1818; border-color: #D89494; }
 .badge--info    { background: #ECE5F2; color: #2D1F50; border-color: #B5A0CC; }
 .badge--lua     { background: #FBEBF1; color: #6B2640; border-color: #ECBFCF; }
@@ -2490,5 +2495,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.2 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*
