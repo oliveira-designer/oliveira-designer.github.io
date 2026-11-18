@@ -564,7 +564,7 @@ html {
    via .hero--home .hero__body below. */
 .hero__body {
   font-family: var(--font-body);
-  font-size: var(--fs-body-lg);
+  font-size: var(--fs-body-xl);
   line-height: 1.7;
   color: var(--color-text-1);
   max-width: 560px;
@@ -1156,7 +1156,7 @@ html {
 
 .case-hero__subtitle {
   font-family: var(--font-body);
-  font-size: var(--fs-body-lg);
+  font-size: var(--fs-body-xl);
   line-height: 1.7;
   color: var(--color-text-2);
   margin-bottom: var(--space-8);
