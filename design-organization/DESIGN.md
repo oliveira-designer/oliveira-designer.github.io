@@ -1,5 +1,5 @@
 ---
-version: v2.6.6
+version: v2.6.7
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -1033,4 +1033,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.6.6 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.6.7 · novembro de 2026 · Renan Moura*

@@ -5,6 +5,27 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.7 · 18 de novembro de 2026 · Mapeamento do lead dos cases e rebuild do output.css (docs e código, PATCH)
+
+**`.case-lead__text` é o Body xl do Figma**
+- O Figma define o Body xl (`size/lead`, 19px) com tracking -1%. O `.case-lead__text` já tinha `letter-spacing: -0.01em`, então não houve mudança de CSS nem visual. `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` v2.6.7 registram o mapeamento e que o peso 500 é válido (o Body do Figma tem Regular, Medium, SemiBold e Bold). O `--fs-body-xl` passa a ter tracking -0,01em na tabela, e `hope-demo.html` e `design-system.html` mostram isso. Nas notas anteriores o mesmo estilo aparecia como Body lg.
+- Medido: tamanho 16 / 17,4 / 19px em 390 / 1024 / 1280px, peso 500, tracking -0,01em. O line height renderiza 1,75 na maioria dos parágrafos (a regra `.case-section__body p` é mais específica que o 1,7 do `.case-lead__text`), contra 1,7 do Figma. Não foi alterado (ver débitos).
+
+**`css/output.css` reconstruído (`npm run build:css`)**
+- Diferença: 26 linhas a mais, todas novas. Um token de tema (`--shadow-md`) e 8 utilitários: `.flex-1`, `.rounded`, `.text-center`, `.text-left`, `.text-right`, `.italic`, `.overline`, `.ease-linear`.
+- De onde vêm: o Tailwind v4 também varre os outros arquivos do projeto (por exemplo os exemplos de CSS do `DESIGN-IMPLEMENTATION.md`), não só `index.html` e `about.html`. Nenhuma página nem script usa essas classes, e o CSS do site não as define.
+- Verificado em 7 páginas, 390px e 1280px, com e sem o rebuild: estilo computado e caixa de todos os elementos idênticos (0 diferenças). Para confirmar que o teste enxerga a mudança, uma classe de teste recebe `border-radius`, `text-align`, `font-style` e `flex-grow` só com o arquivo novo.
+- A pilha monoespaçada padrão do Tailwind **continua** no arquivo (3 linhas, no tema e no preflight de `code, kbd, samp, pre`). O rebuild não a remove, e mesmo com `--font-mono` e `--default-mono-font-family` redefinidos em `@theme` o preflight mantém o valor de reserva escrito (fica sem efeito, porque a variável existe). Nenhuma página renderiza fonte mono. Fica registrado como débito.
+
+**Débitos (só relatório, sem alteração)**
+- **A discutir:** peso das labels uppercase. Em uso: 400 na maioria (overlines, `dt`, números de seção, rótulos do `persona`), 500 no `.case-card__eyebrow` (só no `design-system.html`) e no `.badge--draft` (12,8px), 600 no `.header__status-badge` (10px, oculto) e 700 no `.case-phase-break__label` (nos 3 cases, 9 rótulos), o único em negrito em páginas de produção. `.team-section__title` renderiza em 15,36px (uppercase com 0,12em), não 11px, por causa de uma regra mais específica.
+- **`--fs-body` fluido contra o Body fixo de 16px do Figma.** Hoje `clamp(14px, 1.2vw, 16px)`: 14px até cerca de 1167px e 16px só a partir de cerca de 1333px. Fixar em 16px aumenta a página em 4 a 10% de altura em 390px e faz até 35 elementos por página ganharem linha. Sem overflow horizontal. Medições completas no relatório desta entrega.
+- `.about-bridge__headline` (só no `index`): 36 / 24px, tracking -0,02em. Como `--fs-h1` (32 / 26px, 1,2, -0,01em) ficaria com as mesmas 2 linhas em 390, 1024 e 1280px, 4 a 9px mais baixo e sem overflow.
+- `.about-split__quote-text` (sem uso nas páginas): 18 a 26px, peso 400, **itálico**, line height 1,55, tracking -0,01em. O itálico contradiz a regra "Itálico nunca" dos docs.
+- `.case-lead__text`: line height renderizado 1,75 contra 1,7 do Figma (ver acima).
+
+---
+
 ## v2.6.6 · 18 de novembro de 2026 · Hero e subtítulo dos cases em Body, não em Body lg (docs e código, PATCH)
 
 Decisão de 18/11/2026: o lead de 19px (`--fs-body-xl`) ficou grande demais no hero. `.hero__body` e `.case-hero__subtitle` passam de `--fs-body-xl` para `--fs-body`, com line height 1,75 (era 1,7). **Essas duas regras usam Body, não Body lg, de propósito.** O `--fs-body` não foi alterado: `clamp(14px, 1.2vw, 16px)`, fluido, mínimo 14px (até cerca de 1167px de largura) e máximo 16px (a partir de cerca de 1333px). Em 1280px renderiza 15,36px. O `--fs-body-xl` continua existindo e vale para o lead dos cases (`.case-lead__text`). Isso substitui a migração da v2.6.5 para essas duas regras.
@@ -315,4 +336,4 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.6.6 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.6.7 · novembro de 2026 · Renan Moura*
