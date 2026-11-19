@@ -183,7 +183,7 @@
   --fs-h2:      clamp(18px, 2.5vw, 22px);
   --fs-h3:      clamp(14px, 1.5vw, 16px);
   --fs-body:    16px;                       /* Figma Body: fixed, not fluid */
-  --fs-body-sm: clamp(12px, 1vw, 13px);
+  --fs-body-sm: 13px;                       /* Figma Body sm: fixed, not fluid */
   --fs-body-xl: clamp(16px, 1.7vw, 19px);   /* Figma Body lg (size/lead): hero body, case hero subtitle, case lead text */
   --fs-body-xs: 11px;                       /* Figma Body xs: fixed, not fluid */
   --fs-label:   11px;                       /* Figma Label caps: fixed, not fluid */
