@@ -857,7 +857,7 @@ textarea.input { min-height: 120px; resize: vertical; }
   justify-content: space-between;
   gap: var(--space-6);
   padding: var(--space-4) var(--space-6);
-  max-width: 1280px;
+  max-width: var(--layout-header);
   margin-inline: auto;
 }
 
@@ -914,7 +914,7 @@ textarea.input { min-height: 120px; resize: vertical; }
 }
 
 .site-footer__inner {
-  max-width: 1280px;
+  max-width: var(--layout-container);
   margin-inline: auto;
   display: grid;
   gap: var(--space-8);
@@ -1369,16 +1369,36 @@ pre.code-block code {
 
 ## 18. LAYOUT
 
+Tokens de layout (Figma `layout/*`), definidos em `tokens.css`:
+
+```css
+:root {
+  --layout-header:    1200px;  /* linha interna do header (.nav) */
+  --layout-container: 1040px;  /* coluna de conteúdo das seções */
+  --layout-reading:    752px;  /* prosa dos cases = 1040 - 240 - 48 */
+  --layout-sidebar:    240px;  /* barra lateral dos cases */
+  --content-max-width: var(--layout-container);  /* alias antigo (era 1280px) */
+}
+```
+
+Container e gutter (o que o `layout.css` faz hoje): a partir de 768px a largura é `min(var(--layout-container), calc(100% - 2 * var(--space-20)))`, ou seja, gutter de 80px de cada lado, e **a partir de 1200px de viewport o conteúdo mede 1040px**. O `.nav` usa o mesmo cálculo com `var(--layout-header)`. Abaixo de 768px: `width: 100%`, `max-width: 1120px`, padding lateral `--space-6`.
+
 ```css
 .container {
   width: 100%;
-  max-width: 1280px;
-  margin-inline: auto;
-  padding-inline: var(--space-6);
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
 }
 
-@media (min-width: 640px)  { .container { padding-inline: var(--space-8); } }
-@media (min-width: 1024px) { .container { padding-inline: var(--space-12); } }
+@media (min-width: 768px) {
+  .container {
+    width: min(var(--layout-container), calc(100% - 2 * var(--space-20)));
+    max-width: none;
+    padding: 0;
+  }
+}
+
 
 .container--sm  { max-width: 640px; }
 .container--md  { max-width: 768px; }

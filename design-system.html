@@ -997,8 +997,8 @@
             Full-bleed bar at <code>position: fixed; top: 0</code> with
             <code>backdrop-filter: blur(30px) saturate(1.6)</code>. The bar itself spans the full
             viewport width; its inner <code>.nav</code> is capped at
-            <code>--content-max-width</code> (1280px), the same shared cap every section
-            <code>.container</code> uses, with an enforced 80px minimum gutter on each side.
+            <code>--layout-header</code> (1200px; section <code>.container</code> uses
+            <code>--layout-container</code>, 1040px), with an enforced 80px minimum gutter on each side.
             The preview container uses
             <code>transform: translate(0)</code> to pin the fixed-position header within the frame.
             The <code>.header__status-badge</code> micro-component hangs below the bar via

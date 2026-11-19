@@ -11,7 +11,7 @@
    is never capped here), and this element only centres and
    sizes the INNER content.
 
-   Desktop: width is min(--content-max-width, 100% - 2 * 80px),
+   Desktop: width is min(--layout-container, 100% - 2 * 80px),
    so the gutter is exactly --space-20 (80px) on each side for
    any viewport up to the point the cap takes over, then the
    leftover space becomes extra margin beyond that 80px floor.
@@ -25,7 +25,7 @@
 }
 @media (min-width: 768px) {
   .container {
-    width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+    width: min(var(--layout-container), calc(100% - 2 * var(--space-20)));
     max-width: none;
     padding: 0;
   }
@@ -40,7 +40,8 @@ html {
 
 /* ----------------------------------------------------------
    HEADER / NAV — full-bleed glass bar, inner content capped at
-   --content-max-width (same shared cap as every section .container)
+   --layout-header (Figma layout/header, 1200px; wider than the 1040px
+   section .container on purpose)
    ---------------------------------------------------------- */
 .site-header {
   position: fixed;
@@ -77,7 +78,7 @@ html {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-6);
-  max-width: 1200px;
+  max-width: var(--layout-header);
   margin: 0 auto;
   padding: var(--space-3) var(--space-4);
 }
@@ -95,10 +96,12 @@ html {
   }
 }
 @media (min-width: 768px) {
-  /* Same capped-width-plus-minimum-gutter formula as .container, so the
-     header's inner content lines up with every section's content edge. */
+  /* Same minimum-gutter formula as .container, with the --layout-header
+     cap (1200px) instead of --layout-container (1040px). Below 1360px
+     both shrink with the viewport and line up; above it the header row
+     is 160px wider than the section content, as in the Figma layout. */
   .nav {
-    width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+    width: min(var(--layout-header), calc(100% - 2 * var(--space-20)));
     max-width: none;
     padding-inline: 0;
   }
@@ -1234,14 +1237,13 @@ html {
 }
 
 @media (min-width: 1024px) {
-  /* 2-column: stable 240px sidebar · content fills remaining 1fr.
+  /* 2-column: stable sidebar (--layout-sidebar, 240px) · content fills remaining 1fr.
      max-width caps the grid at sidebar + gap + content-max so the
      margin-inline: auto centres the whole sidebar+content block inside
      the container, giving equal left and right gutters. */
   .case-layout {
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: var(--layout-sidebar) 1fr;
     column-gap: var(--space-12);
-    /*max-width: calc(240px + var(--space-12) + 68ch);*/
     margin-inline: auto;
     width: 100%;
   }
@@ -1416,7 +1418,7 @@ html {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  max-width: 68ch;
+  max-width: var(--layout-reading);
   margin-inline: auto;
   width: 100%;
 }
@@ -1498,19 +1500,14 @@ html {
    column centre is right-of-viewport-centre, causing rightward overflow.
 
    Mobile  (<768px)  : undo the 24 px (--space-6) container padding.
-   Tablet  (768–1023): case-content is centred via margin-inline:auto, so
-                       content left = 50vw − 34ch.  margin-left = 34ch − 50vw.
-   Desktop (≥1024px) : .container now uses a capped-width-plus-minimum-
-                       gutter formula (see .container), so its left edge
-                       sits at a constant 80px from the viewport for any
-                       width up to the 1280px cap (1440px viewport), not
-                       a fixed pixel box. Working through the chain
-                       (container edge 80, sidebar 240, gap 48, then the
-                       68ch case-content re-centring inside the remaining
-                       1fr track) the viewport-width terms cancel out and
-                       the constant lands back at 128:
-                       content left = 50vw − 128px.
-                       So margin-left = 128px − 50vw (always negative ≥ 1024px).
+   Tablet  (768–1023): single column. case-content is centred with a
+                       width of min(--layout-reading, 100vw - 2 * 80px), so its
+                       left edge is 50vw - width / 2.
+   Desktop (≥1024px) : container C = min(--layout-container, 100vw - 160px)
+                       is centred; case-content fills the 1fr track
+                       (C - sidebar - gap, never above --layout-reading), so
+                       its left edge is (100vw - C) / 2 + sidebar + gap.
+                       margin-left is the negative of that edge.
    ---------------------------------------------------------- */
 .cs-figure--full-bleed {
   width: 100vw;
@@ -1522,17 +1519,19 @@ html {
 }
 @media (min-width: 768px) {
   .cs-figure--full-bleed {
-    /* case-content has margin-inline:auto, so it is centred inside the grid
-       track at any viewport where 68ch < (viewport - 2×padding).
-       Content left edge from viewport = 50vw − 34ch (half-viewport minus
-       half the content column).  margin-left = 34ch − 50vw puts the figure
-       flush with the viewport left edge on any width in this range. */
-    margin-left: calc(34ch - 50vw);
+    /* Single column: case-content is centred, width
+       min(--layout-reading, 100vw - 160px). Its left edge is 50vw minus
+       half of that width. margin-left is the negative of that edge, which
+       puts the figure flush with the viewport left edge. */
+    margin-left: calc(min(var(--layout-reading), 100vw - 2 * var(--space-20)) / 2 - 50vw);
   }
 }
 @media (min-width: 1024px) {
   .cs-figure--full-bleed {
-    margin-left: calc(128px - 50vw);
+    margin-left: calc(
+      min(var(--layout-container), 100vw - 2 * var(--space-20)) / 2
+      - 50vw - var(--layout-sidebar) - var(--space-12)
+    );
   }
 }
 
