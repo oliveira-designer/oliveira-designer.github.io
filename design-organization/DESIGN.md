@@ -829,7 +829,21 @@ Border radius progressivo, do mais fechado ao mais aberto:
 - `xl` (24px) — elementos heroicos
 - `pill` (999px) — badges, tags, avatares
 
-Bordas padrão: `0.5px solid {colors.border-base}` — meia espessura para um traço mais editorial.
+Bordas padrão: `0.8px solid {colors.border-base}` (`--border-thin`, o Stroke/hairline do Figma): um traço fino, mais editorial. Navegadores com Chromium desenham 0,8px como 1px de dispositivo; em telas que honram frações o traço sai mais leve.
+
+### Escala de stroke
+
+Valores do Figma (Stroke/*) e o token CSS equivalente:
+
+| Figma | Valor | Token CSS |
+|-------|-------|-----------|
+| Stroke/hairline | 0.8px | `--border-thin` |
+| Stroke/thin | 1px | `--border-normal` (também usado pelo `--border-strong`) |
+| Stroke/medium | 1.5px | sem token CSS ainda |
+| Stroke/thick | 2.4px | sem token CSS ainda |
+| Stroke/accent | 3px | sem token CSS ainda |
+
+**Deslocamento de nome proposital:** o "thin" do CSS é o "hairline" do Figma. Foi mantido assim para não invalidar as 33 referências existentes a `--border-thin`. A força do `--border-strong` vem da cor (`--color-border-strong`); o Figma não tem uma variável ligando "strong" ao Stroke/medium (1.5px).
 
 ## Motion
 

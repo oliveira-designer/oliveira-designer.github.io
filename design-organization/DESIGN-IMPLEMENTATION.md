@@ -468,7 +468,8 @@ O Figma tem uma coleção com a variável `Icon/Color` e 10 modos. No CSS, cada 
   --radius-xl:   24px;  /* Elementos grandes */
   --radius-pill: 999px; /* Badges, pills */
 
-  --border-thin:   0.5px solid var(--color-border);
+  /* Stroke scale do Figma: CSS thin = Stroke/hairline (0.8px); normal e strong = Stroke/thin (1px) */
+  --border-thin:   0.8px solid var(--color-border);
   --border-normal: 1px solid var(--color-border);
   --border-strong: 1px solid var(--color-border-strong);
 }
