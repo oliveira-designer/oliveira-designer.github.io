@@ -519,7 +519,7 @@
 }
 @media (min-width: 768px) {
   .case-card__inner {
-    width: min(var(--layout-container), calc(100% - 2 * var(--space-20)));
+    width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
     max-width: none;
     padding: 0;
     flex-direction: row;

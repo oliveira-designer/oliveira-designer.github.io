@@ -216,24 +216,13 @@
   --gap-page:      var(--space-24);
 
   /* ----------------------------------------------------------
-     LAYOUT — Figma Foundation layout/* variables.
-     --layout-container caps the content column of every section
-     (.container, .case-card__inner, hero, footer). --layout-header
-     caps the header's inner row (.nav). Both use the same gutter
-     rule: min(cap, 100% - 2 * --space-20), so the gutter is never
-     below 80px. At a viewport of 1200px and above the content is
-     1040px wide. --layout-reading is the case-study prose column
-     (= container 1040 - sidebar 240 - gap 48) and --layout-sidebar
-     is the case-study sidebar column.
+     CONTENT WIDTH — shared cap for section inner content.
+     Gutter formula (see .container in layout.css): width shrinks
+     to keep exactly --space-20 (80px) on each side up to the
+     width where the cap takes over, so the minimum gutter never
+     drops below 80px on any desktop width.
      ---------------------------------------------------------- */
-  --layout-header:    1200px;
-  --layout-container: 1040px;
-  --layout-reading:    752px;
-  --layout-sidebar:    240px;
-
-  /* Alias kept so existing references stay valid (hope-demo.html).
-     No longer 1280px: it follows --layout-container. */
-  --content-max-width: var(--layout-container);
+  --content-max-width: 1280px;
 
   /* ----------------------------------------------------------
      HEADER HEIGHT — fixed height of the sticky site header.

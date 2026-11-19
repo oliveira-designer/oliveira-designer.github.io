@@ -730,24 +730,11 @@ Não formalizado nesta fase — os valores hand-tuned atuais já seguem a régua
 
 Sistema de espaçamento base 4px. Todas as medidas (padding, margin, gap) devem usar tokens de spacing.
 
-### Tokens de layout (Figma `layout/*`)
-
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--layout-header` | 1200px | Teto da linha interna do header (`.nav`) |
-| `--layout-container` | 1040px | Teto da coluna de conteúdo de toda seção (`.container`, `.case-card__inner`, hero, rodapé) |
-| `--layout-reading` | 752px | Coluna de prosa dos cases (`.case-content`). É o container (1040) menos a barra lateral (240) menos o gap (48) |
-| `--layout-sidebar` | 240px | Coluna da barra lateral dos cases (`.case-layout`) |
-
-`--content-max-width` continua existindo como alias de `--layout-container` (antes 1280px), para não invalidar as referências antigas (a demo usa).
-
-**Regra do gutter.** A largura do conteúdo é `min(teto, 100% - 2 * 80px)`: o gutter é exatamente 80px de cada lado enquanto o viewport é menor que o teto mais 160px, e acima disso a sobra vira margem. Com o teto de 1040px, **a partir de 1200px de viewport o conteúdo mede 1040px**; abaixo disso ele é o viewport menos 160px. O header usa o mesmo cálculo com o teto de 1200px, então a partir de 1360px a linha do header (1200px) fica 160px mais larga que o conteúdo das seções (1040px), como no layout do Figma. Abaixo de 768px o `.container` usa padding lateral de 24px e `max-width: 1120px`.
-
 ### Containers
 
-- Container padrão: `--layout-container` (1040px) com gutter mínimo de 80px (regra acima)
-- Coluna de prosa (case study): `--layout-reading` (752px)
-- Mobile (< 768px): padding lateral 24px
+- Container padrão: 1280px max-width, padding lateral responsivo
+- Container de prosa (artigo, case study): 65ch para legibilidade ideal
+- Mobile: padding lateral 24px · Tablet: 32px · Desktop: 48px
 
 ### Grid
 
