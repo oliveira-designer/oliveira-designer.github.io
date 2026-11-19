@@ -1,5 +1,5 @@
 ---
-version: v2.6.10
+version: v2.6.11
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -148,8 +148,9 @@ colors:
 
 typography:
   # v2.6.3 (18/11/2026): a escala segue os estilos de texto do Figma Foundation.
-  # Os tamanhos abaixo são os do Figma. No código, Display, H1, H2, H3, Body sm e Body xl são fluidos (clamp) e chegam a esse valor no máximo.
-  # Body (--fs-body), Body xs e Label caps são fixos desde a v2.6.8 (Body 16px).
+  # Os tamanhos abaixo são os do Figma. No código, Display, H1, H2, H3 e Body xl são fluidos (clamp) e chegam a esse valor no máximo.
+  # H3 e Body xl são divergências fluidas aceitas do Figma (16px e 19px), revisáveis depois. Ver a seção de tipografia.
+  # Body (--fs-body), Body sm (--fs-body-sm, desde a v2.6.11), Body xs e Label caps são fixos.
   display:
     fontFamily: Plus Jakarta Sans
     fontSize: 3.25rem  # 52px. Fluido no código: clamp(36px, 5vw, 52px)
@@ -180,7 +181,7 @@ typography:
     lineHeight: 1.75
   body-sm:
     fontFamily: Plus Jakarta Sans
-    fontSize: 0.8125rem
+    fontSize: 0.8125rem  # 13px fixo. Token --fs-body-sm (fixo desde a v2.6.11, antes clamp(12px, 1vw, 13px))
     fontWeight: 400
     lineHeight: 1.6
   body-xs:
@@ -204,7 +205,7 @@ typography:
     fontWeight: 400
     lineHeight: 1.7
     letterSpacing: -0.01em  # Figma Body xl: -1%
-    # Fluid: clamp(16px, 1.7vw, 19px). Token --fs-body-xl. Use for case lead text.
+    # Fluid: clamp(16px, 1.7vw, 19px). Token --fs-body-xl. Use for case lead text. Divergência fluida aceita do Figma (19px), revisável depois (v2.6.11).
     # É o estilo Body xl (size/lead) do Figma: 19px, 170%, tracking -1%. Em versões anteriores aparecia como Body lg. O --fs-body-lg (17px) foi removido na v2.6.5.
     # .case-lead__text é este estilo (tracking -0.01em). Usa peso 500: o Body do Figma tem variantes Regular, Medium, SemiBold e Bold.
     # .hero__body e .case-hero__subtitle NÃO usam Body lg: usam Body (--fs-body), de propósito (v2.6.6).
@@ -670,7 +671,7 @@ Uma fonte, um papel. Plus Jakarta Sans cobre tudo — display, headlines, body, 
 | `h2` | Plus Jakarta Sans | Subtítulo de seção |
 | `h3` | Plus Jakarta Sans | Subseção, label de grupo |
 | `body` | Plus Jakarta Sans | Parágrafos, texto corrido. Também `.hero__body` e `.case-hero__subtitle`, de propósito (não usam Body lg) |
-| `body-sm` | Plus Jakarta Sans | Corpo em UI compacta, botões |
+| `body-sm` | Plus Jakarta Sans | Corpo em UI compacta, botões, 13px fixo (`--fs-body-sm`) |
 | `body-xl` | Plus Jakarta Sans | Lead (Body xl do Figma, -0.01em): case lead text (`.case-lead__text`), `clamp(16px, 1.7vw, 19px)` |
 | `body-xs` | Plus Jakarta Sans | Texto mínimo, 11px fixo (`--fs-body-xs`) |
 | `label-caps` | Plus Jakarta Sans | Overline, metadata (uppercase, 400, 0.12em) |
@@ -679,20 +680,26 @@ Uma fonte, um papel. Plus Jakarta Sans cobre tudo — display, headlines, body, 
 
 ### Estilos de texto do Figma (Foundation)
 
-Valores de referência. Nos estilos fluidos o tamanho é o máximo: no código, os tokens `--fs-*` correspondentes usam `clamp()` e chegam a esse valor. Body, Body xs e Label caps são fixos.
+Valores de referência. Nos estilos fluidos o tamanho é o máximo: no código, os tokens `--fs-*` correspondentes usam `clamp()` e chegam a esse valor. Body, Body sm, Body xs e Label caps são fixos.
 
 | Estilo | Tamanho | Line height | Tracking | Peso | Token de tamanho no código |
 |--------|---------|-------------|----------|------|----------------------------|
 | Display | 52px | 110% | -2% | Bold | `--fs-display` (36 a 52px) |
 | H1 | 32px | 120% | -1% | Bold | `--fs-h1` (26 a 32px) |
 | H2 | 22px | 130% | -1% | Bold | `--fs-h2` (18 a 22px) |
-| H3 | 16px | 140% | 0 | Bold | `--fs-h3` (14 a 16px) |
+| H3 | 16px | 140% | 0 | Bold | `--fs-h3` (14 a 16px, fluido, divergência aceita) |
 | Body | 16px | 175% | | | `--fs-body` (16px fixo desde a v2.6.8; antes 14 a 16px) |
-| Body xl (`size/lead`) | 19px | 170% | -1% | | `--fs-body-xl` (16 a 19px) |
-| Body sm | 13px | 160% | | | `--fs-body-sm` (12 a 13px) |
+| Body xl (`size/lead`) | 19px | 170% | -1% | | `--fs-body-xl` (16 a 19px, fluido, divergência aceita) |
+| Body sm | 13px | 160% | | | `--fs-body-sm` (13px fixo desde a v2.6.11; antes 12 a 13px) |
 | Body xs | 11px | 160% | | | `--fs-body-xs` (11px fixo) |
 | Label caps | 11px | 140% | 12%, uppercase | Regular | `--fs-label` (11px fixo) |
 | Metric | 22px | 140% | | Bold | `--fs-h2`, sem token próprio |
+
+**Divergências fluidas aceitas (v2.6.11).** Dois tokens ficam fluidos de propósito e diferem do valor fixo do Figma fora do desktop largo:
+- `--fs-body-xl`: `clamp(16px, 1.7vw, 19px)`, Figma 19px. Fixo em 19px traria de volta o lead grande demais no celular, rejeitado para os heróis (v2.6.6). Hoje só o `.case-lead__text` usa o token.
+- `--fs-h3`: `clamp(14px, 1.5vw, 16px)`, Figma 16px. Segue fluido por enquanto.
+
+Os dois são **revisáveis depois**. Não são defeitos nem débito aberto: mudar um deles é uma decisão nova, com medição, não uma correção.
 
 O `--fs-body-lg` (17px) não existia no Figma e foi removido na v2.6.5. Os textos que o usavam (`.hero__body` e `.case-hero__subtitle`) passaram a `--fs-body-xl` na v2.6.5 e, em seguida, a `--fs-body` na v2.6.6 (decisão de 18/11/2026: o lead de 19px ficou grande demais no hero). Essas duas regras usam Body, não Body lg, de propósito.
 
@@ -702,7 +709,7 @@ O `--fs-body-lg` (17px) não existia no Figma e foi removido na v2.6.5. Os texto
 - **Label caps é sempre Regular (400).** Não existe variante bold de label: overlines, metadata, números de seção e separadores de fase usam 400, 11px, uppercase, 0.12em. Hierarquia vem de posição, cor e tamanho, não de peso
 - **Itálico nunca** — ênfase é feita por peso (bold) ou cor (Âncora), nunca por inclinação
 - Métricas (+21%, +12%) sempre em Plus Jakarta Sans 700 com cor Âncora (light) ou Solar (dark), no tamanho `--fs-h2` e line height 1.4. Não existe `--fs-metric`
-- Em mobile, Display, H1, H2, H3, Body sm e Body xl reduzem via `clamp()`. Body (`--fs-body`), Body xs e Label caps são fixos e não reduzem
+- Em mobile, Display, H1, H2, H3 e Body xl reduzem via `clamp()`. Body (`--fs-body`), Body sm (`--fs-body-sm`, desde a v2.6.11), Body xs e Label caps são fixos e não reduzem
 
 ### Tracking (letter-spacing) — nota do skill `apple-design`
 
@@ -1035,4 +1042,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.6.10 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.6.11 · novembro de 2026 · Renan Moura*

@@ -5,6 +5,40 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.11 · 19 de novembro de 2026 · `--fs-body-sm` fixo em 13px e divergências fluidas documentadas (docs e código, PATCH)
+
+**Versão escolhida: PATCH (2.6.10 para 2.6.11).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre ajuste de valor sem mudar a estrutura. Nenhum token foi criado, removido ou renomeado e nenhuma classe mudou; só o valor de `--fs-body-sm`, para alinhar ao Figma, como foi feito com `--fs-body` na v2.6.8.
+
+**1. Decisão do item 2 (v2.6.10): opção B**
+- `tokens.css`: `--fs-body-sm: clamp(12px, 1vw, 13px)` virou `13px` fixo (Figma Body/Regular/body-sm). Line height do `.skill-card__body` mantido (1,7).
+- `.skill-card__body` e `.persona__role` renderizam 13px em 390, 1024 e 1280px (conferido no estilo computado).
+
+**2. O que muda (selector, antes e depois)**
+Antes: 12px (390 e 1024px) e 12,8px (1280px). Depois: 13px nas três larguras. Seletores que usam o token, vistos nas 5 páginas:
+- `index`: `.skip-link`, `.nav__link`, `.btn`, `.badge`, `.metric__label`, `.testimonial-card__profile-link`, `.testimonial-card__role`, `.footer__motto`.
+- `about`: `.skill-card__body` (line height 20,4 / 20,4 / 21,76px para 22,1px), `.experience-item__company`, `.experience-item__role`, `.experience-item__highlight`, mais os comuns (`.skip-link`, `.nav__link`, `.btn`, `.footer__motto`).
+- Cases: `.case-hero__meta` (`dd` e `a`), `.case-toc__link`, `.team-card__name`, `.cs-figure figcaption` e link, `.skill-card__body`, `.persona__role` (21 / 21 / 22,4px para 22,75px de line height), `.persona__meta dd`, `.persona__goal-card` (19,8 / 19,8 / 21,12px para 21,45px), `.brand-list li`, `.persona__quote` (`p` e `strong`), `.metric-desc` (com `strong` e `a`), `.case-section__results-legend`, `.small-note`, mais os comuns.
+- Os `visually-hidden` dos cards clonados do ticker também mudam de tamanho, sem efeito visual.
+
+**3. Medições (5 páginas, 390 / 1024 / 1280px)**
+- Altura das páginas: `index` +82 / +8 / +1px, `about` +158 / +50 / +10px, `dotz` +300 / +375 / +64px, `sb-home-redesign` +278 / +173 / +39px, `cloud-cost-intelligence` +218 / +98 / +14px. Os valores de 390px batem com a previsão da v2.6.10.
+- Elementos que ganham linha (390 / 1024 / 1280px): `index` 0 / 0 / 0; `about` 3 / 1 / 0; `dotz` 4 / 11 / 3; `sb-home-redesign` 4 / 6 / 1; `cloud-cost-intelligence` 4 / 2 / 3. São `.skill-card__body`, `figcaption`, `.metric-desc`, `.persona__goal-card`, `.brand-list li`, `.persona__quote p`, `.experience-item__highlight` e `.case-section__results-legend`. Nenhum elemento perde linha, exceto 1 link dentro do `.metric-desc` no `cloud-cost-intelligence` em 1024px, que só recompõe.
+- Cards: `.skill-card` mais altos, por página e largura (soma, maior card): `about` +77 (26) / +29 (5) / +5 (1)px; `dotz` +78 (25) / +128 (32) / +6 (2)px; `sb-home-redesign` +189 (29) / +212 (30) / +59 (22)px; `cloud-cost-intelligence` +155 (26) / +108 (24) / +14 (1)px. `.testimonial-card` (index, 10 cards): +39 (5) / +39 (5) / +10 (1)px. `.persona__goal-card` (3): +11 / +29 / +3px.
+- Corte, truncamento e overflow: nenhum elemento novo cortado nem com reticências, nenhuma barra horizontal (largura do documento igual à da janela em todas as 15 combinações).
+
+**4. Divergências fluidas aceitas (item 2, fechado)**
+- `--fs-body-xl` (`clamp(16px, 1.7vw, 19px)`, Figma 19px) e `--fs-h3` (`clamp(14px, 1.5vw, 16px)`, Figma 16px) **não foram alterados**. Documentados em `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` como divergências aceitas, com o motivo: `--fs-body-xl` fixo em 19px traria de volta o lead grande demais no celular, rejeitado para os heróis (v2.6.6); `--fs-h3` segue fluido por enquanto. Marcados como **revisáveis depois**, não como defeitos.
+
+**5. Docs atualizados**
+- `DESIGN.md`, `DESIGN-IMPLEMENTATION.md`, `hope-demo.html` e `design-system.html` (valor do token, tabelas, texto de tipografia). Versão 2.6.11 em todos.
+
+**Débitos**
+- ~~Decisão pendente (item 2)~~ e ~~tokens fluidos~~: fechados nesta versão como divergências documentadas.
+- Pilha monoespaçada padrão do Tailwind no `css/output.css` (preflight de `code, kbd, samp, pre`), sem efeito visual. Aceito como débito.
+- `.ds-sub` (títulos de subseção do `design-system.html`, uppercase, peso 600) é chrome da página, não um componente do Hope.
+
+---
+
 ## v2.6.10 · 18 de novembro de 2026 · Escopo dos parágrafos dos cases, regras órfãs e ticker com movimento reduzido (docs e código, PATCH)
 
 **Versão escolhida: PATCH (2.6.9 para 2.6.10).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre correção e ajuste de valor sem mudar a estrutura. Nenhum token foi criado, removido ou renomeado, nenhuma classe usada por página foi removida, e a mudança de seletor do item 1 só deixa os componentes usarem o valor que a própria regra já declarava. O item 2 (`.skill-card__body` em 13px) **não foi feito**: aguarda decisão, ver abaixo.

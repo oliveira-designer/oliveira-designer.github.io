@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.6.10 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.6.11 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.6.11 (PATCH, 19/11/2026)**: `--fs-body-sm` passa de `clamp(12px, 1vw, 13px)` para `13px` fixo (Figma Body sm), como o `--fs-body` na v2.6.8. `.skill-card__body` e `.persona__role` renderizam 13px em todas as larguras, e todos os outros usos do token também. `--fs-h3` (14 a 16px) e `--fs-body-xl` (16 a 19px) seguem fluidos e ficam documentados como divergências aceitas do Figma, revisáveis depois, não como defeitos. Medições no CHANGELOG.
 
 **Changelog v2.6.10 (PATCH, 18/11/2026)**: `:where(.case-section__body) p` no lugar de `.case-section__body p`, para que `.skill-card__body`, `.persona__role`, `.case-lead__text` e `.result-card__title` usem a própria regra; parágrafos sem classe inalterados. Removidas as regras `.about-split` sem uso. `.testimonials-ticker` recebe `position: relative`, o que corrige a largura do documento e o header em celular com movimento reduzido. Medições e a decisão pendente sobre `.skill-card__body` em 13px estão no CHANGELOG.
 
@@ -179,10 +181,10 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
 | `--fs-display` | Plus Jakarta Sans | 36–52px | 700 | 1.1 | -0.02em | Hero, capa, nome da marca |
 | `--fs-h1` | Plus Jakarta Sans | 26–32px | 700 | 1.2 | -0.01em | Título de página, case study |
 | `--fs-h2` | Plus Jakarta Sans | 18–22px | 700 | 1.3 | -0.01em | Subtítulo de seção. Também é o tamanho de Metric |
-| `--fs-h3` | Plus Jakarta Sans | 14–16px | 700 | 1.4 | 0 | Subseção, label de grupo |
+| `--fs-h3` | Plus Jakarta Sans | 14–16px (fluido, divergência aceita) | 700 | 1.4 | 0 | Subseção, label de grupo |
 | `--fs-body` | Plus Jakarta Sans | 16px fixo | 400 | 1.75 | 0 | Parágrafos, texto corrido. Também `.hero__body` e `.case-hero__subtitle`, de propósito (não usam Body lg) |
-| `--fs-body-xl` | Plus Jakarta Sans | 16–19px | 400 (o `.case-lead__text` usa 500) | 1.7 | -0.01em | Case lead text. É o Body xl (`size/lead`, 19px, tracking -1%) do Figma |
-| `--fs-body-sm` | Plus Jakarta Sans | 12–13px | 400 | 1.6 | 0 | Body em UI compacta |
+| `--fs-body-xl` | Plus Jakarta Sans | 16–19px (fluido, divergência aceita) | 400 (o `.case-lead__text` usa 500) | 1.7 | -0.01em | Case lead text. É o Body xl (`size/lead`, 19px, tracking -1%) do Figma |
+| `--fs-body-sm` | Plus Jakarta Sans | 13px fixo | 400 | 1.6 | 0 | Body em UI compacta (Body sm do Figma) |
 | `--fs-body-xs` | Plus Jakarta Sans | 11px fixo | 400 | 1.6 | 0 | Texto mínimo (Body xs do Figma) |
 | `--fs-label` | Plus Jakarta Sans | 11px fixo | 400 | 1.4 | 0.12em | Label caps: overlines, metadata (uppercase) |
 | Metric (usa `--fs-h2`) | Plus Jakarta Sans | 18–22px | 700 | 1.4 | 0 | Métricas (+21%, +12%). Não existe `--fs-metric` |
@@ -195,7 +197,7 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
   --fs-h2:       clamp(18px, 2.5vw, 22px);
   --fs-h3:       clamp(14px, 1.5vw, 16px);
   --fs-body:     16px;
-  --fs-body-sm:  clamp(12px, 1vw, 13px);
+  --fs-body-sm:  13px;
   --fs-body-xl:  clamp(16px, 1.7vw, 19px);
   --fs-body-xs:  11px;
   --fs-label:    11px;
@@ -203,6 +205,10 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
 ```
 
 **`--fs-body` é 16px fixo** (Figma Body, v2.6.8). Antes era fluido, de 14 a 16px.
+
+**`--fs-body-sm` é 13px fixo** (Figma Body sm, v2.6.11). Antes era `clamp(12px, 1vw, 13px)`, que só chegava a 13px acima de cerca de 1300px. O `.skill-card__body` mantém o seu line height (1,7), então renderiza 13px com 22,1px de line height.
+
+**Divergências fluidas aceitas (v2.6.11).** `--fs-h3` (`clamp(14px, 1.5vw, 16px)`, Figma 16px) e `--fs-body-xl` (`clamp(16px, 1.7vw, 19px)`, Figma 19px) continuam fluidos de propósito. Motivo do `--fs-body-xl`: fixo em 19px traria de volta o lead grande demais no celular, que já foi rejeitado nos heróis (v2.6.6). Motivo do `--fs-h3`: segue fluido por enquanto, sem decisão de fixar. Os dois são **revisáveis depois**; não são defeitos nem débito aberto. Ver `DESIGN.md`, seção de tipografia.
 
 ### Regras de uso
 
@@ -2518,5 +2524,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.10 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.11 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

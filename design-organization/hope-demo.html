@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   Hope Design System demo
-  Derived demo, 18/11/2026. Reflects DESIGN.md v2.6.10 and DESIGN-IMPLEMENTATION.md v2.6.10.
+  Derived demo, 19/11/2026. Reflects DESIGN.md v2.6.11 and DESIGN-IMPLEMENTATION.md v2.6.11.
   Links the real css/tokens.css, css/reset.css and css/components.css.
   Only the demo's own layout styles live inline (classes prefixed "demo-").
   Token values shown on the page are read from tokens.css at load, not copied.
@@ -210,7 +210,7 @@
     <div class="demo-wrap">
       <h1 class="demo-title">Hope Design System demo</h1>
       <div class="demo-note">
-        <p><strong>Derived demo.</strong> Date: 18/11/2026. Reflects <code>DESIGN.md</code> v2.6.10 and <code>DESIGN-IMPLEMENTATION.md</code> v2.6.10.</p>
+        <p><strong>Derived demo.</strong> Date: 19/11/2026. Reflects <code>DESIGN.md</code> v2.6.11 and <code>DESIGN-IMPLEMENTATION.md</code> v2.6.11.</p>
         <p>Links the real <code>css/tokens.css</code>, <code>css/reset.css</code> and <code>css/components.css</code>. Token values on this page are read from them at load. If this page and the CSS disagree, the CSS wins. Light theme only.</p>
         <noscript><p><strong>JavaScript is off.</strong> Swatches and contrast ratios are built from the live tokens and will not appear.</p></noscript>
       </div>
@@ -283,7 +283,7 @@
     <section class="demo-section" id="typography" aria-labelledby="type-title">
       <div class="demo-wrap">
         <h2 class="demo-h2" id="type-title">Typography</h2>
-        <p class="demo-caption">Plus Jakarta Sans is the only typeface. Sizes come from the <code>--fs-*</code> tokens. Display, H1, H2, H3, body-sm and body-xl are fluid and reach the Figma size at their maximum, so the pixel size shown is for the current window. Body, body-xs and label-caps are fixed. Weight, line height and tracking follow the Figma Foundation text styles as written in <code>DESIGN.md</code>.</p>
+        <p class="demo-caption">Plus Jakarta Sans is the only typeface. Sizes come from the <code>--fs-*</code> tokens. Display, H1, H2, H3 and body-xl are fluid and reach the Figma size at their maximum, so the pixel size shown is for the current window. H3 (Figma 16px) and body-xl (Figma 19px) are accepted fluid divergences, open to review later, not defects: a fixed 19px lead would bring back the oversized mobile lead rejected for the heroes. Body, body-sm, body-xs and label-caps are fixed. Weight, line height and tracking follow the Figma Foundation text styles as written in <code>DESIGN.md</code>.</p>
 
         <div class="demo-type-row">
           <div class="demo-type-meta"><strong>display</strong>--fs-display, 700, lh 1.1, -0.02em<br><span class="demo-type-size"></span></div>
@@ -310,7 +310,7 @@
           <div class="demo-type-sample" style="font-size: var(--fs-body); font-weight: 400; line-height: 1.75; color: var(--color-text-2);">Paragraph text for reading. The quick brown fox jumps over the lazy dog.</div>
         </div>
         <div class="demo-type-row">
-          <div class="demo-type-meta"><strong>body-sm</strong>--fs-body-sm, 400, lh 1.6<br><span class="demo-type-size"></span></div>
+          <div class="demo-type-meta"><strong>body-sm</strong>--fs-body-sm (13px fixed), 400, lh 1.6<br><span class="demo-type-size"></span></div>
           <div class="demo-type-sample" style="font-size: var(--fs-body-sm); font-weight: 400; line-height: 1.6; color: var(--color-text-2);">Compact UI text and button labels.</div>
         </div>
         <div class="demo-type-row">
@@ -499,7 +499,7 @@
   </main>
 
   <footer class="demo-footer">
-    <div class="demo-wrap">Hope Design System demo. Derived from DESIGN.md v2.6.10 and DESIGN-IMPLEMENTATION.md v2.6.10. 18/11/2026.</div>
+    <div class="demo-wrap">Hope Design System demo. Derived from DESIGN.md v2.6.11 and DESIGN-IMPLEMENTATION.md v2.6.11. 19/11/2026.</div>
   </footer>
 
   <script>
