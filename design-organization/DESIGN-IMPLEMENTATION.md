@@ -192,7 +192,7 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
 | `--fs-body-xs` | Plus Jakarta Sans | 11px fixo | 400 | 1.6 | 0 | Texto mínimo (Body xs do Figma) |
 | `--fs-label` | Plus Jakarta Sans | 11px fixo | 400 | 1.4 | 0.12em | Label caps: overlines, metadata (uppercase) |
 | Metric (usa `--fs-h2`) | Plus Jakarta Sans | 18–22px | 700 | 1.4 | 0 | Métricas (+21%, +12%). Não existe `--fs-metric` |
-| `--fs-code` | Plus Jakarta Sans | 13–14px | 400 | 1.6 | 0 | Code inline e blocks (ainda não existe em `tokens.css`) |
+| (sem token) | Plus Jakarta Sans | 13–14px (0.875rem no DESIGN.md) | 400 | 1.6 | 0 | Code inline e blocks. Não existe `--fs-code` em `tokens.css` |
 
 ```css
 :root {
@@ -269,14 +269,10 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
   --color-info:       #634590; /* AJUSTADO de #7B5BA8 para contraste */
   --color-celebrate:           #F5A8C0; /* Mantida — uso só em destaque, não em texto */
 
-  /* --- Aliases semânticos --- */
-  --color-success:   var(--color-success);
-  --color-warning:   var(--color-warning);
-  --color-error:     var(--color-error);
-  --color-info:      var(--color-info);
-  --color-celebrate: var(--color-celebrate);
-
-  /* --- Superfícies (light mode default) --- */
+  /* --- Superfícies (light mode default) ---
+     --color-link, --color-link-hover e --color-focus-ring são os nomes do code syntax do Figma e NÃO existem no tokens.css.
+     No CSS os nomes são --color-text-brand-primary, --color-text-brand-primary-hover e --color-border-focus-ring
+     (decisão de nomenclatura pendente: renomear o Figma ou o CSS). */
   --color-bg:           var(--color-cloud);
   --color-bg-alt:       var(--color-surface);
   --color-bg-inverse:   var(--color-abyss);
@@ -286,9 +282,9 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
   --color-text-2:       var(--color-shadow);   /* Texto secundário */
   --color-text-3:       var(--color-muted);     /* Texto terciário */
   --color-text-inverse: var(--color-cloud);    /* Texto sobre escuro */
-  --color-link:         var(--color-anchor);
-  --color-link-hover:   var(--color-deep);
-  --color-focus-ring:   var(--color-anchor);
+  --color-link:         var(--color-anchor);  /* Nome do code syntax do Figma. Nome no CSS: --color-text-brand-primary */
+  --color-link-hover:   var(--color-deep);  /* Nome do code syntax do Figma. Nome no CSS: --color-text-brand-primary-hover */
+  --color-focus-ring:   var(--color-anchor);  /* Nome do code syntax do Figma. Nome no CSS: --color-border-focus-ring */
 }
 
 /* Dark mode automático */
@@ -298,14 +294,14 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
     --color-bg-alt:       #242438;
     --color-bg-inverse:   var(--color-cloud);
     --color-border:       #2E2E40;
-    --color-border-strong: #4A4A60;
+    --color-border-strong: #69697E;
     --color-text-1:       var(--color-cloud);
     --color-text-2:       #B4B4C8;
-    --color-text-3:       #8888A0;
+    --color-text-3:       #9090A8;
     --color-text-inverse: var(--color-ink);
-    --color-link:         var(--color-solar);
-    --color-link-hover:   #FFD96B;
-    --color-focus-ring:   var(--color-solar);
+    --color-link:         var(--color-solar);  /* Nome do code syntax do Figma. Nome no CSS: --color-text-brand-primary */
+    --color-link-hover:   #FFD96B;  /* Nome do code syntax do Figma. Nome no CSS: --color-text-brand-primary-hover */
+    --color-focus-ring:   var(--color-solar);  /* Nome do code syntax do Figma. Nome no CSS: --color-border-focus-ring */
   }
 }
 
@@ -315,14 +311,14 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
   --color-bg-alt:       #242438;
   --color-bg-inverse:   var(--color-cloud);
   --color-border:       #2E2E40;
-  --color-border-strong: #4A4A60;
+  --color-border-strong: #69697E;
   --color-text-1:       var(--color-cloud);
   --color-text-2:       #B4B4C8;
-  --color-text-3:       #8888A0;
+  --color-text-3:       #9090A8;
   --color-text-inverse: var(--color-ink);
-  --color-link:         var(--color-solar);
-  --color-link-hover:   #FFD96B;
-  --color-focus-ring:   var(--color-solar);
+  --color-link:         var(--color-solar);  /* Nome do code syntax do Figma. Nome no CSS: --color-text-brand-primary */
+  --color-link-hover:   #FFD96B;  /* Nome do code syntax do Figma. Nome no CSS: --color-text-brand-primary-hover */
+  --color-focus-ring:   var(--color-solar);  /* Nome do code syntax do Figma. Nome no CSS: --color-border-focus-ring */
 }
 
 /* Forçar light mode manual */
@@ -335,9 +331,9 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
   --color-text-2:       var(--color-shadow);
   --color-text-3:       var(--color-muted);
   --color-text-inverse: var(--color-cloud);
-  --color-link:         var(--color-anchor);
-  --color-link-hover:   var(--color-deep);
-  --color-focus-ring:   var(--color-anchor);
+  --color-link:         var(--color-anchor);  /* Nome do code syntax do Figma. Nome no CSS: --color-text-brand-primary */
+  --color-link-hover:   var(--color-deep);  /* Nome do code syntax do Figma. Nome no CSS: --color-text-brand-primary-hover */
+  --color-focus-ring:   var(--color-anchor);  /* Nome do code syntax do Figma. Nome no CSS: --color-border-focus-ring */
 }
 ```
 
@@ -394,7 +390,7 @@ Espelham o Figma (Hope DS | Foundation). Valores em `css/tokens.css`.
 --color-text-on-disabled: var(--color-night-400);     /* dark: night-500 */
 --color-border-disabled:  var(--color-border-base);   /* dark: night-700 */
 --color-bg-scrim: rgba(13, 13, 15, 0.5);              /* dark: rgba(0,0,0,0.65) */
---color-bg-scrim-strong: rgba(13, 13, 15, 0.88);      /* v2.6: igual nos dois temas. Foco em imagem (Lightbox) */
+--color-bg-scrim-strong: rgba(13, 13, 15, 0.88);      /* v2.6: foco em imagem (Lightbox). Figma dark: rgba(0,0,0,0.88). Divergência conhecida: o CSS usa este valor nos dois temas (pendente, adiada) */
 
 /* Warning na família Solar (v2.6) */
 --color-bg-warning:      var(--color-solar);          /* igual nos dois temas */
@@ -490,7 +486,6 @@ Uso mínimo. O sistema é flat por princípio.
 
   /* Focus ring (acessibilidade) */
   --shadow-focus: 0 0 0 3px var(--color-focus-ring);
-  --shadow-focus-error: 0 0 0 3px rgba(184, 52, 52, 0.3);
 }
 ```
 
@@ -803,7 +798,7 @@ Uso mínimo. O sistema é flat por princípio.
 }
 .input--error:focus,
 .input--error:focus-visible {
-  box-shadow: var(--shadow-focus-error);
+  box-shadow: 0 0 0 3px rgba(184, 52, 52, 0.3); /* sem token: --shadow-focus-error não existe */
 }
 
 textarea.input { min-height: 120px; resize: vertical; }
@@ -1125,7 +1120,7 @@ blockquote.quote cite {
 .prose code,
 code.code-inline {
   font-family: var(--font-body);
-  font-size: var(--fs-code);
+  font-size: 0.875rem; /* typography.code, sem token --fs-code */
   font-weight: 400;
   padding: 2px 6px;
   background: var(--color-bg-alt);
@@ -1137,7 +1132,7 @@ code.code-inline {
 .prose pre,
 pre.code-block {
   font-family: var(--font-body);
-  font-size: var(--fs-code);
+  font-size: 0.875rem; /* typography.code, sem token --fs-code */
   line-height: 1.6;
   padding: var(--space-4) var(--space-5);
   background: var(--color-abyss);
@@ -1555,34 +1550,7 @@ h1, h2, h3, h4, h5, h6 {
 
 ### Tokens
 
-```css
-:root {
-  --icon-xs:  12px; /* inline em texto pequeno */
-  --icon-sm:  16px; /* inline em body */
-  --icon-md:  20px; /* botões, badges */
-  --icon-lg:  24px; /* nav, header */
-  --icon-xl:  32px; /* hero, destaques */
-  --icon-2xl: 48px; /* empty states */
-
-  --icon-stroke: 1.75;
-}
-
-.icon {
-  display: inline-block;
-  width: var(--icon-md);
-  height: var(--icon-md);
-  stroke-width: var(--icon-stroke);
-  stroke: currentColor;
-  fill: none;
-  flex-shrink: 0;
-}
-
-.icon--xs  { width: var(--icon-xs);  height: var(--icon-xs); }
-.icon--sm  { width: var(--icon-sm);  height: var(--icon-sm); }
-.icon--lg  { width: var(--icon-lg);  height: var(--icon-lg); }
-.icon--xl  { width: var(--icon-xl);  height: var(--icon-xl); }
-.icon--2xl { width: var(--icon-2xl); height: var(--icon-2xl); }
-```
+Não existem tokens `--icon-xs` a `--icon-2xl` nem `--icon-stroke` no `tokens.css` (removidos desta documentação na v2.6.14: nenhum código os usava). O tamanho do ícone é definido no componente que o usa. O que existe em `css/components.css` é a classe `.icon` e as classes de cor `.icon--<papel>`, que usam os tokens `--icon-color-*` (ver a seção de cor de ícone).
 
 ### Regras de uso
 - Ícones decorativos: `aria-hidden="true"` no SVG
@@ -1698,8 +1666,8 @@ Padrão: `--category-name-modifier` em kebab-case.
 --z-modal
 
 /* Ícones — categoria icon */
---icon-sm
---icon-stroke
+--icon-color-default
+--icon-color-danger
 ```
 
 **Regras:**

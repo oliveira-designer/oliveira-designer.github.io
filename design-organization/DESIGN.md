@@ -74,7 +74,7 @@ colors:
   surface-atmospheric-dark: "{colors.ink}"
   text-primary-dark: "{colors.cloud}"
   text-secondary-dark: "#B4B4C8"
-  text-tertiary-dark: "#8888A0"
+  text-tertiary-dark: "#9090A8"
   text-inverse-dark: "{colors.ink}"
   text-on-primary-dark: "{colors.ink}"
   text-on-secondary-dark: "{colors.cloud}"
@@ -82,7 +82,7 @@ colors:
   border-dark: "#2E2E40"
   border-strong-dark: "{colors.night-500}"  # v2.3: contorno de controle no dark, 3,19:1 sobre abismo (era #4A4A60, 1,98:1)
   link-dark: "{colors.solar}"
-  link-hover-dark: "{colors.daybreak}"
+  link-hover-dark: "{colors.night-accent-hover}"  # Figma Night/accent-hover (#FFD96B). Era Daybreak, corrigido na v2.6.14
   focus-ring-dark: "{colors.solar}"
   success-dark: "{colors.success}"
   warning-dark: "{colors.warning}"
@@ -90,7 +90,7 @@ colors:
   info-dark: "{colors.info}"
 
   # --- Extras semânticos ---
-  borda-dark: "#E0E0E8"  # dark mode btn--primary hover surface. Token --color-bg-neutral-hover.
+  bg-neutral-hover-dark: "{colors.border-base}"  # #E2E2E8. Dark mode btn--primary hover surface. Token --color-bg-neutral-hover. Era borda-dark (#E0E0E8), renomeado e corrigido na v2.6.14
 
   # --- v2.3 (Figma sync, nov/2026): primitivos novos ---
   # Nomes em inglês, como no Figma (Hope · Primitives) e em css/tokens.css.
@@ -101,7 +101,10 @@ colors:
   night-500: "#69697E"
   night-400: "#9090A8"
   night-300: "#B4B4C8"
+  night-accent-hover: "#FFD96B"  # Figma Night/accent-hover. Link hover no dark
   night-aurora-soft: "#2A2618"  # v2.6: fundo soft do Warning no dark
+  night-success-soft: "#162418"
+  night-error-soft: "#261616"
   night-warning-soft: "#2A1E10"
   night-info-soft: "#1E182A"
   success-deep: "#2A7347"
@@ -115,7 +118,7 @@ colors:
   text-on-disabled: "#9090A8"
   border-disabled: "{colors.border-base}"
   bg-scrim: "rgba(13, 13, 15, 0.5)"
-  bg-scrim-strong: "rgba(13, 13, 15, 0.88)"  # v2.6: igual em light e dark. Usado no Lightbox
+  bg-scrim-strong: "rgba(13, 13, 15, 0.88)"  # v2.6: usado no Lightbox. Light #0D0D0F a 88%. NO FIGMA o dark é #000000 a 88% (bg-scrim-strong-dark abaixo); o CSS ainda usa o valor light nos dois temas (divergência conhecida, pendente, adiada de propósito)
   # v2.6: Warning na família Solar (decisão de 13/11/2026)
   bg-warning: "{colors.solar}"
   bg-warning-soft: "{colors.aurora}"
@@ -138,6 +141,7 @@ colors:
   text-on-disabled-dark: "{colors.night-500}"
   border-disabled-dark: "#2E2E40"
   bg-scrim-dark: "rgba(0, 0, 0, 0.65)"
+  bg-scrim-strong-dark: "rgba(0, 0, 0, 0.88)"  # valor do Figma. Ainda não aplicado no CSS (divergência conhecida, pendente)
   bg-warning-soft-dark: "{colors.night-aurora-soft}"
   text-warning-dark: "{colors.solar}"
   bg-info-soft-dark: "{colors.night-info-soft}"
@@ -702,6 +706,8 @@ Valores de referência. Nos estilos fluidos o tamanho é o máximo: no código, 
 
 **`--fs-h3` alinhado (v2.6.12).** Agora é 16px fixo, como o Heading/H3 do Figma. A lista de divergências fluidas anterior (v2.6.11) deixa de existir.
 
+**Body lg e Link (Figma, sem token CSS, por decisão).** O Figma tem os estilos de texto Body lg (19px, 170%, sem tracking) e Link (link-xs 11px/160% e link-sm 13px/160%, Regular e Bold). Nenhum tem token CSS, de propósito. O Body xl (-1%) é o estilo que o CSS usa para o lead.
+
 O `--fs-body-lg` (17px) não existia no Figma e foi removido na v2.6.5. Os textos que o usavam (`.hero__body` e `.case-hero__subtitle`) passaram a `--fs-body-xl` na v2.6.5 e, em seguida, a `--fs-body` na v2.6.6 (decisão de 18/11/2026: o lead de 19px ficou grande demais no hero). Essas duas regras usam Body, não Body lg, de propósito.
 
 ### Regras
@@ -994,7 +1000,7 @@ Esta seção espelha o que mudou no Figma (Hope DS | Foundation e Core Component
 ### Figma sync v2.6 (13 de novembro de 2026)
 
 - **Warning na família Solar.** Light: fundo `solar` (#F5C842), soft `aurora` (#FEF8E0), texto `dusk` (#8B6914), borda `amber` (#C49A1F), texto sobre Warning `ink`. Dark: fundo `solar`, soft `night-aurora-soft` (#2A2618), texto `solar`, borda `amber`. O laranja #C47A1F fica só como primitivo `Functional/warning`. A borda Amber dá cerca de 2,5:1 sobre Aurora, abaixo de 3:1: trade-off aceito, a borda é decorativa.
-- **Scrim Strong.** `bg-scrim-strong` = #0D0D0F a 88%, igual em light e dark, ao lado do `bg-scrim` (50% no light, 65% no dark). O Lightbox usa este token, no lugar de Tinta com 0,88 de opacidade. Era o único uso desse valor.
+- **Scrim Strong.** `bg-scrim-strong` = #0D0D0F a 88% no light e **#000000 a 88% no dark** (valor do Figma), ao lado do `bg-scrim` (50% no light, 65% no dark). **Divergência conhecida, pendente:** o `tokens.css` ainda usa #0D0D0F a 88% nos dois temas, adiado de propósito (dark mode fora do escopo desta rodada). O Lightbox usa este token, no lugar de Tinta com 0,88 de opacidade. Era o único uso desse valor.
 - **Choque do Trovão = Solar.** A senshi de atenção deixou de ser laranja. Os nomes poéticos (Folha Navalha, Choque do Trovão, Marte, Saturno, Lua) são narrativa de marca, não nomes de token.
 - **Tipografia.** Os estilos de texto `Label/label-caps` e `Metric/metric` do Figma migraram de Geist para Plus Jakarta Sans (Display, H1, H2, H3 e body-sm já tinham migrado). O código já usava só Plus Jakarta Sans, então não houve mudança de CSS.
 - **Conferência de valores (sem mudança).** Rampa Night (800 a 300) e famílias Functional e derivadas (`success-deep`, `error-light`, `info-light`, `warning-deep`) já existiam em `tokens.css` com os mesmos valores do Figma.
