@@ -1,7 +1,8 @@
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v1.4 · May 2026
-   Source of truth: DESIGN.md + DESIGN-IMPLEMENTATION.md
+   v2.6.14 · November 2026
+   Source of truth: Figma Foundation for VALUES; DESIGN.md +
+   DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
 
 :root {
@@ -177,20 +178,22 @@
   --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Fluid type scale (clamp) */
+  /* Type scale. Fluid (clamp): display, h1, h2 and body-xl only.
+     Everything else is fixed, as in the Figma size/* variables. */
   --fs-display: clamp(36px, 5vw, 52px);
   --fs-h1:      clamp(26px, 3.5vw, 32px);
   --fs-h2:      clamp(18px, 2.5vw, 22px);
   --fs-h3:      16px;                       /* Figma Heading/H3: fixed, not fluid */
   --fs-body:    16px;                       /* Figma Body: fixed, not fluid */
   --fs-body-sm: 13px;                       /* Figma Body sm: fixed, not fluid */
-  --fs-body-xl: clamp(16px, 1.7vw, 19px);   /* Figma Body lg (size/lead): hero body, case hero subtitle, case lead text */
+  --fs-body-xl: clamp(16px, 1.7vw, 19px);   /* Figma Body xl (size/lead, 19px Desktop / 16px Mobile, tracking -1%): case lead text. Figma "Body lg" (19px, no tracking) exists only in Figma, kept on purpose without a CSS token */
   --fs-body-xs: 11px;                       /* Figma Body xs: fixed, not fluid */
   --fs-label:   11px;                       /* Figma Label caps: fixed, not fluid */
 
   /* ----------------------------------------------------------
      SPACING — 4px base scale
      ---------------------------------------------------------- */
+  --space-none: 0;
   --space-1:  4px;
   --space-2:  8px;
   --space-3:  12px;
