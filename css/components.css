@@ -1111,7 +1111,7 @@
 
 .case-section__subtitle {
   font-family: var(--font-body);
-  font-size: var(--fs-body);
+  font-size: var(--fs-h3);
   font-weight: 700;
   color: var(--color-text-1);
   line-height: 1.4;

@@ -181,7 +181,7 @@
   --fs-display: clamp(36px, 5vw, 52px);
   --fs-h1:      clamp(26px, 3.5vw, 32px);
   --fs-h2:      clamp(18px, 2.5vw, 22px);
-  --fs-h3:      clamp(14px, 1.5vw, 16px);
+  --fs-h3:      16px;                       /* Figma Heading/H3: fixed, not fluid */
   --fs-body:    16px;                       /* Figma Body: fixed, not fluid */
   --fs-body-sm: 13px;                       /* Figma Body sm: fixed, not fluid */
   --fs-body-xl: clamp(16px, 1.7vw, 19px);   /* Figma Body lg (size/lead): hero body, case hero subtitle, case lead text */
