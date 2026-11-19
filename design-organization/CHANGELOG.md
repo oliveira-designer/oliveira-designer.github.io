@@ -5,6 +5,41 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.12 · 19 de novembro de 2026 · `--fs-h3` fixo em 16px e `--fs-body-xl` documentado como token fluido (docs e código, PATCH)
+
+**Versão escolhida: PATCH (2.6.11 para 2.6.12).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre ajuste de valor sem mudar a estrutura. Nenhum token foi criado, removido ou renomeado e nenhuma classe mudou. O valor de `--fs-h3` é alinhado ao Figma (mesmo critério da v2.6.8 com `--fs-body` e da v2.6.11 com `--fs-body-sm`), a troca de token no `.case-section__subtitle` não muda nenhum estilo computado, e o resto é documentação.
+
+**1. `--fs-h3` fixo em 16px (Figma Heading/H3)**
+- `tokens.css`: `clamp(14px, 1.5vw, 16px)` virou `16px`. O nome do token não mudou.
+- `.case-section__subtitle` (`components.css`): `font-size` de `var(--fs-body)` para `var(--fs-h3)`. Verificado com estilo computado de todos os elementos (font-family, font-size, line-height, margin, padding, border, box-sizing, display, cor), 3 páginas de case, 390 / 1024 / 1280px, antes e depois da troca: **0 diferenças**. São 34 subtítulos (7 no `dotz`, 10 no `sb-home-redesign`, 17 no `cloud-cost-intelligence`), 16px em todos.
+- Efeito do valor fixo, medido em 7 páginas (`index`, `about`, os 3 cases, `dotz backup` e `design-system`), 390 / 1024 / 1280px, mesmas propriedades: 20 elementos e 40 diferenças de propriedade, todas em `font-size` e `line-height`, nenhuma outra. Em 1280px nada muda.
+
+| Seletor | 390px | 1024px | Line height |
+|---------|-------|--------|-------------|
+| `.result-card__title` (`cloud-cost-intelligence` 1, `design-system` 2) | 14 para 16px | 15,36 para 16px | 19,6 / 21,5 para 22,4px |
+| `.persona__name` (`dotz` 1, `dotz backup` 1) | 14 para 16px | 15,36 para 16px | 19,6 / 21,5 para 22,4px |
+| `.persona__avatar` (`dotz`, `dotz backup`) e 1 `.is-zoomable` no mesmo bloco | 14 para 16px | 15,36 para 16px | 24,5 / 26,9 para 28px (herdado) |
+| `.ds-topbar__title` e o texto de amostra do `h3` (`design-system`) | 14 para 16px | 15,36 para 16px | 24,5 / 19,6 e 26,9 / 21,5 para 28 / 22,4px |
+
+- Verificado em 390 / 1024 / 1280px: `.persona__name`, `.result-card__title` e `.ds-topbar__title` renderizam 16px. `.ds-component__title` está definido no CSS do `design-system.html`, mas nenhum elemento da página usa a classe, então não há o que medir.
+- Sem regressão: o `.result-card__title` deixa de ficar menor que o corpo de 16px ao redor em celular.
+
+**2. `--fs-body-xl` documentado como token fluido (sem mudança de CSS)**
+- `clamp(16px, 1.7vw, 19px)` mantido. Passa de "divergência aceita" a **token fluido documentado, extremos iguais ao Figma**: Desktop 19px e Mobile 16px. É o único token de texto de corpo fluido (Display, H1 e H2 também são fluidos, mas são títulos).
+- O CSS interpola entre cerca de 941px (1,7vw igual a 16px) e cerca de 1118px (1,7vw igual a 19px); abaixo disso é 16px e acima é 19px. Valores intermediários, como 17,408px em 1024px, são esperados e não são divergência. Atenção: o texto da decisão dizia 768px como início da interpolação. Medido: 16px em 768px e em 941px; a interpolação só começa em cerca de 941px.
+- Único consumidor: `.case-lead__text` (peso 500, line height 1,7, tracking -0,01em), 8 instâncias nas 3 páginas de case (5 no `dotz`, 1 no `sb-home-redesign`, 2 no `cloud-cost-intelligence`), mais 1 no `dotz backup.html`.
+- Lista de divergências fluidas da v2.6.11: `--fs-h3` removido (alinhado), `--fs-body-xl` reescrito como token documentado. A lista deixa de existir.
+
+**3. Docs atualizados**
+- `DESIGN.md`, `DESIGN-IMPLEMENTATION.md`, `hope-demo.html` e `design-system.html` (valor do `--fs-h3`, tabelas, texto de tipografia, nota do `--fs-body-xl`). Versão 2.6.12 em todos. `PATTERNS.md` e `GOVERNANCE.md` não citam esses tokens e não foram alterados.
+
+**Débitos**
+- ~~`--fs-h3` fluido~~ e ~~`--fs-body-xl` como divergência~~: fechados nesta versão.
+- Pilha monoespaçada padrão do Tailwind no `css/output.css` (preflight de `code, kbd, samp, pre`), sem efeito visual. Aceito como débito.
+- `.ds-sub` (títulos de subseção do `design-system.html`, uppercase, peso 600) é chrome da página, não um componente do Hope.
+
+---
+
 ## v2.6.11 · 19 de novembro de 2026 · `--fs-body-sm` fixo em 13px e divergências fluidas documentadas (docs e código, PATCH)
 
 **Versão escolhida: PATCH (2.6.10 para 2.6.11).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre ajuste de valor sem mudar a estrutura. Nenhum token foi criado, removido ou renomeado e nenhuma classe mudou; só o valor de `--fs-body-sm`, para alinhar ao Figma, como foi feito com `--fs-body` na v2.6.8.
