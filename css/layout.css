@@ -823,6 +823,7 @@ html {
 
 /* Testimonials — infinite horizontal ticker */
 .testimonials-ticker {
+  position: relative; /* clips absolutely positioned descendants (.visually-hidden) when the track is not animated */
   display: flex;
   overflow: hidden;
   width: 100%;
