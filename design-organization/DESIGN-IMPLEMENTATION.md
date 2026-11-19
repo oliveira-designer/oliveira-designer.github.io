@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.6.12 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.6.13 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.6.13 (PATCH, 19/11/2026)**: a pilha monoespaçada literal do Tailwind sai do `css/output.css`. Novo `css/preflight-nomono.css` (cópia do preflight do Tailwind v4.3.0 sem o `font-family` da regra `code, kbd, samp, pre`), importado por `css/tailwind.css` na camada `base`, junto com `theme.css` e `utilities.css`, e `--font-mono: initial` no `@theme`. Zero diferenças de estilo computado. O `preflight-nomono.css` precisa ser ressincronizado a cada upgrade do Tailwind (ver `GOVERNANCE.md`, seção 11). Documentação alinhada às variáveis `size/*` do Figma.
 
 **Changelog v2.6.12 (PATCH, 19/11/2026)**: `--fs-h3` passa de `clamp(14px, 1.5vw, 16px)` para `16px` fixo (Figma Heading/H3). `.case-section__subtitle` passa a usar `--fs-h3` no lugar de `--fs-body` (mesmo 16px, zero diferença de estilo computado). `--fs-body-xl` não muda e passa de "divergência aceita" a token fluido documentado, com os extremos iguais ao Figma (Desktop 19px, Mobile 16px). Medições no CHANGELOG.
 
@@ -213,6 +215,8 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
 **`--fs-h3` é 16px fixo** (Figma Heading/H3, v2.6.12). Antes era `clamp(14px, 1.5vw, 16px)`. `.persona__name`, `.result-card__title` e `.text-h3` passam de 14 e 15,36px para 16px abaixo de 1067px; `.case-section__subtitle` já era 16px e agora consome o token.
 
 **Token fluido documentado (v2.6.12).** `--fs-body-xl` é o **único token de texto de corpo fluido**: `clamp(16px, 1.7vw, 19px)`. O Figma mostra os dois extremos, Desktop 19px e Mobile 16px. O CSS interpola entre os dois: 16px até cerca de 941px de janela, depois cresce (1,7vw) até 19px em cerca de 1118px, e fica em 19px acima disso. Valores intermediários, como 17,408px em 1024px, são esperados e **não são divergência**. Único consumidor: `.case-lead__text` (peso 500, line height 1,7, tracking -0,01em), 8 instâncias nas 3 páginas de case (5 no `dotz`, 1 no `sb-home-redesign`, 2 no `cloud-cost-intelligence`) mais 1 no `dotz backup.html`. Display, H1 e H2 também são fluidos (`clamp()`), mas são títulos e não entram nesta nota. Fixá-lo em 19px traria de volta o lead grande demais no celular, rejeitado para os heróis (v2.6.6). Não é divergência: os extremos coincidem com o Figma, que deve ter os modos Desktop 19px e Mobile 16px na variável.
+
+**Variáveis `size/*` do Figma (v2.6.13).** Mobile é igual a Desktop em H3 (16px), Body (16px), Body sm (13px), Label (11px) e Body xs (11px): por isso esses tokens são fixos no CSS. O lead (Body xl, `size/lead`) é Desktop 19px e Mobile 16px, com code syntax `var(--fs-body-xl)`, e o CSS representa os dois modos com `clamp(16px, 1.7vw, 19px)`. Display, H1 e H2 continuam responsivos (valores diferentes por modo no Figma, `clamp()` no CSS). Nada na documentação trata H3, Body, Body sm, Body xs ou Label como fluidos ou divergentes do Figma.
 
 ### Regras de uso
 
@@ -2528,5 +2532,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.12 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.13 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

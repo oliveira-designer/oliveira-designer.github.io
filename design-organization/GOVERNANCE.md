@@ -416,6 +416,14 @@ Quando esses arquivos forem usados em projetos diferentes (portfólio, plugin, S
 
 Isso é proposital. Compatibilidade reversa por design.
 
+### CSS gerado pelo Tailwind: passo obrigatório em upgrade
+
+O `css/output.css` é gerado por `npm run build:css` a partir de `css/tailwind.css`. Desde a v2.6.13 o preflight do Tailwind não vem do pacote: `css/tailwind.css` importa `css/preflight-nomono.css`, uma cópia local do `tailwindcss/preflight.css` sem o `font-family` da regra `code, kbd, samp, pre` (o site não tem fonte monoespaçada). **Em todo upgrade do Tailwind:**
+1. Copiar de novo `node_modules/tailwindcss/preflight.css` para `css/preflight-nomono.css`.
+2. Remover de novo só o `font-family` da regra `code, kbd, samp, pre` e atualizar a versão no comentário do topo.
+3. Rodar `npm run build:css` e conferir que `css/output.css` não tem `ui-monospace` nem `--font-mono`.
+4. Comparar o estilo computado das páginas que carregam o `output.css` antes e depois (zero diferenças é o critério).
+
 ---
 
 ## 12. Convenções dos componentes no Figma

@@ -5,6 +5,30 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.13 · 19 de novembro de 2026 · Pilha monoespaçada do Tailwind removida do `output.css` e docs alinhadas às variáveis `size/*` do Figma (docs e código, PATCH)
+
+**Versão escolhida: PATCH (2.6.12 para 2.6.13).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre correção de débito técnico e melhoria de documentação sem mudança de token ou componente. Nenhum token, classe ou componente foi criado, removido ou renomeado, e o resultado renderizado não muda (0 diferenças medidas). O arquivo novo, `css/preflight-nomono.css`, é infraestrutura de build, não parte do sistema visual; por isso não é MINOR.
+
+**1. Pilha monoespaçada do Tailwind (opção c)**
+- Novo `css/preflight-nomono.css`: cópia de `node_modules/tailwindcss/preflight.css` (Tailwind v4.3.0) sem o `font-family` da regra `code, kbd, samp, pre`. Cabeçalho explica a mudança e que precisa ser ressincronizado a cada upgrade do Tailwind.
+- `css/tailwind.css`: `@import "tailwindcss";` virou `@layer theme, base, components, utilities;` mais os imports de `tailwindcss/theme.css` (camada `theme`), `./preflight-nomono.css` (camada `base`) e `tailwindcss/utilities.css` (camada `utilities`). `--font-mono: initial;` no `@theme`.
+- `css/output.css` reconstruído com `npm run build:css` (sem avisos). Tamanho 14.323 para 14.035 bytes. Linhas com `ui-monospace` no arquivo: 2 para 0, e nenhuma ocorrência de `Courier` nem `font-mono`. Efeito colateral: o arquivo versionado estava um pouco defasado em relação a um build novo (4 utilitários sem uso saíram, `.grow` passou a `.flex-grow`), sem efeito em nenhuma página.
+- Verificado no repositório, antes e depois da reconstrução, nas 6 páginas que carregam o `output.css` mais o `design-system.html` (`index`, `about`, os 3 cases, `dotz backup`, `design-system`), 390 / 1024 / 1280px, todos os elementos, propriedades `font-family`, `font-size`, `line-height`, margin, padding, border, `box-sizing`, `display` e cor: **0 diferenças** (21 combinações, de 220 a 706 elementos cada). Nenhuma página carrega `output.css` e tem elemento `code`, `pre`, `kbd` ou `samp`, então a regra nunca se aplicava.
+- Opções descartadas na análise: tirar o preflight inteiro (a) deu 7.959 diferenças de propriedade em 6.921 elementos; remover as linhas depois do build (b) funciona mas exige um passo pós-build a cada build.
+- Passo de upgrade documentado em `GOVERNANCE.md`, seção 11.
+
+**2. Docs alinhadas às variáveis `size/*` do Figma**
+- Mobile igual a Desktop em H3 (16), Body (16), Body sm (13), Label (11) e Body xs (11). Lead: Desktop 19 e Mobile 16, code syntax `var(--fs-body-xl)`. Display, H1 e H2 seguem responsivos.
+- Registrado em `DESIGN.md`, `DESIGN-IMPLEMENTATION.md`, `hope-demo.html` e `design-system.html`. Busca por H3, Body, Body sm, Body xs e Label descritos como fluidos ou divergentes: nada encontrado fora dos registros históricos de versões anteriores.
+- Versão 2.6.13 em todos os arquivos.
+
+**Débitos**
+- ~~Pilha monoespaçada padrão do Tailwind no `css/output.css`~~: resolvido nesta versão.
+- `.ds-sub` (títulos de subseção do `design-system.html`, uppercase, peso 600) é chrome da página, não um componente do Hope.
+- Manutenção recorrente (não é débito): ressincronizar `css/preflight-nomono.css` a cada upgrade do Tailwind.
+
+---
+
 ## v2.6.12 · 19 de novembro de 2026 · `--fs-h3` fixo em 16px e `--fs-body-xl` documentado como token fluido (docs e código, PATCH)
 
 **Versão escolhida: PATCH (2.6.11 para 2.6.12).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre ajuste de valor sem mudar a estrutura. Nenhum token foi criado, removido ou renomeado e nenhuma classe mudou. O valor de `--fs-h3` é alinhado ao Figma (mesmo critério da v2.6.8 com `--fs-body` e da v2.6.11 com `--fs-body-sm`), a troca de token no `.case-section__subtitle` não muda nenhum estilo computado, e o resto é documentação.

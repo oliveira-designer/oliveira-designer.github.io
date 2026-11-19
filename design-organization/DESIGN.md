@@ -1,5 +1,5 @@
 ---
-version: v2.6.12
+version: v2.6.13
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -149,7 +149,8 @@ colors:
 typography:
   # v2.6.3 (18/11/2026): a escala segue os estilos de texto do Figma Foundation.
   # Os tamanhos abaixo são os do Figma. No código, Display, H1, H2 e Body xl são fluidos (clamp) e chegam a esse valor no máximo.
-  # Body xl é o único token de corpo fluido, com os extremos iguais ao Figma (Desktop 19px, Mobile 16px). Ver a seção de tipografia.
+  # Body xl é o único token de corpo fluido, com os extremos iguais ao Figma (Desktop 19px, Mobile 16px; code syntax var(--fs-body-xl)). Ver a seção de tipografia.
+  # Variáveis size/* do Figma (v2.6.13): Mobile igual a Desktop em H3, Body, Body sm, Label e Body xs. Display, H1 e H2 seguem responsivos.
   # H3 (--fs-h3, desde a v2.6.12), Body (--fs-body), Body sm (--fs-body-sm, desde a v2.6.11), Body xs e Label caps são fixos.
   display:
     fontFamily: Plus Jakarta Sans
@@ -697,6 +698,8 @@ Valores de referência. Nos estilos fluidos o tamanho é o máximo: no código, 
 
 **Token fluido documentado (v2.6.12).** `--fs-body-xl` é o **único token de texto de corpo fluido**: `clamp(16px, 1.7vw, 19px)`. O Figma mostra os dois extremos, Desktop 19px e Mobile 16px. O CSS interpola entre os dois: 16px até cerca de 941px de janela, depois cresce (1,7vw) até 19px em cerca de 1118px, e fica em 19px acima disso. Valores intermediários, como 17,408px em 1024px, são esperados e **não são divergência**. Único consumidor: `.case-lead__text` (peso 500, line height 1,7, tracking -0,01em), 8 instâncias nas 3 páginas de case (5 no `dotz`, 1 no `sb-home-redesign`, 2 no `cloud-cost-intelligence`) mais 1 no `dotz backup.html`. Display, H1 e H2 também são fluidos (`clamp()`), mas são títulos e não entram nesta nota. Fixá-lo em 19px traria de volta o lead grande demais no celular, rejeitado para os heróis (v2.6.6). Não é divergência do Figma: os extremos coincidem.
 
+**Variáveis `size/*` do Figma (v2.6.13).** Mobile é igual a Desktop em H3 (16px), Body (16px), Body sm (13px), Label (11px) e Body xs (11px): por isso esses tokens são fixos no CSS. O lead (Body xl, `size/lead`) é Desktop 19px e Mobile 16px, com code syntax `var(--fs-body-xl)`, e o CSS representa os dois modos com `clamp(16px, 1.7vw, 19px)`. Display, H1 e H2 continuam responsivos (valores diferentes por modo no Figma, `clamp()` no CSS). Nada na documentação trata H3, Body, Body sm, Body xs ou Label como fluidos ou divergentes do Figma.
+
 **`--fs-h3` alinhado (v2.6.12).** Agora é 16px fixo, como o Heading/H3 do Figma. A lista de divergências fluidas anterior (v2.6.11) deixa de existir.
 
 O `--fs-body-lg` (17px) não existia no Figma e foi removido na v2.6.5. Os textos que o usavam (`.hero__body` e `.case-hero__subtitle`) passaram a `--fs-body-xl` na v2.6.5 e, em seguida, a `--fs-body` na v2.6.6 (decisão de 18/11/2026: o lead de 19px ficou grande demais no hero). Essas duas regras usam Body, não Body lg, de propósito.
@@ -1040,4 +1043,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.6.12 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.6.13 · novembro de 2026 · Renan Moura*
