@@ -1,6 +1,8 @@
 # GOVERNANCE.md
 # Hope Design System — Regras de Evolução
-# Versão 1.4.1 · novembro de 2026
+# Versão 1.5 · novembro de 2026
+
+**Changelog v1.5 (MINOR, 19/11/2026)**: seção 7 reescrita como "Fontes da verdade e ciclo de divergência". O Figma passa a ser canônico para os VALORES de token e de componente; este repositório é canônico para prosa, regras e changelog; cópias derivadas (documentos de projeto, o arquivo `hope-context.md` do Drive, demos) nunca são editadas como fonte. Entra o ciclo de relatório de divergência (Bloqueia, Atenção, Informativo). Removida a regra "Realidade vence documentação" (seção 6, seção 7 e seção 10), que contradizia a nova ordem. Registro retroativo: a subseção "CSS gerado pelo Tailwind: passo obrigatório em upgrade" da seção 11 foi adicionada em 19/11/2026 (commit 76bdca6, DESIGN.md v2.6.13) sem versão nem changelog neste arquivo.
 
 **Changelog v1.4.1 (PATCH)**: corrigida a frase da seção 12.6 que dizia que Case Callout e Lightbox foram removidos do Figma. Os dois foram recriados em 13 de novembro de 2026; só o Highlight Card legacy segue removido.
 
@@ -250,7 +252,7 @@ Disparam revisão de coerência:
 
 ### Revisão por descompasso
 
-Quando o trabalho real diverge do documentado, atualize o documento. Não force o trabalho a voltar ao documento — o documento é mapa, não trilho.
+Quando o trabalho real diverge do documentado, o critério depende do que diverge. Se for **valor de token ou de componente**, vale o Figma (seção 7): o repositório é corrigido, ou o Figma é corrigido pelo dono, conforme a decisão dele. Se for **prosa ou regra** que ficou velha, atualize o documento: ele é mapa, não trilho.
 
 ### Revisão anual leve
 
@@ -263,24 +265,39 @@ Não confunda revisão com mudança. Revisão é olhar. Mudança é decidir.
 
 ---
 
-## 7. Conflito entre fontes
+## 7. Fontes da verdade e ciclo de divergência
 
-Conforme o sistema cresce, podem aparecer conflitos:
-- O `DESIGN.md` diz uma coisa, o `DESIGN-IMPLEMENTATION.md` diz outra
-- O Brandbook V2.2 contradiz uma decisão técnica
-- O código no Framer não reflete o DESIGN.md
+Conforme o sistema cresce, as fontes podem divergir: o Figma diz uma coisa, o CSS outra, o `DESIGN.md` uma terceira. Esta seção diz quem é canônico para quê e como a divergência é encontrada e fechada.
 
-**Ordem de precedência** (mais autoritativo no topo):
+### Quem é canônico para quê
 
-1. **Brandbook V2.2** — fundação da marca, raramente muda
-2. **DESIGN.md** — fonte da verdade técnica, validável por linter
-3. **DESIGN-IMPLEMENTATION.md** — implementação detalhada, deriva do DESIGN.md
-4. **PATTERNS.md** — anatomias de página, consome componentes do DESIGN.md
-5. **Código real (Framer, projetos)** — aplicação, deve refletir os anteriores
+- **Figma** (Hope DS | Foundation e as bibliotecas de componentes publicadas) é canônico para **valores** de token e de componente: cores, tamanhos, espaçamento, raio, line height, tracking, pesos e os valores dos estilos de texto.
+- **Este repositório** é canônico para **prosa, regras e changelog**: `DESIGN.md`, `DESIGN-IMPLEMENTATION.md`, `PATTERNS.md`, `GOVERNANCE.md` e `CHANGELOG.md`.
+- **Cópias derivadas, nunca editadas como fonte:** os documentos dos projetos, o arquivo `hope-context.md` do Drive, `hope-demo.html`, `design-system.html` e o CSS do site no que toca a valores (o CSS espelha o Figma). Valor errado numa cópia se corrige na fonte ou pelo ciclo abaixo, nunca só na cópia.
+- **O Brandbook V2.2** segue acima de tudo nas decisões de identidade (tese, posicionamento, arquétipos, acentos primários). Se o Figma contradisser o Brandbook numa decisão de identidade, o Brandbook vence e o Figma é corrigido.
 
-Quando houver conflito, **o item mais alto na lista prevalece**. O item mais baixo precisa ser atualizado para alinhar — ou a fonte mais alta precisa ser atualizada explicitamente (com changelog).
+### Precedência entre os documentos de prosa e regras
 
-**Exceção crítica**: se o código real estiver funcionando bem e o DESIGN.md estiver desatualizado, atualize o DESIGN.md — não force o código a voltar. Realidade vence documentação.
+1. **Brandbook V2.2**: fundação da marca, raramente muda
+2. **DESIGN.md**: tokens, componentes e regras em prosa, validável por linter
+3. **DESIGN-IMPLEMENTATION.md**: implementação detalhada, deriva do DESIGN.md
+4. **PATTERNS.md**: anatomias de página, consome componentes do DESIGN.md
+
+O item mais alto prevalece. O mais baixo é atualizado, ou o mais alto é atualizado de forma explícita, com changelog. Esta lista resolve prosa e regra, **nunca valor**: valor vai ao Figma.
+
+### Ciclo de divergência
+
+O relatório de divergência compara um snapshot do Figma com o repositório (CSS e documentos). Roda:
+- (a) depois de publicar a Foundation no Figma;
+- (b) antes de fechar um ciclo de versão;
+- (c) na revisão anual.
+
+Cada item é classificado como:
+- **Bloqueia**: valor errado renderizado no site.
+- **Atenção**: nome, token faltando ou documento desatualizado.
+- **Informativo**: diferença sem efeito, para registro.
+
+Quem faz o quê: o Claude gera o relatório; o dono decide qual lado está errado em cada item; este repositório corrige o espelho (o dono corrige o Figma quando é o Figma que está errado). O relatório **não é guardado como arquivo permanente**: o que fica é o changelog do que foi corrigido. Nome de token no código (code syntax) é uma decisão à parte e conta como Atenção, nunca como valor.
 
 ---
 
@@ -389,7 +406,7 @@ Vale o preço? Aplique os quatro testes. Se passou, vale.
 - **Agente propõe, humano decide.**
 - **Sem critério de sucesso, não há mudança válida.**
 - **YAGNI vence sofisticação.**
-- **Realidade vence documentação — mas documentação acompanha realidade.**
+- **O Figma vence em valores, o repositório vence em prosa e regras, e a documentação acompanha as duas.**
 - **Revisão é olhar. Mudança é decidir. Não confunda.**
 
 ---
@@ -504,4 +521,4 @@ Componente sem decisão fica numa seção "Em revisão", com o nome sufixado `(l
 
 ---
 
-*Hope Design System · GOVERNANCE.md · v1.4.1 · novembro de 2026 · Renan Moura*
+*Hope Design System · GOVERNANCE.md · v1.5 · novembro de 2026 · Renan Moura*

@@ -1,6 +1,8 @@
 # PATTERNS.md
 # Hope Design System — Padrões de Página
-# Versão 1.1.1 · novembro de 2026
+# Versão 1.1.2 · novembro de 2026
+
+**Changelog v1.1.2 (PATCH)**: a referência à seção 7 do GOVERNANCE.md foi atualizada. A seção agora se chama "Fontes da verdade e ciclo de divergência": a precedência vale para prosa e regras, e os valores de token e de componente vêm do Figma.
 
 **Changelog v1.1.1 (PATCH)**: corrigida a frase do v1.1 que dizia que Case Callout e Lightbox foram removidos do Figma. Os dois foram recriados em 13 de novembro de 2026: o Case Callout em Hope DS | Portfolio Components e o Lightbox em Hope DS | Core Components (página `└ Lightbox`, com o token Scrim Strong). Nenhum padrão daqui passa a depender deles.
 
@@ -283,10 +285,10 @@ Esses talvez nunca apareçam. E se aparecerem, será quando você construir o pr
 - **GOVERNANCE.md** define **regras de evolução** — quando criar padrão novo, quando recusar
 - **PATTERNS.md** (este arquivo) define **anatomias de página** — como combinar átomos em páginas inteiras
 
-Hierarquia de precedência (do GOVERNANCE.md seção 7): Brandbook V2.2 → DESIGN.md → DESIGN-IMPLEMENTATION.md → PATTERNS.md → Código real.
+Hierarquia de precedência para prosa e regras (GOVERNANCE.md seção 7): Brandbook V2.2 → DESIGN.md → DESIGN-IMPLEMENTATION.md → PATTERNS.md. Valores de token e de componente vêm do Figma.
 
 Se um padrão aqui conflitar com algo no DESIGN.md, o DESIGN.md vence. Padrões aqui usam componentes, não os redefinem.
 
 ---
 
-*Hope Design System · PATTERNS.md · v1.1.1 · novembro de 2026 · Renan Moura*
+*Hope Design System · PATTERNS.md · v1.1.2 · novembro de 2026 · Renan Moura*
