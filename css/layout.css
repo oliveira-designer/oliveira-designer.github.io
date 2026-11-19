@@ -1536,41 +1536,6 @@ html {
 }
 
 /* ----------------------------------------------------------
-   ABOUT — Split layout: stacked narrative blocks (no page uses it today)
-   ---------------------------------------------------------- */
-.about-split {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-12);
-  align-items: start;
-}
-
-@media (min-width: 768px) {
-  .about-split {
-    grid-template-columns: 2fr 3fr;
-    gap: var(--space-16);
-    align-items: center;
-  }
-}
-
-/* Stacked narrative blocks — right column */
-.about-split__blocks {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.about-split__block {
-  background-color: var(--color-bg-alt);
-  border: var(--border-normal);
-  border-radius: var(--radius-md);
-  padding: var(--space-5) var(--space-6);
-  transition:
-    background-color var(--duration-slower) var(--ease-out),
-    border-color     var(--duration-slower) var(--ease-out);
-}
-
-/* ----------------------------------------------------------
    ABOUT — Experience pipeline list
    ---------------------------------------------------------- */
 .experience-list {
