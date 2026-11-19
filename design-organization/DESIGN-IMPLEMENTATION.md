@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.6.9 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.6.10 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.6.10 (PATCH, 18/11/2026)**: `:where(.case-section__body) p` no lugar de `.case-section__body p`, para que `.skill-card__body`, `.persona__role`, `.case-lead__text` e `.result-card__title` usem a própria regra; parágrafos sem classe inalterados. Removidas as regras `.about-split` sem uso. `.testimonials-ticker` recebe `position: relative`, o que corrige a largura do documento e o header em celular com movimento reduzido. Medições e a decisão pendente sobre `.skill-card__body` em 13px estão no CHANGELOG.
 
 **Changelog v2.6.9 (PATCH, 18/11/2026)**: todas as labels uppercase passam a Regular (400): `.case-phase-break__label` (era 700), `.case-card__eyebrow` (500), `.badge--draft` (500) e `.header__status-badge` (600). `.team-section__title` passa a Label caps de verdade (11px, 400, 1,4, `--color-text-3`). Removidas as regras órfãs `.about-split__quote-text`, `.about-split__quote::before` e `.about-split__attribution`.
 
@@ -2516,5 +2518,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.9 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.10 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

@@ -5,6 +5,49 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.10 · 18 de novembro de 2026 · Escopo dos parágrafos dos cases, regras órfãs e ticker com movimento reduzido (docs e código, PATCH)
+
+**Versão escolhida: PATCH (2.6.9 para 2.6.10).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre correção e ajuste de valor sem mudar a estrutura. Nenhum token foi criado, removido ou renomeado, nenhuma classe usada por página foi removida, e a mudança de seletor do item 1 só deixa os componentes usarem o valor que a própria regra já declarava. O item 2 (`.skill-card__body` em 13px) **não foi feito**: aguarda decisão, ver abaixo.
+
+**1. `:where(.case-section__body) p` (especificidade 0)**
+- `components.css`: o seletor `.case-section__body p` virou `:where(.case-section__body) p`. Os parágrafos de texto sem classe seguem com `font-family`, `font-size` 16px, `--color-text-2` e `max-width: 100%`.
+- Verificado com o estilo computado de todo `<p>`, antes e depois (5 páginas, 390 / 1024 / 1280px, 747 medições): **114 mudaram e nenhuma é parágrafo sem classe**. Lista exata:
+  - `.skill-card__body` (13 no `sb-home-redesign` e 17 no `cloud-cost-intelligence`, 90 medições): 16px para 12px em 390 e 1024px e 12,8px em 1280px; line height 27,2px para 20,4px / 20,4px / 21,76px. Os cards ficam mais baixos.
+  - `.persona__role` (dotz, 1): 16px para 12px / 12px / 12,8px; cor `--color-text-2` para `--color-text-3`; line height 28px para 21px / 21px / 22,4px.
+  - `.case-lead__text` (6 por largura: 3 no dotz, 1 no sb-home-redesign, 2 no cloud-cost-intelligence): cor `--color-text-2` (61,61,69) para `--color-text-1` (13,13,15). Tamanho igual.
+  - `.result-card__title` (cloud-cost-intelligence, 1): cor `--color-text-2` para `--color-text-1`; tamanho 16px para 14px / 15,36px / 16px (em 1280px não muda).
+- Altura das páginas, 390 / 1024 / 1280px: `sb-home-redesign` -734 / -625 / -342px, `cloud-cost-intelligence` -434 / -327 / -190px, `dotz` -14px em 390px e -5px em 1280px, `about` sem mudança.
+
+**2. `.skill-card__body` em 13px: pendente de decisão**
+- O Figma é Body sm, 13px. O token existe, `--fs-body-sm`, mas é fluido: `clamp(12px, 1vw, 13px)`, então só chega a 13px acima de cerca de 1300px. Hoje o card renderiza 12px (390 e 1024px) e 12,8px (1280px). Para ter 13px em todo breakpoint há duas saídas, e a escolha muda mais que este seletor: (A) fixar 13px só no `.skill-card__body` (valor escrito na regra, sem token); (B) fixar `--fs-body-sm` em 13px, como foi feito com `--fs-body`, o que afeta todos os usos do token.
+- Medido (card do `.skill-card__body`, 390 / 1024 / 1280px). A: 13px, line height 22,1px (1,7); `about` +80 / +15 / +3px de página; `sb-home-redesign` +132 / +90 / +31px; `cloud-cost-intelligence` +133 / +63 / +7px. B: o mesmo nos cards, mais todos os outros usos do `--fs-body-sm`: em 390px `index` +82px, `about` +158px, `dotz` +300px, `sb-home-redesign` +278px, `cloud-cost-intelligence` +218px (de 0 a 4 elementos ganham linha por página); em 1280px de +1 a +64px.
+
+**3. Outros valores liberados pelo item 1 (relatório, sem alteração)**
+
+| Elemento | Antes | Depois (390 / 1024 / 1280px) | Na escala do Figma? |
+|----------|-------|------------------------------|---------------------|
+| `.persona__role` | 16px, `--color-text-2` | 12 / 12 / 12,8px, `--color-text-3` | Não. Body sm é 13px: 1px, 1px e 0,2px abaixo. Vem do `--fs-body-sm` fluido |
+| `.case-lead__text` cor | `--color-text-2` | `--color-text-1` | Cor, não tamanho. O tamanho segue 16 / 17,4 / 19px (`--fs-body-xl` fluido); só 19px (1280px) e 16px (390px, igual ao Body) caem na escala, 17,4px não |
+| `.result-card__title` cor e tamanho | 16px, `--color-text-2` | 14 / 15,36 / 16px, `--color-text-1` | 16px sim (H3). 14px e 15,36px não: H3 é 16px. Vem do `--fs-h3` fluido |
+| `.skill-card__body` (também liberado) | 16px | 12 / 12 / 12,8px | Não. Body sm é 13px |
+
+**4. Regras `.about-split` removidas**
+- Busca em HTML, JS, CSS e docs: nenhuma referência. Removidos de `layout.css`: `.about-split`, a variante de 768px, `.about-split__blocks` e `.about-split__block`, com o cabeçalho da seção. Sem efeito visual. O `.about-split` não existe mais em nenhum CSS.
+
+**5. Ticker de depoimentos com `prefers-reduced-motion`**
+- **A causa não era o `.logo-strip__track`**, como as versões 2.6.8 e 2.6.9 registraram. Com a faixa de logos escondida a largura do documento continuava 3725px. A causa é o `.testimonials-ticker`: com movimento reduzido a trilha não anima e fica sem `transform`. Os `<span class="visually-hidden">` dos cards clonados são `position: absolute`, e sem um ancestral posicionado ou transformado escapam do `overflow: hidden` do ticker. Com movimento normal o `transform` da trilha animada já os contém.
+- Efeito real, medido em emulação de celular (390px): antes da correção o `header` ficava com 1560px de largura e o botão do menu (hambúrguer) em x=1148, fora da tela. Rolar com roda, teclado e toque não movia a página (a raiz usa `overflow-x: clip`), então o problema aparecia como layout largo demais, não como barra de rolagem.
+- Correção: `position: relative` em `.testimonials-ticker` (`layout.css`, 1 linha).
+- Verificado em `index` e `design-system.html`, 390 / 1024 / 1280px, com e sem movimento reduzido: largura do documento igual à da janela em todos os casos (antes 3725px em `index` com movimento reduzido); em 390px com movimento reduzido o `header` volta a 390px e o botão a x=338. Com movimento normal, 0 elementos com posição ou tamanho diferente, desconsiderando só o deslocamento horizontal das trilhas animadas.
+
+**Débitos**
+- ~~Escopo de `.case-section__body p`~~, ~~regras `.about-split`~~ e ~~ticker com movimento reduzido~~: resolvidos nesta versão.
+- **Decisão pendente (item 2):** como chegar a 13px no `.skill-card__body`, opção A ou B acima. Relacionado: `--fs-body-sm` (12 a 13px), `--fs-h3` (14 a 16px) e `--fs-body-xl` (16 a 19px) são fluidos e o Figma usa o tamanho fixo (13, 16 e 19px). Fora da escala fora do desktop largo.
+- Pilha monoespaçada padrão do Tailwind no `css/output.css` (preflight de `code, kbd, samp, pre`), sem efeito visual. Aceito como débito.
+- `.ds-sub` (títulos de subseção do `design-system.html`, uppercase, peso 600) é chrome da página, não um componente do Hope.
+
+---
+
 ## v2.6.9 · 18 de novembro de 2026 · Labels em Regular, título do time como Label caps e regras órfãs removidas (docs e código, PATCH)
 
 **Versão escolhida: PATCH (2.6.8 para 2.6.9).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre correção e ajuste de valor sem mudar a estrutura. Nenhum token, componente ou classe usada por alguma página foi criado, removido ou renomeado. As regras removidas no item 1 não eram usadas em nenhum HTML nem JS, então não quebram compatibilidade. O peso das labels (item 3) e o título do time (item 2) são ajustes de valor para alinhar ao Figma.
@@ -28,11 +71,11 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 **Verificação:** 5 páginas, 390 / 1024 / 1280px. Sem erro de console, sem clipping nem truncamento novos, nenhum elemento ganha ou perde linha. As únicas mudanças de altura são as -25px por título do item 2.
 
 **Débitos que seguem abertos**
-- **Escopo de `.case-section__body p` (achado, sem alteração).** A regra (0,1,1) força `font-size`, `color`, `font-family` e `max-width: 100%` em todo `<p>` dentro de `.case-section__body`. Os parágrafos de texto sem classe dependem disso e é intencional. Mas ela também vence componentes com regra própria de uma classe (0,1,0). Hoje contra o valor da regra própria, em 1280px: `.skill-card__body` (sb-home-redesign 13, cloud-cost-intelligence 17) 16px contra 12,8px (12px em 390px); `.persona__role` (dotz) 16px e `--color-text-2` contra 12,8px e `--color-text-3`; `.case-lead__text` (6 no total) cor `--color-text-2` contra `--color-text-1`; `.result-card__title` (cloud) cor `--color-text-2` contra `--color-text-1` (e 16px contra 14px em 390px). Não são vencidos, porque a regra própria é mais específica ou usa `!important`: `.metric-desc`, `.case-section__results-legend`, `.small-note`, `.persona .persona__section p` e `.team-section__title` (corrigido no item 2). Trocar por `.case-section__body > p` **não** serve: os parágrafos aninhados (a maior parte do texto) perderiam `--color-text-2` (viram `--color-text-1`) e `max-width: 100%` (viram 70ch). Recomendado: `:where(.case-section__body) p`, que mantém o escopo com especificidade 0 e deixa cada componente usar o próprio valor. Simulado, só mudam os componentes citados, e os parágrafos comuns ficam iguais: altura das páginas 1280 / 390px, dotz -5 / -14px, sb-home-redesign -342 / -734px, cloud-cost-intelligence -190 / -434px, `about` sem mudança.
-- `.about-split`, `.about-split__blocks` e `.about-split__block` seguem em `layout.css` sem nenhum uso nas páginas. Decidir se saem.
+- ~~**Escopo de `.case-section__body p` (achado, sem alteração).** A regra (0,1,1) força `font-size`, `color`, `font-family` e `max-width: 100%` em todo `<p>` dentro de `.case-section__body`. Os parágrafos de texto sem classe dependem disso e é intencional. Mas ela também vence componentes com regra própria de uma classe (0,1,0). Hoje contra o valor da regra própria, em 1280px: `.skill-card__body` (sb-home-redesign 13, cloud-cost-intelligence 17) 16px contra 12,8px (12px em 390px); `.persona__role` (dotz) 16px e `--color-text-2` contra 12,8px e `--color-text-3`; `.case-lead__text` (6 no total) cor `--color-text-2` contra `--color-text-1`; `.result-card__title` (cloud) cor `--color-text-2` contra `--color-text-1` (e 16px contra 14px em 390px). Não são vencidos, porque a regra própria é mais específica ou usa `!important`: `.metric-desc`, `.case-section__results-legend`, `.small-note`, `.persona .persona__section p` e `.team-section__title` (corrigido no item 2). Trocar por `.case-section__body > p` **não** serve: os parágrafos aninhados (a maior parte do texto) perderiam `--color-text-2` (viram `--color-text-1`) e `max-width: 100%` (viram 70ch). Recomendado: `:where(.case-section__body) p`, que mantém o escopo com especificidade 0 e deixa cada componente usar o próprio valor. Simulado, só mudam os componentes citados, e os parágrafos comuns ficam iguais: altura das páginas 1280 / 390px, dotz -5 / -14px, sb-home-redesign -342 / -734px, cloud-cost-intelligence -190 / -434px, `about` sem mudança.~~ Resolvido em 18 de novembro de 2026 (v2.6.10): `:where(.case-section__body) p`.
+- ~~`.about-split`, `.about-split__blocks` e `.about-split__block` seguem em `layout.css` sem nenhum uso nas páginas. Decidir se saem.~~ Resolvido em 18 de novembro de 2026 (v2.6.10): regras removidas.
 - `.ds-sub` (títulos de subseção do próprio `design-system.html`, uppercase, peso 600) é chrome da página, não um componente do Hope, e não foi alterado.
 - Pilha monoespaçada padrão do Tailwind no `css/output.css` (preflight de `code, kbd, samp, pre`), sem efeito visual.
-- Com `prefers-reduced-motion`, o `.logo-strip__track` do `index` vaza para o lado e cria rolagem horizontal. Já acontecia antes e não depende destas mudanças. Sem movimento reduzido não há overflow.
+- ~~Com `prefers-reduced-motion`, o `.logo-strip__track` do `index` vaza para o lado e cria rolagem horizontal. Já acontecia antes e não depende destas mudanças. Sem movimento reduzido não há overflow.~~ Resolvido em 18 de novembro de 2026 (v2.6.10): a causa era o `.testimonials-ticker`; `position: relative`.
 
 ---
 
@@ -68,7 +111,7 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 - ~~`.about-split__quote-text`: regra órfã (sem uso nas páginas), itálico. Decisão pendente, provavelmente remover.~~ Resolvido em 18 de novembro de 2026 (v2.6.9): regras órfãs removidas.
 - ~~`.team-section__title` renderiza em 16px (era 15,36px antes da v2.6.8), e não nos 11px de Label caps, porque `.case-section__body p` (especificidade 0,1,1) vence `.team-section__title` (0,1,0) em tamanho e cor (vira `--color-text-2`, e não `--color-text-3`). Usado nos 3 cases ("Impact", "Involved teams", "Team Composition"). Sem o override seria 11px, `--color-text-3` (contraste 6,27:1 contra 10,76:1 hoje) e 8,5px mais baixo por título, com line height 1,75 (o Label caps do Figma é 1,4). A mesma regra força o tamanho de outros componentes dentro das seções dos cases: o `.skill-card__body` renderiza em 16px lá e em 12,8px no `about`.~~ Resolvido em 18 de novembro de 2026 (v2.6.9): Label caps de 11px.
 - Pilha monoespaçada padrão do Tailwind no `css/output.css` (preflight de `code, kbd, samp, pre`), sem efeito visual.
-- Com `prefers-reduced-motion`, o `.logo-strip__track` do `index` vaza para o lado e cria rolagem horizontal (3725px de largura de rolagem). Já acontecia antes desta versão e não depende dela. Sem movimento reduzido não há overflow.
+- ~~Com `prefers-reduced-motion`, o `.logo-strip__track` do `index` vaza para o lado e cria rolagem horizontal (3725px de largura de rolagem). Já acontecia antes desta versão e não depende dela. Sem movimento reduzido não há overflow.~~ Resolvido em 18 de novembro de 2026 (v2.6.10): a causa era o `.testimonials-ticker`; `position: relative`.
 
 ---
 
@@ -403,4 +446,4 @@ Escopo desta entrada: **Figma** (Hope DS | Foundation, Hope DS | Core Components
 
 ---
 
-*Hope Design System · CHANGELOG.md · v2.6.9 · novembro de 2026 · Renan Moura*
+*Hope Design System · CHANGELOG.md · v2.6.10 · novembro de 2026 · Renan Moura*
