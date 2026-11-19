@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.6.13 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.6.14 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.6.14 (PATCH, 19/11/2026)**: correções vindas do relatório de divergência contra o Figma de 19/11/2026. `tokens.css`: novo `--space-none: 0`, cabeçalho e comentários da escala tipográfica corrigidos. Docs: dark `text-3` (#9090A8), dark `border-strong` (#69697E), link hover dark (#FFD96B), `borda-dark` renomeado para `bg-neutral-hover-dark` (#E2E2E8), primitivos Night que faltavam, `bg-scrim-strong` dark (#000000 a 88%) registrado como divergência conhecida no CSS, aliases que se referiam a si mesmos removidos, nomes `--color-link`, `--color-link-hover` e `--color-focus-ring` marcados como nomes do code syntax do Figma (no CSS são `--color-text-brand-primary`, `--color-text-brand-primary-hover` e `--color-border-focus-ring`), tokens `--icon-*` de tamanho, `--shadow-focus-error` e `--fs-code` removidos (nunca definidos, nunca usados). Nenhum token renomeado, nenhuma mudança de renderização. Detalhes no CHANGELOG.
 
 **Changelog v2.6.13 (PATCH, 19/11/2026)**: a pilha monoespaçada literal do Tailwind sai do `css/output.css`. Novo `css/preflight-nomono.css` (cópia do preflight do Tailwind v4.3.0 sem o `font-family` da regra `code, kbd, samp, pre`), importado por `css/tailwind.css` na camada `base`, junto com `theme.css` e `utilities.css`, e `--font-mono: initial` no `@theme`. Zero diferenças de estilo computado. O `preflight-nomono.css` precisa ser ressincronizado a cada upgrade do Tailwind (ver `GOVERNANCE.md`, seção 11). Documentação alinhada às variáveis `size/*` do Figma.
 
@@ -2500,5 +2502,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.13 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.14 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

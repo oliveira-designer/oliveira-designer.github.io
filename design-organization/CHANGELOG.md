@@ -5,6 +5,45 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.14 · 19 de novembro de 2026 · Correções do relatório de divergência contra o Figma (docs e código, PATCH)
+
+**Versão escolhida: PATCH (2.6.13 para 2.6.14).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre correção de valor, de débito e de documentação. Nenhum token foi renomeado ou removido do CSS, nenhum valor renderizado mudou, e `--space-none` é um token novo sem consumidor (adição de um token, mas só de um zero que o Figma já tinha; não abre família nem componente, então segue PATCH). Versões dos arquivos: `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` 2.6.14, `tokens.css` 2.6.14 (cabeçalho), `GOVERNANCE.md` 1.5, `PATTERNS.md` 1.1.2.
+
+Origem: relatório de divergência entre o snapshot do Figma de 19/11/2026 e o commit `76bdca6`. O Figma é canônico para valores; este repositório para prosa, regras e changelog (`GOVERNANCE.md`, seção 7, v1.5).
+
+**1. `tokens.css`**
+- Novo `--space-none: 0` na escala de espaçamento (Figma `Spacing/space-none`; o code syntax do Figma ainda aponta para `--space-1`, a corrigir no Figma).
+- Cabeçalho "v1.4 · May 2026" virou v2.6.14 e passa a dizer que o Figma é a fonte dos valores.
+- Comentário "Fluid type scale" corrigido: só display, h1, h2 e `--fs-body-xl` são fluidos.
+- Comentário do `--fs-body-xl`: é o Body xl do Figma (tracking -1%), usado só no `.case-lead__text`. O Body lg (sem tracking) existe só no Figma, mantido de propósito sem token CSS.
+
+**2. Bordas: não feito, aguarda decisão** (ver Débitos)
+
+**3. `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` (valores do Figma vencem)**
+- `text-tertiary-dark` #8888A0 para #9090A8; `link-hover-dark` de Daybreak para #FFD96B; `borda-dark` (#E0E0E8) virou `bg-neutral-hover-dark` (#E2E2E8). Primitivos `night-accent-hover`, `night-success-soft` e `night-error-soft` adicionados ao YAML.
+- `bg-scrim-strong`: o dark no Figma é #000000 a 88% (`bg-scrim-strong-dark` adicionado ao YAML). Registrado como **divergência conhecida, pendente no CSS** (o CSS usa #0D0D0F a 88% nos dois temas).
+- Dark `border-strong` #4A4A60 para #69697E e dark `text-3` #8888A0 para #9090A8 nos blocos de CSS. Aliases que se referiam a si mesmos (`--color-success: var(--color-success)` e os outros quatro) removidos.
+- `--color-link`, `--color-link-hover` e `--color-focus-ring` marcados como nomes do code syntax do Figma, com o nome real do CSS ao lado (`--color-text-brand-primary`, `--color-text-brand-primary-hover`, `--color-border-focus-ring`). A decisão de nomenclatura segue pendente.
+- Removidos por não estarem definidos em `tokens.css` nem usados em nenhum CSS, HTML ou JS: `--icon-xs` a `--icon-2xl` e `--icon-stroke` (e as classes `.icon--xs` a `.icon--2xl`), `--shadow-focus-error` e `--fs-code`. Os exemplos de código passaram a usar valor literal, com comentário.
+- Nota nova: Body lg e Link existem no Figma sem token CSS, por decisão.
+
+**4. `GOVERNANCE.md` v1.5 e `PATTERNS.md` v1.1.2**
+- Seção 7 reescrita (fontes da verdade e ciclo de divergência); regra "Realidade vence documentação" removida das seções 6, 7 e 10; changelog retroativo da subseção do Tailwind (seção 11). `PATTERNS.md` tinha uma referência velha à precedência da seção 7, atualizada.
+
+**Medições (bloco 0, só leitura)**
+- Referências às variáveis em discussão para renomeação (focus-ring, brand-primary, accent-soft, positive-soft, danger-soft, material-*, night-*): o `output.css` não referencia nenhuma delas (0 em todas), então renomear no CSS não obriga a reconstruir o `output.css`.
+- Largura do conteúdo, janelas de 1366 e 1440px: o 1280 de `--content-max-width` **é um teto do conteúdo, não do contêiner com gutters**. A largura é `min(1280px, 100% - 160px)`, com 80px de gutter de cada lado. Em 1366px o conteúdo mede 1206px; em 1440px, 1280px. Vale para `.container`, `.nav`, `.case-card__inner` (herói, seções, rodapé, cards). A coluna de prosa dos cases mede 772,5px (`.case-content`, `max-width: 68ch`, centralizada ao lado da barra lateral de 240px).
+
+**Débitos e decisões pendentes**
+- **Bordas** (bloco 2 não feito). `--border-thin` (0,5px, 33 usos), `--border-normal` (1px) e `--border-strong` (1px, cor forte) contra a escala de stroke do Figma (hairline 0,8, thin 1, medium 1,5, thick 2,4, accent 3). O nome `--border-thin` colide com o `thin` (1px) do Figma, então o mapeamento é ambíguo. No Chromium, 0,5px, 0,8px e 1px renderizam todos como 1px (testado em DPR 1, 1,25, 1,5, 2 e 3).
+- **Nomenclatura** dos tokens CSS contra o code syntax do Figma (link, focus-ring, três soft, glass vs material, rampa Night): pendente.
+- **Largura do contêiner:** Figma `layout-container` 1040 (em um quadro de 1200 com gutters de 80) contra o teto de 1280 do CSS; e `layout-reading` 752 contra 772,5px (68ch). Pendente de decisão.
+- **Dark mode, adiado de propósito:** `--color-bg-icon-chip` (CSS 14%, Figma 15%), `--color-bg-scrim-strong` dark e o anel extra do hover do vidro no dark.
+- `.ds-sub` (títulos de subseção do `design-system.html`) é chrome da página, não um componente do Hope.
+- Manutenção recorrente: ressincronizar `css/preflight-nomono.css` a cada upgrade do Tailwind.
+
+---
+
 ## v2.6.13 · 19 de novembro de 2026 · Pilha monoespaçada do Tailwind removida do `output.css` e docs alinhadas às variáveis `size/*` do Figma (docs e código, PATCH)
 
 **Versão escolhida: PATCH (2.6.12 para 2.6.13).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre correção de débito técnico e melhoria de documentação sem mudança de token ou componente. Nenhum token, classe ou componente foi criado, removido ou renomeado, e o resultado renderizado não muda (0 diferenças medidas). O arquivo novo, `css/preflight-nomono.css`, é infraestrutura de build, não parte do sistema visual; por isso não é MINOR.
