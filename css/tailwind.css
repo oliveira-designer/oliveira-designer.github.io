@@ -3,13 +3,20 @@
    npm run build:css  |  npm run dev
    ============================================================ */
 
-@import "tailwindcss";
+/* Same as @import "tailwindcss", but the preflight is the local copy
+   without the mono font stack. Re-sync css/preflight-nomono.css when
+   Tailwind is upgraded (see its header). */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "./preflight-nomono.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
 
 @source "../index.html";
 @source "../about.html";
 
 @theme {
   --animate-*: initial;
+  --font-mono: initial;
 }
 
 /* Reads data-theme attribute for dark mode utilities (dark:*) */
