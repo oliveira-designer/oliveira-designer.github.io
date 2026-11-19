@@ -1,5 +1,5 @@
 ---
-version: v2.6.15
+version: v2.6.16
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -736,6 +736,8 @@ Sistema de espaçamento base 4px. Todas as medidas (padding, margin, gap) devem 
 - Container de prosa (artigo, case study): 65ch para legibilidade ideal
 - Mobile: padding lateral 24px · Tablet: 32px · Desktop: 48px
 
+**Divergência conhecida (decisão do dono, pendente de atualização do Figma).** O Figma tem Layout/container 1040 e Layout/header 1200. O site renderiza o container em `min(1280px, 100% - 160px)` (gutter mínimo de 80px de cada lado) e o `.nav` com a mesma largura: 1206px em 1366px de viewport e 1280px a partir de 1440px. A prosa dos cases usa 68ch (cerca de 796px), no lugar do Layout/reading de 752px; a barra lateral é 240px, igual ao Figma. Os tokens `--layout-*` não existem no CSS. É uma decisão do dono, a ser corrigida no Figma (Layout/*), e **não deve ser reaberta como erro** no próximo relatório de divergência.
+
 ### Grid
 
 - Cards: grid responsivo com `auto-fill` e `minmax(320px, 1fr)`
@@ -1063,4 +1065,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.6.15 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.6.16 · novembro de 2026 · Renan Moura*

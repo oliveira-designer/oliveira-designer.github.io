@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.6.15 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.6.16 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -9,7 +9,9 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
 
-**Changelog v2.6.15 (PATCH, 19/11/2026)**: valores do Figma. `--border-thin` passa de 0,5px para 0,8px (Stroke/hairline; `--border-normal` e `--border-strong` seguem 1px). Novos tokens de layout `--layout-header` 1200px, `--layout-container` 1040px, `--layout-reading` 752px e `--layout-sidebar` 240px; `--content-max-width` vira alias de `--layout-container` (antes 1280px). A partir de 1200px de viewport o conteúdo das seções mede 1040px, o `.nav` fica em no máximo 1200px e a prosa dos cases em 752px. A conta do `.cs-figure--full-bleed` foi refeita para os novos valores. Medições e efeitos no CHANGELOG.
+**Changelog v2.6.16 (PATCH, 19/11/2026)**: o layout da v2.6.15 foi revertido por decisão do dono (`git revert` de `cb3404c`): a largura do conteúdo, o `.nav`, a prosa de 68ch e a conta do `.cs-figure--full-bleed` voltam ao que eram. Nenhum token `--layout-*` existe no CSS. Registrada a divergência conhecida contra o Figma Layout/* (seção 18). As bordas da v2.6.15 ficam.
+
+**Changelog v2.6.15 (PATCH, 19/11/2026)**: `--border-thin` passa de 0,5px para 0,8px (Stroke/hairline; `--border-normal` e `--border-strong` seguem 1px). A parte de layout desta versão foi revertida na v2.6.16.
 
 **Changelog v2.6.14 (PATCH, 19/11/2026)**: correções vindas do relatório de divergência contra o Figma de 19/11/2026. `tokens.css`: novo `--space-none: 0`, cabeçalho e comentários da escala tipográfica corrigidos. Docs: dark `text-3` (#9090A8), dark `border-strong` (#69697E), link hover dark (#FFD96B), `borda-dark` renomeado para `bg-neutral-hover-dark` (#E2E2E8), primitivos Night que faltavam, `bg-scrim-strong` dark (#000000 a 88%) registrado como divergência conhecida no CSS, aliases que se referiam a si mesmos removidos, nomes `--color-link`, `--color-link-hover` e `--color-focus-ring` marcados como nomes do code syntax do Figma (no CSS são `--color-text-brand-primary`, `--color-text-brand-primary-hover` e `--color-border-focus-ring`), tokens `--icon-*` de tamanho, `--shadow-focus-error` e `--fs-code` removidos (nunca definidos, nunca usados). Nenhum token renomeado, nenhuma mudança de renderização. Detalhes no CHANGELOG.
 
@@ -1371,6 +1373,8 @@ pre.code-block code {
 
 ## 18. LAYOUT
 
+**Divergência conhecida (decisão do dono, pendente de atualização do Figma).** O Figma tem Layout/container 1040 e Layout/header 1200. O site renderiza o container em `min(1280px, 100% - 160px)` (gutter mínimo de 80px de cada lado) e o `.nav` com a mesma largura: 1206px em 1366px de viewport e 1280px a partir de 1440px. A prosa dos cases usa 68ch (cerca de 796px), no lugar do Layout/reading de 752px; a barra lateral é 240px, igual ao Figma. Os tokens `--layout-*` não existem no CSS. É uma decisão do dono, a ser corrigida no Figma (Layout/*), e **não deve ser reaberta como erro** no próximo relatório de divergência.
+
 ```css
 .container {
   width: 100%;
@@ -2505,5 +2509,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.15 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.16 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

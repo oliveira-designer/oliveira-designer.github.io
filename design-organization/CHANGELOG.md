@@ -5,7 +5,33 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.16 · 19 de novembro de 2026 · Layout revertido: largura anterior mantida por decisão do dono (docs e código, PATCH)
+
+**Versão escolhida: PATCH (2.6.15 para 2.6.16).** Reverte um ajuste de valor, sem token novo nem renomeado. Versões: `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` 2.6.16, `tokens.css` (cabeçalho) 2.6.16, `GOVERNANCE.md` 1.5, `PATTERNS.md` 1.1.2.
+
+**1. Reversão (commit `f88b60f`, `git revert` de `cb3404c`)**
+- O dono não aprovou a nova largura de conteúdo. Voltam: `--content-max-width: 1280px` como teto (sem `--layout-*` nem alias), `max-width: 1200px` literal e a conta de 768px em diante do `.nav`, `240px 1fr` literal, `max-width: 68ch` na prosa e a conta antiga do `.cs-figure--full-bleed` (`34ch` e `128px`). Revert limpo, sem conflito. `css/layout.css`, `css/components.css` e `design-system.html` ficam idênticos ao estado de `ef7fea7`; `tokens.css` só difere pelo cabeçalho de versão. **As bordas (`ef7fea7`) ficam.**
+- Verificado com larguras computadas (offsetWidth), 1024 / 1200 / 1366 / 1440 / 1920px, iguais às de antes da v2.6.15: `.container` e `.nav` 864 / 1040 / 1206 / 1280 / 1280; `.case-card__inner` igual; `.case-card` (faixa de ponta a ponta) 1024 / 1200 / 1366 / 1440 / 1920; `.case-content` 576 / 752 / 796 / 796 / 796. 75 valores comparados com a medição anterior, 2 diferenças, ambas só na posição (`left`) do `.case-card` e do `.case-card__inner` do `index` em 1024px, por causa da transformação de escala da animação de entrada no instante da captura; a largura é a mesma.
+- **Problema que já existia no `.cs-figure--full-bleed` (não corrigido).** Em `dotz backup.html`, com movimento reduzido, a figura deveria encostar na borda esquerda do viewport (x = 0). Com a conta antiga ela fica em x = 0 só em 390px; em 768px fica em +94,2px, em 900px em +28,2px, em 1024px em -16px, em 1199px / 1200px em -103,5 / -104px e de 1366px em diante em -126,2px. Ou seja, nas telas largas a figura sai pela esquerda e sobra um vazio à direita. A classe só é usada no `dotz backup.html` e no `design-system.html`; nenhuma página ativa usa. A causa é a constante de `128px`, que não bate com o layout atual. Reportado, sem correção.
+
+**2. Docs**
+- `DESIGN.md` (seção Layout) e `DESIGN-IMPLEMENTATION.md` (seção 18) voltam à redação anterior à `cb3404c`, com uma nota nova de **divergência conhecida**: o Figma tem Layout/container 1040 e Layout/header 1200; o site renderiza o container em `min(1280px, 100% - 160px)` e o `.nav` na mesma largura. Decisão do dono, a corrigir no Figma; não reabrir como erro no próximo relatório de divergência.
+- A escala de stroke do `DESIGN.md` e o trabalho de bordas não foram tocados.
+
+**Débitos**
+- Layout/* do Figma (container 1040, header 1200, reading 752): **decisão do dono: mantida a largura anterior (cap 1280, gutter mínimo de 80px, leitura 68ch); Figma Layout/* a alinhar.**
+- Conta antiga do `.cs-figure--full-bleed` fora de alinhamento (acima).
+- Nomenclatura dos tokens CSS contra o code syntax do Figma: pendente.
+- Dark mode, adiado de propósito: `--color-bg-icon-chip` (CSS 14%, Figma 15%), `--color-bg-scrim-strong` dark e o anel extra do hover do vidro no dark.
+- Literais de borda e de blur fora dos tokens: sem decisão.
+- `.ds-sub` (títulos de subseção do `design-system.html`) é chrome da página, não um componente do Hope.
+- Manutenção recorrente: ressincronizar `css/preflight-nomono.css` a cada upgrade do Tailwind.
+
+---
+
 ## v2.6.15 · 19 de novembro de 2026 · Bordas e layout alinhados ao Figma (docs e código, PATCH)
+
+**Atualização (v2.6.16): o item 2 (layout, `cb3404c`) foi revertido em `f88b60f` por decisão do dono. Valem só as bordas (item 1, `ef7fea7`).**
 
 **Versão escolhida: PATCH (2.6.14 para 2.6.15).** Pela seção 3 do `GOVERNANCE.md`, é ajuste de valor para alinhar ao Figma, a fonte dos valores (seção 7). Os tokens de layout são novos, mas só espelham variáveis que o Figma já tinha e substituem o teto antigo (`--content-max-width`), sem família nova nem componente novo. Nenhuma variável CSS foi renomeada. Versões: `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` 2.6.15, `tokens.css` (cabeçalho) 2.6.15, `GOVERNANCE.md` 1.5, `PATTERNS.md` 1.1.2.
 
@@ -15,7 +41,7 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 - Verificado com estilo computado de todos os elementos, 7 páginas, 390 / 1024 / 1280px, antes e depois: **0 diferenças de borda**. No Chromium 0,5px, 0,8px e 1px renderizam todos como 1px (DPR 1 a 3).
 - Larguras de borda escritas como literal, sem usar token (não alteradas): 21 declarações. 18 são `1px` (`components.css` 62, 74, 86, 98, 327, 917, 1257, 1616, 1625, 1686, 1840, 1921; `layout.css` 60, 258, 960; `auth.css` 82, 94, 238; cores sólidas ou translúcidas), 2 são `1.5px` (`components.css:1324`, `layout.css:1065`) e 1 é `3px` (`layout.css:909`, borda de acento). Nenhum literal de 0,5px no CSS. Nos exemplos do `DESIGN-IMPLEMENTATION.md` há dois `0.5px solid transparent` (botão e badge) que não batem com o CSS real (1px).
 
-**2. Layout (commit `cb3404c`)**
+**2. Layout (commit `cb3404c`, revertido em `f88b60f`; descrição histórica)**
 - Novos em `tokens.css`: `--layout-header: 1200px`, `--layout-container: 1040px`, `--layout-reading: 752px`, `--layout-sidebar: 240px`. `--content-max-width` ficou como **alias** de `--layout-container` (8 ocorrências no repositório; 4 usos de `var()` no CSS e na demo), então nenhuma referência antiga quebra. Os 3 usos de `var(--content-max-width)` no CSS passaram a `var(--layout-container)` ou `var(--layout-header)`.
 - `.container`, `.case-card__inner` (e portanto hero, seções e rodapé): `min(var(--layout-container), 100% - 160px)`. **A partir de 1200px de viewport o conteúdo mede 1040px** (antes até 1280px). O gutter mínimo de 80px continua.
 - `.nav`: o `max-width: 1200px` literal virou `var(--layout-header)` e a conta de 768px em diante usa `min(var(--layout-header), 100% - 160px)`. A linha do header fica em no máximo 1200px (em 1366px mede 1200, antes 1206; em 1440px, 1200, antes 1280). A partir de 1360px o header (1200) é 160px mais largo que o conteúdo das seções (1040), como no Figma.
@@ -30,7 +56,7 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 - Valor atual `blur(24px) saturate(1.5)`: o blur é o Blur/lg (24) do Figma; o saturate não é variável do Figma. O `.site-header` usa literais (`blur(30px) saturate(1.6)`, igual ao Blur/xl, e a versão `-webkit-` com `blur(20px)`, igual ao Blur/md) que não usam o token.
 
 **Débitos**
-- ~~Largura do contêiner (Figma 1040 contra 1280 do CSS; leitura 752 contra 772,5px)~~: resolvido em `cb3404c`.
+- Largura do contêiner (Figma 1040 contra 1280 do CSS; leitura 752 contra 68ch): decisão do dono: mantida a largura anterior (cap 1280, gutter mínimo de 80px, leitura 68ch); Figma Layout/* a alinhar. O `cb3404c` foi revertido.
 - ~~Bordas (mapeamento contra a escala de stroke)~~: resolvido em `ef7fea7`.
 - Nomenclatura dos tokens CSS contra o code syntax do Figma: pendente.
 - Dark mode, adiado de propósito: `--color-bg-icon-chip` (CSS 14%, Figma 15%), `--color-bg-scrim-strong` dark e o anel extra do hover do vidro no dark.
@@ -72,7 +98,7 @@ Origem: relatório de divergência entre o snapshot do Figma de 19/11/2026 e o c
 **Débitos e decisões pendentes**
 - ~~**Bordas** (bloco 2 não feito).~~ Resolvido na v2.6.15 (`ef7fea7`). Texto original: `--border-thin` (0,5px, 33 usos), `--border-normal` (1px) e `--border-strong` (1px, cor forte) contra a escala de stroke do Figma (hairline 0,8, thin 1, medium 1,5, thick 2,4, accent 3). O nome `--border-thin` colide com o `thin` (1px) do Figma, então o mapeamento é ambíguo. No Chromium, 0,5px, 0,8px e 1px renderizam todos como 1px (testado em DPR 1, 1,25, 1,5, 2 e 3).
 - **Nomenclatura** dos tokens CSS contra o code syntax do Figma (link, focus-ring, três soft, glass vs material, rampa Night): pendente.
-- ~~**Largura do contêiner:**~~ Resolvido na v2.6.15 (`cb3404c`). Texto original: Figma `layout-container` 1040 (em um quadro de 1200 com gutters de 80) contra o teto de 1280 do CSS; e `layout-reading` 752 contra 772,5px (68ch). Pendente de decisão.
+- **Largura do contêiner:** decisão do dono na v2.6.16: mantida a largura anterior; Figma Layout/* a alinhar. Texto original: Figma `layout-container` 1040 (em um quadro de 1200 com gutters de 80) contra o teto de 1280 do CSS; e `layout-reading` 752 contra 772,5px (68ch). Pendente de decisão.
 - **Dark mode, adiado de propósito:** `--color-bg-icon-chip` (CSS 14%, Figma 15%), `--color-bg-scrim-strong` dark e o anel extra do hover do vidro no dark.
 - `.ds-sub` (títulos de subseção do `design-system.html`) é chrome da página, não um componente do Hope.
 - Manutenção recorrente: ressincronizar `css/preflight-nomono.css` a cada upgrade do Tailwind.
