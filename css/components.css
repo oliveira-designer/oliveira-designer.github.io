@@ -1148,7 +1148,9 @@
   gap: var(--space-4);
 }
 
-.case-section__body p {
+/* :where() keeps the scope at specificity 0, so components with their own
+   rule (.skill-card__body, .persona__role, .case-lead__text...) keep their values */
+:where(.case-section__body) p {
   font-family: var(--font-body);
   font-size: var(--fs-body);
   color: var(--color-text-2);
