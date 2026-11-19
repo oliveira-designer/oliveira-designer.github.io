@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.6.16 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.6.17 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.6.17 (PATCH, 19/11/2026)**: só documentação. Entra `docs/case/decisoes-hope.md` (diário de decisões do Hope). Sem mudança de token, CSS ou componente. Detalhes no CHANGELOG.
 
 **Changelog v2.6.16 (PATCH, 19/11/2026)**: o layout da v2.6.15 foi revertido por decisão do dono (`git revert` de `cb3404c`): a largura do conteúdo, o `.nav`, a prosa de 68ch e a conta do `.cs-figure--full-bleed` voltam ao que eram. Nenhum token `--layout-*` existe no CSS. Registrada a divergência conhecida contra o Figma Layout/* (seção 18). As bordas da v2.6.15 ficam.
 
@@ -2509,5 +2511,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.16 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.17 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

@@ -5,6 +5,25 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.17 · 19 de novembro de 2026 · Diário de decisões do Hope (documentação, PATCH)
+
+**Versão escolhida: PATCH (2.6.16 para 2.6.17).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre "melhoria de documentação sem mudança técnica", e toda mudança gera entrada no changelog. Nenhum token, regra de CSS ou componente mudou. Versões: `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` 2.6.17, `tokens.css` (só o comentário do cabeçalho) 2.6.17, `GOVERNANCE.md` 1.5 e `PATTERNS.md` 1.1.2 sem mudança.
+
+**1. Novo arquivo: `docs/case/decisoes-hope.md`**
+- Diário de decisões do Hope (material de case), em português. Esta cópia no repositório é a canônica; a cópia no Claude Project é derivada (mesma regra da seção 7 do `GOVERNANCE.md`). O arquivo veio da raiz como `CASE-decisoes-hope.md`.
+- Verificação de NDA: o único trecho com nome de cliente era um item da seção "Como ler este documento", que citava dois produtos de clientes sob NDA. Foi reescrito para "remover referências a clientes sob NDA". Nenhum outro nome de cliente ou produto sob NDA no arquivo. Nenhuma outra edição de conteúdo.
+
+**2. `vercel.json`: cabeçalho `X-Robots-Tag: noindex`**
+- Novos cabeçalhos para `/docs/(.*)` e `/design-organization/(.*)`. Os dois redirecionamentos 301 não mudaram.
+- **Isto não torna esses arquivos privados.** O Vercel serve a raiz do repositório inteira, então qualquer pessoa com a URL continua lendo os arquivos. O cabeçalho só pede aos buscadores que não indexem.
+
+**Débitos**
+- Os comentários do `components.css` (linhas 637, 683 e 713) e o `about.html` citam nomes de clientes; fora do escopo deste diário, sem decisão.
+- `hope-demo.html` aparece como apagado na árvore de trabalho e ficou fora deste commit, por decisão do dono. Ao restaurar, as referências de versão dele estarão em 2.6.16.
+- Demais débitos e decisões pendentes: sem mudança desde a v2.6.16.
+
+---
+
 ## v2.6.16 · 19 de novembro de 2026 · Layout revertido: largura anterior mantida por decisão do dono (docs e código, PATCH)
 
 **Versão escolhida: PATCH (2.6.15 para 2.6.16).** Reverte um ajuste de valor, sem token novo nem renomeado. Versões: `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` 2.6.16, `tokens.css` (cabeçalho) 2.6.16, `GOVERNANCE.md` 1.5, `PATTERNS.md` 1.1.2.
