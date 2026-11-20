@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.6.17 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.7.0 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.7.0 (MINOR, 20/11/2026)**: renomeação semântica dos tokens (Figma Foundation), Button completo (Accent, Inverse, Destructive, Small Ghost), anel de foco em `outline`, `.badge--draft` removido. Nomes antigos seguem como alias deprecated. Detalhes no CHANGELOG.
 
 **Changelog v2.6.17 (PATCH, 19/11/2026)**: só documentação. Entra `docs/case/decisoes-hope.md` (diário de decisões do Hope). Sem mudança de token, CSS ou componente. Detalhes no CHANGELOG.
 
@@ -2511,5 +2513,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.6.17 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.7.0 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

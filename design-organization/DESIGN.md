@@ -1,5 +1,5 @@
 ---
-version: v2.6.17
+version: v2.7.0
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -113,42 +113,72 @@ colors:
   info-light: "#B89EDB"
 
   # --- v2.3 · semânticos novos · Tema LIGHT ---
-  bg-disabled: "{colors.border-base}"
-  text-disabled: "#9090A8"
-  text-on-disabled: "#9090A8"
-  border-disabled: "{colors.border-base}"
+  bg-disabled-default: "{colors.border-base}"
+  text-disabled-default: "#9090A8"
+  text-disabled-inverse: "#9090A8"
+  border-disabled-default: "{colors.border-base}"
   bg-scrim: "rgba(13, 13, 15, 0.5)"
   bg-scrim-strong: "rgba(13, 13, 15, 0.88)"  # v2.6: usado no Lightbox. Light #0D0D0F a 88%. NO FIGMA o dark é #000000 a 88% (bg-scrim-strong-dark abaixo); o CSS ainda usa o valor light nos dois temas (divergência conhecida, pendente, adiada de propósito)
   # v2.6: Warning na família Solar (decisão de 13/11/2026)
-  bg-warning: "{colors.solar}"
-  bg-warning-soft: "{colors.aurora}"
-  text-warning: "{colors.dusk}"
-  text-on-warning: "{colors.ink}"
-  border-warning: "{colors.amber}"  # cerca de 2,5:1 sobre Aurora: aceito, a borda é decorativa
-  bg-info: "{colors.info}"
-  bg-info-soft: "rgba(99, 69, 144, 0.10)"
-  text-info: "{colors.info}"
-  text-on-info: "{colors.cloud}"
-  border-info: "{colors.info}"
-  text-success: "{colors.success-deep}"
-  text-error: "{colors.error}"
-  border-success: "{colors.success}"
-  border-error: "{colors.error}"
+  bg-warning-default: "{colors.solar}"
+  bg-warning-secondary: "{colors.aurora}"
+  text-warning-default: "{colors.dusk}"
+  text-warning-inverse: "{colors.ink}"
+  border-warning-default: "{colors.amber}"  # cerca de 2,5:1 sobre Aurora: aceito, a borda é decorativa
+  bg-info-default: "{colors.info}"
+  bg-info-secondary: "rgba(99, 69, 144, 0.10)"
+  text-info-default: "{colors.info}"
+  text-info-inverse: "{colors.cloud}"
+  border-info-default: "{colors.info}"
+  text-positive-default: "{colors.success-deep}"
+  text-danger-default: "{colors.error}"
+  border-positive-default: "{colors.success}"
+  border-danger-default: "{colors.error}"
 
   # --- v2.3 · semânticos novos · Tema DARK ---
-  bg-disabled-dark: "#2E2E40"
-  text-disabled-dark: "{colors.night-500}"
-  text-on-disabled-dark: "{colors.night-500}"
-  border-disabled-dark: "#2E2E40"
+  bg-disabled-default-dark: "#2E2E40"
+  text-disabled-default-dark: "{colors.night-500}"
+  text-disabled-inverse-dark: "{colors.night-500}"
+  border-disabled-default-dark: "#2E2E40"
   bg-scrim-dark: "rgba(0, 0, 0, 0.65)"
   bg-scrim-strong-dark: "rgba(0, 0, 0, 0.88)"  # valor do Figma. Ainda não aplicado no CSS (divergência conhecida, pendente)
-  bg-warning-soft-dark: "{colors.night-aurora-soft}"
-  text-warning-dark: "{colors.solar}"
-  bg-info-soft-dark: "{colors.night-info-soft}"
-  text-info-dark: "{colors.info-light}"
-  text-success-dark: "{colors.success}"
-  text-error-dark: "{colors.error-light}"
-  border-error-dark: "{colors.error-light}"
+  bg-warning-secondary-dark: "{colors.night-aurora-soft}"
+  text-warning-default-dark: "{colors.solar}"
+  bg-info-secondary-dark: "{colors.night-info-soft}"
+  text-info-default-dark: "{colors.info-light}"
+  text-positive-default-dark: "{colors.success}"
+  text-danger-default-dark: "{colors.error-light}"
+  border-danger-default-dark: "{colors.error-light}"
+
+  # --- v2.7.0 (20/11/2026): renomeação semântica do Figma Foundation. Valores Light; Dark conforme o Figma ---
+  # Os nomes antigos seguem como alias deprecated em css/tokens.css até uma futura versão MAJOR.
+  error-deep: "#7A2020"  # primitivo. Hover do Destructive. Figma Functional/error-deep
+  bg-neutral-tertiary: "{colors.night-700}"  # TODO dark mode (igual ao Light por decisão do Figma)
+  text-neutral-tertiary: "{colors.night-400}"  # TODO dark mode
+  border-neutral-default: "{colors.night-700}"  # TODO dark mode
+  border-neutral-strong: "{colors.night-500}"  # TODO dark mode
+  bg-neutral-inverse: "{colors.cloud}"
+  bg-neutral-inverse-dark: "{colors.ink}"
+  text-neutral-inverse: "{colors.ink}"
+  text-neutral-inverse-dark: "{colors.cloud}"
+  bg-brand-default: "{colors.anchor}"
+  bg-brand-default-dark: "{colors.tide}"
+  bg-brand-hover: "{colors.deep}"
+  bg-brand-hover-dark: "{colors.anchor}"
+  text-brand-inverse: "{colors.cloud}"
+  text-brand-inverse-dark: "{colors.ink}"
+  bg-accent-default: "{colors.solar}"
+  bg-accent-default-dark: "{colors.daybreak}"
+  bg-accent-hover: "{colors.amber}"
+  bg-accent-hover-dark: "{colors.solar}"
+  text-accent-inverse: "{colors.ink}"
+  bg-danger-default: "{colors.error}"
+  bg-danger-default-dark: "{colors.night-error-soft}"
+  bg-danger-hover: "{colors.error-deep}"  # TODO dark mode
+  text-danger-inverse: "{colors.cloud}"
+  bg-positive-default: "{colors.success}"
+  bg-positive-default-dark: "{colors.night-success-soft}"
+  text-positive-inverse: "{colors.cloud}"
 
 typography:
   # v2.6.3 (18/11/2026): a escala segue os estilos de texto do Figma Foundation.
@@ -308,8 +338,8 @@ components:
     textColor: "{colors.ink}"
 
   button-disabled:
-    backgroundColor: "{colors.bg-disabled}"
-    textColor: "{colors.text-on-disabled}"
+    backgroundColor: "{colors.bg-disabled-default}"
+    textColor: "{colors.text-disabled-inverse}"
     typography: "{typography.body-sm}"
     rounded: "{rounded.sm}"
     padding: 12px 24px
@@ -1065,4 +1095,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.6.17 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.7.0 · novembro de 2026 · Renan Moura*
