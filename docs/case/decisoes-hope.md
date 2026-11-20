@@ -1,6 +1,6 @@
 # Hope DS: diário de decisões (material de case)
 
-Versão 0.6 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
+Versão 0.7 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
 
 ## Como ler este documento
 
@@ -189,6 +189,12 @@ Versão 0.6 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
 ### D-28 Checagem de arquivos de dados dos componentes
 - **Contexto:** dois JSONs apareceram apagados na árvore de trabalho no início do Prompt 11, sem causa conhecida. O Code testou: sem qualquer um deles, `docs:components` falha mas `docs:check` passa. [Registrado: relatório do Code]
 - **Decisão de Renan:** aplicar a checagem proposta: `docs:check` passa a falhar se algum dos dois arquivos faltar enquanto houver páginas de componente, e compara cada slug com o HTML gerado. [Registrado]
+
+### D-29 Token `--color-bg-brand-tertiary` e seção vazia nas páginas de componente
+- **Contexto:** o Figma tem `Background/Brand/Tertiary` (Light Sky a 40%, #e8f0f966; Dark Anchor a 15%, #1c5fa826). O CSS não tinha token equivalente e o Code o pulou no Prompt 10 por não haver token existente. O relatório do Prompt 11 o listou como o único token do Figma sem CSS. [Registrado]
+- **Erro meu:** Renan respondeu "vale criar o token" a esse ponto; eu entendi como outro ponto e não o incluí nos Prompts 12 e 13. Corrigido no Prompt 14. [Registrado]
+- **Decisão de Renan:** criar o token no CSS. Sem componente que o use por enquanto, como já era a regra do `Background/Brand/Tertiary` reservado. [Registrado]
+- **Página de componente:** a lista "unverified" do Badge ficou vazia depois do Prompt 13 e a página mostrava uma seção "Not yet verified" sem itens. Decisão de Renan: o gerador esconde a seção quando a lista está vazia. [Registrado]
 
 ## Pendências para o case
 

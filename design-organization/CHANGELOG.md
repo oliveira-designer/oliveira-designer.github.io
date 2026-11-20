@@ -44,11 +44,17 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 **9. `case-studies/dotz backup.html` removido (D-27)**
 - Página órfã, sem nenhuma referência funcional (só menções históricas em prosa) e sem CSS exclusivo.
 
-**10. Diário de decisões v0.6**
-- `docs/case/decisoes-hope.md` atualizado (D-01 a D-28), substituindo a versão anterior sem mesclar.
+**10. `--color-bg-brand-tertiary` criado (D-29)**
+- Light `rgba(232, 240, 249, 0.40)` (Sky a 40%), Dark `rgba(28, 95, 168, 0.15)` (Anchor a 15%), iguais ao Figma. Reservado: nenhum componente usa. Chaves `bg-brand-tertiary` e `bg-brand-tertiary-dark` no YAML do `DESIGN.md`. Comparador: 150 iguais, 0 tokens do Figma sem token no CSS.
+
+**11. Seção vazia nas páginas de componente (D-29)**
+- O gerador deixa de renderizar "Not yet verified" (e a entrada do sumário) quando a lista `unverified` está vazia; só a página do Badge mudou.
+
+**12. Diário de decisões v0.7**
+- `docs/case/decisoes-hope.md` atualizado (D-01 a D-29), substituindo a versão anterior sem mesclar.
 
 **Débitos**
-- Comparador de tokens: 148 iguais e 2 diferentes (`--color-bg-scrim-strong` e `--color-bg-icon-chip` no Dark, já conhecidos); `--color-bg-brand-tertiary` existe no Figma sem token no CSS.
+- Comparador de tokens: 150 iguais e 2 diferentes (`--color-bg-scrim-strong` e `--color-bg-icon-chip` no Dark, já conhecidos); nenhum token do Figma sem token no CSS.
 - `--color-text-neutral-secondary` (Night/300) tem contraste baixo sobre fundo claro; hoje sem uso.
 - Altura do Button Medium: 44,8px no código contra 45px no Figma (diferença de 0,2px do line-height 1.6).
 - Pesquisa das superfícies escuras (decisão D-24): ver `docs/case/drafts/dark-surface-survey.md` (feita antes do alinhamento do rodapé). Sobre Ink, o anel de foco Anchor tem 3,01:1. O modo "Neutral surface" e o `data-surface` seguem adiados.
