@@ -20,8 +20,8 @@
   ],
   "layout": {"size": "44 by 44", "radius": "Radius/radius-pill"},
   "stateTokens": {
-    "Primary": {"default": {"fill": "Background/Neutral/Default"}, "hover": {"fill": "Background/Neutral/Hover"}, "focus": "Same as Default. No effect, no stroke.", "disabled": {"fill": "Background/Disabled/Default", "stroke": "Border/Disabled/Default"}},
-    "Ghost": {"default": {"fill": "none"}, "hover": {"fill": "Background/Default/Secondary"}, "focus": "Same as Default. No effect, no stroke.", "disabled": {"fill": "none"}}
+    "Primary": {"default": {"fill": "Background/Neutral/Default"}, "hover": {"fill": "Background/Neutral/Hover"}, "focus": "Default plus focus ring", "disabled": {"fill": "Background/Disabled/Default", "stroke": "Border/Disabled/Default"}},
+    "Ghost": {"default": {"fill": "none"}, "hover": {"fill": "Background/Default/Secondary"}, "focus": "Default plus focus ring", "disabled": {"fill": "none"}}
   },
   "note": "Icon colour per state was not read. In code it needs an accessible name (aria-label). Not implemented in CSS."
 },
@@ -41,9 +41,6 @@
    "code": "Text/Brand/Default, no underline. Hover is a:hover. Focus is a:focus-visible with a 2px outline. Disabled has no rule.",
    "measured": "Link colour against surrounding text colour, Light: 3.01 against Text/Default/Default, 1.67 against Text/Default/Secondary. Dark: 1.59 and 1.28. Link colour against the page: 6.46 Light, 10.74 Dark.",
    "inference": "Where a link sits inside running text coloured Text/Default/Secondary, colour alone separates it at under 3:1, which is what WCAG 1.4.1 (Use of Color, Level A) warns about. Needs a check of where links appear in running text and what a:hover does. A Brandbook rule about link style would outrank Figma."},
-  {"id": "btn-secondary-focus-stroke", "component": "Button", "class": "Informativo",
-   "figma": "Secondary focus adds a 2.4 stroke plus the ring.",
-   "code": "Only the outline (2px, offset 2px). The stroke is not drawn."},
   {"id": "btn-medium-size", "component": "Button", "class": "Informativo",
    "figma": "Medium is 45 high, padding 12 vertical and 20 horizontal (Spacing/space-3, space-5), stroke drawn inside the box.",
    "code": "Padding 11px and 19px plus the 1px border (the border is subtracted so the box matches Figma), line-height 1.6, 44px minimum height. Renders 44.8 high, 0.2 under Figma because of the line-height."},

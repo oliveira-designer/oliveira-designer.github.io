@@ -42,11 +42,11 @@
   },
   "stateTokens": {
     "Primary": {"default": {"fill": "Background/Neutral/Default", "text": "Text/Neutral/Default"}, "hover": {"fill": "Background/Neutral/Hover", "text": "Text/Neutral/Default"}, "focus": "Default plus focus ring", "disabled": {"fill": "Background/Disabled/Default", "stroke": "Border/Disabled/Default", "text": "Text/Disabled/Inverse"}},
-    "Secondary": {"default": {"fill": "none", "stroke": "Border/Default/Strong", "text": "Text/Default/Default"}, "hover": {"fill": "Background/Neutral/Default", "text": "Text/Neutral/Default"}, "focus": "Stroke Border/Utilities/Focus Ring at 2.4 plus focus ring", "disabled": {"stroke": "Border/Disabled/Default", "text": "Text/Disabled/Default"}},
-    "Ghost": {"default": {"fill": "none", "text": "Text/Default/Secondary"}, "hover": {"fill": "Background/Neutral/Hover", "text": "Text/Neutral/Default", "smallVariant": "fill Background/Brand/Secondary, text Text/Brand/Hover"}, "focus": "Default plus focus ring (Small: fill Text/Brand/Default, text Text/Default/Inverse)", "disabled": {"text": "Text/Disabled/Default"}},
-    "Accent": {"default": {"fill": "Text/Brand/Default", "text": "Text/Default/Inverse"}, "hover": {"fill": "Background/Brand/Secondary", "text": "Text/Brand/Hover"}, "focus": "Default plus focus ring", "disabled": {"fill": "Background/Disabled/Default", "stroke": "Border/Disabled/Default", "text": "Text/Disabled/Inverse"}},
+    "Secondary": {"default": {"fill": "none", "stroke": "Border/Default/Strong", "text": "Text/Default/Default"}, "hover": {"fill": "Background/Neutral/Default", "text": "Text/Neutral/Default"}, "focus": "Default (stroke Border/Default/Strong, 1px) plus focus ring", "disabled": {"stroke": "Border/Disabled/Default", "text": "Text/Disabled/Default"}},
+    "Ghost": {"default": {"fill": "none", "text": "Text/Default/Secondary"}, "hover": {"fill": "Background/Neutral/Hover", "text": "Text/Neutral/Default"}, "focus": "Default plus focus ring", "disabled": {"text": "Text/Disabled/Default"}},
+    "Accent": {"default": {"fill": "Background/Brand/Default", "text": "Text/Default/Inverse"}, "hover": {"fill": "Background/Brand/Secondary", "text": "Text/Brand/Hover"}, "focus": "Default plus focus ring", "disabled": {"fill": "Background/Disabled/Default", "stroke": "Border/Disabled/Default", "text": "Text/Disabled/Inverse"}},
     "Inverse": {"default": {"fill": "Background/Neutral/Inverse", "text": "Text/Neutral/Inverse"}, "hover": {"fill": "Background/Neutral/Hover", "text": "Text/Neutral/Default"}, "focus": "Default plus focus ring", "disabled": {"fill": "Background/Disabled/Default", "stroke": "Border/Disabled/Default", "text": "Text/Disabled/Inverse"}},
-    "Destructive": {"default": {"fill": "Functional/error", "text": "Text/Danger/Inverse"}, "hover": "Same as Default (documented in Figma: no dedicated hover token)", "focus": "Same as Default, ring uses the error colour", "disabled": {"fill": "Background/Disabled/Default", "stroke": "Border/Disabled/Default", "text": "Text/Disabled/Inverse"}}
+    "Destructive": {"default": {"fill": "Functional/error", "text": "Text/Danger/Inverse"}, "hover": {"fill": "Background/Danger/Hover", "stroke": "Background/Danger/Hover", "text": "Text/Danger/Inverse"}, "focus": "Default plus focus ring", "disabled": {"fill": "Background/Disabled/Default", "stroke": "Border/Disabled/Default", "text": "Text/Disabled/Inverse"}}
   },
   "accessibility": {
     "contrastText": [
@@ -55,12 +55,12 @@
       {"case": "Secondary Default (text on page)", "light": 19.42, "dark": 17.06},
       {"case": "Secondary Hover", "light": 19.42, "dark": 19.42},
       {"case": "Ghost Default (text on page)", "light": 10.76, "dark": 8.37},
-      {"case": "Ghost Hover, Medium", "light": 10.76, "dark": 15.05},
-      {"case": "Ghost Hover, Small", "light": 8.78, "dark": 10.72},
+      {"case": "Ghost Hover (Medium and Small)", "light": 10.76, "dark": 15.05},
       {"case": "Accent Default", "light": 6.46, "dark": 12.23},
       {"case": "Accent Hover", "light": 8.78, "dark": 10.72},
       {"case": "Inverse Default (text on its own fill)", "light": 19.42, "dark": 19.42},
-      {"case": "Destructive, all states", "light": 5.87, "dark": 5.87},
+      {"case": "Destructive Default and Focus", "light": 5.87, "dark": 5.87},
+      {"case": "Destructive Hover", "light": 10.22, "dark": 10.22},
       {"case": "Disabled (exempt from 1.4.3 as inactive component)", "light": 2.41, "dark": 2.48}
     ],
     "contrastNonText": [
@@ -68,18 +68,16 @@
       {"case": "Focus ring vs page (needs 3:1)", "light": 6.46, "dark": 10.74}
     ],
     "targetSize": "Medium is 45 high and Icon Button is 44 by 44, which meets 2.5.5 Target Size (Enhanced, AAA). Small is 37 high, which meets 2.5.8 Target Size (Minimum, AA, 24 by 24) but not 2.5.5.",
-    "focus": "Focus is an outline of 2px (--focus-ring-width) with a 2px offset (--focus-ring-gap), in the focus ring colour, on every style.",
+    "focus": "In Figma the ring is a separate layer: no fill, 2px inside stroke bound to Border/Utilities/Focus Ring and Stroke/focus, with a 2px transparent gap (Stroke/focus-gap); square where the component radius is 0. In code it is an outline of 2px (--focus-ring-width) with a 2px offset (--focus-ring-gap) on every style.",
     "naming": "Icon Button has no visible text. In code it needs an accessible name (aria-label), as the Figma description states.",
     "disabled": "Disabled uses the disabled tokens, not opacity."
   },
   "knownGaps": [
     {"id": "button-wcag-ref", "status": "documented", "text": "The Figma Info panel cites WCAG 2.4.7 and 2.4.12 for the focus ring. 2.4.12 is Focus Not Obscured (Enhanced, AAA). Ring appearance falls under 2.4.7 (AA) and 2.4.13 Focus Appearance (AAA). Source: TetraLogical, What's new in WCAG 2.2."},
     {"id": "button-small-only-ghost", "status": "measured", "text": "The description says sizes Medium and Small, but Small exists only for Ghost."},
-    {"id": "button-accent-text-token-as-fill", "status": "documented", "text": "Resolved on 2026-11-20: Accent Default uses Background/Brand/Default (--color-bg-brand-default), not a text token, in Figma and in code."},
-    {"id": "button-destructive-states", "status": "documented", "text": "Destructive Default uses Functional/error and Hover uses Background/Danger/Hover (Functional/error-deep), in Figma and in code (--color-error, --color-bg-danger-hover)."},
-    {"id": "iconbutton-no-focus-indicator", "status": "measured", "text": "Icon Button Focus variants (Primary and Ghost) have no effect and no stroke, and their fill equals Default. The Figma spec shows no visible focus indicator for Icon Button. Needs a decision, and the code should be checked separately."},
-    {"id": "button-inverse-surface", "status": "inference", "text": "Inverse in Light is a white fill with no border. On the default white page it is not visible. It is meant for dark surfaces."},
-    {"id": "button-ring-spread-unbound", "status": "measured", "text": "The focus ring colour is bound to a variable. Its spread of 3 is not bound, although Stroke/accent is also 3."}
+    {"id": "button-accent-text-token-as-fill", "status": "documented", "text": "Accent Default fill is Background/Brand/Default in Figma Core, which matches the code (--color-bg-brand-default). Confirmed on 2026-11-20."},
+    {"id": "button-destructive-primitive", "status": "measured", "text": "Destructive Default and Focus bind the primitive Functional/error, not a semantic Danger token. Hover binds the semantic Background/Danger/Hover."},
+    {"id": "button-inverse-surface", "status": "inference", "text": "Inverse in Light is a white fill with no border. On the default white page it is not visible. It is meant for dark surfaces."}
   ],
   "unverified": [
     "Whether stroke weights are bound to Stroke variables (the check used a field key that may not apply).",
@@ -101,7 +99,7 @@
     "Danger: error or urgency states."
   ],
   "whenNotToUse": [
-    "Anything interactive: use Tag (Tag exists only in Figma-planned components, not in code)."
+    "Anything interactive: use Tag (Tag exists in Figma Core, not in code)."
   ],
   "properties": [
     {"name": "Style", "type": "variant", "options": ["Neutral", "Ancora", "Solar", "Success", "Danger"], "default": "Neutral"},
@@ -162,7 +160,7 @@
   "stateTokens": {
     "Default": {"text": "Text/Default/Default"},
     "Hover": {"text": "Text/Default/Default", "note": "different text style from Default, same colour"},
-    "Focus": {"text": "Text/Default/Default", "note": "same text style as Hover"},
+    "Focus": {"text": "Text/Default/Default", "note": "same text style as Hover, plus a square focus ring (Link radius is 0)"},
     "Disabled": {"text": "Text/Disabled/Default"}
   },
   "accessibility": {
@@ -180,7 +178,6 @@
     {"id": "link-standalone-target", "status": "inference", "text": "Stand-alone Small links (18 high) depend on surrounding spacing to meet 2.5.8."}
   ],
   "unverified": [
-    "Whether Focus shows a ring or only a text style change (effects were not read for Link).",
     "What differs between the Default and Hover text styles.",
     "Which CSS class implements the link."
   ]
