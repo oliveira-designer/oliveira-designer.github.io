@@ -1,6 +1,6 @@
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v2.6.17 · November 2026
+   v2.7.0 · November 2026
    Source of truth: Figma Foundation for VALUES; DESIGN.md +
    DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
@@ -40,11 +40,11 @@
      COLORS — Functional
      ---------------------------------------------------------- */
   --color-success:      #4A9F6B;
-  --color-bg-positive-soft: rgba(74, 159, 107, 0.12);  /* 8.6:1 on white */
+  --color-bg-positive-secondary: rgba(74, 159, 107, 0.12);  /* 8.6:1 on white */
   --color-warning:      #C47A1F;  /* Functional primitive only. The Warning component family uses Solar (13/11/2026) */
   --color-error:        #B83434;
-  --color-bg-danger-soft:   rgba(184, 52, 52, 0.10);   /* 8.3:1 on white */
-  --color-bg-accent-soft:  var(--color-aurora);        /* 9.1:1 on white */
+  --color-bg-danger-secondary:   rgba(184, 52, 52, 0.10);   /* 8.3:1 on white */
+  --color-bg-accent-tertiary:  var(--color-aurora);        /* 9.1:1 on white */
   --color-info:        #634590;
   --color-celebrate:   #F5A8C0;
 
@@ -54,6 +54,7 @@
   --color-warning-deep: #94540A;  /* warning text on light: 5.94:1 on white */
   --color-error-light:  #F28585;  /* error text/border on dark: 6.88:1 on abyss */
   --color-info-light:   #B89EDB;  /* info text on dark: 7.3:1 on abyss */
+  --color-error-deep:   #7a2020;  /* Destructive hover fill (Figma Core, Button) */  /* TODO dark mode */
 
   /* ----------------------------------------------------------
      COLORS — Night Family (dark-mode ramp)
@@ -83,8 +84,8 @@
   --color-text-2:        var(--color-shadow);
   --color-text-3:        var(--color-muted);
   --color-text-inverse:  var(--color-cloud);
-  --color-text-brand-primary:          var(--color-anchor);
-  --color-text-brand-primary-hover:    var(--color-deep);
+  --color-text-brand-default:          var(--color-anchor);
+  --color-text-brand-hover:    var(--color-deep);
   --color-border-focus-ring:    var(--color-anchor);
   --color-accent:               var(--color-anchor);
 
@@ -92,32 +93,32 @@
      STATE + STATUS TOKENS — Light mode (Figma Foundation v2.2)
      Disabled comes from tokens, never from opacity.
      ---------------------------------------------------------- */
-  --color-bg-disabled:       var(--color-border-base);
-  --color-text-disabled:     var(--color-night-400);
-  --color-text-on-disabled:  var(--color-night-400);
-  --color-border-disabled:   var(--color-border-base);
+  --color-bg-disabled-default:       var(--color-border-base);
+  --color-text-disabled-default:     var(--color-night-400);
+  --color-text-disabled-inverse:  var(--color-night-400);
+  --color-border-disabled-default:   var(--color-border-base);
 
   --color-bg-scrim: rgba(13, 13, 15, 0.5);  /* behind modals/drawers; not the glass overlay */
   --color-bg-scrim-strong: rgba(13, 13, 15, 0.88);  /* image focus (Lightbox); same in light and dark */
 
   /* Warning is in the Solar family (Figma, 13/11/2026). Dusk on Aurora is 4.78:1.
      Amber on Aurora is about 2.5:1: accepted, the border is decorative. */
-  --color-bg-warning:       var(--color-solar);
-  --color-bg-warning-soft:  var(--color-aurora);
-  --color-text-warning:     var(--color-dusk);
-  --color-text-on-warning:  var(--color-ink);
-  --color-border-warning:   var(--color-amber);
+  --color-bg-warning-default:       var(--color-solar);
+  --color-bg-warning-secondary:  var(--color-aurora);
+  --color-text-warning-default:     var(--color-dusk);
+  --color-text-warning-inverse:  var(--color-ink);
+  --color-border-warning-default:   var(--color-amber);
 
-  --color-bg-info:          var(--color-info);
-  --color-bg-info-soft:     rgba(99, 69, 144, 0.10);
-  --color-text-info:        var(--color-info);
-  --color-text-on-info:     var(--color-cloud);
-  --color-border-info:      var(--color-info);
+  --color-bg-info-default:          var(--color-info);
+  --color-bg-info-secondary:     rgba(99, 69, 144, 0.10);
+  --color-text-info-default:        var(--color-info);
+  --color-text-info-inverse:     var(--color-cloud);
+  --color-border-info-default:      var(--color-info);
 
-  --color-text-success:     var(--color-success-deep);
-  --color-text-error:       var(--color-error);
-  --color-border-success:   var(--color-success);
-  --color-border-error:     var(--color-error);
+  --color-text-positive-default:     var(--color-success-deep);
+  --color-text-danger-default:       var(--color-error);
+  --color-border-positive-default:   var(--color-success);
+  --color-border-danger-default:     var(--color-error);
 
   /* ----------------------------------------------------------
      ICON COLOR — Figma "Hope · Icon" / Icon/Color (10 modes).
@@ -128,35 +129,106 @@
   --icon-color-default:     var(--color-text-1);
   --icon-color-secondary:   var(--color-text-2);
   --icon-color-tertiary:    var(--color-text-3);
-  --icon-color-on-neutral:  var(--color-text-on-neutral);
-  --icon-color-brand-hover: var(--color-text-brand-primary-hover);
-  --icon-color-disabled:    var(--color-text-disabled);
-  --icon-color-danger:      var(--color-text-error);
-  --icon-color-positive:    var(--color-text-success);
-  --icon-color-warning:     var(--color-text-warning);
-  --icon-color-info:        var(--color-text-info);
+  --icon-color-neutral:     var(--color-text-neutral-default);  /* Figma mode "Neutral" (was "On Neutral") */
+  --icon-color-brand-hover: var(--color-text-brand-hover);
+  --icon-color-disabled:    var(--color-text-disabled-default);
+  --icon-color-danger:      var(--color-text-danger-default);
+  --icon-color-positive:    var(--color-text-positive-default);
+  --icon-color-warning:     var(--color-text-warning-default);
+  --icon-color-info:        var(--color-text-info-default);
 
   /* ----------------------------------------------------------
      COMPONENT TOKENS — Light mode (default)
      ---------------------------------------------------------- */
   --color-bg-neutral-default:     var(--color-ink);
   --color-bg-neutral-hover:       var(--color-shadow);
-  --color-text-on-neutral:        var(--color-cloud);
+  --color-text-neutral-default:   var(--color-cloud);
 
   --color-bg-brand-secondary:     var(--color-sky);
   --color-text-brand-secondary:   var(--color-deep);
 
   --color-bg-accent-secondary:    var(--color-aurora);
-  --color-text-accent-secondary:  var(--color-dusk);
+  --color-text-accent-default:  var(--color-dusk);
 
-  --color-bg-neutral-secondary:   var(--color-surface);
-  --color-text-neutral-secondary: var(--color-muted);
+  --color-bg-neutral-secondary:   var(--color-night-800);  /* was Surface; Foundation rename 2026-11-20 */
+  --color-text-neutral-secondary: var(--color-night-300);  /* was Muted; Foundation rename 2026-11-20 */
 
   --color-bg-brand-strong:        var(--color-abyss);
-  --color-border-accent-strong:   var(--color-solar);
-  --color-text-on-brand-strong:   var(--color-cloud);
+  --color-border-accent-default:   var(--color-solar);
+  --color-text-brand-strong-inverse:   var(--color-cloud);
 
   --color-bg-icon-chip: var(--color-sky);
+
+  /* ----------------------------------------------------------
+     FOUNDATION RENAME 2026-11-20 — new semantic tokens
+     Grammar: Property/Role/Level[ Modifier]. Level: Default, Secondary,
+     Tertiary, Strong. Inverse = text/icon/border on the role's contrasting
+     fill. Values below are the Light value; dark mode is parked, so the
+     dark block does not override them yet unless stated.
+     ---------------------------------------------------------- */
+  /* Neutral */
+  --color-bg-neutral-tertiary:    var(--color-night-700);  /* TODO dark mode */
+  --color-bg-neutral-inverse:     #ffffff;
+  --color-text-neutral-tertiary:  var(--color-night-400);  /* TODO dark mode */
+  --color-text-neutral-inverse:   #0d0d0f;
+  --color-border-neutral-default: var(--color-night-700);  /* TODO dark mode */
+  --color-border-neutral-strong:  var(--color-night-500);  /* TODO dark mode */
+
+  /* Brand. Light and Dark values from the Foundation snapshot of 2026-11-20 (dark overrides in [data-theme="dark"]) */
+  --color-bg-brand-default:       var(--color-anchor);
+  --color-bg-brand-hover:         var(--color-deep);
+  --color-text-brand-inverse:     var(--color-cloud);
+
+  /* Accent */
+  --color-bg-accent-default:      var(--color-solar);
+  --color-bg-accent-hover:        var(--color-amber);
+  --color-text-accent-inverse:    var(--color-ink);
+
+  /* Danger and Positive */
+  --color-bg-danger-default:      var(--color-error);
+  --color-bg-danger-hover:        var(--color-error-deep); /* TODO dark mode */
+  --color-text-danger-inverse:    var(--color-cloud);
+  --color-bg-positive-default:    var(--color-success);
+  --color-text-positive-inverse:  var(--color-cloud);
+
+  /* Focus ring (outline, all interactive components) */
+  --focus-ring-width: 2px;
+  --focus-ring-gap:   2px;
+
+  /* ----------------------------------------------------------
+     DEPRECATED ALIASES (2026-11, remove in a later MAJOR).
+     Old names keep working and point at the new names. Do not use them in
+     new code. Defined only in :root: the dark block overrides the new names
+     on the same element, so the aliases follow dark mode.
+     ---------------------------------------------------------- */
+  --color-text-on-neutral:           var(--color-text-neutral-default);       /* deprecated 2026-11, use --color-text-neutral-default */
+  --color-text-brand-primary:        var(--color-text-brand-default);         /* deprecated 2026-11, use --color-text-brand-default */
+  --color-text-brand-primary-hover:  var(--color-text-brand-hover);           /* deprecated 2026-11, use --color-text-brand-hover */
+  --color-text-on-brand-strong:      var(--color-text-brand-strong-inverse);  /* deprecated 2026-11, use --color-text-brand-strong-inverse */
+  --color-bg-accent-soft:            var(--color-bg-accent-tertiary);         /* deprecated 2026-11, use --color-bg-accent-tertiary */
+  --color-text-accent-secondary:     var(--color-text-accent-default);        /* deprecated 2026-11, use --color-text-accent-default */
+  --color-border-accent-strong:      var(--color-border-accent-default);      /* deprecated 2026-11, use --color-border-accent-default */
+  --color-bg-danger-soft:            var(--color-bg-danger-secondary);        /* deprecated 2026-11, use --color-bg-danger-secondary */
+  --color-text-error:                var(--color-text-danger-default);        /* deprecated 2026-11, use --color-text-danger-default */
+  --color-border-error:              var(--color-border-danger-default);      /* deprecated 2026-11, use --color-border-danger-default */
+  --color-bg-positive-soft:          var(--color-bg-positive-secondary);      /* deprecated 2026-11, use --color-bg-positive-secondary */
+  --color-text-success:              var(--color-text-positive-default);      /* deprecated 2026-11, use --color-text-positive-default */
+  --color-border-success:            var(--color-border-positive-default);    /* deprecated 2026-11, use --color-border-positive-default */
+  --color-bg-warning:                var(--color-bg-warning-default);         /* deprecated 2026-11, use --color-bg-warning-default */
+  --color-bg-warning-soft:           var(--color-bg-warning-secondary);       /* deprecated 2026-11, use --color-bg-warning-secondary */
+  --color-text-warning:              var(--color-text-warning-default);       /* deprecated 2026-11, use --color-text-warning-default */
+  --color-text-on-warning:           var(--color-text-warning-inverse);       /* deprecated 2026-11, use --color-text-warning-inverse */
+  --color-border-warning:            var(--color-border-warning-default);     /* deprecated 2026-11, use --color-border-warning-default */
+  --color-bg-info:                   var(--color-bg-info-default);            /* deprecated 2026-11, use --color-bg-info-default */
+  --color-bg-info-soft:              var(--color-bg-info-secondary);          /* deprecated 2026-11, use --color-bg-info-secondary */
+  --color-text-info:                 var(--color-text-info-default);          /* deprecated 2026-11, use --color-text-info-default */
+  --color-text-on-info:              var(--color-text-info-inverse);          /* deprecated 2026-11, use --color-text-info-inverse */
+  --color-border-info:               var(--color-border-info-default);        /* deprecated 2026-11, use --color-border-info-default */
+  --color-bg-disabled:               var(--color-bg-disabled-default);        /* deprecated 2026-11, use --color-bg-disabled-default */
+  --color-text-disabled:             var(--color-text-disabled-default);      /* deprecated 2026-11, use --color-text-disabled-default */
+  --color-text-on-disabled:          var(--color-text-disabled-inverse);      /* deprecated 2026-11, use --color-text-disabled-inverse */
+  --color-border-disabled:           var(--color-border-disabled-default);    /* deprecated 2026-11, use --color-border-disabled-default */
+  --icon-color-on-neutral:           var(--icon-color-neutral);               /* deprecated 2026-11, use --icon-color-neutral */
 
   /* ----------------------------------------------------------
      MATERIAL — unified glassmorphism recipe
@@ -247,7 +319,8 @@
      Figma Stroke/hairline (0.8px), CSS "normal" and "strong" are Figma
      Stroke/thin (1px). Strength of --border-strong comes from colour. */
   --border-thin:   0.8px solid var(--color-border);
-  --border-normal: 1px solid var(--color-border);
+  --border-width-normal: 1px;  /* width alone, for calc(); --border-normal is a shorthand and cannot be used inside calc() */
+  --border-normal: var(--border-width-normal) solid var(--color-border);
   --border-strong: 1px solid var(--color-border-strong);
 
   /* ----------------------------------------------------------
@@ -256,7 +329,7 @@
   --shadow-sm:    0 1px 3px rgba(13, 13, 15, 0.06);
   --shadow-md:    0 4px 12px rgba(13, 13, 15, 0.08);
   --shadow-lg:    0 8px 32px rgba(13, 13, 15, 0.10);
-  --shadow-focus: 0 0 0 3px var(--color-border-focus-ring);
+  --shadow-focus: 0 0 0 3px var(--color-border-focus-ring);  /* deprecated 2026-11: focus is now an outline, see --focus-ring-width and --focus-ring-gap */
 
   /* ----------------------------------------------------------
      MOTION
@@ -292,9 +365,9 @@
    DARK MODE — enabled via data-theme="dark"
    ---------------------------------------------------------- */
 [data-theme="dark"] {
-  --color-bg-accent-soft:   var(--color-night-aurora-soft);   /* 7.7:1 on #B4B4C8 */
-  --color-bg-positive-soft: var(--color-night-success-soft);  /* 8.3:1 on #B4B4C8 */
-  --color-bg-danger-soft:   var(--color-night-error-soft);    /* 8.9:1 on #B4B4C8 */
+  --color-bg-accent-tertiary:   var(--color-night-aurora-soft);   /* 7.7:1 on #B4B4C8 */
+  --color-bg-positive-secondary: var(--color-night-success-soft);  /* 8.3:1 on #B4B4C8 */
+  --color-bg-danger-secondary:   var(--color-night-error-soft);    /* 8.9:1 on #B4B4C8 */
 
   --color-bg:            var(--color-abyss);
   --color-bg-alt:        var(--color-night-800);
@@ -305,38 +378,53 @@
   --color-text-2:        var(--color-night-300);
   --color-text-3:        var(--color-night-400);  /* WCAG AA: 4.6:1 on dark mode cards */
   --color-text-inverse:  var(--color-ink);
-  --color-text-brand-primary:          var(--color-solar);
-  --color-text-brand-primary-hover:    var(--color-night-accent-hover);
+  --color-text-brand-default:          var(--color-solar);
+  --color-text-brand-hover:    var(--color-night-accent-hover);
   --color-border-focus-ring:    var(--color-solar);
   --color-accent:               var(--color-solar);
 
-  --color-bg-disabled:       var(--color-night-700);
-  --color-text-disabled:     var(--color-night-500);
-  --color-text-on-disabled:  var(--color-night-500);
-  --color-border-disabled:   var(--color-night-700);
+  --color-bg-disabled-default:       var(--color-night-700);
+  --color-text-disabled-default:     var(--color-night-500);
+  --color-text-disabled-inverse:  var(--color-night-500);
+  --color-border-disabled-default:   var(--color-night-700);
 
   --color-bg-scrim: rgba(0, 0, 0, 0.65);
 
-  --color-bg-warning-soft:  var(--color-night-aurora-soft);
-  --color-text-warning:     var(--color-solar);
-  --color-bg-info-soft:     var(--color-night-info-soft);
-  --color-text-info:        var(--color-info-light);
-  --color-text-success:     var(--color-success);
-  --color-text-error:       var(--color-error-light);
-  --color-border-error:     var(--color-error-light);
+  --color-bg-warning-secondary:  var(--color-night-aurora-soft);
+  --color-text-warning-default:     var(--color-solar);
+  --color-bg-info-secondary:     var(--color-night-info-soft);
+  --color-text-info-default:        var(--color-info-light);
+  --color-text-positive-default:     var(--color-success);
+  --color-text-danger-default:       var(--color-error-light);
+  --color-border-danger-default:     var(--color-error-light);
 
   --color-bg-neutral-default:     var(--color-cloud);
   --color-bg-neutral-hover:       var(--color-border-base);
-  --color-text-on-neutral:        var(--color-ink);
+  --color-text-neutral-default:   var(--color-ink);
+
+  --color-bg-neutral-inverse:     #0d0d0f;
+  --color-text-neutral-inverse:   #ffffff;
+
+  /* Foundation 2026-11-20 Dark values (Semantic collection, Dark mode) */
+  --color-bg-brand-default:       var(--color-tide);
+  --color-bg-brand-hover:         var(--color-anchor);
+  --color-text-brand-inverse:     var(--color-ink);
+  --color-bg-accent-default:      var(--color-daybreak);
+  --color-bg-accent-hover:        var(--color-solar);
+  --color-text-accent-inverse:    var(--color-ink);
+  --color-bg-danger-default:      var(--color-night-error-soft);
+  --color-bg-positive-default:    var(--color-night-success-soft);
+  --color-text-positive-inverse:  var(--color-cloud);
+  --color-text-danger-inverse:    var(--color-cloud);
 
   --color-bg-brand-secondary:     rgba(28, 95, 168, 0.2);
   --color-text-brand-secondary:   var(--color-tide);
 
   --color-bg-accent-secondary:    rgba(245, 200, 66, 0.15);
-  --color-text-accent-secondary:  var(--color-solar);
+  --color-text-accent-default:  var(--color-solar);
 
-  --color-bg-neutral-secondary:   rgba(255, 255, 255, 0.05);
-  --color-text-neutral-secondary: var(--color-text-3);
+  --color-bg-neutral-secondary:   var(--color-night-800);
+  --color-text-neutral-secondary: var(--color-night-300);
 
   --color-bg-icon-chip: rgba(245, 200, 66, 0.14);
 

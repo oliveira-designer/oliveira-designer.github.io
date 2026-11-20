@@ -903,10 +903,10 @@ html {
    ---------------------------------------------------------- */
 .site-footer {
   background-color: var(--color-bg-brand-strong);
-  color: var(--color-text-on-brand-strong);
+  color: var(--color-text-brand-strong-inverse);
   padding: var(--space-20) 0 var(--space-10);
   margin-top: var(--space-20);
-  border-top: 3px solid var(--color-border-accent-strong);
+  border-top: 3px solid var(--color-border-accent-default);
 }
 
 .footer__connect {
