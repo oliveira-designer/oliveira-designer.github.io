@@ -342,7 +342,7 @@ function walk(dir, filter, acc = []) {
 }
 
 function usageCorpus() {
-  const skipCss = new Set(['tokens.css', 'output.css', 'preflight-nomono.css', 'tailwind.css']);
+  const skipCss = new Set(['tokens.css', 'hope.css', 'output.css', 'preflight-nomono.css', 'tailwind.css']);
   const files = walk(ROOT, (p) => {
     const rel = path.relative(ROOT, p).split(path.sep).join('/');
     if (rel.startsWith('css/')) return rel.endsWith('.css') && !skipCss.has(path.basename(rel));

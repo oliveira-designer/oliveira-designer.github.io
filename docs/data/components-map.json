@@ -2,7 +2,7 @@
   "meta": {
     "version": "0.1",
     "readAt": "2026-11-19",
-    "note": "Coverage of Figma variants by CSS selectors, read from css/components.css and css/layout.css. \"rule\" is the literal CSS selector that implements the variant; scripts/check-docs.mjs fails if a rule or class is missing from css/*.css. Counts are computed from this file and must match components-code-notes.json."
+    "note": "Coverage of Figma variants by CSS selectors, read from css/components/*.css and css/site/*.css (the sources of the generated css/hope.css). \"rule\" is the literal CSS selector that implements the variant; scripts/check-docs.mjs fails if a rule or class is missing from css/*.css. Counts are computed from this file and must match components-code-notes.json."
   },
   "components": {
     "Button": {
@@ -441,7 +441,7 @@
           "mechanism": null
         }
       ],
-      "note": "No separator class exists in css/*.css. Hairline dividers exist only as border rules inside other components (for example css/layout.css:422 on .hero) and as hr in the Tailwind preflight copy."
+      "note": "No separator class exists in the CSS sources (css/components/, css/site/). Hairline dividers exist only as border rules inside other components (for example in css/site/hero.css on .hero) and as hr in the Tailwind preflight copy."
     },
     "Banner": {
       "figmaVariants": 1,
@@ -461,7 +461,7 @@
           "inference": "Figma has one Banner variant (Type Notice, renamed from Warning per DESIGN.md). It is mapped to .banner--wip, the only banner modifier in the CSS. This mapping is an inference, not a Figma fact."
         }
       ],
-      "note": "Added for the review page. The real markup on css/components.css:1901-1938 is .banner, .banner--wip, .banner__icon and .banner__text."
+      "note": "Added for the review page. The real markup in css/components/banner.css is .banner, .banner--wip, .banner__icon and .banner__text."
     },
     "Lightbox": {
       "figmaVariants": 1,
@@ -480,7 +480,7 @@
           "renderable": false
         }
       ],
-      "note": "Added for the review page. CSS exists (css/components.css:1744-1860) but it is a fixed full-screen modal driven by js/lightbox.js, so the review page does not render it."
+      "note": "Added for the review page. CSS exists (css/components/lightbox.css) but it is a fixed full-screen modal driven by js/lightbox.js, so the review page does not render it."
     }
   },
   "codeOnly": [

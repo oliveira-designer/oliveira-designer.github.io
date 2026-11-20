@@ -1,10 +1,6 @@
 {
-  "note": "Ordered list of the stylesheets the review page loads, relative to the repository root. Today these are the real, current files. After the CSS is split, change this list (for example to one generated aggregate) and the review page and its checks follow.",
+  "note": "Ordered list of the stylesheets the review page loads, relative to the repository root. Since the CSS split (D-18) this is the generated aggregate, built by npm run css:build from css/tokens.css, css/reset.css, css/components/* and css/site/*.",
   "sources": [
-    "css/tokens.css",
-    "css/reset.css",
-    "css/components.css",
-    "css/layout.css",
-    "css/animations.css"
+    "css/hope.css"
   ]
 }

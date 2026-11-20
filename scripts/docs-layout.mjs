@@ -31,9 +31,9 @@ export function esc(value) {
 const ICON_BURGER = '<svg viewBox="0 0 256 256" fill="currentColor" id="iconBurger" aria-hidden="true" focusable="false"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg>';
 const ICON_CLOSE = '<svg viewBox="0 0 256 256" fill="currentColor" id="iconClose" aria-hidden="true" focusable="false" style="display:none"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>';
 
-const STYLESHEETS = ['tokens', 'reset', 'components', 'layout', 'animations'];
+const STYLESHEETS = ['hope'];
 
-// Theme switch: Light, Dark or System. The site CSS hides #themeToggle (css/layout.css), so the
+// Theme switch: Light, Dark or System. The site CSS hides #themeToggle (css/site/header.css), so the
 // docs use their own control. It drives the same mechanism the CSS already uses for dark mode:
 // the data-theme attribute on <html> (tokens.css `[data-theme="dark"]`). System resolves with
 // matchMedia in JS, because the CSS has no prefers-color-scheme rules.
@@ -250,7 +250,7 @@ export function indexBody(stats) {
             <ul class="docs-list">
               <li><strong>Figma</strong> is canonical for token and component values.</li>
               <li><strong>This repository</strong> is canonical for prose, rules and the changelog (<code>design-organization/GOVERNANCE.md</code>, section 7).</li>
-              <li>These pages create no second source: they link <code>css/tokens.css</code>, <code>css/components.css</code> and the other site stylesheets directly, and the tokens page is generated from <code>css/tokens.css</code>.</li>
+              <li>These pages create no second source: they link the generated <code>css/hope.css</code> (built from <code>css/tokens.css</code>, <code>css/components/*</code> and <code>css/site/*</code>), and the tokens page is generated from <code>css/tokens.css</code>.</li>
             </ul>
           </section>
 

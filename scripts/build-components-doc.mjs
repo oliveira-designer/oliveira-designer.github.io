@@ -19,11 +19,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderPage, esc } from './docs-layout.mjs';
+import { sources as cssSourceList } from './build-css.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'docs', 'data');
 const OUT = path.join(ROOT, 'docs', 'components');
-const CSS_DIR = path.join(ROOT, 'css');
 const FIGMA_FILE_KEY = 'U6ThTndTKYSJKkd0XqaSdV';
 const BASE = '../';
 
@@ -74,10 +74,9 @@ function validate() {
    scripts/check-docs.mjs is the one that fails on a missing selector.
    ------------------------------------------------------------------------ */
 
-const cssFiles = fs
-  .readdirSync(CSS_DIR)
-  .filter((n) => n.endsWith('.css') && !['output.css', 'tailwind.css', 'preflight-nomono.css'].includes(n))
-  .map((n) => ({ name: n, text: fs.readFileSync(path.join(CSS_DIR, n), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ') }));
+// The CSS source files (not the generated css/hope.css), so the code reference names the file a rule lives in.
+const cssFiles = [...cssSourceList(), 'css/auth.css']
+  .map((rel) => ({ name: rel, text: fs.readFileSync(path.join(ROOT, rel), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ') }));
 
 function findRuleFile(rule) {
   const re = new RegExp('(?:^|[\\s,}{])' + rule.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=\\s*[,{])');
@@ -240,7 +239,7 @@ function examplesSection(comp) {
   const m = map.components[mapKey(comp)];
   const label = defaultLabel(comp);
   const items = [];
-  let intro = 'Real markup with the real classes from <code>css/components.css</code>. Hover and focus are not simulated: interact with each element (hover it, tab to it).';
+  let intro = 'Real markup with the real classes from <code>css/hope.css</code> (sources in <code>css/components/</code>). Hover and focus are not simulated: interact with each element (hover it, tab to it).';
   if (comp.slug === 'button') {
     for (const style of ['Primary', 'Secondary', 'Ghost']) {
       const v = m.variants.find((x) => x.style === style && x.size === 'Medium' && x.state === 'Default' && x.selector);
@@ -251,7 +250,7 @@ function examplesSection(comp) {
     }
     intro += ' Under 768px the CSS makes every .btn full width, so the demos stack.';
   } else if (comp.slug === 'badge') {
-    intro = 'Real markup with the real classes from <code>css/components.css</code>. Badges are static and non-interactive, so there are no states to try.';
+    intro = 'Real markup with the real classes from <code>css/hope.css</code> (sources in <code>css/components/</code>). Badges are static and non-interactive, so there are no states to try.';
     for (const v of m.variants.filter((x) => x.selector)) {
       const cls = v.selector.replace(/\./g, ' ').trim();
       items.push(demo(`${v.style}`, `<span class="${cls}">${esc(label)}</span>`, `Class ${v.selector.replace('.badge', '')}. Static, no states.`));
@@ -414,7 +413,7 @@ function codeRefSection(comp) {
   const rows = [...seen.keys()].map((r) => {
     const v = seen.get(r);
     const file = findRuleFile(r);
-    return [th(code(r)), td(file ? `css/${esc(file)}` : '<span class="badge docs-status--mismatch">not found in css/*.css</span>'), td(esc(v.mechanism || ''))].join('');
+    return [th(code(r)), td(file ? esc(file) : '<span class="badge docs-status--mismatch">not found in css/*.css</span>'), td(esc(v.mechanism || ''))].join('');
   });
   const base = m.base ? `<p class="docs-section__desc">Base class ${code(m.base)}.</p>` : `<p class="docs-section__desc">${esc(m.globalRulesDescription || 'No component class.')}</p>`;
   return section('code-ref', 'Code reference', `            ${base}\n            ${rows.length ? table(['Selector', 'File', 'Used for'], rows) : ''}`);

@@ -1,8 +1,8 @@
 /* ============================================================
    Hope DS docs: page chrome only.
    Uses Hope tokens only (no hardcoded colors). Everything else comes
-   from css/tokens.css, reset.css, components.css and layout.css, which
-   every docs page links directly. scripts/check-docs.mjs lints this file.
+   from css/hope.css (the generated aggregate of tokens, reset, components
+   and site CSS), which every docs page links. scripts/check-docs.mjs lints this file.
    ============================================================ */
 
 .docs-main {
