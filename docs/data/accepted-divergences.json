@@ -1,0 +1,8 @@
+[
+  {
+    "cssName": "--icon-color",
+    "reason": "Structural difference. Figma has one variable with 10 modes; CSS has ten --icon-color-<mode> tokens. Verified equal.",
+    "decidedBy": "Renan",
+    "date": "2026-11-19"
+  }
+]

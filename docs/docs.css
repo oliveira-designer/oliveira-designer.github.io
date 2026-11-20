@@ -1,0 +1,403 @@
+/* ============================================================
+   Hope DS docs: page chrome only.
+   Uses Hope tokens only (no hardcoded colors). Everything else comes
+   from css/tokens.css, reset.css, components.css and layout.css, which
+   every docs page links directly. scripts/check-docs.mjs lints this file.
+   ============================================================ */
+
+.docs-main {
+  padding-top: calc(var(--header-height) + var(--space-12));
+  padding-bottom: var(--space-24);
+}
+
+.docs-content {
+  min-width: 0; /* let wide tables scroll inside their wrapper */
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+}
+
+.docs-pagehead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.docs-lead {
+  max-width: 68ch;
+}
+
+.docs-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  scroll-margin-top: var(--space-24);
+}
+
+.docs-section__desc {
+  max-width: 68ch;
+  color: var(--color-text-2);
+}
+
+.docs-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-left: var(--space-5);
+  list-style: disc;
+  max-width: 68ch;
+  color: var(--color-text-2);
+}
+
+.docs-content a {
+  color: var(--color-text-brand-primary);
+  text-decoration: underline;
+}
+
+.docs-main code {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  overflow-wrap: break-word; /* long composite values wrap; short ones keep their width */
+}
+
+/* ---- Token tables ---- */
+.docs-table-wrap {
+  overflow-x: auto;
+  border: var(--border-normal);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+}
+
+.docs-table {
+  width: 100%;
+  min-width: 56rem;
+  border-collapse: collapse;
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+}
+
+.docs-table th,
+.docs-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border-thin);
+}
+
+.docs-table tbody tr:last-child th,
+.docs-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.docs-table thead th {
+  background: var(--color-bg-alt);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+}
+
+.docs-table tbody th {
+  font-weight: 600;
+  color: var(--color-text-1);
+}
+
+.docs-token__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--color-text-3);
+}
+
+.docs-token__note {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--fs-body-xs);
+  font-weight: 400;
+  color: var(--color-text-3);
+}
+
+.docs-value {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  color: var(--color-text-2);
+}
+
+.docs-value__tag {
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+}
+
+.docs-value--muted {
+  color: var(--color-text-3);
+}
+
+.docs-muted {
+  color: var(--color-text-3);
+}
+
+/* Swatches: the fill is the resolved color, set inline as data. The
+   checkerboard behind it shows transparency. */
+.docs-swatches {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.docs-swatch {
+  position: relative;
+  display: inline-block;
+  width: var(--space-8);
+  height: var(--space-8);
+  border: var(--border-normal);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  background-color: var(--color-bg);
+  background-image:
+    linear-gradient(45deg, var(--color-border) 25%, transparent 25%, transparent 75%, var(--color-border) 75%),
+    linear-gradient(45deg, var(--color-border) 25%, transparent 25%, transparent 75%, var(--color-border) 75%);
+  background-size: var(--space-2) var(--space-2);
+  background-position: 0 0, var(--space-1) var(--space-1);
+}
+
+.docs-swatch__fill {
+  position: absolute;
+  inset: 0;
+}
+
+.docs-swatch__label {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--fs-body-xs);
+  color: var(--color-text-3);
+}
+
+.docs-swatchcol {
+  display: flex;
+  flex-direction: column;
+}
+
+.docs-note {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  border: var(--border-normal);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-alt);
+  max-width: 68ch;
+  color: var(--color-text-2);
+}
+
+/* ---- Figma comparison ---- */
+.docs-table--compact {
+  min-width: 0;
+}
+
+.docs-status--mismatch {
+  background: var(--color-bg-danger-soft);
+  color: var(--color-text-error);
+  border-color: var(--color-border-error);
+}
+
+.docs-row--mismatch th,
+.docs-row--mismatch td {
+  background: var(--color-bg-danger-soft);
+}
+
+.docs-fig {
+  display: block;
+}
+
+.docs-fig--diff code {
+  color: var(--color-text-error);
+  font-weight: 600;
+}
+
+.docs-fig--info {
+  color: var(--color-text-3);
+}
+
+/* Compact inline swatches inside value lists (Figma-only and Icon tables) */
+.docs-fig .docs-swatchcol {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.docs-fig .docs-swatch {
+  width: var(--space-4);
+  height: var(--space-4);
+}
+
+.docs-fig .docs-swatch__label {
+  display: none;
+}
+
+/* Accepted divergences: informational, never red */
+.docs-status--accepted {
+  background: var(--color-bg-info-soft);
+  color: var(--color-text-info);
+  border-color: var(--color-border-info);
+}
+
+.docs-fig--accepted code {
+  color: var(--color-text-info);
+  font-weight: 600;
+}
+
+/* ---- Component pages ---- */
+.docs-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.docs-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-8);
+}
+
+.docs-cols > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.docs-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--space-4);
+}
+
+.docs-demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: var(--border-normal);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+}
+
+.docs-demo__label {
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+}
+
+.docs-demo__stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--space-16);
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-alt);
+}
+
+.docs-demo__caption {
+  font-size: var(--fs-body-xs);
+  color: var(--color-text-3);
+}
+
+/* ---- Review page (temporary) ---- */
+.docs-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  scroll-margin-top: var(--space-24);
+}
+
+.docs-unit {
+  padding-top: var(--space-6);
+  border-top: var(--border-thin);
+}
+
+.docs-subhead {
+  margin-top: var(--space-2);
+  font-weight: 600;
+  color: var(--color-text-1);
+}
+
+.docs-demo-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 40rem;
+}
+
+.docs-placeholder {
+  padding: var(--space-4) var(--space-5);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text-3);
+  max-width: 40rem;
+}
+
+.docs-placeholder--info {
+  border-style: solid;
+  border-color: var(--color-border);
+  background: var(--color-bg-alt);
+}
+
+.docs-note--banner {
+  border-color: var(--color-border-warning);
+  background: var(--color-bg-warning-soft);
+  color: var(--color-text-1);
+}
+
+.docs-row--total th,
+.docs-row--total td {
+  background: var(--color-bg-alt);
+  font-weight: 600;
+  color: var(--color-text-1);
+}
+
+/* ---- Theme switch (Light, Dark, System) in the docs header ---- */
+.docs-theme {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border: var(--border-normal);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-alt);
+}
+
+.docs-theme__btn {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-body-xs);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-text-2);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+
+.docs-theme__btn:hover {
+  color: var(--color-text-1);
+}
+
+.docs-theme__btn[aria-pressed="true"] {
+  background-color: var(--color-bg-neutral-default);
+  color: var(--color-text-on-neutral);
+}
+
+.docs-theme__btn:focus-visible {
+  outline: 2px solid var(--color-border-focus-ring);
+  outline-offset: 2px;
+}
