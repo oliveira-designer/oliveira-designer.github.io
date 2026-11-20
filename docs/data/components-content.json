@@ -81,7 +81,6 @@
   ],
   "unverified": [
     "Whether stroke weights are bound to Stroke variables (the check used a field key that may not apply).",
-    "Which CSS classes implement each style and size, and whether Accent, Inverse and Destructive exist in code.",
     "Icon colour per state (only fills and text colours were read).",
     "The Documentation link in the Info panel (its target was not read)."
   ]
@@ -130,10 +129,7 @@
   "knownGaps": [
     {"id": "badge-border-05", "status": "measured", "text": "Neutral has a 0.5 border. No Stroke token has that value (hairline is 0.8), so the 0.5 is a raw value."}
   ],
-  "unverified": [
-    "Which CSS classes implement each style (the site has a status badge and a .badge class, the mapping is not confirmed).",
-    "Whether Danger exists in code."
-  ]
+  "unverified": []
 },
 {
   "slug": "link",
@@ -178,8 +174,7 @@
     {"id": "link-standalone-target", "status": "inference", "text": "Stand-alone Small links (18 high) depend on surrounding spacing to meet 2.5.8."}
   ],
   "unverified": [
-    "What differs between the Default and Hover text styles.",
-    "Which CSS class implements the link."
+    "What differs between the Default and Hover text styles."
   ]
 }
 ]
