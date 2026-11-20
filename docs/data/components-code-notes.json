@@ -1,0 +1,87 @@
+{
+"meta": {
+  "version": "0.1",
+  "readAt": "2026-11-19",
+  "language": "en",
+  "sources": {
+    "code": "CSS read by the Code agent on 2026-11-19 (css/components.css, css/layout.css, global a rules). Claude did not read the CSS; items under differences and codeOnly are Code's findings.",
+    "figma": "Same Figma reads as components-content.json.",
+    "classification": "Claude's opinion, using the GOVERNANCE divergence classes: Bloqueia, Atencao, Informativo. Owner decides."
+  },
+  "policy": "Figma is canonical for component values (GOVERNANCE section 7), but identity decisions in the Brandbook outrank it. Each difference below needs an owner decision: CSS follows Figma, Figma follows CSS, or accepted."
+},
+"iconButton": {
+  "figmaSet": "2016:307",
+  "variantCount": 8,
+  "properties": [
+    {"name": "Style", "options": ["Ghost", "Primary"], "default": "Primary"},
+    {"name": "State", "options": ["Default", "Hover", "Focus", "Disabled"], "default": "Default"},
+    {"name": "Icon", "type": "instance swap"}
+  ],
+  "layout": {"size": "44 by 44", "radius": "Radius/radius-pill"},
+  "stateTokens": {
+    "Primary": {"default": {"fill": "Background/Neutral/Default"}, "hover": {"fill": "Background/Neutral/Hover"}, "focus": "Same as Default. No effect, no stroke.", "disabled": {"fill": "Background/Disabled/Default", "stroke": "Border/Disabled/Default"}},
+    "Ghost": {"default": {"fill": "none"}, "hover": {"fill": "Background/Default/Secondary"}, "focus": "Same as Default. No effect, no stroke.", "disabled": {"fill": "none"}}
+  },
+  "note": "Icon colour per state was not read. In code it needs an accessible name (aria-label). Not implemented in CSS."
+},
+"coverage": {
+  "figmaVariants": {"Button": 28, "IconButton": 8, "Badge": 6, "Link": 8},
+  "implementedInCss": {"Button": 12, "IconButton": 0, "Badge": 5, "Link": 0},
+  "implementedNote": "Button: Primary, Secondary, Ghost at Medium, 4 states each (hover via :hover, focus via shared .btn:focus-visible box-shadow, disabled via shared .btn:disabled and .btn[aria-disabled=true]). Badge: Neutral, Ancora (.badge--anchor), Solar, Success, Draft. Link: no class. The global a rule applies brand colour, a:hover, and a:focus-visible with a 2px outline.",
+  "missingInCss": [
+    {"component": "Button", "variant": "Small (Ghost)", "class": "Informativo"},
+    {"component": "Button", "variant": "Accent", "class": "Informativo", "note": "The code has .btn--solar, which is a different style, see codeOnly."},
+    {"component": "Button", "variant": "Inverse", "class": "Informativo", "note": "Only .site-footer .btn--footer exists, footer-only."},
+    {"component": "Button", "variant": "Destructive", "class": "Informativo"},
+    {"component": "Icon Button", "variant": "Primary, Ghost", "class": "Informativo"},
+    {"component": "Badge", "variant": "Danger", "class": "Informativo"},
+    {"component": "Link", "variant": "all 8 (Medium and Small, 4 states)", "class": "Atencao", "note": "Links are used across the whole site through the global a rule, so this is not a component waiting for use."}
+  ]
+},
+"differences": [
+  {"id": "link-colour-underline", "component": "Link", "class": "Atencao",
+   "figma": "Text/Default/Default with underline.",
+   "code": "Text/Brand/Primary, no underline. Hover is a:hover. Focus is a:focus-visible with a 2px outline. Disabled has no rule.",
+   "measured": "Link colour against surrounding text colour, Light: 3.01 against Text/Default/Default, 1.67 against Text/Default/Secondary. Dark: 1.59 and 1.28. Link colour against the page: 6.46 Light, 10.74 Dark.",
+   "inference": "Where a link sits inside running text coloured Text/Default/Secondary, colour alone separates it at under 3:1, which is what WCAG 1.4.1 (Use of Color, Level A) warns about. Needs a check of where links appear in running text and what a:hover does. A Brandbook rule about link style would outrank Figma."},
+  {"id": "btn-secondary-ghost-hover", "component": "Button", "class": "Atencao",
+   "figma": "Secondary and Ghost hover fill with Background/Neutral/Default (Secondary) or Background/Neutral/Hover (Ghost), with Text/Neutral/On Neutral text.",
+   "code": "Hover uses a --color-bg-alt fill and the normal text colour."},
+  {"id": "badge-draft-type", "component": "Badge", "class": "Atencao",
+   "figma": "Draft variant: Plus Jakarta Sans Medium, original case, 13. The Figma description still says Geist uppercase.",
+   "code": "Uppercase, weight 400, letter-spacing 0.12em. The code matches the older description, not the current variant."},
+  {"id": "btn-disabled-fill", "component": "Button", "class": "Informativo",
+   "figma": "Secondary and Ghost disabled have no fill.",
+   "code": "Every variant gets the disabled fill."},
+  {"id": "btn-secondary-focus-stroke", "component": "Button", "class": "Informativo",
+   "figma": "Secondary focus adds a 2.4 stroke plus the ring.",
+   "code": "Only the ring (shared box-shadow with --shadow-focus). The ring itself matches: spread 3, no blur."},
+  {"id": "btn-medium-size", "component": "Button", "class": "Informativo",
+   "figma": "Medium is 45 high, padding 12 vertical and 20 horizontal (Spacing/space-3, space-5).",
+   "code": "44 minimum height, padding 12px and 18px."},
+  {"id": "btn-full-width-mobile", "component": "Button", "class": "Informativo",
+   "figma": "Not specified.",
+   "code": "Every button is full width under 768px."},
+  {"id": "badge-padding", "component": "Badge", "class": "Informativo",
+   "figma": "Padding 4 and 12 (Spacing/space-1, space-3), height 29.",
+   "code": "Padding 3px and 10px."},
+  {"id": "badge-success-literal", "component": "Badge", "class": "Informativo",
+   "figma": "Fill Background/Positive/Soft.",
+   "code": "Literal rgba(74,159,107,0.12) instead of --color-bg-positive-soft. Same value, so it is code debt, not a visual difference."},
+  {"id": "badge-ancora-naming", "component": "Badge", "class": "Informativo",
+   "figma": "Style named Ancora (Portuguese).",
+   "code": "Class named .badge--anchor. The Figma primitives family is also Anchor."}
+],
+"matches": [
+  "Focus ring: spread 3, no blur.",
+  "Button label size 13.",
+  "Badge Neutral, Solar, Success and Draft colour roles exist as classes."
+],
+"codeOnly": [
+  {"selector": ".btn--solar", "note": "Solar fill button. Not the same as Figma's Accent."},
+  {"selector": ".site-footer .btn--footer", "note": "Footer-only button."},
+  {"selector": ".case-card__action--disabled", "note": "Card-specific disabled action."},
+  {"selector": ".testimonial-card__profile-link", "note": "Underlined link specific to the testimonial card."}
+]
+}

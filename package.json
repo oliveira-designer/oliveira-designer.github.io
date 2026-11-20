@@ -3,7 +3,8 @@
     "dev": "tailwindcss -i ./css/tailwind.css -o ./css/output.css --watch",
     "build:css": "tailwindcss -i ./css/tailwind.css -o ./css/output.css",
     "docs:tokens": "node scripts/build-tokens-doc.mjs",
-    "docs:check": "node scripts/check-docs.mjs"
+    "docs:check": "node scripts/check-docs.mjs",
+    "docs:components": "node scripts/build-components-doc.mjs"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.3.0",

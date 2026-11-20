@@ -1,0 +1,511 @@
+{
+  "meta": {
+    "version": "0.1",
+    "readAt": "2026-11-19",
+    "note": "Coverage of Figma variants by CSS selectors, read from css/components.css and css/layout.css. \"rule\" is the literal CSS selector that implements the variant; scripts/check-docs.mjs fails if a rule or class is missing from css/*.css. Counts are computed from this file and must match components-code-notes.json."
+  },
+  "components": {
+    "Button": {
+      "figmaVariants": 28,
+      "implemented": 12,
+      "base": ".btn",
+      "stateMechanisms": {
+        "hover": "Pseudo-class :hover on each style class (.btn--primary:hover, .btn--secondary:hover, .btn--ghost:hover).",
+        "focus": "Pseudo-class .btn:focus-visible with box-shadow var(--shadow-focus), one rule shared by every style. No state class.",
+        "disabled": ".btn:disabled and .btn[aria-disabled=\"true\"], one rule shared by every style (background, text and border use the disabled tokens). No state class."
+      },
+      "variants": [
+        {
+          "style": "Primary",
+          "size": "Medium",
+          "state": "Default",
+          "selector": ".btn.btn--primary",
+          "rule": ".btn--primary",
+          "mechanism": "none (base class)"
+        },
+        {
+          "style": "Primary",
+          "size": "Medium",
+          "state": "Hover",
+          "selector": ".btn.btn--primary",
+          "rule": ".btn--primary:hover",
+          "mechanism": ":hover pseudo-class"
+        },
+        {
+          "style": "Primary",
+          "size": "Medium",
+          "state": "Focus",
+          "selector": ".btn.btn--primary",
+          "rule": ".btn:focus-visible",
+          "mechanism": ":focus-visible pseudo-class (rule shared by all styles)"
+        },
+        {
+          "style": "Primary",
+          "size": "Medium",
+          "state": "Disabled",
+          "selector": ".btn.btn--primary",
+          "rule": ".btn:disabled",
+          "mechanism": "disabled attribute or aria-disabled=\"true\" (rule shared by all styles)"
+        },
+        {
+          "style": "Secondary",
+          "size": "Medium",
+          "state": "Default",
+          "selector": ".btn.btn--secondary",
+          "rule": ".btn--secondary",
+          "mechanism": "none (base class)"
+        },
+        {
+          "style": "Secondary",
+          "size": "Medium",
+          "state": "Hover",
+          "selector": ".btn.btn--secondary",
+          "rule": ".btn--secondary:hover",
+          "mechanism": ":hover pseudo-class"
+        },
+        {
+          "style": "Secondary",
+          "size": "Medium",
+          "state": "Focus",
+          "selector": ".btn.btn--secondary",
+          "rule": ".btn:focus-visible",
+          "mechanism": ":focus-visible pseudo-class (rule shared by all styles)"
+        },
+        {
+          "style": "Secondary",
+          "size": "Medium",
+          "state": "Disabled",
+          "selector": ".btn.btn--secondary",
+          "rule": ".btn:disabled",
+          "mechanism": "disabled attribute or aria-disabled=\"true\" (rule shared by all styles)"
+        },
+        {
+          "style": "Ghost",
+          "size": "Medium",
+          "state": "Default",
+          "selector": ".btn.btn--ghost",
+          "rule": ".btn--ghost",
+          "mechanism": "none (base class)"
+        },
+        {
+          "style": "Ghost",
+          "size": "Medium",
+          "state": "Hover",
+          "selector": ".btn.btn--ghost",
+          "rule": ".btn--ghost:hover",
+          "mechanism": ":hover pseudo-class"
+        },
+        {
+          "style": "Ghost",
+          "size": "Medium",
+          "state": "Focus",
+          "selector": ".btn.btn--ghost",
+          "rule": ".btn:focus-visible",
+          "mechanism": ":focus-visible pseudo-class (rule shared by all styles)"
+        },
+        {
+          "style": "Ghost",
+          "size": "Medium",
+          "state": "Disabled",
+          "selector": ".btn.btn--ghost",
+          "rule": ".btn:disabled",
+          "mechanism": "disabled attribute or aria-disabled=\"true\" (rule shared by all styles)"
+        },
+        {
+          "style": "Ghost",
+          "size": "Small",
+          "state": "Default",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Ghost",
+          "size": "Small",
+          "state": "Hover",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Ghost",
+          "size": "Small",
+          "state": "Focus",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Ghost",
+          "size": "Small",
+          "state": "Disabled",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Inverse",
+          "size": "Medium",
+          "state": "Default",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Inverse",
+          "size": "Medium",
+          "state": "Hover",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Inverse",
+          "size": "Medium",
+          "state": "Focus",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Inverse",
+          "size": "Medium",
+          "state": "Disabled",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Accent",
+          "size": "Medium",
+          "state": "Default",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Accent",
+          "size": "Medium",
+          "state": "Hover",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Accent",
+          "size": "Medium",
+          "state": "Focus",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Accent",
+          "size": "Medium",
+          "state": "Disabled",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Destructive",
+          "size": "Medium",
+          "state": "Default",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Destructive",
+          "size": "Medium",
+          "state": "Hover",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Destructive",
+          "size": "Medium",
+          "state": "Focus",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Destructive",
+          "size": "Medium",
+          "state": "Disabled",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        }
+      ]
+    },
+    "IconButton": {
+      "figmaVariants": 8,
+      "implemented": 0,
+      "base": null,
+      "stateMechanisms": {
+        "hover": "none",
+        "focus": "none",
+        "disabled": "none"
+      },
+      "variants": [
+        {
+          "style": "Primary",
+          "state": "Default",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Primary",
+          "state": "Hover",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Primary",
+          "state": "Focus",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Primary",
+          "state": "Disabled",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Ghost",
+          "state": "Default",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Ghost",
+          "state": "Hover",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Ghost",
+          "state": "Focus",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "style": "Ghost",
+          "state": "Disabled",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        }
+      ]
+    },
+    "Badge": {
+      "figmaVariants": 6,
+      "implemented": 5,
+      "base": ".badge",
+      "stateMechanisms": {
+        "hover": "not applicable, badges are static",
+        "focus": "not applicable",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "style": "Neutral",
+          "selector": ".badge.badge--neutral",
+          "rule": ".badge--neutral",
+          "mechanism": "static, no states"
+        },
+        {
+          "style": "Ancora",
+          "selector": ".badge.badge--anchor",
+          "rule": ".badge--anchor",
+          "mechanism": "static, no states"
+        },
+        {
+          "style": "Solar",
+          "selector": ".badge.badge--solar",
+          "rule": ".badge--solar",
+          "mechanism": "static, no states"
+        },
+        {
+          "style": "Success",
+          "selector": ".badge.badge--success",
+          "rule": ".badge--success",
+          "mechanism": "static, no states"
+        },
+        {
+          "style": "Draft",
+          "selector": ".badge.badge--draft",
+          "rule": ".badge--draft",
+          "mechanism": "static, no states"
+        },
+        {
+          "style": "Danger",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        }
+      ]
+    },
+    "Link": {
+      "figmaVariants": 8,
+      "implemented": 0,
+      "base": null,
+      "stateMechanisms": {
+        "hover": "none as a component. The global a:hover rule changes the colour to --color-text-brand-primary-hover.",
+        "focus": "none as a component. The global a:focus-visible rule draws a 2px outline with 3px offset.",
+        "disabled": "none"
+      },
+      "globalRules": [
+        "a",
+        "a:hover",
+        "a:focus-visible"
+      ],
+      "globalRulesDescription": "Every anchor gets --color-text-brand-primary, no underline, a hover colour and a 2px focus outline (css/reset.css). There is no .link class, no Small size and no disabled rule.",
+      "variants": [
+        {
+          "size": "Medium",
+          "state": "Default",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "size": "Medium",
+          "state": "Hover",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "size": "Medium",
+          "state": "Focus",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "size": "Medium",
+          "state": "Disabled",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "size": "Small",
+          "state": "Default",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "size": "Small",
+          "state": "Hover",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "size": "Small",
+          "state": "Focus",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        },
+        {
+          "size": "Small",
+          "state": "Disabled",
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        }
+      ]
+    },
+    "Separator": {
+      "figmaVariants": 1,
+      "implemented": 0,
+      "base": null,
+      "stateMechanisms": {
+        "hover": "not applicable",
+        "focus": "not applicable",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "selector": null,
+          "rule": null,
+          "mechanism": null
+        }
+      ],
+      "note": "No separator class exists in css/*.css. Hairline dividers exist only as border rules inside other components (for example css/layout.css:422 on .hero) and as hr in the Tailwind preflight copy."
+    },
+    "Banner": {
+      "figmaVariants": 1,
+      "implemented": 1,
+      "base": ".banner",
+      "stateMechanisms": {
+        "hover": "not applicable, static",
+        "focus": "not applicable",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "type": "Notice",
+          "selector": ".banner.banner--wip",
+          "rule": ".banner--wip",
+          "mechanism": "static, no states",
+          "inference": "Figma has one Banner variant (Type Notice, renamed from Warning per DESIGN.md). It is mapped to .banner--wip, the only banner modifier in the CSS. This mapping is an inference, not a Figma fact."
+        }
+      ],
+      "note": "Added for the review page. The real markup on css/components.css:1901-1938 is .banner, .banner--wip, .banner__icon and .banner__text."
+    },
+    "Lightbox": {
+      "figmaVariants": 1,
+      "implemented": 1,
+      "base": ".lightbox",
+      "stateMechanisms": {
+        "hover": "close button :hover",
+        "focus": "close button :focus-visible",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "selector": ".lightbox",
+          "rule": ".lightbox",
+          "mechanism": "state class .is-open set by js/lightbox.js; hidden attribute hides it",
+          "renderable": false
+        }
+      ],
+      "note": "Added for the review page. CSS exists (css/components.css:1744-1860) but it is a fixed full-screen modal driven by js/lightbox.js, so the review page does not render it."
+    }
+  },
+  "codeOnly": [
+    {
+      "selector": ".btn--solar",
+      "component": "Button"
+    },
+    {
+      "selector": ".site-footer .btn--footer",
+      "component": "Button"
+    },
+    {
+      "selector": ".case-card__action--disabled",
+      "component": "Button",
+      "assignment": "Assigned to Button by the docs generator as the closest component, inference: it is a card action, not a .btn."
+    },
+    {
+      "selector": ".testimonial-card__profile-link",
+      "component": "Link"
+    }
+  ]
+}

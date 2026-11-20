@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <script>
+    (function () {
+      var KEY = 'hope-docs-theme';
+      var html = document.documentElement;
+      var mq = null;
+      try { mq = window.matchMedia('(prefers-color-scheme: dark)'); } catch (e) {}
+      var current = null; // in-memory choice, used when localStorage is blocked
+      function stored() {
+        if (current) return current;
+        try {
+          var v = localStorage.getItem(KEY);
+          return v === 'dark' || v === 'system' ? v : 'light';
+        } catch (e) { return 'light'; }
+      }
+      function resolve(choice) { return choice === 'system' ? (mq && mq.matches ? 'dark' : 'light') : choice; }
+      function apply(choice) { html.setAttribute('data-theme', resolve(choice)); }
+      window.hopeDocsTheme = {
+        get: stored,
+        set: function (choice) {
+          current = choice;
+          try { localStorage.setItem(KEY, choice); } catch (e) {}
+          apply(choice);
+        },
+        apply: apply,
+        mq: mq
+      };
+      apply(stored());
+    })();
+  </script>
+  <title>Badge | Hope DS docs</title>
+  <link rel="icon" type="image/svg+xml" href="../../logos/logo-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/tokens.css" />
+  <link rel="stylesheet" href="../../css/reset.css" />
+  <link rel="stylesheet" href="../../css/components.css" />
+  <link rel="stylesheet" href="../../css/layout.css" />
+  <link rel="stylesheet" href="../../css/animations.css" />
+  <link rel="stylesheet" href="../docs.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top" role="banner">
+      <nav class="nav" role="navigation" aria-label="Docs navigation">
+        <a href="../index.html" class="nav__logo" aria-label="Hope DS docs home">
+          <img src="../../logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
+          <img src="../../logos/logo-dark-mode.svg" alt="Renan Moura" class="nav__logo-dark" />
+        </a>
+        <div class="nav__controls">
+          <div class="nav__links">
+            <a href="../index.html" class="nav__link">Overview</a>
+            <a href="../tokens.html" class="nav__link">Tokens</a>
+            <a href="../components/index.html" class="nav__link nav__link--active" aria-current="page">Components</a>
+            <a href="../../index.html" class="nav__link">Portfolio site</a>
+          </div>
+          <div class="docs-theme" role="group" aria-label="Theme">
+            <button type="button" class="docs-theme__btn" data-theme-choice="light" aria-pressed="false">Light</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="dark" aria-pressed="false">Dark</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="system" aria-pressed="false">System</button>
+          </div>
+          <button class="nav__hamburger" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconBurger" aria-hidden="true" focusable="false"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg>
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconClose" aria-hidden="true" focusable="false" style="display:none"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
+          </button>
+        </div>
+      </nav>
+      <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+        <a href="../index.html" class="nav__mobile-link">Overview</a>
+        <a href="../tokens.html" class="nav__mobile-link">Tokens</a>
+        <a href="../components/index.html" class="nav__mobile-link nav__link--active">Components</a>
+        <a href="../../index.html" class="nav__mobile-link">Portfolio site</a>
+      </div>
+    </header>
+
+  <main id="main" class="docs-main">
+    <div class="container">
+      <div class="case-layout">
+        <aside class="case-sidebar">
+          <nav class="case-toc" aria-label="Docs pages">
+            <p class="case-toc__label">Pages</p>
+            <ol class="case-toc__list">
+              <li class="case-toc__item"><a class="case-toc__link" href="../index.html">Overview</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="../tokens.html">Tokens</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="../components/index.html">Components</a></li>
+            </ol>
+            <p class="case-toc__label">Components</p>
+            <ol class="case-toc__list">
+              <li class="case-toc__item"><a class="case-toc__link" href="../components/button.html">Button</a></li>
+              <li class="case-toc__item"><a class="case-toc__link is-active" href="../components/badge.html" aria-current="page">Badge</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="../components/link.html">Link</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="../components/review.html">Review (temporary)</a></li>
+            </ol>
+            <p class="case-toc__label">On this page</p>
+            <ol class="case-toc__list">
+              <li class="case-toc__item"><a class="case-toc__link" href="#summary">Summary</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#usage">When to use</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#anatomy">Anatomy</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#variants">Properties and variants</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#examples">Live examples</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#states">Colour roles</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#accessibility">Accessibility</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#figma-vs-code">Figma vs code</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#no-code">In Figma, no code yet</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#code-only">In code, no Figma</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#gaps">Known gaps</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#unverified">Not yet verified</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#figma-ref">Figma reference</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="#code-ref">Code reference</a></li>
+            </ol>
+          </nav>
+        </aside>
+        <div class="docs-content">
+          <header class="docs-pagehead">
+            <p class="text-label text-tertiary">Component</p>
+            <h1 class="text-h1">Badge</h1>
+            <p class="text-body text-secondary docs-lead">Figma content from 2026-11-19 (v0.1), code notes from 2026-11-19. Generated by <code>npm run docs:components</code>; the data files in <code>docs/data/</code> are the source.</p>
+          </header>
+
+          <section class="docs-section" id="summary" aria-labelledby="summary-title">
+            <h2 class="text-h2" id="summary-title">Summary</h2>
+            <p class="docs-lead text-body text-secondary">Compact, non-interactive label for themes, status and highlights. Brand styles (Ancora, Solar), semantic styles (Success, Danger, Draft) and Neutral.</p>
+            <p class="docs-badges"><span class="badge badge--anchor">6 Figma variants</span> <span class="badge badge--success">5 in code</span> <span class="badge badge--solar">1 Atencao</span> <span class="badge badge--neutral">3 Informativo</span> <span class="badge badge--neutral">2 known gaps</span></p>
+          </section>
+
+          <section class="docs-section" id="usage" aria-labelledby="usage-title">
+            <h2 class="text-h2" id="usage-title">When to use and when not to use</h2>
+            <div class="docs-cols">
+              <div><h3 class="text-h3">When to use</h3><ul class="docs-list"><li>Ancora: technical categories.</li><li>Solar: highlights and milestones.</li><li>Success: positive status.</li><li>Neutral: discreet labels.</li><li>Draft: content under construction.</li><li>Danger: error or urgency states.</li></ul></div>
+              <div><h3 class="text-h3">When not to use</h3><ul class="docs-list"><li>Anything interactive: use Tag (Tag exists only in Figma-planned components, not in code).</li></ul></div>
+            </div>
+          </section>
+
+          <section class="docs-section" id="anatomy" aria-labelledby="anatomy-title">
+            <h2 class="text-h2" id="anatomy-title">Anatomy</h2>
+            <ul class="docs-list"><li>Container (all): height 29, radius Radius/radius-pill, padding Spacing/space-1 vertical, Spacing/space-3 horizontal, text Body/Medium/body-sm medium, Plus Jakarta Sans Medium, 13, original case.</li><li>Label: text property &quot;Label&quot;, default &quot;Product Strategy&quot;.</li></ul>
+            <p class="docs-section__desc">Parts are read from the Figma properties and layout only. Nothing here is inferred.</p>
+          </section>
+
+          <section class="docs-section" id="variants" aria-labelledby="variants-title">
+            <h2 class="text-h2" id="variants-title">Properties and variants</h2>
+            <h3 class="text-h3">Figma properties</h3>
+            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Property</th><th scope="col">Type</th><th scope="col">Options</th><th scope="col">Default</th><th scope="col">Note</th></tr></thead><tbody><tr><th scope="row">Style</th><td>variant</td><td>Neutral, Ancora, Solar, Success, Draft, Danger</td><td>Neutral</td><td></td></tr><tr><th scope="row">Label</th><td>text</td><td><span class="docs-muted">free text</span></td><td>Product Strategy</td><td></td></tr></tbody></table></div>
+            <h3 class="text-h3">Coverage in code (5 of 6 Figma variants)</h3>
+            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Style</th><th scope="col">CSS class</th></tr></thead><tbody><tr><th scope="row">Neutral</th><td><code>.badge--neutral</code></td></tr><tr><th scope="row">Ancora</th><td><code>.badge--anchor</code></td></tr><tr><th scope="row">Solar</th><td><code>.badge--solar</code></td></tr><tr><th scope="row">Success</th><td><code>.badge--success</code></td></tr><tr><th scope="row">Draft</th><td><code>.badge--draft</code></td></tr><tr><th scope="row">Danger</th><td><span class="docs-muted">none</span></td></tr></tbody></table></div>
+            <h3 class="text-h3">How states are implemented</h3>
+            <ul class="docs-list"><li><strong>hover:</strong> not applicable, badges are static</li><li><strong>focus:</strong> not applicable</li><li><strong>disabled:</strong> not applicable</li></ul>
+          </section>
+
+          <section class="docs-section" id="examples" aria-labelledby="examples-title">
+            <h2 class="text-h2" id="examples-title">Live examples</h2>
+            <p class="docs-section__desc">Real markup with the real classes from <code>css/components.css</code>. Badges are static and non-interactive, so there are no states to try.</p>
+            <div class="docs-demo-grid">
+              <div class="docs-demo">
+                <p class="docs-demo__label">Neutral</p>
+                <div class="docs-demo__stage">
+                  <!-- demo:start --><span class="badge badge--neutral">Product Strategy</span><!-- demo:end -->
+                </div>
+                <p class="docs-demo__caption">Class .badge--neutral. Static, no states.</p>
+              </div>
+              <div class="docs-demo">
+                <p class="docs-demo__label">Ancora</p>
+                <div class="docs-demo__stage">
+                  <!-- demo:start --><span class="badge badge--anchor">Product Strategy</span><!-- demo:end -->
+                </div>
+                <p class="docs-demo__caption">Class .badge--anchor. Static, no states.</p>
+              </div>
+              <div class="docs-demo">
+                <p class="docs-demo__label">Solar</p>
+                <div class="docs-demo__stage">
+                  <!-- demo:start --><span class="badge badge--solar">Product Strategy</span><!-- demo:end -->
+                </div>
+                <p class="docs-demo__caption">Class .badge--solar. Static, no states.</p>
+              </div>
+              <div class="docs-demo">
+                <p class="docs-demo__label">Success</p>
+                <div class="docs-demo__stage">
+                  <!-- demo:start --><span class="badge badge--success">Product Strategy</span><!-- demo:end -->
+                </div>
+                <p class="docs-demo__caption">Class .badge--success. Static, no states.</p>
+              </div>
+              <div class="docs-demo">
+                <p class="docs-demo__label">Draft</p>
+                <div class="docs-demo__stage">
+                  <!-- demo:start --><span class="badge badge--draft">Product Strategy</span><!-- demo:end -->
+                </div>
+                <p class="docs-demo__caption">Class .badge--draft. Static, no states.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="docs-section" id="states" aria-labelledby="states-title">
+            <h2 class="text-h2" id="states-title">Colour roles</h2>
+            <p class="docs-section__desc">Badge is static, so there are no states: one set of Figma tokens per style.</p>
+            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Style</th><th scope="col">Fill</th><th scope="col">Stroke</th><th scope="col">Text</th></tr></thead><tbody><tr><th scope="row">Neutral</th><td>Background/Default/Secondary</td><td>Border/Default/Default (0.5)</td><td>Text/Default/Secondary</td></tr><tr><th scope="row">Ancora</th><td>Background/Brand/Secondary</td><td><span class="docs-muted">not specified</span></td><td>Text/Brand/Secondary</td></tr><tr><th scope="row">Solar</th><td>Background/Accent/Secondary</td><td><span class="docs-muted">not specified</span></td><td>Text/Accent/Secondary</td></tr><tr><th scope="row">Success</th><td>Background/Positive/Soft</td><td><span class="docs-muted">not specified</span></td><td>Text/Positive/Secondary</td></tr><tr><th scope="row">Draft</th><td>Background/Neutral/Secondary</td><td>Border/Default/Default (0.5)</td><td>Text/Neutral/Secondary</td></tr><tr><th scope="row">Danger</th><td>Background/Danger/Soft</td><td><span class="docs-muted">not specified</span></td><td>Text/Danger/Secondary</td></tr></tbody></table></div>
+          </section>
+
+          <section class="docs-section" id="accessibility" aria-labelledby="accessibility-title">
+            <h2 class="text-h2" id="accessibility-title">Accessibility</h2>
+            <p class="docs-section__desc">Computed with the WCAG relative luminance formula from docs/data/figma-tokens.json. Translucent fills are composited over the page background (Background/Default/Default: #ffffff Light, #1a1a2e Dark). Components placed on other surfaces will measure differently.</p>
+            <h3 class="text-h3">Text contrast</h3>
+            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Case</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">Result (4.5:1)</th></tr></thead><tbody><tr><th scope="row">Neutral</th><td>10.06</td><td>7.44</td><td><span class="badge badge--success">pass</span> Light <span class="badge badge--success">pass</span> Dark</td></tr><tr><th scope="row">Ancora</th><td>8.78</td><td>6.77</td><td><span class="badge badge--success">pass</span> Light <span class="badge badge--success">pass</span> Dark</td></tr><tr><th scope="row">Solar</th><td>4.78</td><td>7.68</td><td><span class="badge badge--success">pass</span> Light <span class="badge badge--success">pass</span> Dark</td></tr><tr><th scope="row">Success</th><td>5.08</td><td>4.97</td><td><span class="badge badge--success">pass</span> Light <span class="badge badge--success">pass</span> Dark</td></tr><tr><th scope="row">Draft</th><td>5.86</td><td>4.75</td><td><span class="badge badge--success">pass</span> Light <span class="badge badge--success">pass</span> Dark</td></tr><tr><th scope="row">Danger</th><td>5.02</td><td>7.01</td><td><span class="badge badge--success">pass</span> Light <span class="badge badge--success">pass</span> Dark</td></tr></tbody></table></div>
+            
+            <ul class="docs-list"><li><strong>Note:</strong> All six styles meet 4.5:1 in both modes on the default page background. The tightest are Solar in Light (4.78) and Draft in Dark (4.75). Badges on other surfaces must be re-measured.</li><li><strong>Meaning:</strong> Colour alone must not carry the meaning: the label text states the status.</li></ul>
+          </section>
+
+          <section class="docs-section" id="figma-vs-code" aria-labelledby="figma-vs-code-title">
+            <h2 class="text-h2" id="figma-vs-code-title">Figma vs code</h2>
+            <p class="docs-section__desc">Figma is canonical for component values (GOVERNANCE section 7), but identity decisions in the Brandbook outrank it. Each difference below needs an owner decision: CSS follows Figma, Figma follows CSS, or accepted. Classification is Claude's opinion; the owner decides.</p>
+            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Class</th><th scope="col">Difference</th><th scope="col">Figma</th><th scope="col">Code</th><th scope="col">Measured or inference</th></tr></thead><tbody><tr><td><span class="badge badge--solar">Atencao</span></td><th scope="row"><code>badge-draft-type</code></th><td>Draft variant: Plus Jakarta Sans Medium, original case, 13. The Figma description still says Geist uppercase.</td><td>Uppercase, weight 400, letter-spacing 0.12em. The code matches the older description, not the current variant.</td><td><span class="docs-muted">none</span></td></tr><tr><td><span class="badge badge--neutral">Informativo</span></td><th scope="row"><code>badge-padding</code></th><td>Padding 4 and 12 (Spacing/space-1, space-3), height 29.</td><td>Padding 3px and 10px.</td><td><span class="docs-muted">none</span></td></tr><tr><td><span class="badge badge--neutral">Informativo</span></td><th scope="row"><code>badge-success-literal</code></th><td>Fill Background/Positive/Soft.</td><td>Literal rgba(74,159,107,0.12) instead of --color-bg-positive-soft. Same value, so it is code debt, not a visual difference.</td><td><span class="docs-muted">none</span></td></tr><tr><td><span class="badge badge--neutral">Informativo</span></td><th scope="row"><code>badge-ancora-naming</code></th><td>Style named Ancora (Portuguese).</td><td>Class named .badge--anchor. The Figma primitives family is also Anchor.</td><td><span class="docs-muted">none</span></td></tr></tbody></table></div>
+            <h3 class="text-h3">Matches</h3><ul class="docs-list"><li>Badge Neutral, Solar, Success and Draft colour roles exist as classes.</li></ul>
+          </section>
+
+          <section class="docs-section" id="no-code" aria-labelledby="no-code-title">
+            <h2 class="text-h2" id="no-code-title">In Figma, no code yet</h2>
+            <p class="docs-section__desc">Variants that components-map.json maps to no selector. No demo is rendered for them.</p>
+            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Figma variant</th><th scope="col">States</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Danger</th><td>static</td><td><span class="badge badge--draft">no CSS class</span></td></tr></tbody></table></div>
+            
+          </section>
+
+          <section class="docs-section" id="code-only" aria-labelledby="code-only-title">
+            <h2 class="text-h2" id="code-only-title">In code, no Figma</h2>
+            <p class="docs-section__desc">None.</p>
+          </section>
+
+          <section class="docs-section" id="gaps" aria-labelledby="gaps-title">
+            <h2 class="text-h2" id="gaps-title">Known gaps</h2>
+            <p class="docs-section__desc">Status key: documented (stated in Figma description or Info panel); measured (computed from token values); inference (reading of the data, needs owner confirmation); unverified (not checked yet).</p>
+            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Status</th><th scope="col">Id</th><th scope="col">Gap</th></tr></thead><tbody><tr><td><span class="badge badge--neutral">measured</span></td><th scope="row"><code>badge-draft-geist</code></th><td>The Figma description says Draft uses Geist in upper case. The Draft variant uses Plus Jakarta Sans Medium, original case, the same text style as every other style.</td></tr><tr><td><span class="badge badge--neutral">measured</span></td><th scope="row"><code>badge-border-05</code></th><td>Neutral and Draft have a 0.5 border. No Stroke token has that value (hairline is 0.8), so the 0.5 is a raw value.</td></tr></tbody></table></div>
+          </section>
+
+          <section class="docs-section" id="unverified" aria-labelledby="unverified-title">
+            <h2 class="text-h2" id="unverified-title">Not yet verified</h2>
+            <ul class="docs-list"><li>Which CSS classes implement each style (the site has a status badge and a .badge class, the mapping is not confirmed).</li><li>Whether Danger exists in code.</li></ul>
+          </section>
+
+          <section class="docs-section" id="figma-ref" aria-labelledby="figma-ref-title">
+            <h2 class="text-h2" id="figma-ref-title">Figma reference</h2>
+            <p class="docs-section__desc">Hope DS | Core Components, file key <code>U6ThTndTKYSJKkd0XqaSdV</code>.</p>
+            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Item</th><th scope="col">Id</th><th scope="col">Link</th></tr></thead><tbody><tr><th scope="row">Page</th><td><code>11:6</code></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=11-6" rel="noopener noreferrer">Open in Figma</a></td></tr><tr><th scope="row">Set: Badge</th><td><code>12:12</code></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=12-12" rel="noopener noreferrer">Open in Figma</a></td></tr></tbody></table></div>
+          </section>
+
+          <section class="docs-section" id="code-ref" aria-labelledby="code-ref-title">
+            <h2 class="text-h2" id="code-ref-title">Code reference</h2>
+            <p class="docs-section__desc">Base class <code>.badge</code>.</p>
+            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Selector</th><th scope="col">File</th><th scope="col">Used for</th></tr></thead><tbody><tr><th scope="row"><code>.badge--neutral</code></th><td>css/components.css</td><td>static, no states</td></tr><tr><th scope="row"><code>.badge--anchor</code></th><td>css/components.css</td><td>static, no states</td></tr><tr><th scope="row"><code>.badge--solar</code></th><td>css/components.css</td><td>static, no states</td></tr><tr><th scope="row"><code>.badge--success</code></th><td>css/components.css</td><td>static, no states</td></tr><tr><th scope="row"><code>.badge--draft</code></th><td>css/components.css</td><td>static, no states</td></tr></tbody></table></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconBurger = document.getElementById('iconBurger');
+      const iconClose = document.getElementById('iconClose');
+
+      const theme = window.hopeDocsTheme;
+      const choices = document.querySelectorAll('[data-theme-choice]');
+      function syncSwitch() {
+        const current = theme ? theme.get() : 'light';
+        choices.forEach(function (btn) {
+          btn.setAttribute('aria-pressed', String(btn.getAttribute('data-theme-choice') === current));
+        });
+      }
+      function setMenu(open) {
+        mobileMenu.classList.toggle('is-open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        iconBurger.style.display = open ? 'none' : 'block';
+        iconClose.style.display = open ? 'block' : 'none';
+      }
+
+      choices.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (theme) theme.set(btn.getAttribute('data-theme-choice'));
+          syncSwitch();
+        });
+      });
+      if (theme && theme.mq) {
+        const onChange = function () { if (theme.get() === 'system') theme.apply('system'); };
+        try { theme.mq.addEventListener('change', onChange); } catch (e) { try { theme.mq.addListener(onChange); } catch (e2) {} }
+      }
+      syncSwitch();
+
+      menuToggle.addEventListener('click', function () {
+        setMenu(!mobileMenu.classList.contains('is-open'));
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { setMenu(false); });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+          setMenu(false);
+          menuToggle.focus();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
