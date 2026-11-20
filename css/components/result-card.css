@@ -1,0 +1,74 @@
+/* Hope DS: css/components/result-card.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Result cards (glassmorphism + icon + hover lift)
+   ---------------------------------------------------------- */
+.result-card {
+  padding:        var(--space-6);
+  border-radius:  var(--radius-lg);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+  /* Glassmorphism — unified Material recipe (Glass/rest) */
+  background: var(--color-material-bg);
+  -webkit-backdrop-filter: var(--blur-glass);
+          backdrop-filter: var(--blur-glass);
+  border: 1px solid var(--color-material-border);
+  box-shadow:
+    var(--color-material-shadow-drop),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+  /* Hover lift */
+  transition:
+    transform    var(--duration-slow) var(--ease-out),
+    box-shadow   var(--duration-slow) var(--ease-out),
+    border-color var(--duration-slow) var(--ease-out);
+}
+.result-card:hover {
+  transform:    translateY(-4px);
+  box-shadow:
+    var(--color-material-shadow-drop-hover),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+  border-color: var(--color-material-border-hover);
+}
+[data-theme="dark"] .result-card {
+  background: var(--color-material-bg);
+  border-color: var(--color-material-border);
+  box-shadow:
+    var(--color-material-shadow-drop),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+}
+[data-theme="dark"] .result-card:hover {
+  transform:    translateY(-4px);
+  border-color: var(--color-material-border-hover);
+  box-shadow:
+    var(--color-material-shadow-drop-hover),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+}
+
+/* Icon chip — Background/Utilities/Icon Chip (shared with .skill-card__icon) */
+.result-card__icon {
+  width:         40px;
+  height:        40px;
+  border-radius: var(--radius-sm);
+  display:       grid;
+  place-items:   center;
+  flex-shrink:   0;
+  background-color: var(--color-bg-icon-chip);
+  color:            var(--color-text-brand-default);
+}
+
+.result-card__title {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-h3);
+  font-weight:    700;
+  color:          var(--color-text-1);
+  line-height:    1.4;
+}
+.result-card__body {
+  font-family: var(--font-body);
+  font-size:   var(--fs-body-sm);
+  line-height: 1.70;
+  color:       var(--color-text-2);
+}

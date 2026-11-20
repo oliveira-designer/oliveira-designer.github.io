@@ -1,0 +1,273 @@
+/* Hope DS: css/site/header.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   SCROLL OFFSET — compensates for fixed floating header
+   ---------------------------------------------------------- */
+html {
+  scroll-padding-top: var(--space-24);
+}
+
+/* ----------------------------------------------------------
+   HEADER / NAV — full-bleed glass bar, inner content capped at
+   --content-max-width (same shared cap as every section .container)
+   ---------------------------------------------------------- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  z-index: var(--z-overlay);
+
+  /* Glassmorphism — light mode. Bg/border on the unified Material recipe. */
+  background: var(--color-material-bg);
+  backdrop-filter: blur(30px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border-bottom: 1px solid var(--color-material-border);
+  box-shadow: 0 1px 1.5px rgba(13, 13, 15, 0.06);
+
+  transition:
+    background   var(--duration-slower) var(--ease-out),
+    border-color var(--duration-slower) var(--ease-out),
+    box-shadow   var(--duration-slower) var(--ease-out);
+}
+
+/* Glassmorphism — dark mode */
+[data-theme="dark"] .site-header {
+  background: var(--color-material-bg);
+  border-color: var(--color-material-border);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4);
+}
+/* Without this, .nav (a flex item of .site-header with no explicit
+   width) shrinks to fit its own content and the margin: 0 auto above
+   then centers that shrunk box in the header, instead of the logo and
+   controls spreading to the header's true left/right edges. width:
+   100% forces it to fill the header so its own justify-content:
+   space-between actually reaches both edges. Desktop already gets an
+   explicit width from the media query below, so it is unaffected. */
+@media (max-width: 767px) {
+  .nav {
+    width: 100%;
+    margin: 0;
+  }
+}
+@media (min-width: 768px) {
+  /* Same capped-width-plus-minimum-gutter formula as .container, so the
+     header's inner content lines up with every section's content edge. */
+  .nav {
+    width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+    max-width: none;
+    padding-inline: 0;
+  }
+}
+
+/* Logo */
+.nav__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+.nav__logo:hover { opacity: 0.7; }
+.nav__logo img {
+  height: 28px !important;
+  width: auto !important;
+}
+
+/* Logo visibility — light/dark swap */
+.nav__logo-light { display: block !important; }
+.nav__logo-dark  { display: none  !important; }
+[data-theme="dark"] .nav__logo-light { display: none  !important; }
+[data-theme="dark"] .nav__logo-dark  { display: block !important; }
+
+/* Right-side controls wrapper */
+.nav__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+/* Nav links — desktop only */
+.nav__links {
+  display: none;
+  align-items: center;
+  gap: var(--space-5);
+  margin-right: var(--space-2);
+}
+@media (min-width: 768px) {
+  .nav__links { display: flex; }
+}
+
+.nav__link {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  color: var(--color-text-2);
+  padding: var(--space-1) 0;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+.nav__link:hover   { color: var(--color-text-1); }
+.nav__link--active { color: var(--color-text-1); font-weight: 600; }
+
+/* Theme toggle — all breakpoints */
+.nav__theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-2);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+/* Dark mode paused — hide the live toggle only (id-scoped so the
+   design-system.html component showcase, which has no #themeToggle,
+   still documents what the control looks like). Underlying dark-mode
+   CSS is untouched. */
+#themeToggle {
+  display: none;
+}
+.nav__theme-toggle:hover {
+  color: var(--color-text-1);
+  background-color: rgba(0, 0, 0, 0.07);
+}
+[data-theme="dark"] .nav__theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+.nav__theme-toggle svg { width: 17px; height: 17px; }
+
+/* Hamburger — mobile only */
+.nav__hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-2);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+.nav__hamburger:hover {
+  color: var(--color-text-1);
+  background-color: rgba(0, 0, 0, 0.07);
+}
+[data-theme="dark"] .nav__hamburger:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+.nav__hamburger svg { width: 20px; height: 20px; }
+@media (min-width: 768px) {
+  .nav__hamburger { display: none; }
+}
+
+/* LinkedIn icon button — circular, desktop only. On mobile it is
+   replaced by a "LinkedIn" text link inside the hamburger menu (see
+   .nav__mobile-menu), so it does not compete with the hamburger for
+   space in the mobile header bar. */
+.nav__linkedin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-2);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+.nav__linkedin:hover {
+  color: var(--color-text-1);
+  background-color: rgba(0, 0, 0, 0.07);
+}
+[data-theme="dark"] .nav__linkedin:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+.nav__linkedin svg { width: 17px; height: 17px; }
+@media (max-width: 767px) {
+  .nav__linkedin { display: none; }
+}
+
+/* Mobile menu — absolute glass panel below the pill */
+.nav__mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-1);
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: var(--space-4);
+  right: var(--space-4);
+
+  /* Own compositor layer — bypasses parent backdrop-filter stacking
+     restriction on iOS Safari / Chrome mobile. */
+  isolation: isolate;
+  transform: translate3d(0, 0, 0);
+
+  /* Glass panel — milkier tint keeps text readable while blur settles */
+  background: var(--color-cloud);
+  -webkit-backdrop-filter: blur(50px) saturate(1.6);
+          backdrop-filter: blur(50px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-3);
+
+  transition:
+    background   var(--duration-slower) var(--ease-out),
+    border-color var(--duration-slower) var(--ease-out);
+}
+[data-theme="dark"] .nav__mobile-menu {
+  background: var(--color-abyss);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+          backdrop-filter: blur(20px) saturate(1.6);
+  border-color: rgba(74, 74, 96, 0.35);
+}
+.nav__mobile-menu.is-open { display: flex; }
+@media (min-width: 768px) {
+  .nav__mobile-menu { display: none !important; }
+}
+
+.nav__mobile-link {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--color-text-2);
+  padding: var(--space-3) var(--space-4);
+  min-height: 44px;
+  border-radius: var(--radius-sm);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+.nav__mobile-link:hover {
+  color: var(--color-text-1);
+  background-color: rgba(0, 0, 0, 0.04);
+}
+[data-theme="dark"] .nav__mobile-link:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+.nav__mobile-link--active {
+  color: var(--color-text-1);
+  font-weight: 600;
+}

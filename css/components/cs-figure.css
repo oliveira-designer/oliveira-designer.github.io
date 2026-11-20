@@ -1,0 +1,208 @@
+/* Hope DS: css/components/cs-figure.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Figure
+   ---------------------------------------------------------- */
+.cs-figure {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: var(--border-normal);
+  background-color: var(--color-bg-alt);
+  text-align: center;
+}
+
+.cs-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  min-height: 180px; /* visible placeholder area while src is empty */
+}
+
+.cs-figure figcaption {
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  border-top: var(--border-thin);
+}
+
+/* Inline results block — glassmorphism metric cards + legend caption */
+.case-section__results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Three equal-width glass cards spanning the full container */
+.case-section__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+@media (max-width: 640px) {
+  .case-section__metrics { grid-template-columns: 1fr; }
+}
+
+/* Individual metric glass card */
+.case-metric-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  /* Glassmorphism — unified Material recipe (Glass/rest), non-interactive so no hover state */
+  background: var(--color-material-bg);
+  -webkit-backdrop-filter: var(--blur-glass);
+          backdrop-filter: var(--blur-glass);
+  border: 1px solid var(--color-material-border);
+  box-shadow:
+    var(--color-material-shadow-drop),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+}
+[data-theme="dark"] .case-metric-card {
+  background: var(--color-material-bg);
+  border-color: var(--color-material-border);
+  box-shadow:
+    var(--color-material-shadow-drop),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+}
+
+/* Highlight card */
+.highlight-card {
+  width: 100%;
+  flex: 1 1 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  background: var(--color-bg-alt);
+}
+
+.highlight-card:hover {
+  transform: translateY(-4px);
+  transition:
+    transform    var(--duration-slow) var(--ease-out),
+    box-shadow   var(--duration-slow) var(--ease-out),
+    border-color var(--duration-slow) var(--ease-out);
+}
+
+.highlight-card h3 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);  /* Figma: Heading/H1 (32px) */
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-accent);
+}
+
+.highlight-card p {
+  font-weight: 700;
+}
+
+/* Legend — more specific selector to win over .case-section__body p */
+.case-section__body .case-section__results-legend {
+  font-family: var(--font-body);
+  font-size:   var(--fs-body-sm);
+  color:       var(--color-text-3);
+  line-height: 1.5;
+  text-align:  center;
+  /* Visually centered under the three cards */
+  width: 100%;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Slot variant — empty placeholder box for images not yet available */
+.cs-figure--slot {
+  min-height: 260px;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-bg-alt);
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.cs-figure--slot::after {
+  content: 'Image';
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+}
+.cs-figure--slot img { display: none; }
+
+/* Bare variant — image + caption only, no card frame */
+.cs-figure--bare {
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  background-color: transparent;
+}
+.cs-figure--bare img {
+  border-radius: var(--radius-md);
+}
+.cs-figure--bare figcaption {
+  border-top: none;
+  padding: var(--space-3) 0;
+  text-align: center;
+}
+
+/* Centered section header — number + title flush-centered above content */
+.case-section__header--center {
+  text-align: center;
+}
+
+/* ----------------------------------------------------------
+   FIGURE — BALANCED
+   Image matches the natural height of its sibling text column.
+   Requires the parent grid to use align-items: stretch (layout-2col
+   already does this). Do not set a fixed height on this element —
+   height: 100% only works because the grid stretches the cell.
+   ---------------------------------------------------------- */
+.figure-balanced {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  min-height: 0;
+  max-height: 480px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  gap: var(--space-2);
+}
+
+.figure-balanced img {
+  display: block;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center top;
+  border-radius: inherit;
+}
+
+.figure-balanced figcaption {
+  flex-shrink: 0;
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  line-height: 1.4;
+}
+
+@media (max-width: 767px) {
+  .figure-balanced {
+    height: 280px;
+    align-self: auto;
+  }
+}

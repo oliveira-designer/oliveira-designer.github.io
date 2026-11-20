@@ -1,0 +1,98 @@
+/* Hope DS: css/site/footer.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   FOOTER
+   Figma Footer Style=Dark: Background/Neutral/Default surface, Text/Neutral/Default
+   text, Button Inverse. Only shared tokens, no local overrides.
+   ---------------------------------------------------------- */
+.site-footer {
+  /* TODO dark mode: footer surface flips with Neutral tokens, decide when dark mode is created */
+  background-color: var(--color-bg-neutral-default);
+  color: var(--color-text-neutral-default);
+  padding: var(--space-20) 0 var(--space-10);
+  margin-top: var(--space-20);
+  border-top: var(--border-width-accent) solid var(--color-border-accent-default);
+}
+
+.footer__connect {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  max-width: 40rem;
+}
+
+.footer__heading {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-neutral-default);
+}
+
+.footer__lede {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  color: var(--color-text-neutral-default);
+  max-width: 42ch;
+}
+
+.footer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+/* Bottom bar */
+.footer__bottom {
+  margin-top: var(--space-16);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border-strong);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .footer__bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-8);
+  }
+}
+
+.footer__motto {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+  color: var(--color-text-neutral-default);
+}
+
+.footer__heart {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-celebrate);
+}
+
+.footer__heart .icon {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.footer__copy {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  color: var(--color-text-neutral-default);
+  white-space: nowrap;
+}

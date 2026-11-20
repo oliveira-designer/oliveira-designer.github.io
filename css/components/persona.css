@@ -1,0 +1,238 @@
+/* Hope DS: css/components/persona.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Persona card
+   ---------------------------------------------------------- */
+.persona {
+  border: none;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-bg-alt);
+}
+
+.persona__header {
+  display: flex;
+  gap: var(--space-5);
+  padding: var(--space-8);
+  align-items: flex-start;
+  border-bottom: var(--border-thin);
+}
+
+.persona__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--color-border);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--color-text-3);
+}
+
+.persona__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.persona__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--color-text-1);
+  line-height: 1.4;
+}
+
+.persona__role {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  margin-top: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+/* Two-column auto grid: dt in first col, dd in second */
+.persona__meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--space-4);
+  row-gap: var(--space-1);
+  align-items: baseline;
+}
+
+.persona__meta dt {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+}
+
+.persona__meta dd {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+}
+
+/* 2×2 grid of persona attribute sections */
+.persona__body {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .persona__body { grid-template-columns: 1fr 1fr; }
+}
+
+.persona__section {
+  padding: var(--space-6) var(--space-8);
+  border-bottom: var(--border-thin);
+}
+
+.persona__section:last-child { border-bottom: none; }
+
+/* Bio + Goals span full width; Needs + Pains share the last row */
+@media (min-width: 640px) {
+  .persona__section:nth-child(-n+2)      { grid-column: 1 / -1; }
+  .persona__section:nth-child(3)         { border-right: var(--border-thin); }
+  .persona__section:nth-last-child(-n+2) { border-bottom: none; }
+}
+
+.persona__section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-4);
+}
+
+.persona__section-title svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.persona__section ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.persona .persona__section li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.65;
+  color: var(--color-text-2);
+}
+
+.persona__section li::before {
+  content: '–';
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  flex-shrink: 0;
+}
+
+.persona .persona__section p {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--color-text-2);
+  max-width: none;
+}
+
+.persona__goal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .persona__goal-grid { grid-template-columns: 1fr; }
+}
+
+.persona__goal-card {
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  line-height: 1.65;
+  color: var(--color-text-2);
+  text-align: left;
+}
+
+[data-theme="dark"] .persona__goal-card {
+  background-color: var(--color-abyss);
+  color: var(--color-text-1);
+}
+
+.persona__quotes {
+  padding: var(--space-6) var(--space-8);
+  border-top: var(--border-thin);
+}
+
+.persona__quotes-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-5);
+}
+
+.persona__quotes-label svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.persona__quotes-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .persona__quotes-list { grid-template-columns: 1fr; }
+}
+
+.persona .persona__quotes li::before { content: none; }
+
+.persona__quote {
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-accent-tertiary);
+}
+
+.persona__quotes-list .persona__quote:nth-child(4)    { background-color: var(--color-bg-positive-secondary); }
+.persona__quotes-list .persona__quote:nth-child(n+5)  { background-color: var(--color-bg-danger-secondary); }
+
+.persona__quote p {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.65;
+  color: var(--color-text-2);
+  font-style: italic;
+  max-width: none;
+}

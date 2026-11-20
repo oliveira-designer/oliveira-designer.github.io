@@ -1,0 +1,120 @@
+/* Hope DS: css/site/case-hero.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Hero
+   Solid surface, floating header clearance at top, showcase
+   image anchors the bottom of the text block.
+   ---------------------------------------------------------- */
+.case-hero {
+  background: var(--color-bg);
+  color: var(--color-text-1);
+  padding-top: calc(var(--space-24) + var(--space-8));
+  padding-bottom: var(--space-12);
+}
+
+.case-hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin-bottom: var(--space-12);
+  min-width: 0; /* prevents flex children from overflowing their track */
+}
+
+/* Showcase image — spans full container width below the text block */
+.case-hero__showcase-media {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.case-hero__showcase-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.case-hero__overline {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-4);
+}
+
+.case-hero__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-1);
+  margin-bottom: var(--space-4);
+}
+
+.case-hero__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--color-text-2);
+  margin-bottom: var(--space-8);
+}
+
+.case-hero__tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.case-hero__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: var(--space-5);
+  padding-top: var(--space-6);
+  border-top: var(--border-thin);
+}
+
+.case-hero__meta > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: 0;
+  border: none;
+}
+
+.case-hero__meta dt {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+}
+
+.case-hero__meta dd {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+}
+
+.case-hero__visual {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: var(--border-thin);
+  background-color: var(--color-bg-alt);
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-hero__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

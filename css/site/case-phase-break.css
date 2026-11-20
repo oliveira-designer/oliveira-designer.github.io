@@ -1,0 +1,31 @@
+/* Hope DS: css/site/case-phase-break.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Editorial Phase Break
+   Thin structural separator between narrative phases.
+   ---------------------------------------------------------- */
+.case-phase-break {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-16) 0 var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.case-phase-break__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.case-phase-break__rule {
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}

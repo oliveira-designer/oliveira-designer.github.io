@@ -29,13 +29,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { sources as cssSourceList, buildCss, OUTPUT as HOPE_CSS } from './build-css.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = path.join(ROOT, 'docs');
-const CSS_DIR = path.join(ROOT, 'css');
-const SKIP_CSS = new Set(['output.css', 'tailwind.css', 'preflight-nomono.css']);
-const REQUIRED_CSS = ['tokens.css', 'reset.css', 'components.css', 'layout.css', 'animations.css'];
-const BLOCK_SOURCES = ['components.css', 'layout.css'];
+// CSS source files (not the generated css/hope.css, not Tailwind output): the token, reset, component and
+// site files listed by scripts/build-css.mjs, plus css/auth.css (loaded by js/auth.js).
+const CSS_SOURCES = [...cssSourceList(), 'css/auth.css'];
+const readCss = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
+const REQUIRED_CSS = ['hope.css'];
+const isBlockSource = (rel) => rel.startsWith('css/components/') || rel.startsWith('css/site/');
 
 const errors = [];
 const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
@@ -71,10 +74,15 @@ const lineOf = (text, index) => text.slice(0, index).split('\n').length;
 /* ---- CSS class inventory ---- */
 const siteClasses = new Set();
 const blockSource = new Map(); // block -> file
-for (const f of fs.readdirSync(CSS_DIR).filter((n) => n.endsWith('.css') && !SKIP_CSS.has(n))) {
-  const cls = classesIn(fs.readFileSync(path.join(CSS_DIR, f), 'utf8'));
+/* ---- css/hope.css must be up to date with its sources ---- */
+if (!fs.existsSync(HOPE_CSS) || fs.readFileSync(HOPE_CSS, 'utf8').replace(/\r\n/g, '\n') !== buildCss()) {
+  errors.push('css/hope.css is out of date with its source files (run npm run css:build)');
+}
+
+for (const f of CSS_SOURCES) {
+  const cls = classesIn(readCss(f));
   cls.forEach((c) => siteClasses.add(c));
-  if (BLOCK_SOURCES.includes(f)) {
+  if (isBlockSource(f)) {
     for (const c of cls) {
       if (/^(is|has|js)-/.test(c) || /^reveal/.test(c) || /^animate-/.test(c)) continue;
       const block = c.split('__')[0].split('--')[0];
@@ -263,10 +271,7 @@ if (new Set(headerValues).size > 1) {
       errors.push(`docs/data/components-map.json is not valid JSON: ${err.message}`);
     }
     if (map) {
-      const cssText = fs
-        .readdirSync(CSS_DIR)
-        .filter((n) => n.endsWith('.css') && !SKIP_CSS.has(n))
-        .map((n) => fs.readFileSync(path.join(CSS_DIR, n), 'utf8'))
+      const cssText = CSS_SOURCES.map(readCss)
         .join('\n')
         .replace(/\/\*[\s\S]*?\*\//g, '')
         .replace(/\s+/g, ' ');
@@ -310,11 +315,11 @@ const withDemo = blocks.filter((b) => demoBlocks.has(b));
 const without = blocks.filter((b) => !demoBlocks.has(b));
 
 console.log(`docs pages checked: ${pages.length} (${pages.filter(isComponentPage).length} component pages, ${demoCount} live demos)`);
-console.log(`CSS blocks (components.css + layout.css): ${blocks.length}; with a demo: ${withDemo.length}; without: ${without.length}`);
+console.log(`CSS blocks (css/components + css/site): ${blocks.length}; with a demo: ${withDemo.length}; without: ${without.length}`);
 if (without.length) {
   const byFile = {};
   for (const b of without) (byFile[blockSource.get(b)] ||= []).push(b);
-  for (const [f, list] of Object.entries(byFile)) console.log(`  no demo, css/${f} (${list.length}): ${list.join(', ')}`);
+  for (const [f, list] of Object.entries(byFile)) console.log(`  no demo, ${f} (${list.length}): ${list.join(', ')}`);
 }
 
 if (errors.length) {

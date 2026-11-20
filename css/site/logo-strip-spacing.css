@@ -1,0 +1,11 @@
+/* Hope DS: css/site/logo-strip-spacing.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   LOGO STRIP — Section-specific spacing overrides
+   Base component styles live in components.css. The logo carousel now
+   lives inside the Hero (see .hero .logo-strip above); #companies,
+   .companies__row and .companies__label were the wrapper for its old
+   standalone section and are no longer used anywhere.
+   ---------------------------------------------------------- */

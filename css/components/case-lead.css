@@ -1,0 +1,30 @@
+/* Hope DS: css/components/case-lead.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Lead split (text + image side by side)
+   ---------------------------------------------------------- */
+
+.case-lead {
+  display: flex;
+  align-items: center;
+}
+.case-lead .case-lead__text {
+  font-size: var(--fs-body-xl);
+  margin-bottom: 0;
+}
+
+.case-lead__split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .case-lead__split { grid-template-columns: 1fr; }
+}
+/* Slightly larger font size within the split context */
+.case-lead__split .case-lead__text {
+  font-size: var(--fs-body-xl);
+}

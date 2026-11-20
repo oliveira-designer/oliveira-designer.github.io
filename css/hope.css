@@ -1,0 +1,4641 @@
+/* ============================================================
+   HOPE DESIGN SYSTEM: hope.css
+   GENERATED FILE. Do not edit by hand.
+   Built by scripts/build-css.mjs (npm run css:build) from 38 source files:
+   tokens, reset, components/*, site/*. Edit the sources, then rebuild.
+   css/auth.css (loaded by js/auth.js) and css/output.css (Tailwind) stay separate.
+   ============================================================ */
+
+/* ===== css/tokens.css ===== */
+/* ============================================================
+   HOPE DESIGN SYSTEM — tokens.css
+   v2.7.0 · November 2026
+   Source of truth: Figma Foundation for VALUES; DESIGN.md +
+   DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
+   ============================================================ */
+
+:root {
+  /* ----------------------------------------------------------
+     COLORS — Solar Family
+     Warm, luminous, hopeful
+     ---------------------------------------------------------- */
+  --color-aurora:   #FEF8E0;
+  --color-daybreak: #FAE19A;
+  --color-solar:    #F5C842; /* ★ BRAND ACCENT */
+  --color-amber:    #C49A1F;
+  --color-dusk:     #8B6914;
+
+  /* ----------------------------------------------------------
+     COLORS — Anchor Family
+     Cool, precise, structural
+     ---------------------------------------------------------- */
+  --color-sky:      #E8F0F9;
+  --color-tide:     #8CB4E0;
+  --color-anchor:   #1C5FA8; /* ★ BRAND ACCENT */
+  --color-deep:     #144278;
+  --color-abyss:    #1A1A2E;
+
+  /* ----------------------------------------------------------
+     COLORS — Neutrals
+     ---------------------------------------------------------- */
+  --color-cloud:       #FFFFFF;
+  --color-surface:     #F7F7F9;
+  --color-border-base: #E2E2E8;
+  --color-muted:       #5F5F6E; /* adjusted for WCAG AA */
+  --color-shadow:      #3D3D45;
+  --color-ink:         #0D0D0F;
+
+  /* ----------------------------------------------------------
+     COLORS — Functional
+     ---------------------------------------------------------- */
+  --color-success:      #4A9F6B;
+  --color-bg-positive-secondary: rgba(74, 159, 107, 0.12);  /* 8.6:1 on white */
+  --color-warning:      #C47A1F;  /* Functional primitive only. The Warning component family uses Solar (13/11/2026) */
+  --color-error:        #B83434;
+  --color-bg-danger-secondary:   rgba(184, 52, 52, 0.10);   /* 8.3:1 on white */
+  --color-bg-accent-tertiary:  var(--color-aurora);        /* 9.1:1 on white */
+  --color-info:        #634590;
+  --color-celebrate:   #F5A8C0;
+
+  /* Contrast variants (Figma Foundation v2.2): same hue as the
+     functional color, adjusted so text passes WCAG 1.4.3 (4.5:1). */
+  --color-success-deep: #2A7347;  /* success text on light: 5.77:1 on white */
+  --color-warning-deep: #94540A;  /* warning text on light: 5.94:1 on white */
+  --color-error-light:  #F28585;  /* error text/border on dark: 6.88:1 on abyss */
+  --color-info-light:   #B89EDB;  /* info text on dark: 7.3:1 on abyss */
+  --color-error-deep:   #7a2020;  /* Destructive hover fill (Figma Core, Button) */  /* TODO dark mode */
+
+  /* ----------------------------------------------------------
+     COLORS — Night Family (dark-mode ramp)
+     ---------------------------------------------------------- */
+  --color-night-800:          #242438;
+  --color-night-700:          #2E2E40;
+  --color-night-600:          #4A4A60;
+  --color-night-400:          #9090A8;
+  --color-night-300:          #B4B4C8;
+  --color-night-accent-hover: #FFD96B;
+  --color-night-aurora-soft:  #2A2618;
+  --color-night-success-soft: #162418;
+  --color-night-error-soft:   #261616;
+  --color-night-500:          #69697E;  /* disabled text/icon/stroke and control outline in dark mode */
+  --color-night-warning-soft: #2A1E10;
+  --color-night-info-soft:    #1E182A;
+
+  /* ----------------------------------------------------------
+     SURFACES — Light mode (default)
+     ---------------------------------------------------------- */
+  --color-bg:            var(--color-cloud);
+  --color-bg-alt:        var(--color-surface);
+  --color-bg-inverse:    var(--color-abyss);
+  --color-border:        var(--color-border-base);
+  --color-border-strong: var(--color-muted);
+  --color-text-1:        var(--color-ink);
+  --color-text-2:        var(--color-shadow);
+  --color-text-3:        var(--color-muted);
+  --color-text-inverse:  var(--color-cloud);
+  --color-text-brand-default:          var(--color-anchor);
+  --color-text-brand-hover:    var(--color-deep);
+  --color-border-focus-ring:    var(--color-anchor);
+  --color-accent:               var(--color-anchor);
+
+  /* ----------------------------------------------------------
+     STATE + STATUS TOKENS — Light mode (Figma Foundation v2.2)
+     Disabled comes from tokens, never from opacity.
+     ---------------------------------------------------------- */
+  --color-bg-disabled-default:       var(--color-border-base);
+  --color-text-disabled-default:     var(--color-night-400);
+  --color-text-disabled-inverse:  var(--color-night-400);
+  --color-border-disabled-default:   var(--color-border-base);
+
+  --color-bg-scrim: rgba(13, 13, 15, 0.5);  /* behind modals/drawers; not the glass overlay */
+  --color-bg-scrim-strong: rgba(13, 13, 15, 0.88);  /* image focus (Lightbox); same in light and dark */
+
+  /* Warning is in the Solar family (Figma, 13/11/2026). Dusk on Aurora is 4.78:1.
+     Amber on Aurora is about 2.5:1: accepted, the border is decorative. */
+  --color-bg-warning-default:       var(--color-solar);
+  --color-bg-warning-secondary:  var(--color-aurora);
+  --color-text-warning-default:     var(--color-dusk);
+  --color-text-warning-inverse:  var(--color-ink);
+  --color-border-warning-default:   var(--color-amber);
+
+  --color-bg-info-default:          var(--color-info);
+  --color-bg-info-secondary:     rgba(99, 69, 144, 0.10);
+  --color-text-info-default:        var(--color-info);
+  --color-text-info-inverse:     var(--color-cloud);
+  --color-border-info-default:      var(--color-info);
+
+  --color-text-positive-default:     var(--color-success-deep);
+  --color-text-danger-default:       var(--color-error);
+  --color-border-positive-default:   var(--color-success);
+  --color-border-danger-default:     var(--color-error);
+
+  /* ----------------------------------------------------------
+     ICON COLOR — Figma "Hope · Icon" / Icon/Color (10 modes).
+     Each role aliases a semantic text token, so dark mode follows
+     automatically. Icons still inherit currentColor by default;
+     use .icon--<role> (components.css) to pick a role.
+     ---------------------------------------------------------- */
+  --icon-color-default:     var(--color-text-1);
+  --icon-color-secondary:   var(--color-text-2);
+  --icon-color-tertiary:    var(--color-text-3);
+  --icon-color-neutral:     var(--color-text-neutral-default);  /* Figma mode "Neutral" (was "On Neutral") */
+  --icon-color-brand-hover: var(--color-text-brand-hover);
+  --icon-color-disabled:    var(--color-text-disabled-default);
+  --icon-color-danger:      var(--color-text-danger-default);
+  --icon-color-positive:    var(--color-text-positive-default);
+  --icon-color-warning:     var(--color-text-warning-default);
+  --icon-color-info:        var(--color-text-info-default);
+
+  /* ----------------------------------------------------------
+     COMPONENT TOKENS — Light mode (default)
+     ---------------------------------------------------------- */
+  --color-bg-neutral-default:     var(--color-ink);
+  --color-bg-neutral-hover:       var(--color-shadow);
+  --color-text-neutral-default:   var(--color-cloud);
+
+  --color-bg-brand-secondary:     var(--color-sky);
+  --color-bg-brand-tertiary:      rgba(232, 240, 249, 0.40);  /* Sky at 40%. Reserved: no component uses it yet */
+  --color-text-brand-secondary:   var(--color-deep);
+
+  --color-bg-accent-secondary:    var(--color-aurora);
+  --color-text-accent-default:  var(--color-dusk);
+
+  --color-bg-neutral-secondary:   var(--color-night-800);  /* was Surface; Foundation rename 2026-11-20 */
+  --color-text-neutral-secondary: var(--color-night-300);  /* was Muted; Foundation rename 2026-11-20 */
+
+  --color-bg-brand-strong:        var(--color-abyss);
+  --color-border-accent-default:   var(--color-solar);
+  --color-text-brand-strong-inverse:   var(--color-cloud);
+
+  --color-bg-icon-chip: var(--color-sky);
+
+  /* ----------------------------------------------------------
+     FOUNDATION RENAME 2026-11-20 — new semantic tokens
+     Grammar: Property/Role/Level[ Modifier]. Level: Default, Secondary,
+     Tertiary, Strong. Inverse = text/icon/border on the role's contrasting
+     fill. Values below are the Light value; dark mode is parked, so the
+     dark block does not override them yet unless stated.
+     ---------------------------------------------------------- */
+  /* Neutral */
+  --color-bg-neutral-tertiary:    var(--color-night-700);  /* TODO dark mode */
+  --color-bg-neutral-inverse:     #ffffff;
+  --color-text-neutral-tertiary:  var(--color-night-400);  /* TODO dark mode */
+  --color-text-neutral-inverse:   #0d0d0f;
+  --color-border-neutral-default: var(--color-night-700);  /* TODO dark mode */
+  --color-border-neutral-strong:  var(--color-night-500);  /* TODO dark mode */
+
+  /* Brand. Light and Dark values from the Foundation snapshot of 2026-11-20 (dark overrides in [data-theme="dark"]) */
+  --color-bg-brand-default:       var(--color-anchor);
+  --color-bg-brand-hover:         var(--color-deep);
+  --color-text-brand-inverse:     var(--color-cloud);
+
+  /* Accent */
+  --color-bg-accent-default:      var(--color-solar);
+  --color-bg-accent-hover:        var(--color-amber);
+  --color-text-accent-inverse:    var(--color-ink);
+
+  /* Danger and Positive */
+  --color-bg-danger-default:      var(--color-error);
+  --color-bg-danger-hover:        var(--color-error-deep); /* TODO dark mode */
+  --color-text-danger-inverse:    var(--color-cloud);
+  --color-bg-positive-default:    var(--color-success);
+  --color-text-positive-inverse:  var(--color-cloud);
+
+  /* Focus ring (outline, all interactive components) */
+  --focus-ring-width: 2px;
+  --focus-ring-gap:   2px;
+
+  /* ----------------------------------------------------------
+     DEPRECATED ALIASES (2026-11, remove in a later MAJOR).
+     Old names keep working and point at the new names. Do not use them in
+     new code. Defined only in :root: the dark block overrides the new names
+     on the same element, so the aliases follow dark mode.
+     ---------------------------------------------------------- */
+  --color-text-on-neutral:           var(--color-text-neutral-default);       /* deprecated 2026-11, use --color-text-neutral-default */
+  --color-text-brand-primary:        var(--color-text-brand-default);         /* deprecated 2026-11, use --color-text-brand-default */
+  --color-text-brand-primary-hover:  var(--color-text-brand-hover);           /* deprecated 2026-11, use --color-text-brand-hover */
+  --color-text-on-brand-strong:      var(--color-text-brand-strong-inverse);  /* deprecated 2026-11, use --color-text-brand-strong-inverse */
+  --color-bg-accent-soft:            var(--color-bg-accent-tertiary);         /* deprecated 2026-11, use --color-bg-accent-tertiary */
+  --color-text-accent-secondary:     var(--color-text-accent-default);        /* deprecated 2026-11, use --color-text-accent-default */
+  --color-border-accent-strong:      var(--color-border-accent-default);      /* deprecated 2026-11, use --color-border-accent-default */
+  --color-bg-danger-soft:            var(--color-bg-danger-secondary);        /* deprecated 2026-11, use --color-bg-danger-secondary */
+  --color-text-error:                var(--color-text-danger-default);        /* deprecated 2026-11, use --color-text-danger-default */
+  --color-border-error:              var(--color-border-danger-default);      /* deprecated 2026-11, use --color-border-danger-default */
+  --color-bg-positive-soft:          var(--color-bg-positive-secondary);      /* deprecated 2026-11, use --color-bg-positive-secondary */
+  --color-text-success:              var(--color-text-positive-default);      /* deprecated 2026-11, use --color-text-positive-default */
+  --color-border-success:            var(--color-border-positive-default);    /* deprecated 2026-11, use --color-border-positive-default */
+  --color-bg-warning:                var(--color-bg-warning-default);         /* deprecated 2026-11, use --color-bg-warning-default */
+  --color-bg-warning-soft:           var(--color-bg-warning-secondary);       /* deprecated 2026-11, use --color-bg-warning-secondary */
+  --color-text-warning:              var(--color-text-warning-default);       /* deprecated 2026-11, use --color-text-warning-default */
+  --color-text-on-warning:           var(--color-text-warning-inverse);       /* deprecated 2026-11, use --color-text-warning-inverse */
+  --color-border-warning:            var(--color-border-warning-default);     /* deprecated 2026-11, use --color-border-warning-default */
+  --color-bg-info:                   var(--color-bg-info-default);            /* deprecated 2026-11, use --color-bg-info-default */
+  --color-bg-info-soft:              var(--color-bg-info-secondary);          /* deprecated 2026-11, use --color-bg-info-secondary */
+  --color-text-info:                 var(--color-text-info-default);          /* deprecated 2026-11, use --color-text-info-default */
+  --color-text-on-info:              var(--color-text-info-inverse);          /* deprecated 2026-11, use --color-text-info-inverse */
+  --color-border-info:               var(--color-border-info-default);        /* deprecated 2026-11, use --color-border-info-default */
+  --color-bg-disabled:               var(--color-bg-disabled-default);        /* deprecated 2026-11, use --color-bg-disabled-default */
+  --color-text-disabled:             var(--color-text-disabled-default);      /* deprecated 2026-11, use --color-text-disabled-default */
+  --color-text-on-disabled:          var(--color-text-disabled-inverse);      /* deprecated 2026-11, use --color-text-disabled-inverse */
+  --color-border-disabled:           var(--color-border-disabled-default);    /* deprecated 2026-11, use --color-border-disabled-default */
+  --icon-color-on-neutral:           var(--icon-color-neutral);               /* deprecated 2026-11, use --icon-color-neutral */
+
+  /* ----------------------------------------------------------
+     MATERIAL — unified glassmorphism recipe
+     Figma effect styles: Glass/rest = --blur-glass +
+     --color-material-shadow-drop + inset highlight; Glass/hover =
+     --blur-glass + --color-material-shadow-drop-hover + inset highlight.
+     ---------------------------------------------------------- */
+  --blur-glass: blur(24px) saturate(1.5);
+  --color-material-bg:                rgba(255, 255, 255, 0.60);
+  --color-material-border:            rgba(255, 255, 255, 0.70);
+  --color-material-border-hover:      rgba(255, 255, 255, 0.85);
+  --color-material-shadow-drop:       0 4px 16px rgba(13, 13, 15, 0.06);
+  --color-material-shadow-drop-hover: 0 12px 32px rgba(13, 13, 15, 0.10);
+  --color-material-shadow-inset:      rgba(255, 255, 255, 0.90);
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY
+     ---------------------------------------------------------- */
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Type scale. Fluid (clamp): display, h1, h2 and body-xl only.
+     Everything else is fixed, as in the Figma size/* variables. */
+  --fs-display: clamp(36px, 5vw, 52px);
+  --fs-h1:      clamp(26px, 3.5vw, 32px);
+  --fs-h2:      clamp(18px, 2.5vw, 22px);
+  --fs-h3:      16px;                       /* Figma Heading/H3: fixed, not fluid */
+  --fs-body:    16px;                       /* Figma Body: fixed, not fluid */
+  --fs-body-sm: 13px;                       /* Figma Body sm: fixed, not fluid */
+  --fs-body-xl: clamp(16px, 1.7vw, 19px);   /* Figma Body xl (size/lead, 19px Desktop / 16px Mobile, tracking -1%): case lead text. Figma "Body lg" (19px, no tracking) exists only in Figma, kept on purpose without a CSS token */
+  --fs-body-xs: 11px;                       /* Figma Body xs: fixed, not fluid */
+  --fs-label:   11px;                       /* Figma Label caps: fixed, not fluid */
+
+  /* ----------------------------------------------------------
+     SPACING — 4px base scale
+     ---------------------------------------------------------- */
+  --space-none: 0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Semantic spacing tokens */
+  --gap-tight:     var(--space-2);
+  --gap-element:   var(--space-4);
+  --gap-component: var(--space-6);
+  --gap-section:   var(--space-12);
+  --gap-page:      var(--space-24);
+
+  /* ----------------------------------------------------------
+     CONTENT WIDTH — shared cap for section inner content.
+     Gutter formula (see .container in layout.css): width shrinks
+     to keep exactly --space-20 (80px) on each side up to the
+     width where the cap takes over, so the minimum gutter never
+     drops below 80px on any desktop width.
+     ---------------------------------------------------------- */
+  --content-max-width: 1280px;
+
+  /* ----------------------------------------------------------
+     HEADER HEIGHT — fixed height of the sticky site header.
+     Kept as an explicit token (not left to content auto-sizing)
+     so anything that needs to line up flush against the header's
+     bottom edge, like the Featured Projects sticky section header,
+     can reference the exact same value instead of guessing at it.
+     ---------------------------------------------------------- */
+  --header-height: 64px;
+
+  /* ----------------------------------------------------------
+     BORDERS & RADIUS
+     ---------------------------------------------------------- */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-pill: 999px;
+
+  /* Stroke scale (Figma Stroke/*). Intentional name offset: CSS "thin" is
+     Figma Stroke/hairline (0.8px), CSS "normal" and "strong" are Figma
+     Stroke/thin (1px). Strength of --border-strong comes from colour. */
+  --border-thin:   0.8px solid var(--color-border);
+  --border-width-normal: 1px;  /* width alone, for calc(); --border-normal is a shorthand and cannot be used inside calc() */
+  --border-normal: var(--border-width-normal) solid var(--color-border);
+  --border-width-accent: 3px;  /* Figma Stroke/accent: width alone, for the accent borders (footer top border); same pattern as --border-width-normal */
+  --border-strong: 1px solid var(--color-border-strong);
+
+  /* ----------------------------------------------------------
+     SHADOWS
+     ---------------------------------------------------------- */
+  --shadow-sm:    0 1px 3px rgba(13, 13, 15, 0.06);
+  --shadow-md:    0 4px 12px rgba(13, 13, 15, 0.08);
+  --shadow-lg:    0 8px 32px rgba(13, 13, 15, 0.10);
+  --shadow-focus: 0 0 0 3px var(--color-border-focus-ring);  /* deprecated 2026-11: focus is now an outline, see --focus-ring-width and --focus-ring-gap */
+
+  /* ----------------------------------------------------------
+     MOTION
+     ---------------------------------------------------------- */
+  --duration-instant:    0ms;
+  --duration-fast:     100ms;
+  --duration-normal:   150ms;
+  --duration-slow:     250ms;
+  --duration-slower:   400ms;
+  --duration-deliberate: 600ms;
+
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ----------------------------------------------------------
+     Z-INDEX
+     ---------------------------------------------------------- */
+  --z-base:    0;
+  --z-raised:  1;
+  --z-sticky:  10;
+  --z-overlay: 100;
+  --z-modal:   200;
+
+  /* ----------------------------------------------------------
+     GLOBAL URLS
+     ---------------------------------------------------------- */
+  --resume-url: "https://drive.google.com/file/d/14kBZ0YikjJjGseS0qQdrOuB4ix4UHtkm/view?usp=drive_link";
+}
+
+/* ----------------------------------------------------------
+   DARK MODE — enabled via data-theme="dark"
+   ---------------------------------------------------------- */
+[data-theme="dark"] {
+  --color-bg-accent-tertiary:   var(--color-night-aurora-soft);   /* 7.7:1 on #B4B4C8 */
+  --color-bg-positive-secondary: var(--color-night-success-soft);  /* 8.3:1 on #B4B4C8 */
+  --color-bg-danger-secondary:   var(--color-night-error-soft);    /* 8.9:1 on #B4B4C8 */
+
+  --color-bg:            var(--color-abyss);
+  --color-bg-alt:        var(--color-night-800);
+  --color-bg-inverse:    var(--color-cloud);
+  --color-border:        var(--color-night-700);
+  --color-border-strong: var(--color-night-500);  /* 3.19:1 on abyss (WCAG 1.4.11) */
+  --color-text-1:        var(--color-cloud);
+  --color-text-2:        var(--color-night-300);
+  --color-text-3:        var(--color-night-400);  /* WCAG AA: 4.6:1 on dark mode cards */
+  --color-text-inverse:  var(--color-ink);
+  --color-text-brand-default:          var(--color-solar);
+  --color-text-brand-hover:    var(--color-night-accent-hover);
+  --color-border-focus-ring:    var(--color-solar);
+  --color-accent:               var(--color-solar);
+
+  --color-bg-disabled-default:       var(--color-night-700);
+  --color-text-disabled-default:     var(--color-night-500);
+  --color-text-disabled-inverse:  var(--color-night-500);
+  --color-border-disabled-default:   var(--color-night-700);
+
+  --color-bg-scrim: rgba(0, 0, 0, 0.65);
+
+  --color-bg-warning-secondary:  var(--color-night-aurora-soft);
+  --color-text-warning-default:     var(--color-solar);
+  --color-bg-info-secondary:     var(--color-night-info-soft);
+  --color-text-info-default:        var(--color-info-light);
+  --color-text-positive-default:     var(--color-success);
+  --color-text-danger-default:       var(--color-error-light);
+  --color-border-danger-default:     var(--color-error-light);
+
+  --color-bg-neutral-default:     var(--color-cloud);
+  --color-bg-neutral-hover:       var(--color-border-base);
+  --color-text-neutral-default:   var(--color-ink);
+
+  --color-bg-neutral-inverse:     #0d0d0f;
+  --color-text-neutral-inverse:   #ffffff;
+
+  /* Foundation 2026-11-20 Dark values (Semantic collection, Dark mode) */
+  --color-bg-brand-default:       var(--color-tide);
+  --color-bg-brand-hover:         var(--color-anchor);
+  --color-text-brand-inverse:     var(--color-ink);
+  --color-bg-accent-default:      var(--color-daybreak);
+  --color-bg-accent-hover:        var(--color-solar);
+  --color-text-accent-inverse:    var(--color-ink);
+  --color-bg-danger-default:      var(--color-night-error-soft);
+  --color-bg-positive-default:    var(--color-night-success-soft);
+  --color-text-positive-inverse:  var(--color-cloud);
+  --color-text-danger-inverse:    var(--color-cloud);
+
+  --color-bg-brand-secondary:     rgba(28, 95, 168, 0.2);
+  --color-bg-brand-tertiary:      rgba(28, 95, 168, 0.15);   /* Anchor at 15%. Reserved */
+  --color-text-brand-secondary:   var(--color-tide);
+
+  --color-bg-accent-secondary:    rgba(245, 200, 66, 0.15);
+  --color-text-accent-default:  var(--color-solar);
+
+  --color-bg-neutral-secondary:   var(--color-night-800);
+  --color-text-neutral-secondary: var(--color-night-300);
+
+  --color-bg-icon-chip: rgba(245, 200, 66, 0.14);
+
+  --color-material-bg:                rgba(26, 26, 46, 0.52);
+  --color-material-border:            rgba(74, 74, 96, 0.32);
+  --color-material-border-hover:      rgba(245, 200, 66, 0.30);
+  --color-material-shadow-drop:       0 4px 16px rgba(0, 0, 0, 0.22);
+  --color-material-shadow-drop-hover: 0 12px 32px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(245, 200, 66, 0.10);
+  --color-material-shadow-inset:      rgba(255, 255, 255, 0.05);
+}
+
+/* ----------------------------------------------------------
+   REDUCED MOTION — respects system preference
+   ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:       0.01ms !important;
+    animation-iteration-count: 1     !important;
+    transition-duration:      0.01ms !important;
+    scroll-behavior:          auto   !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   REDUCED TRANSPARENCY — frosts glass surfaces to solid,
+   drops blur. Overrides the Material recipe tokens (css/tokens.css
+   §COMPONENT TOKENS) so every glass surface (site header, case
+   cards, result cards, metric cards) degrades consistently from
+   one place. Placed after [data-theme="dark"] so it wins the
+   cascade in both themes.
+   ---------------------------------------------------------- */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --blur-glass:                  none;
+    --color-material-bg:           var(--color-cloud);
+    --color-material-border:       var(--color-border-base);
+    --color-material-border-hover: var(--color-border-strong);
+  }
+  [data-theme="dark"] {
+    --blur-glass:                  none;
+    --color-material-bg:           var(--color-night-800);
+    --color-material-border:       var(--color-night-700);
+    --color-material-border-hover: var(--color-night-600);
+  }
+}
+
+/* ===== css/reset.css ===== */
+/* ============================================================
+   HOPE DESIGN SYSTEM — reset.css
+   v1.4 · May 2026
+   Requires: tokens.css (loaded first)
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   BOX MODEL
+   ---------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ----------------------------------------------------------
+   HTML / BODY
+   ---------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  /* Prevent horizontal scroll/overflow.
+     hidden is the widely-supported fallback; clip is preferred because
+     it does not create a scroll container (so position:sticky keeps
+     working). Browsers that support clip ignore the hidden line above. */
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--color-text-1);
+  background-color: var(--color-bg);
+  transition:
+    background-color var(--duration-slower) var(--ease-out),
+    color            var(--duration-slower) var(--ease-out);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent any rogue element from creating horizontal scroll.
+     hidden is the fallback; clip is preferred (doesn't break sticky). */
+  overflow-x: hidden;
+  overflow-x: clip;
+  /* Disable text selection globally */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Restore selection for readable content and form fields */
+p, h1, h2, h3, h4, h5, h6,
+li, td, th, dt, dd,
+blockquote, pre, code,
+figcaption, label, span, a,
+input, textarea, select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* ----------------------------------------------------------
+   BASE ELEMENTS
+   ---------------------------------------------------------- */
+img, svg, video, canvas, audio, iframe, embed, object {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--color-text-brand-default);
+  text-decoration: none;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+a:hover { color: var(--color-text-brand-hover); }
+a:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+  border-radius: var(--radius-xs);
+}
+
+ul, ol { list-style: none; }
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+button:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+  border-radius: var(--radius-xs);
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+p { max-width: 70ch; }
+
+/* ----------------------------------------------------------
+   ACCESSIBILITY
+   ---------------------------------------------------------- */
+
+/* Skip link — visible on focus only */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  z-index: var(--z-modal);
+  background-color: var(--color-bg);
+  color: var(--color-text-1);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  border: var(--border-strong);
+  transition: top var(--duration-normal) var(--ease-out);
+}
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* Visually hidden — accessible to screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ----------------------------------------------------------
+   TYPOGRAPHY UTILITIES
+   ---------------------------------------------------------- */
+.text-display {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.text-h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.text-h3 {
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.text-body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+}
+
+.text-body-sm {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+}
+
+.text-label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.text-mono {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+}
+
+/* Text colors */
+.text-primary   { color: var(--color-text-1); }
+.text-secondary { color: var(--color-text-2); }
+.text-tertiary  { color: var(--color-text-3); }
+.text-solar     { color: var(--color-solar);  }
+.text-anchor    { color: var(--color-anchor); }
+
+/* ----------------------------------------------------------
+   ENTRANCE ANIMATIONS
+   ---------------------------------------------------------- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.animate-in            { animation: fadeUp var(--duration-slower) var(--ease-out) both; }
+.animate-in--delay-1   { animation-delay: 80ms;  }
+.animate-in--delay-2   { animation-delay: 160ms; }
+.animate-in--delay-3   { animation-delay: 240ms; }
+.animate-in--delay-4   { animation-delay: 320ms; }
+
+/* ===== css/components/badge.css ===== */
+/* Hope DS: css/components/badge.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   BADGES
+   ---------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  line-height: 1.5;
+}
+
+.badge--neutral {
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-2);
+  border: var(--border-thin);
+}
+
+.badge--anchor {
+  background-color: var(--color-bg-brand-secondary);
+  color: var(--color-text-brand-secondary);
+}
+
+.badge--solar {
+  background-color: var(--color-bg-accent-secondary);
+  color: var(--color-text-accent-default);
+}
+
+.badge--success {
+  background-color: rgba(74, 159, 107, 0.12);
+  color: var(--color-text-positive-default);
+}
+
+/* ===== css/components/banner.css ===== */
+/* Hope DS: css/components/banner.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   BANNER
+   ---------------------------------------------------------- */
+.banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-body-sm);
+  font-family: var(--font-body);
+  line-height: 1.4;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: var(--space-6);
+}
+
+.banner--wip {
+  background-color: var(--color-bg-accent-tertiary);
+  color: var(--color-dusk);
+  border: 1px solid var(--color-amber);
+}
+
+[data-theme="dark"] .banner--wip {
+  background-color: var(--color-bg-accent-tertiary);
+  color: var(--color-daybreak);
+  border-color: var(--color-amber);
+}
+
+.banner__icon {
+  flex-shrink: 0;
+  font-size: var(--fs-body);
+}
+
+.banner__text {
+  flex: 1;
+}
+
+/* ===== css/components/brand-list.css ===== */
+/* Hope DS: css/components/brand-list.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   BRAND LIST
+   ---------------------------------------------------------- */
+.brand-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+.brand-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.brand-list li::before {
+  content: "→";
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--color-anchor);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .brand-list {
+  color: var(--color-surface);
+}
+
+[data-theme="dark"] .brand-list li::before {
+  color: var(--color-solar);
+}
+
+/* ===== css/components/button.css ===== */
+/* Hope DS: css/components/button.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   BUTTONS
+   ---------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  line-height: 1.6;
+  /* Every style keeps a 1px border so the box never changes size between
+     states. A style with "no border" sets border-color to its fill (or
+     transparent when it has no fill). */
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  /* Figma Core draws the 1px stroke inside the box (Medium is 12px 20px of padding). In CSS the
+     border adds to the box, so it is subtracted from the padding: 11px 19px plus the 1px border
+     gives the Figma size. */
+  padding: calc(var(--space-3) - var(--border-width-normal)) calc(var(--space-5) - var(--border-width-normal));
+  min-height: 44px;              /* target size >= 44px (WCAG 2.5.5) */
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    color            var(--duration-normal) var(--ease-out),
+    border-color     var(--duration-normal) var(--ease-out),
+    transform        var(--duration-fast)   var(--ease-out);
+}
+/* Focus ring: outline for every interactive component. The radius is set
+   again because reset.css button:focus-visible / a:focus-visible would
+   otherwise shrink it to --radius-xs. */
+.btn:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+  border-radius: var(--radius-md);
+}
+.btn:active        { transform: scale(0.98); }
+
+/* Icons inside a button are 16px and follow the text colour in every state */
+.btn .icon {
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
+
+/* Arrow icon slides right on hover */
+.btn .icon--arrow {
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.btn:hover .icon--arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+  .btn { width: 100%; }
+}
+
+/* Primary */
+.btn--primary {
+  background-color: var(--color-bg-neutral-default);
+  color: var(--color-text-neutral-default);
+  border-color: var(--color-bg-neutral-default);
+}
+.btn--primary:hover {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+  color: var(--color-text-neutral-default);
+}
+
+/* Secondary */
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-text-1);
+  border-color: var(--color-border-strong);
+}
+.btn--secondary:hover {
+  background-color: var(--color-bg-neutral-default);
+  border-color: var(--color-bg-neutral-default);   /* no visible border: equals the fill */
+  color: var(--color-text-neutral-default);
+}
+
+/* Accent (Figma Core: Brand fill) */
+.btn--accent {
+  background-color: var(--color-bg-brand-default);
+  color: var(--color-text-inverse);
+  border-color: var(--color-bg-brand-default);
+}
+.btn--accent:hover {
+  background-color: var(--color-bg-brand-secondary);
+  border-color: var(--color-bg-brand-secondary);
+  color: var(--color-text-brand-hover);
+}
+
+/* Solar (site-only variant, not in Figma Core) */
+.btn--solar {
+  background-color: var(--color-solar);
+  color: var(--color-ink);
+  border-color: var(--color-solar);
+}
+.btn--solar:hover {
+  background-color: var(--color-daybreak);
+  border-color: var(--color-daybreak);
+  color: var(--color-ink);
+}
+
+/* Ghost */
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-text-2);
+  border-color: transparent;
+}
+.btn--ghost:hover {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+  color: var(--color-text-neutral-default);
+}
+
+/* Inverse (Figma Core: neutral-inverse fill, for dark surfaces) */
+.btn--inverse {
+  background-color: var(--color-bg-neutral-inverse);
+  color: var(--color-text-neutral-inverse);
+  border-color: var(--color-bg-neutral-inverse);
+}
+.btn--inverse:hover {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+  color: var(--color-text-neutral-default);
+}
+
+/* Destructive */
+.btn--destructive {
+  background-color: var(--color-error);
+  color: var(--color-text-danger-inverse);
+  border-color: var(--color-error);
+}
+.btn--destructive:hover {
+  background-color: var(--color-bg-danger-hover);
+  border-color: var(--color-bg-danger-hover);
+  color: var(--color-text-danger-inverse);
+}
+
+/* Small Ghost: Ghost colours and states, smaller box, pill radius */
+.btn--ghost-sm {
+  /* Figma 8px 16px with the border inside the box: 7px 15px plus the 1px border. */
+  padding: calc(var(--space-2) - var(--border-width-normal)) calc(var(--space-4) - var(--border-width-normal));
+  border-radius: var(--radius-pill);
+  min-height: 0;
+  background-color: transparent;
+  color: var(--color-text-2);
+  border-color: transparent;
+}
+.btn--ghost-sm:hover {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+  color: var(--color-text-neutral-default);
+}
+.btn--ghost-sm:focus-visible { border-radius: var(--radius-pill); }
+
+/* Disabled state: tokens, never opacity. Specificity is (0,3,0) so it also
+   beats every :hover rule above, whatever the source order. */
+.btn.btn:disabled,
+.btn.btn[aria-disabled="true"] {
+  background-color: var(--color-bg-disabled-default);
+  color: var(--color-text-disabled-inverse);
+  border-color: var(--color-border-disabled-default);
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+}
+.btn--secondary.btn:disabled,
+.btn--secondary.btn[aria-disabled="true"] {
+  background-color: transparent;
+  color: var(--color-text-disabled-default);
+  border-color: var(--color-border-disabled-default);
+}
+.btn--ghost.btn:disabled,
+.btn--ghost.btn[aria-disabled="true"],
+.btn--ghost-sm.btn:disabled,
+.btn--ghost-sm.btn[aria-disabled="true"] {
+  background-color: transparent;
+  color: var(--color-text-disabled-default);
+  border-color: transparent;
+}
+
+/* ===== css/components/case-card.css ===== */
+/* Hope DS: css/components/case-card.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CARDS — Case Studies  (50/50 editorial split)
+   ---------------------------------------------------------- */
+
+/* Card shell — stacked on mobile, horizontal split at 768px */
+.case-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: var(--border-thin);
+  transition:
+    box-shadow    var(--duration-slow)   var(--ease-out),
+    border-color  var(--duration-normal) var(--ease-out);
+}
+@media (min-width: 768px) {
+  .case-card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .case-card__visual {
+    width: 50%;
+    flex-shrink: 0;
+    aspect-ratio: unset;
+    min-height: 320px;
+  }
+
+  .case-card__content {
+    width: 50%;
+    flex: 1;
+  }
+}
+.case-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+/* ── Visual half — full-bleed studio canvas ──────────────── */
+.case-card__visual {
+  overflow: hidden;
+  background-color: var(--color-bg-alt);
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: flex-end;   /* ground the mockup at the bottom */
+  justify-content: center;
+  padding: 0;              /* full-bleed: bg fills all four edges */
+}
+[data-theme="dark"] .case-card__visual {
+  background-color: var(--color-abyss);
+}
+
+.case-card__img--light,
+.case-card__img--dark {
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: bottom center;
+  transition: transform var(--duration-slower) var(--ease-out);
+}
+.case-card:hover .case-card__img--light,
+.case-card:hover .case-card__img--dark {
+  transform: scale(1.04);
+}
+
+/* Visual half as its own link, sibling to the footer's "View case study"
+   button, so the image is clickable without nesting an anchor inside one.
+   display:contents keeps the anchor out of the box tree entirely, so the
+   canvas below stays a direct flex item of .case-card__visual and keeps
+   the exact sizing (flex:1, aspect-ratio, the desktop fixed height) it
+   had before this link wrapped it. */
+.case-card__visual-link {
+  display: contents;
+}
+.case-card__visual-link .case-card__canvas {
+  cursor: pointer;
+}
+.case-card__visual-link:hover .case-card__img--light,
+.case-card__visual-link:hover .case-card__img--dark {
+  transform: scale(1.04);
+  opacity: 0.92;
+}
+
+/* Image visibility — light mode default */
+.case-card__img--light { display: block !important; }
+.case-card__img--dark  { display: none  !important; }
+[data-theme="dark"] .case-card__img--light { display: none  !important; }
+[data-theme="dark"] .case-card__img--dark  { display: block !important; }
+
+/* ── Editorial content half ──────────────────────────────── */
+.case-card__content {
+  background-color: var(--color-bg-alt);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Company eyebrow + title — grouped heading block */
+.case-card__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.case-card__eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+}
+.case-card__status {
+  font-family: var(--font-body);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Project title */
+.case-card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--color-text-1);
+}
+
+/* Capsule discipline tags */
+.case-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.case-card__tag {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-2);
+  background: rgba(13, 13, 15, 0.05);
+  border: 1px solid rgba(13, 13, 15, 0.08);
+  white-space: nowrap;
+}
+[data-theme="dark"] .case-card__tag {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.10);
+}
+
+/* Description prose — margin-top:auto pushes this + metrics + footer to the bottom */
+.case-card__lead {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.70;
+  color: var(--color-text-2);
+  margin-top: auto;
+}
+
+/* Metrics — separated by a subtle rule */
+.case-card__metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: var(--border-normal);
+}
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* no DS token — below 4px scale minimum */
+}
+.metric__value {
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-accent);
+}
+.metric__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  line-height: 1.4;
+}
+
+/* Footer — sits naturally after metrics, no extra push needed */
+.case-card__footer {
+  padding-top: var(--space-4);
+}
+.case-card__action {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  color: var(--color-text-3);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+.case-card__action:hover {
+  color: var(--color-text-1);
+}
+.case-card__action--disabled {
+  color: var(--color-text-disabled-default);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── Desktop: 50/50 side-by-side ────────────────────────── */
+@media (min-width: 768px) {
+  .case-card {
+    grid-template-columns: 1fr 1fr;
+    min-height: 400px;
+  }
+  .case-card__visual {
+    aspect-ratio: auto;
+  }
+
+  /* Flip variant — visual moves to the right */
+  .case-card--flip .case-card__visual  { order: 2; }
+  .case-card--flip .case-card__content { order: 1; }
+}
+
+/* ── Placeholder / Coming Soon variant ──────────────────── */
+.case-card--placeholder {
+  cursor: default;
+}
+.case-card--placeholder:hover {
+  box-shadow: none;
+  border-color: var(--color-border);
+}
+.case-card--placeholder:hover .case-card__img--light,
+.case-card--placeholder:hover .case-card__img--dark {
+  transform: none;
+}
+.case-card--placeholder .case-card__canvas {
+  filter: grayscale(55%);
+  opacity: 0.50;
+}
+.case-card--placeholder .case-card__content {
+  opacity: 0.65;
+}
+.case-card--placeholder .metric__value {
+  color: var(--color-text-3);
+}
+.case-card--placeholder .case-card__tag {
+  opacity: 0.55;
+}
+
+/* ======================================================================
+   CASE CARD — .case-card--glass
+   Full-bleed, flat band per case study (Figma: Portfolio file, node
+   43:3926, adapted to behave like the Hero section). No glass material,
+   no border, no rounded corners, matching Hero's own flat full-width
+   look. Fixed 381px content column at desktop, company/year merged into
+   one meta line, centered tags below the image, impact metrics,
+   content-hugging CTA button.
+   ====================================================================== */
+
+/* ── Outer band — full-bleed width at every breakpoint, matching the
+   Hero/sub-header full-bleed technique: this element's own left/right
+   edges break out of the capped .container to touch the browser edges.
+   --color-bg is the same token Hero uses for its own background; there
+   is no separate per-case color decision recorded anywhere for this
+   section, so all four cards share it. ─────────────────────────────── */
+.case-card--glass {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  background: var(--color-bg);
+  border: none;
+  border-radius: 0;
+  transition: background-color var(--duration-slower) var(--ease-out);
+}
+/* Blocks the base .case-card:hover box-shadow (lower specificity, still
+   matches since this element carries both classes) from showing on a
+   flat full-bleed band that no longer has a shadow-bearing surface. */
+.case-card--glass:hover {
+  box-shadow: none;
+}
+
+/* ── Full viewport height, desktop only, matching how Hero clears the
+   fixed site header (padding-top: var(--header-height)) and fills the
+   screen (min-height: 100dvh). Scoped to the breakpoint where the
+   content column locks to its fixed Figma width and the image gets a
+   fixed height (see below), so tablet and phone keep their existing
+   normal-flow, auto-height stacked layout untouched. ────────────────── */
+@media (min-width: 1024px) {
+  .case-card--glass {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100dvh;
+    padding-top: var(--header-height);
+  }
+
+  /* The first card sits directly below the "Featured Projects" header,
+     not scrolled to on its own, so it does not need this header-
+     clearance padding, or the full-viewport centering that comes with
+     it (that centering leaves extra empty space above the card's
+     visible content, on top of the padding, and that space grows with
+     the viewport's height). Both were stacking with the header's own
+     margin-bottom above, producing a gap far larger than the intended
+     --space-20 and one that changed with browser window height. Later
+     cards keep the full-viewport slide treatment unchanged. */
+  .cases-grid > .case-card:first-child {
+    min-height: 0;
+    padding-top: 0;
+    justify-content: flex-start;
+  }
+}
+
+/* ── Inner content — capped width, standard page gutter (--space-20),
+   centered, holds the visual/content column split. This is what keeps
+   the card's text and image aligned with the rest of the page's content
+   edges (the Featured Projects title above it) now that the outer band
+   itself is full-bleed. ─────────────────────────────────────────────── */
+/* width/padding here matches .container's own mobile-to-desktop
+   formula exactly (--space-6 gutter on mobile, switching to the
+   capped-width-plus-minimum-gutter formula at 768px), instead of
+   using the desktop --space-20 gutter unconditionally. That mismatch
+   was giving the card roughly 56px of extra inset on each side versus
+   the "Featured Projects" title above it, which uses .container. */
+.case-card__inner {
+  width: 100%;
+  max-width: 1120px;
+  padding: 0 var(--space-6);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+@media (min-width: 768px) {
+  .case-card__inner {
+    width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+    max-width: none;
+    padding: 0;
+    flex-direction: row;
+    /* Column gap per Figma (node 43:3926): --space-10 (40px), not the
+       base --space-4 used for the mobile stacked gap. */
+    gap: var(--space-10);
+  }
+
+  /* Content column first (left), visual column second (right), per Figma
+     (node 43:3926). Markup order is visual then content (image column
+     stays first in the DOM for a sane reading order without a visible
+     image), so the swap is done here with order rather than in the
+     HTML. Scoped to this row-layout breakpoint only, the stacked
+     mobile order below it is unaffected. */
+  .case-card--glass .case-card__content {
+    order: 1;
+  }
+  .case-card--glass .case-card__visual {
+    order: 2;
+  }
+}
+
+/* ── Visual column — canvas + tags stacked underneath ────────────────── */
+/* background-color:transparent overrides the base .case-card__visual gray
+   fill (var(--color-bg-alt)). That fill is meant for the base card, where
+   the visual is a padded inset box; here the canvas already fills the
+   column full-bleed, so the base color only ever showed as a gray band
+   behind the tag row below it. The tags sit directly on the page
+   background instead. */
+.case-card--glass .case-card__visual {
+  display: flex;
+  flex-direction: column;
+  /* Overrides the base .case-card__visual align-items:flex-end and
+     justify-content:center (meant for the base card's row layout, where
+     they ground a single mockup image). Left as-is here, both canvas and
+     the tag row below it shrink to their own content width and get
+     pushed to one side instead of spanning the column, which is why the
+     tag row was not actually centered under the image. */
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: var(--space-4);
+  background-color: transparent;
+}
+[data-theme="dark"] .case-card--glass .case-card__visual {
+  background-color: transparent;
+}
+
+/* ── Canvas — full-bleed image panel, no gray inset box ──────────────── */
+/* display:block + position:relative gives a clean stacking context for the
+   full-bleed images. aspect-ratio holds a sensible shape on mobile/tablet;
+   at desktop (see below) it's dropped so the panel fills the card's full
+   height instead, per Figma (node 43:3926 visual column: flex:1, no fixed
+   ratio). */
+.case-card--glass .case-card__canvas {
+  display: block;
+  position: relative;
+  width: 100%;
+  flex: 1;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background:
+    radial-gradient(120% 120% at 18% 8%,  var(--color-sky)    0%, transparent 55%),
+    radial-gradient(120% 120% at 88% 16%, var(--color-aurora)  0%, transparent 52%),
+    linear-gradient(150deg, var(--color-sky) 0%, var(--color-tide) 100%);
+}
+@media (min-width: 768px) {
+  .case-card--glass .case-card__canvas { aspect-ratio: 4 / 3; }
+}
+@media (min-width: 1024px) {
+  /* No aspect-ratio at desktop, and no longer flex:1 (grow to whatever
+     height the row happens to be): a fixed height instead, so the image
+     stops growing or shrinking with content, sized to comfortably fit
+     within the card's own fixed viewport height (min-height: 100dvh
+     minus the fixed header and --space-32 of top/bottom breathing room,
+     see .case-card--glass above). width:100% is explicit, not left to
+     cross-axis stretch alone: with no in-flow content (the images
+     inside are position:absolute), the box has nothing else to size
+     its width from and can otherwise collapse to 0. */
+  .case-card--glass .case-card__canvas {
+    aspect-ratio: unset;
+    width: 100%;
+    height: calc(100dvh - var(--header-height) - var(--space-32));
+    flex: none;
+  }
+}
+[data-theme="dark"] .case-card--glass .case-card__canvas {
+  background:
+    radial-gradient(120% 120% at 15% 0%,  rgba(28, 95, 168, 0.45) 0%, transparent 55%),
+    radial-gradient(120% 120% at 90% 12%, rgba(245, 200, 66, 0.20) 0%, transparent 50%),
+    linear-gradient(150deg, #2A2A42 0%, #1B1B2C 100%);
+}
+
+/* Images fill the full canvas — absolute so height:100% is unambiguous */
+.case-card--glass .case-card__img--light,
+.case-card--glass .case-card__img--dark {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center; /* keep the UI — phone status bar — in view */
+}
+
+/* ── Content stack ──────────────────────────────────────────────────── */
+/* No horizontal padding: with the card's own outer padding gone, this is
+   what keeps the text flush with the card's left edge (and so with the
+   Featured Projects title above it). Top/bottom padding and the gap
+   between children are untouched.
+
+   justify-content: flex-start groups title, meta, description,
+   separator, metrics and button as one tight block and top-aligns that
+   block within the column's full height, so the title lines up with
+   the top of the image beside it. Leftover space from a shorter
+   description (Shell Box, New Relic) collects below the button instead
+   of being split above and below the block. */
+.case-card--glass .case-card__content {
+  background-color: transparent;
+  flex: 1;
+  padding: var(--space-2) 0 var(--space-3);
+  gap:     var(--space-3);
+  justify-content: flex-start;
+}
+/* Desktop: content column locks to the Figma spec's fixed 381px, image
+   column takes the rest. Below this, content and image keep sharing the
+   row 50/50 (existing tablet fallback), since the fixed width is only
+   specified for the desktop frame. Comes after the flex:1 rule above so
+   it wins on equal specificity. */
+@media (min-width: 1024px) {
+  .case-card--glass .case-card__content {
+    width: 381px;
+    flex: 0 0 381px;
+  }
+  .case-card--glass .case-card__visual {
+    flex: 1 1 0%;
+  }
+}
+
+/* ── Title — bold, pipe-separated ───────────────────────────────────── */
+.case-card--glass .case-card__title {
+  font-size:      var(--fs-h2);
+  letter-spacing: -0.01em;
+  line-height:    1.3;
+}
+.case-card__title-sep {
+  margin:      0 calc(var(--space-2) + 2px);
+  color:       var(--color-text-3);
+  font-weight: 400;
+}
+
+/* ── Meta line — muted mono (client · year · discipline) ────────────── */
+.case-card__meta {
+  font-family:    var(--font-body);
+  font-size:      var(--fs-body-sm);
+  letter-spacing: 0.01em;
+  color:          var(--color-text-3);
+  margin-top:     calc(-1 * var(--space-1));
+}
+
+/* Company + year merged into one plain line under the title, per Figma
+   (43:3926): "Raízen • 2026" instead of a separate floating year badge. */
+.case-card--glass .case-card__meta {
+  font-size:  var(--fs-body);
+  color:      var(--color-text-2);
+  margin-top: 0;
+}
+
+/* ── Tags — centered row underneath the canvas, not in the text column ── */
+.case-card--glass .case-card__tags {
+  justify-content: center;
+}
+
+/* ── Lead description — reintroduced below tags ─────────────────────── */
+.case-card--glass .case-card__lead {
+  margin-top:  0;    /* override the base margin-top:auto */
+  font-size:   var(--fs-body);
+  line-height: 1.75;
+  color:       var(--color-text-1);
+}
+/* Clamped to a fixed number of lines, desktop only, matching the card's
+   own fixed viewport height (see .case-card--glass above): the full
+   text stays in the DOM for SEO and screen readers, only the visual
+   display truncates with an ellipsis past this many lines. Same value
+   on every card regardless of how long each case's actual description
+   is, so the row of title, meta, description, separator, metrics and
+   button always takes up the same vertical space next to the image.
+
+   7 lines, measured against the actual available height (content
+   column height minus title, meta, separator, metrics and the tightened
+   button gap, all measured live, not guessed) and against the longest
+   of the four descriptions: Shell Box's full text (not Dotz's, which
+   turned out shorter) wraps to exactly 7 lines at this column width, so
+   7 shows it in full with no truncation and still leaves comfortable
+   slack in the column before the block needs recentring. */
+@media (min-width: 1024px) {
+  .case-card--glass .case-card__lead {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Deliberate accent flip, not a stray duplicate: inside .case-card--glass,
+   dark mode swaps .badge--anchor from its normal Anchor-blue treatment to
+   Solar gold (documented in design-system.html's case-card--glass section).
+   These values match --color-bg-accent-secondary/--color-text-accent-default
+   because that IS what "Solar in dark mode" is — this rule borrows those
+   values to recolor the Ancora badge, it isn't reachable via the shared
+   token (badge--anchor itself stays on brand-secondary/blue everywhere else,
+   e.g. in the plain .case-card and in design-system.html's badge showcase).
+   Same pattern as the Phase 5 --color-accent flip (metric__value,
+   highlight-card h3, etc.) — scope it there if this ever gets consolidated. */
+[data-theme="dark"] .case-card--glass .badge--anchor {
+  background-color: rgba(245, 200, 66, 0.15);
+  color: var(--color-solar);
+}
+
+/* ── Metrics ─────────────────────────────────────────────────────────── */
+.case-card--glass .case-card__metrics {
+  margin-top:  var(--space-2);
+  padding-top: var(--space-4);
+  gap:         var(--space-6);
+  border-top:  var(--border-normal);
+}
+[data-theme="dark"] .case-card--glass .case-card__metrics {
+  border-color: var(--color-border);
+}
+.case-card--glass .metric__value { font-size: var(--fs-h2); }
+
+/* ── Footer ────────────────────────────────────────────────────────── */
+/* Fixed --space-8 (32px) total gap from the metrics row above, per
+   Figma (node 43:3926), not margin-top: auto. The button now stays
+   grouped with the rest of the content as one block (see
+   justify-content: center on .case-card__content above) instead of
+   being pushed to the bottom of the column regardless of how much
+   space is left.
+
+   padding-top is --space-8 minus --space-3, not --space-8 outright:
+   .case-card__content already puts a --space-3 flex gap between every
+   child including this one, so this padding only needs to make up the
+   remaining distance to reach --space-8 total, not add on top of it. */
+.case-card--glass .case-card__footer {
+  padding-top: calc(var(--space-8) - var(--space-3));
+}
+/* Button sizes to its own content (label plus arrow icon), the default
+   .btn behavior (display: inline-flex), left-aligned in the footer. */
+
+/* ===== css/components/case-lead.css ===== */
+/* Hope DS: css/components/case-lead.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Lead split (text + image side by side)
+   ---------------------------------------------------------- */
+
+.case-lead {
+  display: flex;
+  align-items: center;
+}
+.case-lead .case-lead__text {
+  font-size: var(--fs-body-xl);
+  margin-bottom: 0;
+}
+
+.case-lead__split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .case-lead__split { grid-template-columns: 1fr; }
+}
+/* Slightly larger font size within the split context */
+.case-lead__split .case-lead__text {
+  font-size: var(--fs-body-xl);
+}
+
+/* ===== css/components/case-section.css ===== */
+/* Hope DS: css/components/case-section.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Content sections
+   ---------------------------------------------------------- */
+.case-section {
+  padding: var(--space-12) 0;
+  min-width: 0; /* prevent flex item from expanding beyond case-content */
+}
+.case-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.case-section__header {
+  margin-bottom: var(--space-8);
+}
+
+.case-section__number {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-2);
+}
+
+.case-section__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--color-text-1);
+}
+
+.case-section__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--color-text-1);
+  line-height: 1.4;
+}
+
+.case-section__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0; /* prevent overflow from intrinsic-width children */
+}
+
+/* Groups a subtitle + paragraph as a single prose block.
+   Internal gap (8px) is tighter than the outer gap (24px) between items. */
+.case-section__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.case-section__item--bg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-6);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-alt);
+}
+
+.case-section__row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* :where() keeps the scope at specificity 0, so components with their own
+   rule (.skill-card__body, .persona__role, .case-lead__text...) keep their values */
+:where(.case-section__body) p {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--color-text-2);
+  max-width: 100%; /* override global p{max-width:70ch} — let layout control width */
+}
+
+/* Lead paragraph — large intro statement, overrides the base body style */
+.case-lead__text {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-xl);
+  font-weight: 500;
+  color: var(--color-text-1);
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.case-section__body ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.case-section__body ul li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--color-text-2);
+}
+
+/* Em-dash bullet using mono font — matches the design system's typographic voice */
+.case-section__body ul li::before {
+  content: '—';
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  color: var(--color-text-3);
+  flex-shrink: 0;
+}
+
+/* ===== css/components/cs-figure.css ===== */
+/* Hope DS: css/components/cs-figure.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Figure
+   ---------------------------------------------------------- */
+.cs-figure {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: var(--border-normal);
+  background-color: var(--color-bg-alt);
+  text-align: center;
+}
+
+.cs-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  min-height: 180px; /* visible placeholder area while src is empty */
+}
+
+.cs-figure figcaption {
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  border-top: var(--border-thin);
+}
+
+/* Inline results block — glassmorphism metric cards + legend caption */
+.case-section__results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Three equal-width glass cards spanning the full container */
+.case-section__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+@media (max-width: 640px) {
+  .case-section__metrics { grid-template-columns: 1fr; }
+}
+
+/* Individual metric glass card */
+.case-metric-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  /* Glassmorphism — unified Material recipe (Glass/rest), non-interactive so no hover state */
+  background: var(--color-material-bg);
+  -webkit-backdrop-filter: var(--blur-glass);
+          backdrop-filter: var(--blur-glass);
+  border: 1px solid var(--color-material-border);
+  box-shadow:
+    var(--color-material-shadow-drop),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+}
+[data-theme="dark"] .case-metric-card {
+  background: var(--color-material-bg);
+  border-color: var(--color-material-border);
+  box-shadow:
+    var(--color-material-shadow-drop),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+}
+
+/* Highlight card */
+.highlight-card {
+  width: 100%;
+  flex: 1 1 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  background: var(--color-bg-alt);
+}
+
+.highlight-card:hover {
+  transform: translateY(-4px);
+  transition:
+    transform    var(--duration-slow) var(--ease-out),
+    box-shadow   var(--duration-slow) var(--ease-out),
+    border-color var(--duration-slow) var(--ease-out);
+}
+
+.highlight-card h3 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);  /* Figma: Heading/H1 (32px) */
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-accent);
+}
+
+.highlight-card p {
+  font-weight: 700;
+}
+
+/* Legend — more specific selector to win over .case-section__body p */
+.case-section__body .case-section__results-legend {
+  font-family: var(--font-body);
+  font-size:   var(--fs-body-sm);
+  color:       var(--color-text-3);
+  line-height: 1.5;
+  text-align:  center;
+  /* Visually centered under the three cards */
+  width: 100%;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Slot variant — empty placeholder box for images not yet available */
+.cs-figure--slot {
+  min-height: 260px;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-bg-alt);
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.cs-figure--slot::after {
+  content: 'Image';
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+}
+.cs-figure--slot img { display: none; }
+
+/* Bare variant — image + caption only, no card frame */
+.cs-figure--bare {
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  background-color: transparent;
+}
+.cs-figure--bare img {
+  border-radius: var(--radius-md);
+}
+.cs-figure--bare figcaption {
+  border-top: none;
+  padding: var(--space-3) 0;
+  text-align: center;
+}
+
+/* Centered section header — number + title flush-centered above content */
+.case-section__header--center {
+  text-align: center;
+}
+
+/* ----------------------------------------------------------
+   FIGURE — BALANCED
+   Image matches the natural height of its sibling text column.
+   Requires the parent grid to use align-items: stretch (layout-2col
+   already does this). Do not set a fixed height on this element —
+   height: 100% only works because the grid stretches the cell.
+   ---------------------------------------------------------- */
+.figure-balanced {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  min-height: 0;
+  max-height: 480px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  gap: var(--space-2);
+}
+
+.figure-balanced img {
+  display: block;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center top;
+  border-radius: inherit;
+}
+
+.figure-balanced figcaption {
+  flex-shrink: 0;
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  line-height: 1.4;
+}
+
+@media (max-width: 767px) {
+  .figure-balanced {
+    height: 280px;
+    align-self: auto;
+  }
+}
+
+/* ===== css/components/header-status-badge.css ===== */
+/* Hope DS: css/components/header-status-badge.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   HEADER STATUS BADGE — floating construction indicator
+   position: absolute inside .site-header (position: fixed),
+   so it hangs below the pill on the right without disrupting layout.
+   ---------------------------------------------------------- */
+.header__status-badge {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: var(--space-6);
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+
+  font-family: var(--font-body);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+
+  background: rgba(255, 255, 255, 0.70);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--color-text-2);
+  box-shadow: var(--shadow-sm);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] .header__status-badge {
+  background: rgba(26, 26, 46, 0.60);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--color-text-3);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+}
+
+/* Animated amber pulse dot */
+.status-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-amber);
+  flex-shrink: 0;
+  animation: status-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* ===== css/components/icon.css ===== */
+/* Hope DS: css/components/icon.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   ICONS (Phosphor — regular weight, filled silhouette)
+   ---------------------------------------------------------- */
+.icon {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  fill: currentColor;
+}
+
+/* Icon color roles (Figma: Hope · Icon / Icon/Color) */
+.icon--default { color: var(--icon-color-default); }
+.icon--secondary { color: var(--icon-color-secondary); }
+.icon--tertiary { color: var(--icon-color-tertiary); }
+.icon--neutral { color: var(--icon-color-neutral); }
+.icon--on-neutral { color: var(--icon-color-neutral); } /* deprecated 2026-11, use .icon--neutral */
+.icon--brand-hover { color: var(--icon-color-brand-hover); }
+.icon--disabled { color: var(--icon-color-disabled); }
+.icon--danger { color: var(--icon-color-danger); }
+.icon--positive { color: var(--icon-color-positive); }
+.icon--warning { color: var(--icon-color-warning); }
+.icon--info { color: var(--icon-color-info); }
+
+.icon--title {
+  color: var(--color-border-focus-ring);
+}
+
+/* ===== css/components/lightbox.css ===== */
+/* Hope DS: css/components/lightbox.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   LIGHTBOX — full-screen image zoom modal
+   ---------------------------------------------------------- */
+
+/* Zoomable image hint */
+.is-zoomable {
+  cursor: zoom-in;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+.is-zoomable:hover { opacity: 0.88; }
+
+/* Overlay shell — covers the viewport */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  /* Hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity    var(--duration-slow) var(--ease-out),
+    visibility 0s linear           var(--duration-slow);
+}
+.lightbox[hidden] { display: none; }
+
+/* Open state */
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity    var(--duration-slow) var(--ease-out),
+    visibility 0s linear           0s;
+}
+
+/* Frosted dark backdrop */
+.lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg-scrim-strong);
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
+}
+
+/* Content panel — image + caption, animated scale */
+.lightbox__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: min(92vw, 1280px);
+  /* Closed: slightly shrunk and dropped */
+  transform: scale(0.92) translateY(12px);
+  transition: transform var(--duration-slower) var(--ease-out);
+}
+.lightbox.is-open .lightbox__panel {
+  transform: scale(1) translateY(0);
+}
+
+/* Image */
+.lightbox__img {
+  display: block;
+  max-width: 100%;
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.60);
+}
+
+/* Caption */
+.lightbox__caption {
+  font-family: var(--font-body);
+  font-size:   var(--fs-body-sm);
+  color:       rgba(255, 255, 255, 0.55);
+  text-align:  center;
+  max-width:   60ch;
+  line-height: 1.5;
+}
+
+/* Close button — top-right corner of the panel */
+.lightbox__close {
+  position: absolute;
+  top:   calc(-1 * var(--space-10));
+  right: 0;
+  display: grid;
+  place-items: center;
+  width:  36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.80);
+  cursor: pointer;
+  transition:
+    background var(--duration-normal) var(--ease-out),
+    color      var(--duration-normal) var(--ease-out);
+}
+.lightbox__close:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: var(--color-cloud);
+}
+.lightbox__close:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-solar);   /* solar: sits on the dark scrim */
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Reduced-motion: skip the scale, keep the fade */
+@media (prefers-reduced-motion: reduce) {
+  .lightbox__panel { transform: none !important; transition: none !important; }
+}
+
+/* ===== css/components/logo-strip.css ===== */
+/* Hope DS: css/components/logo-strip.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   LOGO STRIP — Infinite ticker carousel
+   ---------------------------------------------------------- */
+
+/* Outer container — clips the scrolling track on both sides */
+.logo-strip {
+  width: 100%;
+  overflow: hidden;
+  padding: var(--space-12) 0;
+}
+
+.logo-strip__label {
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-6);
+}
+
+/* Ticker tunnel — fade-out mask softens both edges */
+.logo-strip__ticker {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  user-select: none;
+  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+/* Scrolling track — each clone fills one full viewport width before looping */
+.logo-strip__track {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-width: 100%;
+  flex-shrink: 0;
+  gap: var(--space-24);
+  padding-right: var(--space-24); /* prevents the visible jump at loop reset */
+  animation: ticker-scroll 25s linear infinite;
+}
+
+/* Pause animation on hover */
+.logo-strip__ticker:hover .logo-strip__track {
+  animation-play-state: running;
+}
+
+.logo-strip__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Logos: desaturated and dimmed by default for visual restraint */
+.logo-strip__item img {
+  height: 32px;
+  width: auto;
+  opacity: 0.5;
+  filter: grayscale(100%);
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    filter  var(--duration-normal) var(--ease-out);
+}
+
+/* Reveal full color on hover */
+.logo-strip__ticker:hover .logo-strip__item img {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* Dark mode: invert dark logos to white */
+[data-theme="dark"] .logo-strip__item img {
+  filter: brightness(0) invert(1);
+  opacity: 0.4;
+}
+[data-theme="dark"] .logo-strip__ticker:hover .logo-strip__item img {
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+}
+
+/* translate3d forces GPU compositing for smooth 60fps scroll */
+@keyframes ticker-scroll {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+
+/* ===== css/components/persona.css ===== */
+/* Hope DS: css/components/persona.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Persona card
+   ---------------------------------------------------------- */
+.persona {
+  border: none;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-bg-alt);
+}
+
+.persona__header {
+  display: flex;
+  gap: var(--space-5);
+  padding: var(--space-8);
+  align-items: flex-start;
+  border-bottom: var(--border-thin);
+}
+
+.persona__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--color-border);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--color-text-3);
+}
+
+.persona__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.persona__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--color-text-1);
+  line-height: 1.4;
+}
+
+.persona__role {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  margin-top: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+/* Two-column auto grid: dt in first col, dd in second */
+.persona__meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--space-4);
+  row-gap: var(--space-1);
+  align-items: baseline;
+}
+
+.persona__meta dt {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+}
+
+.persona__meta dd {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+}
+
+/* 2×2 grid of persona attribute sections */
+.persona__body {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .persona__body { grid-template-columns: 1fr 1fr; }
+}
+
+.persona__section {
+  padding: var(--space-6) var(--space-8);
+  border-bottom: var(--border-thin);
+}
+
+.persona__section:last-child { border-bottom: none; }
+
+/* Bio + Goals span full width; Needs + Pains share the last row */
+@media (min-width: 640px) {
+  .persona__section:nth-child(-n+2)      { grid-column: 1 / -1; }
+  .persona__section:nth-child(3)         { border-right: var(--border-thin); }
+  .persona__section:nth-last-child(-n+2) { border-bottom: none; }
+}
+
+.persona__section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-4);
+}
+
+.persona__section-title svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.persona__section ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.persona .persona__section li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.65;
+  color: var(--color-text-2);
+}
+
+.persona__section li::before {
+  content: '–';
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  flex-shrink: 0;
+}
+
+.persona .persona__section p {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--color-text-2);
+  max-width: none;
+}
+
+.persona__goal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .persona__goal-grid { grid-template-columns: 1fr; }
+}
+
+.persona__goal-card {
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  line-height: 1.65;
+  color: var(--color-text-2);
+  text-align: left;
+}
+
+[data-theme="dark"] .persona__goal-card {
+  background-color: var(--color-abyss);
+  color: var(--color-text-1);
+}
+
+.persona__quotes {
+  padding: var(--space-6) var(--space-8);
+  border-top: var(--border-thin);
+}
+
+.persona__quotes-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-5);
+}
+
+.persona__quotes-label svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.persona__quotes-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .persona__quotes-list { grid-template-columns: 1fr; }
+}
+
+.persona .persona__quotes li::before { content: none; }
+
+.persona__quote {
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-accent-tertiary);
+}
+
+.persona__quotes-list .persona__quote:nth-child(4)    { background-color: var(--color-bg-positive-secondary); }
+.persona__quotes-list .persona__quote:nth-child(n+5)  { background-color: var(--color-bg-danger-secondary); }
+
+.persona__quote p {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.65;
+  color: var(--color-text-2);
+  font-style: italic;
+  max-width: none;
+}
+
+/* ===== css/components/result-card.css ===== */
+/* Hope DS: css/components/result-card.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Result cards (glassmorphism + icon + hover lift)
+   ---------------------------------------------------------- */
+.result-card {
+  padding:        var(--space-6);
+  border-radius:  var(--radius-lg);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+  /* Glassmorphism — unified Material recipe (Glass/rest) */
+  background: var(--color-material-bg);
+  -webkit-backdrop-filter: var(--blur-glass);
+          backdrop-filter: var(--blur-glass);
+  border: 1px solid var(--color-material-border);
+  box-shadow:
+    var(--color-material-shadow-drop),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+  /* Hover lift */
+  transition:
+    transform    var(--duration-slow) var(--ease-out),
+    box-shadow   var(--duration-slow) var(--ease-out),
+    border-color var(--duration-slow) var(--ease-out);
+}
+.result-card:hover {
+  transform:    translateY(-4px);
+  box-shadow:
+    var(--color-material-shadow-drop-hover),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+  border-color: var(--color-material-border-hover);
+}
+[data-theme="dark"] .result-card {
+  background: var(--color-material-bg);
+  border-color: var(--color-material-border);
+  box-shadow:
+    var(--color-material-shadow-drop),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+}
+[data-theme="dark"] .result-card:hover {
+  transform:    translateY(-4px);
+  border-color: var(--color-material-border-hover);
+  box-shadow:
+    var(--color-material-shadow-drop-hover),
+    inset 0 1px 0 var(--color-material-shadow-inset);
+}
+
+/* Icon chip — Background/Utilities/Icon Chip (shared with .skill-card__icon) */
+.result-card__icon {
+  width:         40px;
+  height:        40px;
+  border-radius: var(--radius-sm);
+  display:       grid;
+  place-items:   center;
+  flex-shrink:   0;
+  background-color: var(--color-bg-icon-chip);
+  color:            var(--color-text-brand-default);
+}
+
+.result-card__title {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-h3);
+  font-weight:    700;
+  color:          var(--color-text-1);
+  line-height:    1.4;
+}
+.result-card__body {
+  font-family: var(--font-body);
+  font-size:   var(--fs-body-sm);
+  line-height: 1.70;
+  color:       var(--color-text-2);
+}
+
+/* ===== css/components/skill-card.css ===== */
+/* Hope DS: css/components/skill-card.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CARDS — Skills
+   ---------------------------------------------------------- */
+.skill-card {
+  background-color: var(--color-bg-alt);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition:
+    transform    var(--duration-slow) var(--ease-out),
+    box-shadow   var(--duration-slow) var(--ease-out),
+    border-color var(--duration-slow) var(--ease-out);
+  ;
+}
+.skill-card:hover {
+  transform: translateY(-4px);
+}
+.skill-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.skill-card__icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  /* Background/Utilities/Icon Chip — shared with .result-card__icon */
+  background-color: var(--color-bg-icon-chip);
+  color: var(--color-text-brand-default);
+  flex: 0 0 auto;
+}
+.skill-card__icon .icon {
+  width: 20px;
+  height: 20px;
+}
+.skill-card__title {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: var(--color-text-1);
+  line-height: 1.4;
+}
+.skill-card__body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.7;
+  color: var(--color-text-2);
+}
+
+.small-note {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-6);
+
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm) !important;
+  line-height: 1.7;
+
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-3) !important;
+  
+  transition:
+    transform    var(--duration-slow) var(--ease-out),
+    box-shadow   var(--duration-slow) var(--ease-out),
+    border-color var(--duration-slow) var(--ease-out);
+  ;
+}
+
+/* ── Metric card variant (Results section) ───────────────── */
+.skill-card--metric {
+  background-color: var(--color-bg-alt);
+  border: none;
+  box-shadow: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.skill-card--metric .metric-icon {
+  color: var(--color-text-2);
+  flex-shrink: 0;
+}
+
+.skill-card--metric .metric-value {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--color-text-2);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.skill-card--metric .metric-desc {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* ===== css/components/testimonial-card.css ===== */
+/* Hope DS: css/components/testimonial-card.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CARDS — Testimonials
+   ---------------------------------------------------------- */
+.testimonial-card {
+  /* Gradient fill: card surface fades into page background at the bottom */
+  /* Gradient border: outline fades to transparent alongside the fill     */
+  background-image:
+    linear-gradient(to bottom, var(--color-bg-alt) 0%, var(--color-bg-alt) 50%, var(--color-bg) 100%),
+    linear-gradient(to bottom, var(--color-border) 0%, transparent 80%);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.testimonial-card__author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-bottom: var(--space-5);
+  border-bottom: var(--border-thin);
+}
+
+.testimonial-card__quote {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--color-text-2);
+}
+
+.testimonial-card__quote strong {
+  color: var(--color-text-1);
+  font-weight: 600;
+}
+.testimonial-card__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-border);
+  flex-shrink: 0;
+  overflow: hidden;
+  object-fit: cover;
+  display: block;
+}
+.testimonial-card__name {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+}
+
+.testimonial-card__profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-brand-default);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-text-brand-default) 40%, transparent);
+  text-underline-offset: 3px;
+  transition:
+    color                var(--duration-normal) var(--ease-out),
+    text-decoration-color var(--duration-normal) var(--ease-out);
+}
+
+.testimonial-card__profile-link:hover {
+  color: var(--color-text-brand-hover);
+  text-decoration-color: var(--color-text-brand-hover);
+}
+
+.testimonial-card__linkedin-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.testimonial-card__role {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+}
+
+/* ===== css/components/text-highlight.css ===== */
+/* Hope DS: css/components/text-highlight.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   TEXT HIGHLIGHT — scroll-triggered marker sweep
+   ---------------------------------------------------------- */
+.text-highlight {
+  display: inline;
+  background-image: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--color-solar) 30%, transparent),
+    color-mix(in srgb, var(--color-solar) 30%, transparent)
+  );
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  background-position: 0% 55%;
+  -webkit-box-decoration-break: clone;
+          box-decoration-break: clone;
+  padding: 0 2px;
+  border-radius: 2px;
+  transition: background-size 1.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.text-highlight.is-active {
+  background-size: 100% 100%;
+}
+
+/* ===== css/site/container.css ===== */
+/* Hope DS: css/site/container.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CONTAINER
+   Capped content width with an enforced minimum gutter. The
+   parent section stays full width (its own background/border
+   is never capped here), and this element only centres and
+   sizes the INNER content.
+
+   Desktop: width is min(--content-max-width, 100% - 2 * 80px),
+   so the gutter is exactly --space-20 (80px) on each side for
+   any viewport up to the point the cap takes over, then the
+   leftover space becomes extra margin beyond that 80px floor.
+   It never shrinks below 80px on a desktop width.
+   ---------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+@media (min-width: 768px) {
+  .container {
+    width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+    max-width: none;
+    padding: 0;
+  }
+}
+
+/* ===== css/site/header.css ===== */
+/* Hope DS: css/site/header.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   SCROLL OFFSET — compensates for fixed floating header
+   ---------------------------------------------------------- */
+html {
+  scroll-padding-top: var(--space-24);
+}
+
+/* ----------------------------------------------------------
+   HEADER / NAV — full-bleed glass bar, inner content capped at
+   --content-max-width (same shared cap as every section .container)
+   ---------------------------------------------------------- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  z-index: var(--z-overlay);
+
+  /* Glassmorphism — light mode. Bg/border on the unified Material recipe. */
+  background: var(--color-material-bg);
+  backdrop-filter: blur(30px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border-bottom: 1px solid var(--color-material-border);
+  box-shadow: 0 1px 1.5px rgba(13, 13, 15, 0.06);
+
+  transition:
+    background   var(--duration-slower) var(--ease-out),
+    border-color var(--duration-slower) var(--ease-out),
+    box-shadow   var(--duration-slower) var(--ease-out);
+}
+
+/* Glassmorphism — dark mode */
+[data-theme="dark"] .site-header {
+  background: var(--color-material-bg);
+  border-color: var(--color-material-border);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4);
+}
+/* Without this, .nav (a flex item of .site-header with no explicit
+   width) shrinks to fit its own content and the margin: 0 auto above
+   then centers that shrunk box in the header, instead of the logo and
+   controls spreading to the header's true left/right edges. width:
+   100% forces it to fill the header so its own justify-content:
+   space-between actually reaches both edges. Desktop already gets an
+   explicit width from the media query below, so it is unaffected. */
+@media (max-width: 767px) {
+  .nav {
+    width: 100%;
+    margin: 0;
+  }
+}
+@media (min-width: 768px) {
+  /* Same capped-width-plus-minimum-gutter formula as .container, so the
+     header's inner content lines up with every section's content edge. */
+  .nav {
+    width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+    max-width: none;
+    padding-inline: 0;
+  }
+}
+
+/* Logo */
+.nav__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+.nav__logo:hover { opacity: 0.7; }
+.nav__logo img {
+  height: 28px !important;
+  width: auto !important;
+}
+
+/* Logo visibility — light/dark swap */
+.nav__logo-light { display: block !important; }
+.nav__logo-dark  { display: none  !important; }
+[data-theme="dark"] .nav__logo-light { display: none  !important; }
+[data-theme="dark"] .nav__logo-dark  { display: block !important; }
+
+/* Right-side controls wrapper */
+.nav__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+/* Nav links — desktop only */
+.nav__links {
+  display: none;
+  align-items: center;
+  gap: var(--space-5);
+  margin-right: var(--space-2);
+}
+@media (min-width: 768px) {
+  .nav__links { display: flex; }
+}
+
+.nav__link {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  color: var(--color-text-2);
+  padding: var(--space-1) 0;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+.nav__link:hover   { color: var(--color-text-1); }
+.nav__link--active { color: var(--color-text-1); font-weight: 600; }
+
+/* Theme toggle — all breakpoints */
+.nav__theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-2);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+/* Dark mode paused — hide the live toggle only (id-scoped so the
+   design-system.html component showcase, which has no #themeToggle,
+   still documents what the control looks like). Underlying dark-mode
+   CSS is untouched. */
+#themeToggle {
+  display: none;
+}
+.nav__theme-toggle:hover {
+  color: var(--color-text-1);
+  background-color: rgba(0, 0, 0, 0.07);
+}
+[data-theme="dark"] .nav__theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+.nav__theme-toggle svg { width: 17px; height: 17px; }
+
+/* Hamburger — mobile only */
+.nav__hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-2);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+.nav__hamburger:hover {
+  color: var(--color-text-1);
+  background-color: rgba(0, 0, 0, 0.07);
+}
+[data-theme="dark"] .nav__hamburger:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+.nav__hamburger svg { width: 20px; height: 20px; }
+@media (min-width: 768px) {
+  .nav__hamburger { display: none; }
+}
+
+/* LinkedIn icon button — circular, desktop only. On mobile it is
+   replaced by a "LinkedIn" text link inside the hamburger menu (see
+   .nav__mobile-menu), so it does not compete with the hamburger for
+   space in the mobile header bar. */
+.nav__linkedin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-2);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+.nav__linkedin:hover {
+  color: var(--color-text-1);
+  background-color: rgba(0, 0, 0, 0.07);
+}
+[data-theme="dark"] .nav__linkedin:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+.nav__linkedin svg { width: 17px; height: 17px; }
+@media (max-width: 767px) {
+  .nav__linkedin { display: none; }
+}
+
+/* Mobile menu — absolute glass panel below the pill */
+.nav__mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-1);
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: var(--space-4);
+  right: var(--space-4);
+
+  /* Own compositor layer — bypasses parent backdrop-filter stacking
+     restriction on iOS Safari / Chrome mobile. */
+  isolation: isolate;
+  transform: translate3d(0, 0, 0);
+
+  /* Glass panel — milkier tint keeps text readable while blur settles */
+  background: var(--color-cloud);
+  -webkit-backdrop-filter: blur(50px) saturate(1.6);
+          backdrop-filter: blur(50px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-3);
+
+  transition:
+    background   var(--duration-slower) var(--ease-out),
+    border-color var(--duration-slower) var(--ease-out);
+}
+[data-theme="dark"] .nav__mobile-menu {
+  background: var(--color-abyss);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+          backdrop-filter: blur(20px) saturate(1.6);
+  border-color: rgba(74, 74, 96, 0.35);
+}
+.nav__mobile-menu.is-open { display: flex; }
+@media (min-width: 768px) {
+  .nav__mobile-menu { display: none !important; }
+}
+
+.nav__mobile-link {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--color-text-2);
+  padding: var(--space-3) var(--space-4);
+  min-height: 44px;
+  border-radius: var(--radius-sm);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+.nav__mobile-link:hover {
+  color: var(--color-text-1);
+  background-color: rgba(0, 0, 0, 0.04);
+}
+[data-theme="dark"] .nav__mobile-link:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+.nav__mobile-link--active {
+  color: var(--color-text-1);
+  font-weight: 600;
+}
+
+/* ===== css/site/sections.css ===== */
+/* Hope DS: css/site/sections.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   SECTIONS
+   ---------------------------------------------------------- */
+.section {
+  padding: var(--space-20) 0;
+}
+.section + .section {
+  border-top: var(--border-thin);
+}
+
+.section__header {
+  margin-bottom: var(--space-12);
+}
+
+/* #work carries its top breathing room on .section__header itself (see
+   below) instead of on the section wrapper. */
+#work {
+  padding-top: 0;
+}
+
+/* CASE STUDIES / Featured Projects — top breathing room.
+   --space-12 (48px), reduced by user decision from the Figma frame's own
+   --space-20 (80px), one step further down the Hope DS scale than the
+   prior --space-16 (64px) pass. Kept on the header itself (not on #work)
+   for consistency with the rest of this section's spacing. */
+#work .section__header {
+  padding-top: var(--space-12);
+
+  /* Single source of the gap to the first case card below, --space-20
+     (80px). Overrides the base .section__header's margin-bottom
+     (--space-12, 48px): that base value was combining with the first
+     case card's own header-clearance padding-top (see .cases-grid >
+     .case-card:first-child below), producing a much larger, viewport-
+     height-dependent gap instead of one clear, fixed value. */
+  margin-bottom: var(--space-20);
+}
+
+/* ── Featured Projects — sub-header (desktop only) ─────────────────────
+   Sticky positioning was tried here (pinning the heading while cards
+   scrolled past beneath it) and rolled back along with the scroll-snap
+   and internal-scroll experiments for this section. The heading now
+   scrolls in normal document flow with the rest of the page, like any
+   other section heading.
+
+   position: relative is kept, not removed, so the full-bleed background
+   band below (::before) still anchors to this element instead of
+   escalating to a further, unpositioned ancestor. It no longer carries
+   any sticky-specific offset or stacking order.
+
+   The background itself is still full-bleed. Breaks out of the capped
+   .container the same way .cs-figure--full-bleed does: the pseudo spans
+   100vw regardless of how narrow or wide the header's own box is, so it
+   always touches both browser edges. --color-bg matches the page
+   background (same token body uses), not a hardcoded white. */
+@media (min-width: 1024px) {
+  #work .section__header {
+    position: relative;
+    padding-bottom: var(--space-4);
+  }
+
+  #work .section__header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100vw;
+    height: 100%;
+    margin-left: -50vw;
+    background: var(--color-bg);
+    z-index: -1;
+  }
+}
+.section__overline {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-3);
+}
+.section__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-1);
+}
+
+/* ===== css/site/hero.css ===== */
+/* Hope DS: css/site/hero.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   HERO
+   The centered headline/paragraph/buttons group and the logo carousel
+   both live inside this one full-viewport block now, instead of the
+   carousel being a separate section further down the page. .hero itself
+   no longer centers its content directly, .hero > .container does that
+   job internally so the centered group and the bottom-anchored carousel
+   can be positioned independently within the same viewport height.
+   ---------------------------------------------------------- */
+.hero {
+  padding: var(--space-20) 0;
+  padding-top: calc(var(--space-20) + var(--space-16));
+
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+  position: relative;
+  width: 100%;
+
+  /* dvh avoids clipping by the mobile browser toolbar. min-height, not
+     height: if the centered group plus the logo carousel ever need more
+     room than one viewport at a given height (a short browser window,
+     landscape phone), the section grows past 100dvh instead of clipping
+     or cramming content. */
+  min-height: 100dvh;
+
+  background: var(--color-bg);
+
+  /* Hairline divider between the Hero block and the section that
+     follows (Case Studies). This used to come from the general
+     .section + .section rule below, which only fires when a .section
+     is immediately preceded by another .section: #work got it for
+     free because #companies (a .section) used to sit right before it.
+     Now that the logo carousel lives inside .hero (no longer its own
+     #companies section), #work has nothing before it, so that rule
+     stopped matching and the divider disappeared. Setting it directly
+     here, after the logo carousel since it is the last thing in this
+     block, does not depend on what section happens to follow. Same
+     token the rule below already used, --border-thin, not a new value. */
+  border-bottom: var(--border-thin);
+}
+
+.hero > .container {
+  position: relative;
+  z-index: var(--z-raised);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* The existing headline/paragraph/buttons group. flex:1 makes it fill
+   whatever vertical space is left after the logo carousel below takes
+   its own natural height, and centers its own content within that
+   space, the same visual centering .hero used to do directly.
+   Scoped to .hero--home only: About's .hero__layout also carries the
+   reveal-group class (for the same scroll-reveal animation hook), and
+   this rule's display:flex was overriding .hero__layout's own
+   display:grid, collapsing the About page's two-column layout into a
+   single centered column. */
+.hero--home .reveal-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
+/* Logo carousel, anchored to the bottom of the Hero block. flex: 0 0
+   auto keeps it at its own natural height instead of stretching, and
+   margin-top gives it breathing room from the centered group above
+   without being part of that group's own vertical centering. */
+.hero .logo-strip {
+  flex: 0 0 auto;
+  margin-top: var(--space-16);
+}
+
+.hero__overline {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-2);
+  margin-bottom: var(--space-5);
+}
+
+/* ── Headline row — avatar and headline merged into one centered row,
+   per the simplified Figma Hero (node 43:3914). Replaces the separate
+   floating greeting bubble and the standalone headline block. ───────── */
+.hero__headline-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+/* Mobile: avatar stacks above the headline as two centered rows,
+   instead of sitting inline to its left. Desktop keeps the row
+   layout untouched. */
+@media (max-width: 767px) {
+  .hero__headline-row {
+    flex-direction: column;
+  }
+}
+
+/* Avatar — fixed 115x115, per Figma */
+.hero__avatar {
+  width:         115px;
+  height:        115px;
+  border-radius: 50%;
+  object-fit:    cover;
+  display:       block;
+  flex-shrink:   0;
+}
+
+/* The line break is a hard <br> in the markup (matches the pattern
+   already used for the About headline and Hero body), not a natural
+   wrap. Without it, the browser's own wrap point sizes this box using
+   its single-line preferred width clamped to max-width, which can be
+   much wider than either actual rendered line, leaving slack on the
+   right of a left-aligned line. That slack pulled the avatar + headline
+   visual mass off the center axis shared with the paragraph and buttons
+   below. With a hard break, the box hugs the wider of the two actual
+   lines, and text-align: center keeps the shorter line centered under
+   it, so the visible glyphs stay symmetric around the box's own center. */
+.hero__headline {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text-1);
+  max-width: 800px;
+}
+/* Scoped to Home: this class is shared with About's headline, which
+   must stay left-aligned per its own Figma spec. */
+.hero--home .hero__headline {
+  text-align: center;
+}
+.hero__headline mark {
+  background: none;
+  color: var(--color-accent);
+}
+
+/* Mobile: the hard <br> above forces "who" and "absorbs" onto separate
+   lines on any width, desktop included. That is the intended two-line
+   split on desktop, but combined with mobile's much narrower column it
+   adds a third forced break on top of the natural wrap, splitting
+   "who" and "absorbs" apart in a spot that reads awkwardly. Hiding the
+   break here lets the whole headline wrap naturally on mobile, and
+   .hero__nowrap-pair (below) keeps "who" and "absorbs" specifically
+   from ever landing on separate lines once that natural wrap takes
+   over. Desktop keeps the existing hard break, untouched. */
+@media (max-width: 767px) {
+  .hero__headline-break {
+    display: none;
+  }
+  .hero__nowrap-pair {
+    white-space: nowrap;
+  }
+}
+
+/* Two separate lines by design (Figma node 43:3914), not a natural text
+   wrap: "...across Brazil and the US." and "I turn ambiguous briefs..."
+   are two <p> tags in the markup so the break holds at any width instead
+   of depending on where the browser happens to wrap the text.
+   No text-align here: left is the base .hero default, and About's body
+   paragraphs should stay left-aligned too. Home centers its own copy
+   via .hero--home .hero__body below. */
+.hero__body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--color-text-1);
+  max-width: 560px;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+.hero__body-group {
+  margin-bottom: var(--space-10);
+}
+/* Mobile: the two sentences are separate <p> tags so the line break
+   between them holds at desktop widths, but on mobile that same forced
+   break plus the narrow column produces an awkward three-line wrap with
+   an orphaned word. display: inline joins them into one flowing block
+   of text (the whitespace between the tags in the markup still gives a
+   normal space between sentences), wrapping naturally at this width.
+   Scoped to Home only, About's three-paragraph body is untouched. */
+@media (max-width: 767px) {
+  .hero--home .hero__body-group .hero__body {
+    display: inline;
+  }
+}
+
+/* ── Home hero — centered layout, no background image ────────────────
+   Scoped modifier so .hero--about (which stays left-aligned, two-column)
+   is untouched. */
+.hero--home {
+  text-align: center;
+}
+.hero--home .hero__body {
+  text-align: center;
+}
+.hero--home .hero__actions {
+  justify-content: center;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+@media (max-width: 767px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+    /* The buttons' own width: 100% (below, and in components.css) only
+       stretches them to fill this element's own box. That box was
+       itself shrink-wrapped to the buttons' combined content width by
+       align-items: center on the ancestor .reveal-group (the same
+       shrink-wrap behavior that also affects the headline row and body
+       group, fine for those, but not what we want here), so the
+       buttons never actually reached the container's full width.
+       width: 100% here breaks it out of that shrink-wrap. */
+    width: 100%;
+    gap: var(--space-3);
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* About page — text + portrait side by side */
+.hero--about {
+  padding: var(--space-20) 0;
+  align-items: stretch;
+}
+
+/* Same gap as the description-to-buttons spacing below (--space-10),
+   applied above the description too so both gaps match. */
+.hero--about .hero__headline {
+  margin-bottom: var(--space-10);
+}
+
+/* Vertically centers the hero__layout row within the full viewport
+   height .hero already provides (min-height: 100dvh, on the shared
+   base .hero rule above). Same full-viewport-fill technique the Home
+   hero uses, just centered directly on this container instead of on an
+   inner flex:1 group, since About has no logo carousel anchored below
+   it that needs separate positioning. Horizontal alignment (left) is
+   untouched, this only affects the vertical axis. */
+.hero--about > .container {
+  justify-content: center;
+}
+
+/* Overrides the base .hero__body max-width (560px, a readable line
+   length meant for Home's narrower centered column). About's content
+   column is fluid width, filling the space up to the portrait, so the
+   paragraphs should reflow to that same width instead of staying
+   capped at the old fixed-column reading width. */
+.hero--about .hero__body {
+  margin-bottom: 0;
+  max-width: none;
+}
+
+/* Paragraph break between the first and second body paragraphs only,
+   per the updated Figma. --space-6 (24px) is close to one line's worth
+   of height at this text's line-height, reading as an empty line. The
+   second and third paragraphs stay flush, as before. */
+.hero--about .hero__body:first-of-type {
+  margin-bottom: var(--space-6);
+}
+
+/* Restore vertical breathing room between body text and action buttons */
+.hero--about .hero__actions {
+  margin-top: var(--space-10);
+}
+
+.hero__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: center;
+  width: 100%;
+}
+
+/* Fluid content column, fixed 340px portrait column, per the updated
+   Figma (node 152:1139, Hero About). The content column (1fr) grows to
+   fill whatever space is left after the fixed portrait and the 48px
+   gap, instead of staying locked at a fixed width itself. */
+@media (min-width: 1200px) {
+  .hero__layout {
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-12);
+  }
+}
+
+.hero__content {
+  min-width: 0;
+}
+
+.hero__portrait {
+  margin: 0;
+  width: 100%;
+  max-width: 340px;
+  justify-self: center;
+}
+
+@media (min-width: 1200px) {
+  .hero__portrait {
+    justify-self: end;
+  }
+}
+
+/* aspect-ratio 340/318 (not a square 1:1) matches the Figma portrait's
+   fixed 340x318 box. Kept as a ratio rather than a hardcoded height so
+   it still scales correctly on mobile, where the column is fluid. */
+.hero__portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 340 / 318;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: var(--radius-lg);
+  border: var(--border-normal);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===== css/site/logo-strip-spacing.css ===== */
+/* Hope DS: css/site/logo-strip-spacing.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   LOGO STRIP — Section-specific spacing overrides
+   Base component styles live in components.css. The logo carousel now
+   lives inside the Hero (see .hero .logo-strip above); #companies,
+   .companies__row and .companies__label were the wrapper for its old
+   standalone section and are no longer used anywhere.
+   ---------------------------------------------------------- */
+
+/* ===== css/site/content-grids.css ===== */
+/* Hope DS: css/site/content-grids.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CONTENT GRIDS
+   ---------------------------------------------------------- */
+
+/* Generic layout wrappers — column count only, no padding, no max-width */
+.layout-1col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: stretch;
+  width: 100%;
+}
+
+.layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: stretch;
+  width: 100%;
+}
+
+.layout-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-8);
+  align-items: stretch;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .layout-2col,
+  .layout-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .layout-3col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Cases — always 1 column; horizontal card layout handles visual/content split.
+   gap is --space-32 (128px) per the Figma spec, the vertical distance
+   between consecutive case cards. */
+.cases-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-32);
+}
+
+
+/* Skills */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 640px)  { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* Challenges */
+.challenges-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .challenges-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  margin-top: var(--space-10);
+}
+
+@media (min-width: 768px) {
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+/* Testimonials — infinite horizontal ticker */
+.testimonials-ticker {
+  position: relative; /* clips absolutely positioned descendants (.visually-hidden) when the track is not animated */
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.testimonials-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-6);
+  padding-right: var(--space-6);
+  animation: testimonials-scroll 80s linear infinite;
+}
+
+.testimonials-ticker:hover .testimonials-track {
+  animation-play-state: running;
+}
+
+.testimonials-ticker .testimonial-card {
+  width: 380px;
+  flex-shrink: 0;
+  margin-bottom: 0;
+  align-self: flex-start;
+}
+
+@keyframes testimonials-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-100%, 0, 0); }
+}
+
+.card__title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* ===== css/site/about-snippet.css ===== */
+/* Hope DS: css/site/about-snippet.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   ABOUT SNIPPET
+   ---------------------------------------------------------- */
+.about-snippet {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .about-snippet {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+  }
+}
+.about-snippet__blocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.about-block__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-2);
+}
+.about-block__text {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--color-text-2);
+}
+
+/* ===== css/site/footer.css ===== */
+/* Hope DS: css/site/footer.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   FOOTER
+   Figma Footer Style=Dark: Background/Neutral/Default surface, Text/Neutral/Default
+   text, Button Inverse. Only shared tokens, no local overrides.
+   ---------------------------------------------------------- */
+.site-footer {
+  /* TODO dark mode: footer surface flips with Neutral tokens, decide when dark mode is created */
+  background-color: var(--color-bg-neutral-default);
+  color: var(--color-text-neutral-default);
+  padding: var(--space-20) 0 var(--space-10);
+  margin-top: var(--space-20);
+  border-top: var(--border-width-accent) solid var(--color-border-accent-default);
+}
+
+.footer__connect {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  max-width: 40rem;
+}
+
+.footer__heading {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-neutral-default);
+}
+
+.footer__lede {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  color: var(--color-text-neutral-default);
+  max-width: 42ch;
+}
+
+.footer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+/* Bottom bar */
+.footer__bottom {
+  margin-top: var(--space-16);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border-strong);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .footer__bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-8);
+  }
+}
+
+.footer__motto {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+  color: var(--color-text-neutral-default);
+}
+
+.footer__heart {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-celebrate);
+}
+
+.footer__heart .icon {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.footer__copy {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  color: var(--color-text-neutral-default);
+  white-space: nowrap;
+}
+
+/* ===== css/site/about-bridge.css ===== */
+/* Hope DS: css/site/about-bridge.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   ABOUT BRIDGE
+   ---------------------------------------------------------- */
+#references {
+  padding-bottom: var(--space-12);
+}
+
+.about-bridge {
+  padding: var(--space-12) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-bridge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      var(--color-text-1) 0px,
+      var(--color-text-1) 1px,
+      transparent 1px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      var(--color-text-1) 0px,
+      var(--color-text-1) 1px,
+      transparent 1px,
+      transparent 40px
+    );
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+          mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: var(--z-base);
+}
+
+.about-bridge__inner {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  position: relative;
+  z-index: var(--z-raised);
+}
+
+.about-bridge__eyebrow {
+  margin-bottom: 0;
+}
+
+.about-bridge__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--color-border);
+  display: block;
+}
+
+.about-bridge__headline {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-1);
+}
+
+.about-bridge__body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--color-text-2);
+  line-height: 1.75;
+  max-width: 500px;
+}
+
+.about-bridge__cta {
+  margin-top: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.about-bridge__cta .icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.about-bridge__cta:hover .icon {
+  transform: translateX(4px);
+}
+
+/* ===== css/site/case-hero.css ===== */
+/* Hope DS: css/site/case-hero.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Hero
+   Solid surface, floating header clearance at top, showcase
+   image anchors the bottom of the text block.
+   ---------------------------------------------------------- */
+.case-hero {
+  background: var(--color-bg);
+  color: var(--color-text-1);
+  padding-top: calc(var(--space-24) + var(--space-8));
+  padding-bottom: var(--space-12);
+}
+
+.case-hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin-bottom: var(--space-12);
+  min-width: 0; /* prevents flex children from overflowing their track */
+}
+
+/* Showcase image — spans full container width below the text block */
+.case-hero__showcase-media {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.case-hero__showcase-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.case-hero__overline {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-4);
+}
+
+.case-hero__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-1);
+  margin-bottom: var(--space-4);
+}
+
+.case-hero__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--color-text-2);
+  margin-bottom: var(--space-8);
+}
+
+.case-hero__tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.case-hero__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: var(--space-5);
+  padding-top: var(--space-6);
+  border-top: var(--border-thin);
+}
+
+.case-hero__meta > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: 0;
+  border: none;
+}
+
+.case-hero__meta dt {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+}
+
+.case-hero__meta dd {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+}
+
+.case-hero__visual {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: var(--border-thin);
+  background-color: var(--color-bg-alt);
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-hero__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== css/site/case-body.css ===== */
+/* Hope DS: css/site/case-body.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Body layout
+   ---------------------------------------------------------- */
+.case-body {
+  padding: var(--space-16) 0 var(--space-20);
+}
+
+.case-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  align-items: start;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  /* 2-column: stable 240px sidebar · content fills remaining 1fr.
+     max-width caps the grid at sidebar + gap + content-max so the
+     margin-inline: auto centres the whole sidebar+content block inside
+     the container, giving equal left and right gutters. */
+  .case-layout {
+    grid-template-columns: 240px 1fr;
+    column-gap: var(--space-12);
+    /*max-width: calc(240px + var(--space-12) + 68ch);*/
+    margin-inline: auto;
+    width: 100%;
+  }
+}
+
+/* ===== css/site/case-phase-break.css ===== */
+/* Hope DS: css/site/case-phase-break.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Editorial Phase Break
+   Thin structural separator between narrative phases.
+   ---------------------------------------------------------- */
+.case-phase-break {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-16) 0 var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.case-phase-break__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.case-phase-break__rule {
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+/* ===== css/site/case-callout.css ===== */
+/* Hope DS: css/site/case-callout.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Editorial Callout Quote
+   Full-width accent quote for key insight moments.
+   ---------------------------------------------------------- */
+.case-callout {
+  padding: var(--space-10) 0;
+  margin: var(--space-8) 0;
+}
+
+.case-callout__text {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-accent);
+  max-width: 820px;
+}
+
+.case-callout__attribution {
+  display: block;
+  margin-top: var(--space-5);
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+}
+
+/* ===== css/site/case-toc.css ===== */
+/* Hope DS: css/site/case-toc.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Sidebar TOC
+   Floats directly over the page background — no card box.
+   Active capsule pill provides the only surface treatment.
+   ---------------------------------------------------------- */
+.case-toc {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .case-sidebar {
+    position: sticky;
+    top: var(--space-24); /* clears the floating glass nav */
+  }
+
+  .case-toc {
+    display: block;
+  }
+}
+
+/* "INDEX" group header — mono label, same as DS sidebar group labels */
+.case-toc__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  padding: 0 var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.case-toc__list {
+  list-style: none;
+  counter-reset: toc-counter;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.case-toc__item {
+  counter-increment: toc-counter;
+}
+
+/* Link row — flex, centered, matching DS sidebar link geometry */
+.case-toc__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-text-2);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+
+/* Sequential number — same size as link text, muted mono weight */
+.case-toc__link::before {
+  content: counter(toc-counter, decimal-leading-zero);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  color: var(--color-text-3);
+  flex-shrink: 0;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+/* Hover — text shifts to full contrast, no border indicators */
+.case-toc__link:hover {
+  color: var(--color-text-1);
+  background-color: rgba(28, 95, 168, 0.05);
+}
+.case-toc__link:hover::before {
+  color: var(--color-accent);
+}
+
+[data-theme="dark"] .case-toc__link:hover {
+  background-color: rgba(245, 200, 66, 0.07);
+}
+
+/* Active — capsule pill tint, high-contrast text, no left bar */
+.case-toc__link.is-active {
+  color: var(--color-text-1);
+  font-weight: 600;
+  background-color: rgba(28, 95, 168, 0.08);
+}
+/* Uses --color-accent (Anchor light / Solar dark). Dark mode is currently
+   hidden from users (toggle removed), so this isn't a live contradiction
+   of the portfolio's black=action/blue=highlight/Solar=logo-only rule —
+   but if dark mode is ever re-enabled, this would show Solar on a
+   non-logo element. Revisit this token choice before re-enabling, don't
+   let it slide back in unreviewed. */
+.case-toc__link.is-active::before {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .case-toc__link.is-active {
+  background-color: rgba(245, 200, 66, 0.10);
+}
+
+/* ===== css/site/case-content.css ===== */
+/* Hope DS: css/site/case-content.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Content column
+   ---------------------------------------------------------- */
+.case-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 68ch;
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* ===== css/site/case-teams.css ===== */
+/* Hope DS: css/site/case-teams.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Involved teams component
+   ---------------------------------------------------------- */
+.team-section {
+  margin-top: var(--space-6);
+}
+
+/* Scoped to out-rank .case-section__body p (0,1,1), which would force body size and color */
+.case-section__body .team-section__title {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-6);
+}
+
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: var(--space-10);
+  align-items: center;
+  align-content: center;
+  width: 100%;
+}
+
+
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+  min-width: 72px;
+  width: fit-content;
+}
+
+.team-card svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-text-2);
+  flex-shrink: 0;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.team-card__name {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+  line-height: 1.35;
+}
+
+/* "My squad" emphasis — icon + label in brand accent */
+.team-card--mine svg {
+  color: var(--color-accent);
+}
+
+.team-card--mine .team-card__name {
+  color: var(--color-text-1);
+  font-weight: 600;
+}
+
+/* ===== css/site/case-figure-bleed.css ===== */
+/* Hope DS: css/site/case-figure-bleed.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Full-bleed figure breakout
+   Snaps the figure to 100vw regardless of parent column width.
+   Use for service blueprints, large process maps, hero mockups.
+
+   Uses negative margin-left rather than position/left/transform so the
+   breakout math stays correct even inside the sidebar+content grid.
+   The "left: 50% + translateX(-50%)" trick centres relative to the
+   content COLUMN, not the viewport — when a sidebar is present the
+   column centre is right-of-viewport-centre, causing rightward overflow.
+
+   Mobile  (<768px)  : undo the 24 px (--space-6) container padding.
+   Tablet  (768–1023): case-content is centred via margin-inline:auto, so
+                       content left = 50vw − 34ch.  margin-left = 34ch − 50vw.
+   Desktop (≥1024px) : .container now uses a capped-width-plus-minimum-
+                       gutter formula (see .container), so its left edge
+                       sits at a constant 80px from the viewport for any
+                       width up to the 1280px cap (1440px viewport), not
+                       a fixed pixel box. Working through the chain
+                       (container edge 80, sidebar 240, gap 48, then the
+                       68ch case-content re-centring inside the remaining
+                       1fr track) the viewport-width terms cancel out and
+                       the constant lands back at 128:
+                       content left = 50vw − 128px.
+                       So margin-left = 128px − 50vw (always negative ≥ 1024px).
+   ---------------------------------------------------------- */
+.cs-figure--full-bleed {
+  width: 100vw;
+  margin-left: calc(-1 * var(--space-6));
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  max-width: none;
+}
+@media (min-width: 768px) {
+  .cs-figure--full-bleed {
+    /* case-content has margin-inline:auto, so it is centred inside the grid
+       track at any viewport where 68ch < (viewport - 2×padding).
+       Content left edge from viewport = 50vw − 34ch (half-viewport minus
+       half the content column).  margin-left = 34ch − 50vw puts the figure
+       flush with the viewport left edge on any width in this range. */
+    margin-left: calc(34ch - 50vw);
+  }
+}
+@media (min-width: 1024px) {
+  .cs-figure--full-bleed {
+    margin-left: calc(128px - 50vw);
+  }
+}
+
+/* ===== css/site/about-experience.css ===== */
+/* Hope DS: css/site/about-experience.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   ABOUT — Experience pipeline list
+   ---------------------------------------------------------- */
+.experience-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.experience-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-5) 0;
+  border-bottom: var(--border-thin);
+}
+
+.experience-item:first-child {
+  border-top: var(--border-thin);
+}
+
+/* Logo box */
+.experience-item__logo {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-thin);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-alt);
+  overflow: hidden;
+  transition:
+    background-color var(--duration-slower) var(--ease-out),
+    border-color     var(--duration-slower) var(--ease-out);
+}
+
+.experience-item__logo img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.55;
+}
+
+[data-theme="dark"] .experience-item__logo img {
+  filter: brightness(0) invert(1);
+  opacity: 0.45;
+}
+
+/* Light/dark image pairs (used in dotz case study) */
+.img--light { display: block; }
+.img--dark  { display: none !important; }
+[data-theme="dark"] .img--light { display: none  !important; }
+[data-theme="dark"] .img--dark  { display: block !important; }
+
+/* Text monogram fallback for companies without a logo file */
+.experience-item__logo-mono {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text-3);
+  user-select: none;
+}
+
+/* Company + role info */
+.experience-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.experience-item__company {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  color: var(--color-text-1);
+  line-height: 1.3;
+}
+
+.experience-item__role {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+  margin-top: var(--space-1);
+}
+
+.experience-item__highlight {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-3);
+  line-height: 1.45;
+  margin-top: var(--space-1);
+}
+
+/* Date range — far right, monospaced */
+.experience-item__dates {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.08em;
+  color: var(--color-text-3);
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+/* ===== css/site/animations.css ===== */
+/* ============================================================
+   HOPE DESIGN SYSTEM — animations.css
+   Scroll + load reveals (inspired by GSAP scroll patterns)
+   Requires: tokens.css
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   GLOBAL THEME TRANSITION
+   Restricts to paint-only properties (no layout, no transform)
+   so the browser can handle theme switches on the compositor
+   thread without triggering reflow.
+   ---------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  transition:
+    background-color  var(--duration-slow) var(--ease-in-out),
+    color             var(--duration-slow) var(--ease-in-out),
+    border-color      var(--duration-slow) var(--ease-in-out),
+    box-shadow        var(--duration-slow) var(--ease-in-out);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Scroll-triggered & load-triggered base */
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, 48px, 0) scale(0.97);
+    transition:
+      opacity   0.85s var(--ease-out),
+      transform 0.85s var(--ease-out);
+    will-change: opacity, transform;
+  }
+
+  .reveal--from-top {
+    transform: translate3d(0, -28px, 0) scale(1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  /* Staggered load group (hero, etc.) */
+  .reveal-group .reveal-item {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+    transition:
+      opacity   0.9s var(--ease-out),
+      transform 0.9s var(--ease-out);
+  }
+
+  .reveal-group.is-visible .reveal-item:nth-child(1) { transition-delay: 120ms; }
+  .reveal-group.is-visible .reveal-item:nth-child(2) { transition-delay: 220ms; }
+  .reveal-group.is-visible .reveal-item:nth-child(3) { transition-delay: 320ms; }
+  .reveal-group.is-visible .reveal-item:nth-child(4) { transition-delay: 420ms; }
+  .reveal-group.is-visible .reveal-item:nth-child(5) { transition-delay: 520ms; }
+
+  .reveal-group.is-visible .reveal-item {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Snap all animations and transitions for users who prefer reduced motion */
+  *,
+  *::before,
+  *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+    scroll-behavior:           auto   !important;
+  }
+}

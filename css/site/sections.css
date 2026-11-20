@@ -1,0 +1,92 @@
+/* Hope DS: css/site/sections.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   SECTIONS
+   ---------------------------------------------------------- */
+.section {
+  padding: var(--space-20) 0;
+}
+.section + .section {
+  border-top: var(--border-thin);
+}
+
+.section__header {
+  margin-bottom: var(--space-12);
+}
+
+/* #work carries its top breathing room on .section__header itself (see
+   below) instead of on the section wrapper. */
+#work {
+  padding-top: 0;
+}
+
+/* CASE STUDIES / Featured Projects — top breathing room.
+   --space-12 (48px), reduced by user decision from the Figma frame's own
+   --space-20 (80px), one step further down the Hope DS scale than the
+   prior --space-16 (64px) pass. Kept on the header itself (not on #work)
+   for consistency with the rest of this section's spacing. */
+#work .section__header {
+  padding-top: var(--space-12);
+
+  /* Single source of the gap to the first case card below, --space-20
+     (80px). Overrides the base .section__header's margin-bottom
+     (--space-12, 48px): that base value was combining with the first
+     case card's own header-clearance padding-top (see .cases-grid >
+     .case-card:first-child below), producing a much larger, viewport-
+     height-dependent gap instead of one clear, fixed value. */
+  margin-bottom: var(--space-20);
+}
+
+/* ── Featured Projects — sub-header (desktop only) ─────────────────────
+   Sticky positioning was tried here (pinning the heading while cards
+   scrolled past beneath it) and rolled back along with the scroll-snap
+   and internal-scroll experiments for this section. The heading now
+   scrolls in normal document flow with the rest of the page, like any
+   other section heading.
+
+   position: relative is kept, not removed, so the full-bleed background
+   band below (::before) still anchors to this element instead of
+   escalating to a further, unpositioned ancestor. It no longer carries
+   any sticky-specific offset or stacking order.
+
+   The background itself is still full-bleed. Breaks out of the capped
+   .container the same way .cs-figure--full-bleed does: the pseudo spans
+   100vw regardless of how narrow or wide the header's own box is, so it
+   always touches both browser edges. --color-bg matches the page
+   background (same token body uses), not a hardcoded white. */
+@media (min-width: 1024px) {
+  #work .section__header {
+    position: relative;
+    padding-bottom: var(--space-4);
+  }
+
+  #work .section__header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100vw;
+    height: 100%;
+    margin-left: -50vw;
+    background: var(--color-bg);
+    z-index: -1;
+  }
+}
+.section__overline {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-3);
+}
+.section__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-1);
+}

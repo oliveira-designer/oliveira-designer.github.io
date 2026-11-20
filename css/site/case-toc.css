@@ -1,0 +1,108 @@
+/* Hope DS: css/site/case-toc.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Sidebar TOC
+   Floats directly over the page background — no card box.
+   Active capsule pill provides the only surface treatment.
+   ---------------------------------------------------------- */
+.case-toc {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .case-sidebar {
+    position: sticky;
+    top: var(--space-24); /* clears the floating glass nav */
+  }
+
+  .case-toc {
+    display: block;
+  }
+}
+
+/* "INDEX" group header — mono label, same as DS sidebar group labels */
+.case-toc__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  padding: 0 var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.case-toc__list {
+  list-style: none;
+  counter-reset: toc-counter;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.case-toc__item {
+  counter-increment: toc-counter;
+}
+
+/* Link row — flex, centered, matching DS sidebar link geometry */
+.case-toc__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-text-2);
+  transition:
+    color            var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+
+/* Sequential number — same size as link text, muted mono weight */
+.case-toc__link::before {
+  content: counter(toc-counter, decimal-leading-zero);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  color: var(--color-text-3);
+  flex-shrink: 0;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+/* Hover — text shifts to full contrast, no border indicators */
+.case-toc__link:hover {
+  color: var(--color-text-1);
+  background-color: rgba(28, 95, 168, 0.05);
+}
+.case-toc__link:hover::before {
+  color: var(--color-accent);
+}
+
+[data-theme="dark"] .case-toc__link:hover {
+  background-color: rgba(245, 200, 66, 0.07);
+}
+
+/* Active — capsule pill tint, high-contrast text, no left bar */
+.case-toc__link.is-active {
+  color: var(--color-text-1);
+  font-weight: 600;
+  background-color: rgba(28, 95, 168, 0.08);
+}
+/* Uses --color-accent (Anchor light / Solar dark). Dark mode is currently
+   hidden from users (toggle removed), so this isn't a live contradiction
+   of the portfolio's black=action/blue=highlight/Solar=logo-only rule —
+   but if dark mode is ever re-enabled, this would show Solar on a
+   non-logo element. Revisit this token choice before re-enabling, don't
+   let it slide back in unreviewed. */
+.case-toc__link.is-active::before {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .case-toc__link.is-active {
+  background-color: rgba(245, 200, 66, 0.10);
+}

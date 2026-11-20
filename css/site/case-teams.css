@@ -1,0 +1,68 @@
+/* Hope DS: css/site/case-teams.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Involved teams component
+   ---------------------------------------------------------- */
+.team-section {
+  margin-top: var(--space-6);
+}
+
+/* Scoped to out-rank .case-section__body p (0,1,1), which would force body size and color */
+.case-section__body .team-section__title {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-6);
+}
+
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: var(--space-10);
+  align-items: center;
+  align-content: center;
+  width: 100%;
+}
+
+
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+  min-width: 72px;
+  width: fit-content;
+}
+
+.team-card svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-text-2);
+  flex-shrink: 0;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.team-card__name {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+  line-height: 1.35;
+}
+
+/* "My squad" emphasis — icon + label in brand accent */
+.team-card--mine svg {
+  color: var(--color-accent);
+}
+
+.team-card--mine .team-card__name {
+  color: var(--color-text-1);
+  font-weight: 600;
+}

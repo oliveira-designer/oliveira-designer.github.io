@@ -1,0 +1,32 @@
+/* Hope DS: css/site/case-body.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Body layout
+   ---------------------------------------------------------- */
+.case-body {
+  padding: var(--space-16) 0 var(--space-20);
+}
+
+.case-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  align-items: start;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  /* 2-column: stable 240px sidebar · content fills remaining 1fr.
+     max-width caps the grid at sidebar + gap + content-max so the
+     margin-inline: auto centres the whole sidebar+content block inside
+     the container, giving equal left and right gutters. */
+  .case-layout {
+    grid-template-columns: 240px 1fr;
+    column-gap: var(--space-12);
+    /*max-width: calc(240px + var(--space-12) + 68ch);*/
+    margin-inline: auto;
+    width: 100%;
+  }
+}

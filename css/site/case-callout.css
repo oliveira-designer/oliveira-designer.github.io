@@ -1,0 +1,32 @@
+/* Hope DS: css/site/case-callout.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Editorial Callout Quote
+   Full-width accent quote for key insight moments.
+   ---------------------------------------------------------- */
+.case-callout {
+  padding: var(--space-10) 0;
+  margin: var(--space-8) 0;
+}
+
+.case-callout__text {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-accent);
+  max-width: 820px;
+}
+
+.case-callout__attribution {
+  display: block;
+  margin-top: var(--space-5);
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+}

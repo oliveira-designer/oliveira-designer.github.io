@@ -1,7 +1,7 @@
 /* ============================================================
    HOPE DESIGN SYSTEM — auth.css
    NDA modal gate — load only on protected case study pages.
-   Load order: tokens.css → reset.css → components.css → auth.css
+   Load order: hope.css (tokens, reset, components, site) → auth.css
    ============================================================ */
 
 /* ----------------------------------------------------------

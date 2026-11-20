@@ -1,0 +1,189 @@
+/* Hope DS: css/components/button.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   BUTTONS
+   ---------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  line-height: 1.6;
+  /* Every style keeps a 1px border so the box never changes size between
+     states. A style with "no border" sets border-color to its fill (or
+     transparent when it has no fill). */
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  /* Figma Core draws the 1px stroke inside the box (Medium is 12px 20px of padding). In CSS the
+     border adds to the box, so it is subtracted from the padding: 11px 19px plus the 1px border
+     gives the Figma size. */
+  padding: calc(var(--space-3) - var(--border-width-normal)) calc(var(--space-5) - var(--border-width-normal));
+  min-height: 44px;              /* target size >= 44px (WCAG 2.5.5) */
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    color            var(--duration-normal) var(--ease-out),
+    border-color     var(--duration-normal) var(--ease-out),
+    transform        var(--duration-fast)   var(--ease-out);
+}
+/* Focus ring: outline for every interactive component. The radius is set
+   again because reset.css button:focus-visible / a:focus-visible would
+   otherwise shrink it to --radius-xs. */
+.btn:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+  border-radius: var(--radius-md);
+}
+.btn:active        { transform: scale(0.98); }
+
+/* Icons inside a button are 16px and follow the text colour in every state */
+.btn .icon {
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
+
+/* Arrow icon slides right on hover */
+.btn .icon--arrow {
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.btn:hover .icon--arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+  .btn { width: 100%; }
+}
+
+/* Primary */
+.btn--primary {
+  background-color: var(--color-bg-neutral-default);
+  color: var(--color-text-neutral-default);
+  border-color: var(--color-bg-neutral-default);
+}
+.btn--primary:hover {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+  color: var(--color-text-neutral-default);
+}
+
+/* Secondary */
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-text-1);
+  border-color: var(--color-border-strong);
+}
+.btn--secondary:hover {
+  background-color: var(--color-bg-neutral-default);
+  border-color: var(--color-bg-neutral-default);   /* no visible border: equals the fill */
+  color: var(--color-text-neutral-default);
+}
+
+/* Accent (Figma Core: Brand fill) */
+.btn--accent {
+  background-color: var(--color-bg-brand-default);
+  color: var(--color-text-inverse);
+  border-color: var(--color-bg-brand-default);
+}
+.btn--accent:hover {
+  background-color: var(--color-bg-brand-secondary);
+  border-color: var(--color-bg-brand-secondary);
+  color: var(--color-text-brand-hover);
+}
+
+/* Solar (site-only variant, not in Figma Core) */
+.btn--solar {
+  background-color: var(--color-solar);
+  color: var(--color-ink);
+  border-color: var(--color-solar);
+}
+.btn--solar:hover {
+  background-color: var(--color-daybreak);
+  border-color: var(--color-daybreak);
+  color: var(--color-ink);
+}
+
+/* Ghost */
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-text-2);
+  border-color: transparent;
+}
+.btn--ghost:hover {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+  color: var(--color-text-neutral-default);
+}
+
+/* Inverse (Figma Core: neutral-inverse fill, for dark surfaces) */
+.btn--inverse {
+  background-color: var(--color-bg-neutral-inverse);
+  color: var(--color-text-neutral-inverse);
+  border-color: var(--color-bg-neutral-inverse);
+}
+.btn--inverse:hover {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+  color: var(--color-text-neutral-default);
+}
+
+/* Destructive */
+.btn--destructive {
+  background-color: var(--color-error);
+  color: var(--color-text-danger-inverse);
+  border-color: var(--color-error);
+}
+.btn--destructive:hover {
+  background-color: var(--color-bg-danger-hover);
+  border-color: var(--color-bg-danger-hover);
+  color: var(--color-text-danger-inverse);
+}
+
+/* Small Ghost: Ghost colours and states, smaller box, pill radius */
+.btn--ghost-sm {
+  /* Figma 8px 16px with the border inside the box: 7px 15px plus the 1px border. */
+  padding: calc(var(--space-2) - var(--border-width-normal)) calc(var(--space-4) - var(--border-width-normal));
+  border-radius: var(--radius-pill);
+  min-height: 0;
+  background-color: transparent;
+  color: var(--color-text-2);
+  border-color: transparent;
+}
+.btn--ghost-sm:hover {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+  color: var(--color-text-neutral-default);
+}
+.btn--ghost-sm:focus-visible { border-radius: var(--radius-pill); }
+
+/* Disabled state: tokens, never opacity. Specificity is (0,3,0) so it also
+   beats every :hover rule above, whatever the source order. */
+.btn.btn:disabled,
+.btn.btn[aria-disabled="true"] {
+  background-color: var(--color-bg-disabled-default);
+  color: var(--color-text-disabled-inverse);
+  border-color: var(--color-border-disabled-default);
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+}
+.btn--secondary.btn:disabled,
+.btn--secondary.btn[aria-disabled="true"] {
+  background-color: transparent;
+  color: var(--color-text-disabled-default);
+  border-color: var(--color-border-disabled-default);
+}
+.btn--ghost.btn:disabled,
+.btn--ghost.btn[aria-disabled="true"],
+.btn--ghost-sm.btn:disabled,
+.btn--ghost-sm.btn[aria-disabled="true"] {
+  background-color: transparent;
+  color: var(--color-text-disabled-default);
+  border-color: transparent;
+}

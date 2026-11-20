@@ -1,0 +1,38 @@
+/* Hope DS: css/components/badge.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   BADGES
+   ---------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  line-height: 1.5;
+}
+
+.badge--neutral {
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-2);
+  border: var(--border-thin);
+}
+
+.badge--anchor {
+  background-color: var(--color-bg-brand-secondary);
+  color: var(--color-text-brand-secondary);
+}
+
+.badge--solar {
+  background-color: var(--color-bg-accent-secondary);
+  color: var(--color-text-accent-default);
+}
+
+.badge--success {
+  background-color: rgba(74, 159, 107, 0.12);
+  color: var(--color-text-positive-default);
+}

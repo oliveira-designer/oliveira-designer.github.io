@@ -1,0 +1,132 @@
+/* Hope DS: css/site/content-grids.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CONTENT GRIDS
+   ---------------------------------------------------------- */
+
+/* Generic layout wrappers — column count only, no padding, no max-width */
+.layout-1col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: stretch;
+  width: 100%;
+}
+
+.layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: stretch;
+  width: 100%;
+}
+
+.layout-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-8);
+  align-items: stretch;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .layout-2col,
+  .layout-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .layout-3col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Cases — always 1 column; horizontal card layout handles visual/content split.
+   gap is --space-32 (128px) per the Figma spec, the vertical distance
+   between consecutive case cards. */
+.cases-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-32);
+}
+
+
+/* Skills */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 640px)  { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* Challenges */
+.challenges-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .challenges-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  margin-top: var(--space-10);
+}
+
+@media (min-width: 768px) {
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+/* Testimonials — infinite horizontal ticker */
+.testimonials-ticker {
+  position: relative; /* clips absolutely positioned descendants (.visually-hidden) when the track is not animated */
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.testimonials-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-6);
+  padding-right: var(--space-6);
+  animation: testimonials-scroll 80s linear infinite;
+}
+
+.testimonials-ticker:hover .testimonials-track {
+  animation-play-state: running;
+}
+
+.testimonials-ticker .testimonial-card {
+  width: 380px;
+  flex-shrink: 0;
+  margin-bottom: 0;
+  align-self: flex-start;
+}
+
+@keyframes testimonials-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-100%, 0, 0); }
+}
+
+.card__title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}

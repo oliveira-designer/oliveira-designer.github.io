@@ -1,0 +1,30 @@
+/* Hope DS: css/components/icon.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   ICONS (Phosphor — regular weight, filled silhouette)
+   ---------------------------------------------------------- */
+.icon {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  fill: currentColor;
+}
+
+/* Icon color roles (Figma: Hope · Icon / Icon/Color) */
+.icon--default { color: var(--icon-color-default); }
+.icon--secondary { color: var(--icon-color-secondary); }
+.icon--tertiary { color: var(--icon-color-tertiary); }
+.icon--neutral { color: var(--icon-color-neutral); }
+.icon--on-neutral { color: var(--icon-color-neutral); } /* deprecated 2026-11, use .icon--neutral */
+.icon--brand-hover { color: var(--icon-color-brand-hover); }
+.icon--disabled { color: var(--icon-color-disabled); }
+.icon--danger { color: var(--icon-color-danger); }
+.icon--positive { color: var(--icon-color-positive); }
+.icon--warning { color: var(--icon-color-warning); }
+.icon--info { color: var(--icon-color-info); }
+
+.icon--title {
+  color: var(--color-border-focus-ring);
+}

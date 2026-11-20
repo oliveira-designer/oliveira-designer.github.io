@@ -1,0 +1,53 @@
+/* Hope DS: css/site/case-figure-bleed.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CASE STUDY — Full-bleed figure breakout
+   Snaps the figure to 100vw regardless of parent column width.
+   Use for service blueprints, large process maps, hero mockups.
+
+   Uses negative margin-left rather than position/left/transform so the
+   breakout math stays correct even inside the sidebar+content grid.
+   The "left: 50% + translateX(-50%)" trick centres relative to the
+   content COLUMN, not the viewport — when a sidebar is present the
+   column centre is right-of-viewport-centre, causing rightward overflow.
+
+   Mobile  (<768px)  : undo the 24 px (--space-6) container padding.
+   Tablet  (768–1023): case-content is centred via margin-inline:auto, so
+                       content left = 50vw − 34ch.  margin-left = 34ch − 50vw.
+   Desktop (≥1024px) : .container now uses a capped-width-plus-minimum-
+                       gutter formula (see .container), so its left edge
+                       sits at a constant 80px from the viewport for any
+                       width up to the 1280px cap (1440px viewport), not
+                       a fixed pixel box. Working through the chain
+                       (container edge 80, sidebar 240, gap 48, then the
+                       68ch case-content re-centring inside the remaining
+                       1fr track) the viewport-width terms cancel out and
+                       the constant lands back at 128:
+                       content left = 50vw − 128px.
+                       So margin-left = 128px − 50vw (always negative ≥ 1024px).
+   ---------------------------------------------------------- */
+.cs-figure--full-bleed {
+  width: 100vw;
+  margin-left: calc(-1 * var(--space-6));
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  max-width: none;
+}
+@media (min-width: 768px) {
+  .cs-figure--full-bleed {
+    /* case-content has margin-inline:auto, so it is centred inside the grid
+       track at any viewport where 68ch < (viewport - 2×padding).
+       Content left edge from viewport = 50vw − 34ch (half-viewport minus
+       half the content column).  margin-left = 34ch − 50vw puts the figure
+       flush with the viewport left edge on any width in this range. */
+    margin-left: calc(34ch - 50vw);
+  }
+}
+@media (min-width: 1024px) {
+  .cs-figure--full-bleed {
+    margin-left: calc(128px - 50vw);
+  }
+}

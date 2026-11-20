@@ -1,0 +1,338 @@
+/* Hope DS: css/site/hero.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   HERO
+   The centered headline/paragraph/buttons group and the logo carousel
+   both live inside this one full-viewport block now, instead of the
+   carousel being a separate section further down the page. .hero itself
+   no longer centers its content directly, .hero > .container does that
+   job internally so the centered group and the bottom-anchored carousel
+   can be positioned independently within the same viewport height.
+   ---------------------------------------------------------- */
+.hero {
+  padding: var(--space-20) 0;
+  padding-top: calc(var(--space-20) + var(--space-16));
+
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+  position: relative;
+  width: 100%;
+
+  /* dvh avoids clipping by the mobile browser toolbar. min-height, not
+     height: if the centered group plus the logo carousel ever need more
+     room than one viewport at a given height (a short browser window,
+     landscape phone), the section grows past 100dvh instead of clipping
+     or cramming content. */
+  min-height: 100dvh;
+
+  background: var(--color-bg);
+
+  /* Hairline divider between the Hero block and the section that
+     follows (Case Studies). This used to come from the general
+     .section + .section rule below, which only fires when a .section
+     is immediately preceded by another .section: #work got it for
+     free because #companies (a .section) used to sit right before it.
+     Now that the logo carousel lives inside .hero (no longer its own
+     #companies section), #work has nothing before it, so that rule
+     stopped matching and the divider disappeared. Setting it directly
+     here, after the logo carousel since it is the last thing in this
+     block, does not depend on what section happens to follow. Same
+     token the rule below already used, --border-thin, not a new value. */
+  border-bottom: var(--border-thin);
+}
+
+.hero > .container {
+  position: relative;
+  z-index: var(--z-raised);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* The existing headline/paragraph/buttons group. flex:1 makes it fill
+   whatever vertical space is left after the logo carousel below takes
+   its own natural height, and centers its own content within that
+   space, the same visual centering .hero used to do directly.
+   Scoped to .hero--home only: About's .hero__layout also carries the
+   reveal-group class (for the same scroll-reveal animation hook), and
+   this rule's display:flex was overriding .hero__layout's own
+   display:grid, collapsing the About page's two-column layout into a
+   single centered column. */
+.hero--home .reveal-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
+/* Logo carousel, anchored to the bottom of the Hero block. flex: 0 0
+   auto keeps it at its own natural height instead of stretching, and
+   margin-top gives it breathing room from the centered group above
+   without being part of that group's own vertical centering. */
+.hero .logo-strip {
+  flex: 0 0 auto;
+  margin-top: var(--space-16);
+}
+
+.hero__overline {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-2);
+  margin-bottom: var(--space-5);
+}
+
+/* ── Headline row — avatar and headline merged into one centered row,
+   per the simplified Figma Hero (node 43:3914). Replaces the separate
+   floating greeting bubble and the standalone headline block. ───────── */
+.hero__headline-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+/* Mobile: avatar stacks above the headline as two centered rows,
+   instead of sitting inline to its left. Desktop keeps the row
+   layout untouched. */
+@media (max-width: 767px) {
+  .hero__headline-row {
+    flex-direction: column;
+  }
+}
+
+/* Avatar — fixed 115x115, per Figma */
+.hero__avatar {
+  width:         115px;
+  height:        115px;
+  border-radius: 50%;
+  object-fit:    cover;
+  display:       block;
+  flex-shrink:   0;
+}
+
+/* The line break is a hard <br> in the markup (matches the pattern
+   already used for the About headline and Hero body), not a natural
+   wrap. Without it, the browser's own wrap point sizes this box using
+   its single-line preferred width clamped to max-width, which can be
+   much wider than either actual rendered line, leaving slack on the
+   right of a left-aligned line. That slack pulled the avatar + headline
+   visual mass off the center axis shared with the paragraph and buttons
+   below. With a hard break, the box hugs the wider of the two actual
+   lines, and text-align: center keeps the shorter line centered under
+   it, so the visible glyphs stay symmetric around the box's own center. */
+.hero__headline {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text-1);
+  max-width: 800px;
+}
+/* Scoped to Home: this class is shared with About's headline, which
+   must stay left-aligned per its own Figma spec. */
+.hero--home .hero__headline {
+  text-align: center;
+}
+.hero__headline mark {
+  background: none;
+  color: var(--color-accent);
+}
+
+/* Mobile: the hard <br> above forces "who" and "absorbs" onto separate
+   lines on any width, desktop included. That is the intended two-line
+   split on desktop, but combined with mobile's much narrower column it
+   adds a third forced break on top of the natural wrap, splitting
+   "who" and "absorbs" apart in a spot that reads awkwardly. Hiding the
+   break here lets the whole headline wrap naturally on mobile, and
+   .hero__nowrap-pair (below) keeps "who" and "absorbs" specifically
+   from ever landing on separate lines once that natural wrap takes
+   over. Desktop keeps the existing hard break, untouched. */
+@media (max-width: 767px) {
+  .hero__headline-break {
+    display: none;
+  }
+  .hero__nowrap-pair {
+    white-space: nowrap;
+  }
+}
+
+/* Two separate lines by design (Figma node 43:3914), not a natural text
+   wrap: "...across Brazil and the US." and "I turn ambiguous briefs..."
+   are two <p> tags in the markup so the break holds at any width instead
+   of depending on where the browser happens to wrap the text.
+   No text-align here: left is the base .hero default, and About's body
+   paragraphs should stay left-aligned too. Home centers its own copy
+   via .hero--home .hero__body below. */
+.hero__body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--color-text-1);
+  max-width: 560px;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+.hero__body-group {
+  margin-bottom: var(--space-10);
+}
+/* Mobile: the two sentences are separate <p> tags so the line break
+   between them holds at desktop widths, but on mobile that same forced
+   break plus the narrow column produces an awkward three-line wrap with
+   an orphaned word. display: inline joins them into one flowing block
+   of text (the whitespace between the tags in the markup still gives a
+   normal space between sentences), wrapping naturally at this width.
+   Scoped to Home only, About's three-paragraph body is untouched. */
+@media (max-width: 767px) {
+  .hero--home .hero__body-group .hero__body {
+    display: inline;
+  }
+}
+
+/* ── Home hero — centered layout, no background image ────────────────
+   Scoped modifier so .hero--about (which stays left-aligned, two-column)
+   is untouched. */
+.hero--home {
+  text-align: center;
+}
+.hero--home .hero__body {
+  text-align: center;
+}
+.hero--home .hero__actions {
+  justify-content: center;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+@media (max-width: 767px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+    /* The buttons' own width: 100% (below, and in components.css) only
+       stretches them to fill this element's own box. That box was
+       itself shrink-wrapped to the buttons' combined content width by
+       align-items: center on the ancestor .reveal-group (the same
+       shrink-wrap behavior that also affects the headline row and body
+       group, fine for those, but not what we want here), so the
+       buttons never actually reached the container's full width.
+       width: 100% here breaks it out of that shrink-wrap. */
+    width: 100%;
+    gap: var(--space-3);
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* About page — text + portrait side by side */
+.hero--about {
+  padding: var(--space-20) 0;
+  align-items: stretch;
+}
+
+/* Same gap as the description-to-buttons spacing below (--space-10),
+   applied above the description too so both gaps match. */
+.hero--about .hero__headline {
+  margin-bottom: var(--space-10);
+}
+
+/* Vertically centers the hero__layout row within the full viewport
+   height .hero already provides (min-height: 100dvh, on the shared
+   base .hero rule above). Same full-viewport-fill technique the Home
+   hero uses, just centered directly on this container instead of on an
+   inner flex:1 group, since About has no logo carousel anchored below
+   it that needs separate positioning. Horizontal alignment (left) is
+   untouched, this only affects the vertical axis. */
+.hero--about > .container {
+  justify-content: center;
+}
+
+/* Overrides the base .hero__body max-width (560px, a readable line
+   length meant for Home's narrower centered column). About's content
+   column is fluid width, filling the space up to the portrait, so the
+   paragraphs should reflow to that same width instead of staying
+   capped at the old fixed-column reading width. */
+.hero--about .hero__body {
+  margin-bottom: 0;
+  max-width: none;
+}
+
+/* Paragraph break between the first and second body paragraphs only,
+   per the updated Figma. --space-6 (24px) is close to one line's worth
+   of height at this text's line-height, reading as an empty line. The
+   second and third paragraphs stay flush, as before. */
+.hero--about .hero__body:first-of-type {
+  margin-bottom: var(--space-6);
+}
+
+/* Restore vertical breathing room between body text and action buttons */
+.hero--about .hero__actions {
+  margin-top: var(--space-10);
+}
+
+.hero__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: center;
+  width: 100%;
+}
+
+/* Fluid content column, fixed 340px portrait column, per the updated
+   Figma (node 152:1139, Hero About). The content column (1fr) grows to
+   fill whatever space is left after the fixed portrait and the 48px
+   gap, instead of staying locked at a fixed width itself. */
+@media (min-width: 1200px) {
+  .hero__layout {
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-12);
+  }
+}
+
+.hero__content {
+  min-width: 0;
+}
+
+.hero__portrait {
+  margin: 0;
+  width: 100%;
+  max-width: 340px;
+  justify-self: center;
+}
+
+@media (min-width: 1200px) {
+  .hero__portrait {
+    justify-self: end;
+  }
+}
+
+/* aspect-ratio 340/318 (not a square 1:1) matches the Figma portrait's
+   fixed 340x318 box. Kept as a ratio rather than a hardcoded height so
+   it still scales correctly on mobile, where the column is fluid. */
+.hero__portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 340 / 318;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: var(--radius-lg);
+  border: var(--border-normal);
+  box-shadow: var(--shadow-lg);
+}

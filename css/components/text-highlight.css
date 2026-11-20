@@ -1,0 +1,27 @@
+/* Hope DS: css/components/text-highlight.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   TEXT HIGHLIGHT — scroll-triggered marker sweep
+   ---------------------------------------------------------- */
+.text-highlight {
+  display: inline;
+  background-image: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--color-solar) 30%, transparent),
+    color-mix(in srgb, var(--color-solar) 30%, transparent)
+  );
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  background-position: 0% 55%;
+  -webkit-box-decoration-break: clone;
+          box-decoration-break: clone;
+  padding: 0 2px;
+  border-radius: 2px;
+  transition: background-size 1.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.text-highlight.is-active {
+  background-size: 100% 100%;
+}

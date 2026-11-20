@@ -1,0 +1,30 @@
+/* Hope DS: css/site/container.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   CONTAINER
+   Capped content width with an enforced minimum gutter. The
+   parent section stays full width (its own background/border
+   is never capped here), and this element only centres and
+   sizes the INNER content.
+
+   Desktop: width is min(--content-max-width, 100% - 2 * 80px),
+   so the gutter is exactly --space-20 (80px) on each side for
+   any viewport up to the point the cap takes over, then the
+   leftover space becomes extra margin beyond that 80px floor.
+   It never shrinks below 80px on a desktop width.
+   ---------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+@media (min-width: 768px) {
+  .container {
+    width: min(var(--content-max-width), calc(100% - 2 * var(--space-20)));
+    max-width: none;
+    padding: 0;
+  }
+}

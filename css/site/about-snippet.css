@@ -1,0 +1,38 @@
+/* Hope DS: css/site/about-snippet.css
+   Split from css/layout.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   ABOUT SNIPPET
+   ---------------------------------------------------------- */
+.about-snippet {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .about-snippet {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+  }
+}
+.about-snippet__blocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.about-block__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-3);
+  margin-bottom: var(--space-2);
+}
+.about-block__text {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--color-text-2);
+}

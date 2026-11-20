@@ -1,0 +1,41 @@
+/* Hope DS: css/components/banner.css
+   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   BANNER
+   ---------------------------------------------------------- */
+.banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-body-sm);
+  font-family: var(--font-body);
+  line-height: 1.4;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: var(--space-6);
+}
+
+.banner--wip {
+  background-color: var(--color-bg-accent-tertiary);
+  color: var(--color-dusk);
+  border: 1px solid var(--color-amber);
+}
+
+[data-theme="dark"] .banner--wip {
+  background-color: var(--color-bg-accent-tertiary);
+  color: var(--color-daybreak);
+  border-color: var(--color-amber);
+}
+
+.banner__icon {
+  flex-shrink: 0;
+  font-size: var(--fs-body);
+}
+
+.banner__text {
+  flex: 1;
+}
