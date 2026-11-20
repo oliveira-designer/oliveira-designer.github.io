@@ -1805,12 +1805,17 @@ type ButtonProps = {
   /icons
     (Lucide icons como SVG inline ou via pacote)
   DESIGN.md          ← este arquivo (fonte da verdade)
-  reset.css          ← reset base
-  tokens.css         ← :root com custom properties
-  components.css     ← classes de componentes
-  utilities.css      ← classes utilitárias
-  accessibility.css  ← skip-link, visually-hidden, focus
+  /css
+    tokens.css       ← camada de tokens: :root e [data-theme="dark"]
+    reset.css        ← reset base, foco, skip-link, visually-hidden
+    /components      ← um arquivo por componente (button.css, badge.css, icon.css, case-card.css, ...)
+    /site            ← layout e estilos de página (header, hero, footer, case study, animations, ...)
+    hope.css         ← GERADO por npm run css:build (tokens, reset, components, site). Nunca editar à mão
+    auth.css         ← carregado por js/auth.js só nas páginas protegidas
+    output.css       ← Tailwind (npm run build:css), carregado antes do hope.css
 ```
+
+**CSS dividido por componente (v2.7.0, D-18).** As páginas carregam um único `css/hope.css`, gerado por `scripts/build-css.mjs` na ordem fixa: tokens, reset, `components/*` (alfabética), `site/*` (ordem original do antigo `layout.css`), `animations`. A camada `site` carrega depois da `components` porque sobrescreve `.btn`, `.logo-strip`, `.testimonial-card`, `.icon` e `.case-section__body`. Mudou só a organização: nenhum seletor, valor ou classe mudou (0 diferenças de estilo computado nas páginas do site e do docs). `npm run docs:check` falha se `hope.css` estiver defasado das fontes.
 
 ---
 

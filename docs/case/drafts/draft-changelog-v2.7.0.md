@@ -45,8 +45,14 @@
 **11. Seção vazia nas páginas de componente (D-29)**
 - O gerador deixa de renderizar "Not yet verified" (e a entrada do sumário) quando a lista `unverified` está vazia; só a página do Badge mudou.
 
-**12. Diário de decisões v0.7**
-- `docs/case/decisoes-hope.md` atualizado (D-01 a D-29), substituindo a versão anterior sem mesclar.
+**12. CSS dividido por componente (D-18)**
+- `css/components.css` virou 17 arquivos em `css/components/` (um por família de componente) e `css/layout.css` virou 18 arquivos em `css/site/` (mais `site/animations.css`, que era `animations.css`). `tokens.css` e `reset.css` ficam como estavam; `auth.css` segue carregado por `js/auth.js` e `output.css` é o Tailwind.
+- As páginas carregam um único `css/hope.css`, **gerado** por `npm run css:build` (`scripts/build-css.mjs`) na ordem fixa: tokens, reset, `components/*` em ordem alfabética, `site/*` na ordem original do `layout.css`, `animations`. O site continua carregando depois da camada de componentes porque sobrescreve `.btn`, `.logo-strip`, `.testimonial-card`, `.icon` e `.case-section__body`.
+- `docs:check` falha se `css/hope.css` estiver defasado das fontes. Os geradores de docs, `docs/data/css-sources.json` e as páginas passaram a apontar para o agregado; a referência de código das páginas de componente continua citando o arquivo de origem.
+- Refatoração pura: nenhum seletor, valor ou classe mudou. Verificado com estilo computado (hash por elemento, incluindo `::before` e `::after`, hover e foco por teclado) em 13 páginas, 3 larguras e 2 temas: 0 diferenças nas páginas do site; nas páginas de docs só mudou texto de prosa (menções ao nome dos arquivos).
+
+**13. Diário de decisões v0.8**
+- `docs/case/decisoes-hope.md` atualizado (D-01 a D-30, inclui o foco do Breadcrumb no Figma), substituindo a versão anterior sem mesclar.
 
 **Débitos**
 - Comparador de tokens: 150 iguais e 2 diferentes (`--color-bg-scrim-strong` e `--color-bg-icon-chip` no Dark, já conhecidos); nenhum token do Figma sem token no CSS.

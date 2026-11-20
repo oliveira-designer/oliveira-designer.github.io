@@ -1,6 +1,6 @@
 # Hope DS: diário de decisões (material de case)
 
-Versão 0.7 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
+Versão 0.8 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
 
 ## Como ler este documento
 
@@ -195,6 +195,14 @@ Versão 0.7 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
 - **Erro meu:** Renan respondeu "vale criar o token" a esse ponto; eu entendi como outro ponto e não o incluí nos Prompts 12 e 13. Corrigido no Prompt 14. [Registrado]
 - **Decisão de Renan:** criar o token no CSS. Sem componente que o use por enquanto, como já era a regra do `Background/Brand/Tertiary` reservado. [Registrado]
 - **Página de componente:** a lista "unverified" do Badge ficou vazia depois do Prompt 13 e a página mostrava uma seção "Not yet verified" sem itens. Decisão de Renan: o gerador esconde a seção quando a lista está vazia. [Registrado]
+
+### D-30 Estado Focus no Breadcrumb
+- **Contexto:** o "Breadcrumb item" do Core tinha `Type=Link`, `Link Hover` e `Current`, sem estado Focus. Sem indicador de foco, quem navega por teclado não vê onde está (WCAG 2.4.7 Focus Visible, nível AA). [Registrado: leitura do Figma; critério WCAG]
+- **Opções:** (1) variante nova `Link Focus` com anel só em volta do rótulo; (2) reaproveitar o componente Link; (3) não ter estado Focus. A 2 foi descartada porque o Link tem sublinhado e estilo diferente; a 3 deixa o item de teclado sem indicador. [Inferência: análise minha]
+- **Decisão de Renan:** opção 1, com o rótulo em `Text/Default/Default` (o mesmo do Hover). [Registrado]
+- **Execução (Figma, Core, página `└ Breadcrumb`):** variante `Type=Link Focus` (2510:258) entre Hover e Current, com um retângulo "Focus ring" absoluto: anel quadrado (raio 0), 2px ligado a `Stroke/focus`, cor `Border/Utilities/Focus Ring`, alinhamento interno, deslocado 4px (2px de intervalo mais 2px de traço) em volta do rótulo; o separador fica fora do anel. `Current` não ganha foco (não é link, `aria-current="page"`). Descrição do componente e painel Info atualizados. [Registrado]
+- **Publicação:** Renan publicou o Core em 2026-11-20. [Registrado]
+- **CSS:** ainda não há prompt próprio. Se o Breadcrumb não tem classe no CSS (o Prompt 15 manda o Code conferir), o foco entra quando o componente for codificado no Lote 3 (Navigation), com `:focus-visible`, `--focus-ring-width` e `--focus-ring-gap`, só no link e não no item atual. [Inferência: depende da conferência do Code]
 
 ## Pendências para o case
 
