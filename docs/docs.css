@@ -50,7 +50,7 @@
 }
 
 .docs-content a {
-  color: var(--color-text-brand-primary);
+  color: var(--color-text-brand-default);
   text-decoration: underline;
 }
 
@@ -204,14 +204,14 @@
 }
 
 .docs-status--mismatch {
-  background: var(--color-bg-danger-soft);
-  color: var(--color-text-error);
-  border-color: var(--color-border-error);
+  background: var(--color-bg-danger-secondary);
+  color: var(--color-text-danger-default);
+  border-color: var(--color-border-danger-default);
 }
 
 .docs-row--mismatch th,
 .docs-row--mismatch td {
-  background: var(--color-bg-danger-soft);
+  background: var(--color-bg-danger-secondary);
 }
 
 .docs-fig {
@@ -219,7 +219,7 @@
 }
 
 .docs-fig--diff code {
-  color: var(--color-text-error);
+  color: var(--color-text-danger-default);
   font-weight: 600;
 }
 
@@ -244,13 +244,13 @@
 
 /* Accepted divergences: informational, never red */
 .docs-status--accepted {
-  background: var(--color-bg-info-soft);
-  color: var(--color-text-info);
-  border-color: var(--color-border-info);
+  background: var(--color-bg-info-secondary);
+  color: var(--color-text-info-default);
+  border-color: var(--color-border-info-default);
 }
 
 .docs-fig--accepted code {
-  color: var(--color-text-info);
+  color: var(--color-text-info-default);
   font-weight: 600;
 }
 
@@ -353,8 +353,8 @@
 }
 
 .docs-note--banner {
-  border-color: var(--color-border-warning);
-  background: var(--color-bg-warning-soft);
+  border-color: var(--color-border-warning-default);
+  background: var(--color-bg-warning-secondary);
   color: var(--color-text-1);
 }
 
@@ -394,7 +394,7 @@
 
 .docs-theme__btn[aria-pressed="true"] {
   background-color: var(--color-bg-neutral-default);
-  color: var(--color-text-on-neutral);
+  color: var(--color-text-neutral-default);
 }
 
 .docs-theme__btn:focus-visible {

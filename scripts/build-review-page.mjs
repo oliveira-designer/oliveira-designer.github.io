@@ -154,7 +154,7 @@ function unitSection(u, ctx) {
   const { fileKey, map, notStatic, noRenderer } = ctx;
   const cov = unitCoverage(u, map);
   const id = `unit-${slug(u.name)}`;
-  const statusBadge = { Complete: 'badge--success', Partial: 'badge--solar', 'Not created': 'badge--draft' }[cov.status];
+  const statusBadge = { Complete: 'badge--success', Partial: 'badge--solar', 'Not created': 'badge--neutral' }[cov.status];
   const heading = `<h3 class="text-h3" id="${id}-title">${esc(u.name)}</h3>`;
   const meta = `<p class="docs-badges"><span class="badge badge--anchor">${u.variants} Figma variant${u.variants === 1 ? '' : 's'}</span> <span class="badge ${statusBadge}">CSS ${cov.css} / ${u.variants}</span> <span class="badge ${statusBadge}">${cov.status}</span> <a href="${figmaUrl(fileKey, u.id)}" rel="noopener noreferrer">Figma node ${esc(u.id)}</a></p>`;
   let body = '';
@@ -168,7 +168,10 @@ function unitSection(u, ctx) {
   } else {
     const demos = [];
     const placed = cov.m.variants.filter((v) => v.selector);
-    for (const v of placed) {
+    // Button: the review shows Default and Disabled only. Hover and Focus use one shared rule per
+    // style and are live on the Button page.
+    const shown = u.name === 'Button' ? placed.filter((v) => v.state === 'Default' || v.state === 'Disabled') : placed;
+    for (const v of shown) {
       const label = propsOf(v) || u.name;
       const html = v.renderable === false ? null : renderVariant(u.name, v);
       if (html === null) {
@@ -186,7 +189,8 @@ function unitSection(u, ctx) {
       } else if (v.state === 'Disabled') caption = 'Native disabled attribute.';
       demos.push(demoBlock(label, html, caption));
     }
-    body += `\n            <h4 class="text-body docs-subhead">Covered variants (${cov.css} of ${u.variants})</h4>\n            <div class="docs-demo-stack">\n${demos.join('\n')}\n            </div>`;
+    const shownNote = shown.length !== placed.length ? `\n            <p class="docs-section__desc">Showing ${shown.length}: Default and Disabled. Hover and Focus are shared rules per style, see the Button page.</p>` : '';
+    body += `\n            <h4 class="text-body docs-subhead">Covered variants (${cov.css} of ${u.variants})</h4>${shownNote}\n            <div class="docs-demo-stack">\n${demos.join('\n')}\n            </div>`;
     const missing = cov.m.variants.filter((v) => !v.selector);
     if (missing.length) {
       body += `\n            <h4 class="text-body docs-subhead">Missing variants (${missing.length})</h4>\n            <ul class="docs-list">${missingGroups(cov.m).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>`;
@@ -245,7 +249,7 @@ function main() {
     { units: 0, figma: 0, css: 0, Complete: 0, Partial: 0, 'Not created': 0 }
   );
 
-  const badgeFor = { Complete: 'badge--success', Partial: 'badge--solar', 'Not created': 'badge--draft' };
+  const badgeFor = { Complete: 'badge--success', Partial: 'badge--solar', 'Not created': 'badge--neutral' };
   const tableRows = rows.map(
     ({ u, cov }) =>
       `                  <tr data-unit-row="${esc(u.name)}"><td>${esc(u.group)}</td><th scope="row"><a href="#unit-${slug(u.name)}">${esc(u.name)}</a></th><td>${u.variants}</td><td>${cov.css}</td><td><span class="badge ${badgeFor[cov.status]}">${cov.status}</span></td><td>${u.buildAfter && u.buildAfter.length ? esc(u.buildAfter.join(', ')) : '<span class="docs-muted">none</span>'}</td><td><a href="${figmaUrl(inv.source.fileKey, u.id)}" rel="noopener noreferrer">${esc(u.id)}</a></td></tr>`

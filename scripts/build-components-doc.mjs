@@ -109,7 +109,7 @@ const STATUS_BADGE = {
   documented: '<span class="badge badge--anchor">documented</span>',
   measured: '<span class="badge badge--neutral">measured</span>',
   inference: '<span class="badge badge--solar">inference</span>',
-  unverified: '<span class="badge badge--draft">unverified</span>',
+  unverified: '<span class="badge badge--neutral">unverified</span>',
 };
 const statusBadge = (s) => STATUS_BADGE[s] || `<span class="badge badge--neutral">${esc(s)}</span>`;
 
@@ -153,7 +153,7 @@ function summarySection(comp) {
   const info = diffs.filter((d) => d.class === 'Informativo').length;
   const badges = [
     `<span class="badge badge--anchor">${m.figmaVariants} Figma variants${im ? ` (+ ${im.figmaVariants} Icon Button)` : ''}</span>`,
-    `<span class="badge ${m.implemented ? 'badge--success' : 'badge--draft'}">${m.implemented} in code${im ? ` (Icon Button ${im.implemented})` : ''}</span>`,
+    `<span class="badge ${m.implemented ? 'badge--success' : 'badge--neutral'}">${m.implemented} in code${im ? ` (Icon Button ${im.implemented})` : ''}</span>`,
     `<span class="badge badge--solar">${atencao} Atencao</span>`,
     `<span class="badge badge--neutral">${info} Informativo</span>`,
     `<span class="badge badge--neutral">${gaps} known gaps</span>`,
@@ -298,7 +298,7 @@ function iconButtonSection() {
   );
   const variants = table(
     ['Style', 'State', 'In code'],
-    m.variants.map((v) => [th(esc(v.style)), td(esc(v.state)), td('<span class="badge badge--draft">none</span>')].join(''))
+    m.variants.map((v) => [th(esc(v.style)), td(esc(v.state)), td('<span class="badge badge--neutral">none</span>')].join(''))
   );
   const inner = `            <p class="docs-section__desc">A separate Figma component (set ${code(ib.figmaSet)}) for icon-only actions: ${esc(ib.layout.size)}, ${esc(ib.layout.radius)}. ${m.variants.length} variants, ${m.implemented} implemented in CSS. There is no live demo.</p>
             <h3 class="text-h3">Properties</h3>
@@ -373,7 +373,7 @@ function noCodeSection(comp) {
   } else if (comp.slug === 'badge') collect('Badge', (v) => v.style);
   else collect('Link', (v) => v.size);
   const notesFor = notes.coverage.missingInCss.filter((x) => x.component === comp.name || (comp.slug === 'button' && x.component === 'Icon Button'));
-  const rows = groups.map(([k, , st]) => [th(esc(k)), td(esc(st.join(', '))), td('<span class="badge badge--draft">no CSS class</span>')].join(''));
+  const rows = groups.map(([k, , st]) => [th(esc(k)), td(esc(st.join(', '))), td('<span class="badge badge--neutral">no CSS class</span>')].join(''));
   const extra = notesFor.filter((x) => x.note).map((x) => `${x.variant}: ${x.note}`);
   const inner = `            ${rows.length ? table(['Figma variant', 'States', 'Status'], rows) : '<p class="docs-section__desc">None.</p>'}
             ${extra.length ? `<h3 class="text-h3">Notes from the code review</h3>${list(extra)}` : ''}`;
@@ -495,7 +495,7 @@ function indexPage(components) {
       [
         th(href ? `<a href="${href}">${esc(name)}</a>${extraLabel ? ` <span class="docs-muted">${esc(extraLabel)}</span>` : ''}` : esc(name)),
         td(`<span class="badge badge--anchor">${m.figmaVariants}</span>`),
-        td(`<span class="badge ${m.implemented ? 'badge--success' : 'badge--draft'}">${m.implemented} of ${m.figmaVariants}</span>`),
+        td(`<span class="badge ${m.implemented ? 'badge--success' : 'badge--neutral'}">${m.implemented} of ${m.figmaVariants}</span>`),
         td(`<span class="badge badge--solar">${a} Atencao</span> <span class="badge badge--neutral">${inf} Informativo</span>`),
         td(gaps === null ? '<span class="docs-muted">in the Button page</span>' : `<span class="badge badge--neutral">${gaps}</span>`),
       ].join('')
@@ -509,7 +509,7 @@ function indexPage(components) {
   const total = documented.reduce((n, c) => n + c.figmaVariants, 0);
   const impl = documented.reduce((n, c) => n + c.implemented, 0);
   const figmaOnly = figmaOnlyComponents();
-  const foRows = figmaOnly ? figmaOnly.flatMap((g) => g.items.map((it) => [th(esc(it)), td(esc(g.group)), td('<span class="badge badge--draft">no CSS</span>')].join(''))) : [];
+  const foRows = figmaOnly ? figmaOnly.flatMap((g) => g.items.map((it) => [th(esc(it)), td(esc(g.group)), td('<span class="badge badge--neutral">no CSS</span>')].join(''))) : [];
   const body = `          <header class="docs-pagehead">
             <p class="text-label text-tertiary">Components</p>
             <h1 class="text-h1">Components</h1>

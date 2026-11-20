@@ -119,35 +119,22 @@
 
           <aside class="docs-note docs-note--banner" role="note">
             <p><strong>Temporary page.</strong> It exists to review what is built and what is missing while the CSS is being restructured. It will be removed once the components are created. Nothing here is a design decision: coverage comes from <code>docs/data/components-map.json</code>, the inventory from <code>docs/data/figma-components-inventory.json</code>, and the stylesheets from <code>docs/data/css-sources.json</code>.</p>
-            <p>30 components, 172 Figma variants, 19 with a CSS class: 2 Complete, 2 Partial, 26 Not created.</p>
+            <p>30 components, 171 Figma variants, 34 with a CSS class: 3 Complete, 1 Partial, 26 Not created.</p>
           </aside>
 
           <section class="docs-group" id="group-primitives" aria-labelledby="group-primitives-title">
             <h2 class="text-h2" id="group-primitives-title">Primitives <span class="docs-muted">(5 components)</span></h2>
           <section class="docs-section docs-unit" id="unit-button" aria-labelledby="unit-button-title">
             <h3 class="text-h3" id="unit-button-title">Button</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">28 Figma variants</span> <span class="badge badge--solar">CSS 12 / 28</span> <span class="badge badge--solar">Partial</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=11-105" rel="noopener noreferrer">Figma node 11:105</a></p>
-            <h4 class="text-body docs-subhead">Covered variants (12 of 28)</h4>
+            <p class="docs-badges"><span class="badge badge--anchor">28 Figma variants</span> <span class="badge badge--success">CSS 28 / 28</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=11-105" rel="noopener noreferrer">Figma node 11:105</a></p>
+            <h4 class="text-body docs-subhead">Covered variants (28 of 28)</h4>
+            <p class="docs-section__desc">Showing 14: Default and Disabled. Hover and Focus are shared rules per style, see the Button page.</p>
             <div class="docs-demo-stack">
             <div class="docs-demo">
               <p class="docs-demo__label">Style: Primary, Size: Medium, State: Default</p>
               <div class="docs-demo__stage">
                 <!-- demo:start --><button type="button" class="btn btn--primary">View case study</button><!-- demo:end -->
               </div>
-            </div>
-            <div class="docs-demo">
-              <p class="docs-demo__label">Style: Primary, Size: Medium, State: Hover</p>
-              <div class="docs-demo__stage">
-                <!-- demo:start --><button type="button" class="btn btn--primary">View case study</button><!-- demo:end -->
-              </div>
-              <p class="docs-demo__caption">Live element: hover it. Hover cannot be shown statically.</p>
-            </div>
-            <div class="docs-demo">
-              <p class="docs-demo__label">Style: Primary, Size: Medium, State: Focus</p>
-              <div class="docs-demo__stage">
-                <!-- demo:start --><button type="button" class="btn btn--primary">View case study</button><!-- demo:end -->
-              </div>
-              <p class="docs-demo__caption">Live element: tab to it. Focus cannot be shown statically.</p>
             </div>
             <div class="docs-demo">
               <p class="docs-demo__label">Style: Primary, Size: Medium, State: Disabled</p>
@@ -163,20 +150,6 @@
               </div>
             </div>
             <div class="docs-demo">
-              <p class="docs-demo__label">Style: Secondary, Size: Medium, State: Hover</p>
-              <div class="docs-demo__stage">
-                <!-- demo:start --><button type="button" class="btn btn--secondary">View case study</button><!-- demo:end -->
-              </div>
-              <p class="docs-demo__caption">Live element: hover it. Hover cannot be shown statically.</p>
-            </div>
-            <div class="docs-demo">
-              <p class="docs-demo__label">Style: Secondary, Size: Medium, State: Focus</p>
-              <div class="docs-demo__stage">
-                <!-- demo:start --><button type="button" class="btn btn--secondary">View case study</button><!-- demo:end -->
-              </div>
-              <p class="docs-demo__caption">Live element: tab to it. Focus cannot be shown statically.</p>
-            </div>
-            <div class="docs-demo">
               <p class="docs-demo__label">Style: Secondary, Size: Medium, State: Disabled</p>
               <div class="docs-demo__stage">
                 <!-- demo:start --><button type="button" class="btn btn--secondary" disabled>View case study</button><!-- demo:end -->
@@ -190,34 +163,70 @@
               </div>
             </div>
             <div class="docs-demo">
-              <p class="docs-demo__label">Style: Ghost, Size: Medium, State: Hover</p>
-              <div class="docs-demo__stage">
-                <!-- demo:start --><button type="button" class="btn btn--ghost">View case study</button><!-- demo:end -->
-              </div>
-              <p class="docs-demo__caption">Live element: hover it. Hover cannot be shown statically.</p>
-            </div>
-            <div class="docs-demo">
-              <p class="docs-demo__label">Style: Ghost, Size: Medium, State: Focus</p>
-              <div class="docs-demo__stage">
-                <!-- demo:start --><button type="button" class="btn btn--ghost">View case study</button><!-- demo:end -->
-              </div>
-              <p class="docs-demo__caption">Live element: tab to it. Focus cannot be shown statically.</p>
-            </div>
-            <div class="docs-demo">
               <p class="docs-demo__label">Style: Ghost, Size: Medium, State: Disabled</p>
               <div class="docs-demo__stage">
                 <!-- demo:start --><button type="button" class="btn btn--ghost" disabled>View case study</button><!-- demo:end -->
               </div>
               <p class="docs-demo__caption">Native disabled attribute.</p>
             </div>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Style: Ghost, Size: Small, State: Default</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><button type="button" class="btn btn--ghost-sm">View case study</button><!-- demo:end -->
+              </div>
             </div>
-            <h4 class="text-body docs-subhead">Missing variants (16)</h4>
-            <ul class="docs-list"><li>Style: Ghost, Size: Small: Default, Hover, Focus, Disabled</li><li>Style: Inverse, Size: Medium: Default, Hover, Focus, Disabled</li><li>Style: Accent, Size: Medium: Default, Hover, Focus, Disabled</li><li>Style: Destructive, Size: Medium: Default, Hover, Focus, Disabled</li></ul>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Style: Ghost, Size: Small, State: Disabled</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><button type="button" class="btn btn--ghost-sm" disabled>View case study</button><!-- demo:end -->
+              </div>
+              <p class="docs-demo__caption">Native disabled attribute.</p>
+            </div>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Style: Inverse, Size: Medium, State: Default</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><button type="button" class="btn btn--inverse">View case study</button><!-- demo:end -->
+              </div>
+            </div>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Style: Inverse, Size: Medium, State: Disabled</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><button type="button" class="btn btn--inverse" disabled>View case study</button><!-- demo:end -->
+              </div>
+              <p class="docs-demo__caption">Native disabled attribute.</p>
+            </div>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Style: Accent, Size: Medium, State: Default</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><button type="button" class="btn btn--accent">View case study</button><!-- demo:end -->
+              </div>
+            </div>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Style: Accent, Size: Medium, State: Disabled</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><button type="button" class="btn btn--accent" disabled>View case study</button><!-- demo:end -->
+              </div>
+              <p class="docs-demo__caption">Native disabled attribute.</p>
+            </div>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Style: Destructive, Size: Medium, State: Default</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><button type="button" class="btn btn--destructive">View case study</button><!-- demo:end -->
+              </div>
+            </div>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Style: Destructive, Size: Medium, State: Disabled</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><button type="button" class="btn btn--destructive" disabled>View case study</button><!-- demo:end -->
+              </div>
+              <p class="docs-demo__caption">Native disabled attribute.</p>
+            </div>
+            </div>
           </section>
 
           <section class="docs-section docs-unit" id="unit-icon-button" aria-labelledby="unit-icon-button-title">
             <h3 class="text-h3" id="unit-icon-button-title">Icon Button</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--draft">CSS 0 / 8</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-307" rel="noopener noreferrer">Figma node 2016:307</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 8</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-307" rel="noopener noreferrer">Figma node 2016:307</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <ul class="docs-list"><li>Style: Primary: Default, Hover, Focus, Disabled</li><li>Style: Ghost: Default, Hover, Focus, Disabled</li></ul>
@@ -225,7 +234,7 @@
 
           <section class="docs-section docs-unit" id="unit-link" aria-labelledby="unit-link-title">
             <h3 class="text-h3" id="unit-link-title">Link</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--draft">CSS 0 / 8</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-163" rel="noopener noreferrer">Figma node 2016:163</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 8</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-163" rel="noopener noreferrer">Figma node 2016:163</a></p>
             <p class="docs-placeholder">Not created</p>
             <p class="docs-section__desc">The global <code>a</code> rule styles every anchor, but there is no Link component class, no Small size and no disabled rule.</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
@@ -234,8 +243,8 @@
 
           <section class="docs-section docs-unit" id="unit-badge" aria-labelledby="unit-badge-title">
             <h3 class="text-h3" id="unit-badge-title">Badge</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">6 Figma variants</span> <span class="badge badge--solar">CSS 5 / 6</span> <span class="badge badge--solar">Partial</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=12-12" rel="noopener noreferrer">Figma node 12:12</a></p>
-            <h4 class="text-body docs-subhead">Covered variants (5 of 6)</h4>
+            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--solar">CSS 4 / 5</span> <span class="badge badge--solar">Partial</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=12-12" rel="noopener noreferrer">Figma node 12:12</a></p>
+            <h4 class="text-body docs-subhead">Covered variants (4 of 5)</h4>
             <div class="docs-demo-stack">
             <div class="docs-demo">
               <p class="docs-demo__label">Style: Neutral</p>
@@ -261,12 +270,6 @@
                 <!-- demo:start --><span class="badge badge--success">Product Strategy</span><!-- demo:end -->
               </div>
             </div>
-            <div class="docs-demo">
-              <p class="docs-demo__label">Style: Draft</p>
-              <div class="docs-demo__stage">
-                <!-- demo:start --><span class="badge badge--draft">Product Strategy</span><!-- demo:end -->
-              </div>
-            </div>
             </div>
             <h4 class="text-body docs-subhead">Missing variants (1)</h4>
             <ul class="docs-list"><li>Style: Danger</li></ul>
@@ -274,7 +277,7 @@
 
           <section class="docs-section docs-unit" id="unit-separator" aria-labelledby="unit-separator-title">
             <h3 class="text-h3" id="unit-separator-title">Separator</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--draft">CSS 0 / 1</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2096-1918" rel="noopener noreferrer">Figma node 2096:1918</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--neutral">CSS 0 / 1</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2096-1918" rel="noopener noreferrer">Figma node 2096:1918</a></p>
             <p class="docs-placeholder">Not created</p>
             <p class="docs-section__desc">No separator class exists in css/*.css. Hairline dividers exist only as border rules inside other components (for example css/layout.css:422 on .hero) and as hr in the Tailwind preflight copy.</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
@@ -286,7 +289,7 @@
             <h2 class="text-h2" id="group-forms-title">Forms <span class="docs-muted">(6 components)</span></h2>
           <section class="docs-section docs-unit" id="unit-input" aria-labelledby="unit-input-title">
             <h3 class="text-h3" id="unit-input-title">Input</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--draft">CSS 0 / 5</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2323-317" rel="noopener noreferrer">Figma node 2323:317</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 5</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2323-317" rel="noopener noreferrer">Figma node 2323:317</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 5 variants (State: Default, Focus, Error, Disabled, Hover; other properties: Label, Show label, Helper text, Show helper text, Show icon R).</p>
@@ -294,7 +297,7 @@
 
           <section class="docs-section docs-unit" id="unit-textarea" aria-labelledby="unit-textarea-title">
             <h3 class="text-h3" id="unit-textarea-title">Textarea</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--draft">CSS 0 / 5</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-173" rel="noopener noreferrer">Figma node 2402:173</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 5</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-173" rel="noopener noreferrer">Figma node 2402:173</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 5 variants (State: Default, Focus, Error, Disabled, Hover; other properties: Label, Show label, Helper text, Show helper text).</p>
@@ -302,7 +305,7 @@
 
           <section class="docs-section docs-unit" id="unit-select" aria-labelledby="unit-select-title">
             <h3 class="text-h3" id="unit-select-title">Select</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--draft">CSS 0 / 5</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-315" rel="noopener noreferrer">Figma node 2402:315</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 5</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-315" rel="noopener noreferrer">Figma node 2402:315</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 5 variants (State: Default, Focus, Error, Disabled, Hover; other properties: Label, Show label, Helper text, Show helper text, Show icon R).</p>
@@ -310,7 +313,7 @@
 
           <section class="docs-section docs-unit" id="unit-checkbox" aria-labelledby="unit-checkbox-title">
             <h3 class="text-h3" id="unit-checkbox-title">Checkbox</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">15 Figma variants</span> <span class="badge badge--draft">CSS 0 / 15</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2400-175" rel="noopener noreferrer">Figma node 2400:175</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">15 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 15</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2400-175" rel="noopener noreferrer">Figma node 2400:175</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 15 variants (Checked: Unchecked, Checked, Indeterminate; State: Default, Hover, Focus, Error, Disabled; other properties: Label, Helper text, Show helper text).</p>
@@ -318,7 +321,7 @@
 
           <section class="docs-section docs-unit" id="unit-radio" aria-labelledby="unit-radio-title">
             <h3 class="text-h3" id="unit-radio-title">Radio</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">10 Figma variants</span> <span class="badge badge--draft">CSS 0 / 10</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2401-58" rel="noopener noreferrer">Figma node 2401:58</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">10 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 10</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2401-58" rel="noopener noreferrer">Figma node 2401:58</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 10 variants (Selected: Unselected, Selected; State: Default, Hover, Focus, Error, Disabled; other properties: Label, Helper text, Show helper text).</p>
@@ -326,7 +329,7 @@
 
           <section class="docs-section docs-unit" id="unit-switch" aria-labelledby="unit-switch-title">
             <h3 class="text-h3" id="unit-switch-title">Switch</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--draft">CSS 0 / 8</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-51" rel="noopener noreferrer">Figma node 2402:51</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 8</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-51" rel="noopener noreferrer">Figma node 2402:51</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 8 variants (Checked: Off, On; State: Default, Hover, Focus, Disabled; other properties: Label, Helper text, Show helper text).</p>
@@ -352,7 +355,7 @@
 
           <section class="docs-section docs-unit" id="unit-alert" aria-labelledby="unit-alert-title">
             <h3 class="text-h3" id="unit-alert-title">Alert</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--draft">CSS 0 / 4</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2407-277" rel="noopener noreferrer">Figma node 2407:277</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 4</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2407-277" rel="noopener noreferrer">Figma node 2407:277</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 4 variants (Type: Info, Success, Warning, Error; other properties: Title, Show title, Description, Action label, Show action, Show dismiss).</p>
@@ -360,7 +363,7 @@
 
           <section class="docs-section docs-unit" id="unit-toast" aria-labelledby="unit-toast-title">
             <h3 class="text-h3" id="unit-toast-title">Toast</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--draft">CSS 0 / 5</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2408-73" rel="noopener noreferrer">Figma node 2408:73</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 5</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2408-73" rel="noopener noreferrer">Figma node 2408:73</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 5 variants (Type: Default, Success, Warning, Error, Info; other properties: Message, Description, Show description, Action label, Show action, Show icon, Show dismiss).</p>
@@ -368,7 +371,7 @@
 
           <section class="docs-section docs-unit" id="unit-tooltip" aria-labelledby="unit-tooltip-title">
             <h3 class="text-h3" id="unit-tooltip-title">Tooltip</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--draft">CSS 0 / 4</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-82" rel="noopener noreferrer">Figma node 2409:82</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 4</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-82" rel="noopener noreferrer">Figma node 2409:82</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 4 variants (Placement: Top, Bottom, Left, Right; other properties: Text).</p>
@@ -376,7 +379,7 @@
 
           <section class="docs-section docs-unit" id="unit-progress" aria-labelledby="unit-progress-title">
             <h3 class="text-h3" id="unit-progress-title">Progress</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--draft">CSS 0 / 5</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-172" rel="noopener noreferrer">Figma node 2409:172</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 5</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-172" rel="noopener noreferrer">Figma node 2409:172</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 5 variants (Value: 0, 25, 50, 75, 100; other properties: Label, Show label, Show value).</p>
@@ -384,7 +387,7 @@
 
           <section class="docs-section docs-unit" id="unit-spinner" aria-labelledby="unit-spinner-title">
             <h3 class="text-h3" id="unit-spinner-title">Spinner</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--draft">CSS 0 / 1</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-232" rel="noopener noreferrer">Figma node 2409:232</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--neutral">CSS 0 / 1</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-232" rel="noopener noreferrer">Figma node 2409:232</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 1 variant (other properties: ).</p>
@@ -392,7 +395,7 @@
 
           <section class="docs-section docs-unit" id="unit-skeleton" aria-labelledby="unit-skeleton-title">
             <h3 class="text-h3" id="unit-skeleton-title">Skeleton</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--draft">CSS 0 / 4</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-300" rel="noopener noreferrer">Figma node 2409:300</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 4</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-300" rel="noopener noreferrer">Figma node 2409:300</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 4 variants (Shape: Text, Title, Avatar, Block; other properties: ).</p>
@@ -400,7 +403,7 @@
 
           <section class="docs-section docs-unit" id="unit-empty-state" aria-labelledby="unit-empty-state-title">
             <h3 class="text-h3" id="unit-empty-state-title">Empty state</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--draft">CSS 0 / 1</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2410-41" rel="noopener noreferrer">Figma node 2410:41</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--neutral">CSS 0 / 1</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2410-41" rel="noopener noreferrer">Figma node 2410:41</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 1 variant (other properties: ).</p>
@@ -411,7 +414,7 @@
             <h2 class="text-h2" id="group-navigation-title">Navigation <span class="docs-muted">(5 components)</span></h2>
           <section class="docs-section docs-unit" id="unit-tab" aria-labelledby="unit-tab-title">
             <h3 class="text-h3" id="unit-tab-title">Tab</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--draft">CSS 0 / 8</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2412-20" rel="noopener noreferrer">Figma node 2412:20</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 8</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2412-20" rel="noopener noreferrer">Figma node 2412:20</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 8 variants (Selected: false, true; State: Default, Hover, Focus, Disabled; other properties: Label).</p>
@@ -419,7 +422,7 @@
 
           <section class="docs-section docs-unit" id="unit-breadcrumb-item" aria-labelledby="unit-breadcrumb-item-title">
             <h3 class="text-h3" id="unit-breadcrumb-item-title">Breadcrumb item</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">3 Figma variants</span> <span class="badge badge--draft">CSS 0 / 3</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-51" rel="noopener noreferrer">Figma node 2413:51</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">3 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 3</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-51" rel="noopener noreferrer">Figma node 2413:51</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 3 variants (Type: Link, Link Hover, Current; other properties: Label, Show separator).</p>
@@ -427,7 +430,7 @@
 
           <section class="docs-section docs-unit" id="unit-pagination-item" aria-labelledby="unit-pagination-item-title">
             <h3 class="text-h3" id="unit-pagination-item-title">Pagination item</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">12 Figma variants</span> <span class="badge badge--draft">CSS 0 / 12</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-261" rel="noopener noreferrer">Figma node 2413:261</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">12 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 12</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-261" rel="noopener noreferrer">Figma node 2413:261</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 12 variants (Type: Number, Prev, Next, Ellipsis; State: Default, Hover, Focus, Current, Disabled; other properties: Number).</p>
@@ -435,7 +438,7 @@
 
           <section class="docs-section docs-unit" id="unit-menu-item" aria-labelledby="unit-menu-item-title">
             <h3 class="text-h3" id="unit-menu-item-title">Menu item</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">7 Figma variants</span> <span class="badge badge--draft">CSS 0 / 7</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-380" rel="noopener noreferrer">Figma node 2413:380</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">7 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 7</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-380" rel="noopener noreferrer">Figma node 2413:380</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 7 variants (Tone: Default, Danger; State: Default, Hover, Focus, Selected, Disabled; other properties: Label).</p>
@@ -443,7 +446,7 @@
 
           <section class="docs-section docs-unit" id="unit-menu" aria-labelledby="unit-menu-title">
             <h3 class="text-h3" id="unit-menu-title">Menu</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--draft">CSS 0 / 1</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-381" rel="noopener noreferrer">Figma node 2413:381</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--neutral">CSS 0 / 1</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-381" rel="noopener noreferrer">Figma node 2413:381</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 1 variant (other properties: ).</p>
@@ -454,7 +457,7 @@
             <h2 class="text-h2" id="group-overlays-and-data-title">Overlays and data <span class="docs-muted">(6 components)</span></h2>
           <section class="docs-section docs-unit" id="unit-modal" aria-labelledby="unit-modal-title">
             <h3 class="text-h3" id="unit-modal-title">Modal</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--draft">CSS 0 / 1</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-472" rel="noopener noreferrer">Figma node 2413:472</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--neutral">CSS 0 / 1</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-472" rel="noopener noreferrer">Figma node 2413:472</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 1 variant (other properties: ).</p>
@@ -462,7 +465,7 @@
 
           <section class="docs-section docs-unit" id="unit-popover" aria-labelledby="unit-popover-title">
             <h3 class="text-h3" id="unit-popover-title">Popover</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--draft">CSS 0 / 1</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-573" rel="noopener noreferrer">Figma node 2413:573</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--neutral">CSS 0 / 1</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-573" rel="noopener noreferrer">Figma node 2413:573</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 1 variant (other properties: ).</p>
@@ -479,7 +482,7 @@
 
           <section class="docs-section docs-unit" id="unit-avatar" aria-labelledby="unit-avatar-title">
             <h3 class="text-h3" id="unit-avatar-title">Avatar</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">3 Figma variants</span> <span class="badge badge--draft">CSS 0 / 3</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-755" rel="noopener noreferrer">Figma node 2413:755</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">3 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 3</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-755" rel="noopener noreferrer">Figma node 2413:755</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 3 variants (Size: Small, Medium, Large; other properties: Initials).</p>
@@ -487,7 +490,7 @@
 
           <section class="docs-section docs-unit" id="unit-tag" aria-labelledby="unit-tag-title">
             <h3 class="text-h3" id="unit-tag-title">Tag</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--draft">CSS 0 / 4</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-839" rel="noopener noreferrer">Figma node 2413:839</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 4</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-839" rel="noopener noreferrer">Figma node 2413:839</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 4 variants (State: Default, Hover, Focus, Disabled; other properties: Label, Show dismiss).</p>
@@ -495,7 +498,7 @@
 
           <section class="docs-section docs-unit" id="unit-accordion-item" aria-labelledby="unit-accordion-item-title">
             <h3 class="text-h3" id="unit-accordion-item-title">Accordion item</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">7 Figma variants</span> <span class="badge badge--draft">CSS 0 / 7</span> <span class="badge badge--draft">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-948" rel="noopener noreferrer">Figma node 2413:948</a></p>
+            <p class="docs-badges"><span class="badge badge--anchor">7 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 7</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-948" rel="noopener noreferrer">Figma node 2413:948</a></p>
             <p class="docs-placeholder">Not created</p>
             <h4 class="text-body docs-subhead">Missing variants</h4>
             <p class="docs-section__desc">All 7 variants (Open: false, true; State: Default, Hover, Focus, Disabled; other properties: Title, Content).</p>
@@ -505,7 +508,7 @@
           <section class="docs-section" id="not-static" aria-labelledby="not-static-title">
             <h2 class="text-h2" id="not-static-title">States not shown statically</h2>
             <p class="docs-section__desc">These covered variants are hover or focus states. They stay live elements (interact with them): no mirrored state classes were added.</p>
-            <ul class="docs-list"><li>Button: Style: Primary, Size: Medium, State: Hover</li><li>Button: Style: Primary, Size: Medium, State: Focus</li><li>Button: Style: Secondary, Size: Medium, State: Hover</li><li>Button: Style: Secondary, Size: Medium, State: Focus</li><li>Button: Style: Ghost, Size: Medium, State: Hover</li><li>Button: Style: Ghost, Size: Medium, State: Focus</li></ul>
+            <p class="docs-section__desc">None.</p>
             <p class="docs-section__desc">CSS exists but this page does not render it:</p>
             <ul class="docs-list"><li>Lightbox</li></ul>
           </section>
@@ -517,37 +520,37 @@
               <table class="docs-table docs-table--compact" id="still-to-create-table">
                 <thead><tr><th scope="col">Group</th><th scope="col">Component</th><th scope="col">Figma variants</th><th scope="col">CSS variants</th><th scope="col">Status</th><th scope="col">Suggested build after</th><th scope="col">Figma node id</th></tr></thead>
                 <tbody>
-                  <tr data-unit-row="Button"><td>Primitives</td><th scope="row"><a href="#unit-button">Button</a></th><td>28</td><td>12</td><td><span class="badge badge--solar">Partial</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=11-105" rel="noopener noreferrer">11:105</a></td></tr>
-                  <tr data-unit-row="Icon Button"><td>Primitives</td><th scope="row"><a href="#unit-icon-button">Icon Button</a></th><td>8</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-307" rel="noopener noreferrer">2016:307</a></td></tr>
-                  <tr data-unit-row="Link"><td>Primitives</td><th scope="row"><a href="#unit-link">Link</a></th><td>8</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-163" rel="noopener noreferrer">2016:163</a></td></tr>
-                  <tr data-unit-row="Badge"><td>Primitives</td><th scope="row"><a href="#unit-badge">Badge</a></th><td>6</td><td>5</td><td><span class="badge badge--solar">Partial</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=12-12" rel="noopener noreferrer">12:12</a></td></tr>
-                  <tr data-unit-row="Separator"><td>Primitives</td><th scope="row"><a href="#unit-separator">Separator</a></th><td>1</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2096-1918" rel="noopener noreferrer">2096:1918</a></td></tr>
-                  <tr data-unit-row="Input"><td>Forms</td><th scope="row"><a href="#unit-input">Input</a></th><td>5</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2323-317" rel="noopener noreferrer">2323:317</a></td></tr>
-                  <tr data-unit-row="Textarea"><td>Forms</td><th scope="row"><a href="#unit-textarea">Textarea</a></th><td>5</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td>Input</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-173" rel="noopener noreferrer">2402:173</a></td></tr>
-                  <tr data-unit-row="Select"><td>Forms</td><th scope="row"><a href="#unit-select">Select</a></th><td>5</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td>Input, Menu</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-315" rel="noopener noreferrer">2402:315</a></td></tr>
-                  <tr data-unit-row="Checkbox"><td>Forms</td><th scope="row"><a href="#unit-checkbox">Checkbox</a></th><td>15</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2400-175" rel="noopener noreferrer">2400:175</a></td></tr>
-                  <tr data-unit-row="Radio"><td>Forms</td><th scope="row"><a href="#unit-radio">Radio</a></th><td>10</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2401-58" rel="noopener noreferrer">2401:58</a></td></tr>
-                  <tr data-unit-row="Switch"><td>Forms</td><th scope="row"><a href="#unit-switch">Switch</a></th><td>8</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-51" rel="noopener noreferrer">2402:51</a></td></tr>
+                  <tr data-unit-row="Button"><td>Primitives</td><th scope="row"><a href="#unit-button">Button</a></th><td>28</td><td>28</td><td><span class="badge badge--success">Complete</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=11-105" rel="noopener noreferrer">11:105</a></td></tr>
+                  <tr data-unit-row="Icon Button"><td>Primitives</td><th scope="row"><a href="#unit-icon-button">Icon Button</a></th><td>8</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-307" rel="noopener noreferrer">2016:307</a></td></tr>
+                  <tr data-unit-row="Link"><td>Primitives</td><th scope="row"><a href="#unit-link">Link</a></th><td>8</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-163" rel="noopener noreferrer">2016:163</a></td></tr>
+                  <tr data-unit-row="Badge"><td>Primitives</td><th scope="row"><a href="#unit-badge">Badge</a></th><td>5</td><td>4</td><td><span class="badge badge--solar">Partial</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=12-12" rel="noopener noreferrer">12:12</a></td></tr>
+                  <tr data-unit-row="Separator"><td>Primitives</td><th scope="row"><a href="#unit-separator">Separator</a></th><td>1</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2096-1918" rel="noopener noreferrer">2096:1918</a></td></tr>
+                  <tr data-unit-row="Input"><td>Forms</td><th scope="row"><a href="#unit-input">Input</a></th><td>5</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2323-317" rel="noopener noreferrer">2323:317</a></td></tr>
+                  <tr data-unit-row="Textarea"><td>Forms</td><th scope="row"><a href="#unit-textarea">Textarea</a></th><td>5</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Input</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-173" rel="noopener noreferrer">2402:173</a></td></tr>
+                  <tr data-unit-row="Select"><td>Forms</td><th scope="row"><a href="#unit-select">Select</a></th><td>5</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Input, Menu</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-315" rel="noopener noreferrer">2402:315</a></td></tr>
+                  <tr data-unit-row="Checkbox"><td>Forms</td><th scope="row"><a href="#unit-checkbox">Checkbox</a></th><td>15</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2400-175" rel="noopener noreferrer">2400:175</a></td></tr>
+                  <tr data-unit-row="Radio"><td>Forms</td><th scope="row"><a href="#unit-radio">Radio</a></th><td>10</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2401-58" rel="noopener noreferrer">2401:58</a></td></tr>
+                  <tr data-unit-row="Switch"><td>Forms</td><th scope="row"><a href="#unit-switch">Switch</a></th><td>8</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-51" rel="noopener noreferrer">2402:51</a></td></tr>
                   <tr data-unit-row="Banner"><td>Feedback</td><th scope="row"><a href="#unit-banner">Banner</a></th><td>1</td><td>1</td><td><span class="badge badge--success">Complete</span></td><td>Badge</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2044-618" rel="noopener noreferrer">2044:618</a></td></tr>
-                  <tr data-unit-row="Alert"><td>Feedback</td><th scope="row"><a href="#unit-alert">Alert</a></th><td>4</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td>Icon Button</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2407-277" rel="noopener noreferrer">2407:277</a></td></tr>
-                  <tr data-unit-row="Toast"><td>Feedback</td><th scope="row"><a href="#unit-toast">Toast</a></th><td>5</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td>Icon Button</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2408-73" rel="noopener noreferrer">2408:73</a></td></tr>
-                  <tr data-unit-row="Tooltip"><td>Feedback</td><th scope="row"><a href="#unit-tooltip">Tooltip</a></th><td>4</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-82" rel="noopener noreferrer">2409:82</a></td></tr>
-                  <tr data-unit-row="Progress"><td>Feedback</td><th scope="row"><a href="#unit-progress">Progress</a></th><td>5</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-172" rel="noopener noreferrer">2409:172</a></td></tr>
-                  <tr data-unit-row="Spinner"><td>Feedback</td><th scope="row"><a href="#unit-spinner">Spinner</a></th><td>1</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-232" rel="noopener noreferrer">2409:232</a></td></tr>
-                  <tr data-unit-row="Skeleton"><td>Feedback</td><th scope="row"><a href="#unit-skeleton">Skeleton</a></th><td>4</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-300" rel="noopener noreferrer">2409:300</a></td></tr>
-                  <tr data-unit-row="Empty state"><td>Feedback</td><th scope="row"><a href="#unit-empty-state">Empty state</a></th><td>1</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td>Button</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2410-41" rel="noopener noreferrer">2410:41</a></td></tr>
-                  <tr data-unit-row="Tab"><td>Navigation</td><th scope="row"><a href="#unit-tab">Tab</a></th><td>8</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2412-20" rel="noopener noreferrer">2412:20</a></td></tr>
-                  <tr data-unit-row="Breadcrumb item"><td>Navigation</td><th scope="row"><a href="#unit-breadcrumb-item">Breadcrumb item</a></th><td>3</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td>Link</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-51" rel="noopener noreferrer">2413:51</a></td></tr>
-                  <tr data-unit-row="Pagination item"><td>Navigation</td><th scope="row"><a href="#unit-pagination-item">Pagination item</a></th><td>12</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-261" rel="noopener noreferrer">2413:261</a></td></tr>
-                  <tr data-unit-row="Menu item"><td>Navigation</td><th scope="row"><a href="#unit-menu-item">Menu item</a></th><td>7</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-380" rel="noopener noreferrer">2413:380</a></td></tr>
-                  <tr data-unit-row="Menu"><td>Navigation</td><th scope="row"><a href="#unit-menu">Menu</a></th><td>1</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td>Menu item</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-381" rel="noopener noreferrer">2413:381</a></td></tr>
-                  <tr data-unit-row="Modal"><td>Overlays and data</td><th scope="row"><a href="#unit-modal">Modal</a></th><td>1</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td>Button, Icon Button</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-472" rel="noopener noreferrer">2413:472</a></td></tr>
-                  <tr data-unit-row="Popover"><td>Overlays and data</td><th scope="row"><a href="#unit-popover">Popover</a></th><td>1</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-573" rel="noopener noreferrer">2413:573</a></td></tr>
+                  <tr data-unit-row="Alert"><td>Feedback</td><th scope="row"><a href="#unit-alert">Alert</a></th><td>4</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Icon Button</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2407-277" rel="noopener noreferrer">2407:277</a></td></tr>
+                  <tr data-unit-row="Toast"><td>Feedback</td><th scope="row"><a href="#unit-toast">Toast</a></th><td>5</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Icon Button</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2408-73" rel="noopener noreferrer">2408:73</a></td></tr>
+                  <tr data-unit-row="Tooltip"><td>Feedback</td><th scope="row"><a href="#unit-tooltip">Tooltip</a></th><td>4</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-82" rel="noopener noreferrer">2409:82</a></td></tr>
+                  <tr data-unit-row="Progress"><td>Feedback</td><th scope="row"><a href="#unit-progress">Progress</a></th><td>5</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-172" rel="noopener noreferrer">2409:172</a></td></tr>
+                  <tr data-unit-row="Spinner"><td>Feedback</td><th scope="row"><a href="#unit-spinner">Spinner</a></th><td>1</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-232" rel="noopener noreferrer">2409:232</a></td></tr>
+                  <tr data-unit-row="Skeleton"><td>Feedback</td><th scope="row"><a href="#unit-skeleton">Skeleton</a></th><td>4</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2409-300" rel="noopener noreferrer">2409:300</a></td></tr>
+                  <tr data-unit-row="Empty state"><td>Feedback</td><th scope="row"><a href="#unit-empty-state">Empty state</a></th><td>1</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Button</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2410-41" rel="noopener noreferrer">2410:41</a></td></tr>
+                  <tr data-unit-row="Tab"><td>Navigation</td><th scope="row"><a href="#unit-tab">Tab</a></th><td>8</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2412-20" rel="noopener noreferrer">2412:20</a></td></tr>
+                  <tr data-unit-row="Breadcrumb item"><td>Navigation</td><th scope="row"><a href="#unit-breadcrumb-item">Breadcrumb item</a></th><td>3</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Link</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-51" rel="noopener noreferrer">2413:51</a></td></tr>
+                  <tr data-unit-row="Pagination item"><td>Navigation</td><th scope="row"><a href="#unit-pagination-item">Pagination item</a></th><td>12</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-261" rel="noopener noreferrer">2413:261</a></td></tr>
+                  <tr data-unit-row="Menu item"><td>Navigation</td><th scope="row"><a href="#unit-menu-item">Menu item</a></th><td>7</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-380" rel="noopener noreferrer">2413:380</a></td></tr>
+                  <tr data-unit-row="Menu"><td>Navigation</td><th scope="row"><a href="#unit-menu">Menu</a></th><td>1</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Menu item</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-381" rel="noopener noreferrer">2413:381</a></td></tr>
+                  <tr data-unit-row="Modal"><td>Overlays and data</td><th scope="row"><a href="#unit-modal">Modal</a></th><td>1</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Button, Icon Button</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-472" rel="noopener noreferrer">2413:472</a></td></tr>
+                  <tr data-unit-row="Popover"><td>Overlays and data</td><th scope="row"><a href="#unit-popover">Popover</a></th><td>1</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-573" rel="noopener noreferrer">2413:573</a></td></tr>
                   <tr data-unit-row="Lightbox"><td>Overlays and data</td><th scope="row"><a href="#unit-lightbox">Lightbox</a></th><td>1</td><td>1</td><td><span class="badge badge--success">Complete</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2456-4" rel="noopener noreferrer">2456:4</a></td></tr>
-                  <tr data-unit-row="Avatar"><td>Overlays and data</td><th scope="row"><a href="#unit-avatar">Avatar</a></th><td>3</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-755" rel="noopener noreferrer">2413:755</a></td></tr>
-                  <tr data-unit-row="Tag"><td>Overlays and data</td><th scope="row"><a href="#unit-tag">Tag</a></th><td>4</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td>Badge</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-839" rel="noopener noreferrer">2413:839</a></td></tr>
-                  <tr data-unit-row="Accordion item"><td>Overlays and data</td><th scope="row"><a href="#unit-accordion-item">Accordion item</a></th><td>7</td><td>0</td><td><span class="badge badge--draft">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-948" rel="noopener noreferrer">2413:948</a></td></tr>
-                  <tr class="docs-row--total" data-totals-row><th scope="row">Total</th><td>30 components</td><td>172</td><td>19</td><td>2 Complete, 2 Partial, 26 Not created</td><td><span class="docs-muted">suggestion, not a Figma fact</span></td><td></td></tr>
+                  <tr data-unit-row="Avatar"><td>Overlays and data</td><th scope="row"><a href="#unit-avatar">Avatar</a></th><td>3</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-755" rel="noopener noreferrer">2413:755</a></td></tr>
+                  <tr data-unit-row="Tag"><td>Overlays and data</td><th scope="row"><a href="#unit-tag">Tag</a></th><td>4</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Badge</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-839" rel="noopener noreferrer">2413:839</a></td></tr>
+                  <tr data-unit-row="Accordion item"><td>Overlays and data</td><th scope="row"><a href="#unit-accordion-item">Accordion item</a></th><td>7</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-948" rel="noopener noreferrer">2413:948</a></td></tr>
+                  <tr class="docs-row--total" data-totals-row><th scope="row">Total</th><td>30 components</td><td>171</td><td>34</td><td>3 Complete, 1 Partial, 26 Not created</td><td><span class="docs-muted">suggestion, not a Figma fact</span></td><td></td></tr>
                 </tbody>
               </table>
             </div>

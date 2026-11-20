@@ -7,12 +7,12 @@
   "components": {
     "Button": {
       "figmaVariants": 28,
-      "implemented": 12,
+      "implemented": 28,
       "base": ".btn",
       "stateMechanisms": {
-        "hover": "Pseudo-class :hover on each style class (.btn--primary:hover, .btn--secondary:hover, .btn--ghost:hover).",
-        "focus": "Pseudo-class .btn:focus-visible with box-shadow var(--shadow-focus), one rule shared by every style. No state class.",
-        "disabled": ".btn:disabled and .btn[aria-disabled=\"true\"], one rule shared by every style (background, text and border use the disabled tokens). No state class."
+        "hover": "Pseudo-class :hover on each style class (.btn--primary:hover, .btn--secondary:hover, .btn--accent:hover, .btn--ghost:hover, .btn--inverse:hover, .btn--destructive:hover, .btn--ghost-sm:hover).",
+        "focus": "Pseudo-class .btn:focus-visible: outline var(--focus-ring-width) solid var(--color-border-focus-ring) with offset var(--focus-ring-gap), one rule shared by every style. No state class.",
+        "disabled": ".btn.btn:disabled and .btn.btn[aria-disabled=\"true\"] (specificity 0,3,0, so it also beats :hover). Secondary, Ghost and Small Ghost have their own disabled rules (no fill). Background, text and border use the disabled tokens. No state class."
       },
       "variants": [
         {
@@ -44,7 +44,7 @@
           "size": "Medium",
           "state": "Disabled",
           "selector": ".btn.btn--primary",
-          "rule": ".btn:disabled",
+          "rule": ".btn.btn:disabled",
           "mechanism": "disabled attribute or aria-disabled=\"true\" (rule shared by all styles)"
         },
         {
@@ -76,8 +76,8 @@
           "size": "Medium",
           "state": "Disabled",
           "selector": ".btn.btn--secondary",
-          "rule": ".btn:disabled",
-          "mechanism": "disabled attribute or aria-disabled=\"true\" (rule shared by all styles)"
+          "rule": ".btn--secondary.btn:disabled",
+          "mechanism": "disabled attribute or aria-disabled=\"true\" (rule for this style)"
         },
         {
           "style": "Ghost",
@@ -108,136 +108,136 @@
           "size": "Medium",
           "state": "Disabled",
           "selector": ".btn.btn--ghost",
-          "rule": ".btn:disabled",
+          "rule": ".btn--ghost.btn:disabled",
+          "mechanism": "disabled attribute or aria-disabled=\"true\" (rule for this style)"
+        },
+        {
+          "style": "Ghost",
+          "size": "Small",
+          "state": "Default",
+          "selector": ".btn.btn--ghost-sm",
+          "rule": ".btn--ghost-sm",
+          "mechanism": "none (base class)"
+        },
+        {
+          "style": "Ghost",
+          "size": "Small",
+          "state": "Hover",
+          "selector": ".btn.btn--ghost-sm",
+          "rule": ".btn--ghost-sm:hover",
+          "mechanism": ":hover pseudo-class"
+        },
+        {
+          "style": "Ghost",
+          "size": "Small",
+          "state": "Focus",
+          "selector": ".btn.btn--ghost-sm",
+          "rule": ".btn:focus-visible",
+          "mechanism": ":focus-visible pseudo-class (rule shared by all styles)"
+        },
+        {
+          "style": "Ghost",
+          "size": "Small",
+          "state": "Disabled",
+          "selector": ".btn.btn--ghost-sm",
+          "rule": ".btn--ghost-sm.btn:disabled",
+          "mechanism": "disabled attribute or aria-disabled=\"true\" (rule for this style)"
+        },
+        {
+          "style": "Inverse",
+          "size": "Medium",
+          "state": "Default",
+          "selector": ".btn.btn--inverse",
+          "rule": ".btn--inverse",
+          "mechanism": "none (base class)"
+        },
+        {
+          "style": "Inverse",
+          "size": "Medium",
+          "state": "Hover",
+          "selector": ".btn.btn--inverse",
+          "rule": ".btn--inverse:hover",
+          "mechanism": ":hover pseudo-class"
+        },
+        {
+          "style": "Inverse",
+          "size": "Medium",
+          "state": "Focus",
+          "selector": ".btn.btn--inverse",
+          "rule": ".btn:focus-visible",
+          "mechanism": ":focus-visible pseudo-class (rule shared by all styles)"
+        },
+        {
+          "style": "Inverse",
+          "size": "Medium",
+          "state": "Disabled",
+          "selector": ".btn.btn--inverse",
+          "rule": ".btn.btn:disabled",
           "mechanism": "disabled attribute or aria-disabled=\"true\" (rule shared by all styles)"
         },
         {
-          "style": "Ghost",
-          "size": "Small",
-          "state": "Default",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
-        },
-        {
-          "style": "Ghost",
-          "size": "Small",
-          "state": "Hover",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
-        },
-        {
-          "style": "Ghost",
-          "size": "Small",
-          "state": "Focus",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
-        },
-        {
-          "style": "Ghost",
-          "size": "Small",
-          "state": "Disabled",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
-        },
-        {
-          "style": "Inverse",
-          "size": "Medium",
-          "state": "Default",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
-        },
-        {
-          "style": "Inverse",
-          "size": "Medium",
-          "state": "Hover",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
-        },
-        {
-          "style": "Inverse",
-          "size": "Medium",
-          "state": "Focus",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
-        },
-        {
-          "style": "Inverse",
-          "size": "Medium",
-          "state": "Disabled",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
-        },
-        {
           "style": "Accent",
           "size": "Medium",
           "state": "Default",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".btn.btn--accent",
+          "rule": ".btn--accent",
+          "mechanism": "none (base class)"
         },
         {
           "style": "Accent",
           "size": "Medium",
           "state": "Hover",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".btn.btn--accent",
+          "rule": ".btn--accent:hover",
+          "mechanism": ":hover pseudo-class"
         },
         {
           "style": "Accent",
           "size": "Medium",
           "state": "Focus",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".btn.btn--accent",
+          "rule": ".btn:focus-visible",
+          "mechanism": ":focus-visible pseudo-class (rule shared by all styles)"
         },
         {
           "style": "Accent",
           "size": "Medium",
           "state": "Disabled",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".btn.btn--accent",
+          "rule": ".btn.btn:disabled",
+          "mechanism": "disabled attribute or aria-disabled=\"true\" (rule shared by all styles)"
         },
         {
           "style": "Destructive",
           "size": "Medium",
           "state": "Default",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".btn.btn--destructive",
+          "rule": ".btn--destructive",
+          "mechanism": "none (base class)"
         },
         {
           "style": "Destructive",
           "size": "Medium",
           "state": "Hover",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".btn.btn--destructive",
+          "rule": ".btn--destructive:hover",
+          "mechanism": ":hover pseudo-class"
         },
         {
           "style": "Destructive",
           "size": "Medium",
           "state": "Focus",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".btn.btn--destructive",
+          "rule": ".btn:focus-visible",
+          "mechanism": ":focus-visible pseudo-class (rule shared by all styles)"
         },
         {
           "style": "Destructive",
           "size": "Medium",
           "state": "Disabled",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".btn.btn--destructive",
+          "rule": ".btn.btn:disabled",
+          "mechanism": "disabled attribute or aria-disabled=\"true\" (rule shared by all styles)"
         }
       ]
     },
@@ -310,8 +310,8 @@
       ]
     },
     "Badge": {
-      "figmaVariants": 6,
-      "implemented": 5,
+      "figmaVariants": 5,
+      "implemented": 4,
       "base": ".badge",
       "stateMechanisms": {
         "hover": "not applicable, badges are static",
@@ -344,12 +344,6 @@
           "mechanism": "static, no states"
         },
         {
-          "style": "Draft",
-          "selector": ".badge.badge--draft",
-          "rule": ".badge--draft",
-          "mechanism": "static, no states"
-        },
-        {
           "style": "Danger",
           "selector": null,
           "rule": null,
@@ -362,8 +356,8 @@
       "implemented": 0,
       "base": null,
       "stateMechanisms": {
-        "hover": "none as a component. The global a:hover rule changes the colour to --color-text-brand-primary-hover.",
-        "focus": "none as a component. The global a:focus-visible rule draws a 2px outline with 3px offset.",
+        "hover": "none as a component. The global a:hover rule changes the colour to --color-text-brand-hover.",
+        "focus": "none as a component. The global a:focus-visible rule draws a 2px outline with 2px offset (--focus-ring-width, --focus-ring-gap).",
         "disabled": "none"
       },
       "globalRules": [
@@ -371,7 +365,7 @@
         "a:hover",
         "a:focus-visible"
       ],
-      "globalRulesDescription": "Every anchor gets --color-text-brand-primary, no underline, a hover colour and a 2px focus outline (css/reset.css). There is no .link class, no Small size and no disabled rule.",
+      "globalRulesDescription": "Every anchor gets --color-text-brand-default, no underline, a hover colour and a 2px focus outline with 2px offset (css/reset.css). There is no .link class, no Small size and no disabled rule.",
       "variants": [
         {
           "size": "Medium",

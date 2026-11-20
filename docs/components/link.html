@@ -127,7 +127,7 @@
           <section class="docs-section" id="summary" aria-labelledby="summary-title">
             <h2 class="text-h2" id="summary-title">Summary</h2>
             <p class="docs-lead text-body text-secondary">Text link for navigation and low emphasis actions. Two sizes and four states. Distinguished from surrounding text by underline.</p>
-            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--draft">0 in code</span> <span class="badge badge--solar">1 Atencao</span> <span class="badge badge--neutral">0 Informativo</span> <span class="badge badge--neutral">2 known gaps</span></p>
+            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--neutral">0 in code</span> <span class="badge badge--solar">1 Atencao</span> <span class="badge badge--neutral">0 Informativo</span> <span class="badge badge--neutral">2 known gaps</span></p>
           </section>
 
           <section class="docs-section" id="usage" aria-labelledby="usage-title">
@@ -151,12 +151,12 @@
             <h3 class="text-h3">Coverage in code (0 of 8 Figma variants)</h3>
             <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Size</th><th scope="col">Default</th><th scope="col">Hover</th><th scope="col">Focus</th><th scope="col">Disabled</th></tr></thead><tbody><tr><th scope="row">Medium</th><td><span class="docs-muted">none</span></td><td><span class="docs-muted">none</span></td><td><span class="docs-muted">none</span></td><td><span class="docs-muted">none</span></td></tr><tr><th scope="row">Small</th><td><span class="docs-muted">none</span></td><td><span class="docs-muted">none</span></td><td><span class="docs-muted">none</span></td><td><span class="docs-muted">none</span></td></tr></tbody></table></div>
             <h3 class="text-h3">How states are implemented</h3>
-            <ul class="docs-list"><li><strong>hover:</strong> none as a component. The global a:hover rule changes the colour to --color-text-brand-primary-hover.</li><li><strong>focus:</strong> none as a component. The global a:focus-visible rule draws a 2px outline with 3px offset.</li><li><strong>disabled:</strong> none</li></ul>
+            <ul class="docs-list"><li><strong>hover:</strong> none as a component. The global a:hover rule changes the colour to --color-text-brand-hover.</li><li><strong>focus:</strong> none as a component. The global a:focus-visible rule draws a 2px outline with 2px offset (--focus-ring-width, --focus-ring-gap).</li><li><strong>disabled:</strong> none</li></ul>
           </section>
 
           <section class="docs-section" id="examples" aria-labelledby="examples-title">
             <h2 class="text-h2" id="examples-title">Live examples</h2>
-            <p class="docs-note">No live demo: Link has no component class. Today every anchor on the site is styled by the global <code>a</code> rule. Every anchor gets --color-text-brand-primary, no underline, a hover colour and a 2px focus outline (css/reset.css). There is no .link class, no Small size and no disabled rule.</p>
+            <p class="docs-note">No live demo: Link has no component class. Today every anchor on the site is styled by the global <code>a</code> rule. Every anchor gets --color-text-brand-default, no underline, a hover colour and a 2px focus outline with 2px offset (css/reset.css). There is no .link class, no Small size and no disabled rule.</p>
           </section>
 
           <section class="docs-section" id="states" aria-labelledby="states-title">
@@ -177,14 +177,14 @@
           <section class="docs-section" id="figma-vs-code" aria-labelledby="figma-vs-code-title">
             <h2 class="text-h2" id="figma-vs-code-title">Figma vs code</h2>
             <p class="docs-section__desc">Figma is canonical for component values (GOVERNANCE section 7), but identity decisions in the Brandbook outrank it. Each difference below needs an owner decision: CSS follows Figma, Figma follows CSS, or accepted. Classification is Claude's opinion; the owner decides.</p>
-            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Class</th><th scope="col">Difference</th><th scope="col">Figma</th><th scope="col">Code</th><th scope="col">Measured or inference</th></tr></thead><tbody><tr><td><span class="badge badge--solar">Atencao</span></td><th scope="row"><code>link-colour-underline</code></th><td>Text/Default/Default with underline.</td><td>Text/Brand/Primary, no underline. Hover is a:hover. Focus is a:focus-visible with a 2px outline. Disabled has no rule.</td><td><span class="docs-fig"><span class="docs-value__tag">Measured</span> Link colour against surrounding text colour, Light: 3.01 against Text/Default/Default, 1.67 against Text/Default/Secondary. Dark: 1.59 and 1.28. Link colour against the page: 6.46 Light, 10.74 Dark.</span><span class="docs-fig"><span class="docs-value__tag">Inference</span> Where a link sits inside running text coloured Text/Default/Secondary, colour alone separates it at under 3:1, which is what WCAG 1.4.1 (Use of Color, Level A) warns about. Needs a check of where links appear in running text and what a:hover does. A Brandbook rule about link style would outrank Figma.</span></td></tr></tbody></table></div>
+            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Class</th><th scope="col">Difference</th><th scope="col">Figma</th><th scope="col">Code</th><th scope="col">Measured or inference</th></tr></thead><tbody><tr><td><span class="badge badge--solar">Atencao</span></td><th scope="row"><code>link-colour-underline</code></th><td>Text/Default/Default with underline.</td><td>Text/Brand/Default, no underline. Hover is a:hover. Focus is a:focus-visible with a 2px outline. Disabled has no rule.</td><td><span class="docs-fig"><span class="docs-value__tag">Measured</span> Link colour against surrounding text colour, Light: 3.01 against Text/Default/Default, 1.67 against Text/Default/Secondary. Dark: 1.59 and 1.28. Link colour against the page: 6.46 Light, 10.74 Dark.</span><span class="docs-fig"><span class="docs-value__tag">Inference</span> Where a link sits inside running text coloured Text/Default/Secondary, colour alone separates it at under 3:1, which is what WCAG 1.4.1 (Use of Color, Level A) warns about. Needs a check of where links appear in running text and what a:hover does. A Brandbook rule about link style would outrank Figma.</span></td></tr></tbody></table></div>
             
           </section>
 
           <section class="docs-section" id="no-code" aria-labelledby="no-code-title">
             <h2 class="text-h2" id="no-code-title">In Figma, no code yet</h2>
             <p class="docs-section__desc">Variants that components-map.json maps to no selector. No demo is rendered for them.</p>
-            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Figma variant</th><th scope="col">States</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Medium</th><td>Default, Hover, Focus, Disabled</td><td><span class="badge badge--draft">no CSS class</span></td></tr><tr><th scope="row">Small</th><td>Default, Hover, Focus, Disabled</td><td><span class="badge badge--draft">no CSS class</span></td></tr></tbody></table></div>
+            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Figma variant</th><th scope="col">States</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Medium</th><td>Default, Hover, Focus, Disabled</td><td><span class="badge badge--neutral">no CSS class</span></td></tr><tr><th scope="row">Small</th><td>Default, Hover, Focus, Disabled</td><td><span class="badge badge--neutral">no CSS class</span></td></tr></tbody></table></div>
             <h3 class="text-h3">Notes from the code review</h3><ul class="docs-list"><li>all 8 (Medium and Small, 4 states): Links are used across the whole site through the global a rule, so this is not a component waiting for use.</li></ul>
           </section>
 
@@ -212,7 +212,7 @@
 
           <section class="docs-section" id="code-ref" aria-labelledby="code-ref-title">
             <h2 class="text-h2" id="code-ref-title">Code reference</h2>
-            <p class="docs-section__desc">Every anchor gets --color-text-brand-primary, no underline, a hover colour and a 2px focus outline (css/reset.css). There is no .link class, no Small size and no disabled rule.</p>
+            <p class="docs-section__desc">Every anchor gets --color-text-brand-default, no underline, a hover colour and a 2px focus outline with 2px offset (css/reset.css). There is no .link class, no Small size and no disabled rule.</p>
             <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Selector</th><th scope="col">File</th><th scope="col">Used for</th></tr></thead><tbody><tr><th scope="row"><code>a</code></th><td>css/reset.css</td><td>global rule</td></tr><tr><th scope="row"><code>a:hover</code></th><td>css/reset.css</td><td>global rule</td></tr><tr><th scope="row"><code>a:focus-visible</code></th><td>css/reset.css</td><td>global rule</td></tr></tbody></table></div>
           </section>
         </div>

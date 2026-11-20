@@ -53,6 +53,8 @@ const GROUP_LABELS = {
   'icon-color-figma-hope-icon-icon-color-10-modes': 'Icon color',
   'component-tokens-light-mode-default': 'Component',
   'material-unified-glassmorphism-recipe': 'Material (glass)',
+  'foundation-rename-2026-11-20-new-semantic-tokens': 'Foundation rename (new names)',
+  'deprecated-aliases-2026-11-remove-in-a-later-major': 'Deprecated aliases',
   typography: 'Typography',
   'spacing-4px-base-scale': 'Spacing and gaps',
   'content-width-shared-cap-for-section-inner-content': 'Content width',
