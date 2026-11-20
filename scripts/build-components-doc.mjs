@@ -440,7 +440,8 @@ function componentPage(comp) {
     ['no-code', 'In Figma, no code yet', noCodeSection(comp)],
     ['code-only', 'In code, no Figma', codeOnlySection(comp)],
     ['gaps', 'Known gaps', gapsSection(comp)],
-    ['unverified', 'Not yet verified', unverifiedSection(comp)],
+    // The section is left out when the component has nothing unverified.
+    ...(Array.isArray(comp.unverified) && comp.unverified.length ? [['unverified', 'Not yet verified', unverifiedSection(comp)]] : []),
     ['figma-ref', 'Figma reference', figmaRefSection(comp)],
     ['code-ref', 'Code reference', codeRefSection(comp)]
   );
