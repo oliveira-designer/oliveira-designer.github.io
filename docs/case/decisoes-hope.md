@@ -1,6 +1,6 @@
 # Hope DS: diário de decisões (material de case)
 
-Versão 0.5 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
+Versão 0.6 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
 
 ## Como ler este documento
 
@@ -174,6 +174,21 @@ Versão 0.5 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
 - **Contexto:** `--border-normal` é um atalho (`1px solid ...`) e não funciona dentro de `calc()`. O Code criou `--border-width-normal: 1px` para descontar a borda do padding do Button (D-23). [Registrado: relatório do Code]
 - **Descoberta:** no Foundation, `Stroke/thin` (1px) tinha code syntax `var(--border-normal)`, que já divergia do CSS antes deste ciclo. [Registrado: leitura direta]
 - **Decisão de Renan:** criar o token e alinhar o Figma. O code syntax de `Stroke/thin` passou a `var(--border-width-normal)`; falta publicar o Foundation. `--border-normal` fica só como atalho no CSS. [Registrado]
+
+### D-26 Borda superior do footer: Solar 3px (o Figma seguiu o código)
+- **Contexto:** o Prompt 12 alinhou o footer ao Figma (Ink e botões Inverse). O Code manteve a borda superior de 3px em Solar, que o Figma não descrevia. Lendo o Figma, o Footer Dark tinha borda superior de 2,4px (`Stroke/thick`) em `Border/Default/Default`, um cinza claro. [Registrado: relatório do Code e leitura direta]
+- **Opções:** o código segue o Figma (linha cinza) ou o Figma segue o código (Solar). [Registrado]
+- **Decisão de Renan:** manter o Solar e atualizar o Figma. [Registrado]
+- **Execução:** no Footer Dark do Portfolio Components, a borda superior agora usa `Border/Accent/Default` (Solar) com peso ligado a `Stroke/accent` (3px). `Stroke/accent` ganhou code syntax `var(--border-width-accent)`, e o CSS passa a ter `--border-width-accent: 3px`, no mesmo padrão do `--border-width-normal` (D-25). O footer Light não foi alterado (borda de 1px; o código não o usa). [Registrado]
+- **Observação sobre a regra do Solar:** a regra original reservava o Solar para a logo; foi revista em 13/11/2026 para permitir Solar em Warning. O uso do Solar numa linha decorativa do footer é decisão de marca de Renan. [Registrado]
+
+### D-27 Remoção de `dotz backup.html`
+- **Contexto:** arquivo órfão, não linkado, com uma violação do Solar em botão; já havia sido recomendado apagá-lo. O footer foi alterado nele junto com as outras 6 páginas no Prompt 12. [Registrado]
+- **Decisão de Renan:** apagar. A execução é do Prompt 13, que confere antes se algo ainda o referencia. [Registrado]
+
+### D-28 Checagem de arquivos de dados dos componentes
+- **Contexto:** dois JSONs apareceram apagados na árvore de trabalho no início do Prompt 11, sem causa conhecida. O Code testou: sem qualquer um deles, `docs:components` falha mas `docs:check` passa. [Registrado: relatório do Code]
+- **Decisão de Renan:** aplicar a checagem proposta: `docs:check` passa a falhar se algum dos dois arquivos faltar enquanto houver páginas de componente, e compara cada slug com o HTML gerado. [Registrado]
 
 ## Pendências para o case
 

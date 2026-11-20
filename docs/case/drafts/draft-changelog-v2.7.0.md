@@ -29,8 +29,18 @@
 **6. Rodapé alinhado ao Figma (Footer, Style=Dark)**
 - Superfície `--color-bg-neutral-default` (Ink) no lugar de Abyss; todo o texto em `--color-text-neutral-default`, sem variantes de branco translúcido; borda da barra inferior `--color-border-strong`; botões `.btn--inverse`. `.btn--footer` e suas regras saíram do `layout.css` e do HTML, sem nenhum override local de foco, hover ou disabled. Comentário `TODO dark mode`: a superfície do rodapé acompanha os tokens Neutral no tema escuro.
 
-**7. Diário de decisões v0.5**
-- `docs/case/decisoes-hope.md` atualizado (D-01 a D-25), substituindo a versão anterior sem mesclar.
+**7. Borda superior do rodapé em tokens (D-26)**
+- `--border-width-accent: 3px` (Figma `Stroke/accent`), no mesmo padrão do `--border-width-normal`. A borda do rodapé usa `var(--border-width-accent) solid var(--color-border-accent-default)`; o resultado computado segue 3px sólido Solar. O Figma foi atualizado para o código.
+- Snapshot do Foundation relido: `Stroke/thin` agora aponta para `--border-width-normal` e `Stroke/accent` para `--border-width-accent`. Comparador: 149 iguais, 2 diferentes (dark já conhecidos).
+
+**8. Guarda no `docs:check` (D-28)**
+- Falha se `components-content.json` ou `components-code-notes.json` faltarem enquanto houver páginas de componente, ou se um slug do conteúdo não tiver `docs/components/<slug>.html`. Itens já respondidos saíram das listas "unverified" de Button, Badge e Link.
+
+**9. `case-studies/dotz backup.html` removido (D-27)**
+- Página órfã, sem nenhuma referência funcional (só menções históricas em prosa) e sem CSS exclusivo.
+
+**10. Diário de decisões v0.6**
+- `docs/case/decisoes-hope.md` atualizado (D-01 a D-28), substituindo a versão anterior sem mesclar.
 
 **Débitos**
 - Comparador de tokens: 148 iguais e 2 diferentes (`--color-bg-scrim-strong` e `--color-bg-icon-chip` no Dark, já conhecidos); `--color-bg-brand-tertiary` existe no Figma sem token no CSS.
