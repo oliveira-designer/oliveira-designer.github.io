@@ -68,7 +68,6 @@
 ],
 "codeOnly": [
   {"selector": ".btn--solar", "note": "Solar fill button. Not the same as Figma's Accent."},
-  {"selector": ".site-footer .btn--footer", "note": "Footer-only button."},
   {"selector": ".case-card__action--disabled", "note": "Card-specific disabled action."},
   {"selector": ".testimonial-card__profile-link", "note": "Underlined link specific to the testimonial card."}
 ]

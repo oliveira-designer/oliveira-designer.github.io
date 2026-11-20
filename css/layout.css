@@ -899,11 +899,13 @@ html {
 
 /* ----------------------------------------------------------
    FOOTER
-   Always Background/Brand/Strong — connect CTA + bottom bar
+   Figma Footer Style=Dark: Background/Neutral/Default surface, Text/Neutral/Default
+   text, Button Inverse. Only shared tokens, no local overrides.
    ---------------------------------------------------------- */
 .site-footer {
-  background-color: var(--color-bg-brand-strong);
-  color: var(--color-text-brand-strong-inverse);
+  /* TODO dark mode: footer surface flips with Neutral tokens, decide when dark mode is created */
+  background-color: var(--color-bg-neutral-default);
+  color: var(--color-text-neutral-default);
   padding: var(--space-20) 0 var(--space-10);
   margin-top: var(--space-20);
   border-top: 3px solid var(--color-border-accent-default);
@@ -923,14 +925,14 @@ html {
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  color: var(--color-cloud);
+  color: var(--color-text-neutral-default);
 }
 
 .footer__lede {
   font-family: var(--font-body);
   font-size: var(--fs-body);
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--color-text-neutral-default);
   max-width: 42ch;
 }
 
@@ -941,23 +943,11 @@ html {
   margin-top: var(--space-2);
 }
 
-/* Secondary button on dark footer */
-.site-footer .btn--footer {
-  color: var(--color-cloud);
-  border-color: rgba(255, 255, 255, 0.35);
-  background-color: transparent;
-}
-.site-footer .btn--footer:hover {
-  color: var(--color-cloud);
-  border-color: rgba(255, 255, 255, 0.65);
-  background-color: rgba(255, 255, 255, 0.08);
-}
-
 /* Bottom bar */
 .footer__bottom {
   margin-top: var(--space-16);
   padding-top: var(--space-8);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--color-border-strong);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -980,7 +970,7 @@ html {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--color-text-neutral-default);
 }
 
 .footer__heart {
@@ -998,7 +988,7 @@ html {
   font-family: var(--font-body);
   font-size: var(--fs-label);
   letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--color-text-neutral-default);
   white-space: nowrap;
 }
 

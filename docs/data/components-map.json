@@ -489,10 +489,6 @@
       "component": "Button"
     },
     {
-      "selector": ".site-footer .btn--footer",
-      "component": "Button"
-    },
-    {
       "selector": ".case-card__action--disabled",
       "component": "Button",
       "assignment": "Assigned to Button by the docs generator as the closest component, inference: it is a card action, not a .btn."
