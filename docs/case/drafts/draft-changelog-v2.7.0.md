@@ -26,11 +26,17 @@
 **5. Badge**
 - `.badge--draft` removido; `.badge--neutral` no lugar (`design-system.html`).
 
+**6. Rodapé alinhado ao Figma (Footer, Style=Dark)**
+- Superfície `--color-bg-neutral-default` (Ink) no lugar de Abyss; todo o texto em `--color-text-neutral-default`, sem variantes de branco translúcido; borda da barra inferior `--color-border-strong`; botões `.btn--inverse`. `.btn--footer` e suas regras saíram do `layout.css` e do HTML, sem nenhum override local de foco, hover ou disabled. Comentário `TODO dark mode`: a superfície do rodapé acompanha os tokens Neutral no tema escuro.
+
+**7. Diário de decisões v0.5**
+- `docs/case/decisoes-hope.md` atualizado (D-01 a D-25), substituindo a versão anterior sem mesclar.
+
 **Débitos**
 - Comparador de tokens: 148 iguais e 2 diferentes (`--color-bg-scrim-strong` e `--color-bg-icon-chip` no Dark, já conhecidos); `--color-bg-brand-tertiary` existe no Figma sem token no CSS.
 - `--color-text-neutral-secondary` (Night/300) tem contraste baixo sobre fundo claro; hoje sem uso.
 - Altura do Button Medium: 44,8px no código contra 45px no Figma (diferença de 0,2px do line-height 1.6).
-- Pesquisa das superfícies escuras (decisão D-24, contexto de superfície): ver `dark-surface-survey.md`. O anel de foco Anchor no rodapé (Abyss) tem 2,64:1, abaixo de 3:1.
+- Pesquisa das superfícies escuras (decisão D-24): ver `docs/case/drafts/dark-surface-survey.md` (feita antes do alinhamento do rodapé). Sobre Ink, o anel de foco Anchor tem 3,01:1. O modo "Neutral surface" e o `data-surface` seguem adiados.
 - `GOVERNANCE.md` seção 7 ainda lista `hope-demo.html`.
 
 ---
