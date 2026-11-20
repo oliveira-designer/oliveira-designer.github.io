@@ -321,6 +321,7 @@
   --border-thin:   0.8px solid var(--color-border);
   --border-width-normal: 1px;  /* width alone, for calc(); --border-normal is a shorthand and cannot be used inside calc() */
   --border-normal: var(--border-width-normal) solid var(--color-border);
+  --border-width-accent: 3px;  /* Figma Stroke/accent: width alone, for the accent borders (footer top border); same pattern as --border-width-normal */
   --border-strong: 1px solid var(--color-border-strong);
 
   /* ----------------------------------------------------------

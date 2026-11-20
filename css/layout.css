@@ -908,7 +908,7 @@ html {
   color: var(--color-text-neutral-default);
   padding: var(--space-20) 0 var(--space-10);
   margin-top: var(--space-20);
-  border-top: 3px solid var(--color-border-accent-default);
+  border-top: var(--border-width-accent) solid var(--color-border-accent-default);
 }
 
 .footer__connect {
