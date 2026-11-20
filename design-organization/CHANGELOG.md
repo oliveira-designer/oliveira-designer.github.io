@@ -5,6 +5,31 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.6.18 · 20 de novembro de 2026 · Site de docs: página de tokens com comparação ao Figma, páginas de Button, Badge e Link, página temporária de revisão dos 30 componentes com seletor de tema (documentação, PATCH)
+
+**Versão escolhida: PATCH (2.6.17 para 2.6.18).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre "melhoria de documentação sem mudança técnica", e toda mudança gera entrada no changelog. Sem mudança de token, CSS ou componente. Nenhum arquivo do sistema Hope mudou, então os cabeçalhos de versão de `DESIGN.md`, `DESIGN-IMPLEMENTATION.md` e `tokens.css` seguem em 2.6.17; `GOVERNANCE.md` segue em 1.5 e `PATTERNS.md` em 1.1.2.
+
+**1. Site de docs, fase 1 (`b2b43dc`)**
+- `docs/` e `scripts/`: layout compartilhado, geradores e `docs/docs.css` (só tokens do Hope), com seletor de tema Light, Dark e System (mesmo mecanismo `data-theme` do CSS) e `noindex` em toda página.
+- Página de tokens gerada de `css/tokens.css`: 163 tokens com valores Light e Dark calculados no navegador, comparados ao snapshot do Figma de 19/11/2026: 128 iguais, 2 diferentes (as duas de dark mode já adiadas), 1 divergência aceita (`--icon-color`) e 31 sem código no Figma. Divergências aceitas ficam em `docs/data/accepted-divergences.json`.
+- `scripts/check-docs.mjs` (`npm run docs:check`) confere classes das demos contra o CSS real, `noindex`, cabeçalho e dados.
+
+**2. Páginas de componentes (`1e412b7`)**
+- Button (com Icon Button), Badge e Link, geradas de `docs/data/components-content.json`, `components-code-notes.json` e `components-map.json`. Demos ao vivo só para variantes que existem no CSS; o resto fica em "In Figma, no code yet". As diferenças entre Figma e código aparecem com classe (Atencao ou Informativo), sem decisão tomada.
+
+**3. Página temporária de revisão (`0d1da6f`)**
+- `docs/components/review.html`: as 30 unidades do inventário do Figma (172 variantes), 19 variantes com classe de CSS (Complete 2, Partial 2, Not created 26) e a tabela "Still to create" gerada dos dados. Lê as folhas de estilo de `docs/data/css-sources.json`, para continuar funcionando depois da reestruturação do CSS.
+- `docs/data/css-structure-report.md`: investigação só de leitura da estrutura do CSS e proposta de divisão. Nada em `css/` foi alterado.
+
+**4. `design-organization/hope-demo.html` removido (`796281b`)**
+- Cópia derivada apagada de propósito pelo dono (decisão D-07). A conferência de componentes passa a ser o site de docs.
+
+**Débitos**
+- `GOVERNANCE.md`, seção 7, ainda lista `hope-demo.html` entre as cópias derivadas. Sem edição nesta versão.
+- Sem mudança nos demais débitos e decisões pendentes desde a v2.6.17.
+
+---
+
 ## v2.6.17 · 19 de novembro de 2026 · Diário de decisões do Hope (documentação, PATCH)
 
 **Versão escolhida: PATCH (2.6.16 para 2.6.17).** Pela seção 3 do `GOVERNANCE.md`, PATCH cobre "melhoria de documentação sem mudança técnica", e toda mudança gera entrada no changelog. Nenhum token, regra de CSS ou componente mudou. Versões: `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` 2.6.17, `tokens.css` (só o comentário do cabeçalho) 2.6.17, `GOVERNANCE.md` 1.5 e `PATTERNS.md` 1.1.2 sem mudança.
