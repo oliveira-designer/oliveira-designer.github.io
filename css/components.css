@@ -17,21 +17,41 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.6;
+  /* Every style keeps a 1px border so the box never changes size between
+     states. A style with "no border" sets border-color to its fill (or
+     transparent when it has no fill). */
+  border: 1px solid transparent;
   border-radius: var(--radius-md);
-  padding: 12px 18px;            /* +2px vertical → target ≥ 44px (WCAG 2.5.5) */
-  min-height: 44px;
+  /* Figma Core draws the 1px stroke inside the box (Medium is 12px 20px of padding). In CSS the
+     border adds to the box, so it is subtracted from the padding: 11px 19px plus the 1px border
+     gives the Figma size. */
+  padding: calc(var(--space-3) - var(--border-width-normal)) calc(var(--space-5) - var(--border-width-normal));
+  min-height: 44px;              /* target size >= 44px (WCAG 2.5.5) */
   white-space: nowrap;
   cursor: pointer;
   transition:
     background-color var(--duration-normal) var(--ease-out),
     color            var(--duration-normal) var(--ease-out),
     border-color     var(--duration-normal) var(--ease-out),
-    transform        var(--duration-fast)   var(--ease-out),
-    box-shadow       var(--duration-normal) var(--ease-out);
+    transform        var(--duration-fast)   var(--ease-out);
 }
-.btn:focus-visible { box-shadow: var(--shadow-focus); }
+/* Focus ring: outline for every interactive component. The radius is set
+   again because reset.css button:focus-visible / a:focus-visible would
+   otherwise shrink it to --radius-xs. */
+.btn:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+  border-radius: var(--radius-md);
+}
 .btn:active        { transform: scale(0.98); }
+
+/* Icons inside a button are 16px and follow the text colour in every state */
+.btn .icon {
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
 
 /* Arrow icon slides right on hover */
 .btn .icon--arrow {
@@ -58,32 +78,44 @@
 /* Primary */
 .btn--primary {
   background-color: var(--color-bg-neutral-default);
-  color: var(--color-text-on-neutral);
-  border: 1px solid var(--color-bg-neutral-default);
+  color: var(--color-text-neutral-default);
+  border-color: var(--color-bg-neutral-default);
 }
 .btn--primary:hover {
   background-color: var(--color-bg-neutral-hover);
   border-color: var(--color-bg-neutral-hover);
-  color: var(--color-text-on-neutral);
+  color: var(--color-text-neutral-default);
 }
 
 /* Secondary */
 .btn--secondary {
   background-color: transparent;
   color: var(--color-text-1);
-  border: 1px solid var(--color-border);
+  border-color: var(--color-border-strong);
 }
 .btn--secondary:hover {
-  border-color: var(--color-border-strong);
-  background-color: var(--color-bg-alt);
-  color: var(--color-text-1);
+  background-color: var(--color-bg-neutral-default);
+  border-color: var(--color-bg-neutral-default);   /* no visible border: equals the fill */
+  color: var(--color-text-neutral-default);
 }
 
-/* Solar */
+/* Accent (Figma Core: Brand fill) */
+.btn--accent {
+  background-color: var(--color-bg-brand-default);
+  color: var(--color-text-inverse);
+  border-color: var(--color-bg-brand-default);
+}
+.btn--accent:hover {
+  background-color: var(--color-bg-brand-secondary);
+  border-color: var(--color-bg-brand-secondary);
+  color: var(--color-text-brand-hover);
+}
+
+/* Solar (site-only variant, not in Figma Core) */
 .btn--solar {
   background-color: var(--color-solar);
   color: var(--color-ink);
-  border: 1px solid var(--color-solar);
+  border-color: var(--color-solar);
 }
 .btn--solar:hover {
   background-color: var(--color-daybreak);
@@ -95,30 +127,87 @@
 .btn--ghost {
   background-color: transparent;
   color: var(--color-text-2);
-  border: 1px solid transparent;
+  border-color: transparent;
 }
 .btn--ghost:hover {
-  color: var(--color-text-1);
-  background-color: var(--color-bg-alt);
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+  color: var(--color-text-neutral-default);
 }
 
-/* Disabled state — applies to any variant */
-.btn:disabled,
-.btn[aria-disabled="true"] {
-  background-color: var(--color-bg-disabled);
-  color: var(--color-text-on-disabled);
-  border-color: var(--color-border-disabled);
+/* Inverse (Figma Core: neutral-inverse fill, for dark surfaces) */
+.btn--inverse {
+  background-color: var(--color-bg-neutral-inverse);
+  color: var(--color-text-neutral-inverse);
+  border-color: var(--color-bg-neutral-inverse);
+}
+.btn--inverse:hover {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+  color: var(--color-text-neutral-default);
+}
+
+/* Destructive */
+.btn--destructive {
+  background-color: var(--color-error);
+  color: var(--color-text-danger-inverse);
+  border-color: var(--color-error);
+}
+.btn--destructive:hover {
+  background-color: var(--color-bg-danger-hover);
+  border-color: var(--color-bg-danger-hover);
+  color: var(--color-text-danger-inverse);
+}
+
+/* Small Ghost: Ghost colours and states, smaller box, pill radius */
+.btn--ghost-sm {
+  /* Figma 8px 16px with the border inside the box: 7px 15px plus the 1px border. */
+  padding: calc(var(--space-2) - var(--border-width-normal)) calc(var(--space-4) - var(--border-width-normal));
+  border-radius: var(--radius-pill);
+  min-height: 0;
+  background-color: transparent;
+  color: var(--color-text-2);
+  border-color: transparent;
+}
+.btn--ghost-sm:hover {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+  color: var(--color-text-neutral-default);
+}
+.btn--ghost-sm:focus-visible { border-radius: var(--radius-pill); }
+
+/* Disabled state: tokens, never opacity. Specificity is (0,3,0) so it also
+   beats every :hover rule above, whatever the source order. */
+.btn.btn:disabled,
+.btn.btn[aria-disabled="true"] {
+  background-color: var(--color-bg-disabled-default);
+  color: var(--color-text-disabled-inverse);
+  border-color: var(--color-border-disabled-default);
   cursor: not-allowed;
   pointer-events: none;
   transform: none;
-  box-shadow: none;
+}
+.btn--secondary.btn:disabled,
+.btn--secondary.btn[aria-disabled="true"] {
+  background-color: transparent;
+  color: var(--color-text-disabled-default);
+  border-color: var(--color-border-disabled-default);
+}
+.btn--ghost.btn:disabled,
+.btn--ghost.btn[aria-disabled="true"],
+.btn--ghost-sm.btn:disabled,
+.btn--ghost-sm.btn[aria-disabled="true"] {
+  background-color: transparent;
+  color: var(--color-text-disabled-default);
+  border-color: transparent;
 }
 
 /* Icon color roles (Figma: Hope · Icon / Icon/Color) */
 .icon--default { color: var(--icon-color-default); }
 .icon--secondary { color: var(--icon-color-secondary); }
 .icon--tertiary { color: var(--icon-color-tertiary); }
-.icon--on-neutral { color: var(--icon-color-on-neutral); }
+.icon--neutral { color: var(--icon-color-neutral); }
+.icon--on-neutral { color: var(--icon-color-neutral); } /* deprecated 2026-11, use .icon--neutral */
 .icon--brand-hover { color: var(--icon-color-brand-hover); }
 .icon--disabled { color: var(--icon-color-disabled); }
 .icon--danger { color: var(--icon-color-danger); }
@@ -157,25 +246,12 @@
 
 .badge--solar {
   background-color: var(--color-bg-accent-secondary);
-  color: var(--color-text-accent-secondary);
+  color: var(--color-text-accent-default);
 }
 
 .badge--success {
   background-color: rgba(74, 159, 107, 0.12);
-  color: var(--color-text-success);
-}
-
-.badge--draft {
-  background-color: var(--color-bg-neutral-secondary);
-  color: var(--color-text-neutral-secondary);
-  border: var(--border-thin);
-  font-family: var(--font-body);
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-[data-theme="dark"] .badge--draft {
-  border-color: var(--color-border);
+  color: var(--color-text-positive-default);
 }
 
 /* ----------------------------------------------------------
@@ -386,7 +462,7 @@
   color: var(--color-text-1);
 }
 .case-card__action--disabled {
-  color: var(--color-text-disabled);
+  color: var(--color-text-disabled-default);
   cursor: default;
   pointer-events: none;
 }
@@ -726,7 +802,7 @@
 /* Deliberate accent flip, not a stray duplicate: inside .case-card--glass,
    dark mode swaps .badge--anchor from its normal Anchor-blue treatment to
    Solar gold (documented in design-system.html's case-card--glass section).
-   These values match --color-bg-accent-secondary/--color-text-accent-secondary
+   These values match --color-bg-accent-secondary/--color-text-accent-default
    because that IS what "Solar in dark mode" is — this rule borrows those
    values to recolor the Ancora badge, it isn't reachable via the shared
    token (badge--anchor itself stays on brand-secondary/blue everywhere else,
@@ -801,7 +877,7 @@
   border-radius: var(--radius-sm);
   /* Background/Utilities/Icon Chip — shared with .result-card__icon */
   background-color: var(--color-bg-icon-chip);
-  color: var(--color-text-brand-primary);
+  color: var(--color-text-brand-default);
   flex: 0 0 auto;
 }
 .skill-card__icon .icon {
@@ -961,9 +1037,9 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  color: var(--color-text-brand-primary);
+  color: var(--color-text-brand-default);
   text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--color-text-brand-primary) 40%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--color-text-brand-default) 40%, transparent);
   text-underline-offset: 3px;
   transition:
     color                var(--duration-normal) var(--ease-out),
@@ -971,8 +1047,8 @@
 }
 
 .testimonial-card__profile-link:hover {
-  color: var(--color-text-brand-primary-hover);
-  text-decoration-color: var(--color-text-brand-primary-hover);
+  color: var(--color-text-brand-hover);
+  text-decoration-color: var(--color-text-brand-hover);
 }
 
 .testimonial-card__linkedin-icon {
@@ -1576,11 +1652,11 @@
 .persona__quote {
   padding: var(--space-5) var(--space-6);
   border-radius: var(--radius-md);
-  background-color: var(--color-bg-accent-soft);
+  background-color: var(--color-bg-accent-tertiary);
 }
 
-.persona__quotes-list .persona__quote:nth-child(4)    { background-color: var(--color-bg-positive-soft); }
-.persona__quotes-list .persona__quote:nth-child(n+5)  { background-color: var(--color-bg-danger-soft); }
+.persona__quotes-list .persona__quote:nth-child(4)    { background-color: var(--color-bg-positive-secondary); }
+.persona__quotes-list .persona__quote:nth-child(n+5)  { background-color: var(--color-bg-danger-secondary); }
 
 .persona__quote p {
   font-family: var(--font-body);
@@ -1724,7 +1800,7 @@
   place-items:   center;
   flex-shrink:   0;
   background-color: var(--color-bg-icon-chip);
-  color:            var(--color-text-brand-primary);
+  color:            var(--color-text-brand-default);
 }
 
 .result-card__title {
@@ -1849,8 +1925,8 @@
   color: var(--color-cloud);
 }
 .lightbox__close:focus-visible {
-  outline: 2px solid var(--color-solar);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-solar);   /* solar: sits on the dark scrim */
+  outline-offset: var(--focus-ring-gap);
 }
 
 /* Reduced-motion: skip the scale, keep the fade */
@@ -1916,13 +1992,13 @@
 }
 
 .banner--wip {
-  background-color: var(--color-bg-accent-soft);
+  background-color: var(--color-bg-accent-tertiary);
   color: var(--color-dusk);
   border: 1px solid var(--color-amber);
 }
 
 [data-theme="dark"] .banner--wip {
-  background-color: var(--color-bg-accent-soft);
+  background-color: var(--color-bg-accent-tertiary);
   color: var(--color-daybreak);
   border-color: var(--color-amber);
 }
