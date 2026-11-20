@@ -17,6 +17,8 @@
 //      docs/data/figma-components-inventory.json exactly once, has one "Still to create"
 //      row per unit, links the stylesheets listed in docs/data/css-sources.json, and its demo
 //      classes exist in THOSE stylesheets.
+//   9. docs/data/components-content.json or components-code-notes.json is missing while component
+//      pages exist, or a slug in components-content.json has no docs/components/<slug>.html.
 //   6. docs/data/components-map.json names a CSS rule or class that is not in
 //      css/*.css, is internally inconsistent, or disagrees with
 //      docs/data/components-code-notes.json (counts differ: error).
@@ -227,6 +229,26 @@ for (const file of pages) {
 const headerValues = [...headers.values()];
 if (new Set(headerValues).size > 1) {
   errors.push(`header chrome differs between pages: ${[...headers.keys()].join(', ')} (regenerate with npm run docs:tokens)`);
+}
+
+/* ---- component data files must exist while component pages exist ---- */
+{
+  const compDir = path.join(DOCS, 'components');
+  const pageNames = fs.existsSync(compDir) ? fs.readdirSync(compDir).filter((n) => n.endsWith('.html') && n !== 'index.html' && n !== 'review.html') : [];
+  if (pageNames.length) {
+    for (const f of ['components-content.json', 'components-code-notes.json']) {
+      if (!fs.existsSync(path.join(DOCS, 'data', f))) errors.push(`docs/data/${f} is missing, but component pages exist in docs/components/ (restore the file; npm run docs:components needs it)`);
+    }
+    const contentFile = path.join(DOCS, 'data', 'components-content.json');
+    if (fs.existsSync(contentFile)) {
+      try {
+        const slugs = (JSON.parse(fs.readFileSync(contentFile, 'utf8')).components || []).map((c) => c.slug);
+        for (const slug of slugs) if (!pageNames.includes(`${slug}.html`)) errors.push(`components-content.json lists "${slug}" but docs/components/${slug}.html does not exist (run npm run docs:components)`);
+      } catch (err) {
+        errors.push(`docs/data/components-content.json is not valid JSON: ${err.message}`);
+      }
+    }
+  }
 }
 
 /* ---- components-map.json: every selector must exist in the CSS ---- */
