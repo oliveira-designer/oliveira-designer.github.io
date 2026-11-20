@@ -1,0 +1,10 @@
+{
+  "note": "Ordered list of the stylesheets the review page loads, relative to the repository root. Today these are the real, current files. After the CSS is split, change this list (for example to one generated aggregate) and the review page and its checks follow.",
+  "sources": [
+    "css/tokens.css",
+    "css/reset.css",
+    "css/components.css",
+    "css/layout.css",
+    "css/animations.css"
+  ]
+}
