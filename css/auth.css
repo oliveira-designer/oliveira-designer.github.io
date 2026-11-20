@@ -134,8 +134,8 @@ main,
   background-color: color-mix(in srgb, var(--color-text-1) 8%, transparent);
 }
 .auth-gate__close:focus-visible {
-  outline: none;
-  box-shadow: var(--shadow-focus);
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
 }
 
 /* ----------------------------------------------------------
@@ -178,9 +178,9 @@ main,
 }
 
 .auth-gate__email {
-  color: var(--color-text-brand-primary);
+  color: var(--color-text-brand-default);
   text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--color-text-brand-primary) 40%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--color-text-brand-default) 40%, transparent);
   text-underline-offset: 3px;
   font-weight: 500;
   transition:
@@ -188,8 +188,8 @@ main,
     text-decoration-color var(--duration-normal) var(--ease-out);
 }
 .auth-gate__email:hover {
-  color: var(--color-text-brand-primary-hover);
-  text-decoration-color: var(--color-text-brand-primary-hover);
+  color: var(--color-text-brand-hover);
+  text-decoration-color: var(--color-text-brand-hover);
 }
 
 /* ----------------------------------------------------------
@@ -237,30 +237,23 @@ main,
   padding: 12px 48px 12px var(--space-4);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  outline: none;
   background-color: var(--color-bg);
   color: var(--color-text-1);
   box-sizing: border-box;
   min-height: 44px;
-  transition:
-    border-color var(--duration-normal) var(--ease-out),
-    box-shadow   var(--duration-normal) var(--ease-out);
+  transition: border-color var(--duration-normal) var(--ease-out);
 }
 .auth-gate__input::placeholder {
   color: var(--color-text-3);
 }
-.auth-gate__input:focus {
-  border-color: var(--color-anchor);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-anchor) 15%, transparent);
+/* Focus: the outline is the only indicator; the border does not change. */
+.auth-gate__input:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
 }
-[data-theme="dark"] .auth-gate__input:focus {
-  border-color: var(--color-solar);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-solar) 15%, transparent);
-}
-.auth-gate__input--error,
-.auth-gate__input--error:focus {
-  border-color: var(--color-border-error) !important;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-border-error) 15%, transparent) !important;
+.auth-gate__input--error {
+  border-color: var(--color-border-danger-default);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-border-danger-default) 15%, transparent);
 }
 
 .auth-gate__eye {
@@ -279,8 +272,8 @@ main,
 }
 .auth-gate__eye:hover       { color: var(--color-text-2); }
 .auth-gate__eye:focus-visible {
-  outline: none;
-  box-shadow: var(--shadow-focus);
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
   border-radius: var(--radius-xs);
 }
 
@@ -291,7 +284,7 @@ main,
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   line-height: 1.4;
-  color: var(--color-text-error);
+  color: var(--color-text-danger-default);
   margin: 0;
   min-height: 1.2em;
 }
