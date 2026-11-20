@@ -145,6 +145,7 @@
   --color-text-neutral-default:   var(--color-cloud);
 
   --color-bg-brand-secondary:     var(--color-sky);
+  --color-bg-brand-tertiary:      rgba(232, 240, 249, 0.40);  /* Sky at 40%. Reserved: no component uses it yet */
   --color-text-brand-secondary:   var(--color-deep);
 
   --color-bg-accent-secondary:    var(--color-aurora);
@@ -419,6 +420,7 @@
   --color-text-danger-inverse:    var(--color-cloud);
 
   --color-bg-brand-secondary:     rgba(28, 95, 168, 0.2);
+  --color-bg-brand-tertiary:      rgba(28, 95, 168, 0.15);   /* Anchor at 15%. Reserved */
   --color-text-brand-secondary:   var(--color-tide);
 
   --color-bg-accent-secondary:    rgba(245, 200, 66, 0.15);

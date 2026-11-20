@@ -165,6 +165,8 @@ colors:
   bg-brand-default-dark: "{colors.tide}"
   bg-brand-hover: "{colors.deep}"
   bg-brand-hover-dark: "{colors.anchor}"
+  bg-brand-tertiary: "rgba(232, 240, 249, 0.40)"  # Sky a 40%. Reservado, nenhum componente usa ainda
+  bg-brand-tertiary-dark: "rgba(28, 95, 168, 0.15)"  # Anchor a 15%
   text-brand-inverse: "{colors.cloud}"
   text-brand-inverse-dark: "{colors.ink}"
   bg-accent-default: "{colors.solar}"
