@@ -1,0 +1,17 @@
+/* Hope DS: css/components/separator.css
+   Figma: Core, Separator (one variant). A 1px horizontal rule in Border/Default/Default.
+   Decorative: use <hr class="separator" aria-hidden="true">. No vertical variant exists in Figma.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   SEPARATOR
+   ---------------------------------------------------------- */
+.separator {
+  display: block;
+  width: 100%;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-top: var(--border-width-normal) solid var(--color-border);
+}

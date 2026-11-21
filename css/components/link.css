@@ -1,0 +1,52 @@
+/* Hope DS: css/components/link.css
+   Figma: Core, Link (Size Medium|Small, State Default|Hover|Focus|Disabled).
+   New classes only: the global a rules in css/reset.css are untouched, so anchors
+   without .link render as before.
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   LINK
+   Always underlined, no icon. Hover and Focus change only the weight (400 to 700),
+   which widens the text by about 1px (a small layout shift, as in Figma).
+   ---------------------------------------------------------- */
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--color-text-1);
+  text-decoration: underline;
+}
+
+.link--small {
+  font-size: var(--fs-body-xs);
+}
+
+.link:hover {
+  color: var(--color-text-1);
+  font-weight: 700;
+}
+
+/* Square ring (no radius), 2px with a 2px gap, as in the other components. */
+.link:focus-visible {
+  color: var(--color-text-1);
+  font-weight: 700;
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+  border-radius: 0;
+}
+
+/* Disabled stays regular weight at both sizes, also on hover. Use an anchor without
+   href (not focusable) plus aria-disabled="true". */
+.link[aria-disabled="true"],
+.link[aria-disabled="true"]:hover {
+  color: var(--color-text-disabled-default);
+  font-weight: 400;
+  cursor: not-allowed;
+  pointer-events: none;
+}

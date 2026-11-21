@@ -32,7 +32,15 @@
   color: var(--color-text-accent-default);
 }
 
+/* Success is 12% and Danger 10% on purpose (D-32). The Danger fill uses the Figma
+   token, which already carries the alpha. Success keeps its literal so design-system.html
+   does not change in Dark (the token is solid there); see the Lote 0 report. */
 .badge--success {
   background-color: rgba(74, 159, 107, 0.12);
   color: var(--color-text-positive-default);
+}
+
+.badge--danger {
+  background-color: var(--color-bg-danger-secondary);
+  color: var(--color-text-danger-default);
 }
