@@ -57,6 +57,9 @@
 **14. Prosa com os arquivos CSS reais**
 - `DESIGN.md`, `DESIGN-IMPLEMENTATION.md`, `design-system.html`, comentários de `tokens.css`, a nota do inventário do Figma e o comentário do `check-docs.mjs` passaram a citar `css/components/<nome>.css`, `css/site/*.css` e `css/hope.css` em vez de `components.css` e `layout.css`. Nenhuma regra mudou.
 
+**15. Arquivo solto `css/Untitled` removido**
+- Arquivo de 22 bytes ("hero__body reveal-item"), colado sem querer no commit 359a1b9 (30/05/2026). Nenhuma página, script, configuração ou documento o referenciava.
+
 **Débitos**
 - Comparador de tokens: 150 iguais e 2 diferentes (`--color-bg-scrim-strong` e `--color-bg-icon-chip` no Dark, já conhecidos); nenhum token do Figma sem token no CSS.
 - `--color-text-neutral-secondary` (Night/300) tem contraste baixo sobre fundo claro; hoje sem uso.
