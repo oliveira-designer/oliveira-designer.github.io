@@ -60,6 +60,20 @@
 **15. Arquivo solto `css/Untitled` removido**
 - Arquivo de 22 bytes ("hero__body reveal-item"), colado sem querer no commit 359a1b9 (30/05/2026). Nenhuma página, script, configuração ou documento o referenciava.
 
+**16. Lote 0: Badge Danger, Link e Separator no CSS**
+- `.badge--danger` (fundo `--color-bg-danger-secondary` a 10%, texto `--color-text-danger-default`). `.badge--success` mantém o literal `rgba(74,159,107,0.12)` (o token `--color-bg-positive-secondary` dá o mesmo valor no Light, mas no Dark é uma cor sólida e mudaria o `design-system.html`); Danger usa o token. Success a 12% e Danger a 10% é decisão do dono (D-32).
+- `css/components/link.css`: `.link` e `.link--small` (Default, Hover, Focus, Disabled). Sublinhado, sem ícone, Hover e Focus em negrito (alarga o texto cerca de 1px), anel de foco quadrado de 2px com 2px de espaço em `:focus-visible`, Disabled regular via `aria-disabled="true"`. Só classes novas: a regra global `a` não mudou e o site não usa `.link`.
+- `css/components/separator.css`: `.separator`, linha de 1px em `--color-border`, largura total, `<hr class="separator" aria-hidden="true">`. Sem variante vertical (o Figma não tem).
+- Não alterado, a decidir: a base `.badge` (padding 3px 10px, line-height 1.5, borda Neutral 0.8px) difere do Figma (4 e 12, 160%, 0.5; altura 25,5 contra 29). É usada nas páginas publicadas.
+
+**17. Páginas de docs do Lote 0**
+- Nova página `docs/components/separator.html`; as páginas de Badge e Link passam a ter exemplos ao vivo de todos os estilos e tamanhos (Hover e Focus interativos). `components-map.json`, `components-content.json`, `components-code-notes.json` e o inventário atualizados: Badge 5 de 5, Link 8 de 8, Separator 1 de 1. Cobertura total: 44 de 171 variantes com CSS (eram 34).
+- Lacunas conhecidas revistas: saem o ícone na descrição do Link e a dúvida sobre o texto do Hover; entram o deslocamento do Hover e a borda de 0.5 do Badge Neutral sem variável.
+- `docs/docs.css`: `.docs-content a:where(:not(.link))`, para o link de demonstração manter a cor do componente.
+
+**18. Diário de decisões v0.9**
+- `docs/case/decisoes-hope.md` atualizado (D-01 a D-32), substituindo a versão anterior sem mesclar.
+
 **Débitos**
 - Comparador de tokens: 150 iguais e 2 diferentes (`--color-bg-scrim-strong` e `--color-bg-icon-chip` no Dark, já conhecidos); nenhum token do Figma sem token no CSS.
 - `--color-text-neutral-secondary` (Night/300) tem contraste baixo sobre fundo claro; hoje sem uso.

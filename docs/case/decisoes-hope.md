@@ -1,6 +1,6 @@
 # Hope DS: diário de decisões (material de case)
 
-Versão 0.8 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
+Versão 0.9 · 2026-11-21 · Rascunho vivo, uso interno (Renan e agentes)
 
 ## Como ler este documento
 
@@ -105,7 +105,7 @@ Versão 0.8 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
 ### D-16 Regra "componente entra no CSS quando houver uso" abolida
 - **Contexto:** a regra valia desde antes deste diário e aparece também na página "Como usar" do Figma (rascunho meu). Renan quer codar todos os componentes que já existem no Figma, porque sente que há muitos detalhes a lapidar e quer um lugar para conferir cada componente. [Registrado]
 - **Decisão de Renan:** "Vamos abolir essa decisão. Acho que já não cabe mais pra gente." [Registrado]
-- **Motivo:** a intenção declarada é o DS virar produto vivo (D-08), e um produto de DS tem componentes antes de ter uso. [Inferência: o motivo explícito de Renan foi só "já não cabe mais"]
+- **Motivo:** em 2026-11-21 Renan explicitou: ter o código dos componentes que ainda não existem no DS, a partir do Figma, já pronto para o caso de vir um case que precise de um projeto com esses componentes. [Registrado] A leitura anterior (um produto de DS tem componentes antes de ter uso, ligada ao D-08) continua como contexto. [Inferência]
 - **Onde a regra está escrita (levantamento do Code, 2026-11-19):** GOVERNANCE linhas 315-325, 347-355, 387 e 408; DESIGN.md linhas 1024-1028; CHANGELOG linhas 561, 573 e 654 (histórico, não se reescreve); texto do próprio site de docs (`docs/components/index.html:91` e `scripts/build-components-doc.mjs:525`). Nenhum arquivo usa a frase exata. [Registrado: relatório do Code]
 - **Consequência (proposta do Code, ainda não aprovada):** GOVERNANCE v1.6 (MINOR, como a v1.5) e atualização da seção 23 do DESIGN-IMPLEMENTATION. Preciso corrigir a página "Como usar" no Figma. [Registrado como proposta]
 
@@ -203,6 +203,23 @@ Versão 0.8 · 2026-11-20 · Rascunho vivo, uso interno (Renan e agentes)
 - **Execução (Figma, Core, página `└ Breadcrumb`):** variante `Type=Link Focus` (2510:258) entre Hover e Current, com um retângulo "Focus ring" absoluto: anel quadrado (raio 0), 2px ligado a `Stroke/focus`, cor `Border/Utilities/Focus Ring`, alinhamento interno, deslocado 4px (2px de intervalo mais 2px de traço) em volta do rótulo; o separador fica fora do anel. `Current` não ganha foco (não é link, `aria-current="page"`). Descrição do componente e painel Info atualizados. [Registrado]
 - **Publicação:** Renan publicou o Core em 2026-11-20. [Registrado]
 - **CSS:** ainda não há prompt próprio. Se o Breadcrumb não tem classe no CSS (o Prompt 15 manda o Code conferir), o foco entra quando o componente for codificado no Lote 3 (Navigation), com `:focus-visible`, `--focus-ring-width` e `--focus-ring-gap`, só no link e não no item atual. [Inferência: depende da conferência do Code]
+
+### D-31 Divisão do CSS executada (D-18) e entrada na `main`
+- **Execução (Prompt 15, 2026-11-20):** `css/components/` com 17 arquivos (uma família de componente por arquivo) e `css/site/` com 19 (os banners do antigo `layout.css` mais `animations.css`). Agregado gerado `css/hope.css` por `scripts/build-css.mjs` (`npm run css:build`), carregado por uma única ordem: tokens, reset, componentes, site, animações. O `docs:check` falha se o `hope.css` estiver desatualizado. [Registrado: relatório do Code]
+- **Desvios do plano:** `css/reset.css` ficou fora das pastas; `auth.css` fica fora do agregado porque `js/auth.js` só o carrega em páginas protegidas; a camada do site manteve a ordem original do `layout.css` (só a de componentes é alfabética). [Registrado]
+- **Verificação:** hash dos estilos computados de cada elemento (com `::before` e `::after`), posição, hover nos 14 primeiros interativos e foco em 14 paradas de tab, em 13 páginas, 3 larguras e 2 temas (78 snapshots). Páginas do site: 0 diferenças de CSS; os 4 pontos de ruído do baseline foram testados de novo, um a um, com 0. Páginas do `docs/`: diferenças só de texto que cita os arquivos novos. [Registrado: relatório do Code; a explicação do desvio de quebra de linha na página de revisão a 390px (663 elementos) é dele, e Renan conferiu a página e achou o resultado bom]
+- **Tamanho:** os cinco arquivos antigos somavam cerca de 140 KB e o `hope.css` tem cerca de 148 KB. Renan não vê problema. [Registrado]
+- **Breadcrumb:** não há classe no CSS; o foco definido no D-30 entra quando o componente for codificado (Lote 3). [Registrado]
+- **Entrada na `main`:** por causa do risco de perder o trabalho (problema de hardware no notebook de Renan), ele fez o merge e o push da `hope-review-buttons-tokens` na `main` em 2026-11-21 (`5ccb834`, `main` igual à `origin/main`) e conferiu o site no ar. A 2.7.0 está na `main`; as branches locais antigas foram apagadas. [Registrado]
+
+### D-32 Lote 0 (Badge, Link, Separator) e correções de Figma
+- **Contexto:** o Core está organizado em pastas que coincidem com as famílias do D-17 (Primitives, Forms, Feedback, Navigation, Overlays and data; 28 páginas de componente). O Separator está em Primitives. [Registrado: leitura do Figma em 2026-11-21]
+- **Decisões de Renan:** incluir o Separator no Lote 0; cada lote vira um prompt separado, para ter menos confusão. [Registrado]
+- **Link:** o Small Disabled estava em negrito (`link-xs bold`) e o Medium Disabled em regular; Renan decidiu regular e já corrigiu no Figma (conferido por mim em 2026-11-21). [Registrado] A descrição do Link dizia "com ícone" e nenhuma variante tem ícone: descrição corrigida por mim no Figma, sem ícone no código. [Registrado]
+- **Fundo branco cru:** as 8 variantes do Link e o componente Separator tinham fundo `#ffffff` sem variável. Renan: não deveria ter fundo. Removido no Figma por mim; o CSS não tem fundo. [Registrado]
+- **Hover e Focus do Link:** só passam a negrito, sem mudança de cor; o negrito alarga o texto cerca de 1px e causa um pequeno deslocamento. Renan aceitou. O Focus também é negrito, com anel de 2px a 2px de distância, quadrado. [Registrado]
+- **Badge:** Success usa 12% de opacidade no fundo e Danger 10%. Renan: seguir o Figma, são cores diferentes e merecem tratamento diferente. [Registrado]
+- **Descrições dos estilos de texto (Foundation):** 23 estilos tinham descrição defasada. Os estilos do Link e de Body sm repetiam `clamp(12px, 1vw, 13px)`; H3, Body, Body xs e Label ainda diziam `clamp(...)` embora os tamanhos sejam fixos desde a v2.6.12 e v2.6.13; Body lg citava `--fs-body-lg` (17px), removido; Metric citava Geist. Corrigi para "tamanho · token" (por exemplo `13px · --fs-body-sm`). Display, H1, H2 e Body xl ficaram como estavam, porque seguem fluidos. Renan autorizou corrigir as descrições do Link; a correção dos demais estilos foi minha extensão, feita por serem da mesma classe de erro, e precisa da publicação do Foundation por Renan. [Registrado para o Link; Inferência de escopo para os demais]
 
 ## Pendências para o case
 

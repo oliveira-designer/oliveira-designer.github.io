@@ -1059,6 +1059,12 @@ Formulários: Checkbox, Radio, Switch, Textarea, Select (gatilho fechado). Feedb
 
 Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados no código (teste 4 do `GOVERNANCE.md`). Table e Card genérico ficam de fora por decisão.
 
+### Componentes primitivos no código (Lote 0, 2026-11-21)
+
+- **Badge:** cinco estilos, `.badge--neutral`, `.badge--anchor` (Ancora no Figma), `.badge--solar`, `.badge--success` e `.badge--danger`, em `css/components/badge.css`. Success (12%) e Danger (10%) têm opacidades diferentes de propósito (decisão D-32). Danger usa o token `Background/Danger/Secondary`; Success mantém o literal `rgba(74,159,107,0.12)`, igual ao token no Light, e fica como débito no Dark (o token é sólido lá e mudaria o `design-system.html`). Divergência conhecida na base `.badge`: padding 3px 10px, line-height 1.5 e borda Neutral de 0.8px, contra 4 e 12, 160% e 0.5 no Figma (altura 25,5 contra 29). A base é usada nas páginas publicadas, então a correção espera decisão do dono.
+- **Link:** `.link` e `.link--small` em `css/components/link.css` (Medium e Small; Default, Hover, Focus e Disabled). Sempre sublinhado, sem ícone. Hover e Focus só passam a negrito (700), o que alarga o texto cerca de 1px. O Disabled é regular (400) nos dois tamanhos e usa `aria-disabled="true"` em âncora sem `href`. Os links do site continuam pela regra global `a` do `css/reset.css`; a classe `.link` é só do componente.
+- **Separator:** `.separator` em `css/components/separator.css`. Linha horizontal de 1px em `Border/Default/Default`, largura total do container, decorativa: `<hr class="separator" aria-hidden="true">`. Não existe variante vertical no Figma.
+
 ### Nomenclatura dos componentes no Figma
 
 `State=Active` virou `State=Focus` (Input, Textarea, Select); propriedade `Text` virou `Label` (Link, Header Link); `Description` virou `Helper text` (Input, Textarea, Select); `Input Field` virou `Input`; Banner `Type=Warning` virou `Type=Notice`. Regras completas na seção 12 do `GOVERNANCE.md`.

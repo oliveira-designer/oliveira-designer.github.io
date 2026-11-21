@@ -1037,6 +1037,8 @@ textarea.input { min-height: 120px; resize: vertical; }
 
 ## 15. COMPONENTES — CONTEÚDO EDITORIAL
 
+> **Nota (Lote 0, 2026-11-21):** o bloco `a.link` abaixo é um rascunho antigo de link editorial e não está no CSS. A classe `.link` que existe hoje em `css/components/link.css` é o componente Link do Figma (sublinhado, negrito no hover e foco, anel de foco quadrado). Os dois não são o mesmo estilo.
+
 ### Links inline em prosa
 
 ```css
@@ -1814,6 +1816,8 @@ type ButtonProps = {
     auth.css         ← carregado por js/auth.js só nas páginas protegidas
     output.css       ← Tailwind (npm run build:css), carregado antes do hope.css
 ```
+
+**Lote 0 (v2.7.0, 2026-11-21).** `css/components/` ganhou `link.css` (`.link`, `.link--small`) e `separator.css` (`.separator`), e `badge.css` ganhou `.badge--danger`.
 
 **CSS dividido por componente (v2.7.0, D-18).** As páginas carregam um único `css/hope.css`, gerado por `scripts/build-css.mjs` na ordem fixa: tokens, reset, `components/*` (alfabética), `site/*` (ordem original do antigo `layout.css`), `animations`. A camada `site` carrega depois da `components` porque sobrescreve `.btn`, `.logo-strip`, `.testimonial-card`, `.icon` e `.case-section__body`. Mudou só a organização: nenhum seletor, valor ou classe mudou (0 diferenças de estilo computado nas páginas do site e do docs). `npm run docs:check` falha se `hope.css` estiver defasado das fontes.
 
