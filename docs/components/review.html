@@ -92,6 +92,7 @@
               <li class="case-toc__item"><a class="case-toc__link" href="../components/button.html">Button</a></li>
               <li class="case-toc__item"><a class="case-toc__link" href="../components/badge.html">Badge</a></li>
               <li class="case-toc__item"><a class="case-toc__link" href="../components/link.html">Link</a></li>
+              <li class="case-toc__item"><a class="case-toc__link" href="../components/separator.html">Separator</a></li>
               <li class="case-toc__item"><a class="case-toc__link is-active" href="../components/review.html" aria-current="page">Review (temporary)</a></li>
             </ol>
             <p class="case-toc__label">On this page</p>
@@ -115,7 +116,7 @@
 
           <aside class="docs-note docs-note--banner" role="note">
             <p><strong>Temporary page.</strong> It exists to review what is built and what is missing while the CSS is being restructured. It will be removed once the components are created. Nothing here is a design decision: coverage comes from <code>docs/data/components-map.json</code>, the inventory from <code>docs/data/figma-components-inventory.json</code>, and the stylesheets from <code>docs/data/css-sources.json</code>.</p>
-            <p>30 components, 171 Figma variants, 34 with a CSS class: 3 Complete, 1 Partial, 26 Not created.</p>
+            <p>30 components, 171 Figma variants, 44 with a CSS class: 6 Complete, 0 Partial, 24 Not created.</p>
           </aside>
 
           <section class="docs-group" id="group-primitives" aria-labelledby="group-primitives-title">
@@ -230,17 +231,43 @@
 
           <section class="docs-section docs-unit" id="unit-link" aria-labelledby="unit-link-title">
             <h3 class="text-h3" id="unit-link-title">Link</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 8</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-163" rel="noopener noreferrer">Figma node 2016:163</a></p>
-            <p class="docs-placeholder">Not created</p>
-            <p class="docs-section__desc">The global <code>a</code> rule styles every anchor, but there is no Link component class, no Small size and no disabled rule.</p>
-            <h4 class="text-body docs-subhead">Missing variants</h4>
-            <ul class="docs-list"><li>Size: Medium: Default, Hover, Focus, Disabled</li><li>Size: Small: Default, Hover, Focus, Disabled</li></ul>
+            <p class="docs-badges"><span class="badge badge--anchor">8 Figma variants</span> <span class="badge badge--success">CSS 8 / 8</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-163" rel="noopener noreferrer">Figma node 2016:163</a></p>
+            <h4 class="text-body docs-subhead">Covered variants (8 of 8)</h4>
+            <p class="docs-section__desc">Showing 4: Default and Disabled. Hover and Focus are shared rules per style, see the Button page.</p>
+            <div class="docs-demo-stack">
+            <div class="docs-demo">
+              <p class="docs-demo__label">Size: Medium, State: Default</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><a href="#unit-link" class="link">Link</a><!-- demo:end -->
+              </div>
+            </div>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Size: Medium, State: Disabled</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><a class="link" aria-disabled="true">Link</a><!-- demo:end -->
+              </div>
+              <p class="docs-demo__caption">Native disabled attribute.</p>
+            </div>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Size: Small, State: Default</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><a href="#unit-link" class="link link--small">Link</a><!-- demo:end -->
+              </div>
+            </div>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Size: Small, State: Disabled</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><a class="link link--small" aria-disabled="true">Link</a><!-- demo:end -->
+              </div>
+              <p class="docs-demo__caption">Native disabled attribute.</p>
+            </div>
+            </div>
           </section>
 
           <section class="docs-section docs-unit" id="unit-badge" aria-labelledby="unit-badge-title">
             <h3 class="text-h3" id="unit-badge-title">Badge</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--solar">CSS 4 / 5</span> <span class="badge badge--solar">Partial</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=12-12" rel="noopener noreferrer">Figma node 12:12</a></p>
-            <h4 class="text-body docs-subhead">Covered variants (4 of 5)</h4>
+            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--success">CSS 5 / 5</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=12-12" rel="noopener noreferrer">Figma node 12:12</a></p>
+            <h4 class="text-body docs-subhead">Covered variants (5 of 5)</h4>
             <div class="docs-demo-stack">
             <div class="docs-demo">
               <p class="docs-demo__label">Style: Neutral</p>
@@ -266,18 +293,27 @@
                 <!-- demo:start --><span class="badge badge--success">Product Strategy</span><!-- demo:end -->
               </div>
             </div>
+            <div class="docs-demo">
+              <p class="docs-demo__label">Style: Danger</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><span class="badge badge--danger">Product Strategy</span><!-- demo:end -->
+              </div>
             </div>
-            <h4 class="text-body docs-subhead">Missing variants (1)</h4>
-            <ul class="docs-list"><li>Style: Danger</li></ul>
+            </div>
           </section>
 
           <section class="docs-section docs-unit" id="unit-separator" aria-labelledby="unit-separator-title">
             <h3 class="text-h3" id="unit-separator-title">Separator</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--neutral">CSS 0 / 1</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2096-1918" rel="noopener noreferrer">Figma node 2096:1918</a></p>
-            <p class="docs-placeholder">Not created</p>
-            <p class="docs-section__desc">No separator class exists in the CSS sources (css/components/, css/site/). Hairline dividers exist only as border rules inside other components (for example in css/site/hero.css on .hero) and as hr in the Tailwind preflight copy.</p>
-            <h4 class="text-body docs-subhead">Missing variants</h4>
-            <ul class="docs-list"><li>single variant</li></ul>
+            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--success">CSS 1 / 1</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2096-1918" rel="noopener noreferrer">Figma node 2096:1918</a></p>
+            <h4 class="text-body docs-subhead">Covered variants (1 of 1)</h4>
+            <div class="docs-demo-stack">
+            <div class="docs-demo">
+              <p class="docs-demo__label">Separator</p>
+              <div class="docs-demo__stage">
+                <!-- demo:start --><hr class="separator" aria-hidden="true"><!-- demo:end -->
+              </div>
+            </div>
+            </div>
           </section>
           </section>
 
@@ -518,9 +554,9 @@
                 <tbody>
                   <tr data-unit-row="Button"><td>Primitives</td><th scope="row"><a href="#unit-button">Button</a></th><td>28</td><td>28</td><td><span class="badge badge--success">Complete</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=11-105" rel="noopener noreferrer">11:105</a></td></tr>
                   <tr data-unit-row="Icon Button"><td>Primitives</td><th scope="row"><a href="#unit-icon-button">Icon Button</a></th><td>8</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-307" rel="noopener noreferrer">2016:307</a></td></tr>
-                  <tr data-unit-row="Link"><td>Primitives</td><th scope="row"><a href="#unit-link">Link</a></th><td>8</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-163" rel="noopener noreferrer">2016:163</a></td></tr>
-                  <tr data-unit-row="Badge"><td>Primitives</td><th scope="row"><a href="#unit-badge">Badge</a></th><td>5</td><td>4</td><td><span class="badge badge--solar">Partial</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=12-12" rel="noopener noreferrer">12:12</a></td></tr>
-                  <tr data-unit-row="Separator"><td>Primitives</td><th scope="row"><a href="#unit-separator">Separator</a></th><td>1</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2096-1918" rel="noopener noreferrer">2096:1918</a></td></tr>
+                  <tr data-unit-row="Link"><td>Primitives</td><th scope="row"><a href="#unit-link">Link</a></th><td>8</td><td>8</td><td><span class="badge badge--success">Complete</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2016-163" rel="noopener noreferrer">2016:163</a></td></tr>
+                  <tr data-unit-row="Badge"><td>Primitives</td><th scope="row"><a href="#unit-badge">Badge</a></th><td>5</td><td>5</td><td><span class="badge badge--success">Complete</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=12-12" rel="noopener noreferrer">12:12</a></td></tr>
+                  <tr data-unit-row="Separator"><td>Primitives</td><th scope="row"><a href="#unit-separator">Separator</a></th><td>1</td><td>1</td><td><span class="badge badge--success">Complete</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2096-1918" rel="noopener noreferrer">2096:1918</a></td></tr>
                   <tr data-unit-row="Input"><td>Forms</td><th scope="row"><a href="#unit-input">Input</a></th><td>5</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2323-317" rel="noopener noreferrer">2323:317</a></td></tr>
                   <tr data-unit-row="Textarea"><td>Forms</td><th scope="row"><a href="#unit-textarea">Textarea</a></th><td>5</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Input</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-173" rel="noopener noreferrer">2402:173</a></td></tr>
                   <tr data-unit-row="Select"><td>Forms</td><th scope="row"><a href="#unit-select">Select</a></th><td>5</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Input, Menu</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2402-315" rel="noopener noreferrer">2402:315</a></td></tr>
@@ -546,7 +582,7 @@
                   <tr data-unit-row="Avatar"><td>Overlays and data</td><th scope="row"><a href="#unit-avatar">Avatar</a></th><td>3</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-755" rel="noopener noreferrer">2413:755</a></td></tr>
                   <tr data-unit-row="Tag"><td>Overlays and data</td><th scope="row"><a href="#unit-tag">Tag</a></th><td>4</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td>Badge</td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-839" rel="noopener noreferrer">2413:839</a></td></tr>
                   <tr data-unit-row="Accordion item"><td>Overlays and data</td><th scope="row"><a href="#unit-accordion-item">Accordion item</a></th><td>7</td><td>0</td><td><span class="badge badge--neutral">Not created</span></td><td><span class="docs-muted">none</span></td><td><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-948" rel="noopener noreferrer">2413:948</a></td></tr>
-                  <tr class="docs-row--total" data-totals-row><th scope="row">Total</th><td>30 components</td><td>171</td><td>34</td><td>3 Complete, 1 Partial, 26 Not created</td><td><span class="docs-muted">suggestion, not a Figma fact</span></td><td></td></tr>
+                  <tr class="docs-row--total" data-totals-row><th scope="row">Total</th><td>30 components</td><td>171</td><td>44</td><td>6 Complete, 0 Partial, 24 Not created</td><td><span class="docs-muted">suggestion, not a Figma fact</span></td><td></td></tr>
                 </tbody>
               </table>
             </div>

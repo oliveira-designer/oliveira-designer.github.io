@@ -1,7 +1,7 @@
 {
 "meta": {
-  "version": "0.1",
-  "readAt": "2026-11-19",
+  "version": "0.2",
+  "readAt": "2026-11-21",
   "language": "en",
   "sources": {
     "figma": "Hope DS | Core Components, fileKey U6ThTndTKYSJKkd0XqaSdV. Variants, properties, sizes and bound tokens read via the Figma MCP. Token values come from docs/data/figma-tokens.json.",
@@ -111,8 +111,8 @@
     "Neutral": {"fill": "Background/Default/Secondary", "stroke": "Border/Default/Default (0.5)", "text": "Text/Default/Secondary"},
     "Ancora": {"fill": "Background/Brand/Secondary", "text": "Text/Brand/Secondary"},
     "Solar": {"fill": "Background/Accent/Secondary", "text": "Text/Accent/Default"},
-    "Success": {"fill": "Background/Positive/Secondary", "text": "Text/Positive/Default"},
-    "Danger": {"fill": "Background/Danger/Secondary", "text": "Text/Danger/Default"}
+    "Success": {"fill": "Background/Positive/Secondary (12% opacity)", "text": "Text/Positive/Default"},
+    "Danger": {"fill": "Background/Danger/Secondary (10% opacity)", "text": "Text/Danger/Default"}
   },
   "accessibility": {
     "contrastText": [
@@ -127,7 +127,8 @@
     "meaning": "Colour alone must not carry the meaning: the label text states the status."
   },
   "knownGaps": [
-    {"id": "badge-border-05", "status": "measured", "text": "Neutral has a 0.5 border. No Stroke token has that value (hairline is 0.8), so the 0.5 is a raw value."}
+    {"id": "badge-border-05", "status": "measured", "text": "Neutral has a 0.5 inside border whose weight is not bound to a variable. No Stroke token has that value (hairline is 0.8), so the 0.5 is a raw value."},
+    {"id": "badge-opacity-difference", "status": "documented", "text": "Success uses 12% opacity and Danger 10% on purpose (owner decision D-32, different colours get different treatment). Not an error."}
   ],
   "unverified": []
 },
@@ -155,9 +156,9 @@
   },
   "stateTokens": {
     "Default": {"text": "Text/Default/Default"},
-    "Hover": {"text": "Text/Default/Default", "note": "different text style from Default, same colour"},
-    "Focus": {"text": "Text/Default/Default", "note": "same text style as Hover, plus a square focus ring (Link radius is 0)"},
-    "Disabled": {"text": "Text/Disabled/Default"}
+    "Hover": {"text": "Text/Default/Default", "note": "bold (700) instead of regular (400), same colour; the text is about 1px wider"},
+    "Focus": {"text": "Text/Default/Default", "note": "bold like Hover, plus a square focus ring: 2px (Stroke/focus), 2px gap (Stroke/focus-gap), Border/Utilities/Focus Ring"},
+    "Disabled": {"text": "Text/Disabled/Default", "note": "regular (400) at both sizes"}
   },
   "accessibility": {
     "contrastText": [
@@ -170,12 +171,39 @@
     "naming": "Every link needs a clear destination in its own text."
   },
   "knownGaps": [
-    {"id": "link-icon", "status": "measured", "text": "The Figma description says 'link with icon', but the component has no icon property: only Label, Size and State."},
+    {"id": "link-hover-shift", "status": "measured", "text": "Hover and Focus switch from regular to bold, which widens the text by about 1px (Medium 25 to 26, Small 21 to 22), so neighbouring content shifts slightly. Accepted by the owner (D-32)."},
     {"id": "link-standalone-target", "status": "inference", "text": "Stand-alone Small links (18 high) depend on surrounding spacing to meet 2.5.8."}
   ],
-  "unverified": [
-    "What differs between the Default and Hover text styles."
-  ]
+  "unverified": []
+}
+,
+{
+  "slug": "separator",
+  "name": "Separator",
+  "figma": {"pageId": "2096:1916", "sets": [{"name": "Separator", "id": "2096:1918"}]},
+  "summary": "Decorative horizontal rule that separates blocks of content. One variant, no states, no navigation function.",
+  "whenToUse": [
+    "Dividing groups of content inside a card, list or section when spacing alone is not enough."
+  ],
+  "whenNotToUse": [
+    "Structure that assistive technology must announce: use headings and landmarks.",
+    "A vertical divider: Figma has no vertical variant."
+  ],
+  "properties": [],
+  "layout": {
+    "all": {"height": 1, "width": "100 in the Figma specimen, full container width in CSS", "border": "Border/Default/Default"}
+  },
+  "stateTokens": {
+    "Default": {"text": "Border/Default/Default"}
+  },
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "meaning": "The line is decorative and carries no meaning, so it is hidden from assistive technology: <hr class=\"separator\" aria-hidden=\"true\">. It is exempt from the 3:1 non-text contrast of 1.4.11 because nothing depends on seeing it.",
+    "note": "The Figma specimen is 100 wide only to show the line. The CSS line fills its container."
+  },
+  "knownGaps": [],
+  "unverified": []
 }
 ]
 }

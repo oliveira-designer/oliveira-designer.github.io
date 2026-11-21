@@ -9,7 +9,8 @@
 //                               Icon Button section
 //   components-map.json         which CSS selector implements each Figma variant (or null)
 //
-// Writes docs/components/index.html, button.html, badge.html, link.html.
+// Writes docs/components/index.html and one page per component in components-content.json
+// (button, badge, link, separator).
 // Live demos use ONLY real classes from css/*.css, no inline styles, and exist only for
 // variants that components-map.json maps to a selector. Hover and focus are never faked.
 //
@@ -137,7 +138,7 @@ ${inner}
    Sections
    ------------------------------------------------------------------------ */
 
-const mapKey = (comp) => ({ button: 'Button', badge: 'Badge', link: 'Link' })[comp.slug];
+const mapKey = (comp) => ({ button: 'Button', badge: 'Badge', link: 'Link', separator: 'Separator' })[comp.slug];
 const defaultLabel = (comp) => {
   const p = comp.properties.find((x) => x.type === 'text');
   return p && p.default ? p.default : comp.name;
@@ -187,7 +188,7 @@ function anatomySection(comp) {
 
 function variantsSection(comp) {
   const m = map.components[mapKey(comp)];
-  const props = table(
+  const props = !comp.properties.length ? '<p class="docs-section__desc">No properties: the component has a single variant.</p>' : table(
     ['Property', 'Type', 'Options', 'Default', 'Note'],
     comp.properties.map((p) => [th(esc(p.name)), td(esc(p.type)), td(p.options ? esc(p.options.join(', ')) : '<span class="docs-muted">free text</span>'), td(esc(p.default ?? '')), td(esc(p.note || ''))].join(''))
   );
@@ -206,6 +207,8 @@ function variantsSection(comp) {
     matrix = table(['Style, size', 'Default', 'Hover', 'Focus', 'Disabled'], rows);
   } else if (comp.slug === 'badge') {
     matrix = table(['Style', 'CSS class'], m.variants.map((v) => [th(esc(v.style)), td(v.rule ? code(v.rule) : '<span class="docs-muted">none</span>')].join('')));
+  } else if (comp.slug === 'separator') {
+    matrix = table(['Variant', 'CSS class'], m.variants.map((v) => [th('Default'), td(v.rule ? code(v.rule) : '<span class="docs-muted">none</span>')].join('')));
   } else {
     const rows = ['Medium', 'Small'].map((sz) => [th(sz), ...['Default', 'Hover', 'Focus', 'Disabled'].map((st) => {
       const v = m.variants.find((x) => x.size === sz && x.state === st);
@@ -255,12 +258,20 @@ function examplesSection(comp) {
       const cls = v.selector.replace(/\./g, ' ').trim();
       items.push(demo(`${v.style}`, `<span class="${cls}">${esc(label)}</span>`, `Class ${v.selector.replace('.badge', '')}. Static, no states.`));
     }
+  } else if (comp.slug === 'link') {
+    intro += ' Hover widens the text by about 1px because the weight goes from 400 to 700: that small layout shift is as specified in Figma. The disabled link is an anchor without href plus aria-disabled="true", so it is not focusable.';
+    for (const size of ['Medium', 'Small']) {
+      const v = m.variants.find((x) => x.size === size && x.state === 'Default' && x.selector);
+      if (!v) continue;
+      const cls = v.selector.replace(/\./g, ' ').trim();
+      items.push(demo(`${size}, Default`, `<a href="#examples" class="${cls}">${esc(label)}</a>`, 'Interact with it for hover and focus (Tab to it for the ring).'));
+      items.push(demo(`${size}, Disabled`, `<a class="${cls}" aria-disabled="true">${esc(label)}</a>`, 'No href, aria-disabled="true". Regular weight at both sizes.'));
+    }
+  } else if (comp.slug === 'separator') {
+    intro = 'Real markup with the real class from <code>css/hope.css</code> (sources in <code>css/components/</code>). The line is decorative, so the markup is an <code>hr</code> hidden from assistive technology with <code>aria-hidden="true"</code>: it carries no meaning and has no navigation function. A native <code>hr</code> keeps its thematic-break meaning when the CSS is missing, and the hiding is what makes it decorative. It is full width of its container; the 100 px width in Figma is only the specimen.';
+    items.push(demo('Default', '<hr class="separator" aria-hidden="true">', 'Class .separator. 1px, Border/Default/Default.'));
   } else {
-    return section(
-      'examples',
-      'Live examples',
-      `            <p class="docs-note">No live demo: Link has no component class. Today every anchor on the site is styled by the global <code>a</code> rule. ${esc(m.globalRulesDescription)}</p>`
-    );
+    return section('examples', 'Live examples', '            <p class="docs-note">No live demo for this component.</p>');
   }
   return section('examples', 'Live examples', `            <div class="docs-demo-grid">\n${items.join('\n')}\n            </div>`, intro);
 }
@@ -312,7 +323,7 @@ function iconButtonSection() {
 
 function accessibilitySection(comp) {
   const a = comp.accessibility;
-  const text = table(
+  const text = !a.contrastText.length ? '<p class="docs-section__desc">No text: nothing to measure for text contrast.</p>' : table(
     ['Case', 'Light', 'Dark', 'Result (4.5:1)'],
     a.contrastText.map((r) => {
       const exempt = /exempt/i.test(r.case);
@@ -370,6 +381,7 @@ function noCodeSection(comp) {
     collect('Button', (v) => `${v.style}, ${v.size}`);
     collect('IconButton', (v) => `Icon Button, ${v.style}`);
   } else if (comp.slug === 'badge') collect('Badge', (v) => v.style);
+  else if (comp.slug === 'separator') collect('Separator', () => 'Separator');
   else collect('Link', (v) => v.size);
   const notesFor = notes.coverage.missingInCss.filter((x) => x.component === comp.name || (comp.slug === 'button' && x.component === 'Icon Button'));
   const rows = groups.map(([k, , st]) => [th(esc(k)), td(esc(st.join(', '))), td('<span class="badge badge--neutral">no CSS class</span>')].join(''));
@@ -505,7 +517,7 @@ function indexPage(components) {
     add(comp.name, `${comp.slug}.html`, mapKey(comp), comp);
     if (comp.slug === 'button') add('Icon Button', 'button.html#icon-button', 'IconButton', null, 'section of the Button page');
   }
-  const documented = ['Button', 'IconButton', 'Badge', 'Link'].map((k) => map.components[k]);
+  const documented = ['Button', 'IconButton', 'Badge', 'Link', 'Separator'].map((k) => map.components[k]);
   const total = documented.reduce((n, c) => n + c.figmaVariants, 0);
   const impl = documented.reduce((n, c) => n + c.implemented, 0);
   const figmaOnly = figmaOnlyComponents();
@@ -513,7 +525,7 @@ function indexPage(components) {
   const body = `          <header class="docs-pagehead">
             <p class="text-label text-tertiary">Components</p>
             <h1 class="text-h1">Components</h1>
-            <p class="text-body text-secondary docs-lead">Button (with Icon Button), Badge and Link, documented as they are in Figma and in code today. ${impl} of ${total} Figma variants have a CSS class. Where Figma and the CSS disagree, each page lists the difference with its class (Bloqueia, Atencao, Informativo) and leaves the decision to the owner.</p>
+            <p class="text-body text-secondary docs-lead">Button (with Icon Button), Badge, Link and Separator, documented as they are in Figma and in code today. ${impl} of ${total} Figma variants have a CSS class. Where Figma and the CSS disagree, each page lists the difference with its class (Bloqueia, Atencao, Informativo) and leaves the decision to the owner.</p>
           </header>
 
           <section class="docs-section" id="components" aria-labelledby="components-title">
@@ -555,11 +567,11 @@ function main() {
   const impl = Object.entries(map.components).map(([k, c]) => `${k} ${c.implemented}/${c.figmaVariants}`).join(', ');
   console.log(`components: ${content.components.map((c) => c.slug).join(', ')}; coverage: ${impl}`);
   const notesImpl = notes.coverage.implementedInCss;
-  const notesMap = { Button: 'Button', IconButton: 'IconButton', Badge: 'Badge', Link: 'Link' };
+  const notesMap = { Button: 'Button', IconButton: 'IconButton', Badge: 'Badge', Link: 'Link', Separator: 'Separator' };
   for (const [k, nk] of Object.entries(notesMap)) {
     if (notesImpl[nk] !== map.components[k].implemented) console.warn(`coverage differs for ${k}: components-code-notes.json says ${notesImpl[nk]}, components-map.json says ${map.components[k].implemented} (map used)`);
   }
-  console.log('wrote docs/components/index.html, button.html, badge.html, link.html');
+  console.log(`wrote docs/components/index.html, ${content.components.map((c) => `${c.slug}.html`).join(', ')}`);
 }
 
 try {

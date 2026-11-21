@@ -118,6 +118,10 @@ function renderVariant(unit, v) {
     }
     case 'Badge':
       return `<span class="${cls}">Product Strategy</span>`;
+    case 'Link':
+      return v.state === 'Disabled' ? `<a class="${cls}" aria-disabled="true">Link</a>` : `<a href="#unit-link" class="${cls}">Link</a>`;
+    case 'Separator':
+      return `<hr class="${cls}" aria-hidden="true">`;
     case 'Banner':
       return `<div class="${cls}" role="status"><span class="banner__text">This case study is being finalized.</span></div>`;
     default:
@@ -170,7 +174,7 @@ function unitSection(u, ctx) {
     const placed = cov.m.variants.filter((v) => v.selector);
     // Button: the review shows Default and Disabled only. Hover and Focus use one shared rule per
     // style and are live on the Button page.
-    const shown = u.name === 'Button' ? placed.filter((v) => v.state === 'Default' || v.state === 'Disabled') : placed;
+    const shown = u.name === 'Button' || u.name === 'Link' ? placed.filter((v) => v.state === 'Default' || v.state === 'Disabled') : placed;
     for (const v of shown) {
       const label = propsOf(v) || u.name;
       const html = v.renderable === false ? null : renderVariant(u.name, v);

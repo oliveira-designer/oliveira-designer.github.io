@@ -1,10 +1,10 @@
 {
 "meta": {
-  "version": "0.1",
-  "readAt": "2026-11-19",
+  "version": "0.2",
+  "readAt": "2026-11-21",
   "language": "en",
   "sources": {
-    "code": "CSS read by the Code agent on 2026-11-19 (css/components.css, css/layout.css, global a rules). Claude did not read the CSS; items under differences and codeOnly are Code's findings.",
+    "code": "CSS read by the Code agent on 2026-11-19 (css/components/*.css, css/site/*.css, global a rules). Updated on 2026-11-21 for Badge Danger, Link and Separator. Claude did not read the CSS; items under differences and codeOnly are Code's findings.",
     "figma": "Same Figma reads as components-content.json.",
     "classification": "Claude's opinion, using the GOVERNANCE divergence classes: Bloqueia, Atencao, Informativo. Owner decides."
   },
@@ -26,19 +26,17 @@
   "note": "Icon colour per state was not read. In code it needs an accessible name (aria-label). Not implemented in CSS."
 },
 "coverage": {
-  "figmaVariants": {"Button": 28, "IconButton": 8, "Badge": 5, "Link": 8},
-  "implementedInCss": {"Button": 28, "IconButton": 0, "Badge": 4, "Link": 0},
-  "implementedNote": "Button: all 7 styles (Primary, Secondary, Ghost, Inverse, Accent and Destructive at Medium, plus Small Ghost), 4 states each (hover via :hover, focus via shared .btn:focus-visible outline, disabled via .btn.btn:disabled and per-style rules for Secondary and Ghost). Badge: Neutral, Ancora (.badge--anchor), Solar, Success. Link: no class. The global a rule applies brand colour, a:hover, and a:focus-visible with a 2px outline and 2px offset.",
+  "figmaVariants": {"Button": 28, "IconButton": 8, "Badge": 5, "Link": 8, "Separator": 1},
+  "implementedInCss": {"Button": 28, "IconButton": 0, "Badge": 5, "Link": 8, "Separator": 1},
+  "implementedNote": "Button: all 7 styles (Primary, Secondary, Ghost, Inverse, Accent and Destructive at Medium, plus Small Ghost), 4 states each (hover via :hover, focus via shared .btn:focus-visible outline, disabled via .btn.btn:disabled and per-style rules for Secondary and Ghost). Badge: Neutral, Ancora (.badge--anchor), Solar, Success, Danger (.badge--danger). Link: .link with .link--small, hover and focus-visible as pseudo-classes and disabled via aria-disabled (the global a rules are unchanged for anchors without .link). Separator: .separator.",
   "missingInCss": [
-    {"component": "Icon Button", "variant": "Primary, Ghost", "class": "Informativo"},
-    {"component": "Badge", "variant": "Danger", "class": "Informativo"},
-    {"component": "Link", "variant": "all 8 (Medium and Small, 4 states)", "class": "Atencao", "note": "Links are used across the whole site through the global a rule, so this is not a component waiting for use."}
+    {"component": "Icon Button", "variant": "Primary, Ghost", "class": "Informativo"}
   ]
 },
 "differences": [
   {"id": "link-colour-underline", "component": "Link", "class": "Atencao",
    "figma": "Text/Default/Default with underline.",
-   "code": "Text/Brand/Default, no underline. Hover is a:hover. Focus is a:focus-visible with a 2px outline. Disabled has no rule.",
+   "code": "The new .link class matches Figma (Text/Default/Default, underline, bold on hover and focus, disabled rule). Anchors without .link, which is every anchor on the site today, still use the global a rules: Text/Brand/Default, no underline, a:hover colour and a:focus-visible with a 2px outline.",
    "measured": "Link colour against surrounding text colour, Light: 3.01 against Text/Default/Default, 1.67 against Text/Default/Secondary. Dark: 1.59 and 1.28. Link colour against the page: 6.46 Light, 10.74 Dark.",
    "inference": "Where a link sits inside running text coloured Text/Default/Secondary, colour alone separates it at under 3:1, which is what WCAG 1.4.1 (Use of Color, Level A) warns about. Needs a check of where links appear in running text and what a:hover does. A Brandbook rule about link style would outrank Figma."},
   {"id": "btn-medium-size", "component": "Button", "class": "Informativo",
@@ -49,10 +47,11 @@
    "code": "Every button is full width under 768px."},
   {"id": "badge-padding", "component": "Badge", "class": "Informativo",
    "figma": "Padding 4 and 12 (Spacing/space-1, space-3), height 29.",
-   "code": "Padding 3px and 10px."},
+   "code": "Padding 3px and 10px, line-height 1.5 (Figma 160%), and the Neutral border is --border-thin (0.8px, Figma 0.5px). Renders 25.5 high instead of 29. The base .badge is used on the live case pages, so it was not changed in the Lote 0 work; it needs an owner decision.",
+   "measured": "3 + 19.5 + 3 = 25.5 high in the browser against 29 in Figma."},
   {"id": "badge-success-literal", "component": "Badge", "class": "Informativo",
-   "figma": "Fill Background/Positive/Secondary.",
-   "code": "Literal rgba(74,159,107,0.12) instead of --color-bg-positive-soft. Same value, so it is code debt, not a visual difference."},
+   "figma": "Fill Background/Positive/Secondary (12% in Light, solid in Dark).",
+   "code": "Literal rgba(74,159,107,0.12) instead of --color-bg-positive-secondary. Same value in Light. In Dark the token is solid, so the literal differs there. Kept because switching would change design-system.html in Dark; needs an owner decision."},
   {"id": "badge-ancora-naming", "component": "Badge", "class": "Informativo",
    "figma": "Style named Ancora (Portuguese).",
    "code": "Class named .badge--anchor. The Figma primitives family is also Anchor."}
@@ -61,7 +60,9 @@
   "Focus ring: 2px outline with 2px offset (--focus-ring-width, --focus-ring-gap).",
   "Button Medium padding 12 and 20 (border inside), radius 12, gap 8, icon 16.",
   "Button label size 13.",
-  "Badge Neutral, Solar and Success colour roles exist as classes."
+  "Badge Neutral, Ancora, Solar, Success and Danger colour roles exist as classes. Danger uses the Figma token (10% alpha); Success has the same 12% alpha as a literal.",
+  "Link: size, weight, colour, underline, focus ring (2px, 2px gap, square) and disabled weight per the Figma table.",
+  "Separator: 1px line in Border/Default/Default, full width."
 ],
 "codeOnly": [
   {"selector": ".btn--solar", "note": "Solar fill button. Not the same as Figma's Accent."},

@@ -311,7 +311,7 @@
     },
     "Badge": {
       "figmaVariants": 5,
-      "implemented": 4,
+      "implemented": 5,
       "base": ".badge",
       "stateMechanisms": {
         "hover": "not applicable, badges are static",
@@ -345,90 +345,85 @@
         },
         {
           "style": "Danger",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".badge.badge--danger",
+          "rule": ".badge--danger",
+          "mechanism": "static, no states"
         }
       ]
     },
     "Link": {
       "figmaVariants": 8,
-      "implemented": 0,
-      "base": null,
+      "implemented": 8,
+      "base": ".link",
       "stateMechanisms": {
-        "hover": "none as a component. The global a:hover rule changes the colour to --color-text-brand-hover.",
-        "focus": "none as a component. The global a:focus-visible rule draws a 2px outline with 2px offset (--focus-ring-width, --focus-ring-gap).",
-        "disabled": "none"
+        "hover": "pseudo-class .link:hover: weight 700, colour unchanged (the global a:hover colour is overridden by .link:hover)",
+        "focus": ".link:focus-visible: weight 700 and a square 2px outline with 2px offset (--focus-ring-width, --focus-ring-gap)",
+        "disabled": ".link[aria-disabled=\"true\"]: --color-text-disabled-default, weight 400, not focusable when the anchor has no href"
       },
-      "globalRules": [
-        "a",
-        "a:hover",
-        "a:focus-visible"
-      ],
-      "globalRulesDescription": "Every anchor gets --color-text-brand-default, no underline, a hover colour and a 2px focus outline with 2px offset (css/reset.css). There is no .link class, no Small size and no disabled rule.",
+      "globalRulesDescription": "Anchors without .link are still styled by the global a rules (css/reset.css): brand colour, no underline, a hover colour and a 2px outline on focus. The .link class overrides them for Link.",
       "variants": [
         {
           "size": "Medium",
           "state": "Default",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".link",
+          "rule": ".link",
+          "mechanism": "base class"
         },
         {
           "size": "Medium",
           "state": "Hover",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".link",
+          "rule": ".link:hover",
+          "mechanism": "pseudo-class :hover"
         },
         {
           "size": "Medium",
           "state": "Focus",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".link",
+          "rule": ".link:focus-visible",
+          "mechanism": "pseudo-class :focus-visible"
         },
         {
           "size": "Medium",
           "state": "Disabled",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".link",
+          "rule": ".link[aria-disabled=\"true\"]",
+          "mechanism": "attribute aria-disabled=\"true\""
         },
         {
           "size": "Small",
           "state": "Default",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".link.link--small",
+          "rule": ".link--small",
+          "mechanism": "base class (size modifier .link--small)"
         },
         {
           "size": "Small",
           "state": "Hover",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".link.link--small",
+          "rule": ".link:hover",
+          "mechanism": "pseudo-class :hover (size modifier .link--small)"
         },
         {
           "size": "Small",
           "state": "Focus",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".link.link--small",
+          "rule": ".link:focus-visible",
+          "mechanism": "pseudo-class :focus-visible (size modifier .link--small)"
         },
         {
           "size": "Small",
           "state": "Disabled",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".link.link--small",
+          "rule": ".link[aria-disabled=\"true\"]",
+          "mechanism": "attribute aria-disabled=\"true\" (size modifier .link--small)"
         }
       ]
     },
     "Separator": {
       "figmaVariants": 1,
-      "implemented": 0,
-      "base": null,
+      "implemented": 1,
+      "base": ".separator",
       "stateMechanisms": {
         "hover": "not applicable",
         "focus": "not applicable",
@@ -436,12 +431,12 @@
       },
       "variants": [
         {
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".separator",
+          "rule": ".separator",
+          "mechanism": "static, no states"
         }
       ],
-      "note": "No separator class exists in the CSS sources (css/components/, css/site/). Hairline dividers exist only as border rules inside other components (for example in css/site/hero.css on .hero) and as hr in the Tailwind preflight copy."
+      "note": "Decorative horizontal rule: <hr class=\"separator\" aria-hidden=\"true\">. No vertical variant exists in Figma and none was created."
     },
     "Banner": {
       "figmaVariants": 1,
