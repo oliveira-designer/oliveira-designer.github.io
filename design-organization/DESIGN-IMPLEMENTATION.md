@@ -686,7 +686,7 @@ Uso mínimo. O sistema é flat por princípio.
 }
 
 .badge--anchor  { background: var(--color-sky);    color: var(--color-deep); border-color: var(--color-tide); }
-/* Solar, como no components.css: tokens Accent/Secondary, sem borda.
+/* Solar, como no css/components/badge.css: tokens Accent/Secondary, sem borda.
    .badge--warning é alias do .badge--solar (decisão de 18/11/2026), só na documentação:
    o CSS do site não tem a classe porque nenhuma página a usa. */
 .badge--solar,

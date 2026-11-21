@@ -8,8 +8,7 @@
 //      docs/components/) may use ONLY css/*.css classes and no inline style.
 //      The rest of every docs page may also use the chrome classes in docs/docs.css.
 //   2. a docs page lacks <meta name="robots" content="noindex">.
-//   3. a docs page does not link css/tokens.css, reset.css, components.css,
-//      layout.css and animations.css.
+//   3. a docs page does not link css/hope.css (the generated aggregate).
 //   4. the header chrome of docs/*.html differs between pages.
 //   5. docs/docs.css contains a hardcoded color (it must use Hope tokens).
 //   8. a docs page lacks the theme switch (Light, Dark, System) or its boot script.

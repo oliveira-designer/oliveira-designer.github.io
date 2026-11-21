@@ -756,7 +756,7 @@ O skill `apple-design` (§15) recomenda tracking específico por tamanho: negati
 
 **Títulos (v2.6.4):** cada título usa o tracking e o line height do estilo do Figma que corresponde ao seu tamanho renderizado: Display -0.02em e 1.1, H1 -0.01em e 1.2, H2 -0.01em e 1.3, H3 0 e 1.4, Metric 1.4. Tracking em código sempre em `em` (-2% é -0.02em, -1% é -0.01em). `.case-lead__text` é o Body xl do Figma (19px, tracking -1%, que no código é -0.01em) e já estava assim. O Body do Figma tem variantes Regular, Medium, SemiBold e Bold, então o peso 500 dessa regra é válido. `.about-bridge__headline` passou a H1 (`--fs-h1`, 1.2, -0.01em) na v2.6.8: 32px em 1024 e 1280px e 26px em 390px (antes 36 e 24px, com -0.02em). A regra órfã `.about-split__quote-text` (citação em itálico) foi removida na v2.6.9, com a aspa decorativa e a atribuição que só existiam para ela. Desde a v2.6.8, `.case-section__body p` não define mais line height: os parágrafos herdam o 1.75 do Body e os componentes mantêm o seu (`.case-lead__text` 1.7, como no Body xl do Figma).
 
-Não formalizado nesta fase — os valores hand-tuned atuais já seguem a régua certa e uma tokenização recolheria ~20 declarações espalhadas em `layout.css` sozinho; vale como item futuro, não como correção de algo errado hoje.
+Não formalizado nesta fase — os valores hand-tuned atuais já seguem a régua certa e uma tokenização recolheria ~20 declarações espalhadas nos arquivos de `css/site/` sozinhos; vale como item futuro, não como correção de algo errado hoje.
 
 ## Layout
 
@@ -1065,7 +1065,7 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 ### Divergências conhecidas entre Figma, este arquivo e o código
 
-- **Case Callout e Lightbox:** foram removidos do Figma (sem uso lá), mas **continuam no código e neste arquivo** (`case-callout` em `layout.css`, `lightbox` em `components.css` e `js/lightbox.js`). Decidir: recriar no Figma ou aceitar como componentes só de código.
+- **Case Callout e Lightbox:** foram removidos do Figma (sem uso lá), mas **continuam no código e neste arquivo** (`case-callout` em `css/site/case-callout.css`, `lightbox` em `css/components/lightbox.css` e `js/lightbox.js`). Decidir: recriar no Figma ou aceitar como componentes só de código.
 - **Resolvidas na v2.4:** Highlight Card passou a usar `--fs-h1` (32px) como no Figma; Space Mono foi removida (o `.brand-list li::before` usa `--font-body`); YAML com nomes em inglês (`anchor`, `success`, `border-base`...); entradas de botão refletem o CSS (preto como ação primária, Solar só na marca); badges senshi removidas (duplicavam `badge-success`/`warning`/`error`/`info`).
 - **Case Callout e Lightbox:** continuam no código e neste arquivo, mas foram removidos do Figma. Decisão adiada para a revisão geral.
 - **Ícones:** `Icon/Color` do Figma virou os tokens `--icon-color-*` e as classes `.icon--<papel>` (ver `DESIGN-IMPLEMENTATION.md`, seção 3b).

@@ -59,6 +59,9 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 **13. Diário de decisões v0.8**
 - `docs/case/decisoes-hope.md` atualizado (D-01 a D-30, inclui o foco do Breadcrumb no Figma), substituindo a versão anterior sem mesclar.
 
+**14. Prosa com os arquivos CSS reais**
+- `DESIGN.md`, `DESIGN-IMPLEMENTATION.md`, `design-system.html`, comentários de `tokens.css`, a nota do inventário do Figma e o comentário do `check-docs.mjs` passaram a citar `css/components/<nome>.css`, `css/site/*.css` e `css/hope.css` em vez de `components.css` e `layout.css`. Nenhuma regra mudou.
+
 **Débitos**
 - Comparador de tokens: 150 iguais e 2 diferentes (`--color-bg-scrim-strong` e `--color-bg-icon-chip` no Dark, já conhecidos); nenhum token do Figma sem token no CSS.
 - `--color-text-neutral-secondary` (Night/300) tem contraste baixo sobre fundo claro; hoje sem uso.
