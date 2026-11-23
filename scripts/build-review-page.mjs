@@ -52,6 +52,12 @@ const MAP_KEY = {
   Separator: 'Separator',
   Banner: 'Banner',
   Lightbox: 'Lightbox',
+  Input: 'Input',
+  Textarea: 'Textarea',
+  Select: 'Select',
+  Checkbox: 'Checkbox',
+  Radio: 'Radio',
+  Switch: 'Switch',
   Table: 'Table',
   'Table Header Cell': 'TableHeaderCell',
   'Table Cell': 'TableCell',
@@ -180,6 +186,9 @@ function unitSection(u, ctx) {
     if (u.name === 'Link') body += `\n            <p class="docs-section__desc">The global <code>a</code> rule styles every anchor, but there is no Link component class, no Small size and no disabled rule.</p>`;
     body += `\n            <h4 class="text-body docs-subhead">Missing variants</h4>`;
     body += m ? `\n            <ul class="docs-list">${missingGroups(m).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : `\n            <p class="docs-section__desc">All ${u.variants} variant${u.variants === 1 ? '' : 's'} (${esc(propsSummary(u) || 'no variant properties')}).</p>`;
+  } else if (cov.m.renderOnPage) {
+    // Components with their own docs page (form controls need real markup with labels and ids): linked, not duplicated here.
+    body += `\n            <p class="docs-section__desc">The ${cov.css} covered variants are rendered on <a href="${esc(cov.m.renderOnPage)}.html">the ${esc(u.name)} page</a>.</p>`;
   } else {
     const demos = [];
     const placed = cov.m.variants.filter((v) => v.selector);

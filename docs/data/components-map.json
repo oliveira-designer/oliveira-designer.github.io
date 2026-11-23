@@ -565,6 +565,525 @@
           "mechanism": "end-aligned modifier"
         }
       ]
+    },
+    "Input": {
+      "figmaVariants": 10,
+      "implemented": 10,
+      "base": ".input",
+      "stateMechanisms": {
+        "hover": "see each variant",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset",
+        "disabled": "the native disabled attribute"
+      },
+      "variants": [
+        {
+          "value": "Empty",
+          "state": "Default",
+          "selector": ".input",
+          "rule": ".input::placeholder",
+          "mechanism": "placeholder or empty option, base box"
+        },
+        {
+          "value": "Empty",
+          "state": "Hover",
+          "selector": ".input",
+          "rule": ".input:hover",
+          "mechanism": "pseudo-class :hover, border Border/Default/Strong"
+        },
+        {
+          "value": "Empty",
+          "state": "Focus",
+          "selector": ".input",
+          "rule": ".input:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, 2px outline with 2px offset"
+        },
+        {
+          "value": "Empty",
+          "state": "Error",
+          "selector": ".input",
+          "rule": ".input[aria-invalid=\"true\"]",
+          "mechanism": "aria-invalid=\"true\", Danger border at 1.5px; the value text does not change"
+        },
+        {
+          "value": "Empty",
+          "state": "Disabled",
+          "selector": ".input",
+          "rule": ".input:disabled::placeholder",
+          "mechanism": "disabled attribute, no opacity"
+        },
+        {
+          "value": "Filled",
+          "state": "Default",
+          "selector": ".input",
+          "rule": ".input",
+          "mechanism": "base box, the control own color"
+        },
+        {
+          "value": "Filled",
+          "state": "Hover",
+          "selector": ".input",
+          "rule": ".input:hover",
+          "mechanism": "pseudo-class :hover, border Border/Default/Strong"
+        },
+        {
+          "value": "Filled",
+          "state": "Focus",
+          "selector": ".input",
+          "rule": ".input:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, 2px outline with 2px offset"
+        },
+        {
+          "value": "Filled",
+          "state": "Error",
+          "selector": ".input",
+          "rule": ".input[aria-invalid=\"true\"]",
+          "mechanism": "aria-invalid=\"true\", Danger border at 1.5px; the value text does not change"
+        },
+        {
+          "value": "Filled",
+          "state": "Disabled",
+          "selector": ".input",
+          "rule": ".input:disabled",
+          "mechanism": "disabled attribute, no opacity"
+        }
+      ],
+      "renderOnPage": "input"
+    },
+    "Textarea": {
+      "figmaVariants": 10,
+      "implemented": 10,
+      "base": ".textarea",
+      "stateMechanisms": {
+        "hover": "see each variant",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset",
+        "disabled": "the native disabled attribute"
+      },
+      "variants": [
+        {
+          "value": "Empty",
+          "state": "Default",
+          "selector": ".textarea",
+          "rule": ".textarea::placeholder",
+          "mechanism": "placeholder or empty option, base box"
+        },
+        {
+          "value": "Empty",
+          "state": "Hover",
+          "selector": ".textarea",
+          "rule": ".textarea:hover",
+          "mechanism": "pseudo-class :hover, border Border/Default/Strong"
+        },
+        {
+          "value": "Empty",
+          "state": "Focus",
+          "selector": ".textarea",
+          "rule": ".textarea:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, 2px outline with 2px offset"
+        },
+        {
+          "value": "Empty",
+          "state": "Error",
+          "selector": ".textarea",
+          "rule": ".textarea[aria-invalid=\"true\"]",
+          "mechanism": "aria-invalid=\"true\", Danger border at 1.5px; the value text does not change"
+        },
+        {
+          "value": "Empty",
+          "state": "Disabled",
+          "selector": ".textarea",
+          "rule": ".textarea:disabled::placeholder",
+          "mechanism": "disabled attribute, no opacity"
+        },
+        {
+          "value": "Filled",
+          "state": "Default",
+          "selector": ".textarea",
+          "rule": ".textarea",
+          "mechanism": "base box, the control own color"
+        },
+        {
+          "value": "Filled",
+          "state": "Hover",
+          "selector": ".textarea",
+          "rule": ".textarea:hover",
+          "mechanism": "pseudo-class :hover, border Border/Default/Strong"
+        },
+        {
+          "value": "Filled",
+          "state": "Focus",
+          "selector": ".textarea",
+          "rule": ".textarea:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, 2px outline with 2px offset"
+        },
+        {
+          "value": "Filled",
+          "state": "Error",
+          "selector": ".textarea",
+          "rule": ".textarea[aria-invalid=\"true\"]",
+          "mechanism": "aria-invalid=\"true\", Danger border at 1.5px; the value text does not change"
+        },
+        {
+          "value": "Filled",
+          "state": "Disabled",
+          "selector": ".textarea",
+          "rule": ".textarea:disabled",
+          "mechanism": "disabled attribute, no opacity"
+        }
+      ],
+      "renderOnPage": "textarea"
+    },
+    "Select": {
+      "figmaVariants": 10,
+      "implemented": 10,
+      "base": ".select",
+      "stateMechanisms": {
+        "hover": "see each variant",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset",
+        "disabled": "the native disabled attribute"
+      },
+      "variants": [
+        {
+          "value": "Empty",
+          "state": "Default",
+          "selector": ".select",
+          "rule": ".select:invalid",
+          "mechanism": "placeholder or empty option, base box"
+        },
+        {
+          "value": "Empty",
+          "state": "Hover",
+          "selector": ".select",
+          "rule": ".select:hover",
+          "mechanism": "pseudo-class :hover, border Border/Default/Strong"
+        },
+        {
+          "value": "Empty",
+          "state": "Focus",
+          "selector": ".select",
+          "rule": ".select:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, 2px outline with 2px offset"
+        },
+        {
+          "value": "Empty",
+          "state": "Error",
+          "selector": ".select",
+          "rule": ".select[aria-invalid=\"true\"]",
+          "mechanism": "aria-invalid=\"true\", Danger border at 1.5px; the value text does not change"
+        },
+        {
+          "value": "Empty",
+          "state": "Disabled",
+          "selector": ".select",
+          "rule": ".select:disabled:invalid",
+          "mechanism": "disabled attribute, no opacity"
+        },
+        {
+          "value": "Filled",
+          "state": "Default",
+          "selector": ".select",
+          "rule": ".select",
+          "mechanism": "base box, the control own color"
+        },
+        {
+          "value": "Filled",
+          "state": "Hover",
+          "selector": ".select",
+          "rule": ".select:hover",
+          "mechanism": "pseudo-class :hover, border Border/Default/Strong"
+        },
+        {
+          "value": "Filled",
+          "state": "Focus",
+          "selector": ".select",
+          "rule": ".select:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, 2px outline with 2px offset"
+        },
+        {
+          "value": "Filled",
+          "state": "Error",
+          "selector": ".select",
+          "rule": ".select[aria-invalid=\"true\"]",
+          "mechanism": "aria-invalid=\"true\", Danger border at 1.5px; the value text does not change"
+        },
+        {
+          "value": "Filled",
+          "state": "Disabled",
+          "selector": ".select",
+          "rule": ".select:disabled",
+          "mechanism": "disabled attribute, no opacity"
+        }
+      ],
+      "renderOnPage": "select"
+    },
+    "Checkbox": {
+      "figmaVariants": 15,
+      "implemented": 15,
+      "base": ".checkbox",
+      "stateMechanisms": {
+        "hover": "see each variant",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset",
+        "disabled": "the native disabled attribute"
+      },
+      "variants": [
+        {
+          "checked": "Unchecked",
+          "state": "Default",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input",
+          "mechanism": "base box"
+        },
+        {
+          "checked": "Unchecked",
+          "state": "Hover",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox:hover .checkbox__input:not(:disabled)",
+          "mechanism": "pseudo-class :hover on the whole label"
+        },
+        {
+          "checked": "Unchecked",
+          "state": "Focus",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input:focus-visible",
+          "mechanism": "pseudo-class :focus-visible on the control only"
+        },
+        {
+          "checked": "Unchecked",
+          "state": "Error",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input[aria-invalid=\"true\"]",
+          "mechanism": "aria-invalid=\"true\", Danger border"
+        },
+        {
+          "checked": "Unchecked",
+          "state": "Disabled",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input:disabled",
+          "mechanism": "disabled attribute, no opacity"
+        },
+        {
+          "checked": "Checked",
+          "state": "Default",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input:checked",
+          "mechanism": ":checked"
+        },
+        {
+          "checked": "Checked",
+          "state": "Hover",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox:hover .checkbox__input:not(:disabled)",
+          "mechanism": "pseudo-class :hover on the whole label"
+        },
+        {
+          "checked": "Checked",
+          "state": "Focus",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input:focus-visible",
+          "mechanism": "pseudo-class :focus-visible on the control only"
+        },
+        {
+          "checked": "Checked",
+          "state": "Error",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input[aria-invalid=\"true\"]",
+          "mechanism": "aria-invalid=\"true\", Danger border"
+        },
+        {
+          "checked": "Checked",
+          "state": "Disabled",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input:disabled",
+          "mechanism": "disabled attribute, no opacity"
+        },
+        {
+          "checked": "Indeterminate",
+          "state": "Default",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input:indeterminate",
+          "mechanism": ":indeterminate (set from script)"
+        },
+        {
+          "checked": "Indeterminate",
+          "state": "Hover",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox:hover .checkbox__input:not(:disabled)",
+          "mechanism": "pseudo-class :hover on the whole label"
+        },
+        {
+          "checked": "Indeterminate",
+          "state": "Focus",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input:focus-visible",
+          "mechanism": "pseudo-class :focus-visible on the control only"
+        },
+        {
+          "checked": "Indeterminate",
+          "state": "Error",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input[aria-invalid=\"true\"]",
+          "mechanism": "aria-invalid=\"true\", Danger border"
+        },
+        {
+          "checked": "Indeterminate",
+          "state": "Disabled",
+          "selector": ".checkbox__input",
+          "rule": ".checkbox__input:disabled",
+          "mechanism": "disabled attribute, no opacity"
+        }
+      ],
+      "renderOnPage": "checkbox"
+    },
+    "Radio": {
+      "figmaVariants": 10,
+      "implemented": 10,
+      "base": ".radio",
+      "stateMechanisms": {
+        "hover": "see each variant",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset",
+        "disabled": "the native disabled attribute"
+      },
+      "variants": [
+        {
+          "selected": "Unselected",
+          "state": "Default",
+          "selector": ".radio__input",
+          "rule": ".radio__input",
+          "mechanism": "base box"
+        },
+        {
+          "selected": "Unselected",
+          "state": "Hover",
+          "selector": ".radio__input",
+          "rule": ".radio:hover .radio__input:not(:disabled)",
+          "mechanism": "pseudo-class :hover on the whole label"
+        },
+        {
+          "selected": "Unselected",
+          "state": "Focus",
+          "selector": ".radio__input",
+          "rule": ".radio__input:focus-visible",
+          "mechanism": "pseudo-class :focus-visible on the control only"
+        },
+        {
+          "selected": "Unselected",
+          "state": "Error",
+          "selector": ".radio__input",
+          "rule": ".radio__input[aria-invalid=\"true\"]",
+          "mechanism": "aria-invalid=\"true\", Danger border"
+        },
+        {
+          "selected": "Unselected",
+          "state": "Disabled",
+          "selector": ".radio__input",
+          "rule": ".radio__input:disabled",
+          "mechanism": "disabled attribute, no opacity"
+        },
+        {
+          "selected": "Selected",
+          "state": "Default",
+          "selector": ".radio__input",
+          "rule": ".radio__input:checked",
+          "mechanism": ":checked"
+        },
+        {
+          "selected": "Selected",
+          "state": "Hover",
+          "selector": ".radio__input",
+          "rule": ".radio:hover .radio__input:not(:disabled)",
+          "mechanism": "pseudo-class :hover on the whole label"
+        },
+        {
+          "selected": "Selected",
+          "state": "Focus",
+          "selector": ".radio__input",
+          "rule": ".radio__input:focus-visible",
+          "mechanism": "pseudo-class :focus-visible on the control only"
+        },
+        {
+          "selected": "Selected",
+          "state": "Error",
+          "selector": ".radio__input",
+          "rule": ".radio__input[aria-invalid=\"true\"]",
+          "mechanism": "aria-invalid=\"true\", Danger border"
+        },
+        {
+          "selected": "Selected",
+          "state": "Disabled",
+          "selector": ".radio__input",
+          "rule": ".radio__input:disabled",
+          "mechanism": "disabled attribute, no opacity"
+        }
+      ],
+      "renderOnPage": "radio"
+    },
+    "Switch": {
+      "figmaVariants": 8,
+      "implemented": 8,
+      "base": ".switch",
+      "stateMechanisms": {
+        "hover": "see each variant",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset",
+        "disabled": "the native disabled attribute"
+      },
+      "variants": [
+        {
+          "checked": "Off",
+          "state": "Default",
+          "selector": ".switch__input",
+          "rule": ".switch__input",
+          "mechanism": "base box"
+        },
+        {
+          "checked": "Off",
+          "state": "Hover",
+          "selector": ".switch__input",
+          "rule": ".switch:hover .switch__input:not(:disabled)",
+          "mechanism": "pseudo-class :hover on the whole label"
+        },
+        {
+          "checked": "Off",
+          "state": "Focus",
+          "selector": ".switch__input",
+          "rule": ".switch__input:focus-visible",
+          "mechanism": "pseudo-class :focus-visible on the control only"
+        },
+        {
+          "checked": "Off",
+          "state": "Disabled",
+          "selector": ".switch__input",
+          "rule": ".switch__input:disabled",
+          "mechanism": "disabled attribute, no opacity"
+        },
+        {
+          "checked": "On",
+          "state": "Default",
+          "selector": ".switch__input",
+          "rule": ".switch__input:checked",
+          "mechanism": ":checked"
+        },
+        {
+          "checked": "On",
+          "state": "Hover",
+          "selector": ".switch__input",
+          "rule": ".switch:hover .switch__input:not(:disabled)",
+          "mechanism": "pseudo-class :hover on the whole label"
+        },
+        {
+          "checked": "On",
+          "state": "Focus",
+          "selector": ".switch__input",
+          "rule": ".switch__input:focus-visible",
+          "mechanism": "pseudo-class :focus-visible on the control only"
+        },
+        {
+          "checked": "On",
+          "state": "Disabled",
+          "selector": ".switch__input",
+          "rule": ".switch__input:disabled",
+          "mechanism": "disabled attribute, no opacity"
+        }
+      ],
+      "renderOnPage": "switch"
     }
   },
   "codeOnly": [

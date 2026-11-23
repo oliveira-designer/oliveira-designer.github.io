@@ -94,7 +94,8 @@ function findRuleFile(rule) {
 function ruleTokens(rule) {
   const f = findRuleFile(rule);
   if (!f) return [];
-  const m = new RegExp('(?:^|[\\s,}])' + escRe(rule) + '\\s*\\{([^}]*)\\}').exec(f.raw);
+  // The rule may sit in a selector list (.input, .textarea { ... }): allow other selectors after it.
+  const m = new RegExp('(?:^|[\\s,}])' + escRe(rule) + '\\s*(?:,[^{}]*)?\\{([^}]*)\\}').exec(f.raw);
   const out = [];
   if (m) for (const d of m[1].split(';')) {
     const [prop, val] = d.split(/:(.+)/).map((s) => (s || '').trim());
@@ -186,7 +187,7 @@ function variantsSection(comp) {
   for (const key of keysOf(comp)) {
     for (const v of map.components[key].variants) {
       if (!v.selector || (v.state && v.state !== 'Default')) continue;
-      const k = JSON.stringify([v.selector, v.style, v.size, v.type, v.align]);
+      const k = JSON.stringify([v.selector, variantLabel(comp, v)]);
       if (!seen.has(k)) { seen.add(k); variants.push(v); }
     }
   }

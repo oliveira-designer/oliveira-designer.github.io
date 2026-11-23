@@ -268,6 +268,584 @@
   "essential": ["when", "variants", "contract", "accessibility"],
   "knownGaps": [],
   "unverified": []
+},
+{
+  "slug": "input",
+  "name": "Input",
+  "figma": {
+    "pageId": "2326:5",
+    "sets": [
+      {
+        "name": "Input",
+        "id": "2323:317"
+      }
+    ]
+  },
+  "summary": "Single-line text field with a label, helper text and an optional 16px trailing icon. Five states and two values: empty (placeholder) and filled.",
+  "whenToUse": [
+    "Short free text: a name, an email, a search term.",
+    "With the trailing icon when the field has a clear secondary meaning, such as search."
+  ],
+  "whenNotToUse": [
+    "Several lines of text: use Textarea.",
+    "A choice from a list: use Select, Radio or Checkbox."
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "variant",
+      "options": [
+        "Empty",
+        "Filled"
+      ],
+      "default": "Empty"
+    },
+    {
+      "name": "State",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Hover",
+        "Focus",
+        "Error",
+        "Disabled"
+      ],
+      "default": "Default"
+    },
+    {
+      "name": "Label",
+      "type": "text",
+      "default": "Label"
+    },
+    {
+      "name": "Helper text",
+      "type": "text",
+      "default": "Helper text"
+    },
+    {
+      "name": "Show icon R",
+      "type": "boolean",
+      "default": "false"
+    }
+  ],
+  "layout": {
+    "all": {
+      "height": 44,
+      "radius": "Radius/radius-sm",
+      "padding": "Spacing/space-3 on every side",
+      "gap": "Spacing/space-1 between label, field and helper text",
+      "text": "Body/Regular/body-sm; label Body/SemiBold/body-sm semibold; helper Body/Regular/body-xs"
+    }
+  },
+  "stateTokens": {},
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "note": "Every field needs a visible label tied with for and id, and the helper text is linked with aria-describedby.",
+    "meaning": "The Error state is not only a color: the helper text carries the message and the control has aria-invalid=\"true\"."
+  },
+  "example": {
+    "markup": "<div class=\"field\">\n  <label class=\"field__label\" for=\"in-empty\">Name</label>\n  <input class=\"input\" id=\"in-empty\" type=\"text\" placeholder=\"Your name\" aria-describedby=\"in-empty-help\">\n  <p class=\"field__help\" id=\"in-empty-help\">Helper text</p>\n</div>\n<div class=\"field\">\n  <label class=\"field__label\" for=\"in-filled\">Name</label>\n  <input class=\"input\" id=\"in-filled\" type=\"text\" value=\"Renan\" aria-describedby=\"in-filled-help\">\n  <p class=\"field__help\" id=\"in-filled-help\">Helper text</p>\n</div>\n<div class=\"field\">\n  <label class=\"field__label\" for=\"in-icon\">Search</label>\n  <div class=\"field__control\">\n    <input class=\"input\" id=\"in-icon\" type=\"text\" placeholder=\"Search components\" aria-describedby=\"in-icon-help\">\n    <svg class=\"field__icon\" viewBox=\"0 0 256 256\" aria-hidden=\"true\"><path d=\"M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z\"/></svg>\n  </div>\n  <p class=\"field__help\" id=\"in-icon-help\">Helper text</p>\n</div>\n<div class=\"field\">\n  <label class=\"field__label\" for=\"in-error\">Email</label>\n  <input class=\"input\" id=\"in-error\" type=\"text\" value=\"renan@\" aria-describedby=\"in-error-help\" aria-invalid=\"true\">\n  <p class=\"field__help\" id=\"in-error-help\">Enter a complete email address.</p>\n</div>\n<div class=\"field\">\n  <label class=\"field__label\" for=\"in-disabled\">Name</label>\n  <input class=\"input\" id=\"in-disabled\" type=\"text\" placeholder=\"Your name\" aria-describedby=\"in-disabled-help\" disabled>\n  <p class=\"field__help\" id=\"in-disabled-help\">Helper text</p>\n</div>\n<div class=\"field\">\n  <label class=\"field__label\" for=\"in-disabled-filled\">Name</label>\n  <input class=\"input\" id=\"in-disabled-filled\" type=\"text\" value=\"Renan\" aria-describedby=\"in-disabled-filled-help\" disabled>\n  <p class=\"field__help\" id=\"in-disabled-filled-help\">Helper text</p>\n</div>"
+  },
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {
+      "id": "field-border-secondary-surface",
+      "status": "measured",
+      "text": "Border/Utilities/Input is 3.12:1 on the page background in Light and 3.19:1 in Dark, but 2.91:1 and 2.83:1 on Background/Default/Secondary, under the 3:1 of WCAG 1.4.11. No site page puts a field on a Secondary surface today (the Secondary surfaces are the case cards, skill cards, personas and the Table header)."
+    },
+    {
+      "id": "field-error-border-1x",
+      "status": "inference",
+      "text": "A 1.5px border is drawn as 1px on a 1x screen. The Error box would be 1px shorter, so the field fixes its outer height (min-height) and keeps the text centered: 44.8px in every state."
+    },
+    {
+      "id": "field-height",
+      "status": "measured",
+      "text": "Figma draws the field 44 high; the CSS renders 44.8 (12 + 12 plus one line of 13px at 160%, 20.8). A 0.8px difference, the same as Button (D-23)."
+    },
+    {
+      "id": "field-name-from-helper",
+      "status": "inference",
+      "text": "Checkbox, Radio and Switch wrap the helper text inside the label, so it becomes part of the accessible name and is also read as the description. The contract of the Prompt 21 asks for that shape."
+    },
+    {
+      "id": "tag-border-contrast",
+      "status": "inference",
+      "text": "Note for a later lote: the Tag component draws its boundary with Border/Default/Default, which is 1.29:1 on the page background, under the 3:1 of WCAG 1.4.11. It needs a decision when Tag is coded."
+    }
+  ],
+  "unverified": []
+},
+{
+  "slug": "textarea",
+  "name": "Textarea",
+  "figma": {
+    "pageId": "2402:162",
+    "sets": [
+      {
+        "name": "Textarea",
+        "id": "2402:173"
+      }
+    ]
+  },
+  "summary": "Multi-line text field with a label and helper text. Same states and values as Input, 96px high, resizable vertically.",
+  "whenToUse": [
+    "Free text longer than a line, such as a message."
+  ],
+  "whenNotToUse": [
+    "A single line: use Input."
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "variant",
+      "options": [
+        "Empty",
+        "Filled"
+      ],
+      "default": "Empty"
+    },
+    {
+      "name": "State",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Hover",
+        "Focus",
+        "Error",
+        "Disabled"
+      ],
+      "default": "Default"
+    },
+    {
+      "name": "Label",
+      "type": "text",
+      "default": "Label"
+    },
+    {
+      "name": "Helper text",
+      "type": "text",
+      "default": "Helper text"
+    }
+  ],
+  "layout": {
+    "all": {
+      "height": 96,
+      "radius": "Radius/radius-sm",
+      "padding": "Spacing/space-3 on every side",
+      "gap": "Spacing/space-1 between label, field and helper text",
+      "text": "Body/Regular/body-sm"
+    }
+  },
+  "stateTokens": {},
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "note": "Every field needs a visible label tied with for and id, and the helper text is linked with aria-describedby.",
+    "meaning": "The Error state is not only a color: the helper text carries the message and the control has aria-invalid=\"true\"."
+  },
+  "example": {
+    "markup": "<div class=\"field\">\n  <label class=\"field__label\" for=\"ta-empty\">Message</label>\n  <textarea class=\"textarea\" id=\"ta-empty\" rows=\"3\" placeholder=\"Write your message\" aria-describedby=\"ta-empty-help\"></textarea>\n  <p class=\"field__help\" id=\"ta-empty-help\">Helper text</p>\n</div>\n<div class=\"field\">\n  <label class=\"field__label\" for=\"ta-filled\">Message</label>\n  <textarea class=\"textarea\" id=\"ta-filled\" rows=\"3\" aria-describedby=\"ta-filled-help\">Hello, I would like to talk about a project.</textarea>\n  <p class=\"field__help\" id=\"ta-filled-help\">Helper text</p>\n</div>\n<div class=\"field\">\n  <label class=\"field__label\" for=\"ta-error\">Message</label>\n  <textarea class=\"textarea\" id=\"ta-error\" rows=\"3\" aria-describedby=\"ta-error-help\" aria-invalid=\"true\">Hi</textarea>\n  <p class=\"field__help\" id=\"ta-error-help\">The message needs at least 20 characters.</p>\n</div>\n<div class=\"field\">\n  <label class=\"field__label\" for=\"ta-disabled\">Message</label>\n  <textarea class=\"textarea\" id=\"ta-disabled\" rows=\"3\" placeholder=\"Write your message\" aria-describedby=\"ta-disabled-help\" disabled></textarea>\n  <p class=\"field__help\" id=\"ta-disabled-help\">Helper text</p>\n</div>"
+  },
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {
+      "id": "textarea-resize",
+      "status": "inference",
+      "text": "Figma does not define resize behavior. The CSS allows vertical resize only, so the width never changes."
+    }
+  ],
+  "unverified": []
+},
+{
+  "slug": "select",
+  "name": "Select",
+  "figma": {
+    "pageId": "2402:304",
+    "sets": [
+      {
+        "name": "Select",
+        "id": "2402:315"
+      }
+    ]
+  },
+  "summary": "Native select with a label, helper text and a 16px CaretDown. The closed trigger follows the Input states; the options panel is the browser's own.",
+  "whenToUse": [
+    "Choosing one value from a short list."
+  ],
+  "whenNotToUse": [
+    "Two or three options that should stay visible: use Radio.",
+    "Free text: use Input."
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "variant",
+      "options": [
+        "Empty",
+        "Filled"
+      ],
+      "default": "Empty"
+    },
+    {
+      "name": "State",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Hover",
+        "Focus",
+        "Error",
+        "Disabled"
+      ],
+      "default": "Default"
+    },
+    {
+      "name": "Label",
+      "type": "text",
+      "default": "Label"
+    },
+    {
+      "name": "Helper text",
+      "type": "text",
+      "default": "Helper text"
+    },
+    {
+      "name": "Show icon R",
+      "type": "boolean",
+      "default": "true"
+    }
+  ],
+  "layout": {
+    "all": {
+      "height": 44,
+      "radius": "Radius/radius-sm",
+      "padding": "Spacing/space-3 on every side",
+      "gap": "Spacing/space-1 between label, field and helper text",
+      "text": "Body/Regular/body-sm; label Body/SemiBold/body-sm semibold; helper Body/Regular/body-xs"
+    }
+  },
+  "stateTokens": {},
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "note": "Every field needs a visible label tied with for and id, and the helper text is linked with aria-describedby.",
+    "meaning": "The Error state is not only a color: the helper text carries the message and the control has aria-invalid=\"true\"."
+  },
+  "example": {
+    "markup": "<div class=\"field\">\n  <label class=\"field__label\" for=\"se-empty\">Country</label>\n  <div class=\"field__control\">\n    <select class=\"select\" id=\"se-empty\" required aria-describedby=\"se-empty-help\"><option value=\"\" selected disabled hidden>Choose</option><option value=\"br\">Brazil</option><option value=\"pt\">Portugal</option><option value=\"us\">United States</option></select>\n    <svg class=\"field__icon\" viewBox=\"0 0 256 256\" aria-hidden=\"true\"><path d=\"M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </div>\n  <p class=\"field__help\" id=\"se-empty-help\">Helper text</p>\n</div>\n<div class=\"field\">\n  <label class=\"field__label\" for=\"se-filled\">Country</label>\n  <div class=\"field__control\">\n    <select class=\"select\" id=\"se-filled\" required aria-describedby=\"se-filled-help\"><option value=\"br\" selected>Brazil</option><option value=\"pt\">Portugal</option><option value=\"us\">United States</option></select>\n    <svg class=\"field__icon\" viewBox=\"0 0 256 256\" aria-hidden=\"true\"><path d=\"M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </div>\n  <p class=\"field__help\" id=\"se-filled-help\">Helper text</p>\n</div>\n<div class=\"field\">\n  <label class=\"field__label\" for=\"se-error\">Country</label>\n  <div class=\"field__control\">\n    <select class=\"select\" id=\"se-error\" required aria-describedby=\"se-error-help\" aria-invalid=\"true\"><option value=\"\" selected disabled hidden>Choose</option><option value=\"br\">Brazil</option><option value=\"pt\">Portugal</option><option value=\"us\">United States</option></select>\n    <svg class=\"field__icon\" viewBox=\"0 0 256 256\" aria-hidden=\"true\"><path d=\"M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </div>\n  <p class=\"field__help\" id=\"se-error-help\">Choose a country.</p>\n</div>\n<div class=\"field\">\n  <label class=\"field__label\" for=\"se-disabled\">Country</label>\n  <div class=\"field__control\">\n    <select class=\"select\" id=\"se-disabled\" required aria-describedby=\"se-disabled-help\" disabled><option value=\"\" selected disabled hidden>Choose</option><option value=\"br\">Brazil</option><option value=\"pt\">Portugal</option><option value=\"us\">United States</option></select>\n    <svg class=\"field__icon\" viewBox=\"0 0 256 256\" aria-hidden=\"true\"><path d=\"M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </div>\n  <p class=\"field__help\" id=\"se-disabled-help\">Helper text</p>\n</div>"
+  },
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {
+      "id": "select-options-panel",
+      "status": "documented",
+      "text": "Figma defines only the closed trigger; its options panel is the Menu component, which is not coded. The options panel is the browser native one."
+    },
+    {
+      "id": "select-empty-state",
+      "status": "inference",
+      "text": "The empty look needs a first option with an empty value and the select marked required (:invalid), or the browser must support :has(). A select without a placeholder option always shows the filled color."
+    }
+  ],
+  "unverified": []
+},
+{
+  "slug": "checkbox",
+  "name": "Checkbox",
+  "figma": {
+    "pageId": "2400:69",
+    "sets": [
+      {
+        "name": "Checkbox",
+        "id": "2400:175"
+      }
+    ]
+  },
+  "summary": "20px checkbox with a label and optional helper text. Unchecked, checked and indeterminate, in five states.",
+  "whenToUse": [
+    "Several independent yes or no choices.",
+    "Indeterminate for a parent that has some children selected."
+  ],
+  "whenNotToUse": [
+    "Exactly one choice from several: use Radio.",
+    "An immediate on or off setting: use Switch."
+  ],
+  "properties": [
+    {
+      "name": "Checked",
+      "type": "variant",
+      "options": [
+        "Unchecked",
+        "Checked",
+        "Indeterminate"
+      ],
+      "default": "Unchecked"
+    },
+    {
+      "name": "State",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Hover",
+        "Focus",
+        "Error",
+        "Disabled"
+      ],
+      "default": "Default"
+    },
+    {
+      "name": "Label",
+      "type": "text",
+      "default": "Label"
+    },
+    {
+      "name": "Helper text",
+      "type": "text",
+      "default": "Helper text"
+    }
+  ],
+  "layout": {
+    "all": {
+      "size": "20 by 20",
+      "radius": "Radius/radius-xs",
+      "border": "Stroke/medium, inside",
+      "gap": "Spacing/space-2 between box and text"
+    }
+  },
+  "stateTokens": {},
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "note": "A real checkbox: the whole label is the click target, and Space toggles it.",
+    "meaning": "Indeterminate has no HTML attribute: set input.indeterminate from script. The Error state is not only a color: the helper text carries the message."
+  },
+  "example": {
+    "markup": "<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-off\" aria-describedby=\"cb-off-help\">\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Receive updates</span>\n    <span class=\"checkbox__help\" id=\"cb-off-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-on\" aria-describedby=\"cb-on-help\" checked>\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Receive updates</span>\n    <span class=\"checkbox__help\" id=\"cb-on-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-mixed\" aria-describedby=\"cb-mixed-help\">\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Select all</span>\n    <span class=\"checkbox__help\" id=\"cb-mixed-help\">Some items are selected.</span>\n  </span>\n</label>\n<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-error\" aria-describedby=\"cb-error-help\" aria-invalid=\"true\">\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Accept the terms</span>\n    <span class=\"checkbox__help\" id=\"cb-error-help\">You need to accept to continue.</span>\n  </span>\n</label>\n<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-disabled\" aria-describedby=\"cb-disabled-help\" disabled>\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Receive updates</span>\n    <span class=\"checkbox__help\" id=\"cb-disabled-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-disabled-on\" aria-describedby=\"cb-disabled-on-help\" disabled checked>\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Receive updates</span>\n    <span class=\"checkbox__help\" id=\"cb-disabled-on-help\">Helper text</span>\n  </span>\n</label>\n<script>document.getElementById('cb-mixed').indeterminate = true;</script>"
+  },
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {
+      "id": "checkbox-hover-label",
+      "status": "inference",
+      "text": "Figma draws Hover on the box only. The CSS draws it when the pointer is over the whole label, which is the click target."
+    },
+    {
+      "id": "checkbox-hover-border-dark",
+      "status": "measured",
+      "text": "In Dark, Border/Default/Strong on the Secondary hover fill is 2.83:1, under 3:1. The outside edge of the box (3.19:1 on the page background) still passes."
+    },
+    {
+      "id": "checkbox-indeterminate-script",
+      "status": "documented",
+      "text": "Indeterminate has no HTML attribute: the page sets input.indeterminate from one line of script, shown in the revealed HTML."
+    },
+    {
+      "id": "checkbox-border-1x",
+      "status": "inference",
+      "text": "The 1.5px border is drawn as 1px on a 1x screen. The box stays 20 by 20."
+    }
+  ],
+  "unverified": []
+},
+{
+  "slug": "radio",
+  "name": "Radio",
+  "figma": {
+    "pageId": "2401:2",
+    "sets": [
+      {
+        "name": "Radio",
+        "id": "2401:58"
+      }
+    ]
+  },
+  "summary": "20px radio with a label and optional helper text. Unselected and selected, in five states. Group radios in a fieldset with a legend.",
+  "whenToUse": [
+    "Exactly one choice from a short list."
+  ],
+  "whenNotToUse": [
+    "Several independent choices: use Checkbox.",
+    "A long list: use Select."
+  ],
+  "properties": [
+    {
+      "name": "Selected",
+      "type": "variant",
+      "options": [
+        "Unselected",
+        "Selected"
+      ],
+      "default": "Unselected"
+    },
+    {
+      "name": "State",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Hover",
+        "Focus",
+        "Error",
+        "Disabled"
+      ],
+      "default": "Default"
+    },
+    {
+      "name": "Label",
+      "type": "text",
+      "default": "Label"
+    },
+    {
+      "name": "Helper text",
+      "type": "text",
+      "default": "Helper text"
+    }
+  ],
+  "layout": {
+    "all": {
+      "size": "20 by 20",
+      "radius": "Radius/radius-pill",
+      "border": "Stroke/medium, inside",
+      "gap": "Spacing/space-2 between circle and text"
+    }
+  },
+  "stateTokens": {},
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "note": "A real radio: the arrow keys move inside a group that shares a name.",
+    "meaning": "Group the radios in a fieldset with a legend. The Error state is not only a color: the helper text carries the message."
+  },
+  "example": {
+    "markup": "<fieldset>\n  <legend>Contact preference</legend>\n  <label class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-a\" name=\"contact\" aria-describedby=\"rd-a-help\" checked>\n    <span class=\"radio__text\">\n      <span class=\"radio__label\">Email</span>\n      <span class=\"radio__help\" id=\"rd-a-help\">Helper text</span>\n    </span>\n  </label>\n  <label class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-b\" name=\"contact\" aria-describedby=\"rd-b-help\">\n    <span class=\"radio__text\">\n      <span class=\"radio__label\">Phone</span>\n      <span class=\"radio__help\" id=\"rd-b-help\">Helper text</span>\n    </span>\n  </label>\n</fieldset>\n<fieldset>\n  <legend>Plan</legend>\n  <label class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-err\" name=\"plan\" aria-describedby=\"rd-err-help\" aria-invalid=\"true\">\n    <span class=\"radio__text\">\n      <span class=\"radio__label\">Basic</span>\n      <span class=\"radio__help\" id=\"rd-err-help\">Choose a plan to continue.</span>\n    </span>\n  </label>\n</fieldset>\n<fieldset disabled>\n  <legend>Billing</legend>\n  <label class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-d1\" name=\"bill\" aria-describedby=\"rd-d1-help\">\n    <span class=\"radio__text\">\n      <span class=\"radio__label\">Monthly</span>\n      <span class=\"radio__help\" id=\"rd-d1-help\">Helper text</span>\n    </span>\n  </label>\n  <label class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-d2\" name=\"bill\" aria-describedby=\"rd-d2-help\" checked>\n    <span class=\"radio__text\">\n      <span class=\"radio__label\">Yearly</span>\n      <span class=\"radio__help\" id=\"rd-d2-help\">Helper text</span>\n    </span>\n  </label>\n</fieldset>"
+  },
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {
+      "id": "radio-hover-label",
+      "status": "inference",
+      "text": "Figma draws Hover on the circle only. The CSS draws it when the pointer is over the whole label."
+    },
+    {
+      "id": "radio-hover-border-dark",
+      "status": "measured",
+      "text": "In Dark, Border/Default/Strong on the Secondary hover fill is 2.83:1, under 3:1. The outside edge (3.19:1) still passes."
+    }
+  ],
+  "unverified": []
+},
+{
+  "slug": "switch",
+  "name": "Switch",
+  "figma": {
+    "pageId": "2402:2",
+    "sets": [
+      {
+        "name": "Switch",
+        "id": "2402:51"
+      }
+    ]
+  },
+  "summary": "40 by 24 switch with a label and optional helper text. Off and on, in four states. There is no Error state: a switch is not validated.",
+  "whenToUse": [
+    "A setting that takes effect right away, such as notifications."
+  ],
+  "whenNotToUse": [
+    "A choice that is sent with a form: use Checkbox."
+  ],
+  "properties": [
+    {
+      "name": "Checked",
+      "type": "variant",
+      "options": [
+        "Off",
+        "On"
+      ],
+      "default": "Off"
+    },
+    {
+      "name": "State",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Hover",
+        "Focus",
+        "Disabled"
+      ],
+      "default": "Default"
+    },
+    {
+      "name": "Label",
+      "type": "text",
+      "default": "Label"
+    },
+    {
+      "name": "Helper text",
+      "type": "text",
+      "default": "Helper text"
+    }
+  ],
+  "layout": {
+    "all": {
+      "track": "40 by 24",
+      "thumb": "16 by 16",
+      "radius": "Radius/radius-pill",
+      "gap": "Spacing/space-3 between track and text"
+    }
+  },
+  "stateTokens": {},
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "note": "A real checkbox with role=\"switch\": Space toggles it and the state is announced as on or off.",
+    "meaning": "The label states what the switch controls. The state does not rely on the thumb position alone: assistive technology announces it."
+  },
+  "example": {
+    "markup": "<label class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-off\" aria-describedby=\"sw-off-help\">\n  <span class=\"switch__text\">\n    <span class=\"switch__label\">Notifications</span>\n    <span class=\"switch__help\" id=\"sw-off-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-on\" aria-describedby=\"sw-on-help\" checked>\n  <span class=\"switch__text\">\n    <span class=\"switch__label\">Notifications</span>\n    <span class=\"switch__help\" id=\"sw-on-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-disabled\" aria-describedby=\"sw-disabled-help\" disabled>\n  <span class=\"switch__text\">\n    <span class=\"switch__label\">Notifications</span>\n    <span class=\"switch__help\" id=\"sw-disabled-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-disabled-on\" aria-describedby=\"sw-disabled-on-help\" disabled checked>\n  <span class=\"switch__text\">\n    <span class=\"switch__label\">Notifications</span>\n    <span class=\"switch__help\" id=\"sw-disabled-on-help\">Helper text</span>\n  </span>\n</label>"
+  },
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {
+      "id": "switch-hover-label",
+      "status": "inference",
+      "text": "Figma draws Hover on the track only. The CSS draws it when the pointer is over the whole label."
+    },
+    {
+      "id": "switch-motion",
+      "status": "inference",
+      "text": "Figma defines no motion. The thumb and the colors use the transition tokens of Button hover, and the global reduced-motion rule removes them."
+    },
+    {
+      "id": "switch-thumb-1x",
+      "status": "inference",
+      "text": "The thumb is placed 4px from the outer edge assuming the 1.5px border. On a 1x screen the border is drawn as 1px, so the thumb sits 0.5px from that position."
+    }
+  ],
+  "unverified": []
 }
 ]
 }
