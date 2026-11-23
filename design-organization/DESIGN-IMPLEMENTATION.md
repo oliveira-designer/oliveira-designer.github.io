@@ -1037,36 +1037,7 @@ textarea.input { min-height: 120px; resize: vertical; }
 
 ## 15. COMPONENTES — CONTEÚDO EDITORIAL
 
-> **Nota (Lote 0, 2026-11-21):** o bloco `a.link` abaixo é um rascunho antigo de link editorial e não está no CSS. A classe `.link` que existe hoje em `css/components/link.css` é o componente Link do Figma (sublinhado, negrito no hover e foco, anel de foco quadrado). Os dois não são o mesmo estilo.
-
-### Links inline em prosa
-
-```css
-.prose a,
-a.link {
-  color: var(--color-link);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: var(--color-tide);
-  transition: var(--transition-color);
-}
-
-.prose a:hover,
-a.link:hover {
-  color: var(--color-link-hover);
-  text-decoration-color: var(--color-link-hover);
-}
-
-.prose a:focus-visible,
-a.link:focus-visible {
-  outline: none;
-  background: var(--color-sky);
-  border-radius: var(--radius-xs);
-  text-decoration: none;
-  box-shadow: 0 0 0 2px var(--color-sky);
-}
-```
+> **Nota (Lote 0):** `.link` é o componente Link do Figma (`css/components/link.css`: sublinhado, negrito no hover e foco, anel de foco quadrado). O rascunho antigo de link editorial em prosa (`.prose a` e `a.link`) foi removido em 2026-11-23 porque nunca foi implementado.
 
 ### Listas
 
@@ -1457,7 +1428,7 @@ img, video, svg {
   display: block;
 }
 
-/* a no reset: SEM estilo. Use .link ou .prose para links visíveis. */
+/* a no reset: SEM estilo. Use .link (componente Link) para links visíveis. */
 a {
   color: inherit;
   text-decoration: none;
@@ -1816,6 +1787,8 @@ type ButtonProps = {
     auth.css         ← carregado por js/auth.js só nas páginas protegidas
     output.css       ← Tailwind (npm run build:css), carregado antes do hope.css
 ```
+
+**Componentes entram em lotes (v2.7.0, GOVERNANCE v1.6).** Os componentes que existem no Figma são codificados em lotes por família (Lotes 0 a 4), a partir do Figma, com ou sem uso no site.
 
 **Lote 0 (v2.7.0, 2026-11-21).** `css/components/` ganhou `link.css` (`.link`, `.link--small`) e `separator.css` (`.separator`), e `badge.css` ganhou `.badge--danger`.
 

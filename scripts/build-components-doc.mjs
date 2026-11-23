@@ -402,6 +402,7 @@ function codeOnlySection(comp) {
 
 function gapsSection(comp) {
   const rows = comp.knownGaps.map((g) => [td(statusBadge(g.status)), th(code(g.id)), td(esc(g.text))].join(''));
+  if (!rows.length) return section('gaps', 'Known gaps', '            <p class="docs-section__desc">None recorded.</p>');
   return section('gaps', 'Known gaps', `            ${table(['Status', 'Id', 'Gap'], rows)}`, 'Status key: ' + Object.entries(content.meta.statusKey).map(([k, v]) => `${esc(k)} (${esc(v)})`).join('; ') + '.');
 }
 
@@ -535,7 +536,7 @@ function indexPage(components) {
 
           <section class="docs-section" id="figma-only" aria-labelledby="figma-only-title">
             <h2 class="text-h2" id="figma-only-title">In Figma, no code yet</h2>
-            <p class="docs-section__desc">Components that exist in Figma and have no CSS. From <code>design-organization/DESIGN.md</code>. They enter the docs when they are implemented (GOVERNANCE test 4). No pages.</p>
+            <p class="docs-section__desc">Components that exist in Figma and have no CSS. From <code>design-organization/DESIGN.md</code>. They enter the docs when they are implemented, in batches by family (GOVERNANCE v1.6). No pages.</p>
             ${foRows.length ? table(['Component', 'Group', 'Status'], foRows) : '<p class="docs-note">The Figma-only list was not found in DESIGN.md.</p>'}
           </section>`;
   return renderPage({

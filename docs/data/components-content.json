@@ -111,8 +111,8 @@
     "Neutral": {"fill": "Background/Default/Secondary", "stroke": "Border/Default/Default (0.5)", "text": "Text/Default/Secondary"},
     "Ancora": {"fill": "Background/Brand/Secondary", "text": "Text/Brand/Secondary"},
     "Solar": {"fill": "Background/Accent/Secondary", "text": "Text/Accent/Default"},
-    "Success": {"fill": "Background/Positive/Secondary (12% opacity)", "text": "Text/Positive/Default"},
-    "Danger": {"fill": "Background/Danger/Secondary (10% opacity)", "text": "Text/Danger/Default"}
+    "Success": {"fill": "Background/Positive/Secondary (12% in Light, solid in Dark)", "text": "Text/Positive/Default"},
+    "Danger": {"fill": "Background/Danger/Secondary (10% in Light, solid in Dark)", "text": "Text/Danger/Default"}
   },
   "accessibility": {
     "contrastText": [
@@ -126,10 +126,7 @@
     "note": "All five styles meet 4.5:1 in both modes on the default page background. The tightest is Solar in Light (4.78). Badges on other surfaces must be re-measured.",
     "meaning": "Colour alone must not carry the meaning: the label text states the status."
   },
-  "knownGaps": [
-    {"id": "badge-border-05", "status": "measured", "text": "Neutral has a 0.5 inside border whose weight is not bound to a variable. No Stroke token has that value (hairline is 0.8), so the 0.5 is a raw value."},
-    {"id": "badge-opacity-difference", "status": "documented", "text": "Success uses 12% opacity and Danger 10% on purpose (owner decision D-32, different colours get different treatment). Not an error."}
-  ],
+  "knownGaps": [],
   "unverified": []
 },
 {
