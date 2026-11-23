@@ -1,7 +1,7 @@
 /* ============================================================
    HOPE DESIGN SYSTEM: hope.css
    GENERATED FILE. Do not edit by hand.
-   Built by scripts/build-css.mjs (npm run css:build) from 48 source files:
+   Built by scripts/build-css.mjs (npm run css:build) from 51 source files:
    tokens, reset, components/*, site/*. Edit the sources, then rebuild.
    css/auth.css (loaded by js/auth.js) and css/output.css (Tailwind) stay separate.
    ============================================================ */
@@ -9,7 +9,7 @@
 /* ===== css/tokens.css ===== */
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v2.9.0 · November 2026
+   v2.10.0 · November 2026
    Source of truth: Figma Foundation for VALUES; DESIGN.md +
    DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
@@ -717,6 +717,154 @@ p { max-width: 70ch; }
 .animate-in--delay-3   { animation-delay: 240ms; }
 .animate-in--delay-4   { animation-delay: 320ms; }
 
+/* ===== css/components/alert.css ===== */
+/* Hope DS: css/components/alert.css
+   Figma: Core, Alert (Type Info|Success|Warning|Error). Optional title, action and dismiss.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/alert.html):
+     <div class="alert alert--info" role="status">
+       <span class="alert__icon" aria-hidden="true"><svg class="icon" viewBox="0 0 256 256" fill="currentColor">...</svg></span>
+       <div class="alert__content">
+         <p class="alert__title">Title</p>
+         <p class="alert__description">Description</p>
+         <a class="alert__action" href="#">Action</a>            (or a <button type="button">)
+       </div>
+       <button type="button" class="alert__dismiss" aria-label="Dismiss"><svg class="icon" ...>...</svg></button>
+     </div>
+   Error and Warning use role="alert", Info and Success use role="status". The width is fluid (Figma shows 480).
+   Figma defines no hover, no underline and no focus for the action: it uses the Hope focus ring. */
+
+/* ----------------------------------------------------------
+   ALERT
+   The border is NOT discounted from the padding here, against the general rule (DESIGN-IMPLEMENTATION.md, "Borda dentro
+   da caixa"): the Figma frame is 105 high with three lines (3 x 20.8 + 8 + 32 + 2), so Figma includes the 1px stroke in the
+   layout and the box is content + padding + border, as in CSS. Fill, border and icon color come from the type.
+   ---------------------------------------------------------- */
+.alert {
+  --alert-bg: var(--color-bg-info-secondary);
+  --alert-border: var(--color-border-info-default);
+  --alert-icon: var(--icon-color-info);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background-color: var(--alert-bg);
+  border: var(--border-width-normal) solid var(--alert-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+}
+
+.alert--info {
+  --alert-bg: var(--color-bg-info-secondary);
+  --alert-border: var(--color-border-info-default);
+  --alert-icon: var(--icon-color-info);
+}
+
+.alert--success {
+  --alert-bg: var(--color-bg-positive-secondary);
+  --alert-border: var(--color-border-positive-default);
+  --alert-icon: var(--icon-color-positive);
+}
+
+.alert--warning {
+  --alert-bg: var(--color-bg-warning-secondary);
+  --alert-border: var(--color-border-warning-default);
+  --alert-icon: var(--icon-color-warning);
+}
+
+.alert--error {
+  --alert-bg: var(--color-bg-danger-secondary);
+  --alert-border: var(--color-border-danger-default);
+  --alert-icon: var(--icon-color-danger);
+}
+
+/* Status icon slot, 20x20, in the status Icon/Color mode. */
+.alert__icon {
+  display: flex;
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  color: var(--alert-icon);
+}
+
+.alert__icon .icon {
+  width: 100%;
+  height: 100%;
+}
+
+.alert__content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.alert__title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-text-1);
+}
+
+.alert__description {
+  margin: 0;
+  font-weight: 400;
+  color: var(--color-text-2);
+}
+
+/* Action: text style, no underline (it overrides the global a rule). */
+.alert__action {
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-text-1);
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.alert__action:hover {
+  color: var(--color-text-1);
+}
+
+.alert__action:focus-visible,
+.alert__dismiss:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+  border-radius: var(--radius-xs);
+}
+
+/* Dismiss: 16x16 as in Figma, Icon/Color Default (no mode override). */
+.alert__dismiss {
+  display: flex;
+  flex: none;
+  width: var(--space-4);
+  height: var(--space-4);
+  padding: 0;
+  color: var(--icon-color-default);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.alert__dismiss .icon {
+  width: 100%;
+  height: 100%;
+}
+
+@media (forced-colors: active) {
+  .alert {
+    border-color: CanvasText;
+  }
+}
+
 /* ===== css/components/badge.css ===== */
 /* Hope DS: css/components/badge.css
    Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
@@ -769,30 +917,47 @@ p { max-width: 70ch; }
 
 /* ===== css/components/banner.css ===== */
 /* Hope DS: css/components/banner.css
-   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
-   Edit this file, then run: npm run css:build */
+   Figma: Core, Banner (Type Notice). A brand strip, not a status: statuses use the Alert.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/banner.html):
+     <div class="banner">
+       <span class="banner__icon" aria-hidden="true">🚧</span>           optional, decorative
+       <span class="banner__text">Text</span>
+     </div>
+   The emoji uses the same text style as the text (Figma styles it with Link/link-xs bold, which looks accidental;
+   recorded as a gap). The width is fluid (Figma shows 1206). */
 
 /* ----------------------------------------------------------
    BANNER
+   No border in Figma, so there is nothing to discount from the padding.
    ---------------------------------------------------------- */
 .banner {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-bg-accent-secondary);
   border-radius: var(--radius-md);
+  color: var(--color-text-accent-default);
   font-size: var(--fs-body-sm);
   font-family: var(--font-body);
-  line-height: 1.4;
+  font-weight: 500;
+  line-height: 1.6;
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: var(--space-6);
 }
 
+/* Legacy site modifier (case-studies/sb-home-redesign.html): it keeps the look the site has always had, so the page
+   does not change. It is not a Figma variant. */
 .banner--wip {
+  padding: var(--space-3) var(--space-6);
+  margin-bottom: var(--space-6);
   background-color: var(--color-bg-accent-tertiary);
   color: var(--color-dusk);
   border: 1px solid var(--color-amber);
+  font-weight: inherit;
+  line-height: 1.4;
 }
 
 [data-theme="dark"] .banner--wip {
@@ -803,6 +968,9 @@ p { max-width: 70ch; }
 
 .banner__icon {
   flex-shrink: 0;
+}
+
+.banner--wip .banner__icon {
   font-size: var(--fs-body);
 }
 
@@ -1805,33 +1973,33 @@ p { max-width: 70ch; }
    Edit this file, then run: npm run css:build
 
    Markup contract (docs/components/checkbox.html):
-     <label class="checkbox">
-       <input type="checkbox" class="checkbox__input" aria-describedby="id-help">
-       <span class="checkbox__text">
-         <span class="checkbox__label">Label</span>
-         <span class="checkbox__help" id="id-help">Helper text</span>
-       </span>
-     </label>
-   A real checkbox with appearance: none, so semantics, keyboard and form submission stay native. Checked = :checked,
-   Indeterminate = :indeterminate (set from script, there is no HTML attribute), Error = aria-invalid="true",
-   Disabled = the disabled attribute. Hover is drawn when the pointer is over the whole label (Figma defines it on
-   the box only; this is an inference). The label is the click target. */
+     <div class="checkbox">
+       <input type="checkbox" class="checkbox__input" id="ID" aria-describedby="ID-help">
+       <label class="checkbox__label" for="ID">Label</label>
+       <p class="checkbox__help" id="ID-help">Helper text</p>
+     </div>
+   The helper sits outside the label, so the accessible name is the label only and the helper is the description
+   (aria-describedby). A real checkbox with appearance: none, so semantics, keyboard and form submission stay native.
+   Checked = :checked, Indeterminate = :indeterminate (set from script, there is no HTML attribute), Error =
+   aria-invalid="true", Disabled = the disabled attribute. Hover is drawn when the pointer is over the box, the label or
+   the helper (Figma defines it on the box only; an inference). The label and the box are the click target. */
 
 /* ----------------------------------------------------------
    CHECKBOX
    The border is drawn inside the 20x20 box (border-box), as in Figma. The mark is a mask, so its color is a token.
    ---------------------------------------------------------- */
 .checkbox {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
+  display: grid;
+  grid-template-columns: var(--space-5) 1fr;
+  align-items: start;
+  column-gap: var(--space-2);
+  row-gap: var(--space-1);
   font-family: var(--font-body);
-  cursor: pointer;
 }
 
 .checkbox__input {
   position: relative;
-  flex: none;
+  grid-row: 1;
   width: var(--space-5);
   height: var(--space-5);
   margin: 0;
@@ -1839,7 +2007,7 @@ p { max-width: 70ch; }
   border: var(--border-width-medium) solid var(--color-border-strong);
   border-radius: var(--radius-xs);
   appearance: none;
-  cursor: inherit;
+  cursor: pointer;
   transition:
     background-color var(--duration-normal) var(--ease-out),
     border-color var(--duration-normal) var(--ease-out);
@@ -1900,13 +2068,10 @@ p { max-width: 70ch; }
   border-color: var(--color-border-danger-default);
 }
 
-.checkbox__text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
 .checkbox__label {
+  grid-row: 1;
+  grid-column: 2;
+  cursor: pointer;
   font-size: var(--fs-body-sm);
   font-weight: 400;
   line-height: 1.6;
@@ -1914,13 +2079,16 @@ p { max-width: 70ch; }
 }
 
 .checkbox__help {
+  grid-row: 2;
+  grid-column: 2;
+  margin: 0;
   font-size: var(--fs-body-xs);
   font-weight: 400;
   line-height: 1.6;
   color: var(--color-text-3);
 }
 
-.checkbox__input[aria-invalid="true"] ~ .checkbox__text .checkbox__help {
+.checkbox__input[aria-invalid="true"] ~ .checkbox__help {
   font-weight: 500;
   color: var(--color-text-danger-default);
 }
@@ -1936,12 +2104,12 @@ p { max-width: 70ch; }
   background-color: var(--icon-color-disabled);
 }
 
-.checkbox__input:disabled ~ .checkbox__text {
+.checkbox__input:disabled ~ .checkbox__label {
   cursor: not-allowed;
 }
 
-.checkbox__input:disabled ~ .checkbox__text .checkbox__label,
-.checkbox__input:disabled ~ .checkbox__text .checkbox__help {
+.checkbox__input:disabled ~ .checkbox__label,
+.checkbox__input:disabled ~ .checkbox__help {
   color: var(--color-text-disabled-default);
 }
 
@@ -2177,6 +2345,60 @@ p { max-width: 70ch; }
     height: 280px;
     align-self: auto;
   }
+}
+
+/* ===== css/components/empty-state.css ===== */
+/* Hope DS: css/components/empty-state.css
+   Figma: Core, Empty state (one component). Icon, title, optional description and optional action.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/empty-state.html):
+     <div class="empty-state">
+       <svg class="icon empty-state__icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">...</svg>
+       <p class="empty-state__title">Nothing here yet</p>              (the author chooses the heading level, see below)
+       <p class="empty-state__description">When there is content, it will show up here.</p>
+       <a class="btn btn--primary" href="#">Add item</a>               (the Hope Button, Primary, Medium)
+     </div>
+   The title is styled by class and carries no heading semantics of its own: use the heading level that fits the page
+   (<h2>, <h3>...) with the class, or a <p> when it is not a heading. */
+
+/* ----------------------------------------------------------
+   EMPTY STATE
+   No fill, no border, no radius. Everything is centered on both axes.
+   ---------------------------------------------------------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-8);
+  font-family: var(--font-body);
+  text-align: center;
+}
+
+/* 48px Phosphor icon, swappable. Figma draws the default Tray in Icon/Color Tertiary. */
+.empty-state .empty-state__icon {
+  width: var(--space-12);
+  height: var(--space-12);
+  color: var(--icon-color-tertiary);
+}
+
+.empty-state__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-text-1);
+}
+
+.empty-state__description {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-2);
 }
 
 /* ===== css/components/field.css ===== */
@@ -2970,32 +3192,32 @@ p { max-width: 70ch; }
 
    Markup contract (docs/components/radio.html): same shape as the checkbox, with type="radio", inside a
    <fieldset><legend> for the group:
-     <label class="radio">
-       <input type="radio" class="radio__input" name="group" aria-describedby="id-help">
-       <span class="radio__text">
-         <span class="radio__label">Label</span>
-         <span class="radio__help" id="id-help">Helper text</span>
-       </span>
-     </label>
+     <div class="radio">
+       <input type="radio" class="radio__input" id="ID" name="group" aria-describedby="ID-help">
+       <label class="radio__label" for="ID">Label</label>
+       <p class="radio__help" id="ID-help">Helper text</p>
+     </div>
+   The helper sits outside the label, so the accessible name is the label only and the helper is the description.
    Real radio with appearance: none. Selected = :checked, Error = aria-invalid="true", Disabled = the disabled
-   attribute. Hover is drawn when the pointer is over the whole label (Figma defines it on the circle only;
-   an inference). */
+   attribute. Hover is drawn when the pointer is over the circle, the label or the helper (Figma defines it on the
+   circle only; an inference). */
 
 /* ----------------------------------------------------------
    RADIO
    20x20 circle, 1.5px border drawn inside (border-box), 8px dot.
    ---------------------------------------------------------- */
 .radio {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
+  display: grid;
+  grid-template-columns: var(--space-5) 1fr;
+  align-items: start;
+  column-gap: var(--space-2);
+  row-gap: var(--space-1);
   font-family: var(--font-body);
-  cursor: pointer;
 }
 
 .radio__input {
   position: relative;
-  flex: none;
+  grid-row: 1;
   width: var(--space-5);
   height: var(--space-5);
   margin: 0;
@@ -3003,7 +3225,7 @@ p { max-width: 70ch; }
   border: var(--border-width-medium) solid var(--color-border-strong);
   border-radius: var(--radius-pill);
   appearance: none;
-  cursor: inherit;
+  cursor: pointer;
   transition:
     background-color var(--duration-normal) var(--ease-out),
     border-color var(--duration-normal) var(--ease-out);
@@ -3051,13 +3273,10 @@ p { max-width: 70ch; }
   border-color: var(--color-border-danger-default);
 }
 
-.radio__text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
 .radio__label {
+  grid-row: 1;
+  grid-column: 2;
+  cursor: pointer;
   font-size: var(--fs-body-sm);
   font-weight: 400;
   line-height: 1.6;
@@ -3065,13 +3284,16 @@ p { max-width: 70ch; }
 }
 
 .radio__help {
+  grid-row: 2;
+  grid-column: 2;
+  margin: 0;
   font-size: var(--fs-body-xs);
   font-weight: 400;
   line-height: 1.6;
   color: var(--color-text-3);
 }
 
-.radio__input[aria-invalid="true"] ~ .radio__text .radio__help {
+.radio__input[aria-invalid="true"] ~ .radio__help {
   font-weight: 500;
   color: var(--color-text-danger-default);
 }
@@ -3087,12 +3309,12 @@ p { max-width: 70ch; }
   background-color: var(--color-text-disabled-inverse);
 }
 
-.radio__input:disabled ~ .radio__text {
+.radio__input:disabled ~ .radio__label {
   cursor: not-allowed;
 }
 
-.radio__input:disabled ~ .radio__text .radio__label,
-.radio__input:disabled ~ .radio__text .radio__help {
+.radio__input:disabled ~ .radio__label,
+.radio__input:disabled ~ .radio__help {
   color: var(--color-text-disabled-default);
 }
 
@@ -3364,15 +3586,14 @@ p { max-width: 70ch; }
    Edit this file, then run: npm run css:build
 
    Markup contract (docs/components/switch.html): same shape as the checkbox, with role="switch":
-     <label class="switch">
-       <input type="checkbox" role="switch" class="switch__input" aria-describedby="id-help">
-       <span class="switch__text">
-         <span class="switch__label">Label</span>
-         <span class="switch__help" id="id-help">Helper text</span>
-       </span>
-     </label>
+     <div class="switch">
+       <input type="checkbox" role="switch" class="switch__input" id="ID" aria-describedby="ID-help">
+       <label class="switch__label" for="ID">Label</label>
+       <p class="switch__help" id="ID-help">Helper text</p>
+     </div>
+   The helper sits outside the label, so the accessible name is the label only and the helper is the description.
    Real checkbox with appearance: none. On = :checked, Disabled = the disabled attribute. Hover is drawn when the
-   pointer is over the whole label (Figma defines it on the track only; an inference). */
+   pointer is over the track, the label or the helper (Figma defines it on the track only; an inference). */
 
 /* ----------------------------------------------------------
    SWITCH
@@ -3381,16 +3602,18 @@ p { max-width: 70ch; }
    reduced-motion rule in tokens.css removes them.
    ---------------------------------------------------------- */
 .switch {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-3);
+  display: grid;
+  grid-template-columns: var(--space-10) 1fr;
+  align-items: start;
+  column-gap: var(--space-3);
+  row-gap: var(--space-1);
   font-family: var(--font-body);
-  cursor: pointer;
 }
 
 .switch__input {
   position: relative;
-  flex: none;
+  /* The track (24px) is taller than the label line (20.8px): it spans both rows, so the helper keeps its 4px gap under the label. */
+  grid-row: 1 / span 2;
   width: var(--space-10);
   height: var(--space-6);
   margin: 0;
@@ -3398,7 +3621,7 @@ p { max-width: 70ch; }
   border: var(--border-width-medium) solid var(--color-border-strong);
   border-radius: var(--radius-pill);
   appearance: none;
-  cursor: inherit;
+  cursor: pointer;
   transition:
     background-color var(--duration-normal) var(--ease-out),
     border-color var(--duration-normal) var(--ease-out);
@@ -3442,13 +3665,10 @@ p { max-width: 70ch; }
   outline-offset: var(--focus-ring-gap);
 }
 
-.switch__text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
 .switch__label {
+  grid-row: 1;
+  grid-column: 2;
+  cursor: pointer;
   font-size: var(--fs-body-sm);
   font-weight: 400;
   line-height: 1.6;
@@ -3456,6 +3676,9 @@ p { max-width: 70ch; }
 }
 
 .switch__help {
+  grid-row: 2;
+  grid-column: 2;
+  margin: 0;
   font-size: var(--fs-body-xs);
   font-weight: 400;
   line-height: 1.6;
@@ -3473,12 +3696,12 @@ p { max-width: 70ch; }
   background-color: var(--color-text-disabled-inverse);
 }
 
-.switch__input:disabled ~ .switch__text {
+.switch__input:disabled ~ .switch__label {
   cursor: not-allowed;
 }
 
-.switch__input:disabled ~ .switch__text .switch__label,
-.switch__input:disabled ~ .switch__text .switch__help {
+.switch__input:disabled ~ .switch__label,
+.switch__input:disabled ~ .switch__help {
   color: var(--color-text-disabled-default);
 }
 
@@ -3743,6 +3966,157 @@ p { max-width: 70ch; }
 .textarea {
   min-height: var(--space-24);
   resize: vertical;
+}
+
+/* ===== css/components/toast.css ===== */
+/* Hope DS: css/components/toast.css
+   Figma: Core, Toast (Type Default|Success|Warning|Error|Info). Message, optional description, action and dismiss.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/toast.html):
+     <div class="toast toast--success" role="status">
+       <span class="toast__icon" aria-hidden="true"><svg class="icon" viewBox="0 0 256 256" fill="currentColor">...</svg></span>
+       <div class="toast__content">
+         <p class="toast__message">Message</p>
+         <p class="toast__description">Short supporting text.</p>
+       </div>
+       <a class="toast__action" href="#">Undo</a>                (or a <button type="button">)
+       <button type="button" class="toast__dismiss" aria-label="Dismiss"><svg class="icon" ...>...</svg></button>
+     </div>
+   Error uses role="alert", the other types role="status". The type is signaled by the icon glyph and its color.
+   Not coded here (see the gaps in the docs data): the positioning region, stacking, auto-dismiss and motion. */
+
+/* ----------------------------------------------------------
+   TOAST
+   Border and fill are the same for every type. As in the Alert, the border is not discounted from the padding: the
+   Figma frame is 69 high (24 + 43 + 2), so Figma includes the 1px stroke in the layout.
+   ---------------------------------------------------------- */
+.toast {
+  --toast-icon: var(--icon-color-secondary);
+  --toast-dismiss: var(--icon-color-default);
+  position: relative;
+  z-index: 500;  /* Figma: notification layer 500. The z-index scale in tokens.css stops at --z-modal (200). */
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-bg);
+  border: var(--border-width-normal) solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);  /* Figma Shadow/lg: 0 8px 32px at 10% */
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* Default sets the Secondary mode on the whole variant: its glyph (Info) and its dismiss icon follow. */
+.toast--default {
+  --toast-icon: var(--icon-color-secondary);
+  --toast-dismiss: var(--icon-color-secondary);
+}
+
+.toast--success {
+  --toast-icon: var(--icon-color-positive);
+  --toast-dismiss: var(--icon-color-default);
+}
+
+.toast--warning {
+  --toast-icon: var(--icon-color-warning);
+  --toast-dismiss: var(--icon-color-default);
+}
+
+.toast--error {
+  --toast-icon: var(--icon-color-danger);
+  --toast-dismiss: var(--icon-color-default);
+}
+
+.toast--info {
+  --toast-icon: var(--icon-color-info);
+  --toast-dismiss: var(--icon-color-default);
+}
+
+.toast__icon {
+  display: flex;
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  color: var(--toast-icon);
+}
+
+.toast__icon .icon {
+  width: 100%;
+  height: 100%;
+}
+
+.toast__content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.toast__message {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  color: var(--color-text-1);
+}
+
+.toast__description {
+  margin: 0;
+  font-size: var(--fs-body-xs);
+  font-weight: 400;
+  color: var(--color-text-2);
+}
+
+.toast__action {
+  flex: none;
+  padding: 0;
+  font: inherit;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  color: var(--color-text-1);
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.toast__action:hover {
+  color: var(--color-text-1);
+}
+
+.toast__action:focus-visible,
+.toast__dismiss:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+  border-radius: var(--radius-xs);
+}
+
+.toast__dismiss {
+  display: flex;
+  flex: none;
+  width: var(--space-4);
+  height: var(--space-4);
+  padding: 0;
+  color: var(--toast-dismiss);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.toast__dismiss .icon {
+  width: 100%;
+  height: 100%;
+}
+
+@media (forced-colors: active) {
+  .toast {
+    border-color: CanvasText;
+  }
 }
 
 /* ===== css/site/container.css ===== */

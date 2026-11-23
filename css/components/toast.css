@@ -1,0 +1,149 @@
+/* Hope DS: css/components/toast.css
+   Figma: Core, Toast (Type Default|Success|Warning|Error|Info). Message, optional description, action and dismiss.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/toast.html):
+     <div class="toast toast--success" role="status">
+       <span class="toast__icon" aria-hidden="true"><svg class="icon" viewBox="0 0 256 256" fill="currentColor">...</svg></span>
+       <div class="toast__content">
+         <p class="toast__message">Message</p>
+         <p class="toast__description">Short supporting text.</p>
+       </div>
+       <a class="toast__action" href="#">Undo</a>                (or a <button type="button">)
+       <button type="button" class="toast__dismiss" aria-label="Dismiss"><svg class="icon" ...>...</svg></button>
+     </div>
+   Error uses role="alert", the other types role="status". The type is signaled by the icon glyph and its color.
+   Not coded here (see the gaps in the docs data): the positioning region, stacking, auto-dismiss and motion. */
+
+/* ----------------------------------------------------------
+   TOAST
+   Border and fill are the same for every type. As in the Alert, the border is not discounted from the padding: the
+   Figma frame is 69 high (24 + 43 + 2), so Figma includes the 1px stroke in the layout.
+   ---------------------------------------------------------- */
+.toast {
+  --toast-icon: var(--icon-color-secondary);
+  --toast-dismiss: var(--icon-color-default);
+  position: relative;
+  z-index: 500;  /* Figma: notification layer 500. The z-index scale in tokens.css stops at --z-modal (200). */
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-bg);
+  border: var(--border-width-normal) solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);  /* Figma Shadow/lg: 0 8px 32px at 10% */
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* Default sets the Secondary mode on the whole variant: its glyph (Info) and its dismiss icon follow. */
+.toast--default {
+  --toast-icon: var(--icon-color-secondary);
+  --toast-dismiss: var(--icon-color-secondary);
+}
+
+.toast--success {
+  --toast-icon: var(--icon-color-positive);
+  --toast-dismiss: var(--icon-color-default);
+}
+
+.toast--warning {
+  --toast-icon: var(--icon-color-warning);
+  --toast-dismiss: var(--icon-color-default);
+}
+
+.toast--error {
+  --toast-icon: var(--icon-color-danger);
+  --toast-dismiss: var(--icon-color-default);
+}
+
+.toast--info {
+  --toast-icon: var(--icon-color-info);
+  --toast-dismiss: var(--icon-color-default);
+}
+
+.toast__icon {
+  display: flex;
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  color: var(--toast-icon);
+}
+
+.toast__icon .icon {
+  width: 100%;
+  height: 100%;
+}
+
+.toast__content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.toast__message {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  color: var(--color-text-1);
+}
+
+.toast__description {
+  margin: 0;
+  font-size: var(--fs-body-xs);
+  font-weight: 400;
+  color: var(--color-text-2);
+}
+
+.toast__action {
+  flex: none;
+  padding: 0;
+  font: inherit;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  color: var(--color-text-1);
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.toast__action:hover {
+  color: var(--color-text-1);
+}
+
+.toast__action:focus-visible,
+.toast__dismiss:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+  border-radius: var(--radius-xs);
+}
+
+.toast__dismiss {
+  display: flex;
+  flex: none;
+  width: var(--space-4);
+  height: var(--space-4);
+  padding: 0;
+  color: var(--toast-dismiss);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.toast__dismiss .icon {
+  width: 100%;
+  height: 100%;
+}
+
+@media (forced-colors: active) {
+  .toast {
+    border-color: CanvasText;
+  }
+}

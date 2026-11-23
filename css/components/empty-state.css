@@ -1,0 +1,52 @@
+/* Hope DS: css/components/empty-state.css
+   Figma: Core, Empty state (one component). Icon, title, optional description and optional action.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/empty-state.html):
+     <div class="empty-state">
+       <svg class="icon empty-state__icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">...</svg>
+       <p class="empty-state__title">Nothing here yet</p>              (the author chooses the heading level, see below)
+       <p class="empty-state__description">When there is content, it will show up here.</p>
+       <a class="btn btn--primary" href="#">Add item</a>               (the Hope Button, Primary, Medium)
+     </div>
+   The title is styled by class and carries no heading semantics of its own: use the heading level that fits the page
+   (<h2>, <h3>...) with the class, or a <p> when it is not a heading. */
+
+/* ----------------------------------------------------------
+   EMPTY STATE
+   No fill, no border, no radius. Everything is centered on both axes.
+   ---------------------------------------------------------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-8);
+  font-family: var(--font-body);
+  text-align: center;
+}
+
+/* 48px Phosphor icon, swappable. Figma draws the default Tray in Icon/Color Tertiary. */
+.empty-state .empty-state__icon {
+  width: var(--space-12);
+  height: var(--space-12);
+  color: var(--icon-color-tertiary);
+}
+
+.empty-state__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-text-1);
+}
+
+.empty-state__description {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-2);
+}

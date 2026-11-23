@@ -1,0 +1,146 @@
+/* Hope DS: css/components/alert.css
+   Figma: Core, Alert (Type Info|Success|Warning|Error). Optional title, action and dismiss.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/alert.html):
+     <div class="alert alert--info" role="status">
+       <span class="alert__icon" aria-hidden="true"><svg class="icon" viewBox="0 0 256 256" fill="currentColor">...</svg></span>
+       <div class="alert__content">
+         <p class="alert__title">Title</p>
+         <p class="alert__description">Description</p>
+         <a class="alert__action" href="#">Action</a>            (or a <button type="button">)
+       </div>
+       <button type="button" class="alert__dismiss" aria-label="Dismiss"><svg class="icon" ...>...</svg></button>
+     </div>
+   Error and Warning use role="alert", Info and Success use role="status". The width is fluid (Figma shows 480).
+   Figma defines no hover, no underline and no focus for the action: it uses the Hope focus ring. */
+
+/* ----------------------------------------------------------
+   ALERT
+   The border is NOT discounted from the padding here, against the general rule (DESIGN-IMPLEMENTATION.md, "Borda dentro
+   da caixa"): the Figma frame is 105 high with three lines (3 x 20.8 + 8 + 32 + 2), so Figma includes the 1px stroke in the
+   layout and the box is content + padding + border, as in CSS. Fill, border and icon color come from the type.
+   ---------------------------------------------------------- */
+.alert {
+  --alert-bg: var(--color-bg-info-secondary);
+  --alert-border: var(--color-border-info-default);
+  --alert-icon: var(--icon-color-info);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background-color: var(--alert-bg);
+  border: var(--border-width-normal) solid var(--alert-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+}
+
+.alert--info {
+  --alert-bg: var(--color-bg-info-secondary);
+  --alert-border: var(--color-border-info-default);
+  --alert-icon: var(--icon-color-info);
+}
+
+.alert--success {
+  --alert-bg: var(--color-bg-positive-secondary);
+  --alert-border: var(--color-border-positive-default);
+  --alert-icon: var(--icon-color-positive);
+}
+
+.alert--warning {
+  --alert-bg: var(--color-bg-warning-secondary);
+  --alert-border: var(--color-border-warning-default);
+  --alert-icon: var(--icon-color-warning);
+}
+
+.alert--error {
+  --alert-bg: var(--color-bg-danger-secondary);
+  --alert-border: var(--color-border-danger-default);
+  --alert-icon: var(--icon-color-danger);
+}
+
+/* Status icon slot, 20x20, in the status Icon/Color mode. */
+.alert__icon {
+  display: flex;
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  color: var(--alert-icon);
+}
+
+.alert__icon .icon {
+  width: 100%;
+  height: 100%;
+}
+
+.alert__content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.alert__title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-text-1);
+}
+
+.alert__description {
+  margin: 0;
+  font-weight: 400;
+  color: var(--color-text-2);
+}
+
+/* Action: text style, no underline (it overrides the global a rule). */
+.alert__action {
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-text-1);
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.alert__action:hover {
+  color: var(--color-text-1);
+}
+
+.alert__action:focus-visible,
+.alert__dismiss:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+  border-radius: var(--radius-xs);
+}
+
+/* Dismiss: 16x16 as in Figma, Icon/Color Default (no mode override). */
+.alert__dismiss {
+  display: flex;
+  flex: none;
+  width: var(--space-4);
+  height: var(--space-4);
+  padding: 0;
+  color: var(--icon-color-default);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.alert__dismiss .icon {
+  width: 100%;
+  height: 100%;
+}
+
+@media (forced-colors: active) {
+  .alert {
+    border-color: CanvasText;
+  }
+}
