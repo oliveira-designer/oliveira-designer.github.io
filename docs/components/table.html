@@ -76,7 +76,7 @@
       </div>
     </header>
 
-  <main id="main" class="docs-main docs-main--ds">
+  <main id="main" class="docs-main">
     <div class="docs-ds-layout">
         <aside class="docs-ds-sidebar">
           <nav aria-label="Docs pages">
@@ -133,11 +133,6 @@
                           <td class="data-table__cell data-table__cell--end">8</td>
                           <td class="data-table__cell">Complete</td>
                         </tr>
-                        <tr>
-                          <th scope="row" class="data-table__row-header">Separator</th>
-                          <td class="data-table__cell data-table__cell--end">1</td>
-                          <td class="data-table__cell">Complete</td>
-                        </tr>
                       </tbody>
                     </table>
                   </div><!-- demo:end -->
@@ -171,11 +166,6 @@
         &lt;td class=&quot;data-table__cell data-table__cell--end&quot;&gt;8&lt;/td&gt;
         &lt;td class=&quot;data-table__cell&quot;&gt;Complete&lt;/td&gt;
       &lt;/tr&gt;
-      &lt;tr&gt;
-        &lt;th scope=&quot;row&quot; class=&quot;data-table__row-header&quot;&gt;Separator&lt;/th&gt;
-        &lt;td class=&quot;data-table__cell data-table__cell--end&quot;&gt;1&lt;/td&gt;
-        &lt;td class=&quot;data-table__cell&quot;&gt;Complete&lt;/td&gt;
-      &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
 &lt;/div&gt;</pre>
@@ -187,11 +177,11 @@
             <ul class="docs-ds-list"><li>Comparing several records across the same attributes, such as components and their variant counts.</li><li>Numeric columns, aligned to the end so digits line up.</li></ul>
           </section>
 
-          <section class="docs-ds-section" id="classes" aria-labelledby="classes-title">
-            <h2 class="text-label text-tertiary" id="classes-title">Classes and tokens</h2>
-            <div class="data-table" role="region" aria-labelledby="table-classes-caption" tabindex="0">
+          <section class="docs-ds-section" id="variants" aria-labelledby="variants-title">
+            <h2 class="text-label text-tertiary" id="variants-title">Classes and tokens</h2>
+            <div class="data-table" role="region" aria-labelledby="table-variants-caption" tabindex="0">
   <table class="data-table__grid">
-    <caption class="data-table__caption" id="table-classes-caption">Table classes, what each is for and the tokens its rule uses</caption>
+    <caption class="data-table__caption" id="table-variants-caption">Table classes, what each is for and the tokens its rule uses</caption>
     <thead>
       <tr>
         <th scope="col" class="data-table__head-cell">Class</th>
@@ -262,7 +252,7 @@
 
           <section class="docs-ds-section" id="accessibility" aria-labelledby="accessibility-title">
             <h2 class="text-label text-tertiary" id="accessibility-title">Accessibility</h2>
-            <p class="docs-ds-note">The wrapper is a focusable region named by the caption (role region, aria-labelledby, tabindex 0), so keyboard users can scroll a wide table.</p>
+            <p class="docs-ds-note">The wrapper is a focusable region named by the caption (role region, aria-labelledby, tabindex 0), so keyboard users can scroll a wide table. Header cells use scope col and row headers scope row; rowspan and colspan are not supported. Interactive elements inside cells need their own unique accessible names.</p>
           </section>
         </div>
     </div>
