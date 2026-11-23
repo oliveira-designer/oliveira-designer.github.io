@@ -436,7 +436,82 @@ function codeRefSection(comp) {
    Component page and index
    ------------------------------------------------------------------------ */
 
+/* ---------------------------------------------------------------------------
+   Model layout (Badge first): title, live example card, HTML code revealed by a
+   native <details>, and compact essentials. The data files keep every other section
+   (figma vs code, gaps, references); they are just not rendered here.
+   ------------------------------------------------------------------------ */
+
+// The custom properties a class sets, read from the component CSS so the table cannot drift.
+function tokensOf(selectorClass, file) {
+  const text = fs.readFileSync(path.join(ROOT, file), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const re = new RegExp('(?:^|[\\s,}])' + selectorClass.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*\\{([^}]*)\\}');
+  const m = re.exec(text);
+  const out = {};
+  if (m) for (const d of m[1].split(';')) {
+    const [prop, val] = d.split(/:(.+)/).map((s) => (s || '').trim());
+    const v = /var\((--[a-z0-9-]+)\)/.exec(val || '');
+    if (v && (prop === 'background-color' || prop === 'color')) out[prop] = v[1];
+  }
+  return out;
+}
+
+function badgeModelPage(comp) {
+  const m = map.components.Badge;
+  const variants = m.variants.filter((v) => v.selector);
+  const classOf = (v) => v.selector.replace(/\./g, ' ').trim();
+  const markup = variants.map((v) => `<span class="${classOf(v)}">${esc(v.style)}</span>`);
+  const demoHtml = markup.join('\n                  ');
+  const codeText = markup.join('\n');
+  const rows = variants.map((v) => {
+    const t = tokensOf(v.rule, 'css/components/badge.css');
+    const fig = comp.stateTokens[v.style] || {};
+    return [
+      th(esc(v.style)),
+      td(code(v.rule)),
+      td(t['background-color'] ? `${code(t['background-color'])}<span class="docs-token__note">${esc(fig.fill || '')}</span>` : '<span class="docs-muted">none</span>'),
+      td(t.color ? `${code(t.color)}<span class="docs-token__note">${esc(fig.text || '')}</span>` : '<span class="docs-muted">none</span>'),
+    ].join('');
+  });
+  const a = comp.accessibility;
+  const firstSentence = (s) => (s.match(/^.*?\.(?=\s|$)/) || [s])[0];
+  const body = `          <header class="docs-ds-head">
+            <h1 class="text-h1">${esc(comp.name)}</h1>
+            <p class="docs-ds-desc">${esc(comp.summary)}</p>
+          </header>
+
+          <section class="docs-ds-section" id="example" aria-labelledby="example-title">
+            <h2 class="text-label text-tertiary" id="example-title">Live example</h2>
+            <div class="docs-ds-card">
+              <div class="docs-ds-preview">
+                <!-- demo:start -->${demoHtml}<!-- demo:end -->
+              </div>
+            </div>
+            <details class="docs-ds-code">
+              <summary>HTML</summary>
+<pre class="docs-ds-code__block">${esc(codeText)}</pre>
+            </details>
+          </section>
+
+          <section class="docs-ds-section" id="when" aria-labelledby="when-title">
+            <h2 class="text-label text-tertiary" id="when-title">When to use</h2>
+            ${list(comp.whenToUse).replace('class="docs-list"', 'class="docs-ds-list"')}
+          </section>
+
+          <section class="docs-ds-section" id="variants" aria-labelledby="variants-title">
+            <h2 class="text-label text-tertiary" id="variants-title">Variants and tokens</h2>
+            ${table(['Style', 'Class', 'Fill', 'Text'], rows)}
+          </section>
+
+          <section class="docs-ds-section" id="accessibility" aria-labelledby="accessibility-title">
+            <h2 class="text-label text-tertiary" id="accessibility-title">Accessibility</h2>
+            <p class="docs-ds-note">${esc(firstSentence(a.note))} ${esc(a.meaning)}</p>
+          </section>`;
+  return renderPage({ title: comp.name, activeHref: `components/${comp.slug}.html`, base: BASE, body, layout: 'ds' });
+}
+
 function componentPage(comp) {
+  if (comp.slug === 'badge') return badgeModelPage(comp);
   const sections = [
     ['summary', 'Summary', summarySection(comp)],
     ['usage', 'When to use', usageSection(comp)],

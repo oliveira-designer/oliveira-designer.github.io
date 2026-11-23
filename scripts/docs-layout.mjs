@@ -145,6 +145,24 @@ function sidebar(activeHref, onThisPage, base = '') {
         </aside>`;
 }
 
+// Side menu of the model layout (layout: 'ds'): the pattern of design-system.html (grouped links,
+// no "On this page" list). Same items as the classic sidebar: Pages and Components.
+function sidebarDs(activeHref, base = '') {
+  const link = (n) => `<a class="docs-ds-nav__link" href="${base}${n.href}"${n.href === activeHref ? ' aria-current="page"' : ''}>${n.label}</a>`;
+  return `<aside class="docs-ds-sidebar">
+          <nav aria-label="Docs pages">
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Pages</p>
+              ${NAV.map(link).join('\n              ')}
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Components</p>
+              ${COMPONENT_PAGES.map(link).join('\n              ')}
+            </div>
+          </nav>
+        </aside>`;
+}
+
 // Wires the theme switch (state lives in THEME_BOOT) and the mobile menu.
 const SCRIPT = `<script>
     (function () {
@@ -198,7 +216,9 @@ const SCRIPT = `<script>
   </script>`;
 
 // stylesheets: optional list of repository-root-relative paths (for example from docs/data/css-sources.json).
-export function renderPage({ title, activeHref, onThisPage = [], body, base = '', stylesheets = null }) {
+// layout: 'classic' (default: container, sidebar with On this page, content) or 'ds' (model layout:
+// full width, design-system.html side menu, no On this page).
+export function renderPage({ title, activeHref, onThisPage = [], body, base = '', stylesheets = null, layout = 'classic' }) {
   const links = (stylesheets ? stylesheets.map((p) => `<link rel="stylesheet" href="${base}../${p}" />`) : STYLESHEETS.map((s) => `<link rel="stylesheet" href="${base}../css/${s}.css" />`)).join('\n  ');
   return `<!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -220,7 +240,16 @@ export function renderPage({ title, activeHref, onThisPage = [], body, base = ''
 
   ${header(activeHref, base)}
 
-  <main id="main" class="docs-main">
+  ${layout === 'ds'
+    ? `<main id="main" class="docs-main docs-main--ds">
+    <div class="docs-ds-layout">
+        ${sidebarDs(activeHref, base)}
+        <div class="docs-ds-content">
+${body}
+        </div>
+    </div>
+  </main>`
+    : `<main id="main" class="docs-main">
     <div class="container">
       <div class="case-layout">
         ${sidebar(activeHref, onThisPage, base)}
@@ -229,7 +258,7 @@ ${body}
         </div>
       </div>
     </div>
-  </main>
+  </main>`}
 
   ${SCRIPT}
 </body>
