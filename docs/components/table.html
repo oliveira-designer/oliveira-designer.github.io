@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <script>
+    (function () {
+      var KEY = 'hope-docs-theme';
+      var html = document.documentElement;
+      var mq = null;
+      try { mq = window.matchMedia('(prefers-color-scheme: dark)'); } catch (e) {}
+      var current = null; // in-memory choice, used when localStorage is blocked
+      function stored() {
+        if (current) return current;
+        try {
+          var v = localStorage.getItem(KEY);
+          return v === 'dark' || v === 'system' ? v : 'light';
+        } catch (e) { return 'light'; }
+      }
+      function resolve(choice) { return choice === 'system' ? (mq && mq.matches ? 'dark' : 'light') : choice; }
+      function apply(choice) { html.setAttribute('data-theme', resolve(choice)); }
+      window.hopeDocsTheme = {
+        get: stored,
+        set: function (choice) {
+          current = choice;
+          try { localStorage.setItem(KEY, choice); } catch (e) {}
+          apply(choice);
+        },
+        apply: apply,
+        mq: mq
+      };
+      apply(stored());
+    })();
+  </script>
+  <title>Table | Hope DS docs</title>
+  <link rel="icon" type="image/svg+xml" href="../../logos/logo-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/hope.css" />
+  <link rel="stylesheet" href="../docs.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top" role="banner">
+      <nav class="nav" role="navigation" aria-label="Docs navigation">
+        <a href="../index.html" class="nav__logo" aria-label="Hope DS docs home">
+          <img src="../../logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
+          <img src="../../logos/logo-dark-mode.svg" alt="Renan Moura" class="nav__logo-dark" />
+        </a>
+        <div class="nav__controls">
+          <div class="nav__links">
+            <a href="../index.html" class="nav__link">Overview</a>
+            <a href="../tokens.html" class="nav__link">Tokens</a>
+            <a href="../components/index.html" class="nav__link nav__link--active" aria-current="page">Components</a>
+            <a href="../../index.html" class="nav__link">Portfolio site</a>
+          </div>
+          <div class="docs-theme" role="group" aria-label="Theme">
+            <button type="button" class="docs-theme__btn" data-theme-choice="light" aria-pressed="false">Light</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="dark" aria-pressed="false">Dark</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="system" aria-pressed="false">System</button>
+          </div>
+          <button class="nav__hamburger" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconBurger" aria-hidden="true" focusable="false"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg>
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconClose" aria-hidden="true" focusable="false" style="display:none"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
+          </button>
+        </div>
+      </nav>
+      <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+        <a href="../index.html" class="nav__mobile-link">Overview</a>
+        <a href="../tokens.html" class="nav__mobile-link">Tokens</a>
+        <a href="../components/index.html" class="nav__mobile-link nav__link--active">Components</a>
+        <a href="../../index.html" class="nav__mobile-link">Portfolio site</a>
+      </div>
+    </header>
+
+  <main id="main" class="docs-main docs-main--ds">
+    <div class="docs-ds-layout">
+        <aside class="docs-ds-sidebar">
+          <nav aria-label="Docs pages">
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Pages</p>
+              <a class="docs-ds-nav__link" href="../index.html">Overview</a>
+              <a class="docs-ds-nav__link" href="../tokens.html">Tokens</a>
+              <a class="docs-ds-nav__link" href="../components/index.html">Components</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Components</p>
+              <a class="docs-ds-nav__link" href="../components/button.html">Button</a>
+              <a class="docs-ds-nav__link" href="../components/badge.html">Badge</a>
+              <a class="docs-ds-nav__link" href="../components/link.html">Link</a>
+              <a class="docs-ds-nav__link" href="../components/separator.html">Separator</a>
+              <a class="docs-ds-nav__link" href="../components/table.html" aria-current="page">Table</a>
+              <a class="docs-ds-nav__link" href="../components/review.html">Review (temporary)</a>
+            </div>
+          </nav>
+        </aside>
+        <div class="docs-ds-content">
+          <header class="docs-ds-head">
+            <h1 class="text-h1">Table</h1>
+            <p class="docs-ds-desc">Data table for comparing records across a few columns. A bordered wrapper with an optional caption, header cells, row headers and data cells. No sorting, selection, row hover or sticky header in this version.</p>
+          </header>
+
+          <section class="docs-ds-section" id="example" aria-labelledby="example-title">
+            <h2 class="text-label text-tertiary" id="example-title">Live example</h2>
+            <div class="docs-ds-card">
+              <div class="docs-ds-preview">
+                <!-- demo:start --><div class="data-table" role="region" aria-labelledby="table-example-caption" tabindex="0">
+                    <table class="data-table__grid">
+                      <caption class="data-table__caption" id="table-example-caption">Components documented so far and their variants</caption>
+                      <thead>
+                        <tr>
+                          <th scope="col" class="data-table__head-cell">Component</th>
+                          <th scope="col" class="data-table__head-cell data-table__head-cell--end">Variants</th>
+                          <th scope="col" class="data-table__head-cell">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row" class="data-table__row-header">Button</th>
+                          <td class="data-table__cell data-table__cell--end">28</td>
+                          <td class="data-table__cell">Complete</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="data-table__row-header">Badge</th>
+                          <td class="data-table__cell data-table__cell--end">5</td>
+                          <td class="data-table__cell">Complete</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="data-table__row-header">Link</th>
+                          <td class="data-table__cell data-table__cell--end">8</td>
+                          <td class="data-table__cell">Complete</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="data-table__row-header">Separator</th>
+                          <td class="data-table__cell data-table__cell--end">1</td>
+                          <td class="data-table__cell">Complete</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div><!-- demo:end -->
+              </div>
+            </div>
+            <details class="docs-ds-code">
+              <summary>HTML</summary>
+<pre class="docs-ds-code__block">&lt;div class=&quot;data-table&quot; role=&quot;region&quot; aria-labelledby=&quot;table-example-caption&quot; tabindex=&quot;0&quot;&gt;
+  &lt;table class=&quot;data-table__grid&quot;&gt;
+    &lt;caption class=&quot;data-table__caption&quot; id=&quot;table-example-caption&quot;&gt;Components documented so far and their variants&lt;/caption&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th scope=&quot;col&quot; class=&quot;data-table__head-cell&quot;&gt;Component&lt;/th&gt;
+        &lt;th scope=&quot;col&quot; class=&quot;data-table__head-cell data-table__head-cell--end&quot;&gt;Variants&lt;/th&gt;
+        &lt;th scope=&quot;col&quot; class=&quot;data-table__head-cell&quot;&gt;Status&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;th scope=&quot;row&quot; class=&quot;data-table__row-header&quot;&gt;Button&lt;/th&gt;
+        &lt;td class=&quot;data-table__cell data-table__cell--end&quot;&gt;28&lt;/td&gt;
+        &lt;td class=&quot;data-table__cell&quot;&gt;Complete&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th scope=&quot;row&quot; class=&quot;data-table__row-header&quot;&gt;Badge&lt;/th&gt;
+        &lt;td class=&quot;data-table__cell data-table__cell--end&quot;&gt;5&lt;/td&gt;
+        &lt;td class=&quot;data-table__cell&quot;&gt;Complete&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th scope=&quot;row&quot; class=&quot;data-table__row-header&quot;&gt;Link&lt;/th&gt;
+        &lt;td class=&quot;data-table__cell data-table__cell--end&quot;&gt;8&lt;/td&gt;
+        &lt;td class=&quot;data-table__cell&quot;&gt;Complete&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th scope=&quot;row&quot; class=&quot;data-table__row-header&quot;&gt;Separator&lt;/th&gt;
+        &lt;td class=&quot;data-table__cell data-table__cell--end&quot;&gt;1&lt;/td&gt;
+        &lt;td class=&quot;data-table__cell&quot;&gt;Complete&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</pre>
+            </details>
+          </section>
+
+          <section class="docs-ds-section" id="when" aria-labelledby="when-title">
+            <h2 class="text-label text-tertiary" id="when-title">When to use</h2>
+            <ul class="docs-ds-list"><li>Comparing several records across the same attributes, such as components and their variant counts.</li><li>Numeric columns, aligned to the end so digits line up.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="classes" aria-labelledby="classes-title">
+            <h2 class="text-label text-tertiary" id="classes-title">Classes and tokens</h2>
+            <div class="data-table" role="region" aria-labelledby="table-classes-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="table-classes-caption">Table classes, what each is for and the tokens its rule uses</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Class</th>
+        <th scope="col" class="data-table__head-cell">Used for</th>
+        <th scope="col" class="data-table__head-cell">Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.data-table</code></th>
+        <td class="data-table__cell">Wrapper: border, radius, background, horizontal scroll and the focus ring.</td>
+        <td class="data-table__cell"><code>--color-bg</code> <code>--border-width-normal</code> <code>--color-border</code> <code>--radius-md</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.data-table__grid</code></th>
+        <td class="data-table__cell">The table element.</td>
+        <td class="data-table__cell"><code>--font-body</code> <code>--fs-body-sm</code> <code>--color-text-1</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.data-table__caption</code></th>
+        <td class="data-table__cell">Optional caption, visible by default.</td>
+        <td class="data-table__cell"><code>--space-3</code> <code>--space-4</code> <code>--color-text-2</code> <code>--border-width-normal</code> <code>--color-border</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.data-table__caption--hidden</code></th>
+        <td class="data-table__cell">Visually hidden caption that stays in the accessibility tree.</td>
+        <td class="data-table__cell"><span class="docs-muted">none</span></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.data-table__head-cell</code></th>
+        <td class="data-table__cell">Column header (th scope col).</td>
+        <td class="data-table__cell"><code>--color-bg-alt</code> <code>--color-text-1</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.data-table__row-header</code></th>
+        <td class="data-table__cell">Row header (th scope row).</td>
+        <td class="data-table__cell"><code>--color-text-1</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.data-table__cell</code></th>
+        <td class="data-table__cell">Data cell (td).</td>
+        <td class="data-table__cell"><code>--space-3</code> <code>--space-4</code> <code>--border-width-normal</code> <code>--color-border</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.data-table__head-cell--end</code></th>
+        <td class="data-table__cell">End-aligned header cell, for numeric columns.</td>
+        <td class="data-table__cell"><span class="docs-muted">none</span></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.data-table__row-header--end</code></th>
+        <td class="data-table__cell">End-aligned row header.</td>
+        <td class="data-table__cell"><span class="docs-muted">none</span></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.data-table__cell--end</code></th>
+        <td class="data-table__cell">End-aligned data cell, for numeric columns.</td>
+        <td class="data-table__cell"><span class="docs-muted">none</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          </section>
+
+          <section class="docs-ds-section" id="contract" aria-labelledby="contract-title">
+            <h2 class="text-label text-tertiary" id="contract-title">Markup contract</h2>
+            <ul class="docs-ds-list"><li>Wrapper: a div with role region, aria-labelledby pointing at the caption id, and tabindex 0. The wrapper is always focusable so keyboard users can scroll it; there is no script that toggles it.</li><li>Inside the wrapper: a table with a caption (first child), thead, and tbody.</li><li>Header cells are th with scope col. Row headers are th with scope row. Data cells are td. No rowspan or colspan.</li><li>A numeric column puts the end modifier on its header cell and on every cell of that column.</li><li>Do not hide the caption with display or visibility. Use the hidden caption modifier instead.</li><li>Interactive elements inside cells need their own unique accessible names.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="accessibility" aria-labelledby="accessibility-title">
+            <h2 class="text-label text-tertiary" id="accessibility-title">Accessibility</h2>
+            <p class="docs-ds-note">The wrapper is a focusable region named by the caption (role region, aria-labelledby, tabindex 0), so keyboard users can scroll a wide table.</p>
+          </section>
+        </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconBurger = document.getElementById('iconBurger');
+      const iconClose = document.getElementById('iconClose');
+
+      const theme = window.hopeDocsTheme;
+      const choices = document.querySelectorAll('[data-theme-choice]');
+      function syncSwitch() {
+        const current = theme ? theme.get() : 'light';
+        choices.forEach(function (btn) {
+          btn.setAttribute('aria-pressed', String(btn.getAttribute('data-theme-choice') === current));
+        });
+      }
+      function setMenu(open) {
+        mobileMenu.classList.toggle('is-open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        iconBurger.style.display = open ? 'none' : 'block';
+        iconClose.style.display = open ? 'block' : 'none';
+      }
+
+      choices.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (theme) theme.set(btn.getAttribute('data-theme-choice'));
+          syncSwitch();
+        });
+      });
+      if (theme && theme.mq) {
+        const onChange = function () { if (theme.get() === 'system') theme.apply('system'); };
+        try { theme.mq.addEventListener('change', onChange); } catch (e) { try { theme.mq.addListener(onChange); } catch (e2) {} }
+      }
+      syncSwitch();
+
+      menuToggle.addEventListener('click', function () {
+        setMenu(!mobileMenu.classList.contains('is-open'));
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { setMenu(false); });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+          setMenu(false);
+          menuToggle.focus();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

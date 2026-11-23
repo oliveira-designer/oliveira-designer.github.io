@@ -587,3 +587,8 @@
   white-space: nowrap;
   overflow-wrap: normal;
 }
+
+/* A Table in the example card uses the full card width (flex items otherwise shrink to their content). */
+.docs-ds-preview > .data-table {
+  flex: 1 1 100%;
+}

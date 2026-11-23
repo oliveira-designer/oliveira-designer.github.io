@@ -1,6 +1,6 @@
 # Hope DS: diário de decisões (material de case)
 
-Versão 0.10 · 2026-11-23 · Rascunho vivo, uso interno (Renan e agentes)
+Versão 0.11 · 2026-11-23 · Rascunho vivo, uso interno (Renan e agentes)
 
 ## Como ler este documento
 
@@ -232,6 +232,30 @@ Versão 0.10 · 2026-11-23 · Rascunho vivo, uso interno (Renan e agentes)
 - **Quatro testes viram três:** o teste 4 ("há projeto real usando hoje?") contradiz a abolição da regra. Opções: (a) remover, (b) reescrever para "uso real ou previsto", (c) manter. Renan escolheu (a). [Registrado] Minha recomendação foi (a) porque (b) passaria sempre e não filtraria nada; os três restantes (cobertura de 80%, diferença só visual, reuso) já cobrem duplicação e reuso. [Inferência]
 - **Publicação:** o Core precisa ser publicado de novo (Badge Neutral ligado ao hairline, texto da página "Como usar"). [Registrado]
 
+### D-34 Fechamento do Prompt 17 (Badge e governança)
+- **Resultado:** `.badge` com padding 4/12 e line-height 1,6; `.badge--success` no token `--color-bg-positive-secondary` (Dark `#162418`, igual ao Figma); GOVERNANCE v1.6 sem a regra de uso e com três testes. O diff da GOVERNANCE foi revisado e só removeu a regra e o teste 4. Já está na `main`. [Registrado: relatório do Code]
+- **Altura do Badge Neutral:** renderiza 30,8px contra 29 do Figma, porque a borda do CSS soma ao box (mesma causa da altura do Button no D-33). Decisão de Renan: seguir minha recomendação, que foi não corrigir agora; a lacuna `badge-neutral-height` fica registrada e Badge e Button são resolvidos juntos, com uma abordagem única, no começo do Lote 1. [Registrado] O motivo da recomendação (evitar uma solução só para o Badge que talvez precise ser desfeita) é leitura minha. [Inferência]
+- **Quebra a 390px:** as tags do hero de `sb-home-redesign` passam para uma segunda linha e a página cresce cerca de 41px. Renan olhou `index` e `about` e aceitou. [Registrado]
+- **Contradições de governança deixadas pelo Code:** os anti-padrões "Componente preventivo" e "Componente para um único uso" (seção 9), "YAGNI vence sofisticação" (seção 10) e um comentário de `DESIGN-IMPLEMENTATION.md` sobre `.badge--warning` ainda dizem o contrário da regra abolida. Decisão de Renan: ajustar junto com o prompt do Lote 1. [Registrado]
+
+### D-35 Layout das páginas de documentação de componentes
+- **Contexto:** as páginas novas (`docs/components/*.html` e a página de review) tinham muita informação e margens largas. Renan preferiu o visual da `design-system.html`, principalmente o menu lateral. [Registrado]
+- **Decisões de Renan:** uma página por componente (separar em páginas facilita organização e manutenção); conteúdo mínimo na versão inicial: título e descrição, Live example, HTML revelado por botão e informação essencial. As seções "Figma vs code", "In Figma no code yet", "In code no Figma" e "Known gaps" deixam de ser exibidas e continuam só nos dados (`components-content.json`, `components-code-notes.json`). [Registrado]
+- **Levantamento do Prompt 18:** nenhuma das seis seções cortadas é exigida por `docs:check` ou pelo gerador. O menu da `design-system.html` é HTML estático (`.ds-sidebar`, 220px) e o conteúdo dela tem `max-width: 960px`, então o cartão de lá também não ocupa a tela toda. O "HTML Blueprint" é um `<details>` nativo. [Registrado: relatório do Code]
+- **Erro meu:** eu tinha descrito as páginas novas como de três colunas. Eram duas, e o "On this page" ficava dentro da sidebar; a sensação de margem larga vinha de um gutter mínimo de 80px mais uma sidebar de 240px. [Registrado, correção minha]
+- **Largura da sidebar:** o Code dimensionou pelo conteúdo (cerca de 178px). Decisão de Renan: fixar um valor e não criar token por enquanto; anotar para o caso de outro ponto ser afetado (o `Layout/Sidebar` do Figma é 240 e não tem token no CSS). [Registrado]
+- **Fonte:** a definição é Plus Jakarta Sans em tudo, sem fonte mono (decisão de tipografia de 2026-11 e `--font-mono: initial`, v2.6.13). Eu havia sugerido um token mono como débito; Renan corrigiu. Ele também viu que os subtítulos da página Badge (Live example, When to use, Variants and tokens) saíram em fonte mono, o que contraria a definição. Correção e checagem no `docs:check` entram no Prompt 19. [Registrado]
+- **Aprovação:** Renan viu a página-modelo do Badge (branch `hope-docs-layout`) e aprovou o visual ("excelente"), com a correção da fonte. [Registrado]
+
+### D-36 Componente Table, definido antes das páginas de docs
+- **Contexto:** as páginas de docs usam uma tabela de variantes que existe só em `docs.css`; não há Table no Figma nem no CSS. Table e Card genérico tinham sido adiados antes. [Registrado]
+- **Posição inicial (minha):** não bloquear o Prompt 19; deixar a tabela de docs provisória e criar a Table depois. Renan discordou: o retrabalho seria maior se a definição ficasse para depois. Eu reconheci que o custo estimado do retrabalho era palpite e que as docs são o primeiro caso de uso real. A ordem passou a ser: Table no Figma, Table no CSS adotada na página Badge, depois as demais páginas. [Registrado]
+- **Pesquisa (pedida por Renan):** fontes consultadas: W3C WAI Tables, Mass.gov, Chrome Developers, W3C Design System, Primer, Polaris, Visa, Spectrum, Pajamas, Carbon, Nielsen Norman Group. Documentado: `<th>` e `<td>` com `scope` e `<caption>`; evitar células mescladas; wrapper rolável com `role="region"`, nome acessível e `tabindex="0"` para tabelas largas; numérico à direita, texto à esquerda, cabeçalho acompanhando a coluna, nunca centralizar; `border-collapse: collapse` anula `border-radius` nas células. Opinião minha, sem fonte: tirar o hover de linha (sugere interação inexistente), usar linhas de 1px em vez de hairline para não criar outra lacuna de geometria e adiar cabeçalho fixo (o sticky num wrapper com rolagem gruda no wrapper, suspeita não verificada). [Registrado para o que é documentado; Inferência para o resto]
+- **Decisões de Renan:** seguir a proposta revisada: escopo mínimo (Table, Table Header Cell, Table Cell, legenda opcional), sem ordenação, seleção, hover de linha, cabeçalho fixo nem zebra; só Focus no contêiner; separadores de 1px (`Stroke/thin`); raio e contorno no wrapper e não na `table`; rolagem horizontal em telas estreitas, sem versão em cards; pasta "Overlays and data". [Registrado]
+- **Construído no Figma (Core, página "└ Table"):** Table Header Cell (Align Left e Right), Table Cell (Type Data e Row header, Align Left e Right), Table (State Default e Focus, propriedade booleana Caption). Medidas: grid 640 x 231 com cinco linhas; legenda, cabeçalho e linhas com dados 46px, última linha 45px; células 45px com padding 12/16 e body-sm 13px a 160%. [Registrado: leitura do Figma]
+- **Erro meu:** afirmei que não existia estilo Medium para body-sm. Eu só tinha olhado os estilos usados na página do Accordion. O Foundation tem `Body/Medium/body-sm medium` e `weight/medium`. Renan lembrou que tipografia sem vínculo com o DS dificulta a manutenção. Corrigi: cabeçalhos (de coluna e de linha) usam o estilo Medium e a página inteira tem 0 textos sem estilo vinculado. Core publicado por Renan. [Registrado]
+- **Pendente:** estilo "Inline code" (chip na fonte do corpo) para nomes de classe e tokens nas tabelas das docs; fica para quando houver necessidade fora das docs. [Registrado]
+
 ## Pendências para o case
 
 - Confirmar com Renan o motivo das decisões marcadas como Inferência.
@@ -240,3 +264,5 @@ Versão 0.10 · 2026-11-23 · Rascunho vivo, uso interno (Renan e agentes)
 - Sincronizar esta cópia com `docs/case/decisoes-hope.md` no repositório (mesclagem, não substituição).
 - Aprovação da GOVERNANCE v1.6 (D-16) e execução da divisão do CSS (D-18).
 - Modo "Neutral surface" completo e `data-surface` (D-24), adiados até o segundo caso de uso escuro ou o dark mode.
+- Verificar se a Plus Jakarta Sans tem números tabulares (`tnum`) antes de prometer `tabular-nums` na Table (D-36).
+- Resolver juntos a geometria do Badge Neutral e do Button no início do Lote 1 (D-34).

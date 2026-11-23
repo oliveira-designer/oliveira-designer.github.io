@@ -15,6 +15,7 @@ export const COMPONENT_PAGES = [
   { href: 'components/badge.html', label: 'Badge' },
   { href: 'components/link.html', label: 'Link' },
   { href: 'components/separator.html', label: 'Separator' },
+  { href: 'components/table.html', label: 'Table' },
   { href: 'components/review.html', label: 'Review (temporary)' },
 ];
 
@@ -288,7 +289,7 @@ export function indexBody(stats) {
             <h2 class="text-h2" id="pages-title">Pages</h2>
             <ul class="docs-list">
               <li><a href="tokens.html">Tokens</a>: ${stats.tokens} tokens with Light and Dark values, ${stats.unused} flagged as unused. Figma sync: ${esc(stats.figma)}.</li>
-              <li><a href="components/index.html">Components</a>: Button (with Icon Button), Badge, Link and Separator, documented as they are in Figma and in code today. Run <code>npm run docs:components</code> to regenerate.</li>
+              <li><a href="components/index.html">Components</a>: Button (with Icon Button), Badge, Link, Separator and Table, documented as they are in Figma and in code today. Run <code>npm run docs:components</code> to regenerate.</li>
             </ul>
           </section>
 

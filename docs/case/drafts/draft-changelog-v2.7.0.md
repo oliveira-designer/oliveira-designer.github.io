@@ -88,6 +88,17 @@
 **22. Diário de decisões v0.10**
 - `docs/case/decisoes-hope.md` atualizado (D-01 a D-33), substituindo a versão anterior sem mesclar.
 
+**23. Componente Table (CSS) e página de docs**
+- `css/components/table.css`: `.data-table` (wrapper com borda, raio, fundo, rolagem horizontal e anel de foco), `.data-table__grid`, `.data-table__caption` (e `--hidden`), `.data-table__head-cell`, `.data-table__row-header`, `.data-table__cell` e os modificadores `--end` para colunas numéricas (`text-align: end` e números tabulares). O bloco se chama `data-table` porque o Tailwind já traz um utilitário `.table`. Só tokens existentes; sem zebra, hover de linha, cabeçalho fixo, ordenação ou seleção. Contrato de marcação: wrapper `role="region"` com `aria-labelledby` e `tabindex="0"`, legenda, `th scope`, sem `rowspan` nem `colspan`.
+- Figma a CSS: 3 unidades e 8 variantes (Table 2, Table Header Cell 2, Table Cell 4), todas com CSS. Cobertura total: 52 de 179 variantes com CSS (eram 44 de 171). Nova página `docs/components/table.html` e a tabela de variantes da página Badge passa a usar o Table do Hope.
+
+**24. Docs: layout modelo, fonte e verificação**
+- Página Badge com o layout `ds` (menu lateral no padrão da `design-system.html`, cartão de exemplo, HTML revelado por `<details>`). Menu lateral com largura fixa de 184px, sem token.
+- Nenhuma pilha de fonte mono existia em `docs.css`, nos geradores ou nas páginas; `code`, `pre`, `kbd` e `samp` das docs agora declaram `var(--font-body)`, e o `docs:check` falha se aparecer uma pilha mono nesses arquivos.
+
+**25. Diário de decisões v0.11**
+- `docs/case/decisoes-hope.md` atualizado (D-01 a D-36), substituindo a versão anterior sem mesclar.
+
 **Débitos**
 - Comparador de tokens: 150 iguais e 2 diferentes (`--color-bg-scrim-strong` e `--color-bg-icon-chip` no Dark, já conhecidos); nenhum token do Figma sem token no CSS.
 - `--color-text-neutral-secondary` (Night/300) tem contraste baixo sobre fundo claro; hoje sem uso.

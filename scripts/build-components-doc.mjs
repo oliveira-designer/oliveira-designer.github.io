@@ -138,7 +138,7 @@ ${inner}
    Sections
    ------------------------------------------------------------------------ */
 
-const mapKey = (comp) => ({ button: 'Button', badge: 'Badge', link: 'Link', separator: 'Separator' })[comp.slug];
+const mapKey = (comp) => ({ button: 'Button', badge: 'Badge', link: 'Link', separator: 'Separator', table: 'Table' })[comp.slug];
 const defaultLabel = (comp) => {
   const p = comp.properties.find((x) => x.type === 'text');
   return p && p.default ? p.default : comp.name;
@@ -437,52 +437,65 @@ function codeRefSection(comp) {
    ------------------------------------------------------------------------ */
 
 /* ---------------------------------------------------------------------------
-   Model layout (Badge first): title, live example card, HTML code revealed by a
-   native <details>, and compact essentials. The data files keep every other section
-   (figma vs code, gaps, references); they are just not rendered here.
+   Model layout (layout: 'ds'): title, live example card, HTML code revealed by a native
+   <details>, and compact essentials. The data files keep every other section (figma vs code,
+   gaps, references); they are just not rendered here. Used by Badge and Table.
    ------------------------------------------------------------------------ */
 
-// The custom properties a class sets, read from the component CSS so the table cannot drift.
-function tokensOf(selectorClass, file) {
+const classOfSelector = (sel) => sel.replace(/\./g, ' ').trim();
+
+// Custom properties a rule sets, read from the component CSS so the pages cannot drift.
+function ruleTokens(selectorClass, file) {
   const text = fs.readFileSync(path.join(ROOT, file), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
   const re = new RegExp('(?:^|[\\s,}])' + selectorClass.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*\\{([^}]*)\\}');
   const m = re.exec(text);
-  const out = {};
+  const out = [];
   if (m) for (const d of m[1].split(';')) {
     const [prop, val] = d.split(/:(.+)/).map((s) => (s || '').trim());
-    const v = /var\((--[a-z0-9-]+)\)/.exec(val || '');
-    if (v && (prop === 'background-color' || prop === 'color')) out[prop] = v[1];
+    for (const v of (val || '').matchAll(/var\((--[a-z0-9-]+)\)/g)) out.push([prop, v[1]]);
   }
   return out;
 }
 
-function badgeModelPage(comp) {
-  const m = map.components.Badge;
-  const variants = m.variants.filter((v) => v.selector);
-  const classOf = (v) => v.selector.replace(/\./g, ' ').trim();
-  const markup = variants.map((v) => `<span class="${classOf(v)}">${esc(v.style)}</span>`);
-  const demoHtml = markup.join('\n                  ');
-  const codeText = markup.join('\n');
-  const rows = variants.map((v) => {
-    const t = tokensOf(v.rule, 'css/components/badge.css');
-    const fig = comp.stateTokens[v.style] || {};
-    return [
-      th(esc(v.style)),
-      td(code(v.rule)),
-      td(t['background-color'] ? `${code(t['background-color'])}<span class="docs-token__note">${esc(fig.fill || '')}</span>` : '<span class="docs-muted">none</span>'),
-      td(t.color ? `${code(t.color)}<span class="docs-token__note">${esc(fig.text || '')}</span>` : '<span class="docs-muted">none</span>'),
-    ].join('');
-  });
-  const a = comp.accessibility;
-  const firstSentence = (s) => (s.match(/^.*?\.(?=\s|$)/) || [s])[0];
-  const body = `          <header class="docs-ds-head">
-            <h1 class="text-h1">${esc(comp.name)}</h1>
-            <p class="docs-ds-desc">${esc(comp.summary)}</p>
-          </header>
+const tokensOf = (selectorClass, file) => {
+  const out = {};
+  for (const [prop, v] of ruleTokens(selectorClass, file)) if (prop === 'background-color' || prop === 'color') out[prop] = v;
+  return out;
+};
 
-          <section class="docs-ds-section" id="example" aria-labelledby="example-title">
-            <h2 class="text-label text-tertiary" id="example-title">Live example</h2>
-            <div class="docs-ds-card">
+// Hope Table markup (css/components/table.css). cols: [{ label, end }]; rows: arrays of HTML cells, the
+// first cell of every row is the row header. Returns indented markup, used for the page and the code block.
+function hopeTableMarkup({ id, caption, cols, rows }) {
+  const L = [];
+  L.push(`<div class="data-table" role="region" aria-labelledby="${id}" tabindex="0">`);
+  L.push('  <table class="data-table__grid">');
+  L.push(`    <caption class="data-table__caption" id="${id}">${esc(caption)}</caption>`);
+  L.push('    <thead>', '      <tr>');
+  for (const c of cols) L.push(`        <th scope="col" class="data-table__head-cell${c.end ? ' data-table__head-cell--end' : ''}">${esc(c.label)}</th>`);
+  L.push('      </tr>', '    </thead>', '    <tbody>');
+  for (const r of rows) {
+    L.push('      <tr>');
+    r.forEach((cell, i) => {
+      if (i === 0) L.push(`        <th scope="row" class="data-table__row-header">${cell}</th>`);
+      else L.push(`        <td class="data-table__cell${cols[i].end ? ' data-table__cell--end' : ''}">${cell}</td>`);
+    });
+    L.push('      </tr>');
+  }
+  L.push('    </tbody>', '  </table>', '</div>');
+  return L.join('\n');
+}
+
+const NL = String.fromCharCode(10);
+const indentBlock = (text, pad) => text.split(NL).join(NL + pad);
+
+const modelSection = (id, title, inner) => `          <section class="docs-ds-section" id="${id}" aria-labelledby="${id}-title">
+            <h2 class="text-label text-tertiary" id="${id}-title">${title}</h2>
+            ${inner}
+          </section>`;
+
+// demoHtml: the live markup; codeText: the same markup as raw HTML for the code block.
+function modelExample(demoHtml, codeText) {
+  return modelSection('example', 'Live example', `<div class="docs-ds-card">
               <div class="docs-ds-preview">
                 <!-- demo:start -->${demoHtml}<!-- demo:end -->
               </div>
@@ -490,28 +503,90 @@ function badgeModelPage(comp) {
             <details class="docs-ds-code">
               <summary>HTML</summary>
 <pre class="docs-ds-code__block">${esc(codeText)}</pre>
-            </details>
-          </section>
+            </details>`);
+}
 
-          <section class="docs-ds-section" id="when" aria-labelledby="when-title">
-            <h2 class="text-label text-tertiary" id="when-title">When to use</h2>
-            ${list(comp.whenToUse).replace('class="docs-list"', 'class="docs-ds-list"')}
-          </section>
+function modelPage(comp, { demoHtml, codeText, sections }) {
+  const body = `          <header class="docs-ds-head">
+            <h1 class="text-h1">${esc(comp.name)}</h1>
+            <p class="docs-ds-desc">${esc(comp.summary)}</p>
+          </header>
 
-          <section class="docs-ds-section" id="variants" aria-labelledby="variants-title">
-            <h2 class="text-label text-tertiary" id="variants-title">Variants and tokens</h2>
-            ${table(['Style', 'Class', 'Fill', 'Text'], rows)}
-          </section>
+${modelExample(demoHtml, codeText)}
 
-          <section class="docs-ds-section" id="accessibility" aria-labelledby="accessibility-title">
-            <h2 class="text-label text-tertiary" id="accessibility-title">Accessibility</h2>
-            <p class="docs-ds-note">${esc(firstSentence(a.note))} ${esc(a.meaning)}</p>
-          </section>`;
+${sections.join(NL + NL)}`;
   return renderPage({ title: comp.name, activeHref: `components/${comp.slug}.html`, base: BASE, body, layout: 'ds' });
+}
+
+const modelList = (items) => list(items).replace('class="docs-list"', 'class="docs-ds-list"');
+const firstSentence = (s) => (s.match(/^.*?\.(?=\s|$)/) || [s])[0];
+
+function badgeModelPage(comp) {
+  const m = map.components.Badge;
+  const variants = m.variants.filter((v) => v.selector);
+  const markup = variants.map((v) => `<span class="${classOfSelector(v.selector)}">${esc(v.style)}</span>`);
+  const rows = variants.map((v) => {
+    const t = tokensOf(v.rule, 'css/components/badge.css');
+    const fig = comp.stateTokens[v.style] || {};
+    const cell = (tok, name) => (tok ? `${code(tok)}<span class="docs-token__note">${esc(name || '')}</span>` : '<span class="docs-muted">none</span>');
+    return [esc(v.style), code(v.rule), cell(t['background-color'], fig.fill), cell(t.color, fig.text)];
+  });
+  const variantsTable = hopeTableMarkup({
+    id: 'badge-variants-caption',
+    caption: 'Badge styles, the CSS class of each and the tokens it uses',
+    cols: [{ label: 'Style' }, { label: 'Class' }, { label: 'Fill' }, { label: 'Text' }],
+    rows,
+  });
+  const a = comp.accessibility;
+  return modelPage(comp, {
+    demoHtml: markup.join(NL + '                  '),
+    codeText: markup.join(NL),
+    sections: [
+      modelSection('when', 'When to use', modelList(comp.whenToUse)),
+      modelSection('variants', 'Variants and tokens', variantsTable),
+      modelSection('accessibility', 'Accessibility', `<p class="docs-ds-note">${esc(firstSentence(a.note))} ${esc(a.meaning)}</p>`),
+    ],
+  });
+}
+
+function tableModelPage(comp) {
+  const mp = map.components;
+  const rows = ['Button', 'Badge', 'Link', 'Separator'].map((k) => [esc(k), String(mp[k].figmaVariants), mp[k].implemented === mp[k].figmaVariants ? 'Complete' : 'Partial']);
+  const sample = hopeTableMarkup({
+    id: 'table-example-caption',
+    caption: 'Components documented so far and their variants',
+    cols: [{ label: 'Component' }, { label: 'Variants', end: true }, { label: 'Status' }],
+    rows,
+  });
+  // Class and token list read from table.css.
+  const cssText = fs.readFileSync(path.join(ROOT, 'css/components/table.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const classes = [...new Set([...cssText.matchAll(/\.(data-table[a-z_-]*)/g)].map((x) => '.' + x[1]))];
+  const classRows = classes.map((c) => {
+    const toks = [...new Set(ruleTokens(c, 'css/components/table.css').map((x) => x[1]))];
+    const tokenCell = toks.length ? toks.map((t) => code(t)).join(' ') : '<span class="docs-muted">none</span>';
+    return [code(c), esc(comp.classRoles[c] || ''), tokenCell];
+  });
+  const classTable = hopeTableMarkup({
+    id: 'table-classes-caption',
+    caption: 'Table classes, what each is for and the tokens its rule uses',
+    cols: [{ label: 'Class' }, { label: 'Used for' }, { label: 'Tokens' }],
+    rows: classRows,
+  });
+  return modelPage(comp, {
+    demoHtml: indentBlock(sample, '                  '),
+    codeText: sample,
+    sections: [
+      modelSection('when', 'When to use', modelList(comp.whenToUse)),
+      modelSection('classes', 'Classes and tokens', classTable),
+      modelSection('contract', 'Markup contract', modelList(comp.contract)),
+      modelSection('accessibility', 'Accessibility', `<p class="docs-ds-note">${esc(comp.accessibility.note)}</p>`),
+    ],
+  });
 }
 
 function componentPage(comp) {
   if (comp.slug === 'badge') return badgeModelPage(comp);
+  if (comp.slug === 'table') return tableModelPage(comp);
   const sections = [
     ['summary', 'Summary', summarySection(comp)],
     ['usage', 'When to use', usageSection(comp)],
@@ -593,7 +668,7 @@ function indexPage(components) {
     add(comp.name, `${comp.slug}.html`, mapKey(comp), comp);
     if (comp.slug === 'button') add('Icon Button', 'button.html#icon-button', 'IconButton', null, 'section of the Button page');
   }
-  const documented = ['Button', 'IconButton', 'Badge', 'Link', 'Separator'].map((k) => map.components[k]);
+  const documented = ['Button', 'IconButton', 'Badge', 'Link', 'Separator', 'Table', 'TableHeaderCell', 'TableCell'].map((k) => map.components[k]);
   const total = documented.reduce((n, c) => n + c.figmaVariants, 0);
   const impl = documented.reduce((n, c) => n + c.implemented, 0);
   const figmaOnly = figmaOnlyComponents();
@@ -601,7 +676,7 @@ function indexPage(components) {
   const body = `          <header class="docs-pagehead">
             <p class="text-label text-tertiary">Components</p>
             <h1 class="text-h1">Components</h1>
-            <p class="text-body text-secondary docs-lead">Button (with Icon Button), Badge, Link and Separator, documented as they are in Figma and in code today. ${impl} of ${total} Figma variants have a CSS class. Where Figma and the CSS disagree, each page lists the difference with its class (Bloqueia, Atencao, Informativo) and leaves the decision to the owner.</p>
+            <p class="text-body text-secondary docs-lead">Button (with Icon Button), Badge, Link, Separator and Table, documented as they are in Figma and in code today. ${impl} of ${total} Figma variants have a CSS class. Where Figma and the CSS disagree, each page lists the difference with its class (Bloqueia, Atencao, Informativo) and leaves the decision to the owner.</p>
           </header>
 
           <section class="docs-section" id="components" aria-labelledby="components-title">
@@ -643,7 +718,7 @@ function main() {
   const impl = Object.entries(map.components).map(([k, c]) => `${k} ${c.implemented}/${c.figmaVariants}`).join(', ');
   console.log(`components: ${content.components.map((c) => c.slug).join(', ')}; coverage: ${impl}`);
   const notesImpl = notes.coverage.implementedInCss;
-  const notesMap = { Button: 'Button', IconButton: 'IconButton', Badge: 'Badge', Link: 'Link', Separator: 'Separator' };
+  const notesMap = { Button: 'Button', IconButton: 'IconButton', Badge: 'Badge', Link: 'Link', Separator: 'Separator', Table: 'Table', TableHeaderCell: 'TableHeaderCell', TableCell: 'TableCell' };
   for (const [k, nk] of Object.entries(notesMap)) {
     if (notesImpl[nk] !== map.components[k].implemented) console.warn(`coverage differs for ${k}: components-code-notes.json says ${notesImpl[nk]}, components-map.json says ${map.components[k].implemented} (map used)`);
   }
