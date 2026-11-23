@@ -1,28 +1,45 @@
 /* Hope DS: css/components/banner.css
-   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
-   Edit this file, then run: npm run css:build */
+   Figma: Core, Banner (Type Notice). A brand strip, not a status: statuses use the Alert.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/banner.html):
+     <div class="banner">
+       <span class="banner__icon" aria-hidden="true">🚧</span>           optional, decorative
+       <span class="banner__text">Text</span>
+     </div>
+   The emoji uses the same text style as the text (Figma styles it with Link/link-xs bold, which looks accidental;
+   recorded as a gap). The width is fluid (Figma shows 1206). */
 
 /* ----------------------------------------------------------
    BANNER
+   No border in Figma, so there is nothing to discount from the padding.
    ---------------------------------------------------------- */
 .banner {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-bg-accent-secondary);
   border-radius: var(--radius-md);
+  color: var(--color-text-accent-default);
   font-size: var(--fs-body-sm);
   font-family: var(--font-body);
-  line-height: 1.4;
+  font-weight: 500;
+  line-height: 1.6;
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: var(--space-6);
 }
 
+/* Legacy site modifier (case-studies/sb-home-redesign.html): it keeps the look the site has always had, so the page
+   does not change. It is not a Figma variant. */
 .banner--wip {
+  padding: var(--space-3) var(--space-6);
+  margin-bottom: var(--space-6);
   background-color: var(--color-bg-accent-tertiary);
   color: var(--color-dusk);
   border: 1px solid var(--color-amber);
+  font-weight: inherit;
+  line-height: 1.4;
 }
 
 [data-theme="dark"] .banner--wip {
@@ -33,6 +50,9 @@
 
 .banner__icon {
   flex-shrink: 0;
+}
+
+.banner--wip .banner__icon {
   font-size: var(--fs-body);
 }
 
