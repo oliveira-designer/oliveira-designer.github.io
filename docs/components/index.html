@@ -77,51 +77,87 @@
     </header>
 
   <main id="main" class="docs-main">
-    <div class="container">
-      <div class="case-layout">
-        <aside class="case-sidebar">
-          <nav class="case-toc" aria-label="Docs pages">
-            <p class="case-toc__label">Pages</p>
-            <ol class="case-toc__list">
-              <li class="case-toc__item"><a class="case-toc__link" href="../index.html">Overview</a></li>
-              <li class="case-toc__item"><a class="case-toc__link" href="../tokens.html">Tokens</a></li>
-              <li class="case-toc__item"><a class="case-toc__link is-active" href="../components/index.html" aria-current="page">Components</a></li>
-            </ol>
-            <p class="case-toc__label">Components</p>
-            <ol class="case-toc__list">
-              <li class="case-toc__item"><a class="case-toc__link" href="../components/button.html">Button</a></li>
-              <li class="case-toc__item"><a class="case-toc__link" href="../components/badge.html">Badge</a></li>
-              <li class="case-toc__item"><a class="case-toc__link" href="../components/link.html">Link</a></li>
-              <li class="case-toc__item"><a class="case-toc__link" href="../components/separator.html">Separator</a></li>
-              <li class="case-toc__item"><a class="case-toc__link" href="../components/table.html">Table</a></li>
-              <li class="case-toc__item"><a class="case-toc__link" href="../components/review.html">Review (temporary)</a></li>
-            </ol>
-            <p class="case-toc__label">On this page</p>
-            <ol class="case-toc__list">
-              <li class="case-toc__item"><a class="case-toc__link" href="#components">Documented components</a></li>
-              <li class="case-toc__item"><a class="case-toc__link" href="#figma-only">In Figma, no code yet</a></li>
-            </ol>
+    <div class="docs-ds-layout">
+        <aside class="docs-ds-sidebar">
+          <nav aria-label="Docs pages">
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Pages</p>
+              <a class="docs-ds-nav__link" href="../index.html">Overview</a>
+              <a class="docs-ds-nav__link" href="../tokens.html">Tokens</a>
+              <a class="docs-ds-nav__link" href="../components/index.html" aria-current="page">Components</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Components</p>
+              <a class="docs-ds-nav__link" href="../components/button.html">Button</a>
+              <a class="docs-ds-nav__link" href="../components/badge.html">Badge</a>
+              <a class="docs-ds-nav__link" href="../components/link.html">Link</a>
+              <a class="docs-ds-nav__link" href="../components/separator.html">Separator</a>
+              <a class="docs-ds-nav__link" href="../components/table.html">Table</a>
+              <a class="docs-ds-nav__link" href="../components/review.html">Review (temporary)</a>
+            </div>
           </nav>
         </aside>
-        <div class="docs-content">
-          <header class="docs-pagehead">
-            <p class="text-label text-tertiary">Components</p>
+        <div class="docs-ds-content">
+          <header class="docs-ds-head">
             <h1 class="text-h1">Components</h1>
-            <p class="text-body text-secondary docs-lead">Button (with Icon Button), Badge, Link, Separator and Table, documented as they are in Figma and in code today. 50 of 58 Figma variants have a CSS class. Where Figma and the CSS disagree, each page lists the difference with its class (Bloqueia, Atencao, Informativo) and leaves the decision to the owner.</p>
+            <p class="docs-ds-desc">One page per component, generated from the data files in docs/data. Each page shows a live example built with the real CSS, its HTML, and the essential usage info.</p>
           </header>
 
-          <section class="docs-section" id="components" aria-labelledby="components-title">
-            <h2 class="text-h2" id="components-title">Documented components</h2>
-            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Component</th><th scope="col">Variants in Figma</th><th scope="col">Variants in code</th><th scope="col">Differences</th><th scope="col">Known gaps</th></tr></thead><tbody><tr><th scope="row"><a href="button.html">Button</a></th><td><span class="badge badge--anchor">28</span></td><td><span class="badge badge--success">28 of 28</span></td><td><span class="badge badge--solar">0 Atencao</span> <span class="badge badge--neutral">2 Informativo</span></td><td><span class="badge badge--neutral">5</span></td></tr><tr><th scope="row"><a href="button.html#icon-button">Icon Button</a> <span class="docs-muted">section of the Button page</span></th><td><span class="badge badge--anchor">8</span></td><td><span class="badge badge--neutral">0 of 8</span></td><td><span class="badge badge--solar">0 Atencao</span> <span class="badge badge--neutral">0 Informativo</span></td><td><span class="docs-muted">in the Button page</span></td></tr><tr><th scope="row"><a href="badge.html">Badge</a></th><td><span class="badge badge--anchor">5</span></td><td><span class="badge badge--success">5 of 5</span></td><td><span class="badge badge--solar">0 Atencao</span> <span class="badge badge--neutral">2 Informativo</span></td><td><span class="badge badge--neutral">0</span></td></tr><tr><th scope="row"><a href="link.html">Link</a></th><td><span class="badge badge--anchor">8</span></td><td><span class="badge badge--success">8 of 8</span></td><td><span class="badge badge--solar">1 Atencao</span> <span class="badge badge--neutral">0 Informativo</span></td><td><span class="badge badge--neutral">2</span></td></tr><tr><th scope="row"><a href="separator.html">Separator</a></th><td><span class="badge badge--anchor">1</span></td><td><span class="badge badge--success">1 of 1</span></td><td><span class="badge badge--solar">0 Atencao</span> <span class="badge badge--neutral">0 Informativo</span></td><td><span class="badge badge--neutral">0</span></td></tr><tr><th scope="row"><a href="table.html">Table</a></th><td><span class="badge badge--anchor">2</span></td><td><span class="badge badge--success">2 of 2</span></td><td><span class="badge badge--solar">0 Atencao</span> <span class="badge badge--neutral">1 Informativo</span></td><td><span class="badge badge--neutral">0</span></td></tr></tbody></table></div>
-          </section>
-
-          <section class="docs-section" id="figma-only" aria-labelledby="figma-only-title">
-            <h2 class="text-h2" id="figma-only-title">In Figma, no code yet</h2>
-            <p class="docs-section__desc">Components that exist in Figma and have no CSS. From <code>design-organization/DESIGN.md</code>. They enter the docs when they are implemented, in batches by family (GOVERNANCE v1.6). No pages.</p>
-            <div class="docs-table-wrap"><table class="docs-table docs-table--compact"><thead><tr><th scope="col">Component</th><th scope="col">Group</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Checkbox</th><td>Forms</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Radio</th><td>Forms</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Switch</th><td>Forms</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Textarea</th><td>Forms</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Select (closed trigger)</th><td>Forms</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Alert</th><td>Feedback</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Toast</th><td>Feedback</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Tooltip</th><td>Feedback</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Progress</th><td>Feedback</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Spinner</th><td>Feedback</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Skeleton</th><td>Feedback</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Empty state</th><td>Feedback</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Tabs</th><td>Navigation</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Breadcrumb</th><td>Navigation</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Pagination</th><td>Navigation</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Menu</th><td>Navigation</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Modal</th><td>Overlays and data</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Popover</th><td>Overlays and data</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Avatar</th><td>Overlays and data</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Tag</th><td>Overlays and data</td><td><span class="badge badge--neutral">no CSS</span></td></tr><tr><th scope="row">Accordion</th><td>Overlays and data</td><td><span class="badge badge--neutral">no CSS</span></td></tr></tbody></table></div>
+          <section class="docs-ds-section" id="pages" aria-labelledby="pages-title">
+            <h2 class="text-label text-tertiary" id="pages-title">Pages</h2>
+            <div class="data-table" role="region" aria-labelledby="components-index-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="components-index-caption">Component pages, Figma variants, variants with CSS and status</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Component</th>
+        <th scope="col" class="data-table__head-cell data-table__head-cell--end">Figma variants</th>
+        <th scope="col" class="data-table__head-cell data-table__head-cell--end">In code</th>
+        <th scope="col" class="data-table__head-cell">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header"><a href="button.html">Button</a></th>
+        <td class="data-table__cell data-table__cell--end">28</td>
+        <td class="data-table__cell data-table__cell--end">28</td>
+        <td class="data-table__cell">Complete</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><a href="badge.html">Badge</a></th>
+        <td class="data-table__cell data-table__cell--end">5</td>
+        <td class="data-table__cell data-table__cell--end">5</td>
+        <td class="data-table__cell">Complete</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><a href="link.html">Link</a></th>
+        <td class="data-table__cell data-table__cell--end">8</td>
+        <td class="data-table__cell data-table__cell--end">8</td>
+        <td class="data-table__cell">Complete</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><a href="separator.html">Separator</a></th>
+        <td class="data-table__cell data-table__cell--end">1</td>
+        <td class="data-table__cell data-table__cell--end">1</td>
+        <td class="data-table__cell">Complete</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><a href="table.html">Table</a></th>
+        <td class="data-table__cell data-table__cell--end">8</td>
+        <td class="data-table__cell data-table__cell--end">8</td>
+        <td class="data-table__cell">Complete</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><a href="review.html">Review (temporary)</a></th>
+        <td class="data-table__cell data-table__cell--end"></td>
+        <td class="data-table__cell data-table__cell--end"></td>
+        <td class="data-table__cell">Temporary page</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
           </section>
         </div>
-      </div>
     </div>
   </main>
 

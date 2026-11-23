@@ -23,6 +23,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderPage, esc } from './docs-layout.mjs';
+import { hopeTable } from './docs-kit.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'docs', 'data');
@@ -60,7 +61,6 @@ const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(
 const code = (v) => `<code>${esc(v)}</code>`;
 const figmaUrl = (fileKey, id) => `https://www.figma.com/design/${fileKey}?node-id=${String(id).replace(/:/g, '-')}`;
 
-const head = (cols) => `<thead><tr>${cols.map((c) => `<th scope="col">${c}</th>`).join('')}</tr></thead>`;
 
 function validate(inv, map, sources) {
   const errors = [];
@@ -265,11 +265,30 @@ function main() {
   );
 
   const badgeFor = { Complete: 'badge--success', Partial: 'badge--solar', 'Not created': 'badge--neutral' };
-  const tableRows = rows.map(
-    ({ u, cov }) =>
-      `                  <tr data-unit-row="${esc(u.name)}"><td>${esc(u.group)}</td><th scope="row"><a href="#unit-${slug(u.name)}">${esc(u.name)}</a></th><td>${u.variants}</td><td>${cov.css}</td><td><span class="badge ${badgeFor[cov.status]}">${cov.status}</span></td><td>${u.buildAfter && u.buildAfter.length ? esc(u.buildAfter.join(', ')) : '<span class="docs-muted">none</span>'}</td><td><a href="${figmaUrl(inv.source.fileKey, u.id)}" rel="noopener noreferrer">${esc(u.id)}</a></td></tr>`
-  );
-  const totalsRow = `                  <tr class="docs-row--total" data-totals-row><th scope="row">Total</th><td>${tot.units} components</td><td>${tot.figma}</td><td>${tot.css}</td><td>${tot.Complete} Complete, ${tot.Partial} Partial, ${tot['Not created']} Not created</td><td><span class="docs-muted">suggestion, not a Figma fact</span></td><td></td></tr>`;
+  // Hope Table: the unit is the row header; rows keep the data attributes docs:check counts.
+  const tableRows = rows.map(({ u, cov }) => ({
+    attrs: `data-unit-row="${esc(u.name)}"`,
+    cells: [
+      `<a href="#unit-${slug(u.name)}">${esc(u.name)}</a>`,
+      esc(u.group),
+      String(u.variants),
+      String(cov.css),
+      `<span class="badge ${badgeFor[cov.status]}">${cov.status}</span>`,
+      u.buildAfter && u.buildAfter.length ? esc(u.buildAfter.join(', ')) : '<span class="docs-muted">none</span>',
+      `<a href="${figmaUrl(inv.source.fileKey, u.id)}" rel="noopener noreferrer">${esc(u.id)}</a>`,
+    ],
+  }));
+  const totalsRow = {
+    attrs: 'class="docs-row--total" data-totals-row',
+    cells: ['Total', `${tot.units} components`, String(tot.figma), String(tot.css), `${tot.Complete} Complete, ${tot.Partial} Partial, ${tot['Not created']} Not created`, '<span class="docs-muted">suggestion, not a Figma fact</span>', ''],
+  };
+  const stillTable = hopeTable({
+    id: 'still-to-create-caption',
+    caption: 'Every Figma unit with its CSS coverage and status',
+    hidden: true,
+    cols: [{ label: 'Component' }, { label: 'Group' }, { label: 'Figma variants', end: true }, { label: 'CSS variants', end: true }, { label: 'Status' }, { label: 'Suggested build after' }, { label: 'Figma node id' }],
+    rows: [...tableRows, totalsRow],
+  });
 
   const notStaticHtml = ctx.notStatic.length
     ? `<ul class="docs-list">${ctx.notStatic.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`
@@ -299,24 +318,11 @@ ${groupHtml.join('\n')}
           <section class="docs-section" id="still-to-create" aria-labelledby="still-to-create-title">
             <h2 class="text-h2" id="still-to-create-title">Still to create</h2>
             <p class="docs-section__desc">Generated from the inventory and <code>components-map.json</code>. Status is Not created (no CSS variant), Partial (some) or Complete (all Figma variants have a CSS class). "Suggested build after" is the inventory's <code>buildAfter</code>, a suggestion and not a Figma fact.</p>
-            <div class="docs-table-wrap">
-              <table class="docs-table docs-table--compact" id="still-to-create-table">
-                ${head(['Group', 'Component', 'Figma variants', 'CSS variants', 'Status', 'Suggested build after', 'Figma node id'])}
-                <tbody>
-${tableRows.join('\n')}
-${totalsRow}
-                </tbody>
-              </table>
-            </div>
+            ${stillTable}
           </section>`;
 
-  const onThisPage = [
-    ...groups.map((g) => ({ id: `group-${slug(g)}`, label: g })),
-    { id: 'not-static', label: 'States not shown statically' },
-    { id: 'still-to-create', label: 'Still to create' },
-  ];
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
-  fs.writeFileSync(OUT, renderPage({ title: 'Component review', activeHref: 'components/review.html', base: BASE, onThisPage, body, stylesheets: sources.sources }));
+  fs.writeFileSync(OUT, renderPage({ title: 'Component review', activeHref: 'components/review.html', base: BASE, body, stylesheets: sources.sources }));
   console.log(`review: ${tot.units} units, ${tot.figma} Figma variants, ${tot.css} CSS variants; Complete ${tot.Complete}, Partial ${tot.Partial}, Not created ${tot['Not created']}`);
   console.log(`stylesheets: ${sources.sources.join(', ')}`);
   console.log(`states not shown statically: ${ctx.notStatic.length}; CSS not rendered: ${ctx.noRenderer.length}`);
