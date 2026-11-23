@@ -11,9 +11,9 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   font-weight: 500;
-  padding: 3px 10px;
+  padding: var(--space-1) var(--space-3);  /* Figma: 4px 12px */
   border-radius: var(--radius-pill);
-  line-height: 1.5;
+  line-height: 1.6;                         /* Figma: 160%, one line is 29px high */
 }
 
 .badge--neutral {
@@ -32,11 +32,10 @@
   color: var(--color-text-accent-default);
 }
 
-/* Success is 12% and Danger 10% on purpose (D-32). The Danger fill uses the Figma
-   token, which already carries the alpha. Success keeps its literal so design-system.html
-   does not change in Dark (the token is solid there); see the Lote 0 report. */
+/* Success (12% in Light) and Danger (10% in Light) get their alpha from the Figma
+   tokens, which are solid in Dark. */
 .badge--success {
-  background-color: rgba(74, 159, 107, 0.12);
+  background-color: var(--color-bg-positive-secondary);
   color: var(--color-text-positive-default);
 }
 
