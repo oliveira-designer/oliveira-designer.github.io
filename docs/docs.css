@@ -6,15 +6,8 @@
    ============================================================ */
 
 .docs-main {
-  padding-top: calc(var(--header-height) + var(--space-12));
-  padding-bottom: var(--space-24);
-}
-
-.docs-content {
-  min-width: 0; /* let wide tables scroll inside their wrapper */
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-section);
+  padding-top: var(--header-height);
+  padding-bottom: 0;
 }
 
 .docs-pagehead {
@@ -49,7 +42,7 @@
   color: var(--color-text-2);
 }
 
-.docs-content a:where(:not(.link)) { /* .link is the Link component in the live demos: it keeps its own colour */
+.docs-ds-content a:where(:not(.link)) { /* .link is the Link component in the live demos: it keeps its own colour */
   color: var(--color-text-brand-default);
   text-decoration: underline;
 }
@@ -68,48 +61,6 @@
 }
 
 /* ---- Token tables ---- */
-.docs-table-wrap {
-  overflow-x: auto;
-  border: var(--border-normal);
-  border-radius: var(--radius-md);
-  background: var(--color-bg);
-}
-
-.docs-table {
-  width: 100%;
-  min-width: 56rem;
-  border-collapse: collapse;
-  font-size: var(--fs-body-sm);
-  line-height: 1.6;
-}
-
-.docs-table th,
-.docs-table td {
-  text-align: left;
-  vertical-align: top;
-  padding: var(--space-3) var(--space-4);
-  border-bottom: var(--border-thin);
-}
-
-.docs-table tbody tr:last-child th,
-.docs-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.docs-table thead th {
-  background: var(--color-bg-alt);
-  font-size: var(--fs-label);
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-3);
-}
-
-.docs-table tbody th {
-  font-weight: 600;
-  color: var(--color-text-1);
-}
-
 .docs-token__meta {
   display: flex;
   flex-wrap: wrap;
@@ -155,11 +106,6 @@
 
 /* Swatches: the fill is the resolved color, set inline as data. The
    checkerboard behind it shows transparency. */
-.docs-swatches {
-  display: flex;
-  gap: var(--space-2);
-}
-
 .docs-swatch {
   position: relative;
   display: inline-block;
@@ -206,10 +152,6 @@
 }
 
 /* ---- Figma comparison ---- */
-.docs-table--compact {
-  min-width: 0;
-}
-
 .docs-status--mismatch {
   background: var(--color-bg-danger-secondary);
   color: var(--color-text-danger-default);
@@ -266,24 +208,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-}
-
-.docs-cols {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: var(--space-8);
-}
-
-.docs-cols > div {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.docs-demo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  gap: var(--space-4);
 }
 
 .docs-demo {
@@ -410,16 +334,11 @@
 }
 
 /* ============================================================
-   Model layout (layout: 'ds'): the visual language of design-system.html.
+   Page layout: the visual language of design-system.html.
    Full width (no container gutters), grouped side menu, card with the live
-   example, code revealed by a native <details>. Used by the Badge page first.
+   example, code revealed by a native <details>. Used by every docs page.
    Hope tokens only. The side menu width is the one fixed literal (see .docs-ds-layout).
    ============================================================ */
-.docs-main.docs-main--ds {
-  padding-top: var(--header-height);
-  padding-bottom: 0;
-}
-
 .docs-ds-layout {
   display: grid;
   /* Fixed side menu width, hard-coded once (owner decision, no token): 184px is what the content-sized column
@@ -582,13 +501,15 @@
   .docs-ds-content { padding: var(--space-6); }
 }
 
-/* Tables of the model layout scroll inside their wrapper on narrow screens instead of breaking class names. */
-.docs-ds-section .docs-table code {
-  white-space: nowrap;
-  overflow-wrap: normal;
-}
 
 /* A Table in the example card uses the full card width (flex items otherwise shrink to their content). */
 .docs-ds-preview > .data-table {
   flex: 1 1 100%;
+}
+
+/* Color cell of the tokens tables: decorative swatch and the text value together. */
+.docs-colorcell {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
 }
