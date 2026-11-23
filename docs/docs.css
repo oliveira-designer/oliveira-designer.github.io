@@ -401,3 +401,181 @@
   outline: 2px solid var(--color-border-focus-ring);
   outline-offset: 2px;
 }
+
+/* ============================================================
+   Model layout (layout: 'ds'): the visual language of design-system.html.
+   Full width (no container gutters), grouped side menu, card with the live
+   example, code revealed by a native <details>. Used by the Badge page first.
+   Hope tokens only. No token exists for the side menu width, so the column is
+   sized by its content instead of a literal (reported, not invented).
+   ============================================================ */
+.docs-main.docs-main--ds {
+  padding-top: var(--header-height);
+  padding-bottom: 0;
+}
+
+.docs-ds-layout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  min-height: calc(100vh - var(--header-height));
+}
+
+.docs-ds-sidebar {
+  position: sticky;
+  top: var(--header-height);
+  height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+  border-right: var(--border-thin);
+  padding: var(--space-8) var(--space-5);
+}
+
+.docs-ds-nav__group { margin-bottom: var(--space-6); }
+
+.docs-ds-nav__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-3);
+  padding: 0 var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.docs-ds-nav__link {
+  display: block;
+  white-space: nowrap;
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition:
+    color var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+
+.docs-ds-nav__link:hover,
+.docs-ds-nav__link[aria-current="page"] {
+  color: var(--color-text-1);
+  background: var(--color-bg-alt);
+}
+
+.docs-ds-nav__link[aria-current="page"] { font-weight: 600; }
+
+.docs-ds-content {
+  min-width: 0;
+  padding: var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.docs-ds-head,
+.docs-ds-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Running text only: the card and the tables use the full width. */
+.docs-ds-desc,
+.docs-ds-note,
+.docs-ds-list {
+  max-width: 68ch;
+}
+
+.docs-ds-desc {
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+}
+
+.docs-ds-note {
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+}
+
+.docs-ds-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-left: var(--space-5);
+  list-style: disc;
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-2);
+}
+
+/* Live example card */
+.docs-ds-card {
+  border: var(--border-normal);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.docs-ds-preview {
+  padding: var(--space-8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+/* Code disclosure: native <details>, the code stays in the DOM when collapsed. */
+.docs-ds-code > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  color: var(--color-text-2);
+  cursor: pointer;
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-thin);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-alt);
+  list-style: none;
+  transition:
+    color var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+
+.docs-ds-code > summary::-webkit-details-marker { display: none; }
+.docs-ds-code > summary::before { content: '</> '; font-weight: 700; }
+.docs-ds-code > summary:hover { color: var(--color-text-1); }
+
+.docs-ds-code > summary:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+.docs-ds-code[open] > summary {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.docs-ds-code__block {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+  margin: 0;
+  padding: var(--space-6);
+  background: var(--color-bg-alt);
+  border: var(--border-thin);
+  border-top: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) var(--radius-sm);
+  color: var(--color-text-2);
+}
+
+@media (max-width: 860px) {
+  .docs-ds-layout { grid-template-columns: 1fr; }
+  .docs-ds-sidebar { display: none; }
+  .docs-ds-content { padding: var(--space-6); }
+}
+
+/* Tables of the model layout scroll inside their wrapper on narrow screens instead of breaking class names. */
+.docs-ds-section .docs-table code {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
