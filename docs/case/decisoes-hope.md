@@ -1,6 +1,6 @@
 # Hope DS: diário de decisões (material de case)
 
-Versão 0.11 · 2026-11-23 · Rascunho vivo, uso interno (Renan e agentes)
+Versão 0.12 · 2026-11-23 · Rascunho vivo, uso interno (Renan e agentes)
 
 ## Como ler este documento
 
@@ -256,6 +256,16 @@ Versão 0.11 · 2026-11-23 · Rascunho vivo, uso interno (Renan e agentes)
 - **Erro meu:** afirmei que não existia estilo Medium para body-sm. Eu só tinha olhado os estilos usados na página do Accordion. O Foundation tem `Body/Medium/body-sm medium` e `weight/medium`. Renan lembrou que tipografia sem vínculo com o DS dificulta a manutenção. Corrigi: cabeçalhos (de coluna e de linha) usam o estilo Medium e a página inteira tem 0 textos sem estilo vinculado. Core publicado por Renan. [Registrado]
 - **Pendente:** estilo "Inline code" (chip na fonte do corpo) para nomes de classe e tokens nas tabelas das docs; fica para quando houver necessidade fora das docs. [Registrado]
 
+### D-37 Páginas de docs em todos os componentes e fim do layout clássico (Prompt 20)
+- **Resultado (Code, 2026-11-23):** Button, Link e Separator ganharam página no layout novo, a página de tokens passou a usar a Table do Hope (uma tabela por grupo, colunas Token, Light, Dark, Figma, CSS e Status), o índice é gerado dos dados e o layout clássico saiu (`.docs-table`, "On this page" e classes mortas, 0 hits na busca). `design-system.html` não foi tocado. A comparação de tokens segue em 150 iguais, 2 divergências de dark conhecidas (D-05) e 0 tokens do Figma sem CSS. [Registrado: relatório do Code]
+- **Light e Dark na página de tokens:** uma coluna por tema, com swatch decorativo e valor em texto juntos. Foi recomendação minha, que Renan aceitou. A alternativa, uma tabela por tema, duplicaria as linhas. [Registrado: decisão de Renan; a comparação das opções é Inferência minha]
+- **Revelar o HTML:** o Code usou `<details>/<summary>` nativo no lugar do botão com `aria-expanded`. Motivo dele: o navegador expõe o estado, funciona sem JavaScript e não duplica ARIA (confirmado na árvore de acessibilidade). Renan viu os screenshots e aprovou. [Registrado]
+- **Página de revisão:** migrada para a Table do Hope, porque o layout clássico não podia sair sem isso. Foi escopo além do prompt e ficou aceito. [Registrado]
+- **Exemplos dirigidos por dados:** o exemplo vem das variantes do mapa que têm CSS, e o HTML do bloco de código é gerado da mesma string de marcação. Table usa uma marcação estática nos dados. [Registrado: relatório do Code]
+- **Versão 2.8.1 (PATCH):** só `docs/`, `scripts/` e `docs.css` mudaram. O Code aplicou a seção 3 do GOVERNANCE ("melhoria de documentação sem mudança técnica") e atualizou os mesmos textos de versão da 2.8.0. A 2.6.18 tinha deixado os cabeçalhos sem mudar. Minha recomendação foi manter os cabeçalhos em 2.8.1 para não ficarem diferentes do CHANGELOG, e Renan concordou. [Registrado; o motivo é Inferência minha]
+- **Sobre a "fonte mono":** a causa era o texto em caixa alta com tracking largo, não uma fonte mono, como eu tinha levantado como hipótese (D-35). Renan confirmou nos screenshots, com as web fonts carregadas. Ele prefere caixa alta só para siglas (HTML, por exemplo) e aceitou resolver isso depois, para não aumentar o escopo agora. [Registrado]
+- **Débitos que ficam:** caixa alta nos rótulos de seção dos docs (decisão de estilo a tomar); primeira coluna da página de tokens a 390px sem coluna fixa (69 a 124px, quebra nos hífens); um grupo de 20 linhas rola a 768px; id `header-height` duplicado na página de tokens (já existia na `main`); Icon Button sem página porque não tem CSS; coluna "Variants" da Table mostra 8 por somar três entradas do mapa. [Registrado: relatório do Code]
+
 ## Pendências para o case
 
 - Confirmar com Renan o motivo das decisões marcadas como Inferência.
@@ -266,3 +276,5 @@ Versão 0.11 · 2026-11-23 · Rascunho vivo, uso interno (Renan e agentes)
 - Modo "Neutral surface" completo e `data-surface` (D-24), adiados até o segundo caso de uso escuro ou o dark mode.
 - Verificar se a Plus Jakarta Sans tem números tabulares (`tnum`) antes de prometer `tabular-nums` na Table (D-36).
 - Resolver juntos a geometria do Badge Neutral e do Button no início do Lote 1 (D-34).
+- Decidir o estilo dos rótulos de seção dos docs: hoje em caixa alta com tracking largo, e Renan prefere caixa alta só para siglas (D-37).
+- Corrigir o id `header-height` duplicado na página de tokens (D-37).
