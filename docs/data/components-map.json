@@ -450,13 +450,12 @@
       "variants": [
         {
           "type": "Notice",
-          "selector": ".banner.banner--wip",
-          "rule": ".banner--wip",
-          "mechanism": "static, no states",
-          "inference": "Figma has one Banner variant (Type Notice, renamed from Warning per DESIGN.md). It is mapped to .banner--wip, the only banner modifier in the CSS. This mapping is an inference, not a Figma fact."
+          "selector": ".banner",
+          "rule": ".banner",
+          "mechanism": "static, no states"
         }
       ],
-      "note": "Added for the review page. The real markup in css/components/banner.css is .banner, .banner--wip, .banner__icon and .banner__text."
+      "note": "The Hope .banner is the Figma Notice. The site keeps a legacy .banner--wip modifier (case-studies/sb-home-redesign.html) so the page does not change."
     },
     "Lightbox": {
       "figmaVariants": 1,
@@ -1084,6 +1083,104 @@
         }
       ],
       "renderOnPage": "switch"
+    },
+    "Alert": {
+      "figmaVariants": 4,
+      "implemented": 4,
+      "base": ".alert",
+      "stateMechanisms": {
+        "hover": "not applicable, no hover change in Figma",
+        "focus": "pseudo-class :focus-visible on the action and the dismiss button, outline 2px with 2px offset",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "type": "Info",
+          "selector": ".alert.alert--info",
+          "rule": ".alert--info",
+          "mechanism": "modifier sets fill, border and icon color"
+        },
+        {
+          "type": "Success",
+          "selector": ".alert.alert--success",
+          "rule": ".alert--success",
+          "mechanism": "modifier sets fill, border and icon color"
+        },
+        {
+          "type": "Warning",
+          "selector": ".alert.alert--warning",
+          "rule": ".alert--warning",
+          "mechanism": "modifier sets fill, border and icon color"
+        },
+        {
+          "type": "Error",
+          "selector": ".alert.alert--error",
+          "rule": ".alert--error",
+          "mechanism": "modifier sets fill, border and icon color"
+        }
+      ],
+      "renderOnPage": "alert"
+    },
+    "Toast": {
+      "figmaVariants": 5,
+      "implemented": 5,
+      "base": ".toast",
+      "stateMechanisms": {
+        "hover": "not applicable, no hover change in Figma",
+        "focus": "pseudo-class :focus-visible on the action and the dismiss button, outline 2px with 2px offset",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "type": "Default",
+          "selector": ".toast.toast--default",
+          "rule": ".toast--default",
+          "mechanism": "modifier sets the icon and dismiss colors"
+        },
+        {
+          "type": "Success",
+          "selector": ".toast.toast--success",
+          "rule": ".toast--success",
+          "mechanism": "modifier sets the icon and dismiss colors"
+        },
+        {
+          "type": "Warning",
+          "selector": ".toast.toast--warning",
+          "rule": ".toast--warning",
+          "mechanism": "modifier sets the icon and dismiss colors"
+        },
+        {
+          "type": "Error",
+          "selector": ".toast.toast--error",
+          "rule": ".toast--error",
+          "mechanism": "modifier sets the icon and dismiss colors"
+        },
+        {
+          "type": "Info",
+          "selector": ".toast.toast--info",
+          "rule": ".toast--info",
+          "mechanism": "modifier sets the icon and dismiss colors"
+        }
+      ],
+      "renderOnPage": "toast"
+    },
+    "EmptyState": {
+      "figmaVariants": 1,
+      "implemented": 1,
+      "base": ".empty-state",
+      "stateMechanisms": {
+        "hover": "not applicable, no hover change in Figma",
+        "focus": "pseudo-class :focus-visible on the action and the dismiss button, outline 2px with 2px offset",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "selector": ".empty-state",
+          "rule": ".empty-state",
+          "mechanism": "static, no states"
+        }
+      ],
+      "renderOnPage": "empty-state"
     }
   },
   "codeOnly": [
@@ -1099,6 +1196,11 @@
     {
       "selector": ".testimonial-card__profile-link",
       "component": "Link"
+    },
+    {
+      "selector": ".banner--wip",
+      "component": "Banner",
+      "assignment": "legacy site modifier, not a Figma variant"
     }
   ]
 }

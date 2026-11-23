@@ -369,11 +369,6 @@
       "text": "Figma draws the field 44 high; the CSS renders 44.8 (12 + 12 plus one line of 13px at 160%, 20.8). A 0.8px difference, the same as Button (D-23)."
     },
     {
-      "id": "field-name-from-helper",
-      "status": "inference",
-      "text": "Checkbox, Radio and Switch wrap the helper text inside the label, so it becomes part of the accessible name and is also read as the description. The contract of the Prompt 21 asks for that shape."
-    },
-    {
       "id": "tag-border-contrast",
       "status": "inference",
       "text": "Note for a later lote: the Tag component draws its boundary with Border/Default/Default, which is 1.29:1 on the page background, under the 3:1 of WCAG 1.4.11. It needs a decision when Tag is coded."
@@ -633,7 +628,7 @@
     "meaning": "Indeterminate has no HTML attribute: set input.indeterminate from script. The Error state is not only a color: the helper text carries the message."
   },
   "example": {
-    "markup": "<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-off\" aria-describedby=\"cb-off-help\">\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Receive updates</span>\n    <span class=\"checkbox__help\" id=\"cb-off-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-on\" aria-describedby=\"cb-on-help\" checked>\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Receive updates</span>\n    <span class=\"checkbox__help\" id=\"cb-on-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-mixed\" aria-describedby=\"cb-mixed-help\">\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Select all</span>\n    <span class=\"checkbox__help\" id=\"cb-mixed-help\">Some items are selected.</span>\n  </span>\n</label>\n<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-error\" aria-describedby=\"cb-error-help\" aria-invalid=\"true\">\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Accept the terms</span>\n    <span class=\"checkbox__help\" id=\"cb-error-help\">You need to accept to continue.</span>\n  </span>\n</label>\n<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-disabled\" aria-describedby=\"cb-disabled-help\" disabled>\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Receive updates</span>\n    <span class=\"checkbox__help\" id=\"cb-disabled-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-disabled-on\" aria-describedby=\"cb-disabled-on-help\" disabled checked>\n  <span class=\"checkbox__text\">\n    <span class=\"checkbox__label\">Receive updates</span>\n    <span class=\"checkbox__help\" id=\"cb-disabled-on-help\">Helper text</span>\n  </span>\n</label>\n<script>document.getElementById('cb-mixed').indeterminate = true;</script>"
+    "markup": "<div class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-off\" aria-describedby=\"cb-off-help\">\n  <label class=\"checkbox__label\" for=\"cb-off\">Receive updates</label>\n  <p class=\"checkbox__help\" id=\"cb-off-help\">Helper text</p>\n</div>\n<div class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-on\" aria-describedby=\"cb-on-help\" checked>\n  <label class=\"checkbox__label\" for=\"cb-on\">Receive updates</label>\n  <p class=\"checkbox__help\" id=\"cb-on-help\">Helper text</p>\n</div>\n<div class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-mixed\" aria-describedby=\"cb-mixed-help\">\n  <label class=\"checkbox__label\" for=\"cb-mixed\">Select all</label>\n  <p class=\"checkbox__help\" id=\"cb-mixed-help\">Some items are selected.</p>\n</div>\n<div class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-error\" aria-describedby=\"cb-error-help\" aria-invalid=\"true\">\n  <label class=\"checkbox__label\" for=\"cb-error\">Accept the terms</label>\n  <p class=\"checkbox__help\" id=\"cb-error-help\">You need to accept to continue.</p>\n</div>\n<div class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-disabled\" aria-describedby=\"cb-disabled-help\" disabled>\n  <label class=\"checkbox__label\" for=\"cb-disabled\">Receive updates</label>\n  <p class=\"checkbox__help\" id=\"cb-disabled-help\">Helper text</p>\n</div>\n<div class=\"checkbox\">\n  <input type=\"checkbox\" class=\"checkbox__input\" id=\"cb-disabled-on\" aria-describedby=\"cb-disabled-on-help\" disabled checked>\n  <label class=\"checkbox__label\" for=\"cb-disabled-on\">Receive updates</label>\n  <p class=\"checkbox__help\" id=\"cb-disabled-on-help\">Helper text</p>\n</div>\n<script>document.getElementById('cb-mixed').indeterminate = true;</script>"
   },
   "essential": [
     "when",
@@ -644,7 +639,7 @@
     {
       "id": "checkbox-hover-label",
       "status": "inference",
-      "text": "Figma draws Hover on the box only. The CSS draws it when the pointer is over the whole label, which is the click target."
+      "text": "Figma draws Hover on the box only. The CSS draws it when the pointer is over the box, the label or the helper."
     },
     {
       "id": "checkbox-hover-border-dark",
@@ -733,7 +728,7 @@
     "meaning": "Group the radios in a fieldset with a legend. The Error state is not only a color: the helper text carries the message."
   },
   "example": {
-    "markup": "<fieldset>\n  <legend>Contact preference</legend>\n  <label class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-a\" name=\"contact\" aria-describedby=\"rd-a-help\" checked>\n    <span class=\"radio__text\">\n      <span class=\"radio__label\">Email</span>\n      <span class=\"radio__help\" id=\"rd-a-help\">Helper text</span>\n    </span>\n  </label>\n  <label class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-b\" name=\"contact\" aria-describedby=\"rd-b-help\">\n    <span class=\"radio__text\">\n      <span class=\"radio__label\">Phone</span>\n      <span class=\"radio__help\" id=\"rd-b-help\">Helper text</span>\n    </span>\n  </label>\n</fieldset>\n<fieldset>\n  <legend>Plan</legend>\n  <label class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-err\" name=\"plan\" aria-describedby=\"rd-err-help\" aria-invalid=\"true\">\n    <span class=\"radio__text\">\n      <span class=\"radio__label\">Basic</span>\n      <span class=\"radio__help\" id=\"rd-err-help\">Choose a plan to continue.</span>\n    </span>\n  </label>\n</fieldset>\n<fieldset disabled>\n  <legend>Billing</legend>\n  <label class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-d1\" name=\"bill\" aria-describedby=\"rd-d1-help\">\n    <span class=\"radio__text\">\n      <span class=\"radio__label\">Monthly</span>\n      <span class=\"radio__help\" id=\"rd-d1-help\">Helper text</span>\n    </span>\n  </label>\n  <label class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-d2\" name=\"bill\" aria-describedby=\"rd-d2-help\" checked>\n    <span class=\"radio__text\">\n      <span class=\"radio__label\">Yearly</span>\n      <span class=\"radio__help\" id=\"rd-d2-help\">Helper text</span>\n    </span>\n  </label>\n</fieldset>"
+    "markup": "<fieldset>\n  <legend>Contact preference</legend>\n  <div class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-a\" name=\"contact\" aria-describedby=\"rd-a-help\" checked>\n    <label class=\"radio__label\" for=\"rd-a\">Email</label>\n    <p class=\"radio__help\" id=\"rd-a-help\">Helper text</p>\n  </div>\n  <div class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-b\" name=\"contact\" aria-describedby=\"rd-b-help\">\n    <label class=\"radio__label\" for=\"rd-b\">Phone</label>\n    <p class=\"radio__help\" id=\"rd-b-help\">Helper text</p>\n  </div>\n</fieldset>\n<fieldset>\n  <legend>Plan</legend>\n  <div class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-err\" name=\"plan\" aria-describedby=\"rd-err-help\" aria-invalid=\"true\">\n    <label class=\"radio__label\" for=\"rd-err\">Basic</label>\n    <p class=\"radio__help\" id=\"rd-err-help\">Choose a plan to continue.</p>\n  </div>\n</fieldset>\n<fieldset disabled>\n  <legend>Billing</legend>\n  <div class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-d1\" name=\"bill\" aria-describedby=\"rd-d1-help\">\n    <label class=\"radio__label\" for=\"rd-d1\">Monthly</label>\n    <p class=\"radio__help\" id=\"rd-d1-help\">Helper text</p>\n  </div>\n  <div class=\"radio\">\n    <input type=\"radio\" class=\"radio__input\" id=\"rd-d2\" name=\"bill\" aria-describedby=\"rd-d2-help\" checked>\n    <label class=\"radio__label\" for=\"rd-d2\">Yearly</label>\n    <p class=\"radio__help\" id=\"rd-d2-help\">Helper text</p>\n  </div>\n</fieldset>"
   },
   "essential": [
     "when",
@@ -744,7 +739,7 @@
     {
       "id": "radio-hover-label",
       "status": "inference",
-      "text": "Figma draws Hover on the circle only. The CSS draws it when the pointer is over the whole label."
+      "text": "Figma draws Hover on the circle only. The CSS draws it when the pointer is over the circle, the label or the helper."
     },
     {
       "id": "radio-hover-border-dark",
@@ -821,7 +816,7 @@
     "meaning": "The label states what the switch controls. The state does not rely on the thumb position alone: assistive technology announces it."
   },
   "example": {
-    "markup": "<label class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-off\" aria-describedby=\"sw-off-help\">\n  <span class=\"switch__text\">\n    <span class=\"switch__label\">Notifications</span>\n    <span class=\"switch__help\" id=\"sw-off-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-on\" aria-describedby=\"sw-on-help\" checked>\n  <span class=\"switch__text\">\n    <span class=\"switch__label\">Notifications</span>\n    <span class=\"switch__help\" id=\"sw-on-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-disabled\" aria-describedby=\"sw-disabled-help\" disabled>\n  <span class=\"switch__text\">\n    <span class=\"switch__label\">Notifications</span>\n    <span class=\"switch__help\" id=\"sw-disabled-help\">Helper text</span>\n  </span>\n</label>\n<label class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-disabled-on\" aria-describedby=\"sw-disabled-on-help\" disabled checked>\n  <span class=\"switch__text\">\n    <span class=\"switch__label\">Notifications</span>\n    <span class=\"switch__help\" id=\"sw-disabled-on-help\">Helper text</span>\n  </span>\n</label>"
+    "markup": "<div class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-off\" aria-describedby=\"sw-off-help\">\n  <label class=\"switch__label\" for=\"sw-off\">Notifications</label>\n  <p class=\"switch__help\" id=\"sw-off-help\">Helper text</p>\n</div>\n<div class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-on\" aria-describedby=\"sw-on-help\" checked>\n  <label class=\"switch__label\" for=\"sw-on\">Notifications</label>\n  <p class=\"switch__help\" id=\"sw-on-help\">Helper text</p>\n</div>\n<div class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-disabled\" aria-describedby=\"sw-disabled-help\" disabled>\n  <label class=\"switch__label\" for=\"sw-disabled\">Notifications</label>\n  <p class=\"switch__help\" id=\"sw-disabled-help\">Helper text</p>\n</div>\n<div class=\"switch\">\n  <input type=\"checkbox\" role=\"switch\" class=\"switch__input\" id=\"sw-disabled-on\" aria-describedby=\"sw-disabled-on-help\" disabled checked>\n  <label class=\"switch__label\" for=\"sw-disabled-on\">Notifications</label>\n  <p class=\"switch__help\" id=\"sw-disabled-on-help\">Helper text</p>\n</div>"
   },
   "essential": [
     "when",
@@ -832,7 +827,7 @@
     {
       "id": "switch-hover-label",
       "status": "inference",
-      "text": "Figma draws Hover on the track only. The CSS draws it when the pointer is over the whole label."
+      "text": "Figma draws Hover on the track only. The CSS draws it when the pointer is over the track, the label or the helper."
     },
     {
       "id": "switch-motion",
@@ -846,6 +841,408 @@
     }
   ],
   "unverified": []
+},
+{
+  "slug": "alert",
+  "name": "Alert",
+  "figma": {
+    "pageId": "2407:221",
+    "sets": [
+      {
+        "name": "Alert",
+        "id": "2407:277"
+      }
+    ]
+  },
+  "summary": "Persistent inline message in four types: Info, Success, Warning and Error. Optional title, action and dismiss. Fluid width (Figma shows 480).",
+  "whenToUse": [
+    "A message that stays with the content it is about, such as a form-level result or a notice on a page.",
+    "Error and Warning when the user needs to act or must not miss it."
+  ],
+  "whenNotToUse": [
+    "A passing confirmation that disappears by itself: use Toast.",
+    "A brand strip, not a status: use Banner."
+  ],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "variant",
+      "options": [
+        "Info",
+        "Success",
+        "Warning",
+        "Error"
+      ],
+      "default": "Info"
+    },
+    {
+      "name": "Title",
+      "type": "text",
+      "default": "Title"
+    },
+    {
+      "name": "Show title",
+      "type": "boolean",
+      "default": "true"
+    },
+    {
+      "name": "Description",
+      "type": "text",
+      "default": "Description of the message goes here."
+    },
+    {
+      "name": "Action label",
+      "type": "text",
+      "default": "Action"
+    },
+    {
+      "name": "Show action",
+      "type": "boolean",
+      "default": "true"
+    },
+    {
+      "name": "Show dismiss",
+      "type": "boolean",
+      "default": "true"
+    }
+  ],
+  "layout": {
+    "all": {
+      "height": 105,
+      "radius": "Radius/radius-md",
+      "padding": "Spacing/space-4 on every side",
+      "gap": "Spacing/space-3 between icon, content and dismiss; Spacing/space-1 inside the content",
+      "border": "Stroke/thin, inside"
+    }
+  },
+  "stateTokens": {},
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "note": "Error and Warning use role=\"alert\", Info and Success use role=\"status\".",
+    "meaning": "Role by type: Error and Warning use role=\"alert\", Info and Success use role=\"status\". MDN: developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role and .../status_role. The dismiss button needs an accessible name, and the type never relies on color alone: the glyph and the text say it too."
+  },
+  "example": {
+    "markup": "<div class=\"alert alert--info\" role=\"status\">\n  <span class=\"alert__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z\"/></svg></span>\n  <div class=\"alert__content\">\n    <p class=\"alert__title\">Title</p>\n    <p class=\"alert__description\">Description of the message goes here.</p>\n    <a class=\"alert__action\" href=\"#example\">Action</a>\n  </div>\n  <button type=\"button\" class=\"alert__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>\n<div class=\"alert alert--success\" role=\"status\">\n  <span class=\"alert__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z\"/></svg></span>\n  <div class=\"alert__content\">\n    <p class=\"alert__title\">Title</p>\n    <p class=\"alert__description\">Description of the message goes here.</p>\n    <a class=\"alert__action\" href=\"#example\">Action</a>\n  </div>\n  <button type=\"button\" class=\"alert__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>\n<div class=\"alert alert--warning\" role=\"alert\">\n  <span class=\"alert__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z\"/></svg></span>\n  <div class=\"alert__content\">\n    <p class=\"alert__title\">Title</p>\n    <p class=\"alert__description\">Description of the message goes here.</p>\n    <a class=\"alert__action\" href=\"#example\">Action</a>\n  </div>\n  <button type=\"button\" class=\"alert__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>\n<div class=\"alert alert--error\" role=\"alert\">\n  <span class=\"alert__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z\"/></svg></span>\n  <div class=\"alert__content\">\n    <p class=\"alert__title\">Title</p>\n    <p class=\"alert__description\">Description of the message goes here.</p>\n    <a class=\"alert__action\" href=\"#example\">Action</a>\n  </div>\n  <button type=\"button\" class=\"alert__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>"
+  },
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {
+      "id": "alert-dismiss-target-size",
+      "status": "measured",
+      "text": "The dismiss button is 16 by 16 as in Figma, under the 24 by 24 minimum of WCAG 2.2 SC 2.5.8. Recommendation only: a transparent pseudo-element could grow the hit area without changing the layout."
+    },
+    {
+      "id": "alert-action-states",
+      "status": "documented",
+      "text": "Figma defines no hover, no underline and no focus for the action. The CSS uses the Hope focus ring and no hover change."
+    },
+    {
+      "id": "alert-role-by-urgency",
+      "status": "inference",
+      "text": "MDN says role=alert is for information that needs immediate attention, and role=status for advisory information that is not important enough to be an alert. It does not assign Warning or Success to either. The mapping Error and Warning to alert, Info and Success to status follows the owner brief, not the sources."
+    },
+    {
+      "id": "alert-border-contrast",
+      "status": "measured",
+      "text": "The 1px border against the page background (1.4.11, 3:1): Info 7.54:1 Light and 2.26:1 Dark, Success 3.25 and 5.25, Warning 2.63 and 6.49, Error 5.87 and 6.88. Failures: Info in Dark (2.26) and Warning in Light (2.63); Success against its own fill is 2.86 in Light. The type is also carried by the glyph, the fill and the text, and the status icon passes 3:1 in every type (4.78 to 9.52)."
+    }
+  ],
+  "unverified": []
+},
+{
+  "slug": "toast",
+  "name": "Toast",
+  "figma": {
+    "pageId": "2408:3",
+    "sets": [
+      {
+        "name": "Toast",
+        "id": "2408:73"
+      }
+    ]
+  },
+  "summary": "Floating, passing feedback in five types: Default, Success, Warning, Error and Info. Message, optional description, action and dismiss. The positioning region and the timing are not part of this component.",
+  "whenToUse": [
+    "Short feedback after an action, such as \"Saved\" or \"Message sent\"."
+  ],
+  "whenNotToUse": [
+    "A message that must stay until read: use Alert."
+  ],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Success",
+        "Warning",
+        "Error",
+        "Info"
+      ],
+      "default": "Default"
+    },
+    {
+      "name": "Message",
+      "type": "text",
+      "default": "Message"
+    },
+    {
+      "name": "Description",
+      "type": "text",
+      "default": "Short supporting text."
+    },
+    {
+      "name": "Show description",
+      "type": "boolean",
+      "default": "true"
+    },
+    {
+      "name": "Action label",
+      "type": "text",
+      "default": "Undo"
+    },
+    {
+      "name": "Show action",
+      "type": "boolean",
+      "default": "true"
+    },
+    {
+      "name": "Show icon",
+      "type": "boolean",
+      "default": "true"
+    },
+    {
+      "name": "Show dismiss",
+      "type": "boolean",
+      "default": "true"
+    }
+  ],
+  "layout": {
+    "all": {
+      "height": 69,
+      "radius": "Radius/radius-md",
+      "padding": "Spacing/space-3 vertical, Spacing/space-4 horizontal",
+      "gap": "Spacing/space-3",
+      "shadow": "Shadow/lg"
+    }
+  },
+  "stateTokens": {},
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "note": "Error uses role=\"alert\", the other types use role=\"status\".",
+    "meaning": "Role by type: Error and Warning use role=\"alert\", Info and Success use role=\"status\". MDN: developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role and .../status_role. Default and Info share the Info glyph and differ only by color, so the type is not carried by color alone for Info."
+  },
+  "example": {
+    "markup": "<div class=\"toast toast--default\" role=\"status\">\n  <span class=\"toast__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z\"/></svg></span>\n  <div class=\"toast__content\">\n    <p class=\"toast__message\">Message</p>\n    <p class=\"toast__description\">Short supporting text.</p>\n  </div>\n  <a class=\"toast__action\" href=\"#example\">Undo</a>\n  <button type=\"button\" class=\"toast__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>\n<div class=\"toast toast--success\" role=\"status\">\n  <span class=\"toast__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z\"/></svg></span>\n  <div class=\"toast__content\">\n    <p class=\"toast__message\">Message</p>\n    <p class=\"toast__description\">Short supporting text.</p>\n  </div>\n  <a class=\"toast__action\" href=\"#example\">Undo</a>\n  <button type=\"button\" class=\"toast__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>\n<div class=\"toast toast--warning\" role=\"status\">\n  <span class=\"toast__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z\"/></svg></span>\n  <div class=\"toast__content\">\n    <p class=\"toast__message\">Message</p>\n    <p class=\"toast__description\">Short supporting text.</p>\n  </div>\n  <a class=\"toast__action\" href=\"#example\">Undo</a>\n  <button type=\"button\" class=\"toast__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>\n<div class=\"toast toast--error\" role=\"alert\">\n  <span class=\"toast__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z\"/></svg></span>\n  <div class=\"toast__content\">\n    <p class=\"toast__message\">Message</p>\n    <p class=\"toast__description\">Short supporting text.</p>\n  </div>\n  <a class=\"toast__action\" href=\"#example\">Undo</a>\n  <button type=\"button\" class=\"toast__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>\n<div class=\"toast toast--info\" role=\"status\">\n  <span class=\"toast__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z\"/></svg></span>\n  <div class=\"toast__content\">\n    <p class=\"toast__message\">Message</p>\n    <p class=\"toast__description\">Short supporting text.</p>\n  </div>\n  <a class=\"toast__action\" href=\"#example\">Undo</a>\n  <button type=\"button\" class=\"toast__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>"
+  },
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {
+      "id": "toast-region",
+      "status": "documented",
+      "text": "The container that positions and stacks toasts is not coded."
+    },
+    {
+      "id": "toast-autodismiss",
+      "status": "documented",
+      "text": "Auto-dismiss timing, and pausing it on hover or focus, need JavaScript and are not coded."
+    },
+    {
+      "id": "toast-motion",
+      "status": "documented",
+      "text": "Figma defines no enter or exit motion."
+    },
+    {
+      "id": "toast-zindex",
+      "status": "measured",
+      "text": "Figma uses the notification layer 500. The z-index scale in tokens.css stops at --z-modal (200), so the CSS sets 500 as a literal."
+    },
+    {
+      "id": "toast-default-info-identical",
+      "status": "inference",
+      "text": "Default and Info use the same Info glyph and differ only by icon color (Secondary and Info). Measured: the two icon colors differ by 1.43:1 in Light and 1.15:1 in Dark, so the difference is barely perceivable and the glyph is the same."
+    },
+    {
+      "id": "toast-border-contrast",
+      "status": "measured",
+      "text": "The Toast border (Border/Default/Default) is 1.29:1 on the page background in Light and 1.28:1 in Dark, under the 3:1 of WCAG 1.4.11. The shadow (Shadow/lg) does not count as a boundary for that criterion. The text and icons pass."
+    }
+  ],
+  "unverified": []
+},
+{
+  "slug": "banner",
+  "name": "Banner",
+  "figma": {
+    "pageId": "47:2",
+    "sets": [
+      {
+        "name": "Banner",
+        "id": "2044:618"
+      }
+    ]
+  },
+  "summary": "Brand strip with an optional emoji and one line of text. It is not a status: statuses use Alert. Fluid width (Figma shows 1206).",
+  "whenToUse": [
+    "A page-level notice in the brand voice, such as \"work in progress\"."
+  ],
+  "whenNotToUse": [
+    "A status that needs a role or an action: use Alert."
+  ],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "variant",
+      "options": [
+        "Notice"
+      ],
+      "default": "Notice"
+    },
+    {
+      "name": "Text",
+      "type": "text",
+      "default": "Text"
+    },
+    {
+      "name": "Show emoji",
+      "type": "boolean",
+      "default": "true"
+    }
+  ],
+  "layout": {
+    "all": {
+      "height": 53,
+      "radius": "Radius/radius-md",
+      "padding": "Spacing/space-4 vertical, Spacing/space-6 horizontal",
+      "gap": "Spacing/space-2",
+      "text": "Body/Medium/body-sm medium, Text/Accent/Default"
+    }
+  },
+  "stateTokens": {},
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "note": "The text is regular content: it is read in its place in the page.",
+    "meaning": "The emoji is decorative (aria-hidden), so the meaning is in the text."
+  },
+  "example": {
+    "markup": "<div class=\"banner\">\n  <span class=\"banner__icon\" aria-hidden=\"true\">🚧</span>\n  <span class=\"banner__text\">This case study is being finalized. More visuals are coming soon.</span>\n</div>\n<div class=\"banner\">\n  <span class=\"banner__text\">The portfolio is under construction.</span>\n</div>"
+  },
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {
+      "id": "banner-emoji-style",
+      "status": "inference",
+      "text": "Figma styles the emoji with Link/link-xs bold, which looks accidental. The CSS gives the emoji the same text style as the text. Figma needs a fix."
+    },
+    {
+      "id": "banner-legacy-wip",
+      "status": "documented",
+      "text": "The site keeps a legacy .banner--wip modifier (amber border, tertiary fill) on case-studies/sb-home-redesign.html so the page does not change. It is not a Figma variant."
+    }
+  ],
+  "unverified": []
+},
+{
+  "slug": "empty-state",
+  "name": "Empty state",
+  "figma": {
+    "pageId": "2410:40",
+    "sets": [
+      {
+        "name": "Empty state",
+        "id": "2410:41"
+      }
+    ]
+  },
+  "summary": "Centered block for a place with no content yet: a 48px icon, a title, an optional description and an optional Primary button. No fill and no border.",
+  "whenToUse": [
+    "A list, a table or a page that has nothing to show yet."
+  ],
+  "whenNotToUse": [
+    "An error: use Alert."
+  ],
+  "properties": [
+    {
+      "name": "Title",
+      "type": "text",
+      "default": "Nothing here yet"
+    },
+    {
+      "name": "Description",
+      "type": "text",
+      "default": "When there is content, it will show up here. Start by adding the first item."
+    },
+    {
+      "name": "Show description",
+      "type": "boolean",
+      "default": "true"
+    },
+    {
+      "name": "Show action",
+      "type": "boolean",
+      "default": "true"
+    },
+    {
+      "name": "Icon",
+      "type": "instance swap",
+      "default": "Tray"
+    }
+  ],
+  "layout": {
+    "all": {
+      "width": 360,
+      "height": 269,
+      "padding": "Spacing/space-8",
+      "gap": "Spacing/space-4",
+      "icon": "48 by 48"
+    }
+  },
+  "stateTokens": {},
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "note": "The author chooses the heading level of the title and styles it with the class.",
+    "meaning": "The icon is decorative (aria-hidden). The action is the Hope Button, with its own focus ring."
+  },
+  "example": {
+    "markup": "<div class=\"empty-state\">\n  <svg aria-hidden=\"true\" class=\"icon empty-state__icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,16V152H180.43a16,16,0,0,0-14.31,8.85l-4.5,9A8,8,0,0,1,154.47,174H101.53a8,8,0,0,1-7.15-4.42l-4.5-9A16,16,0,0,0,75.57,152H48V48ZM48,208V168H75.57l4.5,9a24,24,0,0,0,21.46,13.27h52.94A24,24,0,0,0,176,177l4.5-9H208v40Z\"/></svg>\n  <h3 class=\"empty-state__title\">Nothing here yet</h3>\n  <p class=\"empty-state__description\">When there is content, it will show up here. Start by adding the first item.</p>\n  <a class=\"btn btn--primary\" href=\"#example\">Add item</a>\n</div>"
+  },
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {
+      "id": "empty-state-heading",
+      "status": "documented",
+      "text": "Figma draws the title as Heading/H3. The CSS styles it by class and does not fix the heading level: the author chooses it."
+    },
+    {
+      "id": "empty-state-button-width",
+      "status": "inference",
+      "text": "Figma draws the action 184 wide. The CSS uses the Hope Button at its own width; under 768px every .btn is full width."
+    }
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "EmptyState"
+  ]
 }
 ]
 }

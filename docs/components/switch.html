@@ -99,6 +99,10 @@
               <a class="docs-ds-nav__link" href="../components/checkbox.html">Checkbox</a>
               <a class="docs-ds-nav__link" href="../components/radio.html">Radio</a>
               <a class="docs-ds-nav__link" href="../components/switch.html" aria-current="page">Switch</a>
+              <a class="docs-ds-nav__link" href="../components/alert.html">Alert</a>
+              <a class="docs-ds-nav__link" href="../components/toast.html">Toast</a>
+              <a class="docs-ds-nav__link" href="../components/banner.html">Banner</a>
+              <a class="docs-ds-nav__link" href="../components/empty-state.html">Empty state</a>
               <a class="docs-ds-nav__link" href="../components/review.html">Review (temporary)</a>
             </div>
           </nav>
@@ -113,66 +117,50 @@
             <h2 class="text-label text-tertiary" id="example-title">Live example</h2>
             <div class="docs-ds-card">
               <div class="docs-ds-preview">
-                <!-- demo:start --><label class="switch">
+                <!-- demo:start --><div class="switch">
                     <input type="checkbox" role="switch" class="switch__input" id="sw-off" aria-describedby="sw-off-help">
-                    <span class="switch__text">
-                      <span class="switch__label">Notifications</span>
-                      <span class="switch__help" id="sw-off-help">Helper text</span>
-                    </span>
-                  </label>
-                  <label class="switch">
+                    <label class="switch__label" for="sw-off">Notifications</label>
+                    <p class="switch__help" id="sw-off-help">Helper text</p>
+                  </div>
+                  <div class="switch">
                     <input type="checkbox" role="switch" class="switch__input" id="sw-on" aria-describedby="sw-on-help" checked>
-                    <span class="switch__text">
-                      <span class="switch__label">Notifications</span>
-                      <span class="switch__help" id="sw-on-help">Helper text</span>
-                    </span>
-                  </label>
-                  <label class="switch">
+                    <label class="switch__label" for="sw-on">Notifications</label>
+                    <p class="switch__help" id="sw-on-help">Helper text</p>
+                  </div>
+                  <div class="switch">
                     <input type="checkbox" role="switch" class="switch__input" id="sw-disabled" aria-describedby="sw-disabled-help" disabled>
-                    <span class="switch__text">
-                      <span class="switch__label">Notifications</span>
-                      <span class="switch__help" id="sw-disabled-help">Helper text</span>
-                    </span>
-                  </label>
-                  <label class="switch">
+                    <label class="switch__label" for="sw-disabled">Notifications</label>
+                    <p class="switch__help" id="sw-disabled-help">Helper text</p>
+                  </div>
+                  <div class="switch">
                     <input type="checkbox" role="switch" class="switch__input" id="sw-disabled-on" aria-describedby="sw-disabled-on-help" disabled checked>
-                    <span class="switch__text">
-                      <span class="switch__label">Notifications</span>
-                      <span class="switch__help" id="sw-disabled-on-help">Helper text</span>
-                    </span>
-                  </label><!-- demo:end -->
+                    <label class="switch__label" for="sw-disabled-on">Notifications</label>
+                    <p class="switch__help" id="sw-disabled-on-help">Helper text</p>
+                  </div><!-- demo:end -->
               </div>
             </div>
             <details class="docs-ds-code">
               <summary>HTML</summary>
-<pre class="docs-ds-code__block">&lt;label class=&quot;switch&quot;&gt;
+<pre class="docs-ds-code__block">&lt;div class=&quot;switch&quot;&gt;
   &lt;input type=&quot;checkbox&quot; role=&quot;switch&quot; class=&quot;switch__input&quot; id=&quot;sw-off&quot; aria-describedby=&quot;sw-off-help&quot;&gt;
-  &lt;span class=&quot;switch__text&quot;&gt;
-    &lt;span class=&quot;switch__label&quot;&gt;Notifications&lt;/span&gt;
-    &lt;span class=&quot;switch__help&quot; id=&quot;sw-off-help&quot;&gt;Helper text&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/label&gt;
-&lt;label class=&quot;switch&quot;&gt;
+  &lt;label class=&quot;switch__label&quot; for=&quot;sw-off&quot;&gt;Notifications&lt;/label&gt;
+  &lt;p class=&quot;switch__help&quot; id=&quot;sw-off-help&quot;&gt;Helper text&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;switch&quot;&gt;
   &lt;input type=&quot;checkbox&quot; role=&quot;switch&quot; class=&quot;switch__input&quot; id=&quot;sw-on&quot; aria-describedby=&quot;sw-on-help&quot; checked&gt;
-  &lt;span class=&quot;switch__text&quot;&gt;
-    &lt;span class=&quot;switch__label&quot;&gt;Notifications&lt;/span&gt;
-    &lt;span class=&quot;switch__help&quot; id=&quot;sw-on-help&quot;&gt;Helper text&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/label&gt;
-&lt;label class=&quot;switch&quot;&gt;
+  &lt;label class=&quot;switch__label&quot; for=&quot;sw-on&quot;&gt;Notifications&lt;/label&gt;
+  &lt;p class=&quot;switch__help&quot; id=&quot;sw-on-help&quot;&gt;Helper text&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;switch&quot;&gt;
   &lt;input type=&quot;checkbox&quot; role=&quot;switch&quot; class=&quot;switch__input&quot; id=&quot;sw-disabled&quot; aria-describedby=&quot;sw-disabled-help&quot; disabled&gt;
-  &lt;span class=&quot;switch__text&quot;&gt;
-    &lt;span class=&quot;switch__label&quot;&gt;Notifications&lt;/span&gt;
-    &lt;span class=&quot;switch__help&quot; id=&quot;sw-disabled-help&quot;&gt;Helper text&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/label&gt;
-&lt;label class=&quot;switch&quot;&gt;
+  &lt;label class=&quot;switch__label&quot; for=&quot;sw-disabled&quot;&gt;Notifications&lt;/label&gt;
+  &lt;p class=&quot;switch__help&quot; id=&quot;sw-disabled-help&quot;&gt;Helper text&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;switch&quot;&gt;
   &lt;input type=&quot;checkbox&quot; role=&quot;switch&quot; class=&quot;switch__input&quot; id=&quot;sw-disabled-on&quot; aria-describedby=&quot;sw-disabled-on-help&quot; disabled checked&gt;
-  &lt;span class=&quot;switch__text&quot;&gt;
-    &lt;span class=&quot;switch__label&quot;&gt;Notifications&lt;/span&gt;
-    &lt;span class=&quot;switch__help&quot; id=&quot;sw-disabled-on-help&quot;&gt;Helper text&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/label&gt;</pre>
+  &lt;label class=&quot;switch__label&quot; for=&quot;sw-disabled-on&quot;&gt;Notifications&lt;/label&gt;
+  &lt;p class=&quot;switch__help&quot; id=&quot;sw-disabled-on-help&quot;&gt;Helper text&lt;/p&gt;
+&lt;/div&gt;</pre>
             </details>
           </section>
 

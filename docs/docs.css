@@ -42,7 +42,7 @@
   color: var(--color-text-2);
 }
 
-.docs-ds-content a:where(:not(.link)) { /* .link is the Link component in the live demos: it keeps its own colour */
+.docs-ds-content a:where(:not(.link, .btn, .alert__action, .toast__action)) { /* components in the live demos keep their own colour */
   color: var(--color-text-brand-default);
   text-decoration: underline;
 }
@@ -540,4 +540,24 @@
   font-size: var(--fs-body-sm);
   font-weight: 600;
   color: var(--color-text-1);
+}
+
+/* Message examples: Alert, Toast, Banner and Empty state use the width they would have in a page. */
+.docs-ds-preview > .alert {
+  flex: 1 1 24rem;
+  max-width: 30rem;
+}
+
+.docs-ds-preview > .toast,
+.docs-ds-preview > .empty-state {
+  flex: 1 1 20rem;
+  max-width: 22.5rem;
+}
+
+.docs-ds-preview > .banner {
+  flex: 1 1 100%;
+}
+
+.docs-ds-preview > :is(.alert, .toast, .empty-state) {
+  align-self: flex-start;
 }

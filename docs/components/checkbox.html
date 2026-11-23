@@ -99,6 +99,10 @@
               <a class="docs-ds-nav__link" href="../components/checkbox.html" aria-current="page">Checkbox</a>
               <a class="docs-ds-nav__link" href="../components/radio.html">Radio</a>
               <a class="docs-ds-nav__link" href="../components/switch.html">Switch</a>
+              <a class="docs-ds-nav__link" href="../components/alert.html">Alert</a>
+              <a class="docs-ds-nav__link" href="../components/toast.html">Toast</a>
+              <a class="docs-ds-nav__link" href="../components/banner.html">Banner</a>
+              <a class="docs-ds-nav__link" href="../components/empty-state.html">Empty state</a>
               <a class="docs-ds-nav__link" href="../components/review.html">Review (temporary)</a>
             </div>
           </nav>
@@ -113,95 +117,71 @@
             <h2 class="text-label text-tertiary" id="example-title">Live example</h2>
             <div class="docs-ds-card">
               <div class="docs-ds-preview">
-                <!-- demo:start --><label class="checkbox">
+                <!-- demo:start --><div class="checkbox">
                     <input type="checkbox" class="checkbox__input" id="cb-off" aria-describedby="cb-off-help">
-                    <span class="checkbox__text">
-                      <span class="checkbox__label">Receive updates</span>
-                      <span class="checkbox__help" id="cb-off-help">Helper text</span>
-                    </span>
-                  </label>
-                  <label class="checkbox">
+                    <label class="checkbox__label" for="cb-off">Receive updates</label>
+                    <p class="checkbox__help" id="cb-off-help">Helper text</p>
+                  </div>
+                  <div class="checkbox">
                     <input type="checkbox" class="checkbox__input" id="cb-on" aria-describedby="cb-on-help" checked>
-                    <span class="checkbox__text">
-                      <span class="checkbox__label">Receive updates</span>
-                      <span class="checkbox__help" id="cb-on-help">Helper text</span>
-                    </span>
-                  </label>
-                  <label class="checkbox">
+                    <label class="checkbox__label" for="cb-on">Receive updates</label>
+                    <p class="checkbox__help" id="cb-on-help">Helper text</p>
+                  </div>
+                  <div class="checkbox">
                     <input type="checkbox" class="checkbox__input" id="cb-mixed" aria-describedby="cb-mixed-help">
-                    <span class="checkbox__text">
-                      <span class="checkbox__label">Select all</span>
-                      <span class="checkbox__help" id="cb-mixed-help">Some items are selected.</span>
-                    </span>
-                  </label>
-                  <label class="checkbox">
+                    <label class="checkbox__label" for="cb-mixed">Select all</label>
+                    <p class="checkbox__help" id="cb-mixed-help">Some items are selected.</p>
+                  </div>
+                  <div class="checkbox">
                     <input type="checkbox" class="checkbox__input" id="cb-error" aria-describedby="cb-error-help" aria-invalid="true">
-                    <span class="checkbox__text">
-                      <span class="checkbox__label">Accept the terms</span>
-                      <span class="checkbox__help" id="cb-error-help">You need to accept to continue.</span>
-                    </span>
-                  </label>
-                  <label class="checkbox">
+                    <label class="checkbox__label" for="cb-error">Accept the terms</label>
+                    <p class="checkbox__help" id="cb-error-help">You need to accept to continue.</p>
+                  </div>
+                  <div class="checkbox">
                     <input type="checkbox" class="checkbox__input" id="cb-disabled" aria-describedby="cb-disabled-help" disabled>
-                    <span class="checkbox__text">
-                      <span class="checkbox__label">Receive updates</span>
-                      <span class="checkbox__help" id="cb-disabled-help">Helper text</span>
-                    </span>
-                  </label>
-                  <label class="checkbox">
+                    <label class="checkbox__label" for="cb-disabled">Receive updates</label>
+                    <p class="checkbox__help" id="cb-disabled-help">Helper text</p>
+                  </div>
+                  <div class="checkbox">
                     <input type="checkbox" class="checkbox__input" id="cb-disabled-on" aria-describedby="cb-disabled-on-help" disabled checked>
-                    <span class="checkbox__text">
-                      <span class="checkbox__label">Receive updates</span>
-                      <span class="checkbox__help" id="cb-disabled-on-help">Helper text</span>
-                    </span>
-                  </label>
+                    <label class="checkbox__label" for="cb-disabled-on">Receive updates</label>
+                    <p class="checkbox__help" id="cb-disabled-on-help">Helper text</p>
+                  </div>
                   <script>document.getElementById('cb-mixed').indeterminate = true;</script><!-- demo:end -->
               </div>
             </div>
             <details class="docs-ds-code">
               <summary>HTML</summary>
-<pre class="docs-ds-code__block">&lt;label class=&quot;checkbox&quot;&gt;
+<pre class="docs-ds-code__block">&lt;div class=&quot;checkbox&quot;&gt;
   &lt;input type=&quot;checkbox&quot; class=&quot;checkbox__input&quot; id=&quot;cb-off&quot; aria-describedby=&quot;cb-off-help&quot;&gt;
-  &lt;span class=&quot;checkbox__text&quot;&gt;
-    &lt;span class=&quot;checkbox__label&quot;&gt;Receive updates&lt;/span&gt;
-    &lt;span class=&quot;checkbox__help&quot; id=&quot;cb-off-help&quot;&gt;Helper text&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/label&gt;
-&lt;label class=&quot;checkbox&quot;&gt;
+  &lt;label class=&quot;checkbox__label&quot; for=&quot;cb-off&quot;&gt;Receive updates&lt;/label&gt;
+  &lt;p class=&quot;checkbox__help&quot; id=&quot;cb-off-help&quot;&gt;Helper text&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;checkbox&quot;&gt;
   &lt;input type=&quot;checkbox&quot; class=&quot;checkbox__input&quot; id=&quot;cb-on&quot; aria-describedby=&quot;cb-on-help&quot; checked&gt;
-  &lt;span class=&quot;checkbox__text&quot;&gt;
-    &lt;span class=&quot;checkbox__label&quot;&gt;Receive updates&lt;/span&gt;
-    &lt;span class=&quot;checkbox__help&quot; id=&quot;cb-on-help&quot;&gt;Helper text&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/label&gt;
-&lt;label class=&quot;checkbox&quot;&gt;
+  &lt;label class=&quot;checkbox__label&quot; for=&quot;cb-on&quot;&gt;Receive updates&lt;/label&gt;
+  &lt;p class=&quot;checkbox__help&quot; id=&quot;cb-on-help&quot;&gt;Helper text&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;checkbox&quot;&gt;
   &lt;input type=&quot;checkbox&quot; class=&quot;checkbox__input&quot; id=&quot;cb-mixed&quot; aria-describedby=&quot;cb-mixed-help&quot;&gt;
-  &lt;span class=&quot;checkbox__text&quot;&gt;
-    &lt;span class=&quot;checkbox__label&quot;&gt;Select all&lt;/span&gt;
-    &lt;span class=&quot;checkbox__help&quot; id=&quot;cb-mixed-help&quot;&gt;Some items are selected.&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/label&gt;
-&lt;label class=&quot;checkbox&quot;&gt;
+  &lt;label class=&quot;checkbox__label&quot; for=&quot;cb-mixed&quot;&gt;Select all&lt;/label&gt;
+  &lt;p class=&quot;checkbox__help&quot; id=&quot;cb-mixed-help&quot;&gt;Some items are selected.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;checkbox&quot;&gt;
   &lt;input type=&quot;checkbox&quot; class=&quot;checkbox__input&quot; id=&quot;cb-error&quot; aria-describedby=&quot;cb-error-help&quot; aria-invalid=&quot;true&quot;&gt;
-  &lt;span class=&quot;checkbox__text&quot;&gt;
-    &lt;span class=&quot;checkbox__label&quot;&gt;Accept the terms&lt;/span&gt;
-    &lt;span class=&quot;checkbox__help&quot; id=&quot;cb-error-help&quot;&gt;You need to accept to continue.&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/label&gt;
-&lt;label class=&quot;checkbox&quot;&gt;
+  &lt;label class=&quot;checkbox__label&quot; for=&quot;cb-error&quot;&gt;Accept the terms&lt;/label&gt;
+  &lt;p class=&quot;checkbox__help&quot; id=&quot;cb-error-help&quot;&gt;You need to accept to continue.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;checkbox&quot;&gt;
   &lt;input type=&quot;checkbox&quot; class=&quot;checkbox__input&quot; id=&quot;cb-disabled&quot; aria-describedby=&quot;cb-disabled-help&quot; disabled&gt;
-  &lt;span class=&quot;checkbox__text&quot;&gt;
-    &lt;span class=&quot;checkbox__label&quot;&gt;Receive updates&lt;/span&gt;
-    &lt;span class=&quot;checkbox__help&quot; id=&quot;cb-disabled-help&quot;&gt;Helper text&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/label&gt;
-&lt;label class=&quot;checkbox&quot;&gt;
+  &lt;label class=&quot;checkbox__label&quot; for=&quot;cb-disabled&quot;&gt;Receive updates&lt;/label&gt;
+  &lt;p class=&quot;checkbox__help&quot; id=&quot;cb-disabled-help&quot;&gt;Helper text&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;checkbox&quot;&gt;
   &lt;input type=&quot;checkbox&quot; class=&quot;checkbox__input&quot; id=&quot;cb-disabled-on&quot; aria-describedby=&quot;cb-disabled-on-help&quot; disabled checked&gt;
-  &lt;span class=&quot;checkbox__text&quot;&gt;
-    &lt;span class=&quot;checkbox__label&quot;&gt;Receive updates&lt;/span&gt;
-    &lt;span class=&quot;checkbox__help&quot; id=&quot;cb-disabled-on-help&quot;&gt;Helper text&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/label&gt;
+  &lt;label class=&quot;checkbox__label&quot; for=&quot;cb-disabled-on&quot;&gt;Receive updates&lt;/label&gt;
+  &lt;p class=&quot;checkbox__help&quot; id=&quot;cb-disabled-on-help&quot;&gt;Helper text&lt;/p&gt;
+&lt;/div&gt;
 &lt;script&gt;document.getElementById('cb-mixed').indeterminate = true;&lt;/script&gt;</pre>
             </details>
           </section>

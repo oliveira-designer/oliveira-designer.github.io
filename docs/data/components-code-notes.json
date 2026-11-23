@@ -26,8 +26,8 @@
   "note": "Icon colour per state was not read. In code it needs an accessible name (aria-label). Not implemented in CSS."
 },
 "coverage": {
-  "figmaVariants": {"Button": 28, "IconButton": 8, "Badge": 5, "Link": 8, "Separator": 1, "Table": 2, "TableHeaderCell": 2, "TableCell": 4, "Input": 10, "Textarea": 10, "Select": 10, "Checkbox": 15, "Radio": 10, "Switch": 8},
-  "implementedInCss": {"Button": 28, "IconButton": 0, "Badge": 5, "Link": 8, "Separator": 1, "Table": 2, "TableHeaderCell": 2, "TableCell": 4, "Input": 10, "Textarea": 10, "Select": 10, "Checkbox": 15, "Radio": 10, "Switch": 8},
+  "figmaVariants": {"Button": 28, "IconButton": 8, "Badge": 5, "Link": 8, "Separator": 1, "Table": 2, "TableHeaderCell": 2, "TableCell": 4, "Input": 10, "Textarea": 10, "Select": 10, "Checkbox": 15, "Radio": 10, "Switch": 8, "Alert": 4, "Toast": 5, "EmptyState": 1},
+  "implementedInCss": {"Button": 28, "IconButton": 0, "Badge": 5, "Link": 8, "Separator": 1, "Table": 2, "TableHeaderCell": 2, "TableCell": 4, "Input": 10, "Textarea": 10, "Select": 10, "Checkbox": 15, "Radio": 10, "Switch": 8, "Alert": 4, "Toast": 5, "EmptyState": 1},
   "implementedNote": "Button: all 7 styles (Primary, Secondary, Ghost, Inverse, Accent and Destructive at Medium, plus Small Ghost), 4 states each (hover via :hover, focus via shared .btn:focus-visible outline, disabled via .btn.btn:disabled and per-style rules for Secondary and Ghost). Badge: Neutral, Ancora (.badge--anchor), Solar, Success, Danger (.badge--danger). Link: .link with .link--small, hover and focus-visible as pseudo-classes and disabled via aria-disabled (the global a rules are unchanged for anchors without .link). Separator: .separator.",
   "missingInCss": [
     {"component": "Icon Button", "variant": "Primary, Ghost", "class": "Informativo"}

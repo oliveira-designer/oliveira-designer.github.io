@@ -99,6 +99,10 @@
               <a class="docs-ds-nav__link" href="../components/checkbox.html">Checkbox</a>
               <a class="docs-ds-nav__link" href="../components/radio.html">Radio</a>
               <a class="docs-ds-nav__link" href="../components/switch.html">Switch</a>
+              <a class="docs-ds-nav__link" href="../components/alert.html">Alert</a>
+              <a class="docs-ds-nav__link" href="../components/toast.html">Toast</a>
+              <a class="docs-ds-nav__link" href="../components/banner.html">Banner</a>
+              <a class="docs-ds-nav__link" href="../components/empty-state.html">Empty state</a>
               <a class="docs-ds-nav__link" href="../components/review.html" aria-current="page">Review (temporary)</a>
             </div>
           </nav>
@@ -112,7 +116,7 @@
 
           <aside class="docs-note docs-note--banner" role="note">
             <p><strong>Temporary page.</strong> It exists to review what is built and what is missing while the CSS is being restructured. It will be removed once the components are created. Nothing here is a design decision: coverage comes from <code>docs/data/components-map.json</code>, the inventory from <code>docs/data/figma-components-inventory.json</code>, and the stylesheets from <code>docs/data/css-sources.json</code>.</p>
-            <p>33 components, 194 Figma variants, 115 with a CSS class: 15 Complete, 0 Partial, 18 Not created.</p>
+            <p>33 components, 194 Figma variants, 125 with a CSS class: 18 Complete, 0 Partial, 15 Not created.</p>
           </aside>
 
           <section class="docs-group" id="group-primitives" aria-labelledby="group-primitives-title">
@@ -362,27 +366,22 @@
             <div class="docs-demo">
               <p class="docs-demo__label">Type: Notice</p>
               <div class="docs-demo__stage">
-                <!-- demo:start --><div class="banner banner--wip" role="status"><span class="banner__text">This case study is being finalized.</span></div><!-- demo:end -->
+                <!-- demo:start --><div class="banner" role="status"><span class="banner__text">This case study is being finalized.</span></div><!-- demo:end -->
               </div>
             </div>
             </div>
-            <p class="docs-section__desc">Inference: Figma has one Banner variant (Type Notice, renamed from Warning per DESIGN.md). It is mapped to .banner--wip, the only banner modifier in the CSS. This mapping is an inference, not a Figma fact.</p>
           </section>
 
           <section class="docs-section docs-unit" id="unit-alert" aria-labelledby="unit-alert-title">
             <h3 class="text-h3" id="unit-alert-title">Alert</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 4</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2407-277" rel="noopener noreferrer">Figma node 2407:277</a></p>
-            <p class="docs-placeholder">Not created</p>
-            <h4 class="text-body docs-subhead">Missing variants</h4>
-            <p class="docs-section__desc">All 4 variants (Type: Info, Success, Warning, Error; other properties: Title, Show title, Description, Action label, Show action, Show dismiss).</p>
+            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--success">CSS 4 / 4</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2407-277" rel="noopener noreferrer">Figma node 2407:277</a></p>
+            <p class="docs-section__desc">The 4 covered variants are rendered on <a href="alert.html">the Alert page</a>.</p>
           </section>
 
           <section class="docs-section docs-unit" id="unit-toast" aria-labelledby="unit-toast-title">
             <h3 class="text-h3" id="unit-toast-title">Toast</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 5</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2408-73" rel="noopener noreferrer">Figma node 2408:73</a></p>
-            <p class="docs-placeholder">Not created</p>
-            <h4 class="text-body docs-subhead">Missing variants</h4>
-            <p class="docs-section__desc">All 5 variants (Type: Default, Success, Warning, Error, Info; other properties: Message, Description, Show description, Action label, Show action, Show icon, Show dismiss).</p>
+            <p class="docs-badges"><span class="badge badge--anchor">5 Figma variants</span> <span class="badge badge--success">CSS 5 / 5</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2408-73" rel="noopener noreferrer">Figma node 2408:73</a></p>
+            <p class="docs-section__desc">The 5 covered variants are rendered on <a href="toast.html">the Toast page</a>.</p>
           </section>
 
           <section class="docs-section docs-unit" id="unit-tooltip" aria-labelledby="unit-tooltip-title">
@@ -419,10 +418,8 @@
 
           <section class="docs-section docs-unit" id="unit-empty-state" aria-labelledby="unit-empty-state-title">
             <h3 class="text-h3" id="unit-empty-state-title">Empty state</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--neutral">CSS 0 / 1</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2410-41" rel="noopener noreferrer">Figma node 2410:41</a></p>
-            <p class="docs-placeholder">Not created</p>
-            <h4 class="text-body docs-subhead">Missing variants</h4>
-            <p class="docs-section__desc">All 1 variant (other properties: ).</p>
+            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--success">CSS 1 / 1</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2410-41" rel="noopener noreferrer">Figma node 2410:41</a></p>
+            <p class="docs-section__desc">The 1 covered variants are rendered on <a href="empty-state.html">the Empty state page</a>.</p>
           </section>
           </section>
 
@@ -732,8 +729,8 @@
         <th scope="row" class="data-table__row-header"><a href="#unit-alert">Alert</a></th>
         <td class="data-table__cell">Feedback</td>
         <td class="data-table__cell data-table__cell--end">4</td>
-        <td class="data-table__cell data-table__cell--end">0</td>
-        <td class="data-table__cell"><span class="badge badge--neutral">Not created</span></td>
+        <td class="data-table__cell data-table__cell--end">4</td>
+        <td class="data-table__cell"><span class="badge badge--success">Complete</span></td>
         <td class="data-table__cell">Icon Button</td>
         <td class="data-table__cell"><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2407-277" rel="noopener noreferrer">2407:277</a></td>
       </tr>
@@ -741,8 +738,8 @@
         <th scope="row" class="data-table__row-header"><a href="#unit-toast">Toast</a></th>
         <td class="data-table__cell">Feedback</td>
         <td class="data-table__cell data-table__cell--end">5</td>
-        <td class="data-table__cell data-table__cell--end">0</td>
-        <td class="data-table__cell"><span class="badge badge--neutral">Not created</span></td>
+        <td class="data-table__cell data-table__cell--end">5</td>
+        <td class="data-table__cell"><span class="badge badge--success">Complete</span></td>
         <td class="data-table__cell">Icon Button</td>
         <td class="data-table__cell"><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2408-73" rel="noopener noreferrer">2408:73</a></td>
       </tr>
@@ -786,8 +783,8 @@
         <th scope="row" class="data-table__row-header"><a href="#unit-empty-state">Empty state</a></th>
         <td class="data-table__cell">Feedback</td>
         <td class="data-table__cell data-table__cell--end">1</td>
-        <td class="data-table__cell data-table__cell--end">0</td>
-        <td class="data-table__cell"><span class="badge badge--neutral">Not created</span></td>
+        <td class="data-table__cell data-table__cell--end">1</td>
+        <td class="data-table__cell"><span class="badge badge--success">Complete</span></td>
         <td class="data-table__cell">Button</td>
         <td class="data-table__cell"><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2410-41" rel="noopener noreferrer">2410:41</a></td>
       </tr>
@@ -921,8 +918,8 @@
         <th scope="row" class="data-table__row-header">Total</th>
         <td class="data-table__cell">33 components</td>
         <td class="data-table__cell data-table__cell--end">194</td>
-        <td class="data-table__cell data-table__cell--end">115</td>
-        <td class="data-table__cell">15 Complete, 0 Partial, 18 Not created</td>
+        <td class="data-table__cell data-table__cell--end">125</td>
+        <td class="data-table__cell">18 Complete, 0 Partial, 15 Not created</td>
         <td class="data-table__cell"><span class="docs-muted">suggestion, not a Figma fact</span></td>
         <td class="data-table__cell"></td>
       </tr>
