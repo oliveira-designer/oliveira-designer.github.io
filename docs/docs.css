@@ -54,8 +54,15 @@
   text-decoration: underline;
 }
 
-.docs-main code {
+/* Plus Jakarta Sans everywhere: no element falls back to the browser's monospace default. */
+.docs-main code,
+.docs-main pre,
+.docs-main kbd,
+.docs-main samp {
   font-family: var(--font-body);
+}
+
+.docs-main code {
   font-size: var(--fs-body-sm);
   overflow-wrap: break-word; /* long composite values wrap; short ones keep their width */
 }
@@ -406,8 +413,7 @@
    Model layout (layout: 'ds'): the visual language of design-system.html.
    Full width (no container gutters), grouped side menu, card with the live
    example, code revealed by a native <details>. Used by the Badge page first.
-   Hope tokens only. No token exists for the side menu width, so the column is
-   sized by its content instead of a literal (reported, not invented).
+   Hope tokens only. The side menu width is the one fixed literal (see .docs-ds-layout).
    ============================================================ */
 .docs-main.docs-main--ds {
   padding-top: var(--header-height);
@@ -416,7 +422,9 @@
 
 .docs-ds-layout {
   display: grid;
-  grid-template-columns: auto 1fr;
+  /* Fixed side menu width, hard-coded once (owner decision, no token): 184px is what the content-sized column
+     rendered at 1280px with Plus Jakarta Sans loaded (183.7px). Figma Layout/Sidebar is 240 and has no CSS token. */
+  grid-template-columns: 184px 1fr;
   min-height: calc(100vh - var(--header-height));
 }
 

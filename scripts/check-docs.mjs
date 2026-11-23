@@ -11,6 +11,7 @@
 //   3. a docs page does not link css/hope.css (the generated aggregate).
 //   4. the header chrome of docs/*.html differs between pages.
 //   5. docs/docs.css contains a hardcoded color (it must use Hope tokens).
+//  10. docs/docs.css, a docs page or a docs generator contains a monospace font stack (Hope is Plus Jakarta Sans only).
 //   8. a docs page lacks the theme switch (Light, Dark, System) or its boot script.
 //   7. docs/components/review.html (the temporary review page): exists, lists every unit of
 //      docs/data/figma-components-inventory.json exactly once, has one "Still to create"
@@ -118,6 +119,22 @@ const docsClasses = classesIn(docsCssText);
   const text = stripCss(docsCssText);
   const bad = text.match(/#[0-9a-fA-F]{3,8}\b|\b(rgb|rgba|hsl|hsla)\(/g);
   if (bad) errors.push(`docs/docs.css: hardcoded color(s) ${[...new Set(bad)].join(', ')}; use Hope tokens`);
+}
+
+/* ---- no monospace font stack in docs.css, docs pages or the docs generators (Hope uses Plus Jakarta Sans only) ---- */
+{
+  const MONO = /font(?:-family)?\s*:[^;{}]*(?:\b(?:monospace|ui-monospace|SFMono-Regular|SF Mono|Menlo|Consolas|Courier(?: New)?|Monaco|Lucida Console)\b|var\(\s*--font-mono)/i;
+  const monoFiles = [
+    path.join(DOCS, 'docs.css'),
+    ...walk(DOCS, (p) => p.endsWith('.html')),
+    ...['docs-layout', 'build-tokens-doc', 'build-components-doc', 'build-review-page'].map((n) => path.join(ROOT, 'scripts', n + '.mjs')),
+  ];
+  for (const f of monoFiles) {
+    if (!fs.existsSync(f)) continue;
+    const text = fs.readFileSync(f, 'utf8');
+    const m = MONO.exec(text);
+    if (m) errors.push(`${rel(f)}:${lineOf(text, m.index)}: monospace font stack (${m[0].trim().slice(0, 60)}); Hope uses var(--font-body) only`);
+  }
 }
 
 /* ---- docs pages ---- */
