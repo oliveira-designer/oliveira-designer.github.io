@@ -1,0 +1,12 @@
+/* Hope DS: css/components/input.css
+   Figma: Core, Input. The box, the states and the label are in field.css (shared with Textarea and Select).
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   INPUT
+   Value Empty is the placeholder (field.css), Value Filled is the control's own color.
+   ---------------------------------------------------------- */
+.input {
+  min-width: 0;
+  text-overflow: ellipsis;
+}

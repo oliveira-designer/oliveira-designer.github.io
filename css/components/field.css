@@ -1,0 +1,170 @@
+/* Hope DS: css/components/field.css
+   Figma: Core, Input, Textarea and Select (State Default|Hover|Focus|Error|Disabled, Value Empty|Filled).
+   What the three share: the wrapper, the label, the helper text and the control box. input.css, textarea.css
+   and select.css only add what is specific to each.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/input.html):
+     <div class="field">
+       <label class="field__label" for="id">Label</label>
+       <div class="field__control">
+         <input class="input" id="id" aria-describedby="id-help">
+         <svg class="field__icon" aria-hidden="true">...</svg>      optional (Input), always present on Select
+       </div>
+       <p class="field__help" id="id-help">Helper text</p>
+     </div>
+   The wrapper .field__control exists to position the 16px icon over the control. A Textarea does not need it.
+   States: Hover = :hover, Focus = :focus-visible, Error = aria-invalid="true", Disabled = the disabled attribute. */
+
+/* ----------------------------------------------------------
+   FIELD: label, control wrapper, helper text
+   ---------------------------------------------------------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.field__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--color-text-1);
+}
+
+.field__control {
+  position: relative;
+  display: flex;
+}
+
+.field__help {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-xs);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-3);
+}
+
+/* Error: the helper text carries the message, in Danger and Medium weight. The label does not change. */
+.field:has([aria-invalid="true"]) .field__help {
+  font-weight: 500;
+  color: var(--color-text-danger-default);
+}
+
+/* Disabled: label and helper follow the control. */
+.field:has(.input:disabled, .textarea:disabled, .select:disabled) .field__label,
+.field:has(.input:disabled, .textarea:disabled, .select:disabled) .field__help {
+  color: var(--color-text-disabled-default);
+}
+
+/* 16px trailing icon, drawn over the control, not clickable. Color: Icon/Color Tertiary, Disabled when the control is. */
+.field__icon {
+  position: absolute;
+  top: 50%;
+  right: var(--space-3);
+  width: var(--space-4);
+  height: var(--space-4);
+  translate: 0 -50%;
+  fill: currentColor;
+  color: var(--icon-color-tertiary);
+  pointer-events: none;
+}
+
+:disabled + .field__icon {
+  color: var(--icon-color-disabled);
+}
+
+/* ----------------------------------------------------------
+   CONTROL BOX (shared by .input, .textarea and .select)
+   A border drawn inside the box in Figma is discounted from the padding with a token in calc()
+   (DESIGN-IMPLEMENTATION.md, "Borda dentro da caixa"). --field-border-width is the border of the current
+   state (1px, 1.5px on Error), so the outer size never changes between states.
+   ---------------------------------------------------------- */
+.input,
+.textarea,
+.select {
+  --field-border-width: var(--border-width-normal);
+  --field-border-color: var(--color-border-input);
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: calc(var(--space-3) - var(--field-border-width));
+  /* Browsers draw a 1.5px border as 1px on a 1x screen, which would shrink the Error box by 1px: the outer height
+     is fixed instead (12 + 12 + one line of 160%), the text stays centered. Figma: 44px, rendered 44.8px. */
+  min-height: calc(var(--space-6) + var(--fs-body-sm) * 1.6);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-1);
+  background-color: var(--color-bg);
+  border: var(--field-border-width) solid var(--field-border-color);
+  border-radius: var(--radius-sm);
+  appearance: none;
+  transition: border-color var(--duration-normal) var(--ease-out);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-text-3);
+  opacity: 1;
+}
+
+.input:hover,
+.textarea:hover,
+.select:hover {
+  --field-border-color: var(--color-border-strong);
+}
+
+/* Focus: the border stays as in Default; the ring is an outline, 2px with a 2px gap, following the radius. */
+.input:focus-visible,
+.textarea:focus-visible,
+.select:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Error: Danger border at 1.5px. The value text does not change. */
+.input[aria-invalid="true"],
+.textarea[aria-invalid="true"],
+.select[aria-invalid="true"] {
+  --field-border-color: var(--color-border-danger-default);
+  --field-border-width: var(--border-width-medium);
+}
+
+/* Disabled: no opacity. Filled text Text/Disabled/Default, empty text (placeholder) Text/Disabled/Inverse. */
+.input:disabled,
+.textarea:disabled,
+.select:disabled {
+  --field-border-color: var(--color-border-disabled-default);
+  --field-border-width: var(--border-width-normal);
+  color: var(--color-text-disabled-default);
+  background-color: var(--color-bg-disabled-default);
+  cursor: not-allowed;
+}
+
+.input:disabled::placeholder,
+.textarea:disabled::placeholder {
+  color: var(--color-text-disabled-inverse);
+}
+
+/* Room for the 16px icon: padding 12 + icon 16 + gap 8. */
+.field__control:has(.field__icon) > .input,
+.field__control:has(.field__icon) > .select {
+  padding-inline-end: calc(var(--space-3) + var(--space-4) + var(--space-2) - var(--field-border-width));
+}
+
+@media (forced-colors: active) {
+  .input,
+  .textarea,
+  .select {
+    border-color: CanvasText;
+  }
+  .input:disabled,
+  .textarea:disabled,
+  .select:disabled {
+    border-color: GrayText;
+  }
+}

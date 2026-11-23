@@ -1,0 +1,31 @@
+/* Hope DS: css/components/select.css
+   Figma: Core, Select (the closed trigger). The box, the states and the label are in field.css.
+   Native <select>: the options panel is the browser's own (Figma draws it with the Menu component, not coded).
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   SELECT
+   Value Empty: the placeholder option is chosen. Give the first option an empty value, and mark the select
+   required (:invalid) or rely on :has(). Value Filled: the control's own color. The 16px CaretDown is the
+   .field__icon after the select (field.css), so its color follows the Icon/Color tokens.
+   ---------------------------------------------------------- */
+.select {
+  min-width: 0;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.select:invalid,
+.select:has(option[value=""]:checked) {
+  color: var(--color-text-3);
+}
+
+.select:disabled:invalid,
+.select:disabled:has(option[value=""]:checked) {
+  color: var(--color-text-disabled-inverse);
+}
+
+/* The panel lists real values: keep them in the filled color. */
+.select option {
+  color: var(--color-text-1);
+}

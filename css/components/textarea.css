@@ -1,0 +1,13 @@
+/* Hope DS: css/components/textarea.css
+   Figma: Core, Textarea. The box, the states and the label are in field.css (shared with Input and Select).
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   TEXTAREA
+   Figma: the field is 96px high, padding included (box-sizing is border-box). Resize is not defined in Figma:
+   vertical only, so the width of the field never changes (inference, recorded as a gap).
+   ---------------------------------------------------------- */
+.textarea {
+  min-height: var(--space-24);
+  resize: vertical;
+}
