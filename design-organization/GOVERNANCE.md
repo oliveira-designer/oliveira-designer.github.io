@@ -1,6 +1,8 @@
 # GOVERNANCE.md
 # Hope Design System — Regras de Evolução
-# Versão 1.5 · novembro de 2026
+# Versão 1.6 · novembro de 2026
+
+**Changelog v1.6 (MINOR, 23/11/2026)**: abolida a regra "o componente só entra no CSS quando houver uso" (o "teste do projeto real" da seção 8). Os componentes que existem no Figma passam a ser codificados em lotes por família (Lotes 0 a 4: Primitives, Forms, Feedback, Navigation, Overlays e dados), a partir do Figma, com ou sem uso no site. Os quatro testes da seção 9 viram três: o teste 4 ("projeto real") foi removido. Decisão de Renan, diário de decisões D-16 e D-33. Nenhuma outra regra mudou.
 
 **Changelog v1.5 (MINOR, 19/11/2026)**: seção 7 reescrita como "Fontes da verdade e ciclo de divergência". O Figma passa a ser canônico para os VALORES de token e de componente; este repositório é canônico para prosa, regras e changelog; cópias derivadas (documentos de projeto, o arquivo `hope-context.md` do Drive, demos) nunca são editadas como fonte. Entra o ciclo de relatório de divergência (Bloqueia, Atenção, Informativo). Removida a regra "Realidade vence documentação" (seção 6, seção 7 e seção 10), que contradizia a nova ordem. Registro retroativo: a subseção "CSS gerado pelo Tailwind: passo obrigatório em upgrade" da seção 11 foi adicionada em 19/11/2026 (commit 76bdca6, DESIGN.md v2.6.13) sem versão nem changelog neste arquivo.
 
@@ -312,17 +314,9 @@ O maior risco para o Hope **não é falta de features**. É excesso. Cada token 
 - Suportar 8 frameworks frontend antes de ter um projeto rodando
 - Documentar 30 padrões de naming antes de escrever a primeira linha de código
 
-### O teste do projeto real
+### Como os componentes entram no CSS
 
-Antes de adicionar qualquer coisa ao Hope, pergunte: **estou usando isso em um projeto real, hoje?**
-
-Se a resposta é "não, mas vou precisar" — adie. YAGNI (You Aren't Gonna Need It) é regra. A maioria das coisas que "você vai precisar" nunca chegam a ser usadas.
-
-Se a resposta é "sim, agora" — adicione, com critério de sucesso.
-
-### Quando expandir
-
-A expansão certa do Hope acontece quando **um projeto real força a mão**. Você está construindo um plugin e percebe que falta um padrão para popovers? Aí adicione popover ao sistema. Não antes.
+Os componentes que existem no Figma são codificados em lotes por família, a partir do Figma, tenha o site uso para eles ou não: Lote 0 Primitives (Button, Badge, Link, Separator), Lote 1 Forms, Lote 2 Feedback, Lote 3 Navigation e Lote 4 Overlays e dados. Cada lote é um prompt separado.
 
 ---
 
@@ -330,9 +324,9 @@ A expansão certa do Hope acontece quando **um projeto real força a mão**. Voc
 
 A régua existe porque sugestões de IA tendem a propor componentes para todos os cenários possíveis. Esta seção te dá os critérios para responder "não" rapidamente — ou "sim" com confiança.
 
-### Os quatro testes
+### Os três testes
 
-Antes de criar um componente novo, ele precisa passar nos quatro testes abaixo. **Falhou em um? Não cria.**
+Antes de criar um componente novo, ele precisa passar nos três testes abaixo. **Falhou em um? Não cria.**
 
 **Teste 1 — Cobertura do existente.**
 Algum componente existente cobre 80% ou mais do uso pretendido?
@@ -347,11 +341,6 @@ A diferença para o existente é apenas visual (cor, padding, radius)?
 **Teste 3 — Reuso real.**
 O componente novo será usado em mais de um lugar?
 - Não → é padrão local da página, não componente do sistema. Implemente no contexto.
-- Sim → passa para o teste 4.
-
-**Teste 4 — Projeto real.**
-Você está usando isso em um projeto que está rodando hoje?
-- Não → adie. YAGNI (seção 8).
 - Sim → ok. Cria o componente.
 
 ### Quando estender com variante
@@ -394,7 +383,7 @@ Cada componente do sistema custa:
 - Manutenção em todas as fases futuras (mudou paleta? mudou tipografia? precisa atualizar)
 - Carga cognitiva permanente (mais uma coisa para lembrar)
 
-Vale o preço? Aplique os quatro testes. Se passou, vale.
+Vale o preço? Aplique os três testes. Se passou, vale.
 
 ---
 
@@ -521,4 +510,4 @@ Componente sem decisão fica numa seção "Em revisão", com o nome sufixado `(l
 
 ---
 
-*Hope Design System · GOVERNANCE.md · v1.5 · novembro de 2026 · Renan Moura*
+*Hope Design System · GOVERNANCE.md · v1.6 · novembro de 2026 · Renan Moura*

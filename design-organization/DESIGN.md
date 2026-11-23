@@ -1057,7 +1057,7 @@ Esta seção espelha o que mudou no Figma (Hope DS | Foundation e Core Component
 
 Formulários: Checkbox, Radio, Switch, Textarea, Select (gatilho fechado). Feedback: Alert, Toast, Tooltip, Progress, Spinner, Skeleton, Empty state. Navegação: Tabs, Breadcrumb, Pagination, Menu. Overlays e dados: Modal, Popover, Avatar, Tag, Accordion.
 
-Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados no código (teste 4 do `GOVERNANCE.md`). Table e Card genérico ficam de fora por decisão.
+Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados no código, em lotes por família (GOVERNANCE v1.6). Table e Card genérico ficam de fora por decisão.
 
 ### Componentes primitivos no código (Lote 0, 2026-11-21)
 

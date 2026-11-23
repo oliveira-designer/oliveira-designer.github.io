@@ -20,7 +20,7 @@ Cada padrão tem cinco partes:
 4. **Backgrounds atmosféricos** — onde entram (e onde não entram)
 5. **Anti-padrões** — o que evitar
 
-Padrões aqui são **descritivos, não prescritivos absolutos**. Servem como ponto de partida — variações pequenas são esperadas. Variações grandes viram padrão novo (e passam pelos quatro testes do `GOVERNANCE.md` seção 9).
+Padrões aqui são **descritivos, não prescritivos absolutos**. Servem como ponto de partida — variações pequenas são esperadas. Variações grandes viram padrão novo (e passam pelos três testes do `GOVERNANCE.md` seção 9).
 
 ---
 
@@ -261,7 +261,7 @@ O foco é **leitura**. Não é UI, não é catálogo — é texto bem composto.
 
 Quando aparecer uma necessidade real que não cabe em nenhum dos três acima:
 
-1. Aplique os quatro testes do `GOVERNANCE.md` seção 9
+1. Aplique os três testes do `GOVERNANCE.md` seção 9
 2. Se passar, adicione aqui com a mesma estrutura (Propósito → Anatomia → Densidade → Backgrounds → Anti-padrões)
 3. Documente no changelog deste arquivo
 

@@ -1,6 +1,6 @@
 # Hope DS: diário de decisões (material de case)
 
-Versão 0.9 · 2026-11-21 · Rascunho vivo, uso interno (Renan e agentes)
+Versão 0.10 · 2026-11-23 · Rascunho vivo, uso interno (Renan e agentes)
 
 ## Como ler este documento
 
@@ -220,6 +220,17 @@ Versão 0.9 · 2026-11-21 · Rascunho vivo, uso interno (Renan e agentes)
 - **Hover e Focus do Link:** só passam a negrito, sem mudança de cor; o negrito alarga o texto cerca de 1px e causa um pequeno deslocamento. Renan aceitou. O Focus também é negrito, com anel de 2px a 2px de distância, quadrado. [Registrado]
 - **Badge:** Success usa 12% de opacidade no fundo e Danger 10%. Renan: seguir o Figma, são cores diferentes e merecem tratamento diferente. [Registrado]
 - **Descrições dos estilos de texto (Foundation):** 23 estilos tinham descrição defasada. Os estilos do Link e de Body sm repetiam `clamp(12px, 1vw, 13px)`; H3, Body, Body xs e Label ainda diziam `clamp(...)` embora os tamanhos sejam fixos desde a v2.6.12 e v2.6.13; Body lg citava `--fs-body-lg` (17px), removido; Metric citava Geist. Corrigi para "tamanho · token" (por exemplo `13px · --fs-body-sm`). Display, H1, H2 e Body xl ficaram como estavam, porque seguem fluidos. Renan autorizou corrigir as descrições do Link; a correção dos demais estilos foi minha extensão, feita por serem da mesma classe de erro, e precisa da publicação do Foundation por Renan. [Registrado para o Link; Inferência de escopo para os demais]
+
+### D-33 Resultado do Lote 0, geometria do Badge, regra de uso e quatro testes
+- **Resultado (Prompt 16, 2026-11-23):** Badge 5 de 5, Link 8 de 8 e Separator 1 de 1 no CSS; variantes com CSS foram de 34 para 44 de 171. Medição no navegador contra o Figma: o Link bateu em todas as linhas e o Separator renderiza em 1px; o Badge divergiu em geometria (ver abaixo). O Separator usa `<hr class="separator" aria-hidden="true">`; o Link desabilitado é uma âncora sem `href` com `aria-disabled="true"`. O Code achou e corrigiu um erro dele (seletor `:not(.link)` que mudava 151 elementos na página de tokens). [Registrado: relatório do Code]
+- **Correção minha:** eu tinha apresentado "Success 12% e Danger 10%" como possível decisão de tratamento. A leitura do Foundation mostra que é o alfa do próprio token: `Background/Positive/Secondary` Light `#4a9f6b` a 12% e `Background/Danger/Secondary` Light `#b83434` a 10%; no Dark os dois são sólidos (`Night/success-soft` `#162418`, `Night/error-soft` `#261616`). Não há opacidade somada. [Registrado: leitura direta]
+- **Geometria do `.badge`:** o site renderizava padding 3/10, line-height 1,5 e 25,5px de altura; o Figma define padding 4/12, line-height 160% e 29px. Decisão de Renan: corrigir para o Figma (D-01), o que aumenta os badges em cerca de 3,5px nas páginas de case. [Registrado]
+- **Borda do Neutral:** o Figma tinha 0,5px sem variável e o CSS usa 0,8px (`--border-thin`); no Chromium os dois renderizam como 1px. Decisão de Renan: o Figma é que muda. Liguei a borda do Badge Neutral a `Stroke/hairline` (0,8px) em 2026-11-23, sem mudança no CSS. [Registrado]
+- **`.badge--success`:** o Code manteve o literal `rgba(74,159,107,0.12)` porque o token muda o Dark em `design-system.html`. Decisão de Renan: usar o token (`--color-bg-positive-secondary`), igual ao Danger. Renan: definições de Dark não são proibidas, só não são o foco; o D-05 adia as divergências do dark mode, não as proíbe. [Registrado]
+- **Snippet `a.link` do DESIGN-IMPLEMENTATION §15:** nunca foi implementado e o nome `.link` agora é o componente Link do Figma. Decisão de Renan: remover o snippet. [Registrado]
+- **Regra "componente entra no CSS quando houver uso":** Renan autorizou mudar e disse que "podemos até removê-la". Decisão: GOVERNANCE v1.6 remove a regra. A página "Como usar" do Figma foi corrigida por mim em 2026-11-23. [Registrado]
+- **Quatro testes viram três:** o teste 4 ("há projeto real usando hoje?") contradiz a abolição da regra. Opções: (a) remover, (b) reescrever para "uso real ou previsto", (c) manter. Renan escolheu (a). [Registrado] Minha recomendação foi (a) porque (b) passaria sempre e não filtraria nada; os três restantes (cobertura de 80%, diferença só visual, reuso) já cobrem duplicação e reuso. [Inferência]
+- **Publicação:** o Core precisa ser publicado de novo (Badge Neutral ligado ao hairline, texto da página "Como usar"). [Registrado]
 
 ## Pendências para o case
 
