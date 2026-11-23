@@ -5,14 +5,20 @@
    Markup contract (docs/components/progress.html):
      <div class="progress">
        <div class="progress__header">
-         <label class="progress__label" for="ID">Uploading</label>
+         <span class="progress__label" id="ID">Uploading</span>
          <span class="progress__value" aria-hidden="true">50%</span>
        </div>
-       <progress class="progress__bar" id="ID" value="50" max="100">50%</progress>
+       <div class="progress__bar" role="progressbar" aria-labelledby="ID" aria-valuemin="0" aria-valuemax="100"
+            aria-valuenow="50" style="--progress-value: 50%">
+         <span class="progress__fill"></span>
+       </div>
      </div>
-   A native <progress> (implicit progressbar role, no ARIA wiring) named by the label. The visible value is hidden from
-   assistive technology because the progressbar already reports it. The label and the value are optional; without a
-   visible label give the <progress> an aria-label. */
+   Why not a native <progress>: tested in Chromium, Firefox and WebKit. The native element matched the geometry in all
+   three, but Firefox draws ::-moz-progress-bar without honoring transitions, so the fill jumped instead of animating.
+   The div with role="progressbar" animates in every engine. The author keeps aria-valuenow and --progress-value in sync
+   (the CSS reads the percentage; it cannot read the ARIA attribute). The visible value is hidden from assistive
+   technology because the progressbar already reports it. Without a visible label use aria-label instead of
+   aria-labelledby. */
 
 /* ----------------------------------------------------------
    PROGRESS
@@ -45,34 +51,22 @@
 }
 
 .progress__bar {
+  --progress-value: 0%;
   display: block;
   width: 100%;
   height: var(--space-2);
-  margin: 0;
-  padding: 0;
   overflow: hidden;
   background-color: var(--color-border);
-  border: 0;
-  border-radius: var(--radius-pill);
-  appearance: none;
-}
-
-/* Chromium and Safari */
-.progress__bar::-webkit-progress-bar {
-  background-color: var(--color-border);
   border-radius: var(--radius-pill);
 }
 
-.progress__bar::-webkit-progress-value {
+.progress__fill {
+  display: block;
+  width: var(--progress-value);
+  height: 100%;
   background-color: var(--color-bg-neutral-default);
   border-radius: var(--radius-pill);
   transition: width var(--duration-normal) var(--ease-in-out);
-}
-
-/* Firefox */
-.progress__bar::-moz-progress-bar {
-  background-color: var(--color-bg-neutral-default);
-  border-radius: var(--radius-pill);
 }
 
 @media (forced-colors: active) {
@@ -81,11 +75,7 @@
     background-color: Canvas;
     border: 1px solid CanvasText;
   }
-  .progress__bar::-webkit-progress-bar {
-    background-color: Canvas;
-  }
-  .progress__bar::-webkit-progress-value,
-  .progress__bar::-moz-progress-bar {
+  .progress__fill {
     background-color: Highlight;
   }
 }
