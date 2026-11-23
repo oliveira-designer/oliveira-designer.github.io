@@ -110,23 +110,14 @@
         <div class="docs-ds-content">
           <header class="docs-ds-head">
             <h1 class="text-h1">Toast</h1>
-            <p class="docs-ds-desc">Floating, passing feedback in five types: Default, Success, Warning, Error and Info. Message, optional description, action and dismiss. The positioning region and the timing are not part of this component.</p>
+            <p class="docs-ds-desc">Floating, passing feedback in four types: Success, Warning, Error and Info (a neutral message uses Info). Message, optional description, action and dismiss. The positioning region and the timing are not part of this component.</p>
           </header>
 
           <section class="docs-ds-section" id="example" aria-labelledby="example-title">
             <h2 class="text-label text-tertiary" id="example-title">Live example</h2>
             <div class="docs-ds-card">
               <div class="docs-ds-preview">
-                <!-- demo:start --><div class="toast toast--default" role="status">
-                    <span class="toast__icon" aria-hidden="true"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"/></svg></span>
-                    <div class="toast__content">
-                      <p class="toast__message">Message</p>
-                      <p class="toast__description">Short supporting text.</p>
-                    </div>
-                    <a class="toast__action" href="#example">Undo</a>
-                    <button type="button" class="toast__dismiss" aria-label="Dismiss"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg></button>
-                  </div>
-                  <div class="toast toast--success" role="status">
+                <!-- demo:start --><div class="toast toast--success" role="status">
                     <span class="toast__icon" aria-hidden="true"><svg class="icon" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></svg></span>
                     <div class="toast__content">
                       <p class="toast__message">Message</p>
@@ -166,16 +157,7 @@
             </div>
             <details class="docs-ds-code">
               <summary>HTML</summary>
-<pre class="docs-ds-code__block">&lt;div class=&quot;toast toast--default&quot; role=&quot;status&quot;&gt;
-  &lt;span class=&quot;toast__icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;svg class=&quot;icon&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;
-  &lt;div class=&quot;toast__content&quot;&gt;
-    &lt;p class=&quot;toast__message&quot;&gt;Message&lt;/p&gt;
-    &lt;p class=&quot;toast__description&quot;&gt;Short supporting text.&lt;/p&gt;
-  &lt;/div&gt;
-  &lt;a class=&quot;toast__action&quot; href=&quot;#example&quot;&gt;Undo&lt;/a&gt;
-  &lt;button type=&quot;button&quot; class=&quot;toast__dismiss&quot; aria-label=&quot;Dismiss&quot;&gt;&lt;svg class=&quot;icon&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-&lt;/div&gt;
-&lt;div class=&quot;toast toast--success&quot; role=&quot;status&quot;&gt;
+<pre class="docs-ds-code__block">&lt;div class=&quot;toast toast--success&quot; role=&quot;status&quot;&gt;
   &lt;span class=&quot;toast__icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;svg class=&quot;icon&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;
   &lt;div class=&quot;toast__content&quot;&gt;
     &lt;p class=&quot;toast__message&quot;&gt;Message&lt;/p&gt;
@@ -233,11 +215,6 @@
     </thead>
     <tbody>
       <tr>
-        <th scope="row" class="data-table__row-header">Default</th>
-        <td class="data-table__cell"><code>.toast.toast--default</code></td>
-        <td class="data-table__cell"><code>--icon-color-secondary</code></td>
-      </tr>
-      <tr>
         <th scope="row" class="data-table__row-header">Success</th>
         <td class="data-table__cell"><code>.toast.toast--success</code></td>
         <td class="data-table__cell"><code>--icon-color-positive</code> <code>--icon-color-default</code></td>
@@ -264,7 +241,7 @@
 
           <section class="docs-ds-section" id="accessibility" aria-labelledby="accessibility-title">
             <h2 class="text-label text-tertiary" id="accessibility-title">Accessibility</h2>
-            <p class="docs-ds-note">Error uses role=&quot;alert&quot;, the other types use role=&quot;status&quot;. Role by type: Error and Warning use role=&quot;alert&quot;, Info and Success use role=&quot;status&quot;. MDN: developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role and .../status_role. Default and Info share the Info glyph and differ only by color, so the type is not carried by color alone for Info.</p>
+            <p class="docs-ds-note">Error uses role=&quot;alert&quot;, Warning, Info and Success use role=&quot;status&quot;. The dismiss button needs an accessible name, and the type never relies on color alone: the glyph and the text say it too. Live-region roles (alert, status) announce content that is inserted into the page. An Alert already present when the page loads needs no role to be read: apply the role when you inject the message. MDN: developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role and .../status_role.</p>
           </section>
         </div>
     </div>

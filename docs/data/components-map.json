@@ -1122,8 +1122,8 @@
       "renderOnPage": "alert"
     },
     "Toast": {
-      "figmaVariants": 5,
-      "implemented": 5,
+      "figmaVariants": 4,
+      "implemented": 4,
       "base": ".toast",
       "stateMechanisms": {
         "hover": "not applicable, no hover change in Figma",
@@ -1131,12 +1131,6 @@
         "disabled": "not applicable"
       },
       "variants": [
-        {
-          "type": "Default",
-          "selector": ".toast.toast--default",
-          "rule": ".toast--default",
-          "mechanism": "modifier sets the icon and dismiss colors"
-        },
         {
           "type": "Success",
           "selector": ".toast.toast--success",
