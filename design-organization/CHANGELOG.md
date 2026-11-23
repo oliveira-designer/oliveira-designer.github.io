@@ -5,6 +5,36 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.9.0 · 23 de novembro de 2026 · Lote 1 (Forms): Input, Textarea, Select, Checkbox, Radio e Switch, regra única da borda dentro da caixa (MINOR)
+
+**Versão escolhida: MINOR (2.8.1 para 2.9.0).** Regra aplicada: seção 3 do `GOVERNANCE.md`, MINOR cobre "novo componente entra no DESIGN.md": entram seis componentes, em `css/components/`, e dois tokens. Não é MAJOR: nenhum nome ou classe existente foi removido. Versões: `DESIGN.md`, `DESIGN-IMPLEMENTATION.md` e `tokens.css` (cabeçalho) 2.9.0, `GOVERNANCE.md` 1.6.1 (PATCH, ver item 6) e `PATTERNS.md` 1.1.2 sem mudança.
+
+**1. Tokens novos (dois, ambos já no Figma Foundation)**
+- `--border-width-medium: 1.5px` (Figma `Stroke/medium`), ao lado de `--border-width-normal` e `--border-width-accent`.
+- `--color-border-input` (Figma `Border/Utilities/Input`): Light `--color-night-400` (3,12:1 sobre branco), Dark `--color-night-500` (3,19:1 sobre o fundo escuro). O `--color-border` do campo media 1,29:1 e não passava de 3:1 (WCAG 1.4.11).
+- O snapshot `docs/data/figma-tokens.json` (leitura de 20/11/2026) ainda não tem `Border/Utilities/Input` e traz `Stroke/medium` sem code syntax: precisa de um novo snapshot do Figma. A página de tokens mostra os dois como "not in Figma" até lá.
+
+**2. Regra única da borda dentro da caixa**
+- Uma borda desenhada dentro da caixa no Figma é descontada do padding no CSS, com um token dentro de `calc()`; nunca `box-shadow: inset` (some no modo de alto contraste do Windows). Escrita em `DESIGN-IMPLEMENTATION.md`, seção 5. Vale para Button (D-23), Badge Neutral, Input, Textarea e Select. Nos campos, uma custom property (`--field-border-width`) guarda a borda do estado (1px, 1,5px no Error) para a caixa não mudar de tamanho.
+- Badge Neutral passa de 30,8px para 28,8px de altura (os outros estilos já tinham 28,8) e fica 2px mais estreito: o traço de 0,8px deixa de somar ao box. A lacuna `badge-neutral-height` fecha.
+
+**3. Componentes novos (Lote 1)**
+- `css/components/field.css` (o que Input, Textarea e Select compartilham: `.field`, `.field__label`, `.field__control`, `.field__icon`, `.field__help` e a caixa do controle) e `input.css`, `textarea.css`, `select.css`, `checkbox.css`, `radio.css`, `switch.css`. Controles nativos com `appearance: none`, sem JavaScript. Estados: Hover, Focus (`:focus-visible`, anel de 2px com 2px de espaço), Error (`aria-invalid="true"`, borda de 1,5px, o texto do valor não muda, a mensagem vai no texto de apoio), Disabled (atributo `disabled`, sem `opacity`). Eixo Value dos campos: Empty (placeholder) e Filled. Switch sem Error. Marca do Checkbox por máscara (a cor é um token) e regras de `forced-colors`.
+- Hover de Checkbox, Radio e Switch vale com o ponteiro sobre o rótulo inteiro (inferência; o Figma define só no controle). O painel de opções do Select é o do navegador (o Menu não está no código).
+- Figma a CSS: 63 variantes (Input 10, Textarea 10, Select 10, Checkbox 15, Radio 10, Switch 8), todas com CSS.
+
+**4. Páginas de docs**
+- Seis páginas novas pelo gerador genérico (`example.markup` estático no conteúdo). Lacunas conhecidas registradas nos dados, com medidas: contraste do `--color-border-input` sobre a superfície Secondary (2,91:1 Light e 2,83:1 Dark), `select-options-panel`, resize do Textarea, hover no rótulo, nome acessível que inclui o texto de apoio, entre outras; e `tag-border-contrast` como nota para o lote do Tag.
+- Cobertura: 115 de 194 variantes com CSS (eram 52 de 179). O inventário passa a contar o eixo Value de Input, Textarea e Select (5 para 10 variantes cada).
+
+**5. Rótulo de documentação**
+- `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` listam os Forms no código e a regra da borda.
+
+**6. GOVERNANCE 1.6.1 (PATCH)**
+- Três trechos que ainda diziam o contrário da v1.6 foram reescritos com o menor ajuste: os anti-padrões "Componente preventivo" (agora "Componente sem desenho") e "Componente para um único uso" (seção 9), e "YAGNI vence sofisticação" (agora "Simplicidade vence sofisticação", seção 10). Também o comentário sobre `.badge--warning` em `DESIGN-IMPLEMENTATION.md`. Nenhuma regra mudou. PATCH porque é refinamento de texto (seção 3).
+
+---
+
 ## v2.8.1 · 23 de novembro de 2026 · Site de docs: um layout para todas as páginas, um gerador de componentes e a página de tokens com o componente Table (documentação, PATCH)
 
 **Versão escolhida: PATCH (2.8.0 para 2.8.1).** Regra aplicada: seção 3 do `GOVERNANCE.md`, PATCH cobre "melhoria de documentação sem mudança técnica". Mudaram `docs/`, `scripts/` e `docs/docs.css`; nenhum token, classe ou CSS de componente mudou, e `css/hope.css` só muda no comentário de versão. Os cabeçalhos de versão foram atualizados para 2.8.1 (`tokens.css`, `DESIGN.md`, `DESIGN-IMPLEMENTATION.md`), como na 2.8.0; a entrada 2.6.18, também só de docs, os deixou como estavam. `GOVERNANCE.md` segue em 1.6 e `PATTERNS.md` em 1.1.2.
