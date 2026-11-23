@@ -1,7 +1,7 @@
 /* ============================================================
    HOPE DESIGN SYSTEM: hope.css
    GENERATED FILE. Do not edit by hand.
-   Built by scripts/build-css.mjs (npm run css:build) from 40 source files:
+   Built by scripts/build-css.mjs (npm run css:build) from 41 source files:
    tokens, reset, components/*, site/*. Edit the sources, then rebuild.
    css/auth.css (loaded by js/auth.js) and css/output.css (Tailwind) stay separate.
    ============================================================ */
@@ -2807,6 +2807,112 @@ p { max-width: 70ch; }
   color: var(--color-text-3);
   line-height: 1.8;
   margin: 0;
+}
+
+/* ===== css/components/table.css ===== */
+/* Hope DS: css/components/table.css
+   Figma: Core, page "Table" (Table State Default|Focus, Table Header Cell Align Left|Right,
+   Table Cell Type Data|Row header, Align Left|Right).
+   Edit this file, then run: npm run css:build
+
+   Markup contract (see docs/components/table.html):
+     <div class="data-table" role="region" aria-labelledby="CAPTION_ID" tabindex="0">
+       <table class="data-table__grid">
+         <caption class="data-table__caption" id="CAPTION_ID">...</caption>
+         <thead><tr><th scope="col" class="data-table__head-cell">...</th></tr></thead>
+         <tbody><tr><th scope="row" class="data-table__row-header">...</th><td class="data-table__cell">...</td></tr></tbody>
+       </table>
+     </div>
+   No rowspan or colspan. The wrapper is always focusable so keyboard users can scroll it.
+   The block is named data-table, not table, because Tailwind ships a .table utility (display: table). */
+
+/* ----------------------------------------------------------
+   TABLE
+   The wrapper owns the border, the radius and the horizontal scroll; the table is separate-border
+   so nothing on it can square the wrapper corners.
+   ---------------------------------------------------------- */
+.data-table {
+  max-width: 100%;
+  overflow-x: auto;
+  background-color: var(--color-bg);
+  border: var(--border-width-normal) solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* Focus: 2px ring with a 2px gap. The outline follows the wrapper radius (12 + 2 + 2 = 16, Radius/radius-lg). */
+.data-table:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+.data-table__grid {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+  color: var(--color-text-1);
+}
+
+/* Optional, visible by default. Never hide it with display or visibility: use --hidden. */
+.data-table__caption {
+  padding: var(--space-3) var(--space-4);
+  text-align: start;
+  font-weight: 400;
+  color: var(--color-text-2);
+  border-bottom: var(--border-width-normal) solid var(--color-border);
+}
+
+/* Visually hidden, still in the accessibility tree. */
+.data-table__caption--hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.data-table__head-cell,
+.data-table__row-header,
+.data-table__cell {
+  padding: var(--space-3) var(--space-4);
+  text-align: start;
+  vertical-align: top;
+  border-bottom: var(--border-width-normal) solid var(--color-border);
+}
+
+.data-table__head-cell {
+  background-color: var(--color-bg-alt);
+  font-weight: 500;
+  color: var(--color-text-1);
+}
+
+.data-table__row-header {
+  font-weight: 500;
+  color: var(--color-text-1);
+}
+
+.data-table__cell {
+  font-weight: 400;
+  color: var(--color-text-1);
+}
+
+/* No separator under the last row. */
+.data-table__grid tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+/* Numeric columns: put the modifier on the header cell and on every cell of the column. */
+.data-table__head-cell--end,
+.data-table__row-header--end,
+.data-table__cell--end {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ===== css/components/testimonial-card.css ===== */
