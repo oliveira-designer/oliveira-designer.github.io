@@ -1,0 +1,85 @@
+/* Hope DS: css/components/tooltip.css
+   Figma: Core, Tooltip (Placement Top|Bottom|Left|Right). Text only; no link, button or long content (that is a Popover).
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/tooltip.html):
+     <button type="button" aria-describedby="tip-id">Trigger</button>
+     <div class="tooltip tooltip--top" role="tooltip" id="tip-id">
+       <span class="tooltip__bubble">Tooltip text</span>
+       <span class="tooltip__arrow" aria-hidden="true"></span>
+     </div>
+   The placement says where the tooltip sits relative to its trigger: Top means the bubble is above the trigger and the
+   arrow points down at it. The component is the bubble plus the arrow (84 by 40 for the sample text, 90 by 34 for the
+   sides). Not coded here (see the gaps in the docs data): positioning against the trigger, showing and hiding, delay and
+   WCAG 1.4.13 (dismissible with Escape, hoverable, persistent). A tooltip never holds the only way to reach essential
+   information, because it does not appear on touch. */
+
+/* ----------------------------------------------------------
+   TOOLTIP
+   No border in Figma. The arrow is part of the layout with a 0 gap, so it touches the bubble.
+   ---------------------------------------------------------- */
+.tooltip {
+  position: relative;
+  z-index: var(--z-tooltip);  /* Figma Z-index/z-tooltip (400) */
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-body);
+}
+
+.tooltip--top { flex-direction: column; }
+.tooltip--bottom { flex-direction: column-reverse; }
+.tooltip--left { flex-direction: row; }
+.tooltip--right { flex-direction: row-reverse; }
+
+.tooltip__bubble {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--fs-body-xs);
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--color-text-neutral-default);
+  background-color: var(--color-bg-neutral-default);
+  border-radius: var(--radius-sm);
+}
+
+/* Arrow: 12 by 6 (Top, Bottom) or 6 by 12 (Left, Right), the same fill as the bubble. */
+.tooltip__arrow {
+  flex: none;
+  width: var(--space-3);
+  height: calc(var(--space-3) / 2);
+  background-color: var(--color-bg-neutral-default);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.tooltip--bottom .tooltip__arrow {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.tooltip--left .tooltip__arrow,
+.tooltip--right .tooltip__arrow {
+  width: calc(var(--space-3) / 2);
+  height: var(--space-3);
+}
+
+.tooltip--left .tooltip__arrow {
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.tooltip--right .tooltip__arrow {
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+/* Forced colors replace backgrounds with the system canvas: the bubble and the arrow keep a visible fill. */
+@media (forced-colors: active) {
+  .tooltip__bubble,
+  .tooltip__arrow {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+  }
+  .tooltip__bubble {
+    color: Canvas;
+  }
+}

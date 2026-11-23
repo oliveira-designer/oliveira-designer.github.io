@@ -1,0 +1,59 @@
+/* Hope DS: css/components/skeleton.css
+   Figma: Core, Skeleton (Shape Text|Title|Avatar|Block). A placeholder that imitates the shape of the content.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/skeleton.html):
+     <div aria-busy="true">
+       <span class="skeleton skeleton--title" aria-hidden="true"></span>
+       <span class="skeleton skeleton--text" aria-hidden="true"></span>
+     </div>
+   The container is marked aria-busy and the pieces are decorative. Use it for a load that takes more than about 300ms;
+   below that show nothing. The width is fluid (Figma shows 240 for Text and Block, 160 for Title); set it on the piece
+   or its container. */
+
+/* ----------------------------------------------------------
+   SKELETON
+   Fill Border/Default/Default, no stroke. The pulse is documented in Figma, not drawn: a soft opacity pulse in
+   ease-in-out. Figma names no duration, so it is two periods of the deliberate duration (a gap in the docs data); the
+   global reduced-motion rule in tokens.css stops it.
+   ---------------------------------------------------------- */
+.skeleton {
+  display: block;
+  width: 100%;
+  background-color: var(--color-border);
+  animation: skeleton-pulse calc(var(--duration-deliberate) * 2) var(--ease-in-out) infinite;
+}
+
+.skeleton--text {
+  height: var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton--title {
+  height: var(--space-5);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton--avatar {
+  width: var(--space-10);
+  height: var(--space-10);
+  border-radius: var(--radius-pill);
+}
+
+.skeleton--block {
+  height: 120px;  /* Figma Block: 120, no spacing token */
+  border-radius: var(--radius-md);
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Forced colors replace backgrounds with the canvas: the pieces keep a visible fill. */
+@media (forced-colors: active) {
+  .skeleton {
+    forced-color-adjust: none;
+    background-color: GrayText;
+  }
+}

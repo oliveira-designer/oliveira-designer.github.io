@@ -1,0 +1,91 @@
+/* Hope DS: css/components/progress.css
+   Figma: Core, Progress (Value 0|25|50|75|100 are the documented values; in code the fill is any value).
+   Determinate only: for a wait with no known percentage use the Spinner. Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/progress.html):
+     <div class="progress">
+       <div class="progress__header">
+         <label class="progress__label" for="ID">Uploading</label>
+         <span class="progress__value" aria-hidden="true">50%</span>
+       </div>
+       <progress class="progress__bar" id="ID" value="50" max="100">50%</progress>
+     </div>
+   A native <progress> (implicit progressbar role, no ARIA wiring) named by the label. The visible value is hidden from
+   assistive technology because the progressbar already reports it. The label and the value are optional; without a
+   visible label give the <progress> an aria-label. */
+
+/* ----------------------------------------------------------
+   PROGRESS
+   Track 8px high with a pill radius. The fill animates its width with the base duration and ease-in-out; the global
+   reduced-motion rule in tokens.css removes the transition.
+   ---------------------------------------------------------- */
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+}
+
+.progress__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.progress__label {
+  color: var(--color-text-1);
+}
+
+.progress__value {
+  color: var(--color-text-2);
+}
+
+.progress__bar {
+  display: block;
+  width: 100%;
+  height: var(--space-2);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--color-border);
+  border: 0;
+  border-radius: var(--radius-pill);
+  appearance: none;
+}
+
+/* Chromium and Safari */
+.progress__bar::-webkit-progress-bar {
+  background-color: var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.progress__bar::-webkit-progress-value {
+  background-color: var(--color-bg-neutral-default);
+  border-radius: var(--radius-pill);
+  transition: width var(--duration-normal) var(--ease-in-out);
+}
+
+/* Firefox */
+.progress__bar::-moz-progress-bar {
+  background-color: var(--color-bg-neutral-default);
+  border-radius: var(--radius-pill);
+}
+
+@media (forced-colors: active) {
+  .progress__bar {
+    forced-color-adjust: none;
+    background-color: Canvas;
+    border: 1px solid CanvasText;
+  }
+  .progress__bar::-webkit-progress-bar {
+    background-color: Canvas;
+  }
+  .progress__bar::-webkit-progress-value,
+  .progress__bar::-moz-progress-bar {
+    background-color: Highlight;
+  }
+}

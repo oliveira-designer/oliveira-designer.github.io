@@ -1,0 +1,96 @@
+/* Hope DS: css/components/icon-button.css
+   Figma: Core, Icon Button (Style Primary|Ghost, State Default|Hover|Focus|Disabled). A 44 by 44 round button with one
+   24px icon (WCAG 2.5.5). Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/icon-button.html):
+     <button type="button" class="icon-btn icon-btn--primary" aria-label="Add item">
+       <svg class="icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="..."/></svg>
+     </button>
+   Named .icon-btn, not a .btn modifier: .btn brings a padding, a gap and a full width under 768px that a 44 by 44 circle
+   would have to cancel. The button has an accessible name (aria-label). Disabled = the native attribute, no opacity. The
+   icon uses the existing .icon mechanism; its color is the Icon/Color role of each state. */
+
+/* ----------------------------------------------------------
+   ICON BUTTON
+   The size is fixed at 44 by 44 with border-box, so the 1px Primary Disabled border needs no discount from a padding.
+   ---------------------------------------------------------- */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 44px;  /* Figma: 44 (WCAG 2.5.5 target size); no 44px spacing token */
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out);
+}
+
+.icon-btn .icon {
+  width: var(--space-6);
+  height: var(--space-6);
+}
+
+/* Primary: Default and Focus Background/Neutral/Default, Hover Neutral/Hover; icon in the Neutral mode. */
+.icon-btn--primary {
+  color: var(--icon-color-neutral);
+  background-color: var(--color-bg-neutral-default);
+}
+
+.icon-btn--primary:hover {
+  background-color: var(--color-bg-neutral-hover);
+}
+
+/* Ghost: no fill and no border; Hover Background/Default/Secondary. Icon Secondary, Default on hover. */
+.icon-btn--ghost {
+  color: var(--icon-color-secondary);
+  background-color: transparent;
+}
+
+.icon-btn--ghost:hover {
+  color: var(--icon-color-default);
+  background-color: var(--color-bg-alt);
+}
+
+/* Focus: 52 by 52 ring (44 + 2 x (2 + 2)), following the pill radius. */
+.icon-btn:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+.icon-btn--ghost:focus-visible {
+  color: var(--icon-color-secondary);
+}
+
+/* Disabled: the disabled tokens, no opacity. Primary has a 1px Disabled border; Ghost has none. */
+.icon-btn:disabled,
+.icon-btn[aria-disabled="true"] {
+  color: var(--icon-color-disabled);
+  cursor: not-allowed;
+}
+
+.icon-btn--primary:disabled,
+.icon-btn--primary[aria-disabled="true"] {
+  background-color: var(--color-bg-disabled-default);
+  border: var(--border-width-normal) solid var(--color-border-disabled-default);
+}
+
+.icon-btn--ghost:disabled,
+.icon-btn--ghost[aria-disabled="true"] {
+  background-color: transparent;
+}
+
+@media (forced-colors: active) {
+  .icon-btn {
+    border: 1px solid ButtonText;
+  }
+  .icon-btn:disabled {
+    border-color: GrayText;
+  }
+}

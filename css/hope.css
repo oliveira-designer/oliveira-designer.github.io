@@ -1,7 +1,7 @@
 /* ============================================================
    HOPE DESIGN SYSTEM: hope.css
    GENERATED FILE. Do not edit by hand.
-   Built by scripts/build-css.mjs (npm run css:build) from 51 source files:
+   Built by scripts/build-css.mjs (npm run css:build) from 56 source files:
    tokens, reset, components/*, site/*. Edit the sources, then rebuild.
    css/auth.css (loaded by js/auth.js) and css/output.css (Tailwind) stay separate.
    ============================================================ */
@@ -365,8 +365,16 @@
   --z-base:    0;
   --z-raised:  1;
   --z-sticky:  10;
-  --z-overlay: 100;
-  --z-modal:   200;
+  --z-overlay: 100;  /* in use by the site header; not the modal scrim, see --z-modal-scrim */
+  --z-modal:   200;  /* Figma Z-index/z-modal */
+
+  /* Figma Hope · Primitives, group Z-index. Layers keep gaps of 100: a new layer only needs a new number when it must
+     sit between two existing ones. --z-modal-scrim has the same value as --z-overlay but a different meaning (the
+     header and the modal scrim are different layers), so --z-overlay is not an alias. */
+  --z-modal-scrim:   100;  /* Figma Z-index/z-modal-scrim */
+  --z-popover:       300;  /* Figma Z-index/z-popover: Popover, Menu and Select panels */
+  --z-tooltip:       400;  /* Figma Z-index/z-tooltip */
+  --z-notification:  500;  /* Figma Z-index/z-notification: Toast */
 
   /* ----------------------------------------------------------
      GLOBAL URLS
@@ -732,7 +740,7 @@ p { max-width: 70ch; }
        </div>
        <button type="button" class="alert__dismiss" aria-label="Dismiss"><svg class="icon" ...>...</svg></button>
      </div>
-   Error and Warning use role="alert", Info and Success use role="status". The width is fluid (Figma shows 480).
+   Error uses role="alert", Warning, Info and Success use role="status". The width is fluid (Figma shows 480).
    Figma defines no hover, no underline and no focus for the action: it uses the Hope focus ring. */
 
 /* ----------------------------------------------------------
@@ -843,6 +851,7 @@ p { max-width: 70ch; }
 
 /* Dismiss: 16x16 as in Figma, Icon/Color Default (no mode override). */
 .alert__dismiss {
+  position: relative;
   display: flex;
   flex: none;
   width: var(--space-4);
@@ -857,6 +866,14 @@ p { max-width: 70ch; }
 .alert__dismiss .icon {
   width: 100%;
   height: 100%;
+}
+
+/* The visual stays 16x16 (Figma). A transparent pseudo-element grows the hit area to 24x24 (WCAG 2.2 SC 2.5.8) without
+   changing the layout: it grows 4px each way, inside the 16px padding, away from the action. */
+.alert__dismiss::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--space-1) * -1);
 }
 
 @media (forced-colors: active) {
@@ -925,8 +942,8 @@ p { max-width: 70ch; }
        <span class="banner__icon" aria-hidden="true">🚧</span>           optional, decorative
        <span class="banner__text">Text</span>
      </div>
-   The emoji uses the same text style as the text (Figma styles it with Link/link-xs bold, which looks accidental;
-   recorded as a gap). The width is fluid (Figma shows 1206). */
+   The emoji uses the same text style as the text, Body/Medium/body-sm medium (Figma now does too). The width is fluid
+   (Figma shows 1206). */
 
 /* ----------------------------------------------------------
    BANNER
@@ -2630,6 +2647,104 @@ p { max-width: 70ch; }
   50%       { opacity: 0.3; }
 }
 
+/* ===== css/components/icon-button.css ===== */
+/* Hope DS: css/components/icon-button.css
+   Figma: Core, Icon Button (Style Primary|Ghost, State Default|Hover|Focus|Disabled). A 44 by 44 round button with one
+   24px icon (WCAG 2.5.5). Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/icon-button.html):
+     <button type="button" class="icon-btn icon-btn--primary" aria-label="Add item">
+       <svg class="icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="..."/></svg>
+     </button>
+   Named .icon-btn, not a .btn modifier: .btn brings a padding, a gap and a full width under 768px that a 44 by 44 circle
+   would have to cancel. The button has an accessible name (aria-label). Disabled = the native attribute, no opacity. The
+   icon uses the existing .icon mechanism; its color is the Icon/Color role of each state. */
+
+/* ----------------------------------------------------------
+   ICON BUTTON
+   The size is fixed at 44 by 44 with border-box, so the 1px Primary Disabled border needs no discount from a padding.
+   ---------------------------------------------------------- */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 44px;  /* Figma: 44 (WCAG 2.5.5 target size); no 44px spacing token */
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out);
+}
+
+.icon-btn .icon {
+  width: var(--space-6);
+  height: var(--space-6);
+}
+
+/* Primary: Default and Focus Background/Neutral/Default, Hover Neutral/Hover; icon in the Neutral mode. */
+.icon-btn--primary {
+  color: var(--icon-color-neutral);
+  background-color: var(--color-bg-neutral-default);
+}
+
+.icon-btn--primary:hover {
+  background-color: var(--color-bg-neutral-hover);
+}
+
+/* Ghost: no fill and no border; Hover Background/Default/Secondary. Icon Secondary, Default on hover. */
+.icon-btn--ghost {
+  color: var(--icon-color-secondary);
+  background-color: transparent;
+}
+
+.icon-btn--ghost:hover {
+  color: var(--icon-color-default);
+  background-color: var(--color-bg-alt);
+}
+
+/* Focus: 52 by 52 ring (44 + 2 x (2 + 2)), following the pill radius. */
+.icon-btn:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+.icon-btn--ghost:focus-visible {
+  color: var(--icon-color-secondary);
+}
+
+/* Disabled: the disabled tokens, no opacity. Primary has a 1px Disabled border; Ghost has none. */
+.icon-btn:disabled,
+.icon-btn[aria-disabled="true"] {
+  color: var(--icon-color-disabled);
+  cursor: not-allowed;
+}
+
+.icon-btn--primary:disabled,
+.icon-btn--primary[aria-disabled="true"] {
+  background-color: var(--color-bg-disabled-default);
+  border: var(--border-width-normal) solid var(--color-border-disabled-default);
+}
+
+.icon-btn--ghost:disabled,
+.icon-btn--ghost[aria-disabled="true"] {
+  background-color: transparent;
+}
+
+@media (forced-colors: active) {
+  .icon-btn {
+    border: 1px solid ButtonText;
+  }
+  .icon-btn:disabled {
+    border-color: GrayText;
+  }
+}
+
 /* ===== css/components/icon.css ===== */
 /* Hope DS: css/components/icon.css
    Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
@@ -3185,6 +3300,99 @@ p { max-width: 70ch; }
   max-width: none;
 }
 
+/* ===== css/components/progress.css ===== */
+/* Hope DS: css/components/progress.css
+   Figma: Core, Progress (Value 0|25|50|75|100 are the documented values; in code the fill is any value).
+   Determinate only: for a wait with no known percentage use the Spinner. Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/progress.html):
+     <div class="progress">
+       <div class="progress__header">
+         <label class="progress__label" for="ID">Uploading</label>
+         <span class="progress__value" aria-hidden="true">50%</span>
+       </div>
+       <progress class="progress__bar" id="ID" value="50" max="100">50%</progress>
+     </div>
+   A native <progress> (implicit progressbar role, no ARIA wiring) named by the label. The visible value is hidden from
+   assistive technology because the progressbar already reports it. The label and the value are optional; without a
+   visible label give the <progress> an aria-label. */
+
+/* ----------------------------------------------------------
+   PROGRESS
+   Track 8px high with a pill radius. The fill animates its width with the base duration and ease-in-out; the global
+   reduced-motion rule in tokens.css removes the transition.
+   ---------------------------------------------------------- */
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+}
+
+.progress__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.progress__label {
+  color: var(--color-text-1);
+}
+
+.progress__value {
+  color: var(--color-text-2);
+}
+
+.progress__bar {
+  display: block;
+  width: 100%;
+  height: var(--space-2);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--color-border);
+  border: 0;
+  border-radius: var(--radius-pill);
+  appearance: none;
+}
+
+/* Chromium and Safari */
+.progress__bar::-webkit-progress-bar {
+  background-color: var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.progress__bar::-webkit-progress-value {
+  background-color: var(--color-bg-neutral-default);
+  border-radius: var(--radius-pill);
+  transition: width var(--duration-normal) var(--ease-in-out);
+}
+
+/* Firefox */
+.progress__bar::-moz-progress-bar {
+  background-color: var(--color-bg-neutral-default);
+  border-radius: var(--radius-pill);
+}
+
+@media (forced-colors: active) {
+  .progress__bar {
+    forced-color-adjust: none;
+    background-color: Canvas;
+    border: 1px solid CanvasText;
+  }
+  .progress__bar::-webkit-progress-bar {
+    background-color: Canvas;
+  }
+  .progress__bar::-webkit-progress-value,
+  .progress__bar::-moz-progress-bar {
+    background-color: Highlight;
+  }
+}
+
 /* ===== css/components/radio.css ===== */
 /* Hope DS: css/components/radio.css
    Figma: Core, Radio (Selected Unselected|Selected, State Default|Hover|Focus|Error|Disabled).
@@ -3467,6 +3675,67 @@ p { max-width: 70ch; }
   border-top: var(--border-width-normal) solid var(--color-border);
 }
 
+/* ===== css/components/skeleton.css ===== */
+/* Hope DS: css/components/skeleton.css
+   Figma: Core, Skeleton (Shape Text|Title|Avatar|Block). A placeholder that imitates the shape of the content.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/skeleton.html):
+     <div aria-busy="true">
+       <span class="skeleton skeleton--title" aria-hidden="true"></span>
+       <span class="skeleton skeleton--text" aria-hidden="true"></span>
+     </div>
+   The container is marked aria-busy and the pieces are decorative. Use it for a load that takes more than about 300ms;
+   below that show nothing. The width is fluid (Figma shows 240 for Text and Block, 160 for Title); set it on the piece
+   or its container. */
+
+/* ----------------------------------------------------------
+   SKELETON
+   Fill Border/Default/Default, no stroke. The pulse is documented in Figma, not drawn: a soft opacity pulse in
+   ease-in-out. Figma names no duration, so it is two periods of the deliberate duration (a gap in the docs data); the
+   global reduced-motion rule in tokens.css stops it.
+   ---------------------------------------------------------- */
+.skeleton {
+  display: block;
+  width: 100%;
+  background-color: var(--color-border);
+  animation: skeleton-pulse calc(var(--duration-deliberate) * 2) var(--ease-in-out) infinite;
+}
+
+.skeleton--text {
+  height: var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton--title {
+  height: var(--space-5);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton--avatar {
+  width: var(--space-10);
+  height: var(--space-10);
+  border-radius: var(--radius-pill);
+}
+
+.skeleton--block {
+  height: 120px;  /* Figma Block: 120, no spacing token */
+  border-radius: var(--radius-md);
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Forced colors replace backgrounds with the canvas: the pieces keep a visible fill. */
+@media (forced-colors: active) {
+  .skeleton {
+    forced-color-adjust: none;
+    background-color: GrayText;
+  }
+}
+
 /* ===== css/components/skill-card.css ===== */
 /* Hope DS: css/components/skill-card.css
    Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
@@ -3578,6 +3847,71 @@ p { max-width: 70ch; }
   color: var(--color-text-3);
   line-height: 1.8;
   margin: 0;
+}
+
+/* ===== css/components/spinner.css ===== */
+/* Hope DS: css/components/spinner.css
+   Figma: Core, Spinner (one size, 24 by 24). A wait with no known duration; with a known percentage use the Progress.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/spinner.html):
+     <div class="spinner" role="status">
+       <span class="spinner__ring" aria-hidden="true"></span>
+       <span class="visually-hidden">Loading</span>
+     </div>
+   The ring is decorative. The visually hidden text is the accessible name and is supplied by the author, in the language
+   of the page (Figma uses "Carregando"). The spinner is a status: it only says "busy" and has no value, so it is not an
+   indeterminate <progress>. */
+
+/* ----------------------------------------------------------
+   SPINNER
+   Figma draws a ring (2.4px thick) with an arc of about 99 degrees from 12 o'clock. Hope's own CSS, not Material's.
+   Animation (Figma Info panel): a continuous turn per second in ease-in-out. Under prefers-reduced-motion the rotation
+   becomes an opacity pulse.
+   ---------------------------------------------------------- */
+.spinner {
+  display: inline-flex;
+  width: var(--space-6);
+  height: var(--space-6);
+}
+
+.spinner__ring {
+  --spinner-thickness: 2.4px;  /* Figma Stroke/thick (2.4), no CSS token yet */
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(from 0deg, var(--color-bg-neutral-default) 0deg 99deg, var(--color-border) 99deg 360deg);
+  border-radius: 50%;
+  mask: radial-gradient(farthest-side, transparent calc(100% - var(--spinner-thickness)), var(--color-bg-neutral-default) calc(100% - var(--spinner-thickness)));
+  animation: spinner-rotate 1s var(--ease-in-out) infinite;
+}
+
+@keyframes spinner-rotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinner-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* The global reduced-motion rule in tokens.css stops every animation with !important; the pulse is the documented
+   replacement, so it must win over it. */
+@media (prefers-reduced-motion: reduce) {
+  .spinner__ring {
+    animation-name: spinner-pulse !important;
+    animation-duration: 1.6s !important;
+    animation-iteration-count: infinite !important;
+    animation-timing-function: var(--ease-in-out) !important;
+  }
+}
+
+/* Forced colors: the ring and the arc keep visible system colors. */
+@media (forced-colors: active) {
+  .spinner__ring {
+    forced-color-adjust: none;
+    background: conic-gradient(from 0deg, Highlight 0deg 99deg, GrayText 99deg 360deg);
+  }
 }
 
 /* ===== css/components/switch.css ===== */
@@ -3983,7 +4317,8 @@ p { max-width: 70ch; }
        <a class="toast__action" href="#">Undo</a>                (or a <button type="button">)
        <button type="button" class="toast__dismiss" aria-label="Dismiss"><svg class="icon" ...>...</svg></button>
      </div>
-   Error uses role="alert", the other types role="status". The type is signaled by the icon glyph and its color.
+   Error uses role="alert", Warning, Info and Success role="status". The type is signaled by the icon glyph and its color.
+   A neutral message uses Info (Figma removed the Default type).
    Not coded here (see the gaps in the docs data): the positioning region, stacking, auto-dismiss and motion. */
 
 /* ----------------------------------------------------------
@@ -3992,10 +4327,10 @@ p { max-width: 70ch; }
    Figma frame is 69 high (24 + 43 + 2), so Figma includes the 1px stroke in the layout.
    ---------------------------------------------------------- */
 .toast {
-  --toast-icon: var(--icon-color-secondary);
+  --toast-icon: var(--icon-color-info);
   --toast-dismiss: var(--icon-color-default);
   position: relative;
-  z-index: 500;  /* Figma: notification layer 500. The z-index scale in tokens.css stops at --z-modal (200). */
+  z-index: var(--z-notification);  /* Figma Z-index/z-notification (500) */
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -4006,12 +4341,6 @@ p { max-width: 70ch; }
   box-shadow: var(--shadow-lg);  /* Figma Shadow/lg: 0 8px 32px at 10% */
   font-family: var(--font-body);
   line-height: 1.6;
-}
-
-/* Default sets the Secondary mode on the whole variant: its glyph (Info) and its dismiss icon follow. */
-.toast--default {
-  --toast-icon: var(--icon-color-secondary);
-  --toast-dismiss: var(--icon-color-secondary);
 }
 
 .toast--success {
@@ -4097,6 +4426,7 @@ p { max-width: 70ch; }
 }
 
 .toast__dismiss {
+  position: relative;
   display: flex;
   flex: none;
   width: var(--space-4);
@@ -4113,9 +4443,104 @@ p { max-width: 70ch; }
   height: 100%;
 }
 
+/* The visual stays 16x16 (Figma). A transparent pseudo-element grows the hit area to 24x24 (WCAG 2.2 SC 2.5.8) without
+   changing the layout: it grows 4px each way, and the action is 12px away. */
+.toast__dismiss::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--space-1) * -1);
+}
+
 @media (forced-colors: active) {
   .toast {
     border-color: CanvasText;
+  }
+}
+
+/* ===== css/components/tooltip.css ===== */
+/* Hope DS: css/components/tooltip.css
+   Figma: Core, Tooltip (Placement Top|Bottom|Left|Right). Text only; no link, button or long content (that is a Popover).
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/tooltip.html):
+     <button type="button" aria-describedby="tip-id">Trigger</button>
+     <div class="tooltip tooltip--top" role="tooltip" id="tip-id">
+       <span class="tooltip__bubble">Tooltip text</span>
+       <span class="tooltip__arrow" aria-hidden="true"></span>
+     </div>
+   The placement says where the tooltip sits relative to its trigger: Top means the bubble is above the trigger and the
+   arrow points down at it. The component is the bubble plus the arrow (84 by 40 for the sample text, 90 by 34 for the
+   sides). Not coded here (see the gaps in the docs data): positioning against the trigger, showing and hiding, delay and
+   WCAG 1.4.13 (dismissible with Escape, hoverable, persistent). A tooltip never holds the only way to reach essential
+   information, because it does not appear on touch. */
+
+/* ----------------------------------------------------------
+   TOOLTIP
+   No border in Figma. The arrow is part of the layout with a 0 gap, so it touches the bubble.
+   ---------------------------------------------------------- */
+.tooltip {
+  position: relative;
+  z-index: var(--z-tooltip);  /* Figma Z-index/z-tooltip (400) */
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-body);
+}
+
+.tooltip--top { flex-direction: column; }
+.tooltip--bottom { flex-direction: column-reverse; }
+.tooltip--left { flex-direction: row; }
+.tooltip--right { flex-direction: row-reverse; }
+
+.tooltip__bubble {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--fs-body-xs);
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--color-text-neutral-default);
+  background-color: var(--color-bg-neutral-default);
+  border-radius: var(--radius-sm);
+}
+
+/* Arrow: 12 by 6 (Top, Bottom) or 6 by 12 (Left, Right), the same fill as the bubble. */
+.tooltip__arrow {
+  flex: none;
+  width: var(--space-3);
+  height: calc(var(--space-3) / 2);
+  background-color: var(--color-bg-neutral-default);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.tooltip--bottom .tooltip__arrow {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.tooltip--left .tooltip__arrow,
+.tooltip--right .tooltip__arrow {
+  width: calc(var(--space-3) / 2);
+  height: var(--space-3);
+}
+
+.tooltip--left .tooltip__arrow {
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.tooltip--right .tooltip__arrow {
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+/* Forced colors replace backgrounds with the system canvas: the bubble and the arrow keep a visible fill. */
+@media (forced-colors: active) {
+  .tooltip__bubble,
+  .tooltip__arrow {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+  }
+  .tooltip__bubble {
+    color: Canvas;
   }
 }
 

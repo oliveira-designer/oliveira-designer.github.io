@@ -1,0 +1,63 @@
+/* Hope DS: css/components/spinner.css
+   Figma: Core, Spinner (one size, 24 by 24). A wait with no known duration; with a known percentage use the Progress.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/spinner.html):
+     <div class="spinner" role="status">
+       <span class="spinner__ring" aria-hidden="true"></span>
+       <span class="visually-hidden">Loading</span>
+     </div>
+   The ring is decorative. The visually hidden text is the accessible name and is supplied by the author, in the language
+   of the page (Figma uses "Carregando"). The spinner is a status: it only says "busy" and has no value, so it is not an
+   indeterminate <progress>. */
+
+/* ----------------------------------------------------------
+   SPINNER
+   Figma draws a ring (2.4px thick) with an arc of about 99 degrees from 12 o'clock. Hope's own CSS, not Material's.
+   Animation (Figma Info panel): a continuous turn per second in ease-in-out. Under prefers-reduced-motion the rotation
+   becomes an opacity pulse.
+   ---------------------------------------------------------- */
+.spinner {
+  display: inline-flex;
+  width: var(--space-6);
+  height: var(--space-6);
+}
+
+.spinner__ring {
+  --spinner-thickness: 2.4px;  /* Figma Stroke/thick (2.4), no CSS token yet */
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(from 0deg, var(--color-bg-neutral-default) 0deg 99deg, var(--color-border) 99deg 360deg);
+  border-radius: 50%;
+  mask: radial-gradient(farthest-side, transparent calc(100% - var(--spinner-thickness)), var(--color-bg-neutral-default) calc(100% - var(--spinner-thickness)));
+  animation: spinner-rotate 1s var(--ease-in-out) infinite;
+}
+
+@keyframes spinner-rotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinner-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* The global reduced-motion rule in tokens.css stops every animation with !important; the pulse is the documented
+   replacement, so it must win over it. */
+@media (prefers-reduced-motion: reduce) {
+  .spinner__ring {
+    animation-name: spinner-pulse !important;
+    animation-duration: 1.6s !important;
+    animation-iteration-count: infinite !important;
+    animation-timing-function: var(--ease-in-out) !important;
+  }
+}
+
+/* Forced colors: the ring and the arc keep visible system colors. */
+@media (forced-colors: active) {
+  .spinner__ring {
+    forced-color-adjust: none;
+    background: conic-gradient(from 0deg, Highlight 0deg 99deg, GrayText 99deg 360deg);
+  }
+}
