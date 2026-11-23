@@ -3,15 +3,14 @@
    Edit this file, then run: npm run css:build
 
    Markup contract (docs/components/switch.html): same shape as the checkbox, with role="switch":
-     <label class="switch">
-       <input type="checkbox" role="switch" class="switch__input" aria-describedby="id-help">
-       <span class="switch__text">
-         <span class="switch__label">Label</span>
-         <span class="switch__help" id="id-help">Helper text</span>
-       </span>
-     </label>
+     <div class="switch">
+       <input type="checkbox" role="switch" class="switch__input" id="ID" aria-describedby="ID-help">
+       <label class="switch__label" for="ID">Label</label>
+       <p class="switch__help" id="ID-help">Helper text</p>
+     </div>
+   The helper sits outside the label, so the accessible name is the label only and the helper is the description.
    Real checkbox with appearance: none. On = :checked, Disabled = the disabled attribute. Hover is drawn when the
-   pointer is over the whole label (Figma defines it on the track only; an inference). */
+   pointer is over the track, the label or the helper (Figma defines it on the track only; an inference). */
 
 /* ----------------------------------------------------------
    SWITCH
@@ -20,16 +19,18 @@
    reduced-motion rule in tokens.css removes them.
    ---------------------------------------------------------- */
 .switch {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-3);
+  display: grid;
+  grid-template-columns: var(--space-10) 1fr;
+  align-items: start;
+  column-gap: var(--space-3);
+  row-gap: var(--space-1);
   font-family: var(--font-body);
-  cursor: pointer;
 }
 
 .switch__input {
   position: relative;
-  flex: none;
+  /* The track (24px) is taller than the label line (20.8px): it spans both rows, so the helper keeps its 4px gap under the label. */
+  grid-row: 1 / span 2;
   width: var(--space-10);
   height: var(--space-6);
   margin: 0;
@@ -37,7 +38,7 @@
   border: var(--border-width-medium) solid var(--color-border-strong);
   border-radius: var(--radius-pill);
   appearance: none;
-  cursor: inherit;
+  cursor: pointer;
   transition:
     background-color var(--duration-normal) var(--ease-out),
     border-color var(--duration-normal) var(--ease-out);
@@ -81,13 +82,10 @@
   outline-offset: var(--focus-ring-gap);
 }
 
-.switch__text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
 .switch__label {
+  grid-row: 1;
+  grid-column: 2;
+  cursor: pointer;
   font-size: var(--fs-body-sm);
   font-weight: 400;
   line-height: 1.6;
@@ -95,6 +93,9 @@
 }
 
 .switch__help {
+  grid-row: 2;
+  grid-column: 2;
+  margin: 0;
   font-size: var(--fs-body-xs);
   font-weight: 400;
   line-height: 1.6;
@@ -112,12 +113,12 @@
   background-color: var(--color-text-disabled-inverse);
 }
 
-.switch__input:disabled ~ .switch__text {
+.switch__input:disabled ~ .switch__label {
   cursor: not-allowed;
 }
 
-.switch__input:disabled ~ .switch__text .switch__label,
-.switch__input:disabled ~ .switch__text .switch__help {
+.switch__input:disabled ~ .switch__label,
+.switch__input:disabled ~ .switch__help {
   color: var(--color-text-disabled-default);
 }
 

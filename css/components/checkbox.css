@@ -3,33 +3,33 @@
    Edit this file, then run: npm run css:build
 
    Markup contract (docs/components/checkbox.html):
-     <label class="checkbox">
-       <input type="checkbox" class="checkbox__input" aria-describedby="id-help">
-       <span class="checkbox__text">
-         <span class="checkbox__label">Label</span>
-         <span class="checkbox__help" id="id-help">Helper text</span>
-       </span>
-     </label>
-   A real checkbox with appearance: none, so semantics, keyboard and form submission stay native. Checked = :checked,
-   Indeterminate = :indeterminate (set from script, there is no HTML attribute), Error = aria-invalid="true",
-   Disabled = the disabled attribute. Hover is drawn when the pointer is over the whole label (Figma defines it on
-   the box only; this is an inference). The label is the click target. */
+     <div class="checkbox">
+       <input type="checkbox" class="checkbox__input" id="ID" aria-describedby="ID-help">
+       <label class="checkbox__label" for="ID">Label</label>
+       <p class="checkbox__help" id="ID-help">Helper text</p>
+     </div>
+   The helper sits outside the label, so the accessible name is the label only and the helper is the description
+   (aria-describedby). A real checkbox with appearance: none, so semantics, keyboard and form submission stay native.
+   Checked = :checked, Indeterminate = :indeterminate (set from script, there is no HTML attribute), Error =
+   aria-invalid="true", Disabled = the disabled attribute. Hover is drawn when the pointer is over the box, the label or
+   the helper (Figma defines it on the box only; an inference). The label and the box are the click target. */
 
 /* ----------------------------------------------------------
    CHECKBOX
    The border is drawn inside the 20x20 box (border-box), as in Figma. The mark is a mask, so its color is a token.
    ---------------------------------------------------------- */
 .checkbox {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
+  display: grid;
+  grid-template-columns: var(--space-5) 1fr;
+  align-items: start;
+  column-gap: var(--space-2);
+  row-gap: var(--space-1);
   font-family: var(--font-body);
-  cursor: pointer;
 }
 
 .checkbox__input {
   position: relative;
-  flex: none;
+  grid-row: 1;
   width: var(--space-5);
   height: var(--space-5);
   margin: 0;
@@ -37,7 +37,7 @@
   border: var(--border-width-medium) solid var(--color-border-strong);
   border-radius: var(--radius-xs);
   appearance: none;
-  cursor: inherit;
+  cursor: pointer;
   transition:
     background-color var(--duration-normal) var(--ease-out),
     border-color var(--duration-normal) var(--ease-out);
@@ -98,13 +98,10 @@
   border-color: var(--color-border-danger-default);
 }
 
-.checkbox__text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
 .checkbox__label {
+  grid-row: 1;
+  grid-column: 2;
+  cursor: pointer;
   font-size: var(--fs-body-sm);
   font-weight: 400;
   line-height: 1.6;
@@ -112,13 +109,16 @@
 }
 
 .checkbox__help {
+  grid-row: 2;
+  grid-column: 2;
+  margin: 0;
   font-size: var(--fs-body-xs);
   font-weight: 400;
   line-height: 1.6;
   color: var(--color-text-3);
 }
 
-.checkbox__input[aria-invalid="true"] ~ .checkbox__text .checkbox__help {
+.checkbox__input[aria-invalid="true"] ~ .checkbox__help {
   font-weight: 500;
   color: var(--color-text-danger-default);
 }
@@ -134,12 +134,12 @@
   background-color: var(--icon-color-disabled);
 }
 
-.checkbox__input:disabled ~ .checkbox__text {
+.checkbox__input:disabled ~ .checkbox__label {
   cursor: not-allowed;
 }
 
-.checkbox__input:disabled ~ .checkbox__text .checkbox__label,
-.checkbox__input:disabled ~ .checkbox__text .checkbox__help {
+.checkbox__input:disabled ~ .checkbox__label,
+.checkbox__input:disabled ~ .checkbox__help {
   color: var(--color-text-disabled-default);
 }
 
