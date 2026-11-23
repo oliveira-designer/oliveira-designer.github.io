@@ -1,0 +1,152 @@
+/* Hope DS: css/components/radio.css
+   Figma: Core, Radio (Selected Unselected|Selected, State Default|Hover|Focus|Error|Disabled).
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/radio.html): same shape as the checkbox, with type="radio", inside a
+   <fieldset><legend> for the group:
+     <label class="radio">
+       <input type="radio" class="radio__input" name="group" aria-describedby="id-help">
+       <span class="radio__text">
+         <span class="radio__label">Label</span>
+         <span class="radio__help" id="id-help">Helper text</span>
+       </span>
+     </label>
+   Real radio with appearance: none. Selected = :checked, Error = aria-invalid="true", Disabled = the disabled
+   attribute. Hover is drawn when the pointer is over the whole label (Figma defines it on the circle only;
+   an inference). */
+
+/* ----------------------------------------------------------
+   RADIO
+   20x20 circle, 1.5px border drawn inside (border-box), 8px dot.
+   ---------------------------------------------------------- */
+.radio {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.radio__input {
+  position: relative;
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  margin: 0;
+  background-color: var(--color-bg);
+  border: var(--border-width-medium) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  appearance: none;
+  cursor: inherit;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+}
+
+.radio__input::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-2);
+  height: var(--space-2);
+  translate: -50% -50%;
+  background-color: var(--color-text-neutral-default);
+  border-radius: var(--radius-pill);
+  opacity: 0;
+}
+
+.radio__input:checked {
+  background-color: var(--color-bg-neutral-default);
+  border-color: var(--color-bg-neutral-default);
+}
+
+.radio__input:checked::after {
+  opacity: 1;
+}
+
+.radio:hover .radio__input:not(:disabled) {
+  background-color: var(--color-bg-alt);
+}
+
+.radio:hover .radio__input:not(:disabled):checked {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+}
+
+/* Focus: 28x28 ring around the circle only. */
+.radio__input:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+.radio__input[aria-invalid="true"],
+.radio:hover .radio__input[aria-invalid="true"]:not(:disabled) {
+  border-color: var(--color-border-danger-default);
+}
+
+.radio__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.radio__label {
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-1);
+}
+
+.radio__help {
+  font-size: var(--fs-body-xs);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-3);
+}
+
+.radio__input[aria-invalid="true"] ~ .radio__text .radio__help {
+  font-weight: 500;
+  color: var(--color-text-danger-default);
+}
+
+/* Disabled: no opacity. The dot uses Text/Disabled/Inverse. */
+.radio__input:disabled {
+  background-color: var(--color-bg-disabled-default);
+  border-color: var(--color-border-disabled-default);
+  cursor: not-allowed;
+}
+
+.radio__input:disabled::after {
+  background-color: var(--color-text-disabled-inverse);
+}
+
+.radio__input:disabled ~ .radio__text {
+  cursor: not-allowed;
+}
+
+.radio__input:disabled ~ .radio__text .radio__label,
+.radio__input:disabled ~ .radio__text .radio__help {
+  color: var(--color-text-disabled-default);
+}
+
+@media (forced-colors: active) {
+  .radio__input {
+    forced-color-adjust: none;
+    background-color: Canvas;
+    border-color: CanvasText;
+  }
+  .radio__input:checked {
+    background-color: Canvas;
+    border-color: Highlight;
+  }
+  .radio__input::after {
+    background-color: Highlight;
+  }
+  .radio__input:disabled {
+    border-color: GrayText;
+  }
+  .radio__input:disabled::after {
+    background-color: GrayText;
+  }
+}

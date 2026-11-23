@@ -1,7 +1,7 @@
 /* ============================================================
    HOPE DESIGN SYSTEM: hope.css
    GENERATED FILE. Do not edit by hand.
-   Built by scripts/build-css.mjs (npm run css:build) from 41 source files:
+   Built by scripts/build-css.mjs (npm run css:build) from 48 source files:
    tokens, reset, components/*, site/*. Edit the sources, then rebuild.
    css/auth.css (loaded by js/auth.js) and css/output.css (Tailwind) stay separate.
    ============================================================ */
@@ -9,7 +9,7 @@
 /* ===== css/tokens.css ===== */
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v2.8.1 · November 2026
+   v2.9.0 · November 2026
    Source of truth: Figma Foundation for VALUES; DESIGN.md +
    DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
@@ -89,6 +89,7 @@
   --color-bg-inverse:    var(--color-abyss);
   --color-border:        var(--color-border-base);
   --color-border-strong: var(--color-muted);
+  --color-border-input:  var(--color-night-400);  /* Figma Border/Utilities/Input: 3.12:1 on white (WCAG 1.4.11); --color-border is 1.29:1 */
   --color-text-1:        var(--color-ink);
   --color-text-2:        var(--color-shadow);
   --color-text-3:        var(--color-muted);
@@ -332,6 +333,7 @@
   --border-width-normal: 1px;  /* width alone, for calc(); --border-normal is a shorthand and cannot be used inside calc() */
   --border-normal: var(--border-width-normal) solid var(--color-border);
   --border-width-accent: 3px;  /* Figma Stroke/accent: width alone, for the accent borders (footer top border); same pattern as --border-width-normal */
+  --border-width-medium: 1.5px;  /* Figma Stroke/medium: width alone, for the field, checkbox, radio and switch borders (and the Error state of a field); same pattern as --border-width-normal */
   --border-strong: 1px solid var(--color-border-strong);
 
   /* ----------------------------------------------------------
@@ -385,6 +387,7 @@
   --color-bg-inverse:    var(--color-cloud);
   --color-border:        var(--color-night-700);
   --color-border-strong: var(--color-night-500);  /* 3.19:1 on abyss (WCAG 1.4.11) */
+  --color-border-input:  var(--color-night-500);  /* Figma Border/Utilities/Input: 3.19:1 on abyss (WCAG 1.4.11) */
   --color-text-1:        var(--color-cloud);
   --color-text-2:        var(--color-night-300);
   --color-text-3:        var(--color-night-400);  /* WCAG AA: 4.6:1 on dark mode cards */
@@ -737,6 +740,9 @@ p { max-width: 70ch; }
   background-color: var(--color-bg-alt);
   color: var(--color-text-2);
   border: var(--border-thin);
+  /* The stroke is drawn inside the box in Figma, so the border is discounted from the padding
+     (rule: DESIGN-IMPLEMENTATION.md, "Borda dentro da caixa"). Box = 28.8px high, as the other styles. */
+  padding: calc(var(--space-1) - var(--border-width-normal)) calc(var(--space-3) - var(--border-width-normal));
 }
 
 .badge--anchor {
@@ -1793,6 +1799,176 @@ p { max-width: 70ch; }
   flex-shrink: 0;
 }
 
+/* ===== css/components/checkbox.css ===== */
+/* Hope DS: css/components/checkbox.css
+   Figma: Core, Checkbox (Checked Unchecked|Checked|Indeterminate, State Default|Hover|Focus|Error|Disabled).
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/checkbox.html):
+     <label class="checkbox">
+       <input type="checkbox" class="checkbox__input" aria-describedby="id-help">
+       <span class="checkbox__text">
+         <span class="checkbox__label">Label</span>
+         <span class="checkbox__help" id="id-help">Helper text</span>
+       </span>
+     </label>
+   A real checkbox with appearance: none, so semantics, keyboard and form submission stay native. Checked = :checked,
+   Indeterminate = :indeterminate (set from script, there is no HTML attribute), Error = aria-invalid="true",
+   Disabled = the disabled attribute. Hover is drawn when the pointer is over the whole label (Figma defines it on
+   the box only; this is an inference). The label is the click target. */
+
+/* ----------------------------------------------------------
+   CHECKBOX
+   The border is drawn inside the 20x20 box (border-box), as in Figma. The mark is a mask, so its color is a token.
+   ---------------------------------------------------------- */
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.checkbox__input {
+  position: relative;
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  margin: 0;
+  background-color: var(--color-bg);
+  border: var(--border-width-medium) solid var(--color-border-strong);
+  border-radius: var(--radius-xs);
+  appearance: none;
+  cursor: inherit;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+}
+
+/* The 14px Phosphor mark (Figma), centered in the box. */
+.checkbox__input::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  translate: -50% -50%;
+  background-color: var(--icon-color-neutral);
+  mask: var(--checkbox-mark, none) center / contain no-repeat;
+  opacity: 0;
+}
+
+.checkbox__input:checked {
+  --checkbox-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z'/%3E%3C/svg%3E");
+}
+
+.checkbox__input:indeterminate {
+  --checkbox-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128Z'/%3E%3C/svg%3E");
+}
+
+.checkbox__input:checked,
+.checkbox__input:indeterminate {
+  background-color: var(--color-bg-neutral-default);
+  border-color: var(--color-bg-neutral-default);
+}
+
+.checkbox__input:checked::after,
+.checkbox__input:indeterminate::after {
+  opacity: 1;
+}
+
+.checkbox:hover .checkbox__input:not(:disabled) {
+  background-color: var(--color-bg-alt);
+}
+
+.checkbox:hover .checkbox__input:not(:disabled):checked,
+.checkbox:hover .checkbox__input:not(:disabled):indeterminate {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+}
+
+/* Focus: 28x28 ring around the box only (20 + 2 + 2 on each side), radius 4 + 4 = 8. */
+.checkbox__input:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Error: Danger border (still 1.5px), fill as the Checked value. Hover keeps the Danger border. */
+.checkbox__input[aria-invalid="true"],
+.checkbox:hover .checkbox__input[aria-invalid="true"]:not(:disabled) {
+  border-color: var(--color-border-danger-default);
+}
+
+.checkbox__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.checkbox__label {
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-1);
+}
+
+.checkbox__help {
+  font-size: var(--fs-body-xs);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-3);
+}
+
+.checkbox__input[aria-invalid="true"] ~ .checkbox__text .checkbox__help {
+  font-weight: 500;
+  color: var(--color-text-danger-default);
+}
+
+/* Disabled: no opacity. The mark keeps the Disabled icon color, also when checked. */
+.checkbox__input:disabled {
+  background-color: var(--color-bg-disabled-default);
+  border-color: var(--color-border-disabled-default);
+  cursor: not-allowed;
+}
+
+.checkbox__input:disabled::after {
+  background-color: var(--icon-color-disabled);
+}
+
+.checkbox__input:disabled ~ .checkbox__text {
+  cursor: not-allowed;
+}
+
+.checkbox__input:disabled ~ .checkbox__text .checkbox__label,
+.checkbox__input:disabled ~ .checkbox__text .checkbox__help {
+  color: var(--color-text-disabled-default);
+}
+
+/* Forced colors: backgrounds are replaced by the system, so the mark is drawn with system colors. */
+@media (forced-colors: active) {
+  .checkbox__input {
+    forced-color-adjust: none;
+    background-color: Canvas;
+    border-color: CanvasText;
+  }
+  .checkbox__input:checked,
+  .checkbox__input:indeterminate {
+    background-color: Highlight;
+    border-color: Highlight;
+  }
+  .checkbox__input::after {
+    background-color: HighlightText;
+  }
+  .checkbox__input:disabled {
+    background-color: Canvas;
+    border-color: GrayText;
+  }
+  .checkbox__input:disabled::after {
+    background-color: GrayText;
+  }
+}
+
 /* ===== css/components/cs-figure.css ===== */
 /* Hope DS: css/components/cs-figure.css
    Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
@@ -2003,6 +2179,178 @@ p { max-width: 70ch; }
   }
 }
 
+/* ===== css/components/field.css ===== */
+/* Hope DS: css/components/field.css
+   Figma: Core, Input, Textarea and Select (State Default|Hover|Focus|Error|Disabled, Value Empty|Filled).
+   What the three share: the wrapper, the label, the helper text and the control box. input.css, textarea.css
+   and select.css only add what is specific to each.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/input.html):
+     <div class="field">
+       <label class="field__label" for="id">Label</label>
+       <div class="field__control">
+         <input class="input" id="id" aria-describedby="id-help">
+         <svg class="field__icon" aria-hidden="true">...</svg>      optional (Input), always present on Select
+       </div>
+       <p class="field__help" id="id-help">Helper text</p>
+     </div>
+   The wrapper .field__control exists to position the 16px icon over the control. A Textarea does not need it.
+   States: Hover = :hover, Focus = :focus-visible, Error = aria-invalid="true", Disabled = the disabled attribute. */
+
+/* ----------------------------------------------------------
+   FIELD: label, control wrapper, helper text
+   ---------------------------------------------------------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.field__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--color-text-1);
+}
+
+.field__control {
+  position: relative;
+  display: flex;
+}
+
+.field__help {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-xs);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-3);
+}
+
+/* Error: the helper text carries the message, in Danger and Medium weight. The label does not change. */
+.field:has([aria-invalid="true"]) .field__help {
+  font-weight: 500;
+  color: var(--color-text-danger-default);
+}
+
+/* Disabled: label and helper follow the control. */
+.field:has(.input:disabled, .textarea:disabled, .select:disabled) .field__label,
+.field:has(.input:disabled, .textarea:disabled, .select:disabled) .field__help {
+  color: var(--color-text-disabled-default);
+}
+
+/* 16px trailing icon, drawn over the control, not clickable. Color: Icon/Color Tertiary, Disabled when the control is. */
+.field__icon {
+  position: absolute;
+  top: 50%;
+  right: var(--space-3);
+  width: var(--space-4);
+  height: var(--space-4);
+  translate: 0 -50%;
+  fill: currentColor;
+  color: var(--icon-color-tertiary);
+  pointer-events: none;
+}
+
+:disabled + .field__icon {
+  color: var(--icon-color-disabled);
+}
+
+/* ----------------------------------------------------------
+   CONTROL BOX (shared by .input, .textarea and .select)
+   A border drawn inside the box in Figma is discounted from the padding with a token in calc()
+   (DESIGN-IMPLEMENTATION.md, "Borda dentro da caixa"). --field-border-width is the border of the current
+   state (1px, 1.5px on Error), so the outer size never changes between states.
+   ---------------------------------------------------------- */
+.input,
+.textarea,
+.select {
+  --field-border-width: var(--border-width-normal);
+  --field-border-color: var(--color-border-input);
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: calc(var(--space-3) - var(--field-border-width));
+  /* Browsers draw a 1.5px border as 1px on a 1x screen, which would shrink the Error box by 1px: the outer height
+     is fixed instead (12 + 12 + one line of 160%), the text stays centered. Figma: 44px, rendered 44.8px. */
+  min-height: calc(var(--space-6) + var(--fs-body-sm) * 1.6);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-1);
+  background-color: var(--color-bg);
+  border: var(--field-border-width) solid var(--field-border-color);
+  border-radius: var(--radius-sm);
+  appearance: none;
+  transition: border-color var(--duration-normal) var(--ease-out);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-text-3);
+  opacity: 1;
+}
+
+.input:hover,
+.textarea:hover,
+.select:hover {
+  --field-border-color: var(--color-border-strong);
+}
+
+/* Focus: the border stays as in Default; the ring is an outline, 2px with a 2px gap, following the radius. */
+.input:focus-visible,
+.textarea:focus-visible,
+.select:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Error: Danger border at 1.5px. The value text does not change. */
+.input[aria-invalid="true"],
+.textarea[aria-invalid="true"],
+.select[aria-invalid="true"] {
+  --field-border-color: var(--color-border-danger-default);
+  --field-border-width: var(--border-width-medium);
+}
+
+/* Disabled: no opacity. Filled text Text/Disabled/Default, empty text (placeholder) Text/Disabled/Inverse. */
+.input:disabled,
+.textarea:disabled,
+.select:disabled {
+  --field-border-color: var(--color-border-disabled-default);
+  --field-border-width: var(--border-width-normal);
+  color: var(--color-text-disabled-default);
+  background-color: var(--color-bg-disabled-default);
+  cursor: not-allowed;
+}
+
+.input:disabled::placeholder,
+.textarea:disabled::placeholder {
+  color: var(--color-text-disabled-inverse);
+}
+
+/* Room for the 16px icon: padding 12 + icon 16 + gap 8. */
+.field__control:has(.field__icon) > .input,
+.field__control:has(.field__icon) > .select {
+  padding-inline-end: calc(var(--space-3) + var(--space-4) + var(--space-2) - var(--field-border-width));
+}
+
+@media (forced-colors: active) {
+  .input,
+  .textarea,
+  .select {
+    border-color: CanvasText;
+  }
+  .input:disabled,
+  .textarea:disabled,
+  .select:disabled {
+    border-color: GrayText;
+  }
+}
+
 /* ===== css/components/header-status-badge.css ===== */
 /* Hope DS: css/components/header-status-badge.css
    Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
@@ -2090,6 +2438,20 @@ p { max-width: 70ch; }
 
 .icon--title {
   color: var(--color-border-focus-ring);
+}
+
+/* ===== css/components/input.css ===== */
+/* Hope DS: css/components/input.css
+   Figma: Core, Input. The box, the states and the label are in field.css (shared with Textarea and Select).
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   INPUT
+   Value Empty is the placeholder (field.css), Value Filled is the control's own color.
+   ---------------------------------------------------------- */
+.input {
+  min-width: 0;
+  text-overflow: ellipsis;
 }
 
 /* ===== css/components/lightbox.css ===== */
@@ -2601,6 +2963,160 @@ p { max-width: 70ch; }
   max-width: none;
 }
 
+/* ===== css/components/radio.css ===== */
+/* Hope DS: css/components/radio.css
+   Figma: Core, Radio (Selected Unselected|Selected, State Default|Hover|Focus|Error|Disabled).
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/radio.html): same shape as the checkbox, with type="radio", inside a
+   <fieldset><legend> for the group:
+     <label class="radio">
+       <input type="radio" class="radio__input" name="group" aria-describedby="id-help">
+       <span class="radio__text">
+         <span class="radio__label">Label</span>
+         <span class="radio__help" id="id-help">Helper text</span>
+       </span>
+     </label>
+   Real radio with appearance: none. Selected = :checked, Error = aria-invalid="true", Disabled = the disabled
+   attribute. Hover is drawn when the pointer is over the whole label (Figma defines it on the circle only;
+   an inference). */
+
+/* ----------------------------------------------------------
+   RADIO
+   20x20 circle, 1.5px border drawn inside (border-box), 8px dot.
+   ---------------------------------------------------------- */
+.radio {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.radio__input {
+  position: relative;
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  margin: 0;
+  background-color: var(--color-bg);
+  border: var(--border-width-medium) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  appearance: none;
+  cursor: inherit;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+}
+
+.radio__input::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-2);
+  height: var(--space-2);
+  translate: -50% -50%;
+  background-color: var(--color-text-neutral-default);
+  border-radius: var(--radius-pill);
+  opacity: 0;
+}
+
+.radio__input:checked {
+  background-color: var(--color-bg-neutral-default);
+  border-color: var(--color-bg-neutral-default);
+}
+
+.radio__input:checked::after {
+  opacity: 1;
+}
+
+.radio:hover .radio__input:not(:disabled) {
+  background-color: var(--color-bg-alt);
+}
+
+.radio:hover .radio__input:not(:disabled):checked {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+}
+
+/* Focus: 28x28 ring around the circle only. */
+.radio__input:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+.radio__input[aria-invalid="true"],
+.radio:hover .radio__input[aria-invalid="true"]:not(:disabled) {
+  border-color: var(--color-border-danger-default);
+}
+
+.radio__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.radio__label {
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-1);
+}
+
+.radio__help {
+  font-size: var(--fs-body-xs);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-3);
+}
+
+.radio__input[aria-invalid="true"] ~ .radio__text .radio__help {
+  font-weight: 500;
+  color: var(--color-text-danger-default);
+}
+
+/* Disabled: no opacity. The dot uses Text/Disabled/Inverse. */
+.radio__input:disabled {
+  background-color: var(--color-bg-disabled-default);
+  border-color: var(--color-border-disabled-default);
+  cursor: not-allowed;
+}
+
+.radio__input:disabled::after {
+  background-color: var(--color-text-disabled-inverse);
+}
+
+.radio__input:disabled ~ .radio__text {
+  cursor: not-allowed;
+}
+
+.radio__input:disabled ~ .radio__text .radio__label,
+.radio__input:disabled ~ .radio__text .radio__help {
+  color: var(--color-text-disabled-default);
+}
+
+@media (forced-colors: active) {
+  .radio__input {
+    forced-color-adjust: none;
+    background-color: Canvas;
+    border-color: CanvasText;
+  }
+  .radio__input:checked {
+    background-color: Canvas;
+    border-color: Highlight;
+  }
+  .radio__input::after {
+    background-color: Highlight;
+  }
+  .radio__input:disabled {
+    border-color: GrayText;
+  }
+  .radio__input:disabled::after {
+    background-color: GrayText;
+  }
+}
+
 /* ===== css/components/result-card.css ===== */
 /* Hope DS: css/components/result-card.css
    Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
@@ -2675,6 +3191,39 @@ p { max-width: 70ch; }
   font-size:   var(--fs-body-sm);
   line-height: 1.70;
   color:       var(--color-text-2);
+}
+
+/* ===== css/components/select.css ===== */
+/* Hope DS: css/components/select.css
+   Figma: Core, Select (the closed trigger). The box, the states and the label are in field.css.
+   Native <select>: the options panel is the browser's own (Figma draws it with the Menu component, not coded).
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   SELECT
+   Value Empty: the placeholder option is chosen. Give the first option an empty value, and mark the select
+   required (:invalid) or rely on :has(). Value Filled: the control's own color. The 16px CaretDown is the
+   .field__icon after the select (field.css), so its color follows the Icon/Color tokens.
+   ---------------------------------------------------------- */
+.select {
+  min-width: 0;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.select:invalid,
+.select:has(option[value=""]:checked) {
+  color: var(--color-text-3);
+}
+
+.select:disabled:invalid,
+.select:disabled:has(option[value=""]:checked) {
+  color: var(--color-text-disabled-inverse);
+}
+
+/* The panel lists real values: keep them in the filled color. */
+.select option {
+  color: var(--color-text-1);
 }
 
 /* ===== css/components/separator.css ===== */
@@ -2807,6 +3356,155 @@ p { max-width: 70ch; }
   color: var(--color-text-3);
   line-height: 1.8;
   margin: 0;
+}
+
+/* ===== css/components/switch.css ===== */
+/* Hope DS: css/components/switch.css
+   Figma: Core, Switch (Checked Off|On, State Default|Hover|Focus|Disabled). There is no Error: a switch is not validated.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/switch.html): same shape as the checkbox, with role="switch":
+     <label class="switch">
+       <input type="checkbox" role="switch" class="switch__input" aria-describedby="id-help">
+       <span class="switch__text">
+         <span class="switch__label">Label</span>
+         <span class="switch__help" id="id-help">Helper text</span>
+       </span>
+     </label>
+   Real checkbox with appearance: none. On = :checked, Disabled = the disabled attribute. Hover is drawn when the
+   pointer is over the whole label (Figma defines it on the track only; an inference). */
+
+/* ----------------------------------------------------------
+   SWITCH
+   40x24 track with the 1.5px border drawn inside (border-box), 16px thumb 4px from the outer edge.
+   Figma defines no motion: the thumb and colors use the same transition tokens as Button hover, and the global
+   reduced-motion rule in tokens.css removes them.
+   ---------------------------------------------------------- */
+.switch {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.switch__input {
+  position: relative;
+  flex: none;
+  width: var(--space-10);
+  height: var(--space-6);
+  margin: 0;
+  background-color: var(--color-bg);
+  border: var(--border-width-medium) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  appearance: none;
+  cursor: inherit;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+}
+
+/* Thumb: the padding (4px) is measured from the outer edge, so the border is discounted. */
+.switch__input::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--space-1) - var(--border-width-medium));
+  left: calc(var(--space-1) - var(--border-width-medium));
+  width: var(--space-4);
+  height: var(--space-4);
+  background-color: var(--color-text-3);
+  border-radius: var(--radius-pill);
+  transition: translate var(--duration-normal) var(--ease-out), background-color var(--duration-normal) var(--ease-out);
+}
+
+.switch__input:checked {
+  background-color: var(--color-bg-neutral-default);
+  border-color: var(--color-bg-neutral-default);
+}
+
+.switch__input:checked::after {
+  translate: var(--space-4) 0;
+  background-color: var(--color-text-neutral-default);
+}
+
+.switch:hover .switch__input:not(:disabled) {
+  background-color: var(--color-bg-alt);
+}
+
+.switch:hover .switch__input:not(:disabled):checked {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+}
+
+/* Focus: 48x32 ring around the track (40 + 4 + 4 by 24 + 4 + 4). */
+.switch__input:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+.switch__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.switch__label {
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-1);
+}
+
+.switch__help {
+  font-size: var(--fs-body-xs);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-3);
+}
+
+/* Disabled: no opacity. */
+.switch__input:disabled {
+  background-color: var(--color-bg-disabled-default);
+  border-color: var(--color-border-disabled-default);
+  cursor: not-allowed;
+}
+
+.switch__input:disabled::after {
+  background-color: var(--color-text-disabled-inverse);
+}
+
+.switch__input:disabled ~ .switch__text {
+  cursor: not-allowed;
+}
+
+.switch__input:disabled ~ .switch__text .switch__label,
+.switch__input:disabled ~ .switch__text .switch__help {
+  color: var(--color-text-disabled-default);
+}
+
+@media (forced-colors: active) {
+  .switch__input {
+    forced-color-adjust: none;
+    background-color: Canvas;
+    border-color: CanvasText;
+  }
+  .switch__input::after {
+    background-color: CanvasText;
+  }
+  .switch__input:checked {
+    background-color: Highlight;
+    border-color: Highlight;
+  }
+  .switch__input:checked::after {
+    background-color: HighlightText;
+  }
+  .switch__input:disabled {
+    background-color: Canvas;
+    border-color: GrayText;
+  }
+  .switch__input:disabled::after {
+    background-color: GrayText;
+  }
 }
 
 /* ===== css/components/table.css ===== */
@@ -3030,6 +3728,21 @@ p { max-width: 70ch; }
 
 .text-highlight.is-active {
   background-size: 100% 100%;
+}
+
+/* ===== css/components/textarea.css ===== */
+/* Hope DS: css/components/textarea.css
+   Figma: Core, Textarea. The box, the states and the label are in field.css (shared with Input and Select).
+   Edit this file, then run: npm run css:build */
+
+/* ----------------------------------------------------------
+   TEXTAREA
+   Figma: the field is 96px high, padding included (box-sizing is border-box). Resize is not defined in Figma:
+   vertical only, so the width of the field never changes (inference, recorded as a gap).
+   ---------------------------------------------------------- */
+.textarea {
+  min-height: var(--space-24);
+  resize: vertical;
 }
 
 /* ===== css/site/container.css ===== */

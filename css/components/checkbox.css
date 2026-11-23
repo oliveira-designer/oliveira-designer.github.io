@@ -1,0 +1,168 @@
+/* Hope DS: css/components/checkbox.css
+   Figma: Core, Checkbox (Checked Unchecked|Checked|Indeterminate, State Default|Hover|Focus|Error|Disabled).
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/checkbox.html):
+     <label class="checkbox">
+       <input type="checkbox" class="checkbox__input" aria-describedby="id-help">
+       <span class="checkbox__text">
+         <span class="checkbox__label">Label</span>
+         <span class="checkbox__help" id="id-help">Helper text</span>
+       </span>
+     </label>
+   A real checkbox with appearance: none, so semantics, keyboard and form submission stay native. Checked = :checked,
+   Indeterminate = :indeterminate (set from script, there is no HTML attribute), Error = aria-invalid="true",
+   Disabled = the disabled attribute. Hover is drawn when the pointer is over the whole label (Figma defines it on
+   the box only; this is an inference). The label is the click target. */
+
+/* ----------------------------------------------------------
+   CHECKBOX
+   The border is drawn inside the 20x20 box (border-box), as in Figma. The mark is a mask, so its color is a token.
+   ---------------------------------------------------------- */
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.checkbox__input {
+  position: relative;
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  margin: 0;
+  background-color: var(--color-bg);
+  border: var(--border-width-medium) solid var(--color-border-strong);
+  border-radius: var(--radius-xs);
+  appearance: none;
+  cursor: inherit;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+}
+
+/* The 14px Phosphor mark (Figma), centered in the box. */
+.checkbox__input::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  translate: -50% -50%;
+  background-color: var(--icon-color-neutral);
+  mask: var(--checkbox-mark, none) center / contain no-repeat;
+  opacity: 0;
+}
+
+.checkbox__input:checked {
+  --checkbox-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z'/%3E%3C/svg%3E");
+}
+
+.checkbox__input:indeterminate {
+  --checkbox-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128Z'/%3E%3C/svg%3E");
+}
+
+.checkbox__input:checked,
+.checkbox__input:indeterminate {
+  background-color: var(--color-bg-neutral-default);
+  border-color: var(--color-bg-neutral-default);
+}
+
+.checkbox__input:checked::after,
+.checkbox__input:indeterminate::after {
+  opacity: 1;
+}
+
+.checkbox:hover .checkbox__input:not(:disabled) {
+  background-color: var(--color-bg-alt);
+}
+
+.checkbox:hover .checkbox__input:not(:disabled):checked,
+.checkbox:hover .checkbox__input:not(:disabled):indeterminate {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+}
+
+/* Focus: 28x28 ring around the box only (20 + 2 + 2 on each side), radius 4 + 4 = 8. */
+.checkbox__input:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Error: Danger border (still 1.5px), fill as the Checked value. Hover keeps the Danger border. */
+.checkbox__input[aria-invalid="true"],
+.checkbox:hover .checkbox__input[aria-invalid="true"]:not(:disabled) {
+  border-color: var(--color-border-danger-default);
+}
+
+.checkbox__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.checkbox__label {
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-1);
+}
+
+.checkbox__help {
+  font-size: var(--fs-body-xs);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-3);
+}
+
+.checkbox__input[aria-invalid="true"] ~ .checkbox__text .checkbox__help {
+  font-weight: 500;
+  color: var(--color-text-danger-default);
+}
+
+/* Disabled: no opacity. The mark keeps the Disabled icon color, also when checked. */
+.checkbox__input:disabled {
+  background-color: var(--color-bg-disabled-default);
+  border-color: var(--color-border-disabled-default);
+  cursor: not-allowed;
+}
+
+.checkbox__input:disabled::after {
+  background-color: var(--icon-color-disabled);
+}
+
+.checkbox__input:disabled ~ .checkbox__text {
+  cursor: not-allowed;
+}
+
+.checkbox__input:disabled ~ .checkbox__text .checkbox__label,
+.checkbox__input:disabled ~ .checkbox__text .checkbox__help {
+  color: var(--color-text-disabled-default);
+}
+
+/* Forced colors: backgrounds are replaced by the system, so the mark is drawn with system colors. */
+@media (forced-colors: active) {
+  .checkbox__input {
+    forced-color-adjust: none;
+    background-color: Canvas;
+    border-color: CanvasText;
+  }
+  .checkbox__input:checked,
+  .checkbox__input:indeterminate {
+    background-color: Highlight;
+    border-color: Highlight;
+  }
+  .checkbox__input::after {
+    background-color: HighlightText;
+  }
+  .checkbox__input:disabled {
+    background-color: Canvas;
+    border-color: GrayText;
+  }
+  .checkbox__input:disabled::after {
+    background-color: GrayText;
+  }
+}

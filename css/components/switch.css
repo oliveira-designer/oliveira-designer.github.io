@@ -1,0 +1,147 @@
+/* Hope DS: css/components/switch.css
+   Figma: Core, Switch (Checked Off|On, State Default|Hover|Focus|Disabled). There is no Error: a switch is not validated.
+   Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/switch.html): same shape as the checkbox, with role="switch":
+     <label class="switch">
+       <input type="checkbox" role="switch" class="switch__input" aria-describedby="id-help">
+       <span class="switch__text">
+         <span class="switch__label">Label</span>
+         <span class="switch__help" id="id-help">Helper text</span>
+       </span>
+     </label>
+   Real checkbox with appearance: none. On = :checked, Disabled = the disabled attribute. Hover is drawn when the
+   pointer is over the whole label (Figma defines it on the track only; an inference). */
+
+/* ----------------------------------------------------------
+   SWITCH
+   40x24 track with the 1.5px border drawn inside (border-box), 16px thumb 4px from the outer edge.
+   Figma defines no motion: the thumb and colors use the same transition tokens as Button hover, and the global
+   reduced-motion rule in tokens.css removes them.
+   ---------------------------------------------------------- */
+.switch {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.switch__input {
+  position: relative;
+  flex: none;
+  width: var(--space-10);
+  height: var(--space-6);
+  margin: 0;
+  background-color: var(--color-bg);
+  border: var(--border-width-medium) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  appearance: none;
+  cursor: inherit;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+}
+
+/* Thumb: the padding (4px) is measured from the outer edge, so the border is discounted. */
+.switch__input::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--space-1) - var(--border-width-medium));
+  left: calc(var(--space-1) - var(--border-width-medium));
+  width: var(--space-4);
+  height: var(--space-4);
+  background-color: var(--color-text-3);
+  border-radius: var(--radius-pill);
+  transition: translate var(--duration-normal) var(--ease-out), background-color var(--duration-normal) var(--ease-out);
+}
+
+.switch__input:checked {
+  background-color: var(--color-bg-neutral-default);
+  border-color: var(--color-bg-neutral-default);
+}
+
+.switch__input:checked::after {
+  translate: var(--space-4) 0;
+  background-color: var(--color-text-neutral-default);
+}
+
+.switch:hover .switch__input:not(:disabled) {
+  background-color: var(--color-bg-alt);
+}
+
+.switch:hover .switch__input:not(:disabled):checked {
+  background-color: var(--color-bg-neutral-hover);
+  border-color: var(--color-bg-neutral-hover);
+}
+
+/* Focus: 48x32 ring around the track (40 + 4 + 4 by 24 + 4 + 4). */
+.switch__input:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+.switch__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.switch__label {
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-1);
+}
+
+.switch__help {
+  font-size: var(--fs-body-xs);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-3);
+}
+
+/* Disabled: no opacity. */
+.switch__input:disabled {
+  background-color: var(--color-bg-disabled-default);
+  border-color: var(--color-border-disabled-default);
+  cursor: not-allowed;
+}
+
+.switch__input:disabled::after {
+  background-color: var(--color-text-disabled-inverse);
+}
+
+.switch__input:disabled ~ .switch__text {
+  cursor: not-allowed;
+}
+
+.switch__input:disabled ~ .switch__text .switch__label,
+.switch__input:disabled ~ .switch__text .switch__help {
+  color: var(--color-text-disabled-default);
+}
+
+@media (forced-colors: active) {
+  .switch__input {
+    forced-color-adjust: none;
+    background-color: Canvas;
+    border-color: CanvasText;
+  }
+  .switch__input::after {
+    background-color: CanvasText;
+  }
+  .switch__input:checked {
+    background-color: Highlight;
+    border-color: Highlight;
+  }
+  .switch__input:checked::after {
+    background-color: HighlightText;
+  }
+  .switch__input:disabled {
+    background-color: Canvas;
+    border-color: GrayText;
+  }
+  .switch__input:disabled::after {
+    background-color: GrayText;
+  }
+}
