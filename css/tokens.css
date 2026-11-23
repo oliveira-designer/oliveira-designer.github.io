@@ -1,6 +1,6 @@
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v2.8.1 · November 2026
+   v2.9.0 · November 2026
    Source of truth: Figma Foundation for VALUES; DESIGN.md +
    DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
@@ -80,6 +80,7 @@
   --color-bg-inverse:    var(--color-abyss);
   --color-border:        var(--color-border-base);
   --color-border-strong: var(--color-muted);
+  --color-border-input:  var(--color-night-400);  /* Figma Border/Utilities/Input: 3.12:1 on white (WCAG 1.4.11); --color-border is 1.29:1 */
   --color-text-1:        var(--color-ink);
   --color-text-2:        var(--color-shadow);
   --color-text-3:        var(--color-muted);
@@ -323,6 +324,7 @@
   --border-width-normal: 1px;  /* width alone, for calc(); --border-normal is a shorthand and cannot be used inside calc() */
   --border-normal: var(--border-width-normal) solid var(--color-border);
   --border-width-accent: 3px;  /* Figma Stroke/accent: width alone, for the accent borders (footer top border); same pattern as --border-width-normal */
+  --border-width-medium: 1.5px;  /* Figma Stroke/medium: width alone, for the field, checkbox, radio and switch borders (and the Error state of a field); same pattern as --border-width-normal */
   --border-strong: 1px solid var(--color-border-strong);
 
   /* ----------------------------------------------------------
@@ -376,6 +378,7 @@
   --color-bg-inverse:    var(--color-cloud);
   --color-border:        var(--color-night-700);
   --color-border-strong: var(--color-night-500);  /* 3.19:1 on abyss (WCAG 1.4.11) */
+  --color-border-input:  var(--color-night-500);  /* Figma Border/Utilities/Input: 3.19:1 on abyss (WCAG 1.4.11) */
   --color-text-1:        var(--color-cloud);
   --color-text-2:        var(--color-night-300);
   --color-text-3:        var(--color-night-400);  /* WCAG AA: 4.6:1 on dark mode cards */

@@ -20,6 +20,9 @@
   background-color: var(--color-bg-alt);
   color: var(--color-text-2);
   border: var(--border-thin);
+  /* The stroke is drawn inside the box in Figma, so the border is discounted from the padding
+     (rule: DESIGN-IMPLEMENTATION.md, "Borda dentro da caixa"). Box = 28.8px high, as the other styles. */
+  padding: calc(var(--space-1) - var(--border-width-normal)) calc(var(--space-3) - var(--border-width-normal));
 }
 
 .badge--anchor {
