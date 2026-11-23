@@ -7,8 +7,8 @@
        <span class="banner__icon" aria-hidden="true">🚧</span>           optional, decorative
        <span class="banner__text">Text</span>
      </div>
-   The emoji uses the same text style as the text (Figma styles it with Link/link-xs bold, which looks accidental;
-   recorded as a gap). The width is fluid (Figma shows 1206). */
+   The emoji uses the same text style as the text, Body/Medium/body-sm medium (Figma now does too). The width is fluid
+   (Figma shows 1206). */
 
 /* ----------------------------------------------------------
    BANNER

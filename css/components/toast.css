@@ -12,7 +12,8 @@
        <a class="toast__action" href="#">Undo</a>                (or a <button type="button">)
        <button type="button" class="toast__dismiss" aria-label="Dismiss"><svg class="icon" ...>...</svg></button>
      </div>
-   Error uses role="alert", the other types role="status". The type is signaled by the icon glyph and its color.
+   Error uses role="alert", Warning, Info and Success role="status". The type is signaled by the icon glyph and its color.
+   A neutral message uses Info (Figma removed the Default type).
    Not coded here (see the gaps in the docs data): the positioning region, stacking, auto-dismiss and motion. */
 
 /* ----------------------------------------------------------
@@ -21,10 +22,10 @@
    Figma frame is 69 high (24 + 43 + 2), so Figma includes the 1px stroke in the layout.
    ---------------------------------------------------------- */
 .toast {
-  --toast-icon: var(--icon-color-secondary);
+  --toast-icon: var(--icon-color-info);
   --toast-dismiss: var(--icon-color-default);
   position: relative;
-  z-index: 500;  /* Figma: notification layer 500. The z-index scale in tokens.css stops at --z-modal (200). */
+  z-index: var(--z-notification);  /* Figma Z-index/z-notification (500) */
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -35,12 +36,6 @@
   box-shadow: var(--shadow-lg);  /* Figma Shadow/lg: 0 8px 32px at 10% */
   font-family: var(--font-body);
   line-height: 1.6;
-}
-
-/* Default sets the Secondary mode on the whole variant: its glyph (Info) and its dismiss icon follow. */
-.toast--default {
-  --toast-icon: var(--icon-color-secondary);
-  --toast-dismiss: var(--icon-color-secondary);
 }
 
 .toast--success {
@@ -126,6 +121,7 @@
 }
 
 .toast__dismiss {
+  position: relative;
   display: flex;
   flex: none;
   width: var(--space-4);
@@ -140,6 +136,14 @@
 .toast__dismiss .icon {
   width: 100%;
   height: 100%;
+}
+
+/* The visual stays 16x16 (Figma). A transparent pseudo-element grows the hit area to 24x24 (WCAG 2.2 SC 2.5.8) without
+   changing the layout: it grows 4px each way, and the action is 12px away. */
+.toast__dismiss::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--space-1) * -1);
 }
 
 @media (forced-colors: active) {

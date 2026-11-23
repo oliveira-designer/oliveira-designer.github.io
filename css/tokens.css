@@ -356,8 +356,16 @@
   --z-base:    0;
   --z-raised:  1;
   --z-sticky:  10;
-  --z-overlay: 100;
-  --z-modal:   200;
+  --z-overlay: 100;  /* in use by the site header; not the modal scrim, see --z-modal-scrim */
+  --z-modal:   200;  /* Figma Z-index/z-modal */
+
+  /* Figma Hope · Primitives, group Z-index. Layers keep gaps of 100: a new layer only needs a new number when it must
+     sit between two existing ones. --z-modal-scrim has the same value as --z-overlay but a different meaning (the
+     header and the modal scrim are different layers), so --z-overlay is not an alias. */
+  --z-modal-scrim:   100;  /* Figma Z-index/z-modal-scrim */
+  --z-popover:       300;  /* Figma Z-index/z-popover: Popover, Menu and Select panels */
+  --z-tooltip:       400;  /* Figma Z-index/z-tooltip */
+  --z-notification:  500;  /* Figma Z-index/z-notification: Toast */
 
   /* ----------------------------------------------------------
      GLOBAL URLS

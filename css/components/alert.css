@@ -12,7 +12,7 @@
        </div>
        <button type="button" class="alert__dismiss" aria-label="Dismiss"><svg class="icon" ...>...</svg></button>
      </div>
-   Error and Warning use role="alert", Info and Success use role="status". The width is fluid (Figma shows 480).
+   Error uses role="alert", Warning, Info and Success use role="status". The width is fluid (Figma shows 480).
    Figma defines no hover, no underline and no focus for the action: it uses the Hope focus ring. */
 
 /* ----------------------------------------------------------
@@ -123,6 +123,7 @@
 
 /* Dismiss: 16x16 as in Figma, Icon/Color Default (no mode override). */
 .alert__dismiss {
+  position: relative;
   display: flex;
   flex: none;
   width: var(--space-4);
@@ -137,6 +138,14 @@
 .alert__dismiss .icon {
   width: 100%;
   height: 100%;
+}
+
+/* The visual stays 16x16 (Figma). A transparent pseudo-element grows the hit area to 24x24 (WCAG 2.2 SC 2.5.8) without
+   changing the layout: it grows 4px each way, inside the 16px padding, away from the action. */
+.alert__dismiss::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--space-1) * -1);
 }
 
 @media (forced-colors: active) {
