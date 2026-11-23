@@ -32,6 +32,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import { renderPage, indexBody, esc } from './docs-layout.mjs';
+import { hopeTable } from './docs-kit.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const TOKENS_CSS = path.join(ROOT, 'css', 'tokens.css');
@@ -636,41 +637,62 @@ function valueCell(value, muted) {
   return `<span class="docs-value${muted ? ' docs-value--muted' : ''}"><code>${esc(value)}</code></span>`;
 }
 
-function figmaCell(t) {
+const NUMERIC_KINDS = new Set(['length', 'time', 'number']);
+
+// The swatch is decorative (aria-hidden): the text value next to it carries the information.
+function colorCell(value, muted) {
+  if (!value) return '<span class="docs-muted">unset</span>';
+  return `<span class="docs-colorcell${muted ? ' docs-value--muted' : ''}"><span class="docs-swatch" aria-hidden="true"><span class="docs-swatch__fill" style="background-color:${esc(value)}"></span></span><code>${esc(value)}</code></span>`;
+}
+
+// Figma column: one line per compared mode. CSS column: the value the browser computed for the same mode.
+function figmaColumn(t) {
   const f = t.figma;
   if (!f) return '<span class="docs-muted">not in Figma</span>';
+  return `<span class="docs-value">${f.comparison.map((r) => `<span class="docs-fig"><span class="docs-value__tag">${esc(r.mode)}</span> <code>${esc(r.figma)}</code></span>`).join('')}</span>`;
+}
+
+function cssColumn(t) {
+  const f = t.figma;
+  if (!f) return '<span class="docs-muted">not compared</span>';
   const lines = f.comparison.map((r) => {
     const cls = r.ok === false ? (r.accepted ? ' docs-fig--accepted' : ' docs-fig--diff') : r.ok === null ? ' docs-fig--info' : '';
-    const detail = r.ok === false ? ` <span class="docs-muted">CSS ${esc(r.css)}${r.note ? ` (${esc(r.note)})` : ''}${r.accepted ? ', accepted' : ''}</span>` : r.ok === null && r.note ? ` <span class="docs-muted">${esc(r.note)}</span>` : '';
-    return `<span class="docs-fig${cls}"><span class="docs-value__tag">${esc(r.mode)}</span> <code>${esc(r.figma)}</code>${detail}</span>`;
+    const shown = r.css !== undefined && r.css !== null && r.css !== '' ? `<code>${esc(r.css)}</code>` : '<span class="docs-muted">not compared</span>';
+    const note = r.note || r.accepted ? ` <span class="docs-muted">${r.note ? esc(r.note) : ''}${r.accepted ? `${r.note ? ', ' : ''}accepted` : ''}</span>` : '';
+    return `<span class="docs-fig${cls}"><span class="docs-value__tag">${esc(r.mode)}</span> ${shown}${note}</span>`;
   });
   return `<span class="docs-value">${lines.join('')}</span>`;
 }
 
-function rowHtml(t) {
-  const isColor = t.kind === 'color';
-  const swatches = isColor ? `<div class="docs-swatches">${swatch(t.light, 'Light')}${swatch(t.dark, 'Dark')}</div>` : '';
+function tokenRowHeader(t) {
   const unused = t.unused ? '<span class="badge badge--solar">unused</span>' : '';
-  const same = t.dark === t.light && !t.darkOverride;
-  const rtTag = (label, v) => `<span><span class="docs-value__tag">${label}</span> <code>${esc(v)}</code></span>`;
-  const rt = t.reducedTransparency
-    ? `<span class="docs-value">${rtTag('Light', t.reducedTransparency.light)}${
-        t.reducedTransparency.dark !== t.reducedTransparency.light ? rtTag('Dark', t.reducedTransparency.dark) : ''
-      }</span>`
-    : '';
   const note = t.note ? `<span class="docs-token__note">${esc(t.note)}</span>` : '';
-  return `            <tr id="${esc(t.name.slice(2))}"${t.status === 'mismatch' ? ' class="docs-row--mismatch"' : ''}>
-              <th scope="row"><code>${esc(t.name)}</code><span class="docs-token__meta"><span>${t.kind}</span>${unused}</span>${note}</th>
-              <td>${swatches}</td>
-              <td>${valueCell(t.light, false)}</td>
-              <td>${valueCell(t.dark, same)}</td>
-              <td>${rt}</td>
-              <td>${figmaCell(t)}</td>
-              <td>${statusBadge(t.status, t.acceptedTitle)}</td>
-            </tr>`;
+  const rt = t.reducedTransparency
+    ? `<span class="docs-token__note">Reduced transparency: Light ${esc(t.reducedTransparency.light)}${t.reducedTransparency.dark !== t.reducedTransparency.light ? `, Dark ${esc(t.reducedTransparency.dark)}` : ''}</span>`
+    : '';
+  return `<code>${esc(t.name)}</code><span class="docs-token__meta"><span>${t.kind}</span>${unused}</span>${note}${rt}`;
 }
 
-const head = (cols) => `<thead><tr>${cols.map((c) => `<th scope="col">${c}</th>`).join('')}</tr></thead>`;
+// One Hope Table per token group. Color groups get Light and Dark columns (swatch and value together);
+// groups with no color and no dark difference collapse them into one Value column.
+function groupTable(g, d) {
+  const toks = g.tokens.map((name) => d.byName[name]);
+  const hasColor = toks.some((t) => t.kind === 'color');
+  const valueOnly = !hasColor && toks.every((t) => t.dark === t.light && !t.darkOverride);
+  const numeric = valueOnly && toks.every((t) => NUMERIC_KINDS.has(t.kind));
+  const cols = valueOnly
+    ? [{ label: 'Token' }, { label: 'Value', end: numeric }, { label: 'Figma' }, { label: 'CSS (computed)' }, { label: 'Status' }]
+    : [{ label: 'Token' }, { label: 'Light' }, { label: 'Dark' }, { label: 'Figma' }, { label: 'CSS (computed)' }, { label: 'Status' }];
+  const rows = toks.map((t) => {
+    const cell = (v, muted) => (t.kind === 'color' ? colorCell(v, muted) : valueCell(v, muted));
+    const same = t.dark === t.light && !t.darkOverride;
+    const cells = valueOnly
+      ? [tokenRowHeader(t), valueCell(t.light, false), figmaColumn(t), cssColumn(t), statusBadge(t.status, t.acceptedTitle)]
+      : [tokenRowHeader(t), cell(t.light, false), cell(t.dark, same), figmaColumn(t), cssColumn(t), statusBadge(t.status, t.acceptedTitle)];
+    return { attrs: `id="${esc(t.name.slice(2))}"${t.status === 'mismatch' ? ' class="docs-row--mismatch"' : ''}`, cells };
+  });
+  return hopeTable({ id: `tokens-${g.id}-caption`, caption: `${g.label} tokens`, hidden: true, cols, rows });
+}
 
 function figmaValuesCell(ft) {
   const parts = Object.entries(ft.modes).map(([mode, v]) => {
@@ -696,64 +718,59 @@ function tokensBody(d) {
           <section class="docs-section" id="summary" aria-labelledby="summary-title">
             <h2 class="text-h2" id="summary-title">Figma comparison summary</h2>
             <p class="docs-section__desc">Mismatches are information for the divergence report, not build errors. Colors are compared as lowercase #rrggbbaa with a tolerance of 1/255 on alpha, lengths as px numbers (rem converted with a root of ${d.rootFontPx}px: ${esc(d.rootFontSource)}). Font sizes in <code>clamp()</code> compare the max to Desktop and the min to Mobile. <code>--border-*</code> compare the width part only; shadow colors compare the first layer.</p>
-            <div class="docs-table-wrap">
-              <table class="docs-table docs-table--compact">
-                ${head(['Status', 'Count', 'Meaning'])}
-                <tbody>
-                  <tr><th scope="row">${statusBadge('match')}</th><td>${s.match}</td><td>CSS token found, every compared mode equals Figma</td></tr>
-                  <tr><th scope="row">${statusBadge('mismatch')}</th><td>${s.mismatch}</td><td>CSS token found, at least one mode differs and is not accepted (listed below)</td></tr>
-                  <tr><th scope="row">${statusBadge('accepted')}</th><td>${s.accepted}</td><td>A divergence the owner accepted (docs/data/accepted-divergences.json); values stay visible</td></tr>
-                  <tr><th scope="row">${statusBadge('no-figma-mapping')}</th><td>${s.noFigmaMapping}</td><td>Figma token with cssName null (table "In Figma, no code token yet")</td></tr>
-                  <tr><th scope="row">${statusBadge('no-css-token')}</th><td>${s.noCssToken}</td><td>Figma cssName that is not defined in tokens.css and is not accepted</td></tr>
-                  <tr><th scope="row">${statusBadge('css-only')}</th><td>${s.cssOnly}</td><td>CSS token with no Figma token (informational)</td></tr>
-                  <tr><th scope="row">${statusBadge('uncompared')}</th><td>${s.uncompared}</td><td>Matched by name but no mode could be compared</td></tr>
-                </tbody>
-              </table>
-            </div>
+            ${hopeTable({
+              id: 'summary-caption', caption: 'Figma comparison summary', hidden: true,
+              cols: [{ label: 'Status' }, { label: 'Count', end: true }, { label: 'Meaning' }],
+              rows: [
+                [statusBadge('match'), String(s.match), 'CSS token found, every compared mode equals Figma'],
+                [statusBadge('mismatch'), String(s.mismatch), 'CSS token found, at least one mode differs and is not accepted (listed below)'],
+                [statusBadge('accepted'), String(s.accepted), 'A divergence the owner accepted (docs/data/accepted-divergences.json); values stay visible'],
+                [statusBadge('no-figma-mapping'), String(s.noFigmaMapping), 'Figma token with cssName null (table "In Figma, no code token yet")'],
+                [statusBadge('no-css-token'), String(s.noCssToken), 'Figma cssName that is not defined in tokens.css and is not accepted'],
+                [statusBadge('css-only'), String(s.cssOnly), 'CSS token with no Figma token (informational)'],
+                [statusBadge('uncompared'), String(s.uncompared), 'Matched by name but no mode could be compared'],
+              ],
+            })}
           </section>
 
           <section class="docs-section" id="mismatches" aria-labelledby="mismatches-title">
             <h2 class="text-h2" id="mismatches-title">Mismatches (${d.mismatches.length})</h2>${
       d.mismatches.length
         ? `
-            <div class="docs-table-wrap">
-              <table class="docs-table docs-table--compact">
-                ${head(['Token', 'Figma token', 'Mode', 'Figma', 'CSS', 'Note'])}
-                <tbody>
-${d.mismatches
-  .map(
-    (m) => `                  <tr><th scope="row"><a href="#${esc(m.token.slice(2))}"><code>${esc(m.token)}</code></a></th><td>${esc(m.figmaName)}</td><td>${esc(m.mode)}</td><td><code>${esc(m.figma)}</code></td><td><code>${esc(m.css)}</code></td><td>${esc(m.note)}</td></tr>`
-  )
-  .join('\n')}
-                </tbody>
-              </table>
-            </div>`
+            ${hopeTable({
+              id: 'mismatches-caption', caption: 'Mismatched tokens', hidden: true,
+              cols: [{ label: 'Token' }, { label: 'Figma token' }, { label: 'Mode' }, { label: 'Figma' }, { label: 'CSS' }, { label: 'Note' }],
+              rows: d.mismatches.map((m) => [`<a href="#${esc(m.token.slice(2))}"><code>${esc(m.token)}</code></a>`, esc(m.figmaName), esc(m.mode), `<code>${esc(m.figma)}</code>`, `<code>${esc(m.css)}</code>`, esc(m.note)]),
+            })}`
         : '\n            <p class="docs-section__desc">None.</p>'
     }
           </section>`);
     if (d.acceptedItems.length || d.staleAccepted.length) {
-      const accRows = d.acceptedItems
-        .map(
-          (a) => `                  <tr><th scope="row"><code>${esc(a.cssName)}</code></th><td>${esc(a.mode || 'all modes')}</td><td>${esc(a.kind === 'no-css-token' ? 'Figma code name not defined in tokens.css' : 'value differs')}</td><td>${a.rows.length ? a.rows.map((r) => `<span class="docs-fig"><span class="docs-value__tag">${esc(r.mode)}</span> Figma <code>${esc(r.figma)}</code>, CSS <code>${esc(r.css)}</code></span>`).join('') : '<span class="docs-muted">see the table below</span>'}</td><td>${esc(a.reason)}</td><td>${esc(a.decidedBy)}, ${esc(a.date)}</td></tr>`
-        )
-        .join('\n');
-      const staleRows = d.staleAccepted
-        .map(
-          (a) => `                  <tr><th scope="row"><code>${esc(a.cssName)}</code></th><td>${esc(a.mode || 'all modes')}</td><td colspan="2"><span class="badge badge--solar">stale accepted entry</span> ${esc(a.staleReason)}</td><td>${esc(a.reason)}</td><td>${esc(a.decidedBy)}, ${esc(a.date)}</td></tr>`
-        )
-        .join('\n');
+      const accRows = d.acceptedItems.map((a) => [
+        `<code>${esc(a.cssName)}</code>`,
+        esc(a.mode || 'all modes'),
+        esc(a.kind === 'no-css-token' ? 'Figma code name not defined in tokens.css' : 'value differs'),
+        a.rows.length ? a.rows.map((r) => `<span class="docs-fig"><span class="docs-value__tag">${esc(r.mode)}</span> Figma <code>${esc(r.figma)}</code>, CSS <code>${esc(r.css)}</code></span>`).join('') : '<span class="docs-muted">see the table below</span>',
+        esc(a.reason),
+        `${esc(a.decidedBy)}, ${esc(a.date)}`,
+      ]);
+      const staleRows = d.staleAccepted.map((a) => [
+        `<code>${esc(a.cssName)}</code>`,
+        esc(a.mode || 'all modes'),
+        '<span class="badge badge--solar">stale accepted entry</span>',
+        esc(a.staleReason),
+        esc(a.reason),
+        `${esc(a.decidedBy)}, ${esc(a.date)}`,
+      ]);
       parts.push(`
           <section class="docs-section" id="accepted" aria-labelledby="accepted-title">
             <h2 class="text-h2" id="accepted-title">Accepted divergences (${d.acceptedItems.length}${d.staleAccepted.length ? `, ${d.staleAccepted.length} stale` : ''})</h2>
             <p class="docs-section__desc">Listed in <code>docs/data/accepted-divergences.json</code>. Accepting a divergence never hides the values: they stay in the token tables. A stale entry no longer matches any divergence and can be removed.</p>
-            <div class="docs-table-wrap">
-              <table class="docs-table docs-table--compact">
-                ${head(['Token', 'Mode', 'Divergence', 'Values', 'Reason', 'Decided'])}
-                <tbody>
-${accRows}${accRows && staleRows ? '\n' : ''}${staleRows}
-                </tbody>
-              </table>
-            </div>
+            ${hopeTable({
+              id: 'accepted-caption', caption: 'Accepted divergences', hidden: true,
+              cols: [{ label: 'Token' }, { label: 'Mode' }, { label: 'Divergence' }, { label: 'Values' }, { label: 'Reason' }, { label: 'Decided' }],
+              rows: [...accRows, ...staleRows],
+            })}
           </section>`);
     }
   }
@@ -772,18 +789,10 @@ ${accRows}${accRows && staleRows ? '\n' : ''}${staleRows}
           </section>`);
 
   for (const g of d.groups) {
-    const rows = g.tokens.map((name) => rowHtml(d.byName[name])).join('\n');
     parts.push(`
           <section class="docs-section" id="${esc(g.id)}" aria-labelledby="${esc(g.id)}-title">
             <h2 class="text-h2" id="${esc(g.id)}-title" title="${esc(g.raw)}">${esc(g.label)}</h2>${g.description ? `\n            <p class="docs-section__desc">${esc(g.description)}</p>` : ''}
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                ${head(['Token', 'Swatch', 'Light', 'Dark', 'Reduced transparency', 'Figma value', 'Status'])}
-                <tbody>
-${rows}
-                </tbody>
-              </table>
-            </div>
+            ${groupTable(g, d)}
           </section>`);
   }
 
@@ -792,35 +801,27 @@ ${rows}
           <section class="docs-section" id="figma-no-code" aria-labelledby="figma-no-code-title">
             <h2 class="text-h2" id="figma-no-code-title">In Figma, no code token yet</h2>
             <p class="docs-section__desc">${d.figmaNoCode.length} Figma tokens whose code syntax (cssName) is null. They are not mapped to CSS.</p>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                ${head(['Figma token', 'Collection', 'Type', 'Figma value'])}
-                <tbody>
-${d.figmaNoCode.map((ft) => `                  <tr><th scope="row">${esc(ft.name)}</th><td>${esc(ft.collection)}</td><td>${esc(ft.type.toLowerCase())}</td><td>${figmaValuesCell(ft)}</td></tr>`).join('\n')}
-                </tbody>
-              </table>
-            </div>
+            ${hopeTable({
+              id: 'figma-no-code-caption', caption: 'Figma tokens with no code token', hidden: true,
+              cols: [{ label: 'Figma token' }, { label: 'Collection' }, { label: 'Type' }, { label: 'Figma value' }],
+              rows: d.figmaNoCode.map((ft) => [esc(ft.name), esc(ft.collection), esc(ft.type.toLowerCase()), figmaValuesCell(ft)]),
+            })}
           </section>`);
     if (d.figmaNoCssToken.length) {
       parts.push(`
           <section class="docs-section" id="figma-no-css" aria-labelledby="figma-no-css-title">
             <h2 class="text-h2" id="figma-no-css-title">In Figma, code name not in tokens.css</h2>
             <p class="docs-section__desc">Figma tokens with a cssName that tokens.css does not define, including accepted ones (their badge says accepted and the reason is on hover). For Icon/Color the CSS has one token per mode (<code>--icon-color-&lt;mode&gt;</code>); the right-hand values below are informational and do not change the status.</p>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                ${head(['Figma token', 'cssName', 'Modes (Figma value, CSS equivalent)', 'Status'])}
-                <tbody>
-${d.figmaNoCssToken
-  .map((e) => {
-    const lines = (e.icon || []).map(
-      (r) => `<span class="docs-fig${r.ok === false ? ' docs-fig--diff' : ''}"><span class="docs-value__tag">${esc(r.mode)}</span> <code>${esc(r.figma)}</code> ${swatch(r.figma, '')}${r.cssName ? ` <span class="docs-muted"><code>${esc(r.cssName)}</code> ${r.css ? esc(r.css) : 'not defined'}${r.ok === false ? ', differs' : r.ok ? ', same' : ''}</span>` : ''}</span>`
-    );
-    return `                  <tr><th scope="row">${esc(e.name)}</th><td><code>${esc(e.cssName)}</code></td><td>${lines.length ? `<span class="docs-value">${lines.join('')}</span>` : figmaValuesCell(e)}</td><td>${e.accepted ? statusBadge('accepted', acceptedTitle(e.accepted)) : statusBadge('no-css-token')}</td></tr>`;
-  })
-  .join('\n')}
-                </tbody>
-              </table>
-            </div>
+            ${hopeTable({
+              id: 'figma-no-css-caption', caption: 'Figma tokens whose code name is not in tokens.css', hidden: true,
+              cols: [{ label: 'Figma token' }, { label: 'cssName' }, { label: 'Modes (Figma value, CSS equivalent)' }, { label: 'Status' }],
+              rows: d.figmaNoCssToken.map((e) => {
+                const lines = (e.icon || []).map(
+                  (r) => `<span class="docs-fig${r.ok === false ? ' docs-fig--diff' : ''}"><span class="docs-value__tag">${esc(r.mode)}</span> <code>${esc(r.figma)}</code> ${swatch(r.figma, '')}${r.cssName ? ` <span class="docs-muted"><code>${esc(r.cssName)}</code> ${r.css ? esc(r.css) : 'not defined'}${r.ok === false ? ', differs' : r.ok ? ', same' : ''}</span>` : ''}</span>`
+                );
+                return [esc(e.name), `<code>${esc(e.cssName)}</code>`, lines.length ? `<span class="docs-value">${lines.join('')}</span>` : figmaValuesCell(e), e.accepted ? statusBadge('accepted', acceptedTitle(e.accepted)) : statusBadge('no-css-token')];
+              }),
+            })}
           </section>`);
     }
   }
@@ -994,15 +995,7 @@ async function main() {
   fs.writeFileSync(path.join(OUT_DIR, 'data', 'tokens.json'), JSON.stringify(data, null, 2) + '\n');
 
   const view = { ...data, byName, groups, figma: !!figmaRaw, figmaSource, figmaNoCode, figmaNoCssToken, acceptedItems, staleAccepted };
-  const onThisPage = [];
-  if (figmaRaw) onThisPage.push({ id: 'summary', label: 'Summary' }, { id: 'mismatches', label: `Mismatches (${mismatches.length})` });
-  if (figmaRaw && (acceptedItems.length || staleAccepted.length)) onThisPage.push({ id: 'accepted', label: `Accepted (${acceptedItems.length})` });
-  groups.forEach((g) => onThisPage.push({ id: g.id, label: g.label, title: g.raw }));
-  if (figmaRaw) {
-    onThisPage.push({ id: 'figma-no-code', label: 'In Figma, no code token' });
-    if (figmaNoCssToken.length) onThisPage.push({ id: 'figma-no-css', label: 'In Figma, not in CSS' });
-  }
-  fs.writeFileSync(path.join(OUT_DIR, 'tokens.html'), renderPage({ title: 'Tokens', activeHref: 'tokens.html', onThisPage, body: tokensBody(view) }));
+  fs.writeFileSync(path.join(OUT_DIR, 'tokens.html'), renderPage({ title: 'Tokens', activeHref: 'tokens.html', body: tokensBody(view) }));
 
   const figmaLine = figmaRaw
     ? `${summary.match} match, ${summary.mismatch} mismatch, ${summary.accepted} accepted, ${summary.noFigmaMapping} no Figma mapping, ${summary.noCssToken} no CSS token`
