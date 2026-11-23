@@ -828,7 +828,7 @@ O sistema é flat por princípio. Sombras existem mas são usadas com parcimôni
 
 Hierarquia de profundidade (z-index):
 
-- Base: 0 · Sticky header: 10 · Modal backdrop: 100 · Modal: 200 · Popover: 300 · Tooltip: 400 · Toast: 500
+- Base: 0 · Sticky header: 10 · Modal backdrop: 100 · Modal: 200 · Popover: 300 · Tooltip: 400 · Toast: 500 (o CSS usa 100 no header do site; ver DESIGN-IMPLEMENTATION, seção 8)
 
 Hover em cards: borda muda para Âncora + sombra `md`. Sem `transform: translateY` em cards (cria expectativa de drag).
 
@@ -1074,8 +1074,8 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 ### Mensagens no código (Lote 2A, 2026-11-23)
 
-- **Alert:** `css/components/alert.css` (`.alert` com `--info`, `--success`, `--warning` e `--error`, mais `__icon`, `__content`, `__title`, `__description`, `__action` e `__dismiss`). Preenchimento e borda por tipo, ícone de status de 20px na cor do tipo, dismiss de 16px. Error e Warning com `role="alert"`, Info e Success com `role="status"`. A borda não é descontada do padding: o Figma inclui o traço no layout (105 de altura).
-- **Toast:** `toast.css` (`.toast` com `--default`, `--success`, `--warning`, `--error` e `--info`). Mesma borda e fundo em todos os tipos, sombra `--shadow-lg`, camada 500. O tipo vem do glifo e da cor do ícone. A região de posicionamento, o auto-dismiss e o movimento não estão no código.
+- **Alert:** `css/components/alert.css` (`.alert` com `--info`, `--success`, `--warning` e `--error`, mais `__icon`, `__content`, `__title`, `__description`, `__action` e `__dismiss`). Preenchimento e borda por tipo, ícone de status de 20px na cor do tipo, dismiss de 16px. Error com `role="alert"`, Warning, Info e Success com `role="status"` (regiões vivas anunciam conteúdo inserido dinamicamente). A borda não é descontada do padding: o Figma inclui o traço no layout (105 de altura).
+- **Toast:** `toast.css` (`.toast` com `--success`, `--warning`, `--error` e `--info`; Info é o tipo padrão). Mesma borda e fundo em todos os tipos, sombra `--shadow-lg`, camada 500. O tipo vem do glifo e da cor do ícone. A região de posicionamento, o auto-dismiss e o movimento não estão no código.
 - **Banner:** `banner.css`. `.banner` é o Notice do Figma (fundo Accent/Secondary, sem borda). O `.banner--wip` fica como modificador legado do site, para a página de case não mudar.
 - **Empty state:** `empty-state.css` (`.empty-state`, `__icon`, `__title`, `__description`), com o Button Primary do Hope como ação. O nível do título é escolha de quem usa.
 

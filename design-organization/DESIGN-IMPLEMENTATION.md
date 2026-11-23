@@ -502,9 +502,13 @@ O Figma tem uma coleção com a variável `Icon/Color` e 10 modos. No CSS, cada 
 
 **Quando a borda muda de largura entre estados** (campo: 1px, e 1,5px no Error), uma custom property por componente guarda a largura da borda do estado (`--field-border-width`) e o padding é calculado a partir dela, para a caixa externa não mudar de tamanho. O navegador desenha uma borda de 1,5px como 1px numa tela 1x; por isso o campo também fixa a altura externa (`min-height`), e o texto fica centralizado.
 
-**Onde vale:** Button (D-23), Badge Neutral (v2.9.0), Input, Textarea e Select. Checkbox, Radio e Switch têm tamanho fixo (`width` e `height` com `box-sizing: border-box`); neles a borda não precisa de desconto.
+**Regra de decisão: leia a propriedade `strokesIncludedInLayout` do nó no Figma antes de decidir.** Ela diz se o traço entra na conta do tamanho. Não deduza pela aritmética das alturas nem pela aparência.
 
-**Exceção, Alert e Toast (v2.10.0).** O Figma desenha as duas caixas com o traço de 1px incluído no layout: o Alert mede 105 (3 linhas de 20,8, mais 8 de espaço, mais 32 de padding, mais 2 de borda) e o Toast 69 (24 mais 43 mais 2). Por isso a borda soma ao box, como no CSS, e o padding não é descontado. Antes de aplicar a regra a um componente novo, confira a altura medida no Figma com a conta: com o traço dentro, o número bate sem a borda; com o traço no layout, bate com ela.
+- `strokesIncludedInLayout: false` (o traço não entra no tamanho): a borda no CSS soma ao box, então desconte-a do padding como descrito acima. Componentes lidos no Figma: **Button, Icon Button e Badge**.
+- `strokesIncludedInLayout: true` (o traço entra no tamanho, como a borda do CSS): a borda soma ao box e o padding **não** é descontado. Componentes lidos no Figma: **Alert, Toast, Tab, Tag e Accordion item**. Conferência: o Alert mede 105 (3 linhas de 20,8, mais 8 de espaço, mais 32 de padding, mais 2 de borda) e o Toast 69 (24 mais 43 mais 2), e o número só bate com a borda somada.
+- **A verificar (propriedade ainda não lida):** Input, Textarea, Select, Checkbox, Radio e Switch. Hoje o CSS desconta a borda nos três campos (Input, Textarea, Select) e usa tamanho fixo com `box-sizing: border-box` em Checkbox, Radio e Switch. Antes de mexer em qualquer um, leia a propriedade no Figma e registre o resultado aqui.
+
+Componente novo: leia a propriedade primeiro, depois escolha entre descontar e não descontar.
 
 ---
 
@@ -577,19 +581,25 @@ Uso mínimo. O sistema é flat por princípio.
 
 ## 8. Z-INDEX SYSTEM
 
+Escala do Figma (`Hope · Primitives`, grupo `Z-index`), com camadas a cada 100 para que uma camada nova caiba entre duas existentes:
+
 ```css
 :root {
-  --z-base:       0;
-  --z-raised:     1;    /* Cards em hover */
-  --z-sticky:     10;   /* Header sticky */
-  --z-overlay:    100;  /* Backdrop de modal */
-  --z-modal:      200;  /* Modal, dialog */
-  --z-popover:    300;  /* Dropdown, popover */
-  --z-tooltip:    400;  /* Tooltip */
-  --z-notification: 500; /* Toast, snackbar */
-  --z-max:        9999; /* Skip links, debug */
+  --z-base:         0;
+  --z-raised:       1;    /* Cards em hover */
+  --z-sticky:       10;   /* Sem uso hoje no site */
+  --z-overlay:      100;  /* Header do site (não é o backdrop do modal, veja --z-modal-scrim) */
+  --z-modal-scrim:  100;  /* Figma z-modal-scrim: backdrop de modal */
+  --z-modal:        200;  /* Figma z-modal: Modal, dialog */
+  --z-popover:      300;  /* Figma z-popover: Popover, Menu, painel do Select */
+  --z-tooltip:      400;  /* Figma z-tooltip */
+  --z-notification: 500;  /* Figma z-notification: Toast */
 }
 ```
+
+`--z-overlay` e `--z-modal-scrim` valem 100 mas são camadas diferentes (o header e o backdrop de modal), então um não é alias do outro. Nenhum valor computado de `z-index` mudou na v2.11.0: o Toast trocou o literal 500 por `var(--z-notification)`.
+
+**Divergência registrada (v2.11.0).** O texto anterior desta seção e o `DESIGN.md` descrevem o header sticky em 10 e o backdrop do modal em 100. No CSS, o header (`css/site/header.css`) usa `--z-overlay` (100), `--z-sticky` (10) não tem uso e `--z-max` (9999) estava documentado mas não existe em `tokens.css`. Nada foi alterado no CSS por causa disso: a escolha entre mover o header para `--z-sticky` ou atualizar o texto é decisão do Renan.
 
 ---
 

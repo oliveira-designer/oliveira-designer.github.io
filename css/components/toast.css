@@ -18,8 +18,8 @@
 
 /* ----------------------------------------------------------
    TOAST
-   Border and fill are the same for every type. As in the Alert, the border is not discounted from the padding: the
-   Figma frame is 69 high (24 + 43 + 2), so Figma includes the 1px stroke in the layout.
+   Border and fill are the same for every type. As in the Alert, the border is not discounted from the padding:
+   strokesIncludedInLayout is true on the Figma node (frame 69 high, 24 + 43 + 2).
    ---------------------------------------------------------- */
 .toast {
   --toast-icon: var(--icon-color-info);
