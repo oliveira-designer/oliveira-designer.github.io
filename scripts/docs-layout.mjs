@@ -3,6 +3,10 @@
 // Pages link the real css/*.css files; the only docs-specific stylesheet is
 // docs/docs.css, which uses Hope tokens only (see scripts/check-docs.mjs).
 
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 // hrefs are relative to docs/. Pages in a subfolder pass base '../' to renderPage.
 export const NAV = [
   { href: 'index.html', label: 'Overview' },
@@ -10,12 +14,11 @@ export const NAV = [
   { href: 'components/index.html', label: 'Components' },
 ];
 
+// One entry per component in docs/data/components-content.json (the pages the generator writes), then the review page.
+const CONTENT_FILE = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'docs', 'data', 'components-content.json');
+const componentEntries = fs.existsSync(CONTENT_FILE) ? JSON.parse(fs.readFileSync(CONTENT_FILE, 'utf8')).components || [] : [];
 export const COMPONENT_PAGES = [
-  { href: 'components/button.html', label: 'Button' },
-  { href: 'components/badge.html', label: 'Badge' },
-  { href: 'components/link.html', label: 'Link' },
-  { href: 'components/separator.html', label: 'Separator' },
-  { href: 'components/table.html', label: 'Table' },
+  ...componentEntries.map((c) => ({ href: `components/${c.slug}.html`, label: c.name })),
   { href: 'components/review.html', label: 'Review (temporary)' },
 ];
 
@@ -110,44 +113,7 @@ export function header(activeHref, base = '') {
     </header>`;
 }
 
-function sidebar(activeHref, onThisPage, base = '') {
-  const pages = NAV.map(
-    (n) => `<li class="case-toc__item"><a class="case-toc__link${n.href === activeHref ? ' is-active' : ''}" href="${base}${n.href}"${n.href === activeHref ? ' aria-current="page"' : ''}>${n.label}</a></li>`
-  ).join('\n              ');
-  let comps = '';
-  if (typeof activeHref === 'string' && activeHref.startsWith('components/')) {
-    const items = COMPONENT_PAGES.map(
-      (n) => `<li class="case-toc__item"><a class="case-toc__link${n.href === activeHref ? ' is-active' : ''}" href="${base}${n.href}"${n.href === activeHref ? ' aria-current="page"' : ''}>${n.label}</a></li>`
-    ).join('\n              ');
-    comps = `
-            <p class="case-toc__label">Components</p>
-            <ol class="case-toc__list">
-              ${items}
-            </ol>`;
-  }
-  let more = '';
-  if (onThisPage && onThisPage.length) {
-    const items = onThisPage
-      .map((s) => `<li class="case-toc__item"><a class="case-toc__link" href="#${esc(s.id)}"${s.title ? ` title="${esc(s.title)}"` : ''}>${esc(s.label)}</a></li>`)
-      .join('\n              ');
-    more = `
-            <p class="case-toc__label">On this page</p>
-            <ol class="case-toc__list">
-              ${items}
-            </ol>`;
-  }
-  return `<aside class="case-sidebar">
-          <nav class="case-toc" aria-label="Docs pages">
-            <p class="case-toc__label">Pages</p>
-            <ol class="case-toc__list">
-              ${pages}
-            </ol>${comps}${more}
-          </nav>
-        </aside>`;
-}
-
-// Side menu of the model layout (layout: 'ds'): the pattern of design-system.html (grouped links,
-// no "On this page" list). Same items as the classic sidebar: Pages and Components.
+// Side menu: the pattern of design-system.html (grouped links): Pages and Components.
 function sidebarDs(activeHref, base = '') {
   const link = (n) => `<a class="docs-ds-nav__link" href="${base}${n.href}"${n.href === activeHref ? ' aria-current="page"' : ''}>${n.label}</a>`;
   return `<aside class="docs-ds-sidebar">
@@ -217,9 +183,7 @@ const SCRIPT = `<script>
   </script>`;
 
 // stylesheets: optional list of repository-root-relative paths (for example from docs/data/css-sources.json).
-// layout: 'classic' (default: container, sidebar with On this page, content) or 'ds' (model layout:
-// full width, design-system.html side menu, no On this page).
-export function renderPage({ title, activeHref, onThisPage = [], body, base = '', stylesheets = null, layout = 'classic' }) {
+export function renderPage({ title, activeHref, body, base = '', stylesheets = null }) {
   const links = (stylesheets ? stylesheets.map((p) => `<link rel="stylesheet" href="${base}../${p}" />`) : STYLESHEETS.map((s) => `<link rel="stylesheet" href="${base}../css/${s}.css" />`)).join('\n  ');
   return `<!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -241,25 +205,14 @@ export function renderPage({ title, activeHref, onThisPage = [], body, base = ''
 
   ${header(activeHref, base)}
 
-  ${layout === 'ds'
-    ? `<main id="main" class="docs-main docs-main--ds">
+  <main id="main" class="docs-main">
     <div class="docs-ds-layout">
         ${sidebarDs(activeHref, base)}
         <div class="docs-ds-content">
 ${body}
         </div>
     </div>
-  </main>`
-    : `<main id="main" class="docs-main">
-    <div class="container">
-      <div class="case-layout">
-        ${sidebar(activeHref, onThisPage, base)}
-        <div class="docs-content">
-${body}
-        </div>
-      </div>
-    </div>
-  </main>`}
+  </main>
 
   ${SCRIPT}
 </body>
@@ -289,7 +242,7 @@ export function indexBody(stats) {
             <h2 class="text-h2" id="pages-title">Pages</h2>
             <ul class="docs-list">
               <li><a href="tokens.html">Tokens</a>: ${stats.tokens} tokens with Light and Dark values, ${stats.unused} flagged as unused. Figma sync: ${esc(stats.figma)}.</li>
-              <li><a href="components/index.html">Components</a>: Button (with Icon Button), Badge, Link, Separator and Table, documented as they are in Figma and in code today. Run <code>npm run docs:components</code> to regenerate.</li>
+              <li><a href="components/index.html">Components</a>: one page per component, generated from the data files. The index lists every page with its status. Run <code>npm run docs:components</code> to regenerate.</li>
             </ul>
           </section>
 

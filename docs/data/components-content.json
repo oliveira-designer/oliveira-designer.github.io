@@ -72,6 +72,8 @@
     "naming": "Icon Button has no visible text. In code it needs an accessible name (aria-label), as the Figma description states.",
     "disabled": "Disabled uses the disabled tokens, not opacity."
   },
+  "example": {"element": "button", "attrs": {"type": "button"}, "labelProps": ["style", "size", "state"], "skipStates": ["Hover", "Focus"], "stateAttrs": {"Disabled": {"disabled": ""}}},
+  "essential": ["when", "variants", "accessibility"],
   "knownGaps": [
     {"id": "button-wcag-ref", "status": "documented", "text": "The Figma Info panel cites WCAG 2.4.7 and 2.4.12 for the focus ring. 2.4.12 is Focus Not Obscured (Enhanced, AAA). Ring appearance falls under 2.4.7 (AA) and 2.4.13 Focus Appearance (AAA). Source: TetraLogical, What's new in WCAG 2.2."},
     {"id": "button-small-only-ghost", "status": "measured", "text": "The description says sizes Medium and Small, but Small exists only for Ghost."},
@@ -126,6 +128,8 @@
     "note": "All five styles meet 4.5:1 in both modes on the default page background. The tightest is Solar in Light (4.78). Badges on other surfaces must be re-measured.",
     "meaning": "Colour alone must not carry the meaning: the label text states the status."
   },
+  "example": {"element": "span", "labelProps": ["style"]},
+  "essential": ["when", "variants", "accessibility"],
   "knownGaps": [],
   "unverified": []
 },
@@ -167,6 +171,8 @@
     "targetSize": "Medium is 21 high and Small is 18 high, below the 24 by 24 of 2.5.8 Target Size (Minimum, AA). Inline links inside a sentence are covered by the inline exception. Stand-alone links need spacing to meet it.",
     "naming": "Every link needs a clear destination in its own text."
   },
+  "example": {"element": "a", "attrs": {"href": "#example"}, "text": "Link", "labelProps": ["size", "state"], "skipStates": ["Hover", "Focus"], "stateAttrs": {"Disabled": {"aria-disabled": "true"}}, "dropAttrs": {"Disabled": ["href"]}},
+  "essential": ["when", "variants", "accessibility"],
   "knownGaps": [
     {"id": "link-hover-shift", "status": "measured", "text": "Hover and Focus switch from regular to bold, which widens the text by about 1px (Medium 25 to 26, Small 21 to 22), so neighbouring content shifts slightly. Accepted by the owner (D-32)."},
     {"id": "link-standalone-target", "status": "inference", "text": "Stand-alone Small links (18 high) depend on surrounding spacing to meet 2.5.8."}
@@ -197,8 +203,10 @@
     "contrastText": [],
     "contrastNonText": [],
     "meaning": "The line is decorative and carries no meaning, so it is hidden from assistive technology: <hr class=\"separator\" aria-hidden=\"true\">. It is exempt from the 3:1 non-text contrast of 1.4.11 because nothing depends on seeing it.",
-    "note": "The Figma specimen is 100 wide only to show the line. The CSS line fills its container."
+    "specimenNote": "The Figma specimen is 100 wide only to show the line. The CSS line fills its container."
   },
+  "example": {"element": "hr", "void": true, "attrs": {"aria-hidden": "true"}},
+  "essential": ["when", "variants", "accessibility"],
   "knownGaps": [],
   "unverified": []
 },
@@ -255,6 +263,9 @@
     "Do not hide the caption with display or visibility. Use the hidden caption modifier instead.",
     "Interactive elements inside cells need their own unique accessible names."
   ],
+  "example": {"markup": "<div class=\"data-table\" role=\"region\" aria-labelledby=\"table-example-caption\" tabindex=\"0\">\n  <table class=\"data-table__grid\">\n    <caption class=\"data-table__caption\" id=\"table-example-caption\">Components documented so far and their variants</caption>\n    <thead>\n      <tr>\n        <th scope=\"col\" class=\"data-table__head-cell\">Component</th>\n        <th scope=\"col\" class=\"data-table__head-cell data-table__head-cell--end\">Variants</th>\n        <th scope=\"col\" class=\"data-table__head-cell\">Status</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <th scope=\"row\" class=\"data-table__row-header\">Button</th>\n        <td class=\"data-table__cell data-table__cell--end\">28</td>\n        <td class=\"data-table__cell\">Complete</td>\n      </tr>\n      <tr>\n        <th scope=\"row\" class=\"data-table__row-header\">Badge</th>\n        <td class=\"data-table__cell data-table__cell--end\">5</td>\n        <td class=\"data-table__cell\">Complete</td>\n      </tr>\n      <tr>\n        <th scope=\"row\" class=\"data-table__row-header\">Link</th>\n        <td class=\"data-table__cell data-table__cell--end\">8</td>\n        <td class=\"data-table__cell\">Complete</td>\n      </tr>\n    </tbody>\n  </table>\n</div>"},
+  "mapKeys": ["Table", "TableHeaderCell", "TableCell"],
+  "essential": ["when", "variants", "contract", "accessibility"],
   "knownGaps": [],
   "unverified": []
 }
