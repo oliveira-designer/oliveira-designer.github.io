@@ -1,6 +1,8 @@
 # GOVERNANCE.md
 # Hope Design System — Regras de Evolução
-# Versão 1.6 · novembro de 2026
+# Versão 1.6.1 · novembro de 2026
+
+**Changelog v1.6.1 (PATCH, 23/11/2026)**: três trechos que ainda diziam o contrário da v1.6 foram reescritos com o menor ajuste possível: os anti-padrões "Componente preventivo" e "Componente para um único uso" (seção 9) e a frase "YAGNI vence sofisticação" (seção 10). Nenhuma regra mudou: os três testes e os lotes da seção 8 seguem como estavam. PATCH porque é refinamento de texto (seção 3).
 
 **Changelog v1.6 (MINOR, 23/11/2026)**: abolida a regra "o componente só entra no CSS quando houver uso" (o "teste do projeto real" da seção 8). Os componentes que existem no Figma passam a ser codificados em lotes por família (Lotes 0 a 4: Primitives, Forms, Feedback, Navigation, Overlays e dados), a partir do Figma, com ou sem uso no site. Os quatro testes da seção 9 viram três: o teste 4 ("projeto real") foi removido. Decisão de Renan, diário de decisões D-16 e D-33. Nenhuma outra regra mudou.
 
@@ -371,9 +373,9 @@ Exemplo legítimo: `breadcrumb` não é variante de nada. Anatomia própria (lis
 
 **× Variante explosiva.** Mais de 8 variantes em um único componente é sinal de que pelo menos uma virou outra coisa. Quebre.
 
-**× Componente preventivo.** "Vou criar `dashboard-widget` para quando precisar." Não vai precisar. E se precisar, será diferente do que você previu.
+**× Componente sem desenho.** "Vou criar `dashboard-widget` para quando precisar." Sem desenho no Figma, a forma sai do palpite e costuma errar. Componente que já existe no Figma não entra aqui: é codificado em lote, com ou sem uso (seção 8).
 
-**× Componente para um único uso.** Se aparece em uma página só, é padrão local — não componente do sistema.
+**× Componente para um único uso.** Se uma necessidade nova aparece em uma página só e não existe no Figma, é padrão local, não componente do sistema.
 
 ### O custo de um componente novo
 
@@ -394,7 +396,7 @@ Vale o preço? Aplique os três testes. Se passou, vale.
 - **Compatibilidade reversa é dívida que se honra, não obstáculo.**
 - **Agente propõe, humano decide.**
 - **Sem critério de sucesso, não há mudança válida.**
-- **YAGNI vence sofisticação.**
+- **Simplicidade vence sofisticação.**
 - **O Figma vence em valores, o repositório vence em prosa e regras, e a documentação acompanha as duas.**
 - **Revisão é olhar. Mudança é decidir. Não confunda.**
 
@@ -510,4 +512,4 @@ Componente sem decisão fica numa seção "Em revisão", com o nome sufixado `(l
 
 ---
 
-*Hope Design System · GOVERNANCE.md · v1.6 · novembro de 2026 · Renan Moura*
+*Hope Design System · GOVERNANCE.md · v1.6.1 · novembro de 2026 · Renan Moura*

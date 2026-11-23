@@ -1,5 +1,5 @@
 ---
-version: v2.8.1
+version: v2.9.0
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -1055,15 +1055,22 @@ Esta seção espelha o que mudou no Figma (Hope DS | Foundation e Core Component
 
 ### Componentes novos no Figma (sem CSS ainda)
 
-Formulários: Checkbox, Radio, Switch, Textarea, Select (gatilho fechado). Feedback: Alert, Toast, Tooltip, Progress, Spinner, Skeleton, Empty state. Navegação: Tabs, Breadcrumb, Pagination, Menu. Overlays e dados: Modal, Popover, Avatar, Tag, Accordion.
+Feedback: Alert, Toast, Tooltip, Progress, Spinner, Skeleton, Empty state. Navegação: Tabs, Breadcrumb, Pagination, Menu. Overlays e dados: Modal, Popover, Avatar, Tag, Accordion.
 
-Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados no código, em lotes por família (GOVERNANCE v1.6). Table e Card genérico ficam de fora por decisão.
+Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados no código, em lotes por família (GOVERNANCE v1.6). O Card genérico fica de fora por decisão. A Table já está no código (v2.8.0).
 
 ### Componentes primitivos no código (Lote 0, 2026-11-21)
 
 - **Badge:** cinco estilos, `.badge--neutral`, `.badge--anchor` (Ancora no Figma), `.badge--solar`, `.badge--success` e `.badge--danger`, em `css/components/badge.css`. Success (12%) e Danger (10%) têm opacidades diferentes de propósito (decisão D-32). Danger usa o token `Background/Danger/Secondary`; Success mantém o literal `rgba(74,159,107,0.12)`, igual ao token no Light, e fica como débito no Dark (o token é sólido lá e mudaria o `design-system.html`). Divergência conhecida na base `.badge`: padding 3px 10px, line-height 1.5 e borda Neutral de 0.8px, contra 4 e 12, 160% e 0.5 no Figma (altura 25,5 contra 29). A base é usada nas páginas publicadas, então a correção espera decisão do dono.
 - **Link:** `.link` e `.link--small` em `css/components/link.css` (Medium e Small; Default, Hover, Focus e Disabled). Sempre sublinhado, sem ícone. Hover e Focus só passam a negrito (700), o que alarga o texto cerca de 1px. O Disabled é regular (400) nos dois tamanhos e usa `aria-disabled="true"` em âncora sem `href`. Os links do site continuam pela regra global `a` do `css/reset.css`; a classe `.link` é só do componente.
 - **Separator:** `.separator` em `css/components/separator.css`. Linha horizontal de 1px em `Border/Default/Default`, largura total do container, decorativa: `<hr class="separator" aria-hidden="true">`. Não existe variante vertical no Figma.
+
+### Formulários no código (Lote 1, 2026-11-23)
+
+- **Input, Textarea e Select:** `css/components/field.css` (o que os três compartilham: `.field`, `.field__label`, `.field__control`, `.field__icon`, `.field__help` e a caixa do controle), mais `input.css`, `textarea.css` e `select.css` (`.input`, `.textarea`, `.select`). Estados: Hover (`:hover`), Focus (`:focus-visible`, anel de 2px com 2px de espaço), Error (`aria-invalid="true"`, borda de 1,5px em Danger, o texto do valor não muda) e Disabled (atributo `disabled`, sem `opacity`). Eixo Value: Empty é o placeholder (ou a opção vazia do Select), Filled é a cor própria do controle. O Select é o `<select>` nativo com `appearance: none` e um CaretDown de 16px; o painel de opções é o do navegador (o Menu não está no código).
+- **Checkbox, Radio e Switch:** `checkbox.css`, `radio.css` e `switch.css` (`.checkbox`, `.radio`, `.switch`, com `__input`, `__text`, `__label` e `__help`). Controles nativos com `appearance: none`. O Switch não tem Error. O hover vale com o ponteiro sobre o rótulo inteiro (inferência, o Figma define só no controle).
+- **Tokens novos:** `--border-width-medium` (1,5px, Figma Stroke/medium) e `--color-border-input` (Figma Border/Utilities/Input: Night/400 no Light e Night/500 no Dark; o `--color-border` do campo media 1,29:1 e não passava de 3:1).
+- **Regra da borda dentro da caixa:** ver `DESIGN-IMPLEMENTATION.md`, seção 5.
 
 ### Nomenclatura dos componentes no Figma
 
@@ -1103,4 +1110,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.8.1 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.9.0 · novembro de 2026 · Renan Moura*

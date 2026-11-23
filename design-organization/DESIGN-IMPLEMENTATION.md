@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.8.1 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.9.0 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.9.0 (MINOR, 23/11/2026)**: Lote 1 (Forms): Input, Textarea, Select, Checkbox, Radio e Switch no CSS, com os tokens `--border-width-medium` e `--color-border-input`. Regra única da borda dentro da caixa (seção 5), aplicada também ao Badge Neutral (que passa de 30,8px para 28,8px de altura). Detalhes no `CHANGELOG.md`.
 
 **Changelog v2.8.1 (PATCH, 23/11/2026)**: só documentação e site de docs. Todas as páginas de `docs/` passam ao mesmo layout (menu lateral, cartão de exemplo, HTML num `<details>`), as páginas de componentes saem de um único gerador a partir dos dados, a página de tokens usa o componente Table, e o layout antigo foi removido. Sem mudança de token, CSS de componente ou classe. Detalhes no `CHANGELOG.md`.
 
@@ -484,8 +486,21 @@ O Figma tem uma coleção com a variável `Icon/Color` e 10 modos. No CSS, cada 
   --border-thin:   0.8px solid var(--color-border);
   --border-normal: 1px solid var(--color-border);
   --border-strong: 1px solid var(--color-border-strong);
+
+  /* Larguras soltas, para usar dentro de calc() (um atalho como --border-normal não entra numa conta) */
+  --border-width-normal: 1px;    /* Figma Stroke/thin */
+  --border-width-medium: 1.5px;  /* Figma Stroke/medium: campo, checkbox, radio, switch e o Error do campo */
+  --border-width-accent: 3px;    /* Figma Stroke/accent */
 }
 ```
+
+### Borda dentro da caixa
+
+**Regra.** Uma borda desenhada **dentro** da caixa no Figma (stroke inside) não soma ao tamanho. No CSS a borda soma. Por isso a borda é descontada do padding, com um token dentro de `calc()`: `padding: calc(var(--space-3) - var(--border-width-normal))`. Nunca use `box-shadow: inset` para desenhar borda: ele some no modo de alto contraste do Windows.
+
+**Quando a borda muda de largura entre estados** (campo: 1px, e 1,5px no Error), uma custom property por componente guarda a largura da borda do estado (`--field-border-width`) e o padding é calculado a partir dela, para a caixa externa não mudar de tamanho. O navegador desenha uma borda de 1,5px como 1px numa tela 1x; por isso o campo também fixa a altura externa (`min-height`), e o texto fica centralizado.
+
+**Onde vale:** Button (D-23), Badge Neutral (v2.9.0), Input, Textarea, Select, Checkbox, Radio e Switch. Checkbox, Radio e Switch têm tamanho fixo (`width` e `height` com `box-sizing: border-box`); neles a borda não precisa de desconto.
 
 ---
 
@@ -692,7 +707,7 @@ Uso mínimo. O sistema é flat por princípio.
 .badge--anchor  { background: var(--color-sky);    color: var(--color-deep); border-color: var(--color-tide); }
 /* Solar, como no css/components/badge.css: tokens Accent/Secondary, sem borda.
    .badge--warning é alias do .badge--solar (decisão de 18/11/2026), só na documentação:
-   o CSS do site não tem a classe porque nenhuma página a usa. */
+   o CSS não tem a classe porque o Figma não tem um estilo Warning no Badge. */
 .badge--solar,
 .badge--warning { background: var(--color-bg-accent-secondary); color: var(--color-text-accent-secondary); }
 .badge--success { background: #E8F2EB; color: #1A5938; border-color: #A8D4B5; }
@@ -772,6 +787,8 @@ Uso mínimo. O sistema é flat por princípio.
 ---
 
 ## 12. COMPONENTES — INPUTS
+
+> **Nota (v2.9.0):** Input, Textarea, Select, Checkbox, Radio e Switch existem no CSS, a partir do Figma: `css/components/field.css` (o que Input, Textarea e Select compartilham), `input.css`, `textarea.css`, `select.css`, `checkbox.css`, `radio.css` e `switch.css`. O bloco abaixo é o rascunho antigo e não vale mais; a referência é a página de cada componente em `docs/components/`.
 
 ```css
 .input {
@@ -1792,6 +1809,8 @@ type ButtonProps = {
     output.css       ← Tailwind (npm run build:css), carregado antes do hope.css
 ```
 
+**Lote 1, Forms (v2.9.0).** `css/components/` ganhou `field.css`, `input.css`, `textarea.css`, `select.css`, `checkbox.css`, `radio.css` e `switch.css`. Novos tokens: `--border-width-medium` (Figma Stroke/medium) e `--color-border-input` (Figma Border/Utilities/Input).
+
 **Componentes entram em lotes (v2.8.0, GOVERNANCE v1.6).** Os componentes que existem no Figma são codificados em lotes por família (Lotes 0 a 4), a partir do Figma, com ou sem uso no site.
 
 **Lote 0 (v2.7.0, 2026-11-21).** `css/components/` ganhou `link.css` (`.link`, `.link--small`) e `separator.css` (`.separator`), e `badge.css` ganhou `.badge--danger`.
@@ -2499,5 +2518,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.8.1 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.9.0 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*
