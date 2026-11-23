@@ -5,6 +5,26 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.8.1 · 23 de novembro de 2026 · Site de docs: um layout para todas as páginas, um gerador de componentes e a página de tokens com o componente Table (documentação, PATCH)
+
+**Versão escolhida: PATCH (2.8.0 para 2.8.1).** Regra aplicada: seção 3 do `GOVERNANCE.md`, PATCH cobre "melhoria de documentação sem mudança técnica". Mudaram `docs/`, `scripts/` e `docs/docs.css`; nenhum token, classe ou CSS de componente mudou, e `css/hope.css` só muda no comentário de versão. Os cabeçalhos de versão foram atualizados para 2.8.1 (`tokens.css`, `DESIGN.md`, `DESIGN-IMPLEMENTATION.md`), como na 2.8.0; a entrada 2.6.18, também só de docs, os deixou como estavam. `GOVERNANCE.md` segue em 1.6 e `PATTERNS.md` em 1.1.2.
+
+**1. Um gerador para as páginas de componentes**
+- `scripts/build-components-doc.mjs` monta cada página a partir de `docs/data/components-content.json` e do mapa, sem nome de componente no código: título e descrição, exemplo ao vivo (classes reais do `css/hope.css`), o HTML do mesmo exemplo num `<details>` nativo (fechado, funciona com teclado e sem JavaScript) e as informações essenciais. Os campos novos `example`, `essential` e `mapKeys` do conteúdo dizem o que cada página mostra.
+- Button (os 7 estilos, Medium e Small Ghost, em Default e Disabled), Link e Separator passam ao layout novo. Hover e Focus não viram exemplos separados. As seis seções de dados (Figma vs code, In Figma no code yet, In code no Figma, Known gaps, Figma reference, Code reference) seguem nos JSON e não são mostradas.
+- Novo `scripts/docs-kit.mjs` com o markup da Table do Hope e as seções do modelo.
+
+**2. Página de tokens com a Table**
+- Uma Table por grupo de tokens, com `role="region"`, legenda, `th scope` e `tabindex="0"`. Colunas Token, Light, Dark, Figma, CSS (computed) e Status; o swatch é decorativo (`aria-hidden`) e o valor em texto vem junto. Grupos sem cor e sem diferença no Dark usam uma coluna Value, alinhada ao fim quando é numérica. Os status continuam vindo da mesma comparação e de `accepted-divergences.json`.
+- As tabelas de resumo, divergências, aceitas e da página de revisão também usam a Table. A linha de entrada "stale" da tabela de divergências aceitas, que usava `colspan`, virou células separadas (o contrato da Table não aceita `colspan`).
+
+**3. Índice e layout antigo**
+- `docs/components/index.html` é gerado dos dados e lista só páginas que existem. Removidas a seção "In Figma, no code yet" e a frase "Components that exist in Figma and have no CSS. From design-organization/DESIGN.md. They enter the docs when they are implemented, in batches by family (GOVERNANCE v1.6). No pages."
+- O menu lateral lista os componentes de `components-content.json`. Removidos o template clássico (container, `case-layout`, "On this page"), `.docs-table*`, `.docs-content`, `.docs-cols`, `.docs-demo-grid`, `.docs-swatches` e o código morto dos geradores.
+- `docs:check` falha se uma página de `docs/` não tiver os marcadores do layout.
+
+---
+
 ## v2.8.0 · 23 de novembro de 2026 · Componente Table, geometria do Badge, GOVERNANCE v1.6 e layout das páginas de docs (MINOR)
 
 **Versão aprovada pelo dono: MINOR (2.7.0 para 2.8.0).** Pela seção 3 do `GOVERNANCE.md`, MINOR cobre "novo componente entra no DESIGN.md": entra o componente Table (`css/components/table.css`). A mesma versão fecha o trabalho do Prompt 17 (geometria do Badge, `.badge--success` no token, GOVERNANCE v1.6) e do Prompt 19 (layout das páginas de docs, guarda de fonte mono). Sem token novo e sem quebra: nenhum nome ou classe existente foi removido. Versões: `DESIGN.md` e `DESIGN-IMPLEMENTATION.md` 2.8.0, `tokens.css` (cabeçalho) 2.8.0, `GOVERNANCE.md` 1.6 e `PATTERNS.md` 1.1.2 (só "quatro testes" vira "três testes").

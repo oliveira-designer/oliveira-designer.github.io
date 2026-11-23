@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.8.0 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.8.1 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.8.1 (PATCH, 23/11/2026)**: só documentação e site de docs. Todas as páginas de `docs/` passam ao mesmo layout (menu lateral, cartão de exemplo, HTML num `<details>`), as páginas de componentes saem de um único gerador a partir dos dados, a página de tokens usa o componente Table, e o layout antigo foi removido. Sem mudança de token, CSS de componente ou classe. Detalhes no `CHANGELOG.md`.
 
 **Changelog v2.8.0 (MINOR, 23/11/2026)**: componente Table (`css/components/table.css`: `.data-table` e seus elementos), `.badge` com a geometria do Figma (padding 4 e 12, line-height 1,6) e `.badge--success` no token `--color-bg-positive-secondary`, snippet `a.link` da seção 15 removido, componentes do Figma codificados em lotes (GOVERNANCE v1.6), layout `ds` das páginas de docs e guarda de fonte mono no `docs:check`. Detalhes no `CHANGELOG.md`.
 
@@ -2497,5 +2499,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.8.0 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.8.1 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*
