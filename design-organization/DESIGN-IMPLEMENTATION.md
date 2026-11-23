@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.9.0 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.10.0 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.10.0 (MINOR, 23/11/2026)**: Lote 2A (Mensagens): Alert, Toast, Banner (Notice do Figma) e Empty state no CSS. Checkbox, Radio e Switch com o texto de apoio fora do label. Detalhes no `CHANGELOG.md`.
 
 **Changelog v2.9.0 (MINOR, 23/11/2026)**: Lote 1 (Forms): Input, Textarea, Select, Checkbox, Radio e Switch no CSS, com os tokens `--border-width-medium` e `--color-border-input`. Regra única da borda dentro da caixa (seção 5), aplicada também ao Badge Neutral (que passa de 30,8px para 28,8px de altura). Detalhes no `CHANGELOG.md`.
 
@@ -500,7 +502,9 @@ O Figma tem uma coleção com a variável `Icon/Color` e 10 modos. No CSS, cada 
 
 **Quando a borda muda de largura entre estados** (campo: 1px, e 1,5px no Error), uma custom property por componente guarda a largura da borda do estado (`--field-border-width`) e o padding é calculado a partir dela, para a caixa externa não mudar de tamanho. O navegador desenha uma borda de 1,5px como 1px numa tela 1x; por isso o campo também fixa a altura externa (`min-height`), e o texto fica centralizado.
 
-**Onde vale:** Button (D-23), Badge Neutral (v2.9.0), Input, Textarea, Select, Checkbox, Radio e Switch. Checkbox, Radio e Switch têm tamanho fixo (`width` e `height` com `box-sizing: border-box`); neles a borda não precisa de desconto.
+**Onde vale:** Button (D-23), Badge Neutral (v2.9.0), Input, Textarea e Select. Checkbox, Radio e Switch têm tamanho fixo (`width` e `height` com `box-sizing: border-box`); neles a borda não precisa de desconto.
+
+**Exceção, Alert e Toast (v2.10.0).** O Figma desenha as duas caixas com o traço de 1px incluído no layout: o Alert mede 105 (3 linhas de 20,8, mais 8 de espaço, mais 32 de padding, mais 2 de borda) e o Toast 69 (24 mais 43 mais 2). Por isso a borda soma ao box, como no CSS, e o padding não é descontado. Antes de aplicar a regra a um componente novo, confira a altura medida no Figma com a conta: com o traço dentro, o número bate sem a borda; com o traço no layout, bate com ela.
 
 ---
 
@@ -1809,6 +1813,8 @@ type ButtonProps = {
     output.css       ← Tailwind (npm run build:css), carregado antes do hope.css
 ```
 
+**Lote 2A, Mensagens (v2.10.0).** `css/components/` ganhou `alert.css`, `toast.css` e `empty-state.css`; `banner.css` passa a ser o Notice do Figma, com `.banner--wip` como modificador legado do site. Checkbox, Radio e Switch passam a ter o texto de apoio fora do `<label>`, ligado por `aria-describedby`.
+
 **Lote 1, Forms (v2.9.0).** `css/components/` ganhou `field.css`, `input.css`, `textarea.css`, `select.css`, `checkbox.css`, `radio.css` e `switch.css`. Novos tokens: `--border-width-medium` (Figma Stroke/medium) e `--color-border-input` (Figma Border/Utilities/Input).
 
 **Componentes entram em lotes (v2.8.0, GOVERNANCE v1.6).** Os componentes que existem no Figma são codificados em lotes por família (Lotes 0 a 4), a partir do Figma, com ou sem uso no site.
@@ -2518,5 +2524,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.9.0 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.10.0 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

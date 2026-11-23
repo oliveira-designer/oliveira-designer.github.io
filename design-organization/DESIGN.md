@@ -1,5 +1,5 @@
 ---
-version: v2.9.0
+version: v2.10.0
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -1055,7 +1055,7 @@ Esta seção espelha o que mudou no Figma (Hope DS | Foundation e Core Component
 
 ### Componentes novos no Figma (sem CSS ainda)
 
-Feedback: Alert, Toast, Tooltip, Progress, Spinner, Skeleton, Empty state. Navegação: Tabs, Breadcrumb, Pagination, Menu. Overlays e dados: Modal, Popover, Avatar, Tag, Accordion.
+Feedback: Tooltip, Progress, Spinner, Skeleton. Navegação: Tabs, Breadcrumb, Pagination, Menu. Overlays e dados: Modal, Popover, Avatar, Tag, Accordion.
 
 Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados no código, em lotes por família (GOVERNANCE v1.6). O Card genérico fica de fora por decisão. A Table já está no código (v2.8.0).
 
@@ -1071,6 +1071,13 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 - **Checkbox, Radio e Switch:** `checkbox.css`, `radio.css` e `switch.css` (`.checkbox`, `.radio`, `.switch`, com `__input`, `__text`, `__label` e `__help`). Controles nativos com `appearance: none`. O Switch não tem Error. O hover vale com o ponteiro sobre o rótulo inteiro (inferência, o Figma define só no controle).
 - **Tokens novos:** `--border-width-medium` (1,5px, Figma Stroke/medium) e `--color-border-input` (Figma Border/Utilities/Input: Night/400 no Light e Night/500 no Dark; o `--color-border` do campo media 1,29:1 e não passava de 3:1).
 - **Regra da borda dentro da caixa:** ver `DESIGN-IMPLEMENTATION.md`, seção 5.
+
+### Mensagens no código (Lote 2A, 2026-11-23)
+
+- **Alert:** `css/components/alert.css` (`.alert` com `--info`, `--success`, `--warning` e `--error`, mais `__icon`, `__content`, `__title`, `__description`, `__action` e `__dismiss`). Preenchimento e borda por tipo, ícone de status de 20px na cor do tipo, dismiss de 16px. Error e Warning com `role="alert"`, Info e Success com `role="status"`. A borda não é descontada do padding: o Figma inclui o traço no layout (105 de altura).
+- **Toast:** `toast.css` (`.toast` com `--default`, `--success`, `--warning`, `--error` e `--info`). Mesma borda e fundo em todos os tipos, sombra `--shadow-lg`, camada 500. O tipo vem do glifo e da cor do ícone. A região de posicionamento, o auto-dismiss e o movimento não estão no código.
+- **Banner:** `banner.css`. `.banner` é o Notice do Figma (fundo Accent/Secondary, sem borda). O `.banner--wip` fica como modificador legado do site, para a página de case não mudar.
+- **Empty state:** `empty-state.css` (`.empty-state`, `__icon`, `__title`, `__description`), com o Button Primary do Hope como ação. O nível do título é escolha de quem usa.
 
 ### Nomenclatura dos componentes no Figma
 
@@ -1110,4 +1117,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.9.0 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.10.0 · novembro de 2026 · Renan Moura*

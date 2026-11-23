@@ -5,6 +5,27 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.10.0 · 23 de novembro de 2026 · Lote 2A (Mensagens): Alert, Toast, Banner e Empty state, texto de apoio fora do label (MINOR)
+
+**Versão escolhida: MINOR (2.9.0 para 2.10.0).** Regra aplicada: seção 3 do `GOVERNANCE.md`, MINOR cobre "novo componente entra no DESIGN.md": entram Alert, Toast e Empty state, e o Banner passa a ser o Notice do Figma. Sem token novo e sem classe removida. Versões: `DESIGN.md`, `DESIGN-IMPLEMENTATION.md` e `tokens.css` (cabeçalho) 2.10.0, `GOVERNANCE.md` 1.6.1 e `PATTERNS.md` 1.1.2 sem mudança.
+
+**1. Alert, Toast e Empty state**
+- `css/components/alert.css` (`.alert--info|success|warning|error`), `toast.css` (`.toast--default|success|warning|error|info`) e `empty-state.css`. Elementos nativos, sem JavaScript, ícones Phosphor inline pelo mecanismo `.icon` existente, cor do ícone pelos tokens `--icon-color-*` (o `--icon-color` do Figma, que tem modos, vira esse conjunto de tokens no CSS). Foco com o anel de 2px com 2px de espaço, `forced-colors` com cores do sistema.
+- Alert: ícone de 20px, conteúdo (título, descrição, ação) e dismiss de 16px. Toast: sombra `--shadow-lg`, camada 500 (literal: a escala de z-index para em `--z-modal`). Empty state: ícone de 48px (`--icon-color-tertiary`), título pela classe (o nível do cabeçalho é de quem usa) e o Button Primary do Hope.
+- Medido no navegador contra o Figma: Alert 104,4 (105), Toast 68,4 (69), Banner 52,8 (53), Empty state 268,8 (269). Alert e Toast não descontam a borda do padding: o Figma inclui o traço no layout (regra e exceção em `DESIGN-IMPLEMENTATION.md`, seção 5).
+
+**2. Banner**
+- `.banner` segue o Notice do Figma: fundo `--color-bg-accent-secondary`, sem borda, padding 16 e 24, texto Medium em `--color-text-accent-default`. O `.banner--wip` fica como modificador legado, com os valores antigos, para `case-studies/sb-home-redesign.html` não mudar.
+
+**3. Texto de apoio fora do label (Checkbox, Radio, Switch)**
+- O texto de apoio sai do `<label>` e é ligado por `aria-describedby`: o nome acessível passa a ser só o rótulo. Layout igual ao do Figma (medido, 0 de diferença). A área de clique passa a ser a caixa e o rótulo.
+
+**4. Páginas de docs**
+- Quatro páginas novas (Alert, Toast, Banner, Empty state) pelo gerador genérico, com lacunas medidas: contraste da borda do Alert (Info no Dark 2,26:1, Warning no Light 2,63:1) e do Toast (1,29:1), área de clique do dismiss (16 por 16), papéis ARIA por urgência, região e tempo do Toast, estilo do emoji do Banner, Default e Info do Toast quase idênticos (1,43:1 Light, 1,15:1 Dark).
+- Cobertura: 125 de 194 variantes com CSS (eram 115 de 194).
+
+---
+
 ## v2.9.0 · 23 de novembro de 2026 · Lote 1 (Forms): Input, Textarea, Select, Checkbox, Radio e Switch, regra única da borda dentro da caixa (MINOR)
 
 **Versão escolhida: MINOR (2.8.1 para 2.9.0).** Regra aplicada: seção 3 do `GOVERNANCE.md`, MINOR cobre "novo componente entra no DESIGN.md": entram seis componentes, em `css/components/`, e dois tokens. Não é MAJOR: nenhum nome ou classe existente foi removido. Versões: `DESIGN.md`, `DESIGN-IMPLEMENTATION.md` e `tokens.css` (cabeçalho) 2.9.0, `GOVERNANCE.md` 1.6.1 (PATCH, ver item 6) e `PATTERNS.md` 1.1.2 sem mudança.
