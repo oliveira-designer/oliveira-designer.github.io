@@ -476,6 +476,95 @@
         }
       ],
       "note": "Added for the review page. CSS exists (css/components/lightbox.css) but it is a fixed full-screen modal driven by js/lightbox.js, so the review page does not render it."
+    },
+    "Table": {
+      "figmaVariants": 2,
+      "implemented": 2,
+      "base": ".data-table",
+      "stateMechanisms": {
+        "hover": "not applicable, no row or table hover in this version",
+        "focus": ".data-table:focus-visible: 2px outline with 2px offset on the wrapper (--focus-ring-width, --focus-ring-gap); the outline follows the wrapper radius",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "state": "Default",
+          "selector": ".data-table",
+          "rule": ".data-table",
+          "mechanism": "wrapper with border, radius and horizontal scroll"
+        },
+        {
+          "state": "Focus",
+          "selector": ".data-table",
+          "rule": ".data-table:focus-visible",
+          "mechanism": "pseudo-class :focus-visible on the focusable wrapper"
+        }
+      ],
+      "note": "Block named data-table because Tailwind ships a .table utility. The wrapper is always focusable (tabindex 0, role region)."
+    },
+    "TableHeaderCell": {
+      "figmaVariants": 2,
+      "implemented": 2,
+      "base": ".data-table__head-cell",
+      "stateMechanisms": {
+        "hover": "not applicable",
+        "focus": "not applicable",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "align": "Left",
+          "selector": ".data-table__head-cell",
+          "rule": ".data-table__head-cell",
+          "mechanism": "base class"
+        },
+        {
+          "align": "Right",
+          "selector": ".data-table__head-cell.data-table__head-cell--end",
+          "rule": ".data-table__head-cell--end",
+          "mechanism": "end-aligned modifier (text-align: end)"
+        }
+      ]
+    },
+    "TableCell": {
+      "figmaVariants": 4,
+      "implemented": 4,
+      "base": ".data-table__cell",
+      "stateMechanisms": {
+        "hover": "not applicable",
+        "focus": "not applicable",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "type": "Data",
+          "align": "Left",
+          "selector": ".data-table__cell",
+          "rule": ".data-table__cell",
+          "mechanism": "base class"
+        },
+        {
+          "type": "Data",
+          "align": "Right",
+          "selector": ".data-table__cell.data-table__cell--end",
+          "rule": ".data-table__cell--end",
+          "mechanism": "end-aligned modifier"
+        },
+        {
+          "type": "Row header",
+          "align": "Left",
+          "selector": ".data-table__row-header",
+          "rule": ".data-table__row-header",
+          "mechanism": "base class on th scope=row"
+        },
+        {
+          "type": "Row header",
+          "align": "Right",
+          "selector": ".data-table__row-header.data-table__row-header--end",
+          "rule": ".data-table__row-header--end",
+          "mechanism": "end-aligned modifier"
+        }
+      ]
     }
   },
   "codeOnly": [

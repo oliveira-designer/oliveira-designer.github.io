@@ -31,6 +31,9 @@
 {"group": "Overlays and data", "page": "Lightbox", "pageId": "2456:3", "name": "Lightbox", "id": "2456:4", "variants": 1, "props": {"other": []}, "buildAfter": [], "note": "A lightbox section already exists in css/components/lightbox.css."},
 {"group": "Overlays and data", "page": "Avatar", "pageId": "2413:748", "name": "Avatar", "id": "2413:755", "variants": 3, "props": {"Size": ["Small", "Medium", "Large"], "other": ["Initials"]}, "buildAfter": []},
 {"group": "Overlays and data", "page": "Tag", "pageId": "2413:814", "name": "Tag", "id": "2413:839", "variants": 4, "props": {"State": ["Default", "Hover", "Focus", "Disabled"], "other": ["Label", "Show dismiss"]}, "buildAfter": ["Badge"]},
-{"group": "Overlays and data", "page": "Accordion", "pageId": "2413:898", "name": "Accordion item", "id": "2413:948", "variants": 7, "props": {"Open": ["false", "true"], "State": ["Default", "Hover", "Focus", "Disabled"], "other": ["Title", "Content"]}, "buildAfter": []}
+{"group": "Overlays and data", "page": "Accordion", "pageId": "2413:898", "name": "Accordion item", "id": "2413:948", "variants": 7, "props": {"Open": ["false", "true"], "State": ["Default", "Hover", "Focus", "Disabled"], "other": ["Title", "Content"]}, "buildAfter": []},
+{"group": "Overlays and data", "page": "Table", "pageId": "2525:2", "name": "Table", "id": "2526:67", "variants": 2, "props": {"State": ["Default", "Focus"], "other": ["Caption"]}, "buildAfter": [], "note": "Added 2026-11-23 (Figma page created after the 2026-11-19 read). Wrapper with border, radius and optional caption."},
+{"group": "Overlays and data", "page": "Table", "pageId": "2525:2", "name": "Table Header Cell", "id": "2525:15", "variants": 2, "props": {"Align": ["Left", "Right"], "other": ["Label"]}, "buildAfter": [], "note": "Added 2026-11-23."},
+{"group": "Overlays and data", "page": "Table", "pageId": "2525:2", "name": "Table Cell", "id": "2525:16", "variants": 4, "props": {"Type": ["Data", "Row header"], "Align": ["Left", "Right"], "other": ["Label"]}, "buildAfter": [], "note": "Added 2026-11-23."}
 ]
 }

@@ -26,8 +26,8 @@
   "note": "Icon colour per state was not read. In code it needs an accessible name (aria-label). Not implemented in CSS."
 },
 "coverage": {
-  "figmaVariants": {"Button": 28, "IconButton": 8, "Badge": 5, "Link": 8, "Separator": 1},
-  "implementedInCss": {"Button": 28, "IconButton": 0, "Badge": 5, "Link": 8, "Separator": 1},
+  "figmaVariants": {"Button": 28, "IconButton": 8, "Badge": 5, "Link": 8, "Separator": 1, "Table": 2, "TableHeaderCell": 2, "TableCell": 4},
+  "implementedInCss": {"Button": 28, "IconButton": 0, "Badge": 5, "Link": 8, "Separator": 1, "Table": 2, "TableHeaderCell": 2, "TableCell": 4},
   "implementedNote": "Button: all 7 styles (Primary, Secondary, Ghost, Inverse, Accent and Destructive at Medium, plus Small Ghost), 4 states each (hover via :hover, focus via shared .btn:focus-visible outline, disabled via .btn.btn:disabled and per-style rules for Secondary and Ghost). Badge: Neutral, Ancora (.badge--anchor), Solar, Success, Danger (.badge--danger). Link: .link with .link--small, hover and focus-visible as pseudo-classes and disabled via aria-disabled (the global a rules are unchanged for anchors without .link). Separator: .separator.",
   "missingInCss": [
     {"component": "Icon Button", "variant": "Primary, Ghost", "class": "Informativo"}
@@ -50,6 +50,10 @@
    "code": "Padding 4px 12px (Spacing/space-1, space-3) and line-height 1.6 on .badge, so Ancora, Solar, Success and Danger render 28.8 high (29 in Figma, rounded). The Neutral border is outside the box, so Neutral renders 30.8 (28.8 plus the 1px rendered border on each side).",
    "measured": "28.8 for four styles and 30.8 for Neutral, in the browser (Light and Dark).",
    "inference": "Same cause as the Button height (D-23): a CSS border adds to the box, a Figma inside stroke does not. The same fix would apply (subtract the border from the padding), but it was not part of the Prompt 17 scope."},
+  {"id": "table-row-height", "component": "Table", "class": "Informativo",
+   "figma": "Caption, header and data rows are 46 high and the last row is 45; the Default table is 640 by 231 with a caption, a header and three data rows.",
+   "code": "Rows render 45.8 high (13px at 160% is 20.8, plus 24 of padding, plus the 1px separator) and the last row 44.8. The same table renders 230.0 high.",
+   "measured": "45.8 for the caption, header and data rows, 44.8 for the last row, 276 to 640 wide as set, in the browser (Light and Dark). Under 1px per row, no decision needed."},
   {"id": "badge-ancora-naming", "component": "Badge", "class": "Informativo",
    "figma": "Style named Ancora (Portuguese).",
    "code": "Class named .badge--anchor. The Figma primitives family is also Anchor."}
@@ -61,7 +65,8 @@
   "Badge Neutral, Ancora, Solar, Success and Danger colour roles exist as classes. Success and Danger fills use the Figma tokens (12% and 10% in Light, solid in Dark).",
   "Badge padding 4 and 12 and line height 160% (28.8 high, 29 in Figma). Neutral differs, see badge-neutral-height.",
   "Link: size, weight, colour, underline, focus ring (2px, 2px gap, square) and disabled weight per the Figma table.",
-  "Separator: 1px line in Border/Default/Default, full width."
+  "Separator: 1px line in Border/Default/Default, full width.",
+  "Table: wrapper border, radius and background, caption, header and row header weight 500, padding 12 and 16, 1px separators except under the last row, end alignment for numeric columns, focus ring 2px with a 2px gap on the wrapper."
 ],
 "codeOnly": [
   {"selector": ".btn--solar", "note": "Solar fill button. Not the same as Figma's Accent."},

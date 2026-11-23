@@ -51,6 +51,9 @@ const MAP_KEY = {
   Separator: 'Separator',
   Banner: 'Banner',
   Lightbox: 'Lightbox',
+  Table: 'Table',
+  'Table Header Cell': 'TableHeaderCell',
+  'Table Cell': 'TableCell',
 };
 
 const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -122,6 +125,14 @@ function renderVariant(unit, v) {
       return v.state === 'Disabled' ? `<a class="${cls}" aria-disabled="true">Link</a>` : `<a href="#unit-link" class="${cls}">Link</a>`;
     case 'Separator':
       return `<hr class="${cls}" aria-hidden="true">`;
+    case 'Table':
+      return `<div class="data-table" role="region" aria-label="Table example" tabindex="0"><table class="data-table__grid"><caption class="data-table__caption">Caption</caption><thead><tr><th scope="col" class="data-table__head-cell">Component</th><th scope="col" class="data-table__head-cell data-table__head-cell--end">Variants</th></tr></thead><tbody><tr><th scope="row" class="data-table__row-header">Badge</th><td class="data-table__cell data-table__cell--end">5</td></tr></tbody></table></div>`;
+    case 'Table Header Cell':
+      return `<div class="data-table"><table class="data-table__grid"><thead><tr><th scope="col" class="${cls}">Label</th></tr></thead></table></div>`;
+    case 'Table Cell':
+      return v.type === 'Row header'
+        ? `<div class="data-table"><table class="data-table__grid"><tbody><tr><th scope="row" class="${cls}">Label</th></tr></tbody></table></div>`
+        : `<div class="data-table"><table class="data-table__grid"><tbody><tr><td class="${cls}">Label</td></tr></tbody></table></div>`;
     case 'Banner':
       return `<div class="${cls}" role="status"><span class="banner__text">This case study is being finalized.</span></div>`;
     default:
@@ -174,7 +185,7 @@ function unitSection(u, ctx) {
     const placed = cov.m.variants.filter((v) => v.selector);
     // Button: the review shows Default and Disabled only. Hover and Focus use one shared rule per
     // style and are live on the Button page.
-    const shown = u.name === 'Button' || u.name === 'Link' ? placed.filter((v) => v.state === 'Default' || v.state === 'Disabled') : placed;
+    const shown = u.name === 'Button' || u.name === 'Link' ?  placed.filter((v) => v.state === 'Default' || v.state === 'Disabled') : placed;
     for (const v of shown) {
       const label = propsOf(v) || u.name;
       const html = v.renderable === false ? null : renderVariant(u.name, v);

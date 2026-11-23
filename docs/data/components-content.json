@@ -201,6 +201,62 @@
   },
   "knownGaps": [],
   "unverified": []
+},
+{
+  "slug": "table",
+  "name": "Table",
+  "figma": {"pageId": "2525:2", "sets": [{"name": "Table", "id": "2526:67"}, {"name": "Table Header Cell", "id": "2525:15"}, {"name": "Table Cell", "id": "2525:16"}]},
+  "summary": "Data table for comparing records across a few columns. A bordered wrapper with an optional caption, header cells, row headers and data cells. No sorting, selection, row hover or sticky header in this version.",
+  "whenToUse": [
+    "Comparing several records across the same attributes, such as components and their variant counts.",
+    "Numeric columns, aligned to the end so digits line up."
+  ],
+  "whenNotToUse": [
+    "Page layout: use the layout grids.",
+    "Two or three facts about one record: use a list.",
+    "Merged cells: rowspan and colspan are not supported."
+  ],
+  "properties": [
+    {"name": "State", "type": "variant", "options": ["Default", "Focus"], "default": "Default", "note": "Table. Focus is the ring on the focusable wrapper."},
+    {"name": "Caption", "type": "boolean", "default": "true", "note": "Table. Shown by default."},
+    {"name": "Align", "type": "variant", "options": ["Left", "Right"], "default": "Left", "note": "Table Header Cell and Table Cell. Right is for numeric columns."},
+    {"name": "Type", "type": "variant", "options": ["Data", "Row header"], "default": "Data", "note": "Table Cell."}
+  ],
+  "layout": {
+    "all": {"width": 640, "height": 231, "radius": "Radius/radius-md", "padding": "Spacing/space-3 vertical, Spacing/space-4 horizontal (cells and caption)", "text": "Body/Regular/body-sm 13, headers Body/Medium/body-sm medium"}
+  },
+  "stateTokens": {
+    "Default": {"text": "Text/Default/Default", "note": "wrapper Background/Default/Default, Border/Default/Default at Stroke/thin; header cell Background/Default/Secondary; caption Text/Default/Secondary"},
+    "Focus": {"text": "Text/Default/Default", "note": "Default plus the focus ring: Stroke/focus, Stroke/focus-gap, Border/Utilities/Focus Ring, Radius/radius-lg"}
+  },
+  "accessibility": {
+    "contrastText": [],
+    "contrastNonText": [],
+    "note": "The wrapper is a focusable region named by the caption (role region, aria-labelledby, tabindex 0), so keyboard users can scroll a wide table.",
+    "meaning": "Header cells use scope col and row headers scope row; rowspan and colspan are not supported. Interactive elements inside cells need their own unique accessible names."
+  },
+  "classRoles": {
+    ".data-table": "Wrapper: border, radius, background, horizontal scroll and the focus ring.",
+    ".data-table__grid": "The table element.",
+    ".data-table__caption": "Optional caption, visible by default.",
+    ".data-table__caption--hidden": "Visually hidden caption that stays in the accessibility tree.",
+    ".data-table__head-cell": "Column header (th scope col).",
+    ".data-table__row-header": "Row header (th scope row).",
+    ".data-table__cell": "Data cell (td).",
+    ".data-table__head-cell--end": "End-aligned header cell, for numeric columns.",
+    ".data-table__row-header--end": "End-aligned row header.",
+    ".data-table__cell--end": "End-aligned data cell, for numeric columns."
+  },
+  "contract": [
+    "Wrapper: a div with role region, aria-labelledby pointing at the caption id, and tabindex 0. The wrapper is always focusable so keyboard users can scroll it; there is no script that toggles it.",
+    "Inside the wrapper: a table with a caption (first child), thead, and tbody.",
+    "Header cells are th with scope col. Row headers are th with scope row. Data cells are td. No rowspan or colspan.",
+    "A numeric column puts the end modifier on its header cell and on every cell of that column.",
+    "Do not hide the caption with display or visibility. Use the hidden caption modifier instead.",
+    "Interactive elements inside cells need their own unique accessible names."
+  ],
+  "knownGaps": [],
+  "unverified": []
 }
 ]
 }
