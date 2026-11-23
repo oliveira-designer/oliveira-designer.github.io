@@ -11,6 +11,7 @@
 //   3. a docs page does not link css/hope.css (the generated aggregate).
 //   4. the header chrome of docs/*.html differs between pages.
 //   5. docs/docs.css contains a hardcoded color (it must use Hope tokens).
+//  11. a docs page lacks the layout markers (docs-ds-layout, docs-ds-sidebar, docs-ds-content).
 //  10. docs/docs.css, a docs page or a docs generator contains a monospace font stack (Hope is Plus Jakarta Sans only).
 //   8. a docs page lacks the theme switch (Light, Dark, System) or its boot script.
 //   7. docs/components/review.html (the temporary review page): exists, lists every unit of
@@ -185,6 +186,11 @@ for (const file of pages) {
   }
   if (!text.includes('class="docs-theme"')) errors.push(`${name}: theme switch container (.docs-theme) is missing`);
   if (!text.includes("'hope-docs-theme'")) errors.push(`${name}: theme boot script (hope-docs-theme) is missing`);
+
+  // 2c. layout markers: every docs page uses the one layout (side menu and content area, scripts/docs-layout.mjs)
+  for (const marker of ['docs-ds-layout', 'docs-ds-sidebar', 'docs-ds-content']) {
+    if (!text.includes(`class="${marker}`)) errors.push(`${name}: layout marker "${marker}" is missing (regenerate with the docs scripts)`);
+  }
 
   // 2. noindex
   if (!/<meta\s+name="robots"\s+content="noindex"\s*\/?>/i.test(text)) errors.push(`${name}: missing <meta name="robots" content="noindex">`);
