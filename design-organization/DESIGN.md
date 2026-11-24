@@ -1,5 +1,5 @@
 ---
-version: v2.10.0
+version: v2.11.0
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -1079,6 +1079,15 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 - **Banner:** `banner.css`. `.banner` é o Notice do Figma (fundo Accent/Secondary, sem borda). O `.banner--wip` fica como modificador legado do site, para a página de case não mudar.
 - **Empty state:** `empty-state.css` (`.empty-state`, `__icon`, `__title`, `__description`), com o Button Primary do Hope como ação. O nível do título é escolha de quem usa.
 
+### Indicadores e dicas no código (Lote 2B, 2026-11-24)
+
+- **Tooltip:** `css/components/tooltip.css` (`.tooltip` com `--top`, `--bottom`, `--left` e `--right`, mais `__bubble` e `__arrow`). Só o balão e a seta, camada `--z-tooltip`. Posicionamento, atraso e o comportamento de hover e foco do WCAG 1.4.13 não estão no código.
+- **Progress:** `progress.css` (`.progress`, `__header`, `__label`, `__value`, `__bar`, `__fill`, com `.progress__bar--0|25|50|75|100`). É um `div` com `role="progressbar"`, não um `<progress>`: o Firefox não anima o preenchimento do elemento nativo. Outro percentual: custom property `--progress-value`.
+- **Spinner:** `spinner.css` (`.spinner`, `__ring`). Anel de 24px com arco de cerca de 99 graus, uma volta por segundo; em `prefers-reduced-motion` vira um pulso de opacidade. `role="status"` com texto visualmente oculto escrito por quem usa.
+- **Skeleton:** `skeleton.css` (`.skeleton--text|title|avatar|block`). Pulso de opacidade (duração inferida, o Figma não informa), container com `aria-busy`.
+- **Icon Button:** `icon-button.css` (`.icon-btn--primary|ghost`), 44 por 44, `aria-label` obrigatório. Não é modificador de `.btn`: o `.btn` traz padding, gap e largura total abaixo de 768px.
+- **Escala de z-index:** ver `DESIGN-IMPLEMENTATION.md`, seção 8.
+
 ### Nomenclatura dos componentes no Figma
 
 `State=Active` virou `State=Focus` (Input, Textarea, Select); propriedade `Text` virou `Label` (Link, Header Link); `Description` virou `Helper text` (Input, Textarea, Select); `Input Field` virou `Input`; Banner `Type=Warning` virou `Type=Notice`. Regras completas na seção 12 do `GOVERNANCE.md`.
@@ -1117,4 +1126,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.10.0 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.11.0 · novembro de 2026 · Renan Moura*

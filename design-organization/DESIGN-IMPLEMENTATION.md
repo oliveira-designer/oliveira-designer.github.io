@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.10.0 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.11.0 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.11.0 (MINOR, 24/11/2026)**: Lote 2B (Indicadores e dicas): Tooltip, Progress, Spinner, Skeleton e Icon Button no CSS, escala de z-index do Figma, correções do Lote 2A (Toast sem Default, papéis Alert e Status, área de clique do dismiss, regra da borda por `strokesIncludedInLayout`). Detalhes no `CHANGELOG.md`.
 
 **Changelog v2.10.0 (MINOR, 23/11/2026)**: Lote 2A (Mensagens): Alert, Toast, Banner (Notice do Figma) e Empty state no CSS. Checkbox, Radio e Switch com o texto de apoio fora do label. Detalhes no `CHANGELOG.md`.
 
@@ -1823,6 +1825,8 @@ type ButtonProps = {
     output.css       ← Tailwind (npm run build:css), carregado antes do hope.css
 ```
 
+**Lote 2B, Indicadores e dicas (v2.11.0).** `css/components/` ganhou `tooltip.css`, `progress.css`, `spinner.css`, `skeleton.css` e `icon-button.css`, e `tokens.css` ganhou `--z-modal-scrim`, `--z-popover`, `--z-tooltip` e `--z-notification`.
+
 **Lote 2A, Mensagens (v2.10.0).** `css/components/` ganhou `alert.css`, `toast.css` e `empty-state.css`; `banner.css` passa a ser o Notice do Figma, com `.banner--wip` como modificador legado do site. Checkbox, Radio e Switch passam a ter o texto de apoio fora do `<label>`, ligado por `aria-describedby`.
 
 **Lote 1, Forms (v2.9.0).** `css/components/` ganhou `field.css`, `input.css`, `textarea.css`, `select.css`, `checkbox.css`, `radio.css` e `switch.css`. Novos tokens: `--border-width-medium` (Figma Stroke/medium) e `--color-border-input` (Figma Border/Utilities/Input).
@@ -2534,5 +2538,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.10.0 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.11.0 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

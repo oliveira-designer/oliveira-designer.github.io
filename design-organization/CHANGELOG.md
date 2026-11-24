@@ -5,6 +5,33 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.11.0 · 24 de novembro de 2026 · Lote 2B (Indicadores e dicas): Tooltip, Progress, Spinner, Skeleton e Icon Button, escala de z-index e correções do Lote 2A (MINOR)
+
+**Versão escolhida: MINOR (2.10.0 para 2.11.0).** Regra aplicada: seção 3 do `GOVERNANCE.md`, MINOR cobre "novo componente entra no DESIGN.md": entram Tooltip, Progress, Spinner, Skeleton e Icon Button. Nenhuma regra do GOVERNANCE mudou.
+
+**1. Componentes**
+- `css/components/tooltip.css` (`.tooltip--top|bottom|left|right`), `progress.css`, `spinner.css`, `skeleton.css` (`.skeleton--text|title|avatar|block`) e `icon-button.css` (`.icon-btn--primary|ghost`). Elementos nativos, sem JavaScript, sem `opacity` no disabled, `forced-colors` tratado, foco do Hope (2px, offset 2px).
+- Progress é um `div` com `role="progressbar"` e não um `<progress>`: testado em Chromium, Firefox e WebKit, o elemento nativo bate com a geometria nos três, mas o Firefox não anima o preenchimento (`::-moz-progress-bar` ignora a transição). Os cinco valores do Figma têm classes `.progress__bar--0` a `--100`; outro percentual usa `--progress-value`.
+- Spinner: anel de 24px com 2,4px de espessura e arco de cerca de 99 graus, uma volta por segundo em ease-in-out; em `prefers-reduced-motion` vira pulso de opacidade (sobrepõe a regra global com `!important`).
+- Icon Button: `.icon-btn`, não um modificador de `.btn`, porque o `.btn` traz padding, gap e largura total abaixo de 768px.
+- Skeleton: a duração do pulso não existe no Figma; o CSS usa dois períodos de `--duration-deliberate` (inferência, registrada como lacuna).
+
+**2. Escala de z-index**
+- Novos tokens do Figma: `--z-modal-scrim` (100), `--z-popover` (300), `--z-tooltip` (400) e `--z-notification` (500). O Toast troca o literal 500 por `var(--z-notification)`. Nenhum valor computado de `z-index` mudou no site. `--z-overlay` continua sendo o header (100) e não é alias do scrim. Divergência com o texto antigo do DESIGN registrada na seção 8 do DESIGN-IMPLEMENTATION.
+
+**3. Correções do Lote 2A**
+- Toast: variante Default removida (era idêntica a Info); o Figma tem quatro tipos e Info é o padrão.
+- Papéis: Error com `role="alert"`, Warning, Info e Success com `role="status"`; a documentação explica que as regiões vivas anunciam conteúdo inserido dinamicamente (MDN).
+- Dismiss do Alert e do Toast: pseudo-elemento transparente leva a área de clique a 24 por 24 (WCAG 2.5.8) sem mudar o layout e sem encostar na ação.
+- Seção 5 do DESIGN-IMPLEMENTATION: a regra da borda passa a ser decidida pela propriedade `strokesIncludedInLayout` do Figma (falso: Button, Icon Button, Badge descontam; verdadeiro: Alert, Toast, Tab, Tag, Accordion item não descontam; campos e controles a verificar).
+- Banner: o emoji segue o Body/Medium sm do Figma e a lacuna `banner-emoji-style` foi removida.
+
+**4. Páginas de docs**
+- Cinco páginas novas pelo gerador genérico (Tooltip, Progress, Spinner, Skeleton, Icon Button), com lacunas: `tooltip-positioning`, `tooltip-hover-focus-behavior`, `progress-indeterminate-not-designed`, `progress-native-element`, `spinner-easing-observation`, `skeleton-duration`, contrastes medidos. Páginas Alert e Toast atualizadas.
+- Cobertura: 146 de 193 variantes com CSS (eram 124 de 193).
+
+---
+
 ## v2.10.0 · 23 de novembro de 2026 · Lote 2A (Mensagens): Alert, Toast, Banner e Empty state, texto de apoio fora do label (MINOR)
 
 **Versão escolhida: MINOR (2.9.0 para 2.10.0).** Regra aplicada: seção 3 do `GOVERNANCE.md`, MINOR cobre "novo componente entra no DESIGN.md": entram Alert, Toast e Empty state, e o Banner passa a ser o Notice do Figma. Sem token novo e sem classe removida. Versões: `DESIGN.md`, `DESIGN-IMPLEMENTATION.md` e `tokens.css` (cabeçalho) 2.10.0, `GOVERNANCE.md` 1.6.1 e `PATTERNS.md` 1.1.2 sem mudança.
