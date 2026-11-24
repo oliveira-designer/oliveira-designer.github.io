@@ -227,7 +227,7 @@
           </section>
 
           <section class="docs-section" id="accepted" aria-labelledby="accepted-title">
-            <h2 class="text-h2" id="accepted-title">Accepted divergences (1)</h2>
+            <h2 class="text-h2" id="accepted-title">Accepted divergences (2)</h2>
             <p class="docs-section__desc">Listed in <code>docs/data/accepted-divergences.json</code>. Accepting a divergence never hides the values: they stay in the token tables. A stale entry no longer matches any divergence and can be removed.</p>
             <div class="data-table" role="region" aria-labelledby="accepted-caption" tabindex="0">
   <table class="data-table__grid">
@@ -250,6 +250,14 @@
         <td class="data-table__cell"><span class="docs-muted">see the table below</span></td>
         <td class="data-table__cell">Structural difference. Figma has one variable with 10 modes; CSS has ten --icon-color-&lt;mode&gt; tokens. Verified equal.</td>
         <td class="data-table__cell">Renan, 2026-11-19</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Lightbox backdrop blur</th>
+        <td class="data-table__cell">not a token</td>
+        <td class="data-table__cell">effect value differs</td>
+        <td class="data-table__cell"><span class="docs-fig">Figma <code>background blur 12</code>, CSS <code>backdrop-filter: blur(6px)</code></span></td>
+        <td class="data-table__cell">Equivalent rendering: the Figma blur radius is double the CSS blur radius, so Figma 12 is CSS blur(6px) (Figma's own code export gives blur(6px)). Source: Figma forum answers on blur in Dev Mode, not the official docs. No blur token matches, so the value is a literal.</td>
+        <td class="data-table__cell">Renan, 2026-11-24</td>
       </tr>
     </tbody>
   </table>

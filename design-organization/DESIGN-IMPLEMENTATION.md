@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.13.0 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.13.1 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.13.1 (PATCH, 24/11/2026)**: alinhamento do Lote 4 às decisões do Figma: blur do Lightbox em `blur(6px)`, estados do botão `Lightbox close`, texto do Popover, X e regra de tela estreita do Modal, `js/overlay.js` compartilhado pelo Modal e pelo Lightbox, lacunas de contraste registradas. Nenhum componente nem token novo. Detalhes no `CHANGELOG.md`.
 
 **Changelog v2.13.0 (MINOR, 24/11/2026)**: Lote 4 (Sobreposições e dados): Modal, Popover, Avatar, Tag e Accordion no CSS, Lightbox alinhado ao Figma, com `js/modal.js`, `js/popover.js`, `js/tag.js` e `js/accordion.js`. `--z-overlay` volta como alias deprecado de `--z-sticky`, o Tab selecionado usa o mesmo estilo de texto dos outros (Medium), GOVERNANCE v1.7. Detalhes no `CHANGELOG.md`.
 
@@ -387,7 +389,7 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
 
 ### Lacunas de contraste conhecidas (v2.13.0)
 
-Implementadas como no Figma, sem mudar cor; cada decisão está pendente. Medidas com a fórmula de luminância relativa da WCAG 2.2 sobre os tokens (Light, Dark).
+Implementadas como no Figma, sem mudar cor; aceitas pelo Renan em 24/11/2026 e registradas como lacunas medidas nos dados de cada componente, para reavaliar quando o dark mode entrar ou com uso real. A borda do Tag é a primeira a reavaliar (troca possível: `Border/Utilities/Input`). Medidas com a fórmula de luminância relativa da WCAG 2.2 sobre os tokens (Light, Dark).
 
 | Onde | Medida | Critério |
 |---|---|---|
@@ -397,7 +399,7 @@ Implementadas como no Figma, sem mudar cor; cada decisão está pendente. Medida
 | Borda do Alert (Info no Dark, Warning no Light) e do Toast | ver as páginas | 1.4.11 |
 | Painel do Modal no Dark | 1,16 contra o scrim sobre a página; borda 1,49 (no Light, 3,64 e 2,82) | 1.4.11 |
 | Preenchimento e traço do botão de fechar do Lightbox | 1,46 e 1,79 contra o scrim (o X, que identifica o botão, tem 10,2 e 13,04) | 1.4.11 |
-| Anel de foco do Lightbox | Solar, 9,02 e 12,08 contra o scrim; o Anchor do Light daria 2,22 | 2.4.11 / 1.4.11 |
+| Anel de foco do Lightbox | `Border/Accent/Default` (Solar), 9,02 e 12,08 contra o scrim; o Anchor do Light daria 2,22 | 2.4.11 / 1.4.11 |
 | Linha-base do Tabs, trilho do Spinner, Skeleton | 1,29 e 1,28 | 1.4.11 |
 
 ### Filosofia
@@ -1828,15 +1830,15 @@ type ButtonProps = {
     output.css       ← Tailwind (npm run build:css), carregado antes do hope.css
 ```
 
-**Lote 4, Sobreposições e dados (v2.13.0).** `css/components/` ganhou `modal.css`, `popover.css`, `avatar.css`, `tag.css` e `accordion.css`, e o `lightbox.css` foi alinhado ao Figma; `js/` ganhou `modal.js`, `popover.js`, `tag.js` e `accordion.js`, e o `lightbox.js` ganhou foco preso, página inerte e o foco no botão de fechar ao abrir (antes o foco ficava na imagem, porque o botão estava com `visibility: hidden`). O Modal e o Lightbox seguem a mesma abordagem (atributo `hidden`, foco devolvido ao gatilho, rolagem travada); o `<dialog>` nativo ficou como decisão em aberto no relatório.
+**Lote 4, Sobreposições e dados (v2.13.0).** `css/components/` ganhou `modal.css`, `popover.css`, `avatar.css`, `tag.css` e `accordion.css`, e o `lightbox.css` foi alinhado ao Figma; `js/` ganhou `modal.js`, `popover.js`, `tag.js` e `accordion.js`, e o `lightbox.js` ganhou foco preso, página inerte e o foco no botão de fechar ao abrir (antes o foco ficava na imagem, porque o botão estava com `visibility: hidden`). O Modal e o Lightbox seguem a mesma abordagem (atributo `hidden`, foco devolvido ao gatilho, rolagem travada); o `<dialog>` nativo ficou como decisão em aberto no relatório. **Desde a v2.13.1** a parte comum (página inerte, rolagem travada, foco preso, Esc, retorno do foco) está em `js/overlay.js`, carregado antes de `modal.js` e `lightbox.js` (o nome é neutro, sem "modal" nem "dialog", porque serve a qualquer sobreposição que bloqueia a página). A regra do que fica inerte: o percurso começa no `<body>` e cada filho vira inerte por inteiro, exceto o próprio overlay, os elementos a manter (`.toast`, `[data-overlay-keep]`, `[data-modal-keep]`) e qualquer filho que contenha um deles; nesse caso o percurso entra nele e torna inertes só os outros filhos, então um Toast dentro de `<main>` continua alcançável e acima do overlay (500 contra 200).
 
 Valores do Figma usados no Lote 4 (Core, lidos em 24/11/2026):
 
 | Componente | Valores |
 |---|---|
-| Modal | largura 480 (borda incluída), padding 24, gap 16, raio 16, `Shadow/lg`, scrim `Background/Utilities/Scrim`, título `Heading/H3`, corpo `body-sm` Regular `Text/Default/Secondary`, X de 20 em `Icon/Color Secondary`, rodapé à direita com gap 12 |
+| Modal | largura 480 (borda incluída), padding 24, gap 16, raio 16, `Shadow/lg`, scrim `Background/Utilities/Scrim`, título `Heading/H3`, corpo `body-sm` Regular `Text/Default/Secondary`, X de 20 em `Icon/Color Secondary` (comportamento do Icon Button Ghost: hover `Background/Default/Secondary`, foco de 2px com 2px), rodapé à direita com gap 12, botões que abraçam o rótulo (Cancel 85, Confirm 91), tela estreita `min(480, 100% - 32)` com corpo rolável e cabeçalho e rodapé fixos |
 | Popover | largura 280 (borda incluída), padding 16, gap 8, raio 12, `Shadow/md`, título `body-sm` SemiBold, corpo `body-sm` Regular, camada 300 |
-| Lightbox | fundo `Scrim Strong` com blur de fundo 12, padding 24, imagem até 960 com raio 16 e `Shadow/lg`, legenda 520, botão de 36 com traço de 1px incluído, X de 20 a 80%, a 40px acima da imagem |
+| Lightbox | fundo `Scrim Strong` com blur de fundo 12 no Figma (`blur(6px)` no CSS: o raio do Figma é o dobro do CSS), padding 24, imagem até 960 com raio 16 e `Shadow/lg`, legenda 520, botão de 36 (`Lightbox close`: vidro branco a 12% e borda de 1px a 18%, hover 22% e 32%, X de 20 branco nos dois temas a 80% e 100% no hover, foco em `Border/Accent/Default` de 2px com 2px, anel de 44), a 40px acima da imagem |
 | Avatar | círculo `--radius-pill`, preenchimento `Border/Default/Default`, 32 (`body-xs` SemiBold), 40 (`body-sm` SemiBold), 56 (`Heading/H3`) |
 | Tag | altura 28 com borda incluída, padding 0 e 12, gap 4, raio pill, X de 14, anel 75 por 36 |
 | Accordion item | largura do contêiner, padding 16, gap 8, só a borda inferior de 1px, título `body-sm` SemiBold, chevron de 20 girado 180 graus quando aberto, anel de 4px em volta do item inteiro |
@@ -2301,7 +2303,7 @@ Cartão de case glassmórfico com canvas de gradiente, chrome de paginação, pi
 
 O CSS vive em `css/components/lightbox.css` (alinhado ao Figma na v2.13.0); não há mais uma cópia dele aqui. `js/lightbox.js` monta o DOM (`.lightbox`, `__backdrop`, `__panel`, `__media`, `__img`, `__caption`, `__close`) e abre a partir das imagens de `.case-section` e de qualquer `<img data-lightbox>`; `.is-zoomable` aciona o cursor de zoom.
 
-Valores: camada `--z-modal`; fundo `--color-bg-scrim-strong` com `blur(12px)`; imagem até 960 com `--radius-lg` e `--shadow-lg`; legenda de até 520 em `body-sm`, branco a 55%; botão de fechar de 36 com traço de 1px incluído (branco a 12% e 18%), X de 20 a 80% em branco nos dois temas, a 40px acima do canto da imagem; anel de foco em Solar (o Anchor do Light dá 2,22:1 contra o scrim). Abre com fade e escala (movimento do repositório, não definido no Figma; a escala some em `prefers-reduced-motion`). Fecha com Esc, clique no fundo e o botão; o foco fica preso no botão e a página atrás fica inerte.
+Valores: camada `--z-modal`; fundo `--color-bg-scrim-strong` com `blur(6px)` (v2.13.1; o blur do Figma é 12 e o raio do Figma é o dobro do CSS, informação de respostas no fórum do Figma, não da documentação oficial; divergência aceita em `accepted-divergences.json`, sem token de blur); imagem até 960 com `--radius-lg` e `--shadow-lg`; legenda de até 520 em `body-sm`, branco a 55%; botão de fechar de 36, o componente `Lightbox close` do Figma, com traço de 1px incluído (branco a 12% e 18%; no hover 22% e 32%), X de 20 a 80% (100% no hover) em branco nos dois temas, a 40px acima do canto da imagem; anel de foco em `Border/Accent/Default` (`--color-border-accent-default`, Solar), 2px com 2px, 44 por 44 (o Anchor do Light dá 2,22:1 contra o scrim; o Solar dá 9,02:1 no Light e 12,08:1 no Dark). O X branco também no Dark é intencional e é item da era do dark mode: reavaliar quando o dark mode entrar. Abre com fade e escala (movimento do repositório, não definido no Figma; a escala some em `prefers-reduced-motion`). Fecha com Esc, clique no fundo e o botão; o foco fica preso no botão e a página atrás fica inerte.
 
 ---
 
@@ -2478,5 +2480,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.13.0 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.13.1 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

@@ -1,5 +1,5 @@
 ---
-version: v2.13.0
+version: v2.13.1
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -1098,9 +1098,9 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 ### Sobreposições e dados no código (Lote 4, 2026-11-24)
 
-- **Modal:** `css/components/modal.css` (`.modal`, `__header`, `__title`, `__close`, `__body`, `__footer`, `.modal-scrim`) e `js/modal.js`. Painel de 480 com borda incluída no layout (430 de conteúdo), `--shadow-lg`, camadas `--z-modal-scrim` (100) e `--z-modal` (200). `role="dialog"`, `aria-modal`, foco preso, Esc fecha, página inerte, rolagem travada; o clique no scrim não fecha.
+- **Modal:** `css/components/modal.css` (`.modal`, `__header`, `__title`, `__close`, `__body`, `__footer`, `.modal-scrim`) e `js/modal.js`. Painel de 480 com borda incluída no layout (430 de conteúdo), `--shadow-lg`, camadas `--z-modal-scrim` (100) e `--z-modal` (200). Em tela estreita a largura é `min(480px, 100% - 32px)`, o corpo rola e o cabeçalho e o rodapé ficam fixos (v2.13.1). O X segue o Icon Button Ghost (hover com `--color-bg-alt`). `role="dialog"`, `aria-modal`, foco preso, Esc fecha, página inerte, rolagem travada; o clique no scrim não fecha. A parte comum com o Lightbox está em `js/overlay.js`.
 - **Popover:** `popover.css` (`.popover-anchor`, `.popover`, `__title`, `__body`) e `js/popover.js`. Painel de 280, `--shadow-md`, `--z-popover`, abre abaixo do gatilho a 8px, sem seta.
-- **Lightbox:** alinhado ao Figma: imagem até 960 com `--shadow-lg`, legenda de 520, botão de fechar de 36 no canto da imagem, foco preso e página inerte.
+- **Lightbox:** alinhado ao Figma: imagem até 960 com `--shadow-lg`, legenda de 520, blur de fundo `blur(6px)` (o raio do Figma, 12, equivale ao dobro do CSS), botão de fechar de 36 no canto da imagem com os estados do componente `Lightbox close` (Default, Hover, Focus em `--color-border-accent-default`), foco preso e página inerte pelo `js/overlay.js`.
 - **Avatar:** `avatar.css` (`.avatar`, `--small`, `--medium`, `--large`, `__image`), 32, 40 e 56.
 - **Tag:** `tag.css` (`.tag`, `__label`, `__dismiss`) e `js/tag.js`. Botão de 28 com borda incluída no layout; Delete ou Backspace remove. Sem versão não interativa: use o Badge.
 - **Accordion:** `accordion.css` (`.accordion`, `__item`, `__trigger`, `__chevron`, `__panel`) e `js/accordion.js`. Item com só a borda inferior, anel de foco em volta do item inteiro por `:has()`.
@@ -1142,4 +1142,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.13.0 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.13.1 · novembro de 2026 · Renan Moura*

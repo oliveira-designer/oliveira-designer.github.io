@@ -131,7 +131,7 @@
         <div class="docs-ds-content">
           <header class="docs-ds-head">
             <h1 class="text-h1">Lightbox</h1>
-            <p class="docs-ds-desc">A full-screen image viewer: a dark scrim with a blur, an image of up to 960px, an optional caption and a close button at the top-right corner of the panel. It sits at the same layer as the Modal.</p>
+            <p class="docs-ds-desc">A full-screen image viewer: a dark scrim with a blur, an image of up to 960px, an optional caption and a close button (the Lightbox close component) at the top-right corner of the image. It sits at the same layer as the Modal.</p>
           </header>
 
           <section class="docs-ds-section" id="example" aria-labelledby="example-title">
@@ -165,7 +165,7 @@
 
           <section class="docs-ds-section" id="anatomy" aria-labelledby="anatomy-title">
             <h2 class="text-label text-tertiary" id="anatomy-title">Anatomy</h2>
-            <ul class="docs-ds-list"><li>Overlay: full screen, Scrim Strong plus a 12px background blur, padding 24.</li><li>Panel: the image and the optional caption, 16 apart. The panel has no root border.</li><li>Image: up to 960 wide, radius 16, Shadow/lg.</li><li>Caption: Body/Regular/body-sm, white at 55%, centered, up to 520 wide.</li><li>Close button: 36 by 36 circle at the top-right corner of the panel, 40px above the image.</li></ul>
+            <ul class="docs-ds-list"><li>Overlay: full screen, Scrim Strong plus a background blur (Figma 12, CSS blur(6px): the Figma radius is double the CSS radius), padding 24.</li><li>Panel: the image and the optional caption, 16 apart. The panel has no root border.</li><li>Image: up to 960 wide, radius 16, Shadow/lg.</li><li>Caption: Body/Regular/body-sm, white at 55%, centered, up to 520 wide.</li><li>Close button (Lightbox close): 36 by 36 glass circle at the top-right corner of the image, 40px above it, with a white X of 20px.</li></ul>
           </section>
 
           <section class="docs-ds-section" id="states" aria-labelledby="states-title">
@@ -193,13 +193,13 @@
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header">Close button, hover</th>
-        <td class="data-table__cell">The fill goes from 12% to 22% white and the X to full opacity. Figma draws no hover.</td>
+        <td class="data-table__cell">Glass fill from 12% to 22%, glass edge from 18% to 32%, X from 80% to 100% (Figma Lightbox close, Hover).</td>
         <td class="data-table__cell"><code>--color-cloud</code></td>
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header">Close button, focus</th>
-        <td class="data-table__cell">A Solar ring (2px, 2px gap) following the pill radius. Figma draws no focus.</td>
-        <td class="data-table__cell"><code>--focus-ring-width</code> <code>--focus-ring-gap</code> <code>--color-solar</code></td>
+        <td class="data-table__cell">Default plus a ring of 2px with a 2px gap in Border/Accent/Default (Solar), 44 by 44 around the circle, radius 22 (Figma Lightbox close, Focus).</td>
+        <td class="data-table__cell"><code>--focus-ring-width</code> <code>--focus-ring-gap</code> <code>--color-border-accent-default</code></td>
       </tr>
     </tbody>
   </table>
@@ -233,7 +233,7 @@
     </tbody>
   </table>
 </div>
-            <ul class="docs-ds-list"><li>The overlay has role=&quot;dialog&quot;, aria-modal=&quot;true&quot; and aria-label=&quot;Image preview&quot;.</li><li>A zoomable image has role=&quot;button&quot;, tabindex=&quot;0&quot; and an aria-label that starts with &quot;Zoom in&quot;.</li><li>The close button has an accessible name (aria-label).</li><li>The alt of the image is reused in the viewer; the caption is the text of the figcaption.</li><li>The page behind is inert and the scroll is locked while it is open.</li></ul>
+            <ul class="docs-ds-list"><li>The overlay has role=&quot;dialog&quot;, aria-modal=&quot;true&quot; and aria-label=&quot;Image preview&quot;.</li><li>A zoomable image has role=&quot;button&quot;, tabindex=&quot;0&quot; and an aria-label that starts with &quot;Zoom in&quot;.</li><li>The close button has an accessible name (aria-label). It is the Lightbox close component: Default, Hover and Focus, no Disabled.</li><li>The alt of the image is reused in the viewer; the caption is the text of the figcaption.</li><li>The page behind is inert and the scroll is locked while it is open.</li></ul>
           </section>
 
           <section class="docs-ds-section" id="variants" aria-labelledby="variants-title">
@@ -266,7 +266,7 @@
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header"><code>.lightbox__media</code></th>
-        <td class="data-table__cell"></td>
+        <td class="data-table__cell">Hugs the image, so the close button sits at the corner of the image.</td>
         <td class="data-table__cell"><span class="docs-muted">none</span></td>
       </tr>
       <tr>
@@ -282,7 +282,7 @@
       <tr>
         <th scope="row" class="data-table__row-header"><code>.lightbox__close</code></th>
         <td class="data-table__cell">The 36px close button.</td>
-        <td class="data-table__cell"><code>--space-10</code> <code>--color-cloud</code> <code>--border-width-normal</code> <code>--radius-pill</code> <code>--duration-normal</code> <code>--ease-out</code></td>
+        <td class="data-table__cell"><code>--space-10</code> <code>--color-cloud</code> <code>--border-width-normal</code> <code>--radius-pill</code></td>
       </tr>
     </tbody>
   </table>
@@ -303,19 +303,14 @@
     </thead>
     <tbody>
       <tr>
-        <th scope="row" class="data-table__row-header"><code>lightbox-close-states</code></th>
-        <td class="data-table__cell">documented</td>
-        <td class="data-table__cell">Figma draws no Hover and no Focus for the close button. Hover is the one the repo already had (22% white fill, X at full opacity). Focus is the shared ring in Solar, because the focus color of the Light theme (Anchor) is 2.22:1 against this scrim.</td>
-      </tr>
-      <tr>
         <th scope="row" class="data-table__row-header"><code>lightbox-close-icon-color</code></th>
-        <td class="data-table__cell">inference</td>
-        <td class="data-table__cell">Figma binds the X to Icon/Color Neutral, which is white in Light and ink in Dark. The scrim is the same dark color in both themes, so an ink X would disappear in Dark. The CSS keeps the X white (--color-cloud) in both themes. Pending decision.</td>
+        <td class="data-table__cell">documented</td>
+        <td class="data-table__cell">Decided in Figma (Lightbox close, 2026-11-24): the X uses the primitive white in BOTH themes and does not follow Icon/Color, because the Lightbox scrim is dark in both. Icon/Color Neutral would turn ink in Dark. Intentional; a dark mode era item: reevaluate when dark mode lands.</td>
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header"><code>lightbox-blur</code></th>
-        <td class="data-table__cell">inference</td>
-        <td class="data-table__cell">The Figma effect is a background blur of radius 12 (not a style, no token). The CSS uses blur(12px), as before. Figma blur radius and CSS blur() are not the same unit (Figma exports 12 as blur(6px) in its code output). Open item.</td>
+        <td class="data-table__cell">documented</td>
+        <td class="data-table__cell">The Figma effect is a raw background blur of radius 12 (not a style, no token). The CSS uses blur(6px): the Figma radius is double the CSS radius, so Figma 12 renders as CSS blur(6px), and Figma's own code export gives blur(6px). The source of this equivalence is Figma forum answers on blur in Dev Mode, not the official docs. Accepted divergence in docs/data/accepted-divergences.json (decided by Renan, 2026-11-24). No blur token matches, so the value is a literal: open item.</td>
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header"><code>lightbox-scrim-dark</code></th>
@@ -395,6 +390,7 @@
       });
     })();
   </script>
+  <script src="../../js/overlay.js"></script>
   <script src="../../js/lightbox.js"></script>
 </body>
 </html>

@@ -475,7 +475,7 @@
           "renderable": false
         }
       ],
-      "note": "CSS in css/components/lightbox.css, aligned to Figma in v2.13.0. It is a fixed full-screen viewer built and driven by js/lightbox.js, so it is demonstrated on its own page from an image and not rendered on the review page.",
+      "note": "CSS in css/components/lightbox.css, aligned to Figma in v2.13.0 and v2.13.1. It is a fixed full-screen viewer built and driven by js/lightbox.js (with js/overlay.js), so it is demonstrated on its own page from an image and not rendered on the review page. The close button is the Lightbox close component (key LightboxClose).",
       "renderOnPage": "lightbox"
     },
     "Table": {
@@ -1779,6 +1779,37 @@
         }
       ],
       "renderOnPage": "accordion"
+    },
+    "LightboxClose": {
+      "figmaVariants": 3,
+      "implemented": 3,
+      "base": ".lightbox__close",
+      "stateMechanisms": {
+        "hover": "pseudo-class :hover",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset in Border/Accent/Default",
+        "disabled": "not applicable, Figma has no Disabled"
+      },
+      "variants": [
+        {
+          "state": "Default",
+          "selector": ".lightbox__close",
+          "rule": ".lightbox__close",
+          "mechanism": "base rule: 36 by 36 glass circle, white at 12% fill and 18% edge, X at 80%"
+        },
+        {
+          "state": "Hover",
+          "selector": ".lightbox__close",
+          "rule": ".lightbox__close:hover",
+          "mechanism": "pseudo-class :hover, fill 22%, edge 32%, X at 100%"
+        },
+        {
+          "state": "Focus",
+          "selector": ".lightbox__close",
+          "rule": ".lightbox__close:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, ring in Border/Accent/Default"
+        }
+      ],
+      "renderOnPage": "lightbox"
     }
   },
   "codeOnly": [

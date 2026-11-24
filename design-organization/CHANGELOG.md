@@ -5,6 +5,27 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.13.1 · 24 de novembro de 2026 · Lote 4 alinhado às decisões do Figma, `js/overlay.js` compartilhado e lacunas de contraste registradas (PATCH)
+
+**Versão escolhida: PATCH (2.13.0 para 2.13.1).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), PATCH cobre "Ajuste de valor" (o blur do Lightbox de 12px para 6px, a margem do Modal em tela estreita de 24px para 16px, os estados do botão de fechar) e "Correção de bug" (um Toast fora dos filhos diretos do `<body>`, por exemplo dentro de `<main>`, ficava inerte com um Modal aberto; o filtro agora entra nos filhos que o contêm), mais "Melhoria de documentação sem mudança técnica". Não entra componente novo no DESIGN.md (o `Lightbox close` do Figma é o botão de fechar que já existia no Lightbox, sem classe nova) e não entra token novo (o anel usa `--color-border-accent-default`, que já existia), então não se aplica MINOR. O refactor para `js/overlay.js` não muda comportamento. Nenhuma regra do GOVERNANCE mudou.
+
+**Alterado**
+- Lightbox: o blur do fundo passa de `blur(12px)` para `blur(6px)`. O raio do blur de fundo do Figma é o dobro do raio do CSS: Figma 12 equivale a `blur(6px)`, e o código exportado pelo próprio Figma dá `blur(6px)`. A fonte dessa equivalência são respostas no fórum do Figma sobre blur no Dev Mode, não a documentação oficial. Não existe token de blur que combine (`--blur-glass` é 24px com saturação), então o valor é literal (item em aberto). Divergência aceita registrada em `docs/data/accepted-divergences.json` (Figma 12, CSS 6px, decidido pelo Renan em 2026-11-24); o gerador de tokens passou a aceitar entradas de efeito (`scope: "effect"`).
+- Lightbox, botão de fechar: alinhado ao componente `Lightbox close` do Figma (Default, Hover, Focus; sem Disabled). Vidro branco a 12% com borda de 1px a 18%; hover com 22% e 32% e X a 100%; foco com anel de 2px e 2px de espaço em `Border/Accent/Default` (`--color-border-accent-default`, Solar), 44 por 44, raio 22, contraste 9,02:1 no Light e 12,08:1 no Dark contra o scrim. O X é branco nos dois temas de propósito (o scrim é escuro nos dois) e isso é item da era do dark mode. A regra de tela estreita continua: a altura da imagem deixa 40px acima e abaixo e espaço para uma legenda de três linhas, e o botão fica dentro da janela. A lacuna "estados do botão não existem no Figma" saiu dos dados.
+- Inventário do Figma ganha o `Lightbox close` (3 variantes). Totais: 199 de 199 variantes com CSS (eram 196 de 196).
+- Popover: texto da página e do DESIGN-IMPLEMENTATION igual ao Info do Figma: sem seta (só o Tooltip tem), abaixo do gatilho, alinhado ao início, 8px, inverte para cima quando não cabe. O código já fazia isso; nada mudou no CSS ou no JavaScript do Popover.
+- Modal: o X segue o comportamento do Icon Button Ghost (hover com `--color-bg-alt`, ícone `--icon-color-secondary`, foco de 2px com 2px; o círculo do hover tem 28 por 28, escolha do código). Em tela estreita a largura é `min(480px, 100% - 32px)` (margem de 16px, antes 24px), a altura é limitada a `100dvh` menos a margem, o corpo rola e o cabeçalho e o rodapé ficam fixos; o corpo rolável ganha `tabindex="0"` para o teclado.
+- `js/overlay.js` (novo, plain script): a página inerte, a rolagem travada, o foco preso, o Esc e o retorno do foco, antes duplicados em `modal.js` e `lightbox.js`. Carregado antes dos dois (as três páginas de estudo de caso e as páginas de docs do Modal e do Lightbox foram atualizadas). O que fica inerte: cada filho do `<body>`, exceto o overlay, `.toast`, `[data-overlay-keep]`, `[data-modal-keep]` e qualquer filho que contenha um deles (o percurso entra nele): um Toast aberto com o Modal fica acima e alcançável, mesmo dentro de `<main>`. O padrão (atributo `hidden`) continua; não muda para `<dialog>` nativo.
+
+**Corrigido (notas da v2.13.0)**
+- A lacuna "o botão de fechar do Lightbox não tem Hover nem Foco no Figma" deixou de valer: o Figma tem o componente `Lightbox close`. A margem de 24px do Modal em tela estreita foi trocada pela regra aprovada. A diferença "Cancel 96" do relatório do Lote 4 era o texto: a demo usava "Cancelar" e o Figma "Cancel" (Cancel 85, Confirm 91). A entrada da v2.13.0 não foi reescrita.
+
+**Registrado (só nos dados)**
+- Lacuna `accordion-no-js`: sem JavaScript os itens ficam fechados e o conteúdo não é legível; aceito pelo Renan em 24/11/2026 (mostrar o conteúdo por padrão empurraria outros elementos para fora da vista).
+- Lacunas de contraste medidas, aceitas pelo Renan em 24/11/2026, sem mudar cor, para reavaliar quando o dark mode entrar ou com uso real: painel do Modal no Dark (1,16:1 contra o scrim, borda 1,49:1; no Light 3,64 e 2,82) e as bordas do Tag, do Accordion item, do Popover e do painel do Menu a 1,29:1 no Light. O Tag é o primeiro a reavaliar (troca possível: `Border/Utilities/Input`).
+
+---
+
 ## v2.13.0 · 24 de novembro de 2026 · Lote 4 (Sobreposições e dados): Modal, Popover, Avatar, Tag e Accordion, Lightbox alinhado ao Figma, mais correções do Lote 3 (MINOR)
 
 **Versão escolhida: MINOR (2.12.0 para 2.13.0).** Regra aplicada: seção 3 do `GOVERNANCE.md`, MINOR cobre "novo componente entra no DESIGN.md": entram Modal, Popover, Avatar, Tag e Accordion. O `--z-overlay` volta como alias deprecado, o que mantém a mudança em MINOR (a remoção de um token é a quebra de compatibilidade da regra MAJOR; o alias dá o caminho de deprecação). O GOVERNANCE passa a v1.7 (uma regra nova na seção 3). Decisão do Renan.

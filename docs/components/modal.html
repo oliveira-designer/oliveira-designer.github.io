@@ -213,7 +213,7 @@
 
           <section class="docs-ds-section" id="anatomy" aria-labelledby="anatomy-title">
             <h2 class="text-label text-tertiary" id="anatomy-title">Anatomy</h2>
-            <ul class="docs-ds-list"><li>Scrim: a full-screen layer behind the panel (--color-bg-scrim). A click on it does not close the Modal.</li><li>Panel: the dialog, 480 wide, centered, with a border, a radius of 16 and Shadow/lg.</li><li>Header: the title (Heading/H3) and the close button with a 20px X icon.</li><li>Body: the supporting text (Body/Regular/body-sm, Text/Default/Secondary).</li><li>Footer (optional): right aligned, a Secondary and a Primary (or Destructive) Button.</li></ul>
+            <ul class="docs-ds-list"><li>Scrim: a full-screen layer behind the panel (--color-bg-scrim). A click on it does not close the Modal.</li><li>Panel: the dialog, 480 wide, centered, with a border, a radius of 16 and Shadow/lg.</li><li>Header: the title (Heading/H3) and the close button with a 20px X icon. The X follows the Icon Button Ghost behavior.</li><li>Body: the supporting text (Body/Regular/body-sm, Text/Default/Secondary).</li><li>Footer (optional): right aligned, a Secondary and a Primary (or Destructive) Button.</li></ul>
           </section>
 
           <section class="docs-ds-section" id="states" aria-labelledby="states-title">
@@ -240,13 +240,18 @@
         <td class="data-table__cell"><code>--color-bg-scrim</code> <code>--z-modal-scrim</code> <code>--z-modal</code></td>
       </tr>
       <tr>
+        <th scope="row" class="data-table__row-header">Narrow screen</th>
+        <td class="data-table__cell">The panel is min(480, 100% - 32) wide and as tall as the screen minus 16px each side; the body scrolls, the header and the footer stay in view.</td>
+        <td class="data-table__cell"><code>--space-4</code></td>
+      </tr>
+      <tr>
         <th scope="row" class="data-table__row-header">Close button, hover</th>
-        <td class="data-table__cell">The X goes from the Secondary to the Default icon color. Figma draws no hover.</td>
-        <td class="data-table__cell"><code>--icon-color-secondary</code> <code>--icon-color-default</code></td>
+        <td class="data-table__cell">A Background/Default/Secondary circle shows behind the X and the X goes from the Secondary to the Default icon color (Icon Button Ghost behavior, Figma Info text).</td>
+        <td class="data-table__cell"><code>--color-bg-alt</code> <code>--icon-color-secondary</code> <code>--icon-color-default</code></td>
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header">Close button, focus</th>
-        <td class="data-table__cell">The shared ring (2px, 2px gap) following the pill radius. Figma draws no focus.</td>
+        <td class="data-table__cell">The shared ring (2px, 2px gap) following the pill radius (Figma Info text).</td>
         <td class="data-table__cell"><code>--focus-ring-width</code> <code>--focus-ring-gap</code> <code>--color-border-focus-ring</code></td>
       </tr>
     </tbody>
@@ -281,7 +286,7 @@
     </tbody>
   </table>
 </div>
-            <ul class="docs-ds-list"><li>The panel has role=&quot;dialog&quot; and aria-modal=&quot;true&quot;.</li><li>aria-labelledby points at the title and aria-describedby at the body.</li><li>The close button has an accessible name (aria-label) because it holds only an icon.</li><li>The focus moves into the dialog on open (to the first control, or to the element with data-modal-initial-focus) and returns to the trigger on close.</li><li>The page behind is inert and the scroll is locked while the Modal is open.</li></ul>
+            <ul class="docs-ds-list"><li>The panel has role=&quot;dialog&quot; and aria-modal=&quot;true&quot;.</li><li>aria-labelledby points at the title and aria-describedby at the body.</li><li>The close button has an accessible name (aria-label) because it holds only an icon.</li><li>The focus moves into the dialog on open (to the first control, or to the element with data-modal-initial-focus) and returns to the trigger on close.</li><li>The page behind is inert and the scroll is locked while the Modal is open.</li><li>When the body scrolls (narrow screens) it gets tabindex=&quot;0&quot;, so the keyboard can scroll it.</li></ul>
           </section>
 
           <section class="docs-ds-section" id="variants" aria-labelledby="variants-title">
@@ -325,7 +330,7 @@
       <tr>
         <th scope="row" class="data-table__row-header"><code>.modal__body</code></th>
         <td class="data-table__cell">The supporting text.</td>
-        <td class="data-table__cell"><code>--fs-body-sm</code> <code>--color-text-2</code></td>
+        <td class="data-table__cell"><code>--space-1</code> <code>--fs-body-sm</code> <code>--color-text-2</code></td>
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header"><code>.modal__footer</code></th>
@@ -352,18 +357,18 @@
     <tbody>
       <tr>
         <th scope="row" class="data-table__row-header"><code>modal-footer-button-width</code></th>
-        <td class="data-table__cell">documented</td>
-        <td class="data-table__cell">Figma shows both footer buttons 184 wide. That is a fixed width on the instances, not a Button rule, so in code the buttons hug their content. Pending decision.</td>
+        <td class="data-table__cell">measured</td>
+        <td class="data-table__cell">Resolved in v2.13.1. Figma hugs the content (Cancel 85, Confirm 91, 45 high); the 184 seen earlier was a fixed width on the instances. The Lote 4 report measured about 96 for Cancel because the demo label was &quot;Cancelar&quot; (8 letters) and Figma uses &quot;Cancel&quot; (6): a measurement artefact, not a CSS difference. With the Figma labels and the font loaded the CSS gives Cancel 84.09 and Confirm 90.66 (padding 20 + border 1 - 1, gap 8, 13px SemiBold, no min-width). The 0.2 to 0.8 px difference is the Plus Jakarta Sans text width and the 44.8 height (13px at 160%) against 45.</td>
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header"><code>modal-close-states</code></th>
         <td class="data-table__cell">documented</td>
-        <td class="data-table__cell">Figma draws no Hover and no Focus for the close button. Focus follows the Icon Button pattern (2px ring with 2px gap, pill radius). Hover uses the Ghost Icon Button pattern (Icon/Color Secondary to Default). Both are borrowed, not drawn in Figma.</td>
+        <td class="data-table__cell">Resolved in v2.13.1. The Figma Info text defines the X: it follows the Icon Button Ghost behavior. Hover fills Background/Default/Secondary (--color-bg-alt) and the X goes to Icon/Color Default; Focus is the ring of 2px with a 2px gap; the icon color is --icon-color-secondary; the accessible name stays. The hover fill is a 28 by 28 circle (a choice of the code; Figma gives only the token). It is not a new component.</td>
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header"><code>modal-narrow-width</code></th>
         <td class="data-table__cell">documented</td>
-        <td class="data-table__cell">Figma does not define the panel on narrow screens. The panel is 480 wide and keeps a margin of 24px (--space-6, the mobile page gutter) on each side: max-width calc(100% - 2 * --space-6). When the content is taller than the viewport, the panel scrolls.</td>
+        <td class="data-table__cell">Approved rule (Figma Info text, 2026-11-24), replacing the 24px margin of v2.13.0: the width is min(480px, 100% - 32px) (16px each side, --space-4), the height is limited to 100dvh minus the same margin, the body scrolls (overflow auto) and the header and the footer stay in view. A bottom sheet for touch would be a separate component, not created yet. Tested at 320, 390 and 768 wide, with a long body, and at 200% zoom.</td>
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header"><code>modal-no-motion</code></th>
@@ -383,7 +388,7 @@
       <tr>
         <th scope="row" class="data-table__row-header"><code>modal-dark-panel-contrast</code></th>
         <td class="data-table__cell">measured</td>
-        <td class="data-table__cell">In Dark the panel (Background/Default/Default) is 1.16:1 against the scrim over the page and its border is 1.49:1. In Light they are 3.64 and 2.82. The shadow does not count as a boundary for WCAG 1.4.11. Implemented as in Figma; the decision is pending.</td>
+        <td class="data-table__cell">In Dark the panel (Background/Default/Default) is 1.16:1 against the scrim over the page and its border is 1.49:1. In Light they are 3.64 and 2.82. The shadow does not count as a boundary for WCAG 1.4.11. Implemented as in Figma, no color changed. Accepted by Renan, 2026-11-24. Reevaluate: when dark mode lands, or with real use.</td>
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header"><code>modal-scrim-name</code></th>
@@ -448,6 +453,7 @@
       });
     })();
   </script>
+  <script src="../../js/overlay.js"></script>
   <script src="../../js/modal.js"></script>
 </body>
 </html>

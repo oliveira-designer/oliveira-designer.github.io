@@ -4,5 +4,14 @@
     "reason": "Structural difference. Figma has one variable with 10 modes; CSS has ten --icon-color-<mode> tokens. Verified equal.",
     "decidedBy": "Renan",
     "date": "2026-11-19"
+  },
+  {
+    "scope": "effect",
+    "name": "Lightbox backdrop blur",
+    "figma": "background blur 12",
+    "css": "backdrop-filter: blur(6px)",
+    "reason": "Equivalent rendering: the Figma blur radius is double the CSS blur radius, so Figma 12 is CSS blur(6px) (Figma's own code export gives blur(6px)). Source: Figma forum answers on blur in Dev Mode, not the official docs. No blur token matches, so the value is a literal.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
   }
 ]

@@ -354,7 +354,7 @@
       <tr>
         <th scope="row" class="data-table__row-header"><code>accordion-border-contrast</code></th>
         <td class="data-table__cell">measured</td>
-        <td class="data-table__cell">The bottom border (Border/Default/Default) is 1.29:1 against the page in Light and 1.28:1 in Dark, and 1.21:1 and 1.14:1 against the hover fill, under the 3:1 of WCAG 1.4.11. It separates items and the title carries the information, so it is a documented gap. Implemented as Figma, the decision is pending.</td>
+        <td class="data-table__cell">The bottom border (Border/Default/Default) is 1.29:1 against the page in Light and 1.28:1 in Dark, and 1.21:1 and 1.14:1 against the hover fill, under the 3:1 of WCAG 1.4.11. It separates items and the title carries the information. Implemented as in Figma, no color changed. Accepted by Renan, 2026-11-24. Reevaluate: when dark mode lands, or with real use.</td>
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header"><code>accordion-focus-has</code></th>
@@ -364,7 +364,7 @@
       <tr>
         <th scope="row" class="data-table__row-header"><code>accordion-no-js</code></th>
         <td class="data-table__cell">documented</td>
-        <td class="data-table__cell">Without JavaScript the items stay closed (the panels have the hidden attribute) and cannot be opened. The role=&quot;region&quot; rule by item count is applied by the script.</td>
+        <td class="data-table__cell">Without JavaScript the items stay closed (the panels have the hidden attribute) and their content is not readable. Accepted: showing the content by default was considered and rejected, because an open Accordion on first load can push other elements out of view and looks wrong. The role=&quot;region&quot; rule by item count is applied by the script. Accepted by Renan, 2026-11-24. Reevaluate: with real use.</td>
       </tr>
       <tr>
         <th scope="row" class="data-table__row-header"><code>accordion-site</code></th>

@@ -1702,7 +1702,7 @@
     {"id": "menu-positioning", "status": "documented", "text": "The CSS draws the panel. Placing it next to the trigger, flipping it near the viewport edge and typeahead are not coded. js/menu.js opens and closes it and handles the keys. The docs demo places the panel under the trigger in the document flow."},
     {"id": "menu-danger-states", "status": "documented", "text": "Figma has no Danger Focus, Selected or Disabled. Focus uses the shared ring. They are not invented; an open item if the design needs them."},
     {"id": "menu-select-parity", "status": "documented", "text": "Figma says Select uses this panel. The native <select> of the repo still opens the browser panel. Select was not changed in this lote."},
-    {"id": "menu-border-contrast", "status": "measured", "text": "The panel border (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark, under the 3:1 of WCAG 1.4.11. The shadow (Shadow/md) does not count as a boundary for that criterion."},
+    {"id": "menu-border-contrast", "status": "measured", "text": "The panel border (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark, under the 3:1 of WCAG 1.4.11. The shadow (Shadow/md) does not count as a boundary for that criterion. Implemented as in Figma, no color changed.", "acceptedBy": "Renan", "date": "2026-11-24", "reevaluate": "when dark mode lands, or with real use"},
     {"id": "menu-specimen-width", "status": "documented", "text": "The Figma panel is 238 wide because the specimen items are 220. In code the items fill the panel and the panel width is the author's; the docs demo uses 238."}
   ],
   "unverified": [],
@@ -1716,6 +1716,7 @@
   "name": "Modal",
   "navGroup": "Overlays and data",
   "scripts": [
+    "overlay.js",
     "modal.js"
   ],
   "figma": {
@@ -1764,7 +1765,8 @@
       "radius": "Radius/radius-lg",
       "border": "1px Border/Default/Default",
       "shadow": "Shadow/lg",
-      "layers": "Z-index/z-modal-scrim (100) for the scrim, Z-index/z-modal (200) for the panel"
+      "layers": "Z-index/z-modal-scrim (100) for the scrim, Z-index/z-modal (200) for the panel",
+      "narrow": "width min(480, 100% - 32), the body scrolls, header and footer stay fixed"
     },
     "header": {
       "gap": "Spacing/space-3",
@@ -1773,7 +1775,7 @@
     "footer": {
       "align": "right",
       "gap": "Spacing/space-3",
-      "buttons": "Secondary (Cancel) and Primary (Confirm), Medium; 184 wide in Figma is an override on the instances"
+      "buttons": "Secondary (Cancel, 85 wide) and Primary (Confirm, 91 wide), Medium, hugging their labels"
     }
   },
   "stateTokens": {
@@ -1803,15 +1805,16 @@
         "text": "Icon/Color Secondary"
       },
       "hover": {
-        "text": "Icon/Color Default (not in Figma)"
+        "fill": "Background/Default/Secondary",
+        "text": "Icon/Color Default"
       },
-      "focus": "Shared focus ring (not in Figma)"
+      "focus": "Default plus the shared ring (2px, 2px gap)"
     }
   },
   "anatomy": [
     "Scrim: a full-screen layer behind the panel (--color-bg-scrim). A click on it does not close the Modal.",
     "Panel: the dialog, 480 wide, centered, with a border, a radius of 16 and Shadow/lg.",
-    "Header: the title (Heading/H3) and the close button with a 20px X icon.",
+    "Header: the title (Heading/H3) and the close button with a 20px X icon. The X follows the Icon Button Ghost behavior.",
     "Body: the supporting text (Body/Regular/body-sm, Text/Default/Secondary).",
     "Footer (optional): right aligned, a Secondary and a Primary (or Destructive) Button."
   ],
@@ -1827,13 +1830,18 @@
       "--color-bg-scrim, --z-modal-scrim, --z-modal"
     ],
     [
+      "Narrow screen",
+      "The panel is min(480, 100% - 32) wide and as tall as the screen minus 16px each side; the body scrolls, the header and the footer stay in view.",
+      "--space-4"
+    ],
+    [
       "Close button, hover",
-      "The X goes from the Secondary to the Default icon color. Figma draws no hover.",
-      "--icon-color-secondary, --icon-color-default"
+      "A Background/Default/Secondary circle shows behind the X and the X goes from the Secondary to the Default icon color (Icon Button Ghost behavior, Figma Info text).",
+      "--color-bg-alt, --icon-color-secondary, --icon-color-default"
     ],
     [
       "Close button, focus",
-      "The shared ring (2px, 2px gap) following the pill radius. Figma draws no focus.",
+      "The shared ring (2px, 2px gap) following the pill radius (Figma Info text).",
       "--focus-ring-width, --focus-ring-gap, --color-border-focus-ring"
     ]
   ],
@@ -1856,7 +1864,8 @@
     "aria-labelledby points at the title and aria-describedby at the body.",
     "The close button has an accessible name (aria-label) because it holds only an icon.",
     "The focus moves into the dialog on open (to the first control, or to the element with data-modal-initial-focus) and returns to the trigger on close.",
-    "The page behind is inert and the scroll is locked while the Modal is open."
+    "The page behind is inert and the scroll is locked while the Modal is open.",
+    "When the body scrolls (narrow screens) it gets tabindex=\"0\", so the keyboard can scroll it."
   ],
   "accessibility": {
     "contrastText": [
@@ -1893,7 +1902,7 @@
         "dark": 1.16
       }
     ],
-    "targetSize": "The close icon is 20 by 20 and a transparent pseudo-element grows the hit area to 24 by 24 (WCAG 2.5.8). The footer buttons are 44 high (the Button Medium).",
+    "targetSize": "The close icon is 20 by 20 and a transparent pseudo-element of 28 by 28 is its hit area and hover fill (WCAG 2.5.8 asks 24 by 24). The footer buttons are 44 high (the Button Medium).",
     "focus": "The focus moves into the dialog on open and is trapped there. The close button takes the shared ring (2px, offset 2px) following its pill radius.",
     "note": "role=\"dialog\" with aria-modal=\"true\", aria-labelledby on the title and aria-describedby on the body. Tab cycles inside the dialog, Escape closes it, and the focus returns to the trigger. The page behind is inert and its scroll is locked. A click on the scrim does not close the Modal.",
     "meaning": "A Modal interrupts the person on purpose, so it has to be answered: Escape and the close button are the ways out, not a click outside. The destructive action is carried by the destructive Button and its label, not by color alone."
@@ -1922,18 +1931,18 @@
   "knownGaps": [
     {
       "id": "modal-footer-button-width",
-      "status": "documented",
-      "text": "Figma shows both footer buttons 184 wide. That is a fixed width on the instances, not a Button rule, so in code the buttons hug their content. Pending decision."
+      "status": "measured",
+      "text": "Resolved in v2.13.1. Figma hugs the content (Cancel 85, Confirm 91, 45 high); the 184 seen earlier was a fixed width on the instances. The Lote 4 report measured about 96 for Cancel because the demo label was \"Cancelar\" (8 letters) and Figma uses \"Cancel\" (6): a measurement artefact, not a CSS difference. With the Figma labels and the font loaded the CSS gives Cancel 84.09 and Confirm 90.66 (padding 20 + border 1 - 1, gap 8, 13px SemiBold, no min-width). The 0.2 to 0.8 px difference is the Plus Jakarta Sans text width and the 44.8 height (13px at 160%) against 45."
     },
     {
       "id": "modal-close-states",
       "status": "documented",
-      "text": "Figma draws no Hover and no Focus for the close button. Focus follows the Icon Button pattern (2px ring with 2px gap, pill radius). Hover uses the Ghost Icon Button pattern (Icon/Color Secondary to Default). Both are borrowed, not drawn in Figma."
+      "text": "Resolved in v2.13.1. The Figma Info text defines the X: it follows the Icon Button Ghost behavior. Hover fills Background/Default/Secondary (--color-bg-alt) and the X goes to Icon/Color Default; Focus is the ring of 2px with a 2px gap; the icon color is --icon-color-secondary; the accessible name stays. The hover fill is a 28 by 28 circle (a choice of the code; Figma gives only the token). It is not a new component."
     },
     {
       "id": "modal-narrow-width",
       "status": "documented",
-      "text": "Figma does not define the panel on narrow screens. The panel is 480 wide and keeps a margin of 24px (--space-6, the mobile page gutter) on each side: max-width calc(100% - 2 * --space-6). When the content is taller than the viewport, the panel scrolls."
+      "text": "Approved rule (Figma Info text, 2026-11-24), replacing the 24px margin of v2.13.0: the width is min(480px, 100% - 32px) (16px each side, --space-4), the height is limited to 100dvh minus the same margin, the body scrolls (overflow auto) and the header and the footer stay in view. A bottom sheet for touch would be a separate component, not created yet. Tested at 320, 390 and 768 wide, with a long body, and at 200% zoom."
     },
     {
       "id": "modal-no-motion",
@@ -1953,7 +1962,10 @@
     {
       "id": "modal-dark-panel-contrast",
       "status": "measured",
-      "text": "In Dark the panel (Background/Default/Default) is 1.16:1 against the scrim over the page and its border is 1.49:1. In Light they are 3.64 and 2.82. The shadow does not count as a boundary for WCAG 1.4.11. Implemented as in Figma; the decision is pending."
+      "text": "In Dark the panel (Background/Default/Default) is 1.16:1 against the scrim over the page and its border is 1.49:1. In Light they are 3.64 and 2.82. The shadow does not count as a boundary for WCAG 1.4.11. Implemented as in Figma, no color changed.",
+      "acceptedBy": "Renan",
+      "date": "2026-11-24",
+      "reevaluate": "when dark mode lands, or with real use"
     },
     {
       "id": "modal-scrim-name",
@@ -1982,14 +1994,14 @@
       }
     ]
   },
-  "summary": "A floating panel of 280px anchored to a trigger, with an optional title and free content. It opens on click, does not block the page and does not trap the focus.",
+  "summary": "A floating panel of 280px anchored to a trigger, with an optional title and free content (text, links, a small control). It opens on click, closes on a click outside, does not block the page and has no arrow.",
   "whenToUse": [
     "Extra context tied to the element that opened it.",
-    "A small control or a link next to its trigger.",
-    "Content that can hold links or a small control (the Figma text says free content)."
+    "A small control or a link next to its trigger: unlike a Tooltip, it can have interaction and opens on click.",
+    "Content that can hold text, links or a small control (the Figma text says free content)."
   ],
   "whenNotToUse": [
-    "A decision that must be taken first: use a Modal.",
+    "A decision that must be taken first: unlike a Popover, a Modal blocks the screen.",
     "A list of actions or options: use a Menu.",
     "A short label on hover or focus: use a Tooltip."
   ],
@@ -2041,7 +2053,7 @@
   },
   "anatomy": [
     "Trigger: any button with aria-expanded and aria-controls.",
-    "Panel: 280 wide, border, radius 12, Shadow/md, layer 300, no arrow.",
+    "Panel: 280 wide, border, radius 12, Shadow/md, layer 300. No arrow: only the Tooltip has one (the Menu panel has none either).",
     "Title (optional): Body/SemiBold/body-sm semibold.",
     "Body: Body/Regular/body-sm, free content."
   ],
@@ -2058,7 +2070,7 @@
     ],
     [
       "Flipped",
-      "When the panel would leave the viewport at the bottom and there is room above, it opens above; when it would leave at the right, it aligns to the end.",
+      "When it does not fit below the trigger it opens above (only when there is room above). Code addition beyond the Figma text: near the right edge it aligns to the end of the trigger.",
       ".popover--above, .popover--end"
     ]
   ],
@@ -2131,7 +2143,7 @@
     {
       "id": "popover-placement",
       "status": "documented",
-      "text": "Figma draws no arrow and no placement rules. The panel opens below the trigger, aligned to its start, 8px away (--space-2, a choice of the code). The script flips it above only when it would leave the viewport at the bottom and there is room above, and aligns it to the end near the right edge. No other placement, no arrow, no collision handling beyond that. Open item."
+      "text": "Same as the Figma Info text: no arrow (only the Tooltip has one), the panel opens below the trigger, aligned to its start, 8px away (--space-2), and flips above when it does not fit. The code flips only when there is room above; otherwise it stays below. Near the right edge it aligns to the end of the trigger (an addition, not in Figma). No other placement and no collision handling beyond that. Open item."
     },
     {
       "id": "popover-role",
@@ -2146,7 +2158,10 @@
     {
       "id": "popover-border-contrast",
       "status": "measured",
-      "text": "The panel border (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark, under the 3:1 of WCAG 1.4.11. The shadow does not count as a boundary for that criterion. Same as the Menu panel."
+      "text": "The panel border (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark, under the 3:1 of WCAG 1.4.11. The shadow does not count as a boundary for that criterion. Same as the Menu panel. Implemented as in Figma, no color changed.",
+      "acceptedBy": "Renan",
+      "date": "2026-11-24",
+      "reevaluate": "when dark mode lands, or with real use"
     }
   ],
   "unverified": [],
@@ -2159,6 +2174,7 @@
   "name": "Lightbox",
   "navGroup": "Overlays and data",
   "scripts": [
+    "overlay.js",
     "lightbox.js"
   ],
   "figma": {
@@ -2167,10 +2183,14 @@
       {
         "name": "Lightbox",
         "id": "2456:4"
+      },
+      {
+        "name": "Lightbox close",
+        "id": "2570:1148"
       }
     ]
   },
-  "summary": "A full-screen image viewer: a dark scrim with a blur, an image of up to 960px, an optional caption and a close button at the top-right corner of the panel. It sits at the same layer as the Modal.",
+  "summary": "A full-screen image viewer: a dark scrim with a blur, an image of up to 960px, an optional caption and a close button (the Lightbox close component) at the top-right corner of the image. It sits at the same layer as the Modal.",
   "whenToUse": [
     "Looking at one image closely: screenshots, diagrams and case study figures.",
     "The caption comes from the figcaption of the image.",
@@ -2191,12 +2211,22 @@
       "name": "Caption",
       "type": "text",
       "default": "Caption of the image, taken from the figure caption"
+    },
+    {
+      "name": "State (Lightbox close)",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Hover",
+        "Focus"
+      ],
+      "default": "Default"
     }
   ],
   "layout": {
     "overlay": {
       "fill": "Background/Utilities/Scrim Strong (Neutral ink at 88%)",
-      "blur": "Background blur 12 (a raw effect in Figma)",
+      "blur": "Background blur 12 in Figma, which is blur(6px) in CSS (the Figma radius is double the CSS radius)",
       "padding": "Spacing/space-6",
       "layer": "Z-index/z-modal (200)"
     },
@@ -2206,15 +2236,17 @@
       "caption": "520 wide, centered"
     },
     "close": {
-      "size": "36 by 36, pill, 1px stroke included in layout",
-      "position": "x 924, y -40 in a 960 panel: at the top-right corner, 40px above the image",
-      "icon": "20px X at 80% opacity"
+      "size": "36 by 36, pill, two glass layers: fill white at 12% and a 1px edge at 18% (the edge is part of the 36)",
+      "position": "x 924, y -40 in a 960 panel: at the top-right corner of the image, 40px above it",
+      "icon": "20px X, white in both themes, 80% opacity (100% on hover)",
+      "states": "Default, Hover (fill 22%, edge 32%, icon 100%), Focus (Default plus a ring Border/Accent/Default, 2px with 2px gap, 44 by 44, radius 22); no Disabled"
     }
   },
   "stateTokens": {
     "Overlay": {
       "default": {
-        "fill": "Background/Utilities/Scrim Strong"
+        "fill": "Background/Utilities/Scrim Strong",
+        "blur": "background blur 12 (CSS blur(6px))"
       }
     },
     "Caption": {
@@ -2224,18 +2256,24 @@
     },
     "Close": {
       "default": {
-        "fill": "The Figma white variable at 12%",
-        "stroke": "The Figma white variable at 18%",
-        "text": "White at 80% (Icon/Color Neutral mode in Figma)"
-      }
+        "fill": "primitive white at 12%",
+        "stroke": "primitive white at 18%",
+        "icon": "primitive white at 80%"
+      },
+      "hover": {
+        "fill": "white at 22%",
+        "stroke": "white at 32%",
+        "icon": "white at 100%"
+      },
+      "focus": "Default plus a ring in Border/Accent/Default (Solar), 2px with 2px gap"
     }
   },
   "anatomy": [
-    "Overlay: full screen, Scrim Strong plus a 12px background blur, padding 24.",
+    "Overlay: full screen, Scrim Strong plus a background blur (Figma 12, CSS blur(6px): the Figma radius is double the CSS radius), padding 24.",
     "Panel: the image and the optional caption, 16 apart. The panel has no root border.",
     "Image: up to 960 wide, radius 16, Shadow/lg.",
     "Caption: Body/Regular/body-sm, white at 55%, centered, up to 520 wide.",
-    "Close button: 36 by 36 circle at the top-right corner of the panel, 40px above the image."
+    "Close button (Lightbox close): 36 by 36 glass circle at the top-right corner of the image, 40px above it, with a white X of 20px."
   ],
   "states": [
     [
@@ -2250,13 +2288,13 @@
     ],
     [
       "Close button, hover",
-      "The fill goes from 12% to 22% white and the X to full opacity. Figma draws no hover.",
+      "Glass fill from 12% to 22%, glass edge from 18% to 32%, X from 80% to 100% (Figma Lightbox close, Hover).",
       "--color-cloud"
     ],
     [
       "Close button, focus",
-      "A Solar ring (2px, 2px gap) following the pill radius. Figma draws no focus.",
-      "--focus-ring-width, --focus-ring-gap, --color-solar"
+      "Default plus a ring of 2px with a 2px gap in Border/Accent/Default (Solar), 44 by 44 around the circle, radius 22 (Figma Lightbox close, Focus).",
+      "--focus-ring-width, --focus-ring-gap, --color-border-accent-default"
     ]
   ],
   "keyboard": [
@@ -2276,7 +2314,7 @@
   "aria": [
     "The overlay has role=\"dialog\", aria-modal=\"true\" and aria-label=\"Image preview\".",
     "A zoomable image has role=\"button\", tabindex=\"0\" and an aria-label that starts with \"Zoom in\".",
-    "The close button has an accessible name (aria-label).",
+    "The close button has an accessible name (aria-label). It is the Lightbox close component: Default, Hover and Focus, no Disabled.",
     "The alt of the image is reused in the viewer; the caption is the text of the figcaption.",
     "The page behind is inert and the scroll is locked while it is open."
   ],
@@ -2311,9 +2349,9 @@
       }
     ],
     "targetSize": "36 by 36: above WCAG 2.5.8 (24 by 24) and under 2.5.5 (44 by 44, AAA).",
-    "focus": "The close button takes a 2px ring with a 2px offset in Solar (--color-solar): the Light focus color (Anchor) is only 2.22:1 against this scrim, while Solar is 9.02:1.",
+    "focus": "The close button takes a 2px ring with a 2px offset in Border/Accent/Default (Solar, --color-border-accent-default), 44 by 44 around the 36 circle: the Light focus color (Anchor) is only 2.22:1 against this scrim, while Solar is 9.02:1 in Light and 12.08:1 in Dark.",
     "note": "role=\"dialog\" with aria-modal=\"true\". The focus moves to the close button on open, stays inside, and returns to the image on close. Escape, the close button and a click on the backdrop close it. The page behind is inert.",
-    "meaning": "The close button is identified by the X (10.2:1 and 13.04:1), so its low-contrast fill and stroke do not carry information. The image keeps its own alt text."
+    "meaning": "The close button is identified by the X (10.2:1 and 13.04:1), so its low-contrast glass fill and edge do not carry information. The X is white in both themes on purpose (dark mode era item: reevaluate when dark mode lands). The image keeps its own alt text."
   },
   "example": {
     "markup": "<figure>\n  <img data-lightbox src=\"../../images/case-thumbnails/dotz-thumb-light.png\" alt=\"Miniatura do estudo de caso Dotz, com a tela inicial do aplicativo\" width=\"320\">\n  <figcaption>Miniatura do estudo de caso Dotz.</figcaption>\n</figure>"
@@ -2334,23 +2372,19 @@
     ".lightbox__panel": "Image and caption, up to 960 wide.",
     ".lightbox__img": "The image, radius 16 and Shadow/lg.",
     ".lightbox__caption": "The caption, from the figcaption.",
-    ".lightbox__close": "The 36px close button."
+    ".lightbox__close": "The 36px close button.",
+    ".lightbox__media": "Hugs the image, so the close button sits at the corner of the image."
   },
   "knownGaps": [
     {
-      "id": "lightbox-close-states",
-      "status": "documented",
-      "text": "Figma draws no Hover and no Focus for the close button. Hover is the one the repo already had (22% white fill, X at full opacity). Focus is the shared ring in Solar, because the focus color of the Light theme (Anchor) is 2.22:1 against this scrim."
-    },
-    {
       "id": "lightbox-close-icon-color",
-      "status": "inference",
-      "text": "Figma binds the X to Icon/Color Neutral, which is white in Light and ink in Dark. The scrim is the same dark color in both themes, so an ink X would disappear in Dark. The CSS keeps the X white (--color-cloud) in both themes. Pending decision."
+      "status": "documented",
+      "text": "Decided in Figma (Lightbox close, 2026-11-24): the X uses the primitive white in BOTH themes and does not follow Icon/Color, because the Lightbox scrim is dark in both. Icon/Color Neutral would turn ink in Dark. Intentional; a dark mode era item: reevaluate when dark mode lands."
     },
     {
       "id": "lightbox-blur",
-      "status": "inference",
-      "text": "The Figma effect is a background blur of radius 12 (not a style, no token). The CSS uses blur(12px), as before. Figma blur radius and CSS blur() are not the same unit (Figma exports 12 as blur(6px) in its code output). Open item."
+      "status": "documented",
+      "text": "The Figma effect is a raw background blur of radius 12 (not a style, no token). The CSS uses blur(6px): the Figma radius is double the CSS radius, so Figma 12 renders as CSS blur(6px), and Figma's own code export gives blur(6px). The source of this equivalence is Figma forum answers on blur in Dev Mode, not the official docs. Accepted divergence in docs/data/accepted-divergences.json (decided by Renan, 2026-11-24). No blur token matches, so the value is a literal: open item."
     },
     {
       "id": "lightbox-scrim-dark",
@@ -2375,7 +2409,8 @@
   ],
   "unverified": [],
   "mapKeys": [
-    "Lightbox"
+    "Lightbox",
+    "LightboxClose"
   ]
 },
 {
@@ -2733,7 +2768,10 @@
     {
       "id": "tag-border-contrast",
       "status": "measured",
-      "text": "The Tag border (Border/Default/Default) is 1.29:1 against the page in Light and 1.28:1 in Dark, and 1.21:1 and 1.14:1 against the Tag fill; the fill is 1.07:1 and 1.12:1 against the page. All are under the 3:1 of WCAG 1.4.11. Implemented exactly as Figma, no color was changed. The decision is pending (together with the Alert and Toast borders)."
+      "text": "The Tag border (Border/Default/Default) is 1.29:1 against the page in Light and 1.28:1 in Dark, and 1.21:1 and 1.14:1 against the Tag fill; the fill is 1.07:1 and 1.12:1 against the page. All are under the 3:1 of WCAG 1.4.11. Implemented exactly as in Figma, no color changed. The Tag is the first to reevaluate (together with the Alert and Toast borders); a possible swap is Border/Utilities/Input (--color-border-input, 3.12:1 on white).",
+      "acceptedBy": "Renan",
+      "date": "2026-11-24",
+      "reevaluate": "first in the list: when dark mode lands, or with real use"
     },
     {
       "id": "tag-no-static",
@@ -2979,7 +3017,10 @@
     {
       "id": "accordion-border-contrast",
       "status": "measured",
-      "text": "The bottom border (Border/Default/Default) is 1.29:1 against the page in Light and 1.28:1 in Dark, and 1.21:1 and 1.14:1 against the hover fill, under the 3:1 of WCAG 1.4.11. It separates items and the title carries the information, so it is a documented gap. Implemented as Figma, the decision is pending."
+      "text": "The bottom border (Border/Default/Default) is 1.29:1 against the page in Light and 1.28:1 in Dark, and 1.21:1 and 1.14:1 against the hover fill, under the 3:1 of WCAG 1.4.11. It separates items and the title carries the information. Implemented as in Figma, no color changed.",
+      "acceptedBy": "Renan",
+      "date": "2026-11-24",
+      "reevaluate": "when dark mode lands, or with real use"
     },
     {
       "id": "accordion-focus-has",
@@ -2989,7 +3030,10 @@
     {
       "id": "accordion-no-js",
       "status": "documented",
-      "text": "Without JavaScript the items stay closed (the panels have the hidden attribute) and cannot be opened. The role=\"region\" rule by item count is applied by the script."
+      "text": "Without JavaScript the items stay closed (the panels have the hidden attribute) and their content is not readable. Accepted: showing the content by default was considered and rejected, because an open Accordion on first load can push other elements out of view and looks wrong. The role=\"region\" rule by item count is applied by the script.",
+      "acceptedBy": "Renan",
+      "date": "2026-11-24",
+      "reevaluate": "with real use"
     },
     {
       "id": "accordion-site",
