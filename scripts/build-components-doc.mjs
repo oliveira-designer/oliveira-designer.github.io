@@ -222,6 +222,11 @@ const notesTable = (comp) => hopeTable({
   rows: comp.knownGaps.map((g) => [code(g.id), esc(g.status), esc(g.text + (g.acceptedBy ? ` Accepted by ${g.acceptedBy}, ${g.date}.` : '') + (g.reevaluate ? ` Reevaluate: ${g.reevaluate}.` : ''))]),
 });
 
+/* Sections generated but not rendered on the pages (decision D-44: the code notes live in the data, not on the page,
+   as on the older component pages, D-35). The data stays in components-content.json (knownGaps) and the render code
+   stays above; remove "notes" from this set to show them again. */
+const HIDDEN_SECTIONS = new Set(['notes']);
+
 const SECTIONS = {
   when: (comp) => modelSection('when', 'When to use', list(comp.whenToUse)),
   whenNot: (comp) => modelSection('when-not', 'When not to use', list(comp.whenNotToUse)),
@@ -253,7 +258,7 @@ function componentPage(comp) {
   const body = [
     modelHead(comp.name, esc(comp.summary)),
     modelExample(indentBlock(markup, '                  '), markup),
-    ...comp.essential.map((s) => {
+    ...comp.essential.filter((s) => !HIDDEN_SECTIONS.has(s)).map((s) => {
       if (!SECTIONS[s]) throw new MalformedData(`components-content.json: ${comp.slug} lists unknown essential section "${s}"`);
       return SECTIONS[s](comp);
     }),

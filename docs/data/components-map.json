@@ -1531,8 +1531,8 @@
       "renderOnPage": "pagination"
     },
     "MenuItem": {
-      "figmaVariants": 7,
-      "implemented": 7,
+      "figmaVariants": 10,
+      "implemented": 10,
       "base": ".menu__item",
       "stateMechanisms": {
         "hover": "pseudo-class :hover",
@@ -1588,6 +1588,27 @@
           "selector": ".menu__item.menu__item--danger",
           "rule": ".menu__item:hover:not([aria-disabled=\"true\"])",
           "mechanism": "pseudo-class :hover, same fill as Default"
+        },
+        {
+          "tone": "Danger",
+          "state": "Focus",
+          "selector": ".menu__item.menu__item--danger",
+          "rule": ".menu__item--danger:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, same ring as Default, text stays Danger"
+        },
+        {
+          "tone": "Danger",
+          "state": "Selected",
+          "selector": ".menu__item.menu__item--danger",
+          "rule": ".menu__item--danger[aria-checked=\"true\"]",
+          "mechanism": "aria-checked=\"true\", text Danger, check in --icon-color-danger"
+        },
+        {
+          "tone": "Danger",
+          "state": "Disabled",
+          "selector": ".menu__item.menu__item--danger",
+          "rule": ".menu__item--danger[aria-disabled=\"true\"]",
+          "mechanism": "aria-disabled=\"true\", same as Default Disabled, no opacity"
         }
       ],
       "renderOnPage": "menu"

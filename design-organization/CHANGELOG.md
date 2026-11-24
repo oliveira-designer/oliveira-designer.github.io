@@ -5,6 +5,23 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.14.0 · 24 de novembro de 2026 · Menu item com os três estados Danger, páginas do Lote 4 sem "Code notes" e com demos em inglês (MINOR)
+
+**Versão escolhida: MINOR (2.13.1 para 2.14.0).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), MINOR cobre "Expansão de escala (mais tamanhos, mais variantes)". O set `Menu item` do Figma Core passou de 7 para 10 variantes (`Tone=Danger` com `State=Focus`, `Selected` e `Disabled`) e o inventário passa de 199 para 202 variantes com CSS. Não entra componente novo e não entra token novo. Ressalva para o Renan: na v2.13.1 o `Lightbox close` (um set novo, 3 variantes) foi tratado como PATCH; pela mesma leitura literal da cláusula ele também seria MINOR. A v2.13.1 não foi reescrita. Se a leitura certa for PATCH, a versão vira 2.13.2 e o texto desta entrada muda só na primeira linha.
+
+**Alterado**
+- `css/components/menu.css`: os estados Danger do `Menu item`. Focus: o mesmo anel do Default (`--color-border-focus-ring`, 2px, 2px de espaço) e o texto continua em `--color-text-danger-default`. Selected: `--color-bg-alt`, SemiBold, texto `--color-text-danger-default` e check em `--icon-color-danger` (o modo Danger do `Icon/Color`). Disabled: igual ao Default Disabled (`--color-text-disabled-default`, sem opacidade), e o check de um item desabilitado usa `--icon-color-disabled`. Cada estado tem seletor próprio, então a cor do texto não depende da ordem das regras. Nenhum token novo.
+- Contraste medido no navegador, Light e Dark: texto Danger no painel 5,87 e 6,88; texto Danger e check no Selected (sobre `--color-bg-alt`) 5,48 e 6,12; anel de foco contra o painel 6,46 e 10,74 (valores da v2.12.0). Disabled é igual ao Default Disabled e segue isento.
+- Inventário: `Menu item` com 10 variantes, 202 de 202 com CSS. A lacuna `menu-danger-states` virou "resolved".
+- Docs do Modal: o hover do X é um círculo de 28px em `--color-bg-alt` e o ícone vai para `--icon-color-default`. O Figma (descrição do componente e Info) diz o mesmo desde D-44; depende de a biblioteca Core ser republicada para chegar a quem consome por ela, mas nada nos docs depende do estado não publicado.
+- Os textos das demos das seis páginas do Lote 4 (Modal, Popover, Lightbox, Avatar, Tag, Accordion) passam de português para inglês (D-15): rótulos, `aria-label` e `alt`. Nomes de pessoas ficam como estão.
+
+**Corrigido**
+- `build-components-doc.mjs`: a seção "Code notes" não é mais renderizada nas páginas (D-44; as páginas antigas nunca a mostraram, D-35). O código que a gera e os dados (`knownGaps`, `accepted-divergences.json`) ficam; basta tirar `notes` do conjunto `HIDDEN_SECTIONS` para mostrá-la de novo.
+- Nota sobre a v2.12.0: a lacuna que dizia que o Menu não tinha Danger Focus, Selected e Disabled no Figma deixou de valer com o set de 10 variantes. A entrada da v2.12.0 não foi reescrita.
+
+---
+
 ## v2.13.1 · 24 de novembro de 2026 · Lote 4 alinhado às decisões do Figma, `js/overlay.js` compartilhado e lacunas de contraste registradas (PATCH)
 
 **Versão escolhida: PATCH (2.13.0 para 2.13.1).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), PATCH cobre "Ajuste de valor" (o blur do Lightbox de 12px para 6px, a margem do Modal em tela estreita de 24px para 16px, os estados do botão de fechar) e "Correção de bug" (um Toast fora dos filhos diretos do `<body>`, por exemplo dentro de `<main>`, ficava inerte com um Modal aberto; o filtro agora entra nos filhos que o contêm), mais "Melhoria de documentação sem mudança técnica". Não entra componente novo no DESIGN.md (o `Lightbox close` do Figma é o botão de fechar que já existia no Lightbox, sem classe nova) e não entra token novo (o anel usa `--color-border-accent-default`, que já existia), então não se aplica MINOR. O refactor para `js/overlay.js` não muda comportamento. Nenhuma regra do GOVERNANCE mudou.

@@ -1,5 +1,5 @@
 ---
-version: v2.13.1
+version: v2.14.0
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -1093,7 +1093,7 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 - **Tabs:** `css/components/tabs.css` (`.tabs`, `.tabs__list`, `.tab`, `.tabs__panel`) e `js/tabs.js`. Item de 40px com a linha inferior de 1,5px incluída na altura (o `strokesIncludedInLayout` do Figma é verdadeiro), linha-base de 1px sob a lista, texto Medium também quando selecionado (v2.13.0). `role=tablist`, `tab` e `tabpanel`, tabindex móvel, setas, Home e End, aba desabilitada pulada.
 - **Breadcrumb:** `breadcrumb.css` (`.breadcrumb__list`, `__item`, `__link`, `__current`, `__separator`). O anel de foco envolve só o rótulo; o último item não leva separador; a página atual é texto com `aria-current="page"`.
 - **Pagination:** `pagination.css` (`.pagination__item`, `--ellipsis`). Itens de 36 por 36 com raio 12, atual com preenchimento escuro e `aria-current="page"`, Prev e Next desabilitados com `aria-disabled` e sem `href`, reticências decorativas.
-- **Menu:** `menu.css` (`.menu`, `.menu__item`, `--danger`, `.menu__divider`, `.menu__check`) e `js/menu.js`. Painel com borda incluída no layout (238 = 220 + 16 + 2), `--z-popover`, itens de 36px, opção escolhida com `menuitemradio` e check.
+- **Menu:** `menu.css` (`.menu`, `.menu__item`, `--danger`, `.menu__divider`, `.menu__check`) e `js/menu.js`. Painel com borda incluída no layout (238 = 220 + 16 + 2), `--z-popover`, itens de 36px, opção escolhida com `menuitemradio` e check. Tom Danger com os cinco estados (Default, Hover, Focus, Selected, Disabled), 10 variantes no Figma.
 - **Atual em três jeitos, de propósito:** Tabs marca com linha inferior e cor do texto, Pagination com preenchimento escuro, Menu com preenchimento claro, SemiBold e check.
 
 ### Sobreposições e dados no código (Lote 4, 2026-11-24)
@@ -1142,4 +1142,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.13.1 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.14.0 · novembro de 2026 · Renan Moura*

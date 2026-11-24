@@ -139,16 +139,16 @@
             <div class="docs-ds-card">
               <div class="docs-ds-preview">
                 <!-- demo:start --><figure>
-                    <img data-lightbox src="../../images/case-thumbnails/dotz-thumb-light.png" alt="Miniatura do estudo de caso Dotz, com a tela inicial do aplicativo" width="320">
-                    <figcaption>Miniatura do estudo de caso Dotz.</figcaption>
+                    <img data-lightbox src="../../images/case-thumbnails/dotz-thumb-light.png" alt="Thumbnail of the Dotz case study, showing the app home screen" width="320">
+                    <figcaption>Thumbnail of the Dotz case study.</figcaption>
                   </figure><!-- demo:end -->
               </div>
             </div>
             <details class="docs-ds-code">
               <summary>HTML</summary>
 <pre class="docs-ds-code__block">&lt;figure&gt;
-  &lt;img data-lightbox src=&quot;../../images/case-thumbnails/dotz-thumb-light.png&quot; alt=&quot;Miniatura do estudo de caso Dotz, com a tela inicial do aplicativo&quot; width=&quot;320&quot;&gt;
-  &lt;figcaption&gt;Miniatura do estudo de caso Dotz.&lt;/figcaption&gt;
+  &lt;img data-lightbox src=&quot;../../images/case-thumbnails/dotz-thumb-light.png&quot; alt=&quot;Thumbnail of the Dotz case study, showing the app home screen&quot; width=&quot;320&quot;&gt;
+  &lt;figcaption&gt;Thumbnail of the Dotz case study.&lt;/figcaption&gt;
 &lt;/figure&gt;</pre>
             </details>
           </section>
@@ -283,54 +283,6 @@
         <th scope="row" class="data-table__row-header"><code>.lightbox__close</code></th>
         <td class="data-table__cell">The 36px close button.</td>
         <td class="data-table__cell"><code>--space-10</code> <code>--color-cloud</code> <code>--border-width-normal</code> <code>--radius-pill</code></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-          </section>
-
-          <section class="docs-ds-section" id="notes" aria-labelledby="notes-title">
-            <h2 class="text-label text-tertiary" id="notes-title">Code notes</h2>
-            <div class="data-table" role="region" aria-labelledby="lightbox-notes-caption" tabindex="0">
-  <table class="data-table__grid">
-    <caption class="data-table__caption" id="lightbox-notes-caption">Lightbox code notes, the status of each and the detail</caption>
-    <thead>
-      <tr>
-        <th scope="col" class="data-table__head-cell">Note</th>
-        <th scope="col" class="data-table__head-cell">Status</th>
-        <th scope="col" class="data-table__head-cell">Detail</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row" class="data-table__row-header"><code>lightbox-close-icon-color</code></th>
-        <td class="data-table__cell">documented</td>
-        <td class="data-table__cell">Decided in Figma (Lightbox close, 2026-11-24): the X uses the primitive white in BOTH themes and does not follow Icon/Color, because the Lightbox scrim is dark in both. Icon/Color Neutral would turn ink in Dark. Intentional; a dark mode era item: reevaluate when dark mode lands.</td>
-      </tr>
-      <tr>
-        <th scope="row" class="data-table__row-header"><code>lightbox-blur</code></th>
-        <td class="data-table__cell">documented</td>
-        <td class="data-table__cell">The Figma effect is a raw background blur of radius 12 (not a style, no token). The CSS uses blur(6px): the Figma radius is double the CSS radius, so Figma 12 renders as CSS blur(6px), and Figma's own code export gives blur(6px). The source of this equivalence is Figma forum answers on blur in Dev Mode, not the official docs. Accepted divergence in docs/data/accepted-divergences.json (decided by Renan, 2026-11-24). No blur token matches, so the value is a literal: open item.</td>
-      </tr>
-      <tr>
-        <th scope="row" class="data-table__row-header"><code>lightbox-scrim-dark</code></th>
-        <td class="data-table__cell">documented</td>
-        <td class="data-table__cell">Known accepted divergence D-05: the Dark value of Scrim Strong is #000000e0 in Figma and #0d0d0fe0 in the CSS (the same value in both themes). Not changed in this release.</td>
-      </tr>
-      <tr>
-        <th scope="row" class="data-table__row-header"><code>lightbox-narrow</code></th>
-        <td class="data-table__cell">documented</td>
-        <td class="data-table__cell">The image height is limited to the viewport minus the overlay padding, the 40px of the close button on each side and room for a caption of three lines, so the close button always stays inside the viewport. Figma does not define narrow screens.</td>
-      </tr>
-      <tr>
-        <th scope="row" class="data-table__row-header"><code>lightbox-no-gallery</code></th>
-        <td class="data-table__cell">documented</td>
-        <td class="data-table__cell">Figma has one image and no previous or next controls. They are not built.</td>
-      </tr>
-      <tr>
-        <th scope="row" class="data-table__row-header"><code>lightbox-close-contrast</code></th>
-        <td class="data-table__cell">measured</td>
-        <td class="data-table__cell">The close fill is 1.46:1 and the stroke 1.79:1 against the scrim in Light (1.37 and 1.69 in Dark). The X, which identifies the button, is 10.2:1 and 13.04:1. The ring is 9.02:1 and 12.08:1.</td>
       </tr>
     </tbody>
   </table>

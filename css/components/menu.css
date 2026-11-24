@@ -111,16 +111,33 @@
   display: block;
 }
 
-/* Danger: Text/Danger/Default. Figma has no Danger Focus, Selected or Disabled: Focus uses the shared ring. */
-.menu__item--danger {
+/* Danger (Figma Tone=Danger, set 2413:380, 10 variants):
+   Default and Hover: Text/Danger/Default, the Hover fill is the same as Default.
+   Focus: the shared ring (Border/Utilities/Focus Ring) and the text stays Text/Danger/Default.
+   Selected: Background/Default/Secondary, SemiBold, text Text/Danger/Default, check in the Danger mode of Icon/Color.
+   Disabled: identical to Default Disabled (below); the variant exists so a Tone switch never lands on a missing combination.
+   Each state has its own selector, so the text color does not depend on source order. */
+.menu__item--danger,
+.menu__item--danger:hover:not([aria-disabled="true"]),
+.menu__item--danger:focus-visible,
+.menu__item--danger[aria-checked="true"] {
   color: var(--color-text-danger-default);
+}
+
+.menu__item--danger[aria-checked="true"] .menu__check {
+  color: var(--icon-color-danger);
 }
 
 /* Disabled: Text/Disabled/Default, no opacity. aria-disabled keeps it in the arrow-key order of assistive technology,
    js/menu.js skips it. */
-.menu__item[aria-disabled="true"] {
+.menu__item[aria-disabled="true"],
+.menu__item--danger[aria-disabled="true"] {
   color: var(--color-text-disabled-default);
   cursor: not-allowed;
+}
+
+.menu__item--danger[aria-disabled="true"] .menu__check {
+  color: var(--icon-color-disabled);
 }
 
 @media (forced-colors: active) {
