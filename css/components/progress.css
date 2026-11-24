@@ -8,15 +8,16 @@
          <span class="progress__label" id="ID">Uploading</span>
          <span class="progress__value" aria-hidden="true">50%</span>
        </div>
-       <div class="progress__bar" role="progressbar" aria-labelledby="ID" aria-valuemin="0" aria-valuemax="100"
-            aria-valuenow="50" style="--progress-value: 50%">
+       <div class="progress__bar progress__bar--50" role="progressbar" aria-labelledby="ID" aria-valuemin="0" aria-valuemax="100"
+            aria-valuenow="50">
          <span class="progress__fill"></span>
        </div>
      </div>
    Why not a native <progress>: tested in Chromium, Firefox and WebKit. The native element matched the geometry in all
    three, but Firefox draws ::-moz-progress-bar without honoring transitions, so the fill jumped instead of animating.
-   The div with role="progressbar" animates in every engine. The author keeps aria-valuenow and --progress-value in sync
-   (the CSS reads the percentage; it cannot read the ARIA attribute). The visible value is hidden from assistive
+   The div with role="progressbar" animates in every engine.
+   The modifier classes cover the five Figma values; for another percentage set style="--progress-value: 37%" on the bar
+   and keep aria-valuenow in sync (the CSS cannot read the ARIA attribute). The visible value is hidden from assistive
    technology because the progressbar already reports it. Without a visible label use aria-label instead of
    aria-labelledby. */
 
@@ -59,6 +60,13 @@
   background-color: var(--color-border);
   border-radius: var(--radius-pill);
 }
+
+/* The five values of the Figma Value property. Any other percentage: set --progress-value on the bar. */
+.progress__bar--0 { --progress-value: 0%; }
+.progress__bar--25 { --progress-value: 25%; }
+.progress__bar--50 { --progress-value: 50%; }
+.progress__bar--75 { --progress-value: 75%; }
+.progress__bar--100 { --progress-value: 100%; }
 
 .progress__fill {
   display: block;
