@@ -561,3 +561,21 @@
 .docs-ds-preview > :is(.alert, .toast, .empty-state) {
   align-self: flex-start;
 }
+
+/* Indicator examples: Progress takes a form-like width, Skeleton pieces share one column width, the Icon Button row stays compact. */
+.docs-ds-preview > .progress {
+  flex: 1 1 16rem;
+  max-width: 20rem;
+}
+
+.docs-ds-preview > [aria-busy="true"],
+.docs-ds-preview > .skeleton:not(.skeleton--avatar) {
+  flex: 0 1 15rem;
+  width: 15rem;
+}
+
+.docs-ds-preview > [aria-busy="true"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}

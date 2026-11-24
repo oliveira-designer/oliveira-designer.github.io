@@ -243,71 +243,72 @@
     },
     "IconButton": {
       "figmaVariants": 8,
-      "implemented": 0,
-      "base": null,
+      "implemented": 8,
+      "base": ".icon-btn",
       "stateMechanisms": {
-        "hover": "none",
-        "focus": "none",
-        "disabled": "none"
+        "hover": "pseudo-class :hover",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset",
+        "disabled": "the native disabled attribute"
       },
       "variants": [
         {
           "style": "Primary",
           "state": "Default",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".icon-btn.icon-btn--primary",
+          "rule": ".icon-btn--primary",
+          "mechanism": "base modifier"
         },
         {
           "style": "Primary",
           "state": "Hover",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".icon-btn.icon-btn--primary",
+          "rule": ".icon-btn--primary:hover",
+          "mechanism": "pseudo-class :hover"
         },
         {
           "style": "Primary",
           "state": "Focus",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".icon-btn.icon-btn--primary",
+          "rule": ".icon-btn:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, outline 2px with 2px offset"
         },
         {
           "style": "Primary",
           "state": "Disabled",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".icon-btn.icon-btn--primary",
+          "rule": ".icon-btn--primary:disabled",
+          "mechanism": "disabled attribute, no opacity"
         },
         {
           "style": "Ghost",
           "state": "Default",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".icon-btn.icon-btn--ghost",
+          "rule": ".icon-btn--ghost",
+          "mechanism": "base modifier"
         },
         {
           "style": "Ghost",
           "state": "Hover",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".icon-btn.icon-btn--ghost",
+          "rule": ".icon-btn--ghost:hover",
+          "mechanism": "pseudo-class :hover"
         },
         {
           "style": "Ghost",
           "state": "Focus",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".icon-btn.icon-btn--ghost",
+          "rule": ".icon-btn:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, outline 2px with 2px offset"
         },
         {
           "style": "Ghost",
           "state": "Disabled",
-          "selector": null,
-          "rule": null,
-          "mechanism": null
+          "selector": ".icon-btn.icon-btn--ghost",
+          "rule": ".icon-btn--ghost:disabled",
+          "mechanism": "disabled attribute, no opacity"
         }
-      ]
+      ],
+      "renderOnPage": "icon-button"
     },
     "Badge": {
       "figmaVariants": 5,
@@ -1175,6 +1176,141 @@
         }
       ],
       "renderOnPage": "empty-state"
+    },
+    "Tooltip": {
+      "figmaVariants": 4,
+      "implemented": 4,
+      "base": ".tooltip",
+      "stateMechanisms": {
+        "hover": "not applicable, no hover change in Figma",
+        "focus": "not applicable, the tooltip is not focusable",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "placement": "Top",
+          "selector": ".tooltip.tooltip--top",
+          "rule": ".tooltip--top",
+          "mechanism": "modifier sets the flex direction, and the arrow shape for Bottom, Left and Right"
+        },
+        {
+          "placement": "Bottom",
+          "selector": ".tooltip.tooltip--bottom",
+          "rule": ".tooltip--bottom",
+          "mechanism": "modifier sets the flex direction, and the arrow shape for Bottom, Left and Right"
+        },
+        {
+          "placement": "Left",
+          "selector": ".tooltip.tooltip--left",
+          "rule": ".tooltip--left",
+          "mechanism": "modifier sets the flex direction, and the arrow shape for Bottom, Left and Right"
+        },
+        {
+          "placement": "Right",
+          "selector": ".tooltip.tooltip--right",
+          "rule": ".tooltip--right",
+          "mechanism": "modifier sets the flex direction, and the arrow shape for Bottom, Left and Right"
+        }
+      ],
+      "renderOnPage": "tooltip"
+    },
+    "Progress": {
+      "figmaVariants": 5,
+      "implemented": 5,
+      "base": ".progress",
+      "stateMechanisms": {
+        "hover": "not applicable, no hover change in Figma",
+        "focus": "not applicable, not focusable",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "value": "0",
+          "selector": ".progress__bar.progress__bar--0",
+          "rule": ".progress__bar--0",
+          "mechanism": "modifier sets --progress-value to 0%; the fill width reads it"
+        },
+        {
+          "value": "25",
+          "selector": ".progress__bar.progress__bar--25",
+          "rule": ".progress__bar--25",
+          "mechanism": "modifier sets --progress-value to 25%; the fill width reads it"
+        },
+        {
+          "value": "50",
+          "selector": ".progress__bar.progress__bar--50",
+          "rule": ".progress__bar--50",
+          "mechanism": "modifier sets --progress-value to 50%; the fill width reads it"
+        },
+        {
+          "value": "75",
+          "selector": ".progress__bar.progress__bar--75",
+          "rule": ".progress__bar--75",
+          "mechanism": "modifier sets --progress-value to 75%; the fill width reads it"
+        },
+        {
+          "value": "100",
+          "selector": ".progress__bar.progress__bar--100",
+          "rule": ".progress__bar--100",
+          "mechanism": "modifier sets --progress-value to 100%; the fill width reads it"
+        }
+      ],
+      "renderOnPage": "progress"
+    },
+    "Spinner": {
+      "figmaVariants": 1,
+      "implemented": 1,
+      "base": ".spinner",
+      "stateMechanisms": {
+        "hover": "not applicable",
+        "focus": "not applicable",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "selector": ".spinner",
+          "rule": ".spinner__ring",
+          "mechanism": "static ring with an arc, rotated by the spinner-rotate animation"
+        }
+      ],
+      "renderOnPage": "spinner"
+    },
+    "Skeleton": {
+      "figmaVariants": 4,
+      "implemented": 4,
+      "base": ".skeleton",
+      "stateMechanisms": {
+        "hover": "not applicable",
+        "focus": "not applicable",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "shape": "Text",
+          "selector": ".skeleton.skeleton--text",
+          "rule": ".skeleton--text",
+          "mechanism": "modifier sets the height, the radius and for Avatar the width"
+        },
+        {
+          "shape": "Title",
+          "selector": ".skeleton.skeleton--title",
+          "rule": ".skeleton--title",
+          "mechanism": "modifier sets the height, the radius and for Avatar the width"
+        },
+        {
+          "shape": "Avatar",
+          "selector": ".skeleton.skeleton--avatar",
+          "rule": ".skeleton--avatar",
+          "mechanism": "modifier sets the height, the radius and for Avatar the width"
+        },
+        {
+          "shape": "Block",
+          "selector": ".skeleton.skeleton--block",
+          "rule": ".skeleton--block",
+          "mechanism": "modifier sets the height, the radius and for Avatar the width"
+        }
+      ],
+      "renderOnPage": "skeleton"
     }
   },
   "codeOnly": [

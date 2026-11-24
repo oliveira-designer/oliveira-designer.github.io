@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <script>
+    (function () {
+      var KEY = 'hope-docs-theme';
+      var html = document.documentElement;
+      var mq = null;
+      try { mq = window.matchMedia('(prefers-color-scheme: dark)'); } catch (e) {}
+      var current = null; // in-memory choice, used when localStorage is blocked
+      function stored() {
+        if (current) return current;
+        try {
+          var v = localStorage.getItem(KEY);
+          return v === 'dark' || v === 'system' ? v : 'light';
+        } catch (e) { return 'light'; }
+      }
+      function resolve(choice) { return choice === 'system' ? (mq && mq.matches ? 'dark' : 'light') : choice; }
+      function apply(choice) { html.setAttribute('data-theme', resolve(choice)); }
+      window.hopeDocsTheme = {
+        get: stored,
+        set: function (choice) {
+          current = choice;
+          try { localStorage.setItem(KEY, choice); } catch (e) {}
+          apply(choice);
+        },
+        apply: apply,
+        mq: mq
+      };
+      apply(stored());
+    })();
+  </script>
+  <title>Icon Button | Hope DS docs</title>
+  <link rel="icon" type="image/svg+xml" href="../../logos/logo-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/hope.css" />
+  <link rel="stylesheet" href="../docs.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top" role="banner">
+      <nav class="nav" role="navigation" aria-label="Docs navigation">
+        <a href="../index.html" class="nav__logo" aria-label="Hope DS docs home">
+          <img src="../../logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
+          <img src="../../logos/logo-dark-mode.svg" alt="Renan Moura" class="nav__logo-dark" />
+        </a>
+        <div class="nav__controls">
+          <div class="nav__links">
+            <a href="../index.html" class="nav__link">Overview</a>
+            <a href="../tokens.html" class="nav__link">Tokens</a>
+            <a href="../components/index.html" class="nav__link nav__link--active" aria-current="page">Components</a>
+            <a href="../../index.html" class="nav__link">Portfolio site</a>
+          </div>
+          <div class="docs-theme" role="group" aria-label="Theme">
+            <button type="button" class="docs-theme__btn" data-theme-choice="light" aria-pressed="false">Light</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="dark" aria-pressed="false">Dark</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="system" aria-pressed="false">System</button>
+          </div>
+          <button class="nav__hamburger" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconBurger" aria-hidden="true" focusable="false"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg>
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconClose" aria-hidden="true" focusable="false" style="display:none"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
+          </button>
+        </div>
+      </nav>
+      <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+        <a href="../index.html" class="nav__mobile-link">Overview</a>
+        <a href="../tokens.html" class="nav__mobile-link">Tokens</a>
+        <a href="../components/index.html" class="nav__mobile-link nav__link--active">Components</a>
+        <a href="../../index.html" class="nav__mobile-link">Portfolio site</a>
+      </div>
+    </header>
+
+  <main id="main" class="docs-main">
+    <div class="docs-ds-layout">
+        <aside class="docs-ds-sidebar">
+          <nav aria-label="Docs pages">
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Pages</p>
+              <a class="docs-ds-nav__link" href="../index.html">Overview</a>
+              <a class="docs-ds-nav__link" href="../tokens.html">Tokens</a>
+              <a class="docs-ds-nav__link" href="../components/index.html">Components</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Components</p>
+              <a class="docs-ds-nav__link" href="../components/button.html">Button</a>
+              <a class="docs-ds-nav__link" href="../components/badge.html">Badge</a>
+              <a class="docs-ds-nav__link" href="../components/link.html">Link</a>
+              <a class="docs-ds-nav__link" href="../components/separator.html">Separator</a>
+              <a class="docs-ds-nav__link" href="../components/table.html">Table</a>
+              <a class="docs-ds-nav__link" href="../components/input.html">Input</a>
+              <a class="docs-ds-nav__link" href="../components/textarea.html">Textarea</a>
+              <a class="docs-ds-nav__link" href="../components/select.html">Select</a>
+              <a class="docs-ds-nav__link" href="../components/checkbox.html">Checkbox</a>
+              <a class="docs-ds-nav__link" href="../components/radio.html">Radio</a>
+              <a class="docs-ds-nav__link" href="../components/switch.html">Switch</a>
+              <a class="docs-ds-nav__link" href="../components/alert.html">Alert</a>
+              <a class="docs-ds-nav__link" href="../components/toast.html">Toast</a>
+              <a class="docs-ds-nav__link" href="../components/banner.html">Banner</a>
+              <a class="docs-ds-nav__link" href="../components/empty-state.html">Empty state</a>
+              <a class="docs-ds-nav__link" href="../components/tooltip.html">Tooltip</a>
+              <a class="docs-ds-nav__link" href="../components/progress.html">Progress</a>
+              <a class="docs-ds-nav__link" href="../components/spinner.html">Spinner</a>
+              <a class="docs-ds-nav__link" href="../components/skeleton.html">Skeleton</a>
+              <a class="docs-ds-nav__link" href="../components/icon-button.html" aria-current="page">Icon Button</a>
+              <a class="docs-ds-nav__link" href="../components/review.html">Review (temporary)</a>
+            </div>
+          </nav>
+        </aside>
+        <div class="docs-ds-content">
+          <header class="docs-ds-head">
+            <h1 class="text-h1">Icon Button</h1>
+            <p class="docs-ds-desc">A 44 by 44 round button with one 24px icon, in Primary and Ghost, with Default, Hover, Focus and Disabled. It has no visible text, so it needs an accessible name.</p>
+          </header>
+
+          <section class="docs-ds-section" id="example" aria-labelledby="example-title">
+            <h2 class="text-label text-tertiary" id="example-title">Live example</h2>
+            <div class="docs-ds-card">
+              <div class="docs-ds-preview">
+                <!-- demo:start --><button type="button" class="icon-btn icon-btn--primary" aria-label="Add item">
+                    <svg class="icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>
+                  </button>
+                  <button type="button" class="icon-btn icon-btn--ghost" aria-label="Add item">
+                    <svg class="icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>
+                  </button>
+                  <button type="button" class="icon-btn icon-btn--primary" disabled aria-label="Add item">
+                    <svg class="icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>
+                  </button>
+                  <button type="button" class="icon-btn icon-btn--ghost" disabled aria-label="Add item">
+                    <svg class="icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>
+                  </button><!-- demo:end -->
+              </div>
+            </div>
+            <details class="docs-ds-code">
+              <summary>HTML</summary>
+<pre class="docs-ds-code__block">&lt;button type=&quot;button&quot; class=&quot;icon-btn icon-btn--primary&quot; aria-label=&quot;Add item&quot;&gt;
+  &lt;svg class=&quot;icon&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z&quot;/&gt;&lt;/svg&gt;
+&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;icon-btn icon-btn--ghost&quot; aria-label=&quot;Add item&quot;&gt;
+  &lt;svg class=&quot;icon&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z&quot;/&gt;&lt;/svg&gt;
+&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;icon-btn icon-btn--primary&quot; disabled aria-label=&quot;Add item&quot;&gt;
+  &lt;svg class=&quot;icon&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z&quot;/&gt;&lt;/svg&gt;
+&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;icon-btn icon-btn--ghost&quot; disabled aria-label=&quot;Add item&quot;&gt;
+  &lt;svg class=&quot;icon&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z&quot;/&gt;&lt;/svg&gt;
+&lt;/button&gt;</pre>
+            </details>
+          </section>
+
+          <section class="docs-ds-section" id="when" aria-labelledby="when-title">
+            <h2 class="text-label text-tertiary" id="when-title">When to use</h2>
+            <ul class="docs-ds-list"><li>A compact action whose icon is well known, such as add or close.</li><li>Primary for the one main action of a group, Ghost for secondary actions.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="variants" aria-labelledby="variants-title">
+            <h2 class="text-label text-tertiary" id="variants-title">Variants and tokens</h2>
+            <div class="data-table" role="region" aria-labelledby="icon-button-variants-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="icon-button-variants-caption">Icon Button variants, the CSS class of each and the tokens its rule uses</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Variant</th>
+        <th scope="col" class="data-table__head-cell">Class</th>
+        <th scope="col" class="data-table__head-cell">Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header">Primary</th>
+        <td class="data-table__cell"><code>.icon-btn.icon-btn--primary</code></td>
+        <td class="data-table__cell"><code>--icon-color-neutral</code> <code>--color-bg-neutral-default</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Ghost</th>
+        <td class="data-table__cell"><code>.icon-btn.icon-btn--ghost</code></td>
+        <td class="data-table__cell"><code>--icon-color-secondary</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          </section>
+
+          <section class="docs-ds-section" id="accessibility" aria-labelledby="accessibility-title">
+            <h2 class="text-label text-tertiary" id="accessibility-title">Accessibility</h2>
+            <p class="docs-ds-note">A native button: Tab reaches it, Enter and Space activate it. The icon is decorative. The accessible name says what the button does (&quot;Add item&quot;), never the name of the icon.</p>
+          </section>
+        </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconBurger = document.getElementById('iconBurger');
+      const iconClose = document.getElementById('iconClose');
+
+      const theme = window.hopeDocsTheme;
+      const choices = document.querySelectorAll('[data-theme-choice]');
+      function syncSwitch() {
+        const current = theme ? theme.get() : 'light';
+        choices.forEach(function (btn) {
+          btn.setAttribute('aria-pressed', String(btn.getAttribute('data-theme-choice') === current));
+        });
+      }
+      function setMenu(open) {
+        mobileMenu.classList.toggle('is-open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        iconBurger.style.display = open ? 'none' : 'block';
+        iconClose.style.display = open ? 'block' : 'none';
+      }
+
+      choices.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (theme) theme.set(btn.getAttribute('data-theme-choice'));
+          syncSwitch();
+        });
+      });
+      if (theme && theme.mq) {
+        const onChange = function () { if (theme.get() === 'system') theme.apply('system'); };
+        try { theme.mq.addEventListener('change', onChange); } catch (e) { try { theme.mq.addListener(onChange); } catch (e2) {} }
+      }
+      syncSwitch();
+
+      menuToggle.addEventListener('click', function () {
+        setMenu(!mobileMenu.classList.contains('is-open'));
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { setMenu(false); });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+          setMenu(false);
+          menuToggle.focus();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

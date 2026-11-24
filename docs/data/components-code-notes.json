@@ -23,15 +23,13 @@
     "Primary": {"default": {"fill": "Background/Neutral/Default"}, "hover": {"fill": "Background/Neutral/Hover"}, "focus": "Default plus focus ring", "disabled": {"fill": "Background/Disabled/Default", "stroke": "Border/Disabled/Default"}},
     "Ghost": {"default": {"fill": "none"}, "hover": {"fill": "Background/Default/Secondary"}, "focus": "Default plus focus ring", "disabled": {"fill": "none"}}
   },
-  "note": "Icon colour per state was not read. In code it needs an accessible name (aria-label). Not implemented in CSS."
+  "note": "Implemented as .icon-btn in v2.11.0 (css/components/icon-button.css). The icon color roles per state were chosen, not read variant by variant; see the gaps on the Icon Button page."
 },
 "coverage": {
-  "figmaVariants": {"Button": 28, "IconButton": 8, "Badge": 5, "Link": 8, "Separator": 1, "Table": 2, "TableHeaderCell": 2, "TableCell": 4, "Input": 10, "Textarea": 10, "Select": 10, "Checkbox": 15, "Radio": 10, "Switch": 8, "Alert": 4, "Toast": 4, "EmptyState": 1},
-  "implementedInCss": {"Button": 28, "IconButton": 0, "Badge": 5, "Link": 8, "Separator": 1, "Table": 2, "TableHeaderCell": 2, "TableCell": 4, "Input": 10, "Textarea": 10, "Select": 10, "Checkbox": 15, "Radio": 10, "Switch": 8, "Alert": 4, "Toast": 4, "EmptyState": 1},
+  "figmaVariants": {"Button": 28, "IconButton": 8, "Tooltip": 4, "Progress": 5, "Spinner": 1, "Skeleton": 4, "Badge": 5, "Link": 8, "Separator": 1, "Table": 2, "TableHeaderCell": 2, "TableCell": 4, "Input": 10, "Textarea": 10, "Select": 10, "Checkbox": 15, "Radio": 10, "Switch": 8, "Alert": 4, "Toast": 4, "EmptyState": 1},
+  "implementedInCss": {"Button": 28, "IconButton": 8, "Tooltip": 4, "Progress": 5, "Spinner": 1, "Skeleton": 4, "Badge": 5, "Link": 8, "Separator": 1, "Table": 2, "TableHeaderCell": 2, "TableCell": 4, "Input": 10, "Textarea": 10, "Select": 10, "Checkbox": 15, "Radio": 10, "Switch": 8, "Alert": 4, "Toast": 4, "EmptyState": 1},
   "implementedNote": "Button: all 7 styles (Primary, Secondary, Ghost, Inverse, Accent and Destructive at Medium, plus Small Ghost), 4 states each (hover via :hover, focus via shared .btn:focus-visible outline, disabled via .btn.btn:disabled and per-style rules for Secondary and Ghost). Badge: Neutral, Ancora (.badge--anchor), Solar, Success, Danger (.badge--danger). Link: .link with .link--small, hover and focus-visible as pseudo-classes and disabled via aria-disabled (the global a rules are unchanged for anchors without .link). Separator: .separator.",
-  "missingInCss": [
-    {"component": "Icon Button", "variant": "Primary, Ghost", "class": "Informativo"}
-  ]
+  "missingInCss": []
 },
 "differences": [
   {"id": "link-colour-underline", "component": "Link", "class": "Atencao",
