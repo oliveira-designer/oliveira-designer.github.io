@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.11.0 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.12.0 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.12.0 (MINOR, 24/11/2026)**: Lote 3 (Navegação): Tabs, Breadcrumb, Pagination e Menu no CSS, com `js/tabs.js` e `js/menu.js`. Header no `--z-sticky` e `--z-overlay` removido, rotação do Spinner linear, trilho do Progress em `--color-border-input`, deslocamentos internos dos campos e do polegar do Switch corrigidos pelo `strokesIncludedInLayout`, foco do Icon Button volta a ser redondo. Detalhes no `CHANGELOG.md`.
 
 **Changelog v2.11.0 (MINOR, 24/11/2026)**: Lote 2B (Indicadores e dicas): Tooltip, Progress, Spinner, Skeleton e Icon Button no CSS, escala de z-index do Figma, correções do Lote 2A (Toast sem Default, papéis Alert e Status, área de clique do dismiss, regra da borda por `strokesIncludedInLayout`). Detalhes no `CHANGELOG.md`.
 
@@ -1806,6 +1808,20 @@ type ButtonProps = {
     output.css       ← Tailwind (npm run build:css), carregado antes do hope.css
 ```
 
+**Lote 3, Navegação (v2.12.0).** `css/components/` ganhou `tabs.css`, `breadcrumb.css`, `pagination.css` e `menu.css`; `js/` ganhou `tabs.js` e `menu.js`. O anel de foco global de `reset.css` (`a:focus-visible` e `button:focus-visible`, raio 4) vence a regra-base de um componente: cada componente repete o `border-radius` na sua regra `:focus-visible`.
+
+Valores do Figma usados no Lote 3 (Core, lidos em 24/11/2026):
+
+| Componente | Valores |
+|---|---|
+| Tab | altura 40 (inclui a linha de 1,5px), padding 0 e 16, gap 0, texto `body-sm` Medium e SemiBold quando selecionado, linha-base de 1px `Border/Default/Default` sob a lista (lista com 41), anel 88 por 48 quadrado |
+| Breadcrumb item | gap 8, padding 0, rótulo `body-sm` Regular (Medium no atual), separador CaretRight de 14, anel 40 por 29 só em volta do rótulo, itens a 8 de distância |
+| Pagination item | 36 por 36, raio 12, número `body-sm` Medium, ícones de 20, itens a 4 de distância, anel 44 por 44 com raio externo 16 |
+| Menu item | altura 36, padding 0 e 12, gap 8, raio 8, check de 16, anel 228 por 44 com raio 12 |
+| Menu (painel) | padding 8, gap 4, raio 12, borda de 1px, `Shadow/md`, 238 de largura no exemplo (220 + 16 + 2) |
+
+Mapa dos tokens: texto Secondary `--color-text-2`, Default `--color-text-1`, desabilitado `--color-text-disabled-default`, perigo `--color-text-danger-default`; preenchimento Secondary `--color-bg-alt`, Neutral `--color-bg-neutral-default` com texto `--color-text-neutral-default`; linha de 1,5px `--border-width-medium`; borda `--color-border`; anel `--color-border-focus-ring` com `--focus-ring-width` e `--focus-ring-gap`; ícones `--icon-color-default`, `--icon-color-tertiary` (separador), `--icon-color-disabled`; camada `--z-popover`.
+
 **Lote 2B, Indicadores e dicas (v2.11.0).** `css/components/` ganhou `tooltip.css`, `progress.css`, `spinner.css`, `skeleton.css` e `icon-button.css`, e `tokens.css` ganhou `--z-modal-scrim`, `--z-popover`, `--z-tooltip` e `--z-notification`.
 
 **Lote 2A, Mensagens (v2.10.0).** `css/components/` ganhou `alert.css`, `toast.css` e `empty-state.css`; `banner.css` passa a ser o Notice do Figma, com `.banner--wip` como modificador legado do site. Checkbox, Radio e Switch passam a ter o texto de apoio fora do `<label>`, ligado por `aria-describedby`.
@@ -2519,5 +2535,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.11.0 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.12.0 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

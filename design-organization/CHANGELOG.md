@@ -5,6 +5,34 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.12.0 · 24 de novembro de 2026 · Lote 3 (Navegação): Tabs, Breadcrumb, Pagination e Menu, mais correções do Lote 2B (MINOR)
+
+**Versão escolhida: MINOR (2.11.0 para 2.12.0).** Regra aplicada: seção 3 do `GOVERNANCE.md`, MINOR cobre "novo componente entra no DESIGN.md": entram Tabs, Breadcrumb, Pagination e Menu. Decisão do Renan. Ponto de atenção: a remoção de `--z-overlay` encaixa literalmente em "quebra compatibilidade reversa de tokens" (MAJOR); ela tinha um único uso, migrado na mesma versão, e fica registrada como pergunta em aberto. Nenhuma regra do GOVERNANCE mudou.
+
+**Adicionado**
+- `css/components/tabs.css` e `js/tabs.js`: item de 40px com a linha de 1,5px incluída na altura (sem desconto), linha-base de 1px sob a lista, SemiBold quando selecionado, foco quadrado 88 por 48. `role=tablist|tab|tabpanel`, tabindex móvel, setas com ativação automática, Home e End, abas desabilitadas puladas. Sem JavaScript, o primeiro painel fica visível e os outros ficam `hidden`.
+- `css/components/breadcrumb.css`: `nav` com `ol`, anel de foco só em volta do rótulo, último item sem separador, página atual com `aria-current="page"`.
+- `css/components/pagination.css`: itens 36 por 36 com raio 12, atual com preenchimento escuro, Prev e Next desabilitados com `aria-disabled` e sem `href`, reticências decorativas.
+- `css/components/menu.css` e `js/menu.js`: painel com borda incluída no layout (238 = 220 + 16 + 2), `--z-popover`, itens de 36px, tom Danger, divisor, opção escolhida com `menuitemradio` e check. Setas, Home, End, Esc devolve o foco ao gatilho, Tab fecha.
+- Quatro páginas de docs pelo gerador genérico, grupo "Navigation" no menu lateral, suporte a `scripts` e `navGroup` nos dados (`scripts/docs-layout.mjs`, `scripts/build-components-doc.mjs`). Cobertura: 180 de 196 variantes com CSS.
+
+**Alterado**
+- Header do site usa `--z-sticky` (10), antes `--z-overlay` (100). Escala final: base 0, raised 1, sticky 10, modal-scrim 100, modal 200, popover 300, tooltip 400, notification 500.
+- Rotação do Spinner passa a ser linear (decisão do Figma Core); o pulso de redução de movimento e o do Skeleton continuam em ease-in-out.
+- Trilho do Progress usa `--color-border-input` (Figma `Border/Utilities/Input`): trilho contra a página 3,12:1 no Light e 3,19:1 no Dark; preenchimento contra o trilho 6,23:1 e 5,35:1.
+- Regra da borda (seção 5): Input, Textarea, Select, Checkbox, Radio e Switch confirmados com `strokesIncludedInLayout` verdadeiro.
+
+**Removido**
+- Token `--z-overlay` e a menção a `--z-max` (9999) no texto, que nunca existiu em `tokens.css`.
+
+**Corrigido**
+- Deslocamento interno dos campos: o texto e o ícone ficam a 13px da borda (12 mais 1), como no Figma; antes ficavam a 12px. Textarea também no topo. O tamanho externo não muda.
+- Polegar do Switch a 5,5px da borda (4 mais 1,5), antes a 4px.
+- Foco do Icon Button: o `button:focus-visible` do `reset.css` trocava o raio para 4px e quadrava o botão; o raio agora é repetido na regra de foco (e o mesmo em Tabs, Breadcrumb, Pagination e Menu).
+- Lacunas de contraste: o trilho do Progress sai da lista; trilho do Spinner e Skeleton ficam como lacunas documentadas, com o motivo.
+
+---
+
 ## v2.11.0 · 24 de novembro de 2026 · Lote 2B (Indicadores e dicas): Tooltip, Progress, Spinner, Skeleton e Icon Button, escala de z-index e correções do Lote 2A (MINOR)
 
 **Versão escolhida: MINOR (2.10.0 para 2.11.0).** Regra aplicada: seção 3 do `GOVERNANCE.md`, MINOR cobre "novo componente entra no DESIGN.md": entram Tooltip, Progress, Spinner, Skeleton e Icon Button. Nenhuma regra do GOVERNANCE mudou.
