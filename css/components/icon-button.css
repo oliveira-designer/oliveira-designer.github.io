@@ -60,6 +60,7 @@
 
 /* Focus: 52 by 52 ring (44 + 2 x (2 + 2)), following the pill radius. */
 .icon-btn:focus-visible {
+  border-radius: var(--radius-pill);  /* reset.css sets radius-xs on button:focus-visible, which squared the button on focus */
   outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
   outline-offset: var(--focus-ring-gap);
 }
