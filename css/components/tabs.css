@@ -1,0 +1,127 @@
+/* Hope DS: css/components/tabs.css
+   Figma: Core, Tab (Selected false|true, State Default|Hover|Focus|Disabled), set 2412:20. Edit this file, then run:
+   npm run css:build. The behavior (selection, roving tabindex, arrow keys) is in js/tabs.js.
+
+   Markup contract (docs/components/tabs.html):
+     <div class="tabs">
+       <div class="tabs__list" role="tablist" aria-label="Sections">
+         <button type="button" class="tab" role="tab" id="t1" aria-selected="true" aria-controls="p1" tabindex="0">Visão geral</button>
+         <button type="button" class="tab" role="tab" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1">Atividade</button>
+         <button type="button" class="tab" role="tab" id="t3" aria-selected="false" aria-disabled="true" aria-controls="p3" tabindex="-1">Arquivados</button>
+       </div>
+       <div class="tabs__panel" role="tabpanel" id="p1" aria-labelledby="t1">...</div>
+       <div class="tabs__panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>...</div>
+     </div>
+   Without JavaScript the first panel stays visible and the others stay hidden: the markup carries that state. */
+
+/* The block: carries the font for the list and the panels. */
+.tabs {
+  font-family: var(--font-body);
+}
+
+/* ----------------------------------------------------------
+   TAB LIST
+   A 1px line (Border/Default/Default) under the whole list. In Figma the list is the 40px tabs plus this line below
+   them (41 high), so the selected tab's line sits on top of the baseline and does not cover it.
+   ---------------------------------------------------------- */
+.tabs__list {
+  display: flex;
+  align-items: flex-start;
+  border-bottom: var(--border-width-normal) solid var(--color-border);
+}
+
+/* ----------------------------------------------------------
+   TAB
+   Figma strokesIncludedInLayout is true on the item: the 1.5px bottom line is part of the 40px height, so nothing is
+   discounted. Every tab carries a transparent 1.5px bottom border, so a selected and an unselected tab have the same
+   height and the label does not move. Padding 0 16, gap 0, centered.
+   ---------------------------------------------------------- */
+.tab {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  height: 40px;  /* Figma: 40, no spacing token */
+  margin: 0;
+  padding: 0 var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--color-text-2);
+  background: none;
+  border: 0;
+  border-bottom: var(--border-width-medium) solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+  transition: color var(--duration-normal) var(--ease-out), border-color var(--duration-normal) var(--ease-out);
+}
+
+/* Hover (not selected): text Text/Default/Default, no background. A selected tab looks the same on hover. */
+.tab:hover:not([aria-disabled="true"]) {
+  color: var(--color-text-1);
+}
+
+/* Selected: text Text/Default/Default, SemiBold (the weight change keeps the selection from depending on color alone),
+   bottom line Background/Neutral/Default. */
+.tab[aria-selected="true"] {
+  font-weight: 600;
+  color: var(--color-text-1);
+  border-bottom-color: var(--color-bg-neutral-default);
+}
+
+/* Focus: ring 2px with 2px gap, square (88 by 48 around an 80 by 40 item). */
+.tab:focus-visible {
+  /* reset.css sets border-radius: var(--radius-xs) on a:focus-visible and button:focus-visible, which beats the base
+     rule of this file: the radius is repeated here so the shape does not change on focus. */
+  border-radius: 0;
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Disabled: aria-disabled keeps the tab readable by assistive technology; the arrow keys skip it. Text and, when
+   selected, the line use Text/Disabled/Default. */
+.tab[aria-disabled="true"] {
+  color: var(--color-text-disabled-default);
+  cursor: not-allowed;
+}
+
+.tab[aria-disabled="true"][aria-selected="true"] {
+  border-bottom-color: var(--color-text-disabled-default);
+}
+
+/* ----------------------------------------------------------
+   PANEL
+   Gets tabindex="0" only when it has no focusable content (js/tabs.js). The attribute hidden hides the others.
+   ---------------------------------------------------------- */
+.tabs__panel[hidden] {
+  display: none;
+}
+
+.tabs__panel:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Forced colors replace the transparent border with a system color: set every border on purpose. */
+@media (forced-colors: active) {
+  .tabs__list {
+    border-bottom-color: CanvasText;
+  }
+  .tab {
+    forced-color-adjust: none;
+    color: ButtonText;
+    border-bottom-color: Canvas;
+  }
+  .tab[aria-selected="true"] {
+    border-bottom-color: Highlight;
+  }
+  .tab[aria-disabled="true"] {
+    color: GrayText;
+  }
+  .tab[aria-disabled="true"][aria-selected="true"] {
+    border-bottom-color: GrayText;
+  }
+}

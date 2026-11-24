@@ -1,0 +1,144 @@
+/* Hope DS: css/components/menu.css
+   Figma: Core, Menu (panel, 2413:381) and Menu item (Tone Default|Danger, State Default|Hover|Focus|Selected|Disabled,
+   set 2413:380). Edit this file, then run: npm run css:build. The behavior (open and close, arrow keys, Escape) is in
+   js/menu.js. Positioning against the trigger, flipping and typeahead are not coded.
+
+   Markup contract (docs/components/menu.html):
+     <button type="button" class="btn btn--secondary" id="m-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="m-panel">Conta</button>
+     <div class="menu" role="menu" id="m-panel" aria-labelledby="m-trigger" hidden>
+       <button type="button" class="menu__item" role="menuitem" tabindex="-1"><span class="menu__label">Configurações</span></button>
+       <button type="button" class="menu__item" role="menuitem" tabindex="-1" aria-disabled="true"><span class="menu__label">Cobrança</span></button>
+       <div class="menu__divider" role="separator"></div>
+       <button type="button" class="menu__item menu__item--danger" role="menuitem" tabindex="-1"><span class="menu__label">Sair</span></button>
+     </div>
+   A chosen option (Selected in Figma) uses role="menuitemradio" (or menuitemcheckbox) with aria-checked="true"; the check
+   icon is a child with the class menu__check and shows only when the item is checked. */
+
+/* ----------------------------------------------------------
+   MENU PANEL
+   Figma strokesIncludedInLayout is true on the panel: it is 238 wide = 220 of item + 16 of padding + 2 of border, so
+   the border is added to the box and the padding is not discounted. The items fill the panel (220 is the specimen).
+   ---------------------------------------------------------- */
+.menu {
+  position: relative;
+  z-index: var(--z-popover);  /* Figma Z-index/z-popover (300) */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  border: var(--border-width-normal) solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.menu[hidden] {
+  display: none;
+}
+
+/* Divider: 1px Border/Default/Default across the inner width. Destructive actions go after one. */
+.menu__divider {
+  flex: none;
+  width: 100%;
+  height: var(--border-width-normal);
+  margin: 0;
+  background-color: var(--color-border);
+  border: 0;
+}
+
+/* ----------------------------------------------------------
+   MENU ITEM
+   36 high, padding 0 12, gap 8, radius 8, label Regular body-sm. The optional 16px check sits on the right.
+   ---------------------------------------------------------- */
+.menu__item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  height: 36px;  /* Figma: 36, no spacing token */
+  margin: 0;
+  padding: 0 var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--color-text-1);
+  background-color: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--duration-normal) var(--ease-out);
+}
+
+.menu__label {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Two classes: icon.css loads after this file and its .icon sets 1em, so one class would lose. */
+.menu__item .menu__check {
+  display: none;
+  flex: none;
+  width: var(--space-4);
+  height: var(--space-4);
+  color: var(--icon-color-default);
+}
+
+/* Hover (Default and Danger): Background/Default/Secondary. */
+.menu__item:hover:not([aria-disabled="true"]) {
+  background-color: var(--color-bg-alt);
+}
+
+/* Focus: ring 228 by 44 around a 220 by 36 item (4px outside), radius 12 on the outer edge. The ring sits inside the
+   8px panel padding, so the panel needs no overflow. */
+.menu__item:focus-visible {
+  border-radius: var(--radius-sm);  /* reset.css sets radius-xs on button:focus-visible */
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Selected (a chosen option): Background/Default/Secondary, SemiBold, check visible. */
+.menu__item[aria-checked="true"] {
+  font-weight: 600;
+  background-color: var(--color-bg-alt);
+}
+
+.menu__item[aria-checked="true"] .menu__check {
+  display: block;
+}
+
+/* Danger: Text/Danger/Default. Figma has no Danger Focus, Selected or Disabled: Focus uses the shared ring. */
+.menu__item--danger {
+  color: var(--color-text-danger-default);
+}
+
+/* Disabled: Text/Disabled/Default, no opacity. aria-disabled keeps it in the arrow-key order of assistive technology,
+   js/menu.js skips it. */
+.menu__item[aria-disabled="true"] {
+  color: var(--color-text-disabled-default);
+  cursor: not-allowed;
+}
+
+@media (forced-colors: active) {
+  .menu {
+    border-color: CanvasText;
+  }
+  .menu__divider {
+    background-color: CanvasText;
+  }
+  .menu__item {
+    forced-color-adjust: none;
+    color: ButtonText;
+  }
+  .menu__item:hover:not([aria-disabled="true"]) {
+    color: HighlightText;
+    background-color: Highlight;
+  }
+  .menu__item[aria-disabled="true"] {
+    color: GrayText;
+  }
+}

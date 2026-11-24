@@ -1,0 +1,91 @@
+/* Hope DS: css/components/breadcrumb.css
+   Figma: Core, Breadcrumb item (Type Link|Link Hover|Link Focus|Current), set 2413:51. Edit this file, then run:
+   npm run css:build.
+
+   Markup contract (docs/components/breadcrumb.html):
+     <nav class="breadcrumb" aria-label="Breadcrumb">
+       <ol class="breadcrumb__list">
+         <li class="breadcrumb__item">
+           <a class="breadcrumb__link" href="/">Início</a>
+           <svg class="icon breadcrumb__separator" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="..."/></svg>
+         </li>
+         <li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Componentes</span></li>
+       </ol>
+     </nav>
+   The separator is a sibling of the link, never inside it, so the focus ring wraps the label only. The last item
+   (Current) has no separator in code: Figma draws one in the Current variant but marks it optional. */
+
+/* ----------------------------------------------------------
+   BREADCRUMB
+   Item: horizontal, gap 8 between label and separator, centered, padding 0. Items are 8 apart (Figma example).
+   Narrow screens: the list wraps. Collapsing the middle levels is documented in the docs (the Figma piece for an
+   ellipsis control does not exist), not coded.
+   ---------------------------------------------------------- */
+.breadcrumb {
+  font-family: var(--font-body);
+}
+
+.breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+}
+
+.breadcrumb__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Link: Default text Text/Default/Secondary (Regular), Hover and Focus text Text/Default/Default. No underline in Figma. */
+.breadcrumb__link {
+  display: block;
+  font-weight: 400;
+  color: var(--color-text-2);
+  text-decoration: none;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.breadcrumb__link:hover {
+  color: var(--color-text-1);
+}
+
+/* Focus ring around the label only: 40 by 29 around a 32 by 21 label (2px ring + 2px gap = 4px on each side). */
+.breadcrumb__link:focus-visible {
+  color: var(--color-text-1);
+  border-radius: 0;  /* reset.css sets radius-xs on a:focus-visible; the Figma ring has no radius */
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Current: Medium, Text/Default/Default, not a link, never focusable. */
+.breadcrumb__current {
+  display: block;
+  font-weight: 500;
+  color: var(--color-text-1);
+}
+
+/* Separator: CaretRight 14px. Figma paints it #5F5F6E, which is Icon/Color Tertiary. */
+/* Two classes: icon.css loads after this file and its .icon sets 1em, so one class would lose. */
+.breadcrumb__item .breadcrumb__separator {
+  flex: none;
+  width: 14px;  /* Figma: 14, no spacing token */
+  height: 14px;
+  color: var(--icon-color-tertiary);
+}
+
+@media (forced-colors: active) {
+  .breadcrumb__link {
+    color: LinkText;
+  }
+  .breadcrumb__current {
+    color: CanvasText;
+  }
+}

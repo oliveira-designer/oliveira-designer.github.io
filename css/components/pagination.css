@@ -1,0 +1,121 @@
+/* Hope DS: css/components/pagination.css
+   Figma: Core, Pagination item (Type Number|Prev|Next|Ellipsis, State Default|Hover|Focus|Current|Disabled), set 2413:261.
+   Edit this file, then run: npm run css:build.
+
+   Markup contract (docs/components/pagination.html):
+     <nav class="pagination" aria-label="Paginação">
+       <ul class="pagination__list">
+         <li><a class="pagination__item" aria-disabled="true" aria-label="Página anterior"><svg class="icon" ... aria-hidden="true">...</svg></a></li>
+         <li><a class="pagination__item" href="?p=1" aria-label="Página 1">1</a></li>
+         <li><a class="pagination__item" href="?p=2" aria-label="Página 2" aria-current="page">2</a></li>
+         <li><span class="pagination__item pagination__item--ellipsis" aria-hidden="true"><svg class="icon" ...>...</svg></span></li>
+         <li><a class="pagination__item" href="?p=3" aria-label="Próxima página"><svg class="icon" ...>...</svg></a></li>
+       </ul>
+     </nav>
+   Disabled Prev and Next: a link with aria-disabled="true" and NO href, so it is neither focusable nor activatable (same
+   idea as Link, which is disabled through aria-disabled). The Ellipsis is a decorative span, not focusable. */
+
+/* ----------------------------------------------------------
+   PAGINATION
+   Items are 36 by 36 with radius 12, 4px apart (Figma example). The number is Medium body-sm. Current is the only
+   state that is not just a color change: a dark fill, plus aria-current="page".
+   ---------------------------------------------------------- */
+.pagination {
+  font-family: var(--font-body);
+}
+
+.pagination__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pagination__item {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 36px;  /* Figma: 36, no spacing token */
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--color-text-1);
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--duration-normal) var(--ease-out), color var(--duration-normal) var(--ease-out);
+}
+
+.pagination__item .icon {
+  width: var(--space-5);
+  height: var(--space-5);
+  color: var(--icon-color-default);
+}
+
+/* Hover (Number, Prev, Next): Background/Default/Secondary. */
+.pagination__item:hover:not([aria-disabled="true"], [aria-current="page"], .pagination__item--ellipsis) {
+  background-color: var(--color-bg-alt);
+}
+
+/* Focus: ring 44 by 44 (36 + 2 x (2 ring + 2 gap)), radius 16 on the outer edge: the outline follows the 12px radius
+   plus the 2px offset and the 2px width. */
+.pagination__item:focus-visible {
+  border-radius: var(--radius-md);  /* reset.css sets radius-xs on a:focus-visible and button:focus-visible */
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Current: Background/Neutral/Default with Text/Neutral/Default. */
+.pagination__item[aria-current="page"] {
+  color: var(--color-text-neutral-default);
+  background-color: var(--color-bg-neutral-default);
+  cursor: default;
+}
+
+/* Disabled: text and icon use the disabled roles, no opacity. */
+.pagination__item[aria-disabled="true"] {
+  color: var(--color-text-disabled-default);
+  cursor: not-allowed;
+}
+
+.pagination__item[aria-disabled="true"] .icon {
+  color: var(--icon-color-disabled);
+}
+
+/* Ellipsis: DotsThree 20px, Default only, not interactive. */
+.pagination__item--ellipsis {
+  cursor: default;
+}
+
+@media (forced-colors: active) {
+  .pagination__item {
+    forced-color-adjust: none;
+    color: LinkText;
+  }
+  .pagination__item .icon {
+    color: LinkText;
+  }
+  .pagination__item[aria-current="page"] {
+    color: HighlightText;
+    background-color: Highlight;
+  }
+  .pagination__item[aria-disabled="true"],
+  .pagination__item[aria-disabled="true"] .icon {
+    color: GrayText;
+  }
+  .pagination__item--ellipsis,
+  .pagination__item--ellipsis .icon {
+    color: CanvasText;
+  }
+}
