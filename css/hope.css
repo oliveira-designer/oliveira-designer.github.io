@@ -1,7 +1,7 @@
 /* ============================================================
    HOPE DESIGN SYSTEM: hope.css
    GENERATED FILE. Do not edit by hand.
-   Built by scripts/build-css.mjs (npm run css:build) from 60 source files:
+   Built by scripts/build-css.mjs (npm run css:build) from 65 source files:
    tokens, reset, components/*, site/*. Edit the sources, then rebuild.
    css/auth.css (loaded by js/auth.js) and css/output.css (Tailwind) stay separate.
    ============================================================ */
@@ -9,7 +9,7 @@
 /* ===== css/tokens.css ===== */
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v2.12.0 · November 2026
+   v2.13.0 · November 2026
    Source of truth: Figma Foundation for VALUES; DESIGN.md +
    DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
@@ -367,6 +367,7 @@
   --z-base:          0;
   --z-raised:        1;
   --z-sticky:        10;   /* Figma Z-index/z-sticky: the site header */
+  --z-overlay:       var(--z-sticky);  /* DEPRECATED (2026-11, v2.13.0): old name of the site header layer. Use --z-sticky. The next MAJOR may remove it. Nothing in the repo uses it. */
   --z-modal-scrim:   100;  /* Figma Z-index/z-modal-scrim */
   --z-modal:         200;  /* Figma Z-index/z-modal */
   --z-popover:       300;  /* Figma Z-index/z-popover: Popover, Menu and Select panels */
@@ -722,6 +723,176 @@ p { max-width: 70ch; }
 .animate-in--delay-3   { animation-delay: 240ms; }
 .animate-in--delay-4   { animation-delay: 320ms; }
 
+/* ===== css/components/accordion.css ===== */
+/* Hope DS: css/components/accordion.css
+   Figma: Core, Accordion item (Open false|true, State Default|Hover|Focus|Disabled, Disabled only closed, set 2413:948).
+   Edit this file, then run: npm run css:build. The behavior (toggle, panel role by item count) is in js/accordion.js.
+
+   Markup contract (docs/components/accordion.html):
+     <div class="accordion">
+       <div class="accordion__item">
+         <h3 class="accordion__heading">
+           <button type="button" class="accordion__trigger" id="a1-trigger" aria-expanded="false" aria-controls="a1-panel">
+             <span class="accordion__title">Título</span>
+             <svg class="icon accordion__chevron" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="..."/></svg>
+           </button>
+         </h3>
+         <div class="accordion__panel" id="a1-panel" role="region" aria-labelledby="a1-trigger" hidden>Conteúdo.</div>
+       </div>
+       ...
+     </div>
+   role="region" and aria-labelledby on the panel only when the list has 6 items or fewer (more would flood the landmark list);
+   js/accordion.js applies this rule. The heading level is the author's. A closed panel is hidden with the hidden attribute. */
+
+/* The list: stacked items, full width. No overflow here: the focus ring of an item is drawn 4px outside it. */
+.accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ----------------------------------------------------------
+   ITEM
+   Figma strokesIncludedInLayout is true: only a bottom border of 1px, part of the height (closed item 54 = 16 + 21 + 16 + 1),
+   so box-sizing is border-box and the padding is not discounted. The item fills its container (480 is the Figma specimen).
+   Stacked items: the last one keeps its border, as in Figma. The container must not set overflow: the focus ring is drawn
+   4px outside the item.
+   ---------------------------------------------------------- */
+.accordion__item {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-4);
+  font-family: var(--font-body);
+  border-bottom: var(--border-width-normal) solid var(--color-border);
+}
+
+/* Hover: the whole item takes Background/Default/Secondary (open or closed). A disabled item does not. */
+.accordion__item:hover:not(:has(.accordion__trigger:disabled)) {
+  background-color: var(--color-bg-alt);
+}
+
+.accordion__heading {
+  margin: 0;
+  font: inherit;
+}
+
+/* ----------------------------------------------------------
+   TRIGGER
+   The header is a button: title Body/SemiBold/body-sm semibold, chevron 20px at the right, gap 12. A transparent
+   pseudo-element extends the click target over the item padding (the padding belongs to the item, as in Figma).
+   ---------------------------------------------------------- */
+.accordion__trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--color-text-1);
+  background: none;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.accordion__trigger::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--space-4) * -1) calc(var(--space-4) * -1) calc(var(--space-2) * -1);  /* open: stops at the gap, so the content is not part of the button */
+}
+
+.accordion__trigger[aria-expanded="false"]::after {
+  bottom: calc(var(--space-4) * -1);
+}
+
+.accordion__title {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Chevron: CaretDown 20px, Icon/Color Secondary. Open: rotated 180 degrees. No transition: Figma defines no motion. */
+.accordion__trigger .accordion__chevron {
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  color: var(--icon-color-secondary);
+}
+
+.accordion__trigger[aria-expanded="true"] .accordion__chevron {
+  transform: rotate(180deg);
+}
+
+/* Content: Body/Regular/body-sm, Text/Default/Secondary. */
+.accordion__panel {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-2);
+}
+
+.accordion__panel[hidden] {
+  display: none;
+}
+
+/* ----------------------------------------------------------
+   FOCUS
+   Fallback first: a plain ring on the button, so focus is never invisible where :has() is not supported. Where :has() is
+   supported the ring surrounds the WHOLE item (488 by 62 closed, 488 by 112 open: 4px outside each side), square, even
+   though the focus is on the header button, and the button's own ring is removed. The focused item is raised one layer so
+   the ring is not painted under the next item.
+   ---------------------------------------------------------- */
+.accordion__trigger:focus-visible {
+  border-radius: 0;  /* reset.css sets radius-xs on button:focus-visible */
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+@supports selector(:has(a)) {
+  .accordion__trigger:focus-visible {
+    outline: none;
+  }
+
+  .accordion__item:has(.accordion__trigger:focus-visible) {
+    position: relative;
+    z-index: var(--z-raised);
+    outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+    outline-offset: var(--focus-ring-gap);
+  }
+}
+
+/* Disabled (closed only in Figma): title Text/Disabled/Default, chevron in the Disabled mode, no opacity. */
+.accordion__trigger:disabled {
+  color: var(--color-text-disabled-default);
+  cursor: not-allowed;
+}
+
+.accordion__trigger:disabled .accordion__chevron {
+  color: var(--icon-color-disabled);
+}
+
+@media (forced-colors: active) {
+  .accordion__item {
+    border-bottom-color: CanvasText;
+  }
+  .accordion__trigger {
+    forced-color-adjust: none;
+    color: ButtonText;
+  }
+  .accordion__trigger:disabled {
+    color: GrayText;
+  }
+}
+
 /* ===== css/components/alert.css ===== */
 /* Hope DS: css/components/alert.css
    Figma: Core, Alert (Type Info|Success|Warning|Error). Optional title, action and dismiss.
@@ -877,6 +1048,72 @@ p { max-width: 70ch; }
   .alert {
     border-color: CanvasText;
   }
+}
+
+/* ===== css/components/avatar.css ===== */
+/* Hope DS: css/components/avatar.css
+   Figma: Core, Avatar (Size Small|Medium|Large, component set 2413:755). Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/avatar.html):
+     Initials, name NOT next to it:   <span class="avatar avatar--medium" role="img" aria-label="Renan Moura">RM</span>
+     Initials, name next to it:       <span class="avatar avatar--medium" aria-hidden="true">RM</span> Renan Moura
+     Photo, name NOT next to it:      <span class="avatar avatar--medium"><img class="avatar__image" src="..." alt="Renan Moura"></span>
+     Photo, name next to it:          <span class="avatar avatar--medium"><img class="avatar__image" src="..." alt=""></span> Renan Moura
+   The initials are content (the Figma property defaults to "RM"), not generated. With a photo the initials are not rendered. */
+
+/* ----------------------------------------------------------
+   AVATAR
+   Circle (--radius-pill), fill Border/Default/Default, initials Text/Default/Default, centered. Small is the default.
+   No border in Figma, so box-sizing needs no discount.
+   ---------------------------------------------------------- */
+.avatar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-8);   /* Small 32 */
+  height: var(--space-8);
+  overflow: hidden;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-xs);  /* Body/SemiBold/body-xs semibold */
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--color-text-1);
+  background-color: var(--color-border);
+  border-radius: var(--radius-pill);
+  vertical-align: middle;
+}
+
+.avatar--small {
+  width: var(--space-8);
+  height: var(--space-8);
+  font-size: var(--fs-body-xs);
+}
+
+/* Medium 40: Body/SemiBold/body-sm semibold. */
+.avatar--medium {
+  width: var(--space-10);
+  height: var(--space-10);
+  font-size: var(--fs-body-sm);
+}
+
+/* Large 56: Heading/H3 (display font, Bold, 16px, line height 1.4). Figma: 56, no spacing token. */
+.avatar--large {
+  width: 56px;
+  height: 56px;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Photo: the image fills the circle. */
+.avatar__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* ===== css/components/badge.css ===== */
@@ -2886,11 +3123,13 @@ p { max-width: 70ch; }
 
 /* ===== css/components/lightbox.css ===== */
 /* Hope DS: css/components/lightbox.css
-   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
-   Edit this file, then run: npm run css:build */
+   Split from css/components.css on 2026-11-20 (D-18). Aligned to Figma Core, Lightbox (component 2456:4, page "Lightbox") in v2.13.0.
+   Edit this file, then run: npm run css:build. The behavior (open from an image, close, focus trap, inert page, scroll lock)
+   is in js/lightbox.js, which builds the markup below and opens it from every image of .case-section and from any
+   <img data-lightbox> (the docs demo). The caption comes from the figcaption of the image. */
 
 /* ----------------------------------------------------------
-   LIGHTBOX — full-screen image zoom modal
+   LIGHTBOX: full-screen image viewer
    ---------------------------------------------------------- */
 
 /* Zoomable image hint */
@@ -2900,11 +3139,12 @@ p { max-width: 70ch; }
 }
 .is-zoomable:hover { opacity: 0.88; }
 
-/* Overlay shell — covers the viewport */
+/* Overlay shell: covers the viewport, padding 24 (Figma), layer Z-index/z-modal (200), the same level as the Modal. */
 .lightbox {
   position: fixed;
   inset: 0;
   z-index: var(--z-modal);
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2927,7 +3167,8 @@ p { max-width: 70ch; }
     visibility 0s linear           0s;
 }
 
-/* Frosted dark backdrop */
+/* Backdrop: Background/Utilities/Scrim Strong (Neutral ink at 88%) plus a 12px background blur. The Figma blur is a raw
+   effect (BACKGROUND_BLUR, radius 12), not a style, and no blur token matches it (--blur-glass is 24px with saturation). */
 .lightbox__backdrop {
   position: absolute;
   inset: 0;
@@ -2936,7 +3177,8 @@ p { max-width: 70ch; }
           backdrop-filter: blur(12px);
 }
 
-/* Content panel — image + caption, animated scale */
+/* Panel: image and caption, gap 16. The image is up to 960 wide. Motion (scale and fade) is the one the repo already had;
+   Figma defines none, and it is removed under reduced motion. */
 .lightbox__panel {
   position: relative;
   z-index: 1;
@@ -2944,7 +3186,7 @@ p { max-width: 70ch; }
   flex-direction: column;
   align-items: center;
   gap: var(--space-4);
-  max-width: min(92vw, 1280px);
+  max-width: 100%;
   /* Closed: slightly shrunk and dropped */
   transform: scale(0.92) translateY(12px);
   transition: transform var(--duration-slower) var(--ease-out);
@@ -2953,57 +3195,90 @@ p { max-width: 70ch; }
   transform: scale(1) translateY(0);
 }
 
-/* Image */
+/* Media: hugs the image, so the close button sits at the corner of the image (Figma: the top-right of a panel as wide as the
+   image). */
+.lightbox__media {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+}
+
+/* Image: radius 16 and Shadow/lg (Figma). It never grows past 960 wide (Figma: 960, no spacing token), and its height leaves
+   room above for the close button (40px) and below for a caption of up to three lines, so the button always stays inside the
+   viewport. The image has no border, and the panel has no root border. */
 .lightbox__img {
   display: block;
-  max-width: 100%;
-  max-height: 82vh;
+  max-width: min(960px, calc(100vw - 2 * var(--space-6)));
+  max-height: calc(100dvh - 2 * (var(--space-6) + var(--space-10)) - 6rem);
   width: auto;
   height: auto;
   border-radius: var(--radius-lg);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.60);
+  box-shadow: var(--shadow-lg);
 }
 
-/* Caption */
+/* Caption: Body/Regular/body-sm, the Figma white variable at 55%, centered, 520 wide. */
 .lightbox__caption {
+  max-width: 520px;  /* Figma: 520, no spacing token */
+  margin: 0;
   font-family: var(--font-body);
   font-size:   var(--fs-body-sm);
-  color:       rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
   text-align:  center;
-  max-width:   60ch;
-  line-height: 1.5;
+  color:       color-mix(in srgb, var(--color-cloud) 55%, transparent);
 }
 
-/* Close button — top-right corner of the panel */
+/* Close button: 36 by 36 circle at the top-right corner of the image, 40px above the image (Figma: x 924, y -40 in a 960
+   panel). Fill and 1px stroke are the Figma white variable at 12% and 18%; the stroke is part of the 36 (border-box). The X is
+   20px at 80% opacity. It is white in both themes on purpose: the scrim is the same in Light and Dark, and the Icon/Color
+   Neutral mode would turn ink in Dark. Figma draws no Hover or Focus for it: Hover is the repo's (22% fill, full opacity), Focus
+   is the shared ring in Solar, because the Light focus color (Anchor) is only 2.2:1 against this scrim. */
 .lightbox__close {
   position: absolute;
   top:   calc(-1 * var(--space-10));
   right: 0;
+  box-sizing: border-box;
   display: grid;
   place-items: center;
-  width:  36px;
+  width:  36px;  /* Figma: 36, no spacing token */
   height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.80);
+  padding: 0;
+  color: var(--color-cloud);
+  background: color-mix(in srgb, var(--color-cloud) 12%, transparent);
+  border: var(--border-width-normal) solid color-mix(in srgb, var(--color-cloud) 18%, transparent);
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  transition:
-    background var(--duration-normal) var(--ease-out),
-    color      var(--duration-normal) var(--ease-out);
+  transition: background var(--duration-normal) var(--ease-out);
+}
+.lightbox__close .icon {
+  width: var(--space-5);
+  height: var(--space-5);
+  opacity: 0.8;
+  transition: opacity var(--duration-normal) var(--ease-out);
 }
 .lightbox__close:hover {
-  background: rgba(255, 255, 255, 0.22);
-  color: var(--color-cloud);
+  background: color-mix(in srgb, var(--color-cloud) 22%, transparent);
+}
+.lightbox__close:hover .icon {
+  opacity: 1;
 }
 .lightbox__close:focus-visible {
-  outline: var(--focus-ring-width) solid var(--color-solar);   /* solar: sits on the dark scrim */
+  border-radius: var(--radius-pill);  /* reset.css sets radius-xs on button:focus-visible */
+  outline: var(--focus-ring-width) solid var(--color-solar);   /* solar: sits on the dark scrim in both themes */
   outline-offset: var(--focus-ring-gap);
 }
 
-/* Reduced-motion: skip the scale, keep the fade */
+/* Reduced-motion: skip the scale, keep the fade (the global rule in tokens.css shortens the fade too) */
 @media (prefers-reduced-motion: reduce) {
   .lightbox__panel { transform: none !important; transition: none !important; }
+}
+
+@media (forced-colors: active) {
+  .lightbox__close {
+    forced-color-adjust: none;
+    color: ButtonText;
+    background: ButtonFace;
+    border-color: ButtonText;
+  }
 }
 
 /* ===== css/components/link.css ===== */
@@ -3296,6 +3571,173 @@ p { max-width: 70ch; }
   }
   .menu__item[aria-disabled="true"] {
     color: GrayText;
+  }
+}
+
+/* ===== css/components/modal.css ===== */
+/* Hope DS: css/components/modal.css
+   Figma: Core, Modal (component 2413:472, page "Modal"). Edit this file, then run: npm run css:build. The behavior (open and
+   close, focus trap, Escape, inert page, scroll lock) is in js/modal.js.
+
+   Markup contract (docs/components/modal.html):
+     <button type="button" class="btn btn--secondary" data-modal-open="m-confirm">Excluir projeto</button>
+     <div class="modal" role="dialog" aria-modal="true" id="m-confirm" aria-labelledby="m-confirm-title" aria-describedby="m-confirm-body" hidden>
+       <div class="modal__header">
+         <h2 class="modal__title" id="m-confirm-title">Excluir projeto?</h2>
+         <button type="button" class="modal__close" aria-label="Fechar" data-modal-close><svg class="icon" ...>X</svg></button>
+       </div>
+       <p class="modal__body" id="m-confirm-body">Texto de apoio.</p>
+       <div class="modal__footer">                         (optional: Figma "Show footer")
+         <button type="button" class="btn btn--secondary" data-modal-close>Cancelar</button>
+         <button type="button" class="btn btn--primary">Confirmar</button>
+       </div>
+     </div>
+   js/modal.js creates the scrim (.modal-scrim) and moves the dialog to the end of <body>, so the page behind can be made
+   inert without making the dialog inert. A click on the scrim does not close the Modal: it is for decisions. */
+
+/* ----------------------------------------------------------
+   SCRIM
+   Background/Utilities/Scrim (--color-bg-scrim), layer Z-index/z-modal-scrim (100).
+   ---------------------------------------------------------- */
+.modal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal-scrim);
+  background-color: var(--color-bg-scrim);
+}
+
+.modal-scrim[hidden] {
+  display: none;
+}
+
+/* ----------------------------------------------------------
+   MODAL PANEL
+   Figma strokesIncludedInLayout is true on the panel: 480 is the OUTER width (430 of content + 48 of padding + 2 of
+   border), so box-sizing is border-box and nothing is discounted from the padding. Layer Z-index/z-modal (200), above the
+   scrim and below the Toast (500). Centered with inset and auto margins (no transform). On narrow screens the panel keeps
+   a 24px margin (--space-6, the same as the mobile page gutter and the Lightbox padding): Figma does not define it.
+   No motion: Figma defines none, so the panel appears and disappears at once (nothing to remove for reduced motion).
+   ---------------------------------------------------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 480px;  /* Figma: 480, no spacing token */
+  max-width: calc(100% - 2 * var(--space-6));
+  height: fit-content;
+  max-height: calc(100% - 2 * var(--space-6));
+  margin: auto;
+  padding: var(--space-6);
+  overflow-y: auto;
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  border: var(--border-width-normal) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+/* The dialog gets the focus when it has nothing focusable: no ring on the panel itself. */
+.modal:focus {
+  outline: none;
+}
+
+/* Header: title and close button, gap 12. */
+.modal__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+/* Title: Heading/H3 (display font, Bold, 16px, line height 1.4), Text/Default/Default. */
+.modal__title {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-text-1);
+}
+
+/* Close: the 20px X icon in the Icon/Color Secondary mode. A transparent pseudo-element grows the hit area to 24 by 24
+   (WCAG 2.5.8) without changing the layout. Figma draws no Hover or Focus for it: Hover goes to Icon/Color Default (the
+   Ghost Icon Button pattern) and Focus uses the shared ring following the pill radius (the Icon Button pattern). */
+.modal__close {
+  position: relative;
+  display: flex;
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  margin: 0;
+  padding: 0;
+  color: var(--icon-color-secondary);
+  background: none;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.modal__close .icon {
+  width: 100%;
+  height: 100%;
+}
+
+.modal__close::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--space-1) * -0.5);
+}
+
+.modal__close:hover {
+  color: var(--icon-color-default);
+}
+
+.modal__close:focus-visible {
+  border-radius: var(--radius-pill);  /* reset.css sets radius-xs on button:focus-visible */
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Body: Body/Regular/body-sm, Text/Default/Secondary. Free content is allowed. */
+.modal__body {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-2);
+}
+
+/* Footer ("Show footer"): right aligned, gap 12. Figma shows both buttons at 184 wide, a fixed width on the instances and not
+   a Button rule, so the buttons hug their label here. .btn is full width under 768px; inside the dialog it hugs too. */
+.modal__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.modal__footer .btn {
+  width: auto;
+}
+
+/* Forced colors: the border is the only edge of the panel. */
+@media (forced-colors: active) {
+  .modal {
+    border-color: CanvasText;
+  }
+  .modal__close {
+    forced-color-adjust: none;
+    color: ButtonText;
   }
 }
 
@@ -3660,6 +4102,94 @@ p { max-width: 70ch; }
   color: var(--color-text-2);
   font-style: italic;
   max-width: none;
+}
+
+/* ===== css/components/popover.css ===== */
+/* Hope DS: css/components/popover.css
+   Figma: Core, Popover (component 2413:573, page "Popover"). Edit this file, then run: npm run css:build. The behavior (open and
+   close, aria-expanded, Escape, click outside, flip) is in js/popover.js.
+
+   Markup contract (docs/components/popover.html):
+     <div class="popover-anchor">
+       <button type="button" class="btn btn--secondary" id="p-trigger" data-popover-trigger aria-expanded="false" aria-controls="p-panel">Detalhes</button>
+       <div class="popover" id="p-panel" hidden>
+         <p class="popover__title">Título</p>                 (optional: Figma "Show title")
+         <p class="popover__body">Contexto extra ou um controle pequeno.</p>
+       </div>
+     </div>
+   The panel has no role when it holds text only. When it holds interactive content, add role="dialog" (without aria-modal) and
+   aria-labelledby pointing at the title. It does not block the page and does not trap the focus (the Modal does). */
+
+/* ----------------------------------------------------------
+   ANCHOR
+   The trigger and the panel share this wrapper; the panel is placed against it.
+   ---------------------------------------------------------- */
+.popover-anchor {
+  position: relative;
+  display: inline-block;
+}
+
+/* ----------------------------------------------------------
+   POPOVER PANEL
+   Figma strokesIncludedInLayout is true: 280 is the outer width (246 of content + 32 of padding + 2 of border), so
+   box-sizing is border-box. Placement: below the trigger, aligned to its start, 8px away (--space-2); Figma defines no
+   arrow and no placement. js/popover.js adds .popover--above and .popover--end when the panel would leave the viewport.
+   ---------------------------------------------------------- */
+.popover {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  z-index: var(--z-popover);  /* Figma Z-index/z-popover (300) */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 280px;  /* Figma: 280, no spacing token */
+  max-width: calc(100vw - 2 * var(--space-4));
+  padding: var(--space-4);
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  border: var(--border-width-normal) solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.popover[hidden] {
+  display: none;
+}
+
+.popover--above {
+  top: auto;
+  bottom: calc(100% + var(--space-2));
+}
+
+.popover--end {
+  left: auto;
+  right: 0;
+}
+
+/* Title ("Show title"): Body/SemiBold/body-sm semibold, Text/Default/Default. */
+.popover__title {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--color-text-1);
+}
+
+/* Body: Body/Regular/body-sm, Text/Default/Secondary. Free content (links, a small control) is allowed. */
+.popover__body {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-2);
+}
+
+@media (forced-colors: active) {
+  .popover {
+    border-color: CanvasText;
+  }
 }
 
 /* ===== css/components/progress.css ===== */
@@ -4599,10 +5129,10 @@ p { max-width: 70ch; }
   color: var(--color-text-1);
 }
 
-/* Selected: text Text/Default/Default, SemiBold (the weight change keeps the selection from depending on color alone),
-   bottom line Background/Neutral/Default. */
+/* Selected: the same text style as the others (Body/Medium/body-sm medium, decided 24/11/2026, so the label does not change
+   width), text Text/Default/Default, bottom line Background/Neutral/Default. The selection is marked by the 1.5px bottom line and
+   the text color. */
 .tab[aria-selected="true"] {
-  font-weight: 600;
   color: var(--color-text-1);
   border-bottom-color: var(--color-bg-neutral-default);
 }
@@ -4658,6 +5188,96 @@ p { max-width: 70ch; }
   }
   .tab[aria-disabled="true"][aria-selected="true"] {
     border-bottom-color: GrayText;
+  }
+}
+
+/* ===== css/components/tag.css ===== */
+/* Hope DS: css/components/tag.css
+   Figma: Core, Tag (State Default|Hover|Focus|Disabled, "Show dismiss", component set 2413:839). Edit this file, then run:
+   npm run css:build. The behavior (Delete or Backspace removes, click removes) is in js/tag.js.
+
+   Markup contract (docs/components/tag.html):
+     <button type="button" class="tag" data-tag-removable aria-label="Remover filtro Design">
+       <span class="tag__label">Design</span>
+       <svg class="icon tag__dismiss" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="..."/></svg>
+     </button>
+   The whole Tag is the button; the X is a visual cue inside it, not a second button. The accessible name is the visible label
+   plus the action ("Remover filtro Design"). A Tag that is not interactive is a Badge: do not use .tag for it. */
+
+/* ----------------------------------------------------------
+   TAG
+   Figma strokesIncludedInLayout is true: the 1px border is part of the 28px height, so box-sizing is border-box and the
+   padding stays 0 12 (width = 12 + content + 12 + 2 of border; 67 for the label "Tag" with the dismiss icon). Pill radius,
+   gap 4, label Body/Medium/body-sm medium.
+   ---------------------------------------------------------- */
+.tag {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-1);
+  height: 28px;  /* Figma: 28, no spacing token */
+  margin: 0;
+  padding: 0 var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--color-text-1);
+  background-color: var(--color-bg-alt);
+  border: var(--border-width-normal) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color var(--duration-normal) var(--ease-out);
+}
+
+/* Label: one line, the Tag hugs it. */
+.tag__label {
+  white-space: nowrap;
+}
+
+/* Dismiss: X 14px in the Icon/Color Secondary mode. Two classes: icon.css loads after this file and its .icon sets 1em. */
+.tag .tag__dismiss {
+  flex: none;
+  width: 14px;  /* Figma: 14, no spacing token */
+  height: 14px;
+  color: var(--icon-color-secondary);
+}
+
+/* Hover: fill Border/Default/Default. */
+.tag:hover:not(:disabled) {
+  background-color: var(--color-border);
+}
+
+/* Focus: ring around the whole Tag, 75 by 36 around a 67 by 28 tag (4px outside each side), following the pill (radius 18). */
+.tag:focus-visible {
+  border-radius: var(--radius-pill);  /* reset.css sets radius-xs on button:focus-visible */
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Disabled: fill, border, text and icon from the Disabled tokens, no opacity. */
+.tag:disabled {
+  color: var(--color-text-disabled-default);
+  cursor: not-allowed;
+  background-color: var(--color-bg-disabled-default);
+  border-color: var(--color-border-disabled-default);
+}
+
+.tag:disabled .tag__dismiss {
+  color: var(--icon-color-disabled);
+}
+
+@media (forced-colors: active) {
+  .tag {
+    forced-color-adjust: none;
+    color: ButtonText;
+    border-color: ButtonText;
+  }
+  .tag:disabled {
+    color: GrayText;
+    border-color: GrayText;
   }
 }
 

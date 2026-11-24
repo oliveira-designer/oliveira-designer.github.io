@@ -64,10 +64,10 @@
   color: var(--color-text-1);
 }
 
-/* Selected: text Text/Default/Default, SemiBold (the weight change keeps the selection from depending on color alone),
-   bottom line Background/Neutral/Default. */
+/* Selected: the same text style as the others (Body/Medium/body-sm medium, decided 24/11/2026, so the label does not change
+   width), text Text/Default/Default, bottom line Background/Neutral/Default. The selection is marked by the 1.5px bottom line and
+   the text color. */
 .tab[aria-selected="true"] {
-  font-weight: 600;
   color: var(--color-text-1);
   border-bottom-color: var(--color-bg-neutral-default);
 }

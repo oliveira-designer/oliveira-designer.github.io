@@ -1,7 +1,9 @@
 /**
- * Lightbox — opens case-study images in a full-screen modal.
- * Targets every <img> inside .case-section (excludes nav, hero, avatars).
- * Motion uses the Hope DS duration / easing tokens via CSS.
+ * Lightbox: opens case-study images in a full-screen modal.
+ * Targets every <img> inside .case-section (excludes nav, hero, avatars) and any <img data-lightbox> (the docs demo).
+ * Motion uses the Hope DS duration / easing tokens via CSS. Same approach as js/modal.js: the hidden attribute, the focus
+ * moves in and returns to the opener, the page scroll is locked; since v2.13.0 the focus is also trapped inside and the
+ * page behind is inert. Closes with Escape, the close button and a click on the backdrop (unlike the Modal).
  */
 (function () {
   'use strict';
@@ -16,14 +18,14 @@
   modal.innerHTML = `
     <div class="lightbox__backdrop" aria-hidden="true"></div>
     <div class="lightbox__panel">
+      <div class="lightbox__media">
       <button class="lightbox__close" aria-label="Close image preview">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2.5"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M18 6L6 18M6 6l12 12"/>
+        <svg class="icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+          <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/>
         </svg>
       </button>
       <img class="lightbox__img" src="" alt="" />
+      </div>
       <p class="lightbox__caption"></p>
     </div>
   `;
@@ -34,6 +36,9 @@
   const closeBtn  = modal.querySelector('.lightbox__close');
   const backdrop  = modal.querySelector('.lightbox__backdrop');
   let   prevFocus = null;
+  let   prevOverflow = '';
+  let   inerted = [];
+  const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
   // ── Open / close ──────────────────────────────────────────────────────
   function open(src, alt, caption) {
@@ -43,20 +48,30 @@
     captionEl.hidden = !caption;
 
     prevFocus = document.activeElement;
+    prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    Array.from(document.body.children).forEach(el => {
+      if (el === modal || el.tagName === 'SCRIPT' || el.inert || el.matches('.toast, [data-modal-keep]')) return;
+      el.inert = true;
+      inerted.push(el);
+    });
 
     // Render in hidden state first so the browser paints, then trigger transition
     modal.removeAttribute('hidden');
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => modal.classList.add('is-open'));
+      requestAnimationFrame(() => {
+        modal.classList.add('is-open');
+        // The shell is visibility:hidden until .is-open is set, and a hidden element cannot take focus: focus after it.
+        closeBtn.focus();
+      });
     });
-
-    closeBtn.focus();
   }
 
   function close() {
     modal.classList.remove('is-open');
-    document.body.style.overflow = '';
+    document.body.style.overflow = prevOverflow;
+    inerted.forEach(el => { el.inert = false; });
+    inerted = [];
 
     // Wait for the CSS fade-out to finish before hiding from the a11y tree
     modal.addEventListener('transitionend', function onEnd(e) {
@@ -68,7 +83,7 @@
   }
 
   // ── Wire source images ────────────────────────────────────────────────
-  document.querySelectorAll('.case-section img').forEach(img => {
+  document.querySelectorAll('.case-section img, img[data-lightbox]').forEach(img => {
     img.classList.add('is-zoomable');
     img.setAttribute('role', 'button');
     img.setAttribute('tabindex', '0');
@@ -90,7 +105,20 @@
   closeBtn.addEventListener('click', close);
   backdrop.addEventListener('click', close);
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+    if (!modal.classList.contains('is-open')) return;
+    if (e.key === 'Escape') { close(); return; }
+    if (e.key === 'Tab') {
+      // The close button is the only focusable element: keep the focus on it.
+      const list = Array.from(modal.querySelectorAll(FOCUSABLE));
+      if (!list.length) { e.preventDefault(); return; }
+      const first = list[0], last = list[list.length - 1];
+      if (!modal.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  document.addEventListener('focusin', e => {
+    if (modal.classList.contains('is-open') && !modal.contains(e.target)) closeBtn.focus();
   });
 
   // Start hidden

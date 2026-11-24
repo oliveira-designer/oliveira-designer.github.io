@@ -1,6 +1,6 @@
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v2.12.0 · November 2026
+   v2.13.0 · November 2026
    Source of truth: Figma Foundation for VALUES; DESIGN.md +
    DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
@@ -358,6 +358,7 @@
   --z-base:          0;
   --z-raised:        1;
   --z-sticky:        10;   /* Figma Z-index/z-sticky: the site header */
+  --z-overlay:       var(--z-sticky);  /* DEPRECATED (2026-11, v2.13.0): old name of the site header layer. Use --z-sticky. The next MAJOR may remove it. Nothing in the repo uses it. */
   --z-modal-scrim:   100;  /* Figma Z-index/z-modal-scrim */
   --z-modal:         200;  /* Figma Z-index/z-modal */
   --z-popover:       300;  /* Figma Z-index/z-popover: Popover, Menu and Select panels */

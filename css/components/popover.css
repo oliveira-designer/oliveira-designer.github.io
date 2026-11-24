@@ -1,0 +1,86 @@
+/* Hope DS: css/components/popover.css
+   Figma: Core, Popover (component 2413:573, page "Popover"). Edit this file, then run: npm run css:build. The behavior (open and
+   close, aria-expanded, Escape, click outside, flip) is in js/popover.js.
+
+   Markup contract (docs/components/popover.html):
+     <div class="popover-anchor">
+       <button type="button" class="btn btn--secondary" id="p-trigger" data-popover-trigger aria-expanded="false" aria-controls="p-panel">Detalhes</button>
+       <div class="popover" id="p-panel" hidden>
+         <p class="popover__title">Título</p>                 (optional: Figma "Show title")
+         <p class="popover__body">Contexto extra ou um controle pequeno.</p>
+       </div>
+     </div>
+   The panel has no role when it holds text only. When it holds interactive content, add role="dialog" (without aria-modal) and
+   aria-labelledby pointing at the title. It does not block the page and does not trap the focus (the Modal does). */
+
+/* ----------------------------------------------------------
+   ANCHOR
+   The trigger and the panel share this wrapper; the panel is placed against it.
+   ---------------------------------------------------------- */
+.popover-anchor {
+  position: relative;
+  display: inline-block;
+}
+
+/* ----------------------------------------------------------
+   POPOVER PANEL
+   Figma strokesIncludedInLayout is true: 280 is the outer width (246 of content + 32 of padding + 2 of border), so
+   box-sizing is border-box. Placement: below the trigger, aligned to its start, 8px away (--space-2); Figma defines no
+   arrow and no placement. js/popover.js adds .popover--above and .popover--end when the panel would leave the viewport.
+   ---------------------------------------------------------- */
+.popover {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  z-index: var(--z-popover);  /* Figma Z-index/z-popover (300) */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 280px;  /* Figma: 280, no spacing token */
+  max-width: calc(100vw - 2 * var(--space-4));
+  padding: var(--space-4);
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  border: var(--border-width-normal) solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.popover[hidden] {
+  display: none;
+}
+
+.popover--above {
+  top: auto;
+  bottom: calc(100% + var(--space-2));
+}
+
+.popover--end {
+  left: auto;
+  right: 0;
+}
+
+/* Title ("Show title"): Body/SemiBold/body-sm semibold, Text/Default/Default. */
+.popover__title {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--color-text-1);
+}
+
+/* Body: Body/Regular/body-sm, Text/Default/Secondary. Free content (links, a small control) is allowed. */
+.popover__body {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-2);
+}
+
+@media (forced-colors: active) {
+  .popover {
+    border-color: CanvasText;
+  }
+}

@@ -73,6 +73,11 @@ const MAP_KEY = {
   Table: 'Table',
   'Table Header Cell': 'TableHeaderCell',
   'Table Cell': 'TableCell',
+  Modal: 'Modal',
+  Popover: 'Popover',
+  Avatar: 'Avatar',
+  Tag: 'Tag',
+  'Accordion item': 'AccordionItem',
 };
 
 const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');

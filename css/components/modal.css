@@ -1,0 +1,165 @@
+/* Hope DS: css/components/modal.css
+   Figma: Core, Modal (component 2413:472, page "Modal"). Edit this file, then run: npm run css:build. The behavior (open and
+   close, focus trap, Escape, inert page, scroll lock) is in js/modal.js.
+
+   Markup contract (docs/components/modal.html):
+     <button type="button" class="btn btn--secondary" data-modal-open="m-confirm">Excluir projeto</button>
+     <div class="modal" role="dialog" aria-modal="true" id="m-confirm" aria-labelledby="m-confirm-title" aria-describedby="m-confirm-body" hidden>
+       <div class="modal__header">
+         <h2 class="modal__title" id="m-confirm-title">Excluir projeto?</h2>
+         <button type="button" class="modal__close" aria-label="Fechar" data-modal-close><svg class="icon" ...>X</svg></button>
+       </div>
+       <p class="modal__body" id="m-confirm-body">Texto de apoio.</p>
+       <div class="modal__footer">                         (optional: Figma "Show footer")
+         <button type="button" class="btn btn--secondary" data-modal-close>Cancelar</button>
+         <button type="button" class="btn btn--primary">Confirmar</button>
+       </div>
+     </div>
+   js/modal.js creates the scrim (.modal-scrim) and moves the dialog to the end of <body>, so the page behind can be made
+   inert without making the dialog inert. A click on the scrim does not close the Modal: it is for decisions. */
+
+/* ----------------------------------------------------------
+   SCRIM
+   Background/Utilities/Scrim (--color-bg-scrim), layer Z-index/z-modal-scrim (100).
+   ---------------------------------------------------------- */
+.modal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal-scrim);
+  background-color: var(--color-bg-scrim);
+}
+
+.modal-scrim[hidden] {
+  display: none;
+}
+
+/* ----------------------------------------------------------
+   MODAL PANEL
+   Figma strokesIncludedInLayout is true on the panel: 480 is the OUTER width (430 of content + 48 of padding + 2 of
+   border), so box-sizing is border-box and nothing is discounted from the padding. Layer Z-index/z-modal (200), above the
+   scrim and below the Toast (500). Centered with inset and auto margins (no transform). On narrow screens the panel keeps
+   a 24px margin (--space-6, the same as the mobile page gutter and the Lightbox padding): Figma does not define it.
+   No motion: Figma defines none, so the panel appears and disappears at once (nothing to remove for reduced motion).
+   ---------------------------------------------------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 480px;  /* Figma: 480, no spacing token */
+  max-width: calc(100% - 2 * var(--space-6));
+  height: fit-content;
+  max-height: calc(100% - 2 * var(--space-6));
+  margin: auto;
+  padding: var(--space-6);
+  overflow-y: auto;
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  border: var(--border-width-normal) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+/* The dialog gets the focus when it has nothing focusable: no ring on the panel itself. */
+.modal:focus {
+  outline: none;
+}
+
+/* Header: title and close button, gap 12. */
+.modal__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+/* Title: Heading/H3 (display font, Bold, 16px, line height 1.4), Text/Default/Default. */
+.modal__title {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-text-1);
+}
+
+/* Close: the 20px X icon in the Icon/Color Secondary mode. A transparent pseudo-element grows the hit area to 24 by 24
+   (WCAG 2.5.8) without changing the layout. Figma draws no Hover or Focus for it: Hover goes to Icon/Color Default (the
+   Ghost Icon Button pattern) and Focus uses the shared ring following the pill radius (the Icon Button pattern). */
+.modal__close {
+  position: relative;
+  display: flex;
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  margin: 0;
+  padding: 0;
+  color: var(--icon-color-secondary);
+  background: none;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.modal__close .icon {
+  width: 100%;
+  height: 100%;
+}
+
+.modal__close::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--space-1) * -0.5);
+}
+
+.modal__close:hover {
+  color: var(--icon-color-default);
+}
+
+.modal__close:focus-visible {
+  border-radius: var(--radius-pill);  /* reset.css sets radius-xs on button:focus-visible */
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Body: Body/Regular/body-sm, Text/Default/Secondary. Free content is allowed. */
+.modal__body {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-2);
+}
+
+/* Footer ("Show footer"): right aligned, gap 12. Figma shows both buttons at 184 wide, a fixed width on the instances and not
+   a Button rule, so the buttons hug their label here. .btn is full width under 768px; inside the dialog it hugs too. */
+.modal__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.modal__footer .btn {
+  width: auto;
+}
+
+/* Forced colors: the border is the only edge of the panel. */
+@media (forced-colors: active) {
+  .modal {
+    border-color: CanvasText;
+  }
+  .modal__close {
+    forced-color-adjust: none;
+    color: ButtonText;
+  }
+}

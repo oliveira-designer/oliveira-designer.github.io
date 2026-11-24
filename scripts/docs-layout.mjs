@@ -117,7 +117,9 @@ export function header(activeHref, base = '') {
 function sidebarDs(activeHref, base = '') {
   const link = (n) => `<a class="docs-ds-nav__link" href="${base}${n.href}"${n.href === activeHref ? ' aria-current="page"' : ''}>${n.label}</a>`;
   // Components with a navGroup in components-content.json (for example Navigation) get their own labelled group.
-  const groupNames = [...new Set(COMPONENT_PAGES.filter((n) => n.group).map((n) => n.group))];
+  // Groups follow the order of the Figma inventory (Navigation, then Overlays and data), not the order of the first page.
+  const GROUP_ORDER = ['Navigation', 'Overlays and data'];
+  const groupNames = [...new Set(COMPONENT_PAGES.filter((n) => n.group).map((n) => n.group))].sort((a, b) => (GROUP_ORDER.indexOf(a) + 1 || 99) - (GROUP_ORDER.indexOf(b) + 1 || 99));
   const navGroups = groupNames.map((g) => `
             <div class="docs-ds-nav__group">
               <p class="docs-ds-nav__label">${esc(g)}</p>

@@ -1,0 +1,64 @@
+/* Hope DS: css/components/avatar.css
+   Figma: Core, Avatar (Size Small|Medium|Large, component set 2413:755). Edit this file, then run: npm run css:build
+
+   Markup contract (docs/components/avatar.html):
+     Initials, name NOT next to it:   <span class="avatar avatar--medium" role="img" aria-label="Renan Moura">RM</span>
+     Initials, name next to it:       <span class="avatar avatar--medium" aria-hidden="true">RM</span> Renan Moura
+     Photo, name NOT next to it:      <span class="avatar avatar--medium"><img class="avatar__image" src="..." alt="Renan Moura"></span>
+     Photo, name next to it:          <span class="avatar avatar--medium"><img class="avatar__image" src="..." alt=""></span> Renan Moura
+   The initials are content (the Figma property defaults to "RM"), not generated. With a photo the initials are not rendered. */
+
+/* ----------------------------------------------------------
+   AVATAR
+   Circle (--radius-pill), fill Border/Default/Default, initials Text/Default/Default, centered. Small is the default.
+   No border in Figma, so box-sizing needs no discount.
+   ---------------------------------------------------------- */
+.avatar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-8);   /* Small 32 */
+  height: var(--space-8);
+  overflow: hidden;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-xs);  /* Body/SemiBold/body-xs semibold */
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--color-text-1);
+  background-color: var(--color-border);
+  border-radius: var(--radius-pill);
+  vertical-align: middle;
+}
+
+.avatar--small {
+  width: var(--space-8);
+  height: var(--space-8);
+  font-size: var(--fs-body-xs);
+}
+
+/* Medium 40: Body/SemiBold/body-sm semibold. */
+.avatar--medium {
+  width: var(--space-10);
+  height: var(--space-10);
+  font-size: var(--fs-body-sm);
+}
+
+/* Large 56: Heading/H3 (display font, Bold, 16px, line height 1.4). Figma: 56, no spacing token. */
+.avatar--large {
+  width: 56px;
+  height: 56px;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Photo: the image fills the circle. */
+.avatar__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

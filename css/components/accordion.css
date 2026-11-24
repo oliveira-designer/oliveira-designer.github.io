@@ -1,0 +1,168 @@
+/* Hope DS: css/components/accordion.css
+   Figma: Core, Accordion item (Open false|true, State Default|Hover|Focus|Disabled, Disabled only closed, set 2413:948).
+   Edit this file, then run: npm run css:build. The behavior (toggle, panel role by item count) is in js/accordion.js.
+
+   Markup contract (docs/components/accordion.html):
+     <div class="accordion">
+       <div class="accordion__item">
+         <h3 class="accordion__heading">
+           <button type="button" class="accordion__trigger" id="a1-trigger" aria-expanded="false" aria-controls="a1-panel">
+             <span class="accordion__title">Título</span>
+             <svg class="icon accordion__chevron" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="..."/></svg>
+           </button>
+         </h3>
+         <div class="accordion__panel" id="a1-panel" role="region" aria-labelledby="a1-trigger" hidden>Conteúdo.</div>
+       </div>
+       ...
+     </div>
+   role="region" and aria-labelledby on the panel only when the list has 6 items or fewer (more would flood the landmark list);
+   js/accordion.js applies this rule. The heading level is the author's. A closed panel is hidden with the hidden attribute. */
+
+/* The list: stacked items, full width. No overflow here: the focus ring of an item is drawn 4px outside it. */
+.accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ----------------------------------------------------------
+   ITEM
+   Figma strokesIncludedInLayout is true: only a bottom border of 1px, part of the height (closed item 54 = 16 + 21 + 16 + 1),
+   so box-sizing is border-box and the padding is not discounted. The item fills its container (480 is the Figma specimen).
+   Stacked items: the last one keeps its border, as in Figma. The container must not set overflow: the focus ring is drawn
+   4px outside the item.
+   ---------------------------------------------------------- */
+.accordion__item {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-4);
+  font-family: var(--font-body);
+  border-bottom: var(--border-width-normal) solid var(--color-border);
+}
+
+/* Hover: the whole item takes Background/Default/Secondary (open or closed). A disabled item does not. */
+.accordion__item:hover:not(:has(.accordion__trigger:disabled)) {
+  background-color: var(--color-bg-alt);
+}
+
+.accordion__heading {
+  margin: 0;
+  font: inherit;
+}
+
+/* ----------------------------------------------------------
+   TRIGGER
+   The header is a button: title Body/SemiBold/body-sm semibold, chevron 20px at the right, gap 12. A transparent
+   pseudo-element extends the click target over the item padding (the padding belongs to the item, as in Figma).
+   ---------------------------------------------------------- */
+.accordion__trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--color-text-1);
+  background: none;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.accordion__trigger::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--space-4) * -1) calc(var(--space-4) * -1) calc(var(--space-2) * -1);  /* open: stops at the gap, so the content is not part of the button */
+}
+
+.accordion__trigger[aria-expanded="false"]::after {
+  bottom: calc(var(--space-4) * -1);
+}
+
+.accordion__title {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Chevron: CaretDown 20px, Icon/Color Secondary. Open: rotated 180 degrees. No transition: Figma defines no motion. */
+.accordion__trigger .accordion__chevron {
+  flex: none;
+  width: var(--space-5);
+  height: var(--space-5);
+  color: var(--icon-color-secondary);
+}
+
+.accordion__trigger[aria-expanded="true"] .accordion__chevron {
+  transform: rotate(180deg);
+}
+
+/* Content: Body/Regular/body-sm, Text/Default/Secondary. */
+.accordion__panel {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-2);
+}
+
+.accordion__panel[hidden] {
+  display: none;
+}
+
+/* ----------------------------------------------------------
+   FOCUS
+   Fallback first: a plain ring on the button, so focus is never invisible where :has() is not supported. Where :has() is
+   supported the ring surrounds the WHOLE item (488 by 62 closed, 488 by 112 open: 4px outside each side), square, even
+   though the focus is on the header button, and the button's own ring is removed. The focused item is raised one layer so
+   the ring is not painted under the next item.
+   ---------------------------------------------------------- */
+.accordion__trigger:focus-visible {
+  border-radius: 0;  /* reset.css sets radius-xs on button:focus-visible */
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+@supports selector(:has(a)) {
+  .accordion__trigger:focus-visible {
+    outline: none;
+  }
+
+  .accordion__item:has(.accordion__trigger:focus-visible) {
+    position: relative;
+    z-index: var(--z-raised);
+    outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+    outline-offset: var(--focus-ring-gap);
+  }
+}
+
+/* Disabled (closed only in Figma): title Text/Disabled/Default, chevron in the Disabled mode, no opacity. */
+.accordion__trigger:disabled {
+  color: var(--color-text-disabled-default);
+  cursor: not-allowed;
+}
+
+.accordion__trigger:disabled .accordion__chevron {
+  color: var(--icon-color-disabled);
+}
+
+@media (forced-colors: active) {
+  .accordion__item {
+    border-bottom-color: CanvasText;
+  }
+  .accordion__trigger {
+    forced-color-adjust: none;
+    color: ButtonText;
+  }
+  .accordion__trigger:disabled {
+    color: GrayText;
+  }
+}

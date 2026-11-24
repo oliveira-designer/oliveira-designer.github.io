@@ -1,0 +1,88 @@
+/* Hope DS: css/components/tag.css
+   Figma: Core, Tag (State Default|Hover|Focus|Disabled, "Show dismiss", component set 2413:839). Edit this file, then run:
+   npm run css:build. The behavior (Delete or Backspace removes, click removes) is in js/tag.js.
+
+   Markup contract (docs/components/tag.html):
+     <button type="button" class="tag" data-tag-removable aria-label="Remover filtro Design">
+       <span class="tag__label">Design</span>
+       <svg class="icon tag__dismiss" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="..."/></svg>
+     </button>
+   The whole Tag is the button; the X is a visual cue inside it, not a second button. The accessible name is the visible label
+   plus the action ("Remover filtro Design"). A Tag that is not interactive is a Badge: do not use .tag for it. */
+
+/* ----------------------------------------------------------
+   TAG
+   Figma strokesIncludedInLayout is true: the 1px border is part of the 28px height, so box-sizing is border-box and the
+   padding stays 0 12 (width = 12 + content + 12 + 2 of border; 67 for the label "Tag" with the dismiss icon). Pill radius,
+   gap 4, label Body/Medium/body-sm medium.
+   ---------------------------------------------------------- */
+.tag {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-1);
+  height: 28px;  /* Figma: 28, no spacing token */
+  margin: 0;
+  padding: 0 var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--color-text-1);
+  background-color: var(--color-bg-alt);
+  border: var(--border-width-normal) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color var(--duration-normal) var(--ease-out);
+}
+
+/* Label: one line, the Tag hugs it. */
+.tag__label {
+  white-space: nowrap;
+}
+
+/* Dismiss: X 14px in the Icon/Color Secondary mode. Two classes: icon.css loads after this file and its .icon sets 1em. */
+.tag .tag__dismiss {
+  flex: none;
+  width: 14px;  /* Figma: 14, no spacing token */
+  height: 14px;
+  color: var(--icon-color-secondary);
+}
+
+/* Hover: fill Border/Default/Default. */
+.tag:hover:not(:disabled) {
+  background-color: var(--color-border);
+}
+
+/* Focus: ring around the whole Tag, 75 by 36 around a 67 by 28 tag (4px outside each side), following the pill (radius 18). */
+.tag:focus-visible {
+  border-radius: var(--radius-pill);  /* reset.css sets radius-xs on button:focus-visible */
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Disabled: fill, border, text and icon from the Disabled tokens, no opacity. */
+.tag:disabled {
+  color: var(--color-text-disabled-default);
+  cursor: not-allowed;
+  background-color: var(--color-bg-disabled-default);
+  border-color: var(--color-border-disabled-default);
+}
+
+.tag:disabled .tag__dismiss {
+  color: var(--icon-color-disabled);
+}
+
+@media (forced-colors: active) {
+  .tag {
+    forced-color-adjust: none;
+    color: ButtonText;
+    border-color: ButtonText;
+  }
+  .tag:disabled {
+    color: GrayText;
+    border-color: GrayText;
+  }
+}

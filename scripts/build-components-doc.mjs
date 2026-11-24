@@ -215,8 +215,30 @@ function accessibilityText(comp) {
   return [first, a.meaning].filter(Boolean).join(' ');
 }
 
+const notesTable = (comp) => hopeTable({
+  id: `${comp.slug}-notes-caption`,
+  caption: `${comp.name} code notes, the status of each and the detail`,
+  cols: [{ label: 'Note' }, { label: 'Status' }, { label: 'Detail' }],
+  rows: comp.knownGaps.map((g) => [code(g.id), esc(g.status), esc(g.text)]),
+});
+
 const SECTIONS = {
   when: (comp) => modelSection('when', 'When to use', list(comp.whenToUse)),
+  whenNot: (comp) => modelSection('when-not', 'When not to use', list(comp.whenNotToUse)),
+  anatomy: (comp) => modelSection('anatomy', 'Anatomy', list(comp.anatomy || [])),
+  states: (comp) => modelSection('states', 'States', hopeTable({
+    id: `${comp.slug}-states-caption`,
+    caption: `${comp.name} states, what changes in each and the tokens involved`,
+    cols: [{ label: 'State' }, { label: 'What changes' }, { label: 'Tokens' }],
+    rows: (comp.states || []).map((r) => [esc(r[0]), esc(r[1]), r[2] === 'none' ? '<span class="docs-muted">none</span>' : r[2].split(', ').map(code).join(' ')]),
+  })),
+  keyboard: (comp) => modelSection('keyboard', 'Keyboard and ARIA', hopeTable({
+    id: `${comp.slug}-keyboard-caption`,
+    caption: `${comp.name} keyboard interaction`,
+    cols: [{ label: 'Key' }, { label: 'Action' }],
+    rows: (comp.keyboard || []).map((r) => [esc(r[0]), esc(r[1])]),
+  }) + NL + '            ' + list(comp.aria || [])),
+  notes: (comp) => modelSection('notes', 'Code notes', notesTable(comp)),
   variants: variantsSection,
   contract: (comp) => modelSection('contract', 'Markup contract', list(comp.contract || [])),
   accessibility: (comp) => modelSection('accessibility', 'Accessibility', `<p class="docs-ds-note">${esc(accessibilityText(comp))}</p>`),

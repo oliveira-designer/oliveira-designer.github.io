@@ -1,9 +1,11 @@
 /* Hope DS: css/components/lightbox.css
-   Split from css/components.css on 2026-11-20 (D-18). No selector, declaration or rule order changed.
-   Edit this file, then run: npm run css:build */
+   Split from css/components.css on 2026-11-20 (D-18). Aligned to Figma Core, Lightbox (component 2456:4, page "Lightbox") in v2.13.0.
+   Edit this file, then run: npm run css:build. The behavior (open from an image, close, focus trap, inert page, scroll lock)
+   is in js/lightbox.js, which builds the markup below and opens it from every image of .case-section and from any
+   <img data-lightbox> (the docs demo). The caption comes from the figcaption of the image. */
 
 /* ----------------------------------------------------------
-   LIGHTBOX — full-screen image zoom modal
+   LIGHTBOX: full-screen image viewer
    ---------------------------------------------------------- */
 
 /* Zoomable image hint */
@@ -13,11 +15,12 @@
 }
 .is-zoomable:hover { opacity: 0.88; }
 
-/* Overlay shell — covers the viewport */
+/* Overlay shell: covers the viewport, padding 24 (Figma), layer Z-index/z-modal (200), the same level as the Modal. */
 .lightbox {
   position: fixed;
   inset: 0;
   z-index: var(--z-modal);
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,7 +43,8 @@
     visibility 0s linear           0s;
 }
 
-/* Frosted dark backdrop */
+/* Backdrop: Background/Utilities/Scrim Strong (Neutral ink at 88%) plus a 12px background blur. The Figma blur is a raw
+   effect (BACKGROUND_BLUR, radius 12), not a style, and no blur token matches it (--blur-glass is 24px with saturation). */
 .lightbox__backdrop {
   position: absolute;
   inset: 0;
@@ -49,7 +53,8 @@
           backdrop-filter: blur(12px);
 }
 
-/* Content panel — image + caption, animated scale */
+/* Panel: image and caption, gap 16. The image is up to 960 wide. Motion (scale and fade) is the one the repo already had;
+   Figma defines none, and it is removed under reduced motion. */
 .lightbox__panel {
   position: relative;
   z-index: 1;
@@ -57,7 +62,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-4);
-  max-width: min(92vw, 1280px);
+  max-width: 100%;
   /* Closed: slightly shrunk and dropped */
   transform: scale(0.92) translateY(12px);
   transition: transform var(--duration-slower) var(--ease-out);
@@ -66,55 +71,88 @@
   transform: scale(1) translateY(0);
 }
 
-/* Image */
+/* Media: hugs the image, so the close button sits at the corner of the image (Figma: the top-right of a panel as wide as the
+   image). */
+.lightbox__media {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+}
+
+/* Image: radius 16 and Shadow/lg (Figma). It never grows past 960 wide (Figma: 960, no spacing token), and its height leaves
+   room above for the close button (40px) and below for a caption of up to three lines, so the button always stays inside the
+   viewport. The image has no border, and the panel has no root border. */
 .lightbox__img {
   display: block;
-  max-width: 100%;
-  max-height: 82vh;
+  max-width: min(960px, calc(100vw - 2 * var(--space-6)));
+  max-height: calc(100dvh - 2 * (var(--space-6) + var(--space-10)) - 6rem);
   width: auto;
   height: auto;
   border-radius: var(--radius-lg);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.60);
+  box-shadow: var(--shadow-lg);
 }
 
-/* Caption */
+/* Caption: Body/Regular/body-sm, the Figma white variable at 55%, centered, 520 wide. */
 .lightbox__caption {
+  max-width: 520px;  /* Figma: 520, no spacing token */
+  margin: 0;
   font-family: var(--font-body);
   font-size:   var(--fs-body-sm);
-  color:       rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
   text-align:  center;
-  max-width:   60ch;
-  line-height: 1.5;
+  color:       color-mix(in srgb, var(--color-cloud) 55%, transparent);
 }
 
-/* Close button — top-right corner of the panel */
+/* Close button: 36 by 36 circle at the top-right corner of the image, 40px above the image (Figma: x 924, y -40 in a 960
+   panel). Fill and 1px stroke are the Figma white variable at 12% and 18%; the stroke is part of the 36 (border-box). The X is
+   20px at 80% opacity. It is white in both themes on purpose: the scrim is the same in Light and Dark, and the Icon/Color
+   Neutral mode would turn ink in Dark. Figma draws no Hover or Focus for it: Hover is the repo's (22% fill, full opacity), Focus
+   is the shared ring in Solar, because the Light focus color (Anchor) is only 2.2:1 against this scrim. */
 .lightbox__close {
   position: absolute;
   top:   calc(-1 * var(--space-10));
   right: 0;
+  box-sizing: border-box;
   display: grid;
   place-items: center;
-  width:  36px;
+  width:  36px;  /* Figma: 36, no spacing token */
   height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.80);
+  padding: 0;
+  color: var(--color-cloud);
+  background: color-mix(in srgb, var(--color-cloud) 12%, transparent);
+  border: var(--border-width-normal) solid color-mix(in srgb, var(--color-cloud) 18%, transparent);
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  transition:
-    background var(--duration-normal) var(--ease-out),
-    color      var(--duration-normal) var(--ease-out);
+  transition: background var(--duration-normal) var(--ease-out);
+}
+.lightbox__close .icon {
+  width: var(--space-5);
+  height: var(--space-5);
+  opacity: 0.8;
+  transition: opacity var(--duration-normal) var(--ease-out);
 }
 .lightbox__close:hover {
-  background: rgba(255, 255, 255, 0.22);
-  color: var(--color-cloud);
+  background: color-mix(in srgb, var(--color-cloud) 22%, transparent);
+}
+.lightbox__close:hover .icon {
+  opacity: 1;
 }
 .lightbox__close:focus-visible {
-  outline: var(--focus-ring-width) solid var(--color-solar);   /* solar: sits on the dark scrim */
+  border-radius: var(--radius-pill);  /* reset.css sets radius-xs on button:focus-visible */
+  outline: var(--focus-ring-width) solid var(--color-solar);   /* solar: sits on the dark scrim in both themes */
   outline-offset: var(--focus-ring-gap);
 }
 
-/* Reduced-motion: skip the scale, keep the fade */
+/* Reduced-motion: skip the scale, keep the fade (the global rule in tokens.css shortens the fade too) */
 @media (prefers-reduced-motion: reduce) {
   .lightbox__panel { transform: none !important; transition: none !important; }
+}
+
+@media (forced-colors: active) {
+  .lightbox__close {
+    forced-color-adjust: none;
+    color: ButtonText;
+    background: ButtonFace;
+    border-color: ButtonText;
+  }
 }
