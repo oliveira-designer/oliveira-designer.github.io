@@ -828,7 +828,7 @@ O sistema é flat por princípio. Sombras existem mas são usadas com parcimôni
 
 Hierarquia de profundidade (z-index):
 
-- Base: 0 · Sticky header: 10 · Modal backdrop: 100 · Modal: 200 · Popover: 300 · Tooltip: 400 · Toast: 500 (o CSS usa 100 no header do site; ver DESIGN-IMPLEMENTATION, seção 8)
+- Base: 0 · Raised: 1 · Sticky (header do site): 10 · Modal backdrop: 100 · Modal: 200 · Popover: 300 · Tooltip: 400 · Notification (Toast): 500. Detalhes na seção 8 do DESIGN-IMPLEMENTATION.
 
 Hover em cards: borda muda para Âncora + sombra `md`. Sem `transform: translateY` em cards (cria expectativa de drag).
 

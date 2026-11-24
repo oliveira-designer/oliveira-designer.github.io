@@ -589,8 +589,7 @@ Escala do Figma (`Hope · Primitives`, grupo `Z-index`), com camadas a cada 100 
 :root {
   --z-base:         0;
   --z-raised:       1;    /* Cards em hover */
-  --z-sticky:       10;   /* Sem uso hoje no site */
-  --z-overlay:      100;  /* Header do site (não é o backdrop do modal, veja --z-modal-scrim) */
+  --z-sticky:       10;   /* Figma z-sticky: header do site */
   --z-modal-scrim:  100;  /* Figma z-modal-scrim: backdrop de modal */
   --z-modal:        200;  /* Figma z-modal: Modal, dialog */
   --z-popover:      300;  /* Figma z-popover: Popover, Menu, painel do Select */
@@ -599,9 +598,7 @@ Escala do Figma (`Hope · Primitives`, grupo `Z-index`), com camadas a cada 100 
 }
 ```
 
-`--z-overlay` e `--z-modal-scrim` valem 100 mas são camadas diferentes (o header e o backdrop de modal), então um não é alias do outro. Nenhum valor computado de `z-index` mudou na v2.11.0: o Toast trocou o literal 500 por `var(--z-notification)`.
-
-**Divergência registrada (v2.11.0).** O texto anterior desta seção e o `DESIGN.md` descrevem o header sticky em 10 e o backdrop do modal em 100. No CSS, o header (`css/site/header.css`) usa `--z-overlay` (100), `--z-sticky` (10) não tem uso e `--z-max` (9999) estava documentado mas não existe em `tokens.css`. Nada foi alterado no CSS por causa disso: a escolha entre mover o header para `--z-sticky` ou atualizar o texto é decisão do Renan.
+A escala final é: base 0, raised 1, sticky 10, modal-scrim 100, modal 200, popover 300, tooltip 400, notification 500. Na v2.12.0 o header do site passou a usar `--z-sticky` (era `--z-overlay`, 100, que empatava com o scrim do modal) e `--z-overlay` foi removido. Não existe `--z-max`: o skip link usa `--z-modal`, como em `css/reset.css`. Ficam fora da escala, de propósito, `z-index: 1` em `lightbox.css` (camada interna do componente) e `z-index: -1` em `sections.css`.
 
 ---
 
@@ -1280,23 +1277,7 @@ pre.code-block code {
 
 ### Spinner
 
-```css
-.spinner {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--color-border);
-  border-top-color: var(--color-anchor);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-@media (prefers-reduced-motion: reduce) {
-  .spinner { animation-duration: 2s; }
-}
-```
+Ver `css/components/spinner.css` (Lote 2B). Anel de 24px com arco de cerca de 99 graus. A rotação é **linear**, 1s por volta, infinita (v2.12.0, decisão do Figma Core). Em `prefers-reduced-motion` a rotação vira um pulso de opacidade em ease-in-out. O pulso do Skeleton também é ease-in-out: o easing ease-in-out vale só para pulsos, nunca para a rotação.
 
 ---
 
@@ -1521,7 +1502,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: -100px;
   left: var(--space-4);
-  z-index: var(--z-max);
+  z-index: var(--z-modal);
   padding: var(--space-3) var(--space-4);
   background: var(--color-anchor);
   color: #FFFFFF;
@@ -1685,8 +1666,8 @@ Padrão: `--category-name-modifier` em kebab-case.
 --transition-hover
 
 /* Z-index — categoria z */
---z-sticky
---z-modal
+--z-base  --z-raised  --z-sticky  --z-modal-scrim  --z-modal
+--z-popover  --z-tooltip  --z-notification
 
 /* Ícones — categoria icon */
 --icon-color-default

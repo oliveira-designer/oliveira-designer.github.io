@@ -22,7 +22,7 @@ html {
   height: var(--header-height);
   display: flex;
   align-items: center;
-  z-index: var(--z-overlay);
+  z-index: var(--z-sticky);
 
   /* Glassmorphism — light mode. Bg/border on the unified Material recipe. */
   background: var(--color-material-bg);
