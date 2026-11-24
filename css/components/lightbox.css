@@ -1,5 +1,5 @@
 /* Hope DS: css/components/lightbox.css
-   Split from css/components.css on 2026-11-20 (D-18). Aligned to Figma Core, Lightbox (component 2456:4, page "Lightbox") in v2.13.0.
+   Split from css/components.css on 2026-11-20 (D-18). Aligned to Figma Core, Lightbox (component 2456:4) and Lightbox close (set 2570:1148, page "Lightbox") in v2.13.0 and v2.13.1.
    Edit this file, then run: npm run css:build. The behavior (open from an image, close, focus trap, inert page, scroll lock)
    is in js/lightbox.js, which builds the markup below and opens it from every image of .case-section and from any
    <img data-lightbox> (the docs demo). The caption comes from the figcaption of the image. */
@@ -43,14 +43,17 @@
     visibility 0s linear           0s;
 }
 
-/* Backdrop: Background/Utilities/Scrim Strong (Neutral ink at 88%) plus a 12px background blur. The Figma blur is a raw
-   effect (BACKGROUND_BLUR, radius 12), not a style, and no blur token matches it (--blur-glass is 24px with saturation). */
+/* Backdrop: Background/Utilities/Scrim Strong (Neutral ink at 88%) plus a background blur. The Figma effect is a raw
+   BACKGROUND_BLUR of radius 12 (not a style). The Figma radius is double the CSS radius, so Figma 12 is blur(6px) (decided
+   2026-11-24; Figma's own code export gives blur(6px); the source of the equivalence is Figma forum answers, not the official
+   docs). No blur token matches it (--blur-glass is 24px with saturation), so the value is a literal. Accepted divergence in
+   docs/data/accepted-divergences.json. */
 .lightbox__backdrop {
   position: absolute;
   inset: 0;
   background: var(--color-bg-scrim-strong);
-  -webkit-backdrop-filter: blur(12px);
-          backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
 }
 
 /* Panel: image and caption, gap 16. The image is up to 960 wide. Motion (scale and fade) is the one the repo already had;
@@ -103,11 +106,13 @@
   color:       color-mix(in srgb, var(--color-cloud) 55%, transparent);
 }
 
-/* Close button: 36 by 36 circle at the top-right corner of the image, 40px above the image (Figma: x 924, y -40 in a 960
-   panel). Fill and 1px stroke are the Figma white variable at 12% and 18%; the stroke is part of the 36 (border-box). The X is
-   20px at 80% opacity. It is white in both themes on purpose: the scrim is the same in Light and Dark, and the Icon/Color
-   Neutral mode would turn ink in Dark. Figma draws no Hover or Focus for it: Hover is the repo's (22% fill, full opacity), Focus
-   is the shared ring in Solar, because the Light focus color (Anchor) is only 2.2:1 against this scrim. */
+/* Close button (Figma component Lightbox close: Default, Hover, Focus; no Disabled). A 36 by 36 circle at the top-right corner of
+   the image, 40px above it (Figma: x 924, y -40 in a 960 panel). The two glass layers use the Figma primitive white (no CSS
+   token of that name; --color-cloud is the same #FFFFFF): fill at 12%, edge 1px at 18%, the edge part of the 36 (border-box).
+   The X is 20px at 80% opacity. Hover: fill 22%, edge 32%, X at 100%. Focus: Default plus a ring in Border/Accent/Default
+   (--color-border-accent-default, Solar), 2px with a 2px gap (44 by 44 around the circle, radius 22). The X is white in BOTH
+   themes on purpose: the Lightbox scrim is dark in both, so it does not follow Icon/Color (Neutral would turn ink in Dark).
+   Dark mode era item: reevaluate when dark mode lands. */
 .lightbox__close {
   position: absolute;
   top:   calc(-1 * var(--space-10));
@@ -123,7 +128,9 @@
   border: var(--border-width-normal) solid color-mix(in srgb, var(--color-cloud) 18%, transparent);
   border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: background var(--duration-normal) var(--ease-out);
+  transition:
+    background   var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
 }
 .lightbox__close .icon {
   width: var(--space-5);
@@ -133,13 +140,14 @@
 }
 .lightbox__close:hover {
   background: color-mix(in srgb, var(--color-cloud) 22%, transparent);
+  border-color: color-mix(in srgb, var(--color-cloud) 32%, transparent);
 }
 .lightbox__close:hover .icon {
   opacity: 1;
 }
 .lightbox__close:focus-visible {
   border-radius: var(--radius-pill);  /* reset.css sets radius-xs on button:focus-visible */
-  outline: var(--focus-ring-width) solid var(--color-solar);   /* solar: sits on the dark scrim in both themes */
+  outline: var(--focus-ring-width) solid var(--color-border-accent-default);   /* Solar, in both themes: sits on the dark scrim */
   outline-offset: var(--focus-ring-gap);
 }
 

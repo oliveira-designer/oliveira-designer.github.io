@@ -52,6 +52,7 @@ const MAP_KEY = {
   Separator: 'Separator',
   Banner: 'Banner',
   Lightbox: 'Lightbox',
+  'Lightbox close': 'LightboxClose',
   Alert: 'Alert',
   Toast: 'Toast',
   'Empty state': 'EmptyState',

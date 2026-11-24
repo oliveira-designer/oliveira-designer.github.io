@@ -9,7 +9,7 @@
 /* ===== css/tokens.css ===== */
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v2.13.0 · November 2026
+   v2.13.1 · November 2026
    Source of truth: Figma Foundation for VALUES; DESIGN.md +
    DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
@@ -3123,7 +3123,7 @@ p { max-width: 70ch; }
 
 /* ===== css/components/lightbox.css ===== */
 /* Hope DS: css/components/lightbox.css
-   Split from css/components.css on 2026-11-20 (D-18). Aligned to Figma Core, Lightbox (component 2456:4, page "Lightbox") in v2.13.0.
+   Split from css/components.css on 2026-11-20 (D-18). Aligned to Figma Core, Lightbox (component 2456:4) and Lightbox close (set 2570:1148, page "Lightbox") in v2.13.0 and v2.13.1.
    Edit this file, then run: npm run css:build. The behavior (open from an image, close, focus trap, inert page, scroll lock)
    is in js/lightbox.js, which builds the markup below and opens it from every image of .case-section and from any
    <img data-lightbox> (the docs demo). The caption comes from the figcaption of the image. */
@@ -3167,14 +3167,17 @@ p { max-width: 70ch; }
     visibility 0s linear           0s;
 }
 
-/* Backdrop: Background/Utilities/Scrim Strong (Neutral ink at 88%) plus a 12px background blur. The Figma blur is a raw
-   effect (BACKGROUND_BLUR, radius 12), not a style, and no blur token matches it (--blur-glass is 24px with saturation). */
+/* Backdrop: Background/Utilities/Scrim Strong (Neutral ink at 88%) plus a background blur. The Figma effect is a raw
+   BACKGROUND_BLUR of radius 12 (not a style). The Figma radius is double the CSS radius, so Figma 12 is blur(6px) (decided
+   2026-11-24; Figma's own code export gives blur(6px); the source of the equivalence is Figma forum answers, not the official
+   docs). No blur token matches it (--blur-glass is 24px with saturation), so the value is a literal. Accepted divergence in
+   docs/data/accepted-divergences.json. */
 .lightbox__backdrop {
   position: absolute;
   inset: 0;
   background: var(--color-bg-scrim-strong);
-  -webkit-backdrop-filter: blur(12px);
-          backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
 }
 
 /* Panel: image and caption, gap 16. The image is up to 960 wide. Motion (scale and fade) is the one the repo already had;
@@ -3227,11 +3230,13 @@ p { max-width: 70ch; }
   color:       color-mix(in srgb, var(--color-cloud) 55%, transparent);
 }
 
-/* Close button: 36 by 36 circle at the top-right corner of the image, 40px above the image (Figma: x 924, y -40 in a 960
-   panel). Fill and 1px stroke are the Figma white variable at 12% and 18%; the stroke is part of the 36 (border-box). The X is
-   20px at 80% opacity. It is white in both themes on purpose: the scrim is the same in Light and Dark, and the Icon/Color
-   Neutral mode would turn ink in Dark. Figma draws no Hover or Focus for it: Hover is the repo's (22% fill, full opacity), Focus
-   is the shared ring in Solar, because the Light focus color (Anchor) is only 2.2:1 against this scrim. */
+/* Close button (Figma component Lightbox close: Default, Hover, Focus; no Disabled). A 36 by 36 circle at the top-right corner of
+   the image, 40px above it (Figma: x 924, y -40 in a 960 panel). The two glass layers use the Figma primitive white (no CSS
+   token of that name; --color-cloud is the same #FFFFFF): fill at 12%, edge 1px at 18%, the edge part of the 36 (border-box).
+   The X is 20px at 80% opacity. Hover: fill 22%, edge 32%, X at 100%. Focus: Default plus a ring in Border/Accent/Default
+   (--color-border-accent-default, Solar), 2px with a 2px gap (44 by 44 around the circle, radius 22). The X is white in BOTH
+   themes on purpose: the Lightbox scrim is dark in both, so it does not follow Icon/Color (Neutral would turn ink in Dark).
+   Dark mode era item: reevaluate when dark mode lands. */
 .lightbox__close {
   position: absolute;
   top:   calc(-1 * var(--space-10));
@@ -3247,7 +3252,9 @@ p { max-width: 70ch; }
   border: var(--border-width-normal) solid color-mix(in srgb, var(--color-cloud) 18%, transparent);
   border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: background var(--duration-normal) var(--ease-out);
+  transition:
+    background   var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
 }
 .lightbox__close .icon {
   width: var(--space-5);
@@ -3257,13 +3264,14 @@ p { max-width: 70ch; }
 }
 .lightbox__close:hover {
   background: color-mix(in srgb, var(--color-cloud) 22%, transparent);
+  border-color: color-mix(in srgb, var(--color-cloud) 32%, transparent);
 }
 .lightbox__close:hover .icon {
   opacity: 1;
 }
 .lightbox__close:focus-visible {
   border-radius: var(--radius-pill);  /* reset.css sets radius-xs on button:focus-visible */
-  outline: var(--focus-ring-width) solid var(--color-solar);   /* solar: sits on the dark scrim in both themes */
+  outline: var(--focus-ring-width) solid var(--color-border-accent-default);   /* Solar, in both themes: sits on the dark scrim */
   outline-offset: var(--focus-ring-gap);
 }
 
@@ -3615,7 +3623,8 @@ p { max-width: 70ch; }
    Figma strokesIncludedInLayout is true on the panel: 480 is the OUTER width (430 of content + 48 of padding + 2 of
    border), so box-sizing is border-box and nothing is discounted from the padding. Layer Z-index/z-modal (200), above the
    scrim and below the Toast (500). Centered with inset and auto margins (no transform). On narrow screens the panel keeps
-   a 24px margin (--space-6, the same as the mobile page gutter and the Lightbox padding): Figma does not define it.
+   a 16px margin each side (--space-4): the width is min(480, 100% - 32), the panel is as tall as its content up to the viewport
+   minus the same margin, the BODY scrolls and the header and footer stay in view (Figma Info text, approved 2026-11-24).
    No motion: Figma defines none, so the panel appears and disappears at once (nothing to remove for reduced motion).
    ---------------------------------------------------------- */
 .modal {
@@ -3626,13 +3635,12 @@ p { max-width: 70ch; }
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  width: 480px;  /* Figma: 480, no spacing token */
-  max-width: calc(100% - 2 * var(--space-6));
+  width: min(480px, calc(100% - 2 * var(--space-4)));  /* Figma: 480, no spacing token */
   height: fit-content;
-  max-height: calc(100% - 2 * var(--space-6));
+  max-height: calc(100dvh - 2 * var(--space-4));
   margin: auto;
   padding: var(--space-6);
-  overflow-y: auto;
+  overflow: hidden;
   font-family: var(--font-body);
   background-color: var(--color-bg);
   border: var(--border-width-normal) solid var(--color-border);
@@ -3649,8 +3657,9 @@ p { max-width: 70ch; }
   outline: none;
 }
 
-/* Header: title and close button, gap 12. */
+/* Header: title and close button, gap 12. Fixed while the body scrolls. */
 .modal__header {
+  flex: none;
   display: flex;
   align-items: flex-start;
   gap: var(--space-3);
@@ -3668,9 +3677,10 @@ p { max-width: 70ch; }
   color: var(--color-text-1);
 }
 
-/* Close: the 20px X icon in the Icon/Color Secondary mode. A transparent pseudo-element grows the hit area to 24 by 24
-   (WCAG 2.5.8) without changing the layout. Figma draws no Hover or Focus for it: Hover goes to Icon/Color Default (the
-   Ghost Icon Button pattern) and Focus uses the shared ring following the pill radius (the Icon Button pattern). */
+/* Close: the 20px X icon in the Icon/Color Secondary mode. It follows the Icon Button Ghost behavior (Figma Info text): Hover
+   fills Background/Default/Secondary (--color-bg-alt) and the X goes to Icon/Color Default; Focus is the shared ring (2px, 2px gap)
+   following the pill radius. The hover fill and the hit area are a transparent pseudo-element of 28 by 28 (4px around the X, which
+   also covers the tips of the glyph; WCAG 2.5.8 asks 24 by 24) so the layout does not change. It is not a new component. */
 .modal__close {
   position: relative;
   display: flex;
@@ -3688,6 +3698,8 @@ p { max-width: 70ch; }
 }
 
 .modal__close .icon {
+  position: relative;  /* above the hover fill */
+  z-index: 1;
   width: 100%;
   height: 100%;
 }
@@ -3695,11 +3707,17 @@ p { max-width: 70ch; }
 .modal__close::after {
   content: "";
   position: absolute;
-  inset: calc(var(--space-1) * -0.5);
+  inset: calc(var(--space-1) * -1);
+  border-radius: var(--radius-pill);
+  transition: background-color var(--duration-normal) var(--ease-out);
 }
 
 .modal__close:hover {
   color: var(--icon-color-default);
+}
+
+.modal__close:hover::after {
+  background-color: var(--color-bg-alt);
 }
 
 .modal__close:focus-visible {
@@ -3708,18 +3726,32 @@ p { max-width: 70ch; }
   outline-offset: var(--focus-ring-gap);
 }
 
-/* Body: Body/Regular/body-sm, Text/Default/Secondary. Free content is allowed. */
+/* Body: Body/Regular/body-sm, Text/Default/Secondary. Free content is allowed. It scrolls when the content passes the height of the
+   screen (js/modal.js gives it tabindex="0" then, so the keyboard can scroll it). */
 .modal__body {
-  margin: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  /* The scroll box would clip the focus ring (4px) of a link or control inside the body: 4px of padding give it room and the
+     same negative margin keeps the layout where Figma has it. */
+  margin: calc(var(--space-1) * -1);
+  padding: var(--space-1);
   font-size: var(--fs-body-sm);
   font-weight: 400;
   line-height: 1.6;
   color: var(--color-text-2);
 }
 
-/* Footer ("Show footer"): right aligned, gap 12. Figma shows both buttons at 184 wide, a fixed width on the instances and not
+.modal__body:focus-visible {
+  border-radius: var(--radius-xs);
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Footer ("Show footer"): fixed while the body scrolls, right aligned, gap 12. Figma shows both buttons at 184 wide, a fixed width on the instances and not
    a Button rule, so the buttons hug their label here. .btn is full width under 768px; inside the dialog it hugs too. */
 .modal__footer {
+  flex: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;

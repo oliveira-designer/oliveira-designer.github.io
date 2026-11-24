@@ -219,7 +219,7 @@ const notesTable = (comp) => hopeTable({
   id: `${comp.slug}-notes-caption`,
   caption: `${comp.name} code notes, the status of each and the detail`,
   cols: [{ label: 'Note' }, { label: 'Status' }, { label: 'Detail' }],
-  rows: comp.knownGaps.map((g) => [code(g.id), esc(g.status), esc(g.text)]),
+  rows: comp.knownGaps.map((g) => [code(g.id), esc(g.status), esc(g.text + (g.acceptedBy ? ` Accepted by ${g.acceptedBy}, ${g.date}.` : '') + (g.reevaluate ? ` Reevaluate: ${g.reevaluate}.` : ''))]),
 });
 
 const SECTIONS = {

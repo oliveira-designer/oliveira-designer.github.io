@@ -501,6 +501,10 @@ function loadFigma() {
   return raw;
 }
 
+// Accepted divergences that are not tokens (an effect value, for example a blur radius): entries with scope "effect", a name
+// instead of a cssName, and the two values as text. They are shown in the Accepted divergences table, never matched to a token.
+let ACCEPTED_EFFECTS = [];
+
 function loadAccepted() {
   if (!fs.existsSync(ACCEPTED_JSON)) return [];
   let raw;
@@ -510,6 +514,14 @@ function loadAccepted() {
     throw new MalformedData(`docs/data/accepted-divergences.json is not valid JSON: ${err.message}`);
   }
   const errors = [];
+  if (Array.isArray(raw)) {
+    ACCEPTED_EFFECTS = raw.filter((e) => e && e.scope === 'effect');
+    ACCEPTED_EFFECTS.forEach((e, i) => {
+      for (const k of ['name', 'figma', 'css', 'reason', 'decidedBy', 'date']) if (!(typeof e[k] === 'string' && e[k].trim())) errors.push(`[effect ${i}]: ${k} is required`);
+      if (typeof e.date === 'string' && !/^\d{4}-\d{2}-\d{2}$/.test(e.date)) errors.push(`[effect ${i}]: date must be YYYY-MM-DD`);
+    });
+    raw = raw.filter((e) => !(e && e.scope === 'effect'));
+  }
   if (!Array.isArray(raw)) errors.push('top level must be an array');
   else {
     const seen = new Set();
@@ -745,12 +757,20 @@ function tokensBody(d) {
         : '\n            <p class="docs-section__desc">None.</p>'
     }
           </section>`);
-    if (d.acceptedItems.length || d.staleAccepted.length) {
+    if (d.acceptedItems.length || d.staleAccepted.length || ACCEPTED_EFFECTS.length) {
       const accRows = d.acceptedItems.map((a) => [
         `<code>${esc(a.cssName)}</code>`,
         esc(a.mode || 'all modes'),
         esc(a.kind === 'no-css-token' ? 'Figma code name not defined in tokens.css' : 'value differs'),
         a.rows.length ? a.rows.map((r) => `<span class="docs-fig"><span class="docs-value__tag">${esc(r.mode)}</span> Figma <code>${esc(r.figma)}</code>, CSS <code>${esc(r.css)}</code></span>`).join('') : '<span class="docs-muted">see the table below</span>',
+        esc(a.reason),
+        `${esc(a.decidedBy)}, ${esc(a.date)}`,
+      ]);
+      const effectRows = ACCEPTED_EFFECTS.map((a) => [
+        esc(a.name),
+        'not a token',
+        'effect value differs',
+        `<span class="docs-fig">Figma <code>${esc(a.figma)}</code>, CSS <code>${esc(a.css)}</code></span>`,
         esc(a.reason),
         `${esc(a.decidedBy)}, ${esc(a.date)}`,
       ]);
@@ -764,12 +784,12 @@ function tokensBody(d) {
       ]);
       parts.push(`
           <section class="docs-section" id="accepted" aria-labelledby="accepted-title">
-            <h2 class="text-h2" id="accepted-title">Accepted divergences (${d.acceptedItems.length}${d.staleAccepted.length ? `, ${d.staleAccepted.length} stale` : ''})</h2>
+            <h2 class="text-h2" id="accepted-title">Accepted divergences (${d.acceptedItems.length + ACCEPTED_EFFECTS.length}${d.staleAccepted.length ? `, ${d.staleAccepted.length} stale` : ''})</h2>
             <p class="docs-section__desc">Listed in <code>docs/data/accepted-divergences.json</code>. Accepting a divergence never hides the values: they stay in the token tables. A stale entry no longer matches any divergence and can be removed.</p>
             ${hopeTable({
               id: 'accepted-caption', caption: 'Accepted divergences', hidden: true,
               cols: [{ label: 'Token' }, { label: 'Mode' }, { label: 'Divergence' }, { label: 'Values' }, { label: 'Reason' }, { label: 'Decided' }],
-              rows: [...accRows, ...staleRows],
+              rows: [...accRows, ...effectRows, ...staleRows],
             })}
           </section>`);
     }

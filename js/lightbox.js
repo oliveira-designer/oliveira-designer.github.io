@@ -1,12 +1,15 @@
 /**
  * Lightbox: opens case-study images in a full-screen modal.
  * Targets every <img> inside .case-section (excludes nav, hero, avatars) and any <img data-lightbox> (the docs demo).
- * Motion uses the Hope DS duration / easing tokens via CSS. Same approach as js/modal.js: the hidden attribute, the focus
- * moves in and returns to the opener, the page scroll is locked; since v2.13.0 the focus is also trapped inside and the
- * page behind is inert. Closes with Escape, the close button and a click on the backdrop (unlike the Modal).
+ * Motion uses the Hope DS duration / easing tokens via CSS. Load js/overlay.js first: the inert page, the scroll lock, the focus
+ * trap, Escape and the focus return are shared with js/modal.js (since v2.13.1). Closes with Escape, the close button and a
+ * click on the backdrop (unlike the Modal).
  */
 (function () {
   'use strict';
+
+  const overlay = window.HopeOverlay;
+  if (!overlay) { if (window.console) console.error('js/lightbox.js needs js/overlay.js loaded before it.'); return; }
 
   // ── Build modal DOM ───────────────────────────────────────────────────
   const modal = document.createElement('div');
@@ -35,26 +38,16 @@
   const captionEl = modal.querySelector('.lightbox__caption');
   const closeBtn  = modal.querySelector('.lightbox__close');
   const backdrop  = modal.querySelector('.lightbox__backdrop');
-  let   prevFocus = null;
-  let   prevOverflow = '';
-  let   inerted = [];
-  const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  let   opened = false;
 
   // ── Open / close ──────────────────────────────────────────────────────
   function open(src, alt, caption) {
+    if (opened || !overlay.activate(modal, { trigger: document.activeElement, onEscape: close })) return;
+    opened = true;
     imgEl.src = src;
     imgEl.alt = alt;
     captionEl.textContent = caption;
     captionEl.hidden = !caption;
-
-    prevFocus = document.activeElement;
-    prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    Array.from(document.body.children).forEach(el => {
-      if (el === modal || el.tagName === 'SCRIPT' || el.inert || el.matches('.toast, [data-modal-keep]')) return;
-      el.inert = true;
-      inerted.push(el);
-    });
 
     // Render in hidden state first so the browser paints, then trigger transition
     modal.removeAttribute('hidden');
@@ -68,17 +61,19 @@
   }
 
   function close() {
+    if (!opened) return;
+    opened = false;
     modal.classList.remove('is-open');
-    document.body.style.overflow = prevOverflow;
-    inerted.forEach(el => { el.inert = false; });
-    inerted = [];
+    // Inert, scroll lock and listeners are restored now; the focus goes back after the fade-out.
+    const back = overlay.deactivate({ restoreFocus: false });
 
     // Wait for the CSS fade-out to finish before hiding from the a11y tree
     modal.addEventListener('transitionend', function onEnd(e) {
       if (e.target !== modal) return;
-      modal.setAttribute('hidden', '');
       modal.removeEventListener('transitionend', onEnd);
-      if (prevFocus) prevFocus.focus();
+      if (opened) return;  // reopened during the fade-out: leave it open
+      modal.setAttribute('hidden', '');
+      if (back && back.focus) back.focus();
     });
   }
 
@@ -104,23 +99,6 @@
   // ── Close triggers ────────────────────────────────────────────────────
   closeBtn.addEventListener('click', close);
   backdrop.addEventListener('click', close);
-  document.addEventListener('keydown', e => {
-    if (!modal.classList.contains('is-open')) return;
-    if (e.key === 'Escape') { close(); return; }
-    if (e.key === 'Tab') {
-      // The close button is the only focusable element: keep the focus on it.
-      const list = Array.from(modal.querySelectorAll(FOCUSABLE));
-      if (!list.length) { e.preventDefault(); return; }
-      const first = list[0], last = list[list.length - 1];
-      if (!modal.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
-      else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  });
-  document.addEventListener('focusin', e => {
-    if (modal.classList.contains('is-open') && !modal.contains(e.target)) closeBtn.focus();
-  });
-
   // Start hidden
   modal.setAttribute('hidden', '');
 })();

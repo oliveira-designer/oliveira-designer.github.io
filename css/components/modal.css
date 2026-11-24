@@ -38,7 +38,8 @@
    Figma strokesIncludedInLayout is true on the panel: 480 is the OUTER width (430 of content + 48 of padding + 2 of
    border), so box-sizing is border-box and nothing is discounted from the padding. Layer Z-index/z-modal (200), above the
    scrim and below the Toast (500). Centered with inset and auto margins (no transform). On narrow screens the panel keeps
-   a 24px margin (--space-6, the same as the mobile page gutter and the Lightbox padding): Figma does not define it.
+   a 16px margin each side (--space-4): the width is min(480, 100% - 32), the panel is as tall as its content up to the viewport
+   minus the same margin, the BODY scrolls and the header and footer stay in view (Figma Info text, approved 2026-11-24).
    No motion: Figma defines none, so the panel appears and disappears at once (nothing to remove for reduced motion).
    ---------------------------------------------------------- */
 .modal {
@@ -49,13 +50,12 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  width: 480px;  /* Figma: 480, no spacing token */
-  max-width: calc(100% - 2 * var(--space-6));
+  width: min(480px, calc(100% - 2 * var(--space-4)));  /* Figma: 480, no spacing token */
   height: fit-content;
-  max-height: calc(100% - 2 * var(--space-6));
+  max-height: calc(100dvh - 2 * var(--space-4));
   margin: auto;
   padding: var(--space-6);
-  overflow-y: auto;
+  overflow: hidden;
   font-family: var(--font-body);
   background-color: var(--color-bg);
   border: var(--border-width-normal) solid var(--color-border);
@@ -72,8 +72,9 @@
   outline: none;
 }
 
-/* Header: title and close button, gap 12. */
+/* Header: title and close button, gap 12. Fixed while the body scrolls. */
 .modal__header {
+  flex: none;
   display: flex;
   align-items: flex-start;
   gap: var(--space-3);
@@ -91,9 +92,10 @@
   color: var(--color-text-1);
 }
 
-/* Close: the 20px X icon in the Icon/Color Secondary mode. A transparent pseudo-element grows the hit area to 24 by 24
-   (WCAG 2.5.8) without changing the layout. Figma draws no Hover or Focus for it: Hover goes to Icon/Color Default (the
-   Ghost Icon Button pattern) and Focus uses the shared ring following the pill radius (the Icon Button pattern). */
+/* Close: the 20px X icon in the Icon/Color Secondary mode. It follows the Icon Button Ghost behavior (Figma Info text): Hover
+   fills Background/Default/Secondary (--color-bg-alt) and the X goes to Icon/Color Default; Focus is the shared ring (2px, 2px gap)
+   following the pill radius. The hover fill and the hit area are a transparent pseudo-element of 28 by 28 (4px around the X, which
+   also covers the tips of the glyph; WCAG 2.5.8 asks 24 by 24) so the layout does not change. It is not a new component. */
 .modal__close {
   position: relative;
   display: flex;
@@ -111,6 +113,8 @@
 }
 
 .modal__close .icon {
+  position: relative;  /* above the hover fill */
+  z-index: 1;
   width: 100%;
   height: 100%;
 }
@@ -118,11 +122,17 @@
 .modal__close::after {
   content: "";
   position: absolute;
-  inset: calc(var(--space-1) * -0.5);
+  inset: calc(var(--space-1) * -1);
+  border-radius: var(--radius-pill);
+  transition: background-color var(--duration-normal) var(--ease-out);
 }
 
 .modal__close:hover {
   color: var(--icon-color-default);
+}
+
+.modal__close:hover::after {
+  background-color: var(--color-bg-alt);
 }
 
 .modal__close:focus-visible {
@@ -131,18 +141,32 @@
   outline-offset: var(--focus-ring-gap);
 }
 
-/* Body: Body/Regular/body-sm, Text/Default/Secondary. Free content is allowed. */
+/* Body: Body/Regular/body-sm, Text/Default/Secondary. Free content is allowed. It scrolls when the content passes the height of the
+   screen (js/modal.js gives it tabindex="0" then, so the keyboard can scroll it). */
 .modal__body {
-  margin: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  /* The scroll box would clip the focus ring (4px) of a link or control inside the body: 4px of padding give it room and the
+     same negative margin keeps the layout where Figma has it. */
+  margin: calc(var(--space-1) * -1);
+  padding: var(--space-1);
   font-size: var(--fs-body-sm);
   font-weight: 400;
   line-height: 1.6;
   color: var(--color-text-2);
 }
 
-/* Footer ("Show footer"): right aligned, gap 12. Figma shows both buttons at 184 wide, a fixed width on the instances and not
+.modal__body:focus-visible {
+  border-radius: var(--radius-xs);
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Footer ("Show footer"): fixed while the body scrolls, right aligned, gap 12. Figma shows both buttons at 184 wide, a fixed width on the instances and not
    a Button rule, so the buttons hug their label here. .btn is full width under 768px; inside the dialog it hugs too. */
 .modal__footer {
+  flex: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
