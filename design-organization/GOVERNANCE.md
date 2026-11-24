@@ -1,6 +1,8 @@
 # GOVERNANCE.md
 # Hope Design System — Regras de Evolução
-# Versão 1.6.1 · novembro de 2026
+# Versão 1.7 · novembro de 2026
+
+**Changelog v1.7 (MINOR, 24/11/2026)**: a seção 3 ganha uma cláusula para mudanças no próprio GOVERNANCE.md: regra adicionada ou removida é MINOR; alinhamento do texto a uma regra já decidida, sem mudar a regra, é PATCH. Entra uma regra, por isso MINOR. A v1.6.1 continua classificada como PATCH. Decisão de Renan.
 
 **Changelog v1.6.1 (PATCH, 23/11/2026)**: três trechos que ainda diziam o contrário da v1.6 foram reescritos com o menor ajuste possível: os anti-padrões "Componente preventivo" e "Componente para um único uso" (seção 9) e a frase "YAGNI vence sofisticação" (seção 10). Nenhuma regra mudou: os três testes e os lotes da seção 8 seguem como estavam. PATCH porque é refinamento de texto (seção 3).
 
@@ -119,6 +121,12 @@ Muda quando:
 - Adição de exemplo ou regra ao prosa do DESIGN.md
 
 Cadência: contínua. Quando algo melhora, atualize.
+
+### Mudanças no próprio GOVERNANCE.md
+
+A mesma escala vale para este documento:
+- **MINOR:** uma regra é adicionada ou removida (a v1.6 removeu o "teste do projeto real"; esta cláusula entrou na v1.7).
+- **PATCH:** o texto é alinhado a uma regra já decidida, sem mudar a regra (a v1.6.1 reescreveu três trechos que ainda diziam o contrário da v1.6).
 
 ### Changelog
 
@@ -512,4 +520,4 @@ Componente sem decisão fica numa seção "Em revisão", com o nome sufixado `(l
 
 ---
 
-*Hope Design System · GOVERNANCE.md · v1.6.1 · novembro de 2026 · Renan Moura*
+*Hope Design System · GOVERNANCE.md · v1.7 · novembro de 2026 · Renan Moura*

@@ -100,7 +100,7 @@
     "Danger: error or urgency states."
   ],
   "whenNotToUse": [
-    "Anything interactive: use Tag (Tag exists in Figma Core, not in code)."
+    "Anything interactive: use a Tag."
   ],
   "properties": [
     {"name": "Style", "type": "variant", "options": ["Neutral", "Ancora", "Solar", "Success", "Danger"], "default": "Neutral"},
@@ -213,6 +213,7 @@
 {
   "slug": "table",
   "name": "Table",
+  "navGroup": "Overlays and data",
   "figma": {"pageId": "2525:2", "sets": [{"name": "Table", "id": "2526:67"}, {"name": "Table Header Cell", "id": "2525:15"}, {"name": "Table Cell", "id": "2525:16"}]},
   "summary": "Data table for comparing records across a few columns. A bordered wrapper with an optional caption, header cells, row headers and data cells. No sorting, selection, row hover or sticky header in this version.",
   "whenToUse": [
@@ -371,7 +372,7 @@
     {
       "id": "tag-border-contrast",
       "status": "inference",
-      "text": "Note for a later lote: the Tag component draws its boundary with Border/Default/Default, which is 1.29:1 on the page background, under the 3:1 of WCAG 1.4.11. It needs a decision when Tag is coded."
+      "text": "The Tag component (v2.13.0) draws its boundary with Border/Default/Default, which is 1.29:1 on the page background in Light and 1.28:1 in Dark, under the 3:1 of WCAG 1.4.11. It was implemented as in Figma and the decision is pending: see the Tag page."
     }
   ],
   "unverified": []
@@ -1473,7 +1474,7 @@
     "tabs.js"
   ],
   "figma": {"pageId": "2412:3", "sets": [{"name": "Tab", "id": "2412:20"}]},
-  "summary": "A row of tab items that switches between panels of related content on the same page. Each item is 40px high; the selected one has a 1.5px bottom line and SemiBold text, and the whole list sits on a 1px baseline.",
+  "summary": "A row of tab items that switches between panels of related content on the same page. Each item is 40px high; the selected one has a 1.5px bottom line and a stronger text color, and the whole list sits on a 1px baseline.",
   "whenToUse": [
     "Two to six panels of related content that share one page, each with a short label.",
     "Different views of the same object, such as Overview, Activity and Settings."
@@ -1508,7 +1509,7 @@
     "targetSize": "40 high with a label wider than 24px: above 2.5.8 (24 by 24). Under 2.5.5 (44 by 44, AAA) in height.",
     "focus": "An outline of 2px (--focus-ring-width) with a 2px offset (--focus-ring-gap) around the whole item, square: 88 by 48 around an 80 by 40 item.",
     "note": "role=\"tablist\" with role=\"tab\" items (aria-selected, aria-controls) and role=\"tabpanel\" (aria-labelledby). Roving tabindex: only the selected tab is in the tab order. Left and Right move and activate (automatic activation, wrapping), Home and End jump to the first and last, disabled tabs (aria-disabled=\"true\") are skipped. Tab then moves into the panel.",
-    "meaning": "The selected tab is not shown by color alone: the weight changes to SemiBold and a bottom line appears. Tabs, Pagination and Menu mark the current item in three different ways on purpose: Tabs with a bottom line and SemiBold text, Pagination with a dark fill, Menu with a light fill, SemiBold text and a check. The panel is a tab stop (tabindex=\"0\") only when it has no focusable content. Without JavaScript the first panel is visible and the others stay hidden."
+    "meaning": "The selected tab is marked by a 1.5px bottom line and the text color (Text/Default/Default instead of Text/Default/Secondary); the weight does not change, so the label keeps the same width. Tabs, Pagination and Menu mark the current item in three different ways on purpose: Tabs with a bottom line and text color, Pagination with a dark fill, Menu with a light fill, SemiBold text and a check. The panel is a tab stop (tabindex=\"0\") only when it has no focusable content. Without JavaScript the first panel is visible and the others stay hidden."
   },
   "example": {"markup": "<div class=\"tabs\">\n  <div class=\"tabs__list\" role=\"tablist\" aria-label=\"Seções do projeto\">\n    <button type=\"button\" class=\"tab\" role=\"tab\" id=\"tab-overview\" aria-selected=\"true\" aria-controls=\"panel-overview\" tabindex=\"0\">Visão geral</button>\n    <button type=\"button\" class=\"tab\" role=\"tab\" id=\"tab-activity\" aria-selected=\"false\" aria-controls=\"panel-activity\" tabindex=\"-1\">Atividade</button>\n    <button type=\"button\" class=\"tab\" role=\"tab\" id=\"tab-settings\" aria-selected=\"false\" aria-controls=\"panel-settings\" tabindex=\"-1\">Configurações</button>\n    <button type=\"button\" class=\"tab\" role=\"tab\" id=\"tab-archived\" aria-selected=\"false\" aria-disabled=\"true\" aria-controls=\"panel-archived\" tabindex=\"-1\">Arquivados</button>\n  </div>\n  <div class=\"tabs__panel\" role=\"tabpanel\" id=\"panel-overview\" aria-labelledby=\"tab-overview\">\n    <p>Resumo do projeto: objetivo, prazo e responsáveis.</p>\n  </div>\n  <div class=\"tabs__panel\" role=\"tabpanel\" id=\"panel-activity\" aria-labelledby=\"tab-activity\" hidden>\n    <p>Histórico das últimas alterações.</p>\n  </div>\n  <div class=\"tabs__panel\" role=\"tabpanel\" id=\"panel-settings\" aria-labelledby=\"tab-settings\" hidden>\n    <p>Preferências e permissões do projeto.</p>\n  </div>\n  <div class=\"tabs__panel\" role=\"tabpanel\" id=\"panel-archived\" aria-labelledby=\"tab-archived\" hidden>\n    <p>Itens arquivados.</p>\n  </div>\n</div>"},
   "essential": [
@@ -1517,10 +1518,10 @@
     "accessibility"
   ],
   "knownGaps": [
-    {"id": "tabs-label-width-shift", "status": "inference", "text": "Figma gives the selected label SemiBold and the others Medium, at a fixed 80 width. With a width that follows the label, a tab can grow a little when it is selected. Reserving the SemiBold width needs a data attribute on every tab and is not coded."},
+    {"id": "tabs-label-width-shift", "status": "resolved", "text": "Resolved in v2.13.0 (decision of 24/11/2026, option A): the four Selected variants in Figma now use Body/Medium/body-sm medium like the unselected ones, so a tab does not change width when it is selected. Measured in the browser: the label is the same width selected and unselected."},
     {"id": "tabs-overflow", "status": "documented", "text": "Figma defines no behavior for more tabs than fit the width. The guidance is two to six short labels; the list does not scroll, because a scroll container would clip the 4px focus ring."},
     {"id": "tabs-focus-state-selected-disabled", "status": "documented", "text": "A disabled tab has no focus variant in Figma. In code it is not focusable by arrow keys and keeps tabindex -1."},
-    {"id": "tabs-baseline-contrast", "status": "measured", "text": "The 1px baseline under the list (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark. The selected tab line passes (19.42 and 17.06) and the selection is also carried by the SemiBold weight, so the baseline alone does not carry the information."},
+    {"id": "tabs-baseline-contrast", "status": "measured", "text": "The 1px baseline under the list (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark. The selected tab line passes (19.42 and 17.06) and the selected tab also changes text color, so the baseline alone does not carry the information."},
     {"id": "tabs-line-1x", "status": "inference", "text": "On a 1x screen the browser draws the 1.5px bottom line as 1px. The height stays 40 because the border is part of the box, so nothing moves."},
     {"id": "tabs-forced-colors", "status": "measured", "text": "Under forced colors the transparent bottom border would be drawn in a system color, so every border is set on purpose: Canvas when not selected, Highlight when selected, GrayText when disabled."}
   ],
@@ -1624,9 +1625,9 @@
     "targetSize": "36 by 36 meets 2.5.8 (24 by 24, AA) and is under 2.5.5 (44 by 44, AAA). The items are 4px apart.",
     "focus": "An outline of 2px with a 2px offset following the radius: 44 by 44 with an outer radius of 16.",
     "note": "A nav with aria-label=\"Paginação\" (Portuguese, as in Figma) containing a ul of li. The current number has aria-current=\"page\". Number links may carry aria-label=\"Página 3\". Icon-only Previous and Next need aria-label (\"Página anterior\", \"Próxima página\").",
-    "meaning": "Disabled Previous on the first page and Next on the last: a link with aria-disabled=\"true\" and no href, so it is not focusable and cannot be activated (the same approach as the Hope Link). The Ellipsis is a decorative span with aria-hidden, not focusable. Tabs, Pagination and Menu mark the current item in three different ways on purpose: Tabs with a bottom line and SemiBold text, Pagination with a dark fill, Menu with a light fill, SemiBold text and a check."
+    "meaning": "Disabled Previous on the first page and Next on the last: a link with aria-disabled=\"true\" and no href, so it is not focusable and cannot be activated (the same approach as the Hope Link). The Ellipsis is a decorative span with aria-hidden, not focusable. Tabs, Pagination and Menu mark the current item in three different ways on purpose: Tabs with a bottom line and text color, Pagination with a dark fill, Menu with a light fill, SemiBold text and a check."
   },
-  "example": {"markup": "<nav class=\"pagination\" aria-label=\"Paginação\">\n  <ul class=\"pagination__list\">\n    <li><a class=\"pagination__item\" aria-disabled=\"true\" aria-label=\"Página anterior\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z\"/></svg></a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-1\" aria-label=\"Página 1\">1</a></li>\n    <li><span class=\"pagination__item pagination__item--ellipsis\" aria-hidden=\"true\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Zm136,0a12,12,0,1,0,12,12A12,12,0,0,0,196,116Z\"/></svg></span></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-4\" aria-label=\"Página 4\">4</a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-5\" aria-label=\"Página 5\" aria-current=\"page\">5</a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-6\" aria-label=\"Página 6\">6</a></li>\n    <li><span class=\"pagination__item pagination__item--ellipsis\" aria-hidden=\"true\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Zm136,0a12,12,0,1,0,12,12A12,12,0,0,0,196,116Z\"/></svg></span></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-20\" aria-label=\"Página 20\">20</a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-6\" aria-label=\"Próxima página\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg></a></li>\n  </ul>\n</nav>"},
+  "example": {"markup": "<nav class=\"pagination\" aria-label=\"Paginação\">\n  <ul class=\"pagination__list\">\n    <li><a class=\"pagination__item\" aria-disabled=\"true\" aria-label=\"Página anterior\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z\"/></svg></a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-1\" aria-label=\"Página 1\">1</a></li>\n    <li><span class=\"pagination__item pagination__item--ellipsis\" aria-hidden=\"true\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z\"/></svg></span></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-4\" aria-label=\"Página 4\">4</a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-5\" aria-label=\"Página 5\" aria-current=\"page\">5</a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-6\" aria-label=\"Página 6\">6</a></li>\n    <li><span class=\"pagination__item pagination__item--ellipsis\" aria-hidden=\"true\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z\"/></svg></span></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-20\" aria-label=\"Página 20\">20</a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-6\" aria-label=\"Próxima página\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg></a></li>\n  </ul>\n</nav>"},
   "essential": [
     "when",
     "variants",
@@ -1658,7 +1659,7 @@
     "Put destructive actions last, after a divider."
   ],
   "whenNotToUse": [
-    "Free content, a form or rich layout: use a Popover (Lote 4).",
+    "Free content, a form or rich layout: use a Popover.",
     "Page navigation: use links or Tabs."
   ],
   "properties": [
@@ -1689,7 +1690,7 @@
     "targetSize": "36 high and as wide as the panel: meets 2.5.8 (24 by 24) and is under 2.5.5 (44 by 44, AAA) in height. The items are 4px apart.",
     "focus": "An outline of 2px with a 2px offset: 228 by 44 around a 220 by 36 item, radius 12. It sits inside the 8px panel padding, so it is not clipped (the panel has no overflow).",
     "note": "The trigger has aria-haspopup=\"menu\", aria-expanded and aria-controls. The panel has role=\"menu\"; items are role=\"menuitem\". A chosen option uses role=\"menuitemradio\" (or menuitemcheckbox) with aria-checked. Up and Down move the focus, Home and End jump, Escape closes and returns the focus to the trigger, Tab closes. Typeahead is out of scope. Disabled items use aria-disabled=\"true\" and are skipped.",
-    "meaning": "Selected in Figma means a chosen option, so it is menuitemradio with aria-checked=\"true\" and a visible check; it is not announced by color alone. Tabs, Pagination and Menu mark the current item in three different ways on purpose: Tabs with a bottom line and SemiBold text, Pagination with a dark fill, Menu with a light fill, SemiBold text and a check. The divider is a role=\"separator\". Danger is carried by the text and its position after the divider, not by color alone."
+    "meaning": "Selected in Figma means a chosen option, so it is menuitemradio with aria-checked=\"true\" and a visible check; it is not announced by color alone. Tabs, Pagination and Menu mark the current item in three different ways on purpose: Tabs with a bottom line and text color, Pagination with a dark fill, Menu with a light fill, SemiBold text and a check. The divider is a role=\"separator\". Danger is carried by the text and its position after the divider, not by color alone."
   },
   "example": {"markup": "<div data-menu>\n  <button type=\"button\" class=\"btn btn--secondary\" id=\"menu-account\" aria-haspopup=\"menu\" aria-expanded=\"false\" aria-controls=\"menu-account-panel\">Conta</button>\n  <div class=\"menu\" role=\"menu\" id=\"menu-account-panel\" aria-labelledby=\"menu-account\" hidden>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Perfil</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Configurações</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" aria-disabled=\"true\">\n    <span class=\"menu__label\">Cobrança</span>\n  </button>\n    <div class=\"menu__divider\" role=\"separator\"></div>\n  <button type=\"button\" class=\"menu__item menu__item--danger\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Sair</span>\n  </button>\n  </div>\n</div>\n<div class=\"menu\" role=\"menu\" aria-label=\"Ações da conta (exemplo estático)\">\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Perfil</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Configurações</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" aria-disabled=\"true\">\n    <span class=\"menu__label\">Cobrança</span>\n  </button>\n  <div class=\"menu__divider\" role=\"separator\"></div>\n  <button type=\"button\" class=\"menu__item menu__item--danger\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Sair</span>\n  </button>\n</div>\n<div class=\"menu\" role=\"menu\" aria-label=\"Escolha do idioma (exemplo estático)\">\n  <div role=\"group\" aria-label=\"Idioma\">\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"true\">\n    <span class=\"menu__label\">Português</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"false\">\n    <span class=\"menu__label\">English</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"false\">\n    <span class=\"menu__label\">Español</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  </div>\n</div>"},
   "essential": [
@@ -1708,6 +1709,1297 @@
   "mapKeys": [
     "MenuItem",
     "Menu"
+  ]
+},
+{
+  "slug": "modal",
+  "name": "Modal",
+  "navGroup": "Overlays and data",
+  "scripts": [
+    "modal.js"
+  ],
+  "figma": {
+    "pageId": "2413:471",
+    "sets": [
+      {
+        "name": "Modal",
+        "id": "2413:472"
+      }
+    ]
+  },
+  "summary": "A dialog of 480px over a scrim, for one decision: a title, a close button, a short body and an optional footer with the actions. It blocks the page until the person decides.",
+  "whenToUse": [
+    "A short decision that must be taken before the person goes on: confirm, cancel, choose.",
+    "Keep it short and about a single decision (the Figma text).",
+    "A destructive confirmation uses the destructive Button as the main action."
+  ],
+  "whenNotToUse": [
+    "Extra context tied to an element, or a small control: use a Popover, which does not block the page.",
+    "A list of actions on an object: use a Menu.",
+    "A long form or a flow with several steps: use a page.",
+    "Zooming an image: use a Lightbox."
+  ],
+  "properties": [
+    {
+      "name": "Title",
+      "type": "text",
+      "default": "Modal title"
+    },
+    {
+      "name": "Body",
+      "type": "text",
+      "default": "Supporting text that explains what happens next. Keep it short and about a single decision."
+    },
+    {
+      "name": "Show footer",
+      "type": "boolean",
+      "default": "true"
+    }
+  ],
+  "layout": {
+    "panel": {
+      "width": "480 (outer: 430 of content + 48 of padding + 2 of border, strokesIncludedInLayout true)",
+      "padding": "Spacing/space-6",
+      "gap": "Spacing/space-4 between header, body and footer",
+      "radius": "Radius/radius-lg",
+      "border": "1px Border/Default/Default",
+      "shadow": "Shadow/lg",
+      "layers": "Z-index/z-modal-scrim (100) for the scrim, Z-index/z-modal (200) for the panel"
+    },
+    "header": {
+      "gap": "Spacing/space-3",
+      "close": "20 by 20 X icon at the right"
+    },
+    "footer": {
+      "align": "right",
+      "gap": "Spacing/space-3",
+      "buttons": "Secondary (Cancel) and Primary (Confirm), Medium; 184 wide in Figma is an override on the instances"
+    }
+  },
+  "stateTokens": {
+    "Panel": {
+      "default": {
+        "fill": "Background/Default/Default",
+        "stroke": "Border/Default/Default"
+      }
+    },
+    "Scrim": {
+      "default": {
+        "fill": "Background/Utilities/Scrim"
+      }
+    },
+    "Title": {
+      "default": {
+        "text": "Text/Default/Default, Heading/H3"
+      }
+    },
+    "Body": {
+      "default": {
+        "text": "Text/Default/Secondary, Body/Regular/body-sm"
+      }
+    },
+    "Close": {
+      "default": {
+        "text": "Icon/Color Secondary"
+      },
+      "hover": {
+        "text": "Icon/Color Default (not in Figma)"
+      },
+      "focus": "Shared focus ring (not in Figma)"
+    }
+  },
+  "anatomy": [
+    "Scrim: a full-screen layer behind the panel (--color-bg-scrim). A click on it does not close the Modal.",
+    "Panel: the dialog, 480 wide, centered, with a border, a radius of 16 and Shadow/lg.",
+    "Header: the title (Heading/H3) and the close button with a 20px X icon.",
+    "Body: the supporting text (Body/Regular/body-sm, Text/Default/Secondary).",
+    "Footer (optional): right aligned, a Secondary and a Primary (or Destructive) Button."
+  ],
+  "states": [
+    [
+      "Closed",
+      "The dialog and the scrim have the hidden attribute. Nothing is rendered.",
+      "none"
+    ],
+    [
+      "Open",
+      "The scrim covers the page, the dialog is centered, the page behind is inert and its scroll is locked.",
+      "--color-bg-scrim, --z-modal-scrim, --z-modal"
+    ],
+    [
+      "Close button, hover",
+      "The X goes from the Secondary to the Default icon color. Figma draws no hover.",
+      "--icon-color-secondary, --icon-color-default"
+    ],
+    [
+      "Close button, focus",
+      "The shared ring (2px, 2px gap) following the pill radius. Figma draws no focus.",
+      "--focus-ring-width, --focus-ring-gap, --color-border-focus-ring"
+    ]
+  ],
+  "keyboard": [
+    [
+      "Tab and Shift+Tab",
+      "Move through the controls of the dialog. The focus wraps from the last to the first and cannot leave the dialog."
+    ],
+    [
+      "Escape",
+      "Closes the Modal and returns the focus to the trigger."
+    ],
+    [
+      "Enter and Space",
+      "Activate the focused button (close, Cancel, Confirm)."
+    ]
+  ],
+  "aria": [
+    "The panel has role=\"dialog\" and aria-modal=\"true\".",
+    "aria-labelledby points at the title and aria-describedby at the body.",
+    "The close button has an accessible name (aria-label) because it holds only an icon.",
+    "The focus moves into the dialog on open (to the first control, or to the element with data-modal-initial-focus) and returns to the trigger on close.",
+    "The page behind is inert and the scroll is locked while the Modal is open."
+  ],
+  "accessibility": {
+    "contrastText": [
+      {
+        "case": "Title (Text/Default/Default on the panel)",
+        "light": 19.42,
+        "dark": 17.06
+      },
+      {
+        "case": "Body (Text/Default/Secondary on the panel)",
+        "light": 10.76,
+        "dark": 8.37
+      }
+    ],
+    "contrastNonText": [
+      {
+        "case": "Close icon (Icon/Color Secondary) on the panel (needs 3:1)",
+        "light": 10.76,
+        "dark": 8.37
+      },
+      {
+        "case": "Focus ring vs panel (needs 3:1)",
+        "light": 6.46,
+        "dark": 10.74
+      },
+      {
+        "case": "Panel border vs the scrim over the page",
+        "light": 2.82,
+        "dark": 1.49
+      },
+      {
+        "case": "Panel vs the scrim over the page",
+        "light": 3.64,
+        "dark": 1.16
+      }
+    ],
+    "targetSize": "The close icon is 20 by 20 and a transparent pseudo-element grows the hit area to 24 by 24 (WCAG 2.5.8). The footer buttons are 44 high (the Button Medium).",
+    "focus": "The focus moves into the dialog on open and is trapped there. The close button takes the shared ring (2px, offset 2px) following its pill radius.",
+    "note": "role=\"dialog\" with aria-modal=\"true\", aria-labelledby on the title and aria-describedby on the body. Tab cycles inside the dialog, Escape closes it, and the focus returns to the trigger. The page behind is inert and its scroll is locked. A click on the scrim does not close the Modal.",
+    "meaning": "A Modal interrupts the person on purpose, so it has to be answered: Escape and the close button are the ways out, not a click outside. The destructive action is carried by the destructive Button and its label, not by color alone."
+  },
+  "example": {
+    "markup": "<button type=\"button\" class=\"btn btn--secondary\" data-modal-open=\"modal-demo\">Abrir modal</button>\n<button type=\"button\" class=\"btn btn--secondary\" data-modal-open=\"modal-demo-destructive\">Abrir modal destrutivo</button>\n<div class=\"modal\" role=\"dialog\" aria-modal=\"true\" id=\"modal-demo\" aria-labelledby=\"modal-demo-title\" aria-describedby=\"modal-demo-body\" hidden>\n  <div class=\"modal__header\">\n    <h2 class=\"modal__title\" id=\"modal-demo-title\">Publicar alterações?</h2>\n    <button type=\"button\" class=\"modal__close\" aria-label=\"Fechar\" data-modal-close>\n      <svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg>\n    </button>\n  </div>\n  <p class=\"modal__body\" id=\"modal-demo-body\">As alterações ficam visíveis para toda a equipe. Você pode desfazer a publicação depois.</p>\n  <div class=\"modal__footer\">\n    <button type=\"button\" class=\"btn btn--secondary\" data-modal-close>Cancelar</button>\n    <button type=\"button\" class=\"btn btn--primary\" data-modal-close>Publicar</button>\n  </div>\n</div>\n<div class=\"modal\" role=\"dialog\" aria-modal=\"true\" id=\"modal-demo-destructive\" aria-labelledby=\"modal-demo-destructive-title\" aria-describedby=\"modal-demo-destructive-body\" hidden>\n  <div class=\"modal__header\">\n    <h2 class=\"modal__title\" id=\"modal-demo-destructive-title\">Excluir projeto?</h2>\n    <button type=\"button\" class=\"modal__close\" aria-label=\"Fechar\" data-modal-close>\n      <svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg>\n    </button>\n  </div>\n  <p class=\"modal__body\" id=\"modal-demo-destructive-body\">O projeto e todos os arquivos dele serão apagados. Essa ação não pode ser desfeita.</p>\n  <div class=\"modal__footer\">\n    <button type=\"button\" class=\"btn btn--secondary\" data-modal-close>Cancelar</button>\n    <button type=\"button\" class=\"btn btn--destructive\" data-modal-close>Excluir</button>\n  </div>\n</div>"
+  },
+  "essential": [
+    "when",
+    "whenNot",
+    "anatomy",
+    "states",
+    "keyboard",
+    "variants",
+    "notes"
+  ],
+  "classRoles": {
+    ".modal": "The dialog panel: 480 wide, border, radius, shadow, layer 200.",
+    ".modal-scrim": "The full-screen scrim behind the panel, layer 100. Created by js/modal.js.",
+    ".modal__header": "Row with the title and the close button.",
+    ".modal__title": "The title, Heading/H3.",
+    ".modal__close": "The 20px X button (needs an aria-label).",
+    ".modal__body": "The supporting text.",
+    ".modal__footer": "Right aligned row of actions."
+  },
+  "knownGaps": [
+    {
+      "id": "modal-footer-button-width",
+      "status": "documented",
+      "text": "Figma shows both footer buttons 184 wide. That is a fixed width on the instances, not a Button rule, so in code the buttons hug their content. Pending decision."
+    },
+    {
+      "id": "modal-close-states",
+      "status": "documented",
+      "text": "Figma draws no Hover and no Focus for the close button. Focus follows the Icon Button pattern (2px ring with 2px gap, pill radius). Hover uses the Ghost Icon Button pattern (Icon/Color Secondary to Default). Both are borrowed, not drawn in Figma."
+    },
+    {
+      "id": "modal-narrow-width",
+      "status": "documented",
+      "text": "Figma does not define the panel on narrow screens. The panel is 480 wide and keeps a margin of 24px (--space-6, the mobile page gutter) on each side: max-width calc(100% - 2 * --space-6). When the content is taller than the viewport, the panel scrolls."
+    },
+    {
+      "id": "modal-no-motion",
+      "status": "documented",
+      "text": "Figma defines no motion, so the Modal opens and closes without animation. There is nothing to remove under prefers-reduced-motion."
+    },
+    {
+      "id": "modal-native-dialog",
+      "status": "inference",
+      "text": "The Modal uses the same approach as the Lightbox (the hidden attribute, a script for the focus trap, Escape, inert and scroll lock), not the native <dialog> element. Moving to <dialog> is an open decision: the top layer ignores z-index, so the Toast (500) would stay under an open Modal unless the Toast also moves to the top layer."
+    },
+    {
+      "id": "modal-toast-inert",
+      "status": "inference",
+      "text": "While a Modal is open the rest of the page is inert. A .toast and any element with data-modal-keep stay active so a notification still reaches the person. The Toast layer (500) is above the Modal (200)."
+    },
+    {
+      "id": "modal-dark-panel-contrast",
+      "status": "measured",
+      "text": "In Dark the panel (Background/Default/Default) is 1.16:1 against the scrim over the page and its border is 1.49:1. In Light they are 3.64 and 2.82. The shadow does not count as a boundary for WCAG 1.4.11. Implemented as in Figma; the decision is pending."
+    },
+    {
+      "id": "modal-scrim-name",
+      "status": "documented",
+      "text": "The Figma Info text said the scrim was \"Overlay\" by mistake. It is Background/Utilities/Scrim (--color-bg-scrim)."
+    }
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "Modal"
+  ]
+},
+{
+  "slug": "popover",
+  "name": "Popover",
+  "navGroup": "Overlays and data",
+  "scripts": [
+    "popover.js"
+  ],
+  "figma": {
+    "pageId": "2413:572",
+    "sets": [
+      {
+        "name": "Popover",
+        "id": "2413:573"
+      }
+    ]
+  },
+  "summary": "A floating panel of 280px anchored to a trigger, with an optional title and free content. It opens on click, does not block the page and does not trap the focus.",
+  "whenToUse": [
+    "Extra context tied to the element that opened it.",
+    "A small control or a link next to its trigger.",
+    "Content that can hold links or a small control (the Figma text says free content)."
+  ],
+  "whenNotToUse": [
+    "A decision that must be taken first: use a Modal.",
+    "A list of actions or options: use a Menu.",
+    "A short label on hover or focus: use a Tooltip."
+  ],
+  "properties": [
+    {
+      "name": "Title",
+      "type": "text",
+      "default": "Popover title"
+    },
+    {
+      "name": "Body",
+      "type": "text",
+      "default": "Extra context or a small control tied to the element that opened it."
+    },
+    {
+      "name": "Show title",
+      "type": "boolean",
+      "default": "true"
+    }
+  ],
+  "layout": {
+    "panel": {
+      "width": "280 (outer: 246 of content + 32 of padding + 2 of border, strokesIncludedInLayout true)",
+      "padding": "Spacing/space-4",
+      "gap": "Spacing/space-2",
+      "radius": "Radius/radius-md",
+      "border": "1px Border/Default/Default",
+      "shadow": "Shadow/md",
+      "layer": "Z-index/z-popover (300)"
+    }
+  },
+  "stateTokens": {
+    "Panel": {
+      "default": {
+        "fill": "Background/Default/Default",
+        "stroke": "Border/Default/Default"
+      }
+    },
+    "Title": {
+      "default": {
+        "text": "Text/Default/Default, Body/SemiBold/body-sm semibold"
+      }
+    },
+    "Body": {
+      "default": {
+        "text": "Text/Default/Secondary, Body/Regular/body-sm"
+      }
+    }
+  },
+  "anatomy": [
+    "Trigger: any button with aria-expanded and aria-controls.",
+    "Panel: 280 wide, border, radius 12, Shadow/md, layer 300, no arrow.",
+    "Title (optional): Body/SemiBold/body-sm semibold.",
+    "Body: Body/Regular/body-sm, free content."
+  ],
+  "states": [
+    [
+      "Closed",
+      "The panel has the hidden attribute and the trigger has aria-expanded=\"false\".",
+      "none"
+    ],
+    [
+      "Open",
+      "The panel shows below the trigger, aligned to its start, 8px away. The trigger has aria-expanded=\"true\".",
+      "--z-popover, --shadow-md, --space-2"
+    ],
+    [
+      "Flipped",
+      "When the panel would leave the viewport at the bottom and there is room above, it opens above; when it would leave at the right, it aligns to the end.",
+      ".popover--above, .popover--end"
+    ]
+  ],
+  "keyboard": [
+    [
+      "Enter and Space",
+      "On the trigger: open or close the panel."
+    ],
+    [
+      "Tab",
+      "The panel follows the trigger in the DOM, so Tab goes into it. When the focus leaves the panel, it closes."
+    ],
+    [
+      "Escape",
+      "Closes the panel and returns the focus to the trigger. It does not close a Modal that contains the Popover."
+    ]
+  ],
+  "aria": [
+    "The trigger has aria-expanded and aria-controls.",
+    "The panel has no role when it holds text only: the trigger state is enough.",
+    "When the panel holds interactive content, use role=\"dialog\" without aria-modal and name it with aria-labelledby (the title). It is not role=\"menu\".",
+    "The focus is not trapped and the page is not inert."
+  ],
+  "accessibility": {
+    "contrastText": [
+      {
+        "case": "Title (Text/Default/Default on the panel)",
+        "light": 19.42,
+        "dark": 17.06
+      },
+      {
+        "case": "Body (Text/Default/Secondary on the panel)",
+        "light": 10.76,
+        "dark": 8.37
+      }
+    ],
+    "contrastNonText": [
+      {
+        "case": "Panel border vs page (needs 3:1)",
+        "light": 1.29,
+        "dark": 1.28
+      }
+    ],
+    "targetSize": "The panel has no controls of its own. A link or button inside follows its own component.",
+    "focus": "The focus stays on the trigger when the panel opens. Controls inside use the shared ring.",
+    "note": "The trigger has aria-expanded and aria-controls. Escape closes the panel and returns the focus to the trigger; a click outside closes it without moving the focus. The panel has no role for text only, and role=\"dialog\" (without aria-modal) when it holds interactive content.",
+    "meaning": "A Popover is a disclosure, not a menu and not a modal: it does not take the focus away and does not hide the page. That is why its panel is not role=\"menu\" and has no aria-modal."
+  },
+  "example": {
+    "markup": "<div class=\"popover-anchor\">\n  <button type=\"button\" class=\"btn btn--secondary\" id=\"popover-demo-trigger\" data-popover-trigger aria-expanded=\"false\" aria-controls=\"popover-demo-panel\">Detalhes do prazo</button>\n  <div class=\"popover\" id=\"popover-demo-panel\" hidden>\n    <p class=\"popover__title\">Prazo do projeto</p>\n    <p class=\"popover__body\">O prazo conta a partir da aprovação do escopo e pode mudar depois da revisão.</p>\n  </div>\n</div>\n<div class=\"popover-anchor\">\n  <button type=\"button\" class=\"btn btn--secondary\" id=\"popover-demo-link-trigger\" data-popover-trigger aria-expanded=\"false\" aria-controls=\"popover-demo-link-panel\">Ajuda</button>\n  <div class=\"popover\" id=\"popover-demo-link-panel\" role=\"dialog\" aria-labelledby=\"popover-demo-link-title\" hidden>\n    <p class=\"popover__title\" id=\"popover-demo-link-title\">Precisa de ajuda?</p>\n    <p class=\"popover__body\">Veja o guia de publicação ou fale com a equipe.</p>\n    <a class=\"link\" href=\"#popover-demo-link-trigger\">Abrir o guia</a>\n  </div>\n</div>"
+  },
+  "essential": [
+    "when",
+    "whenNot",
+    "anatomy",
+    "states",
+    "keyboard",
+    "variants",
+    "notes"
+  ],
+  "classRoles": {
+    ".popover-anchor": "Wrapper of the trigger and the panel, the panel is placed against it.",
+    ".popover": "The panel: 280 wide, border, radius 12, Shadow/md, layer 300.",
+    ".popover--above": "Opens above the trigger (added by js/popover.js when there is no room below).",
+    ".popover--end": "Aligns the panel to the end of the trigger (added by js/popover.js near the right edge).",
+    ".popover__title": "The optional title.",
+    ".popover__body": "The supporting text."
+  },
+  "knownGaps": [
+    {
+      "id": "popover-placement",
+      "status": "documented",
+      "text": "Figma draws no arrow and no placement rules. The panel opens below the trigger, aligned to its start, 8px away (--space-2, a choice of the code). The script flips it above only when it would leave the viewport at the bottom and there is room above, and aligns it to the end near the right edge. No other placement, no arrow, no collision handling beyond that. Open item."
+    },
+    {
+      "id": "popover-role",
+      "status": "documented",
+      "text": "No role for a text-only panel (the trigger already exposes aria-expanded); role=\"dialog\" without aria-modal when it holds interactive content. Chosen because a Popover does not block the page, so it is not a modal dialog, and it is not a menu."
+    },
+    {
+      "id": "popover-menu-shell",
+      "status": "documented",
+      "text": "The Menu panel and the Popover panel share the same visual shell: radius, border, background and shadow (Shadow/md) and the layer 300. The padding differs (8 and 16). The CSS is not merged in this release."
+    },
+    {
+      "id": "popover-border-contrast",
+      "status": "measured",
+      "text": "The panel border (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark, under the 3:1 of WCAG 1.4.11. The shadow does not count as a boundary for that criterion. Same as the Menu panel."
+    }
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "Popover"
+  ]
+},
+{
+  "slug": "lightbox",
+  "name": "Lightbox",
+  "navGroup": "Overlays and data",
+  "scripts": [
+    "lightbox.js"
+  ],
+  "figma": {
+    "pageId": "2456:3",
+    "sets": [
+      {
+        "name": "Lightbox",
+        "id": "2456:4"
+      }
+    ]
+  },
+  "summary": "A full-screen image viewer: a dark scrim with a blur, an image of up to 960px, an optional caption and a close button at the top-right corner of the panel. It sits at the same layer as the Modal.",
+  "whenToUse": [
+    "Looking at one image closely: screenshots, diagrams and case study figures.",
+    "The caption comes from the figcaption of the image.",
+    "The image needs a meaningful alt: the viewer reuses it."
+  ],
+  "whenNotToUse": [
+    "A decision or a form: use a Modal.",
+    "A gallery with navigation between images: it is not designed (Figma has one image).",
+    "Decorative images: do not make them zoomable."
+  ],
+  "properties": [
+    {
+      "name": "Show caption",
+      "type": "boolean",
+      "default": "true"
+    },
+    {
+      "name": "Caption",
+      "type": "text",
+      "default": "Caption of the image, taken from the figure caption"
+    }
+  ],
+  "layout": {
+    "overlay": {
+      "fill": "Background/Utilities/Scrim Strong (Neutral ink at 88%)",
+      "blur": "Background blur 12 (a raw effect in Figma)",
+      "padding": "Spacing/space-6",
+      "layer": "Z-index/z-modal (200)"
+    },
+    "panel": {
+      "image": "up to 960 wide, radius Radius/radius-lg, Shadow/lg",
+      "gap": "Spacing/space-4 between image and caption",
+      "caption": "520 wide, centered"
+    },
+    "close": {
+      "size": "36 by 36, pill, 1px stroke included in layout",
+      "position": "x 924, y -40 in a 960 panel: at the top-right corner, 40px above the image",
+      "icon": "20px X at 80% opacity"
+    }
+  },
+  "stateTokens": {
+    "Overlay": {
+      "default": {
+        "fill": "Background/Utilities/Scrim Strong"
+      }
+    },
+    "Caption": {
+      "default": {
+        "text": "The Figma white variable at 55%, Body/Regular/body-sm"
+      }
+    },
+    "Close": {
+      "default": {
+        "fill": "The Figma white variable at 12%",
+        "stroke": "The Figma white variable at 18%",
+        "text": "White at 80% (Icon/Color Neutral mode in Figma)"
+      }
+    }
+  },
+  "anatomy": [
+    "Overlay: full screen, Scrim Strong plus a 12px background blur, padding 24.",
+    "Panel: the image and the optional caption, 16 apart. The panel has no root border.",
+    "Image: up to 960 wide, radius 16, Shadow/lg.",
+    "Caption: Body/Regular/body-sm, white at 55%, centered, up to 520 wide.",
+    "Close button: 36 by 36 circle at the top-right corner of the panel, 40px above the image."
+  ],
+  "states": [
+    [
+      "Closed",
+      "The overlay has the hidden attribute.",
+      "none"
+    ],
+    [
+      "Open",
+      "The overlay fades in, the panel scales in, the page behind is inert and its scroll is locked.",
+      "--color-bg-scrim-strong, --z-modal, --duration-slow"
+    ],
+    [
+      "Close button, hover",
+      "The fill goes from 12% to 22% white and the X to full opacity. Figma draws no hover.",
+      "--color-cloud"
+    ],
+    [
+      "Close button, focus",
+      "A Solar ring (2px, 2px gap) following the pill radius. Figma draws no focus.",
+      "--focus-ring-width, --focus-ring-gap, --color-solar"
+    ]
+  ],
+  "keyboard": [
+    [
+      "Enter and Space",
+      "On a zoomable image: open the Lightbox. On the close button: close it."
+    ],
+    [
+      "Escape",
+      "Closes the Lightbox and returns the focus to the image."
+    ],
+    [
+      "Tab",
+      "The focus stays on the close button (the only control)."
+    ]
+  ],
+  "aria": [
+    "The overlay has role=\"dialog\", aria-modal=\"true\" and aria-label=\"Image preview\".",
+    "A zoomable image has role=\"button\", tabindex=\"0\" and an aria-label that starts with \"Zoom in\".",
+    "The close button has an accessible name (aria-label).",
+    "The alt of the image is reused in the viewer; the caption is the text of the figcaption.",
+    "The page behind is inert and the scroll is locked while it is open."
+  ],
+  "accessibility": {
+    "contrastText": [
+      {
+        "case": "Caption (white at 55%) on the scrim over the page",
+        "light": 5.43,
+        "dark": 6.24
+      }
+    ],
+    "contrastNonText": [
+      {
+        "case": "Close X (white at 80%) on the scrim (needs 3:1)",
+        "light": 10.2,
+        "dark": 13.04
+      },
+      {
+        "case": "Focus ring (Solar) vs the scrim (needs 3:1)",
+        "light": 9.02,
+        "dark": 12.08
+      },
+      {
+        "case": "Close fill vs the scrim",
+        "light": 1.46,
+        "dark": 1.37
+      },
+      {
+        "case": "Close stroke vs the scrim",
+        "light": 1.79,
+        "dark": 1.69
+      }
+    ],
+    "targetSize": "36 by 36: above WCAG 2.5.8 (24 by 24) and under 2.5.5 (44 by 44, AAA).",
+    "focus": "The close button takes a 2px ring with a 2px offset in Solar (--color-solar): the Light focus color (Anchor) is only 2.22:1 against this scrim, while Solar is 9.02:1.",
+    "note": "role=\"dialog\" with aria-modal=\"true\". The focus moves to the close button on open, stays inside, and returns to the image on close. Escape, the close button and a click on the backdrop close it. The page behind is inert.",
+    "meaning": "The close button is identified by the X (10.2:1 and 13.04:1), so its low-contrast fill and stroke do not carry information. The image keeps its own alt text."
+  },
+  "example": {
+    "markup": "<figure>\n  <img data-lightbox src=\"../../images/case-thumbnails/dotz-thumb-light.png\" alt=\"Miniatura do estudo de caso Dotz, com a tela inicial do aplicativo\" width=\"320\">\n  <figcaption>Miniatura do estudo de caso Dotz.</figcaption>\n</figure>"
+  },
+  "essential": [
+    "when",
+    "whenNot",
+    "anatomy",
+    "states",
+    "keyboard",
+    "variants",
+    "notes"
+  ],
+  "classRoles": {
+    ".is-zoomable": "Added by js/lightbox.js to an image that opens the viewer.",
+    ".lightbox": "The overlay shell, layer 200. Built by js/lightbox.js.",
+    ".lightbox__backdrop": "Scrim Strong plus the 12px blur.",
+    ".lightbox__panel": "Image and caption, up to 960 wide.",
+    ".lightbox__img": "The image, radius 16 and Shadow/lg.",
+    ".lightbox__caption": "The caption, from the figcaption.",
+    ".lightbox__close": "The 36px close button."
+  },
+  "knownGaps": [
+    {
+      "id": "lightbox-close-states",
+      "status": "documented",
+      "text": "Figma draws no Hover and no Focus for the close button. Hover is the one the repo already had (22% white fill, X at full opacity). Focus is the shared ring in Solar, because the focus color of the Light theme (Anchor) is 2.22:1 against this scrim."
+    },
+    {
+      "id": "lightbox-close-icon-color",
+      "status": "inference",
+      "text": "Figma binds the X to Icon/Color Neutral, which is white in Light and ink in Dark. The scrim is the same dark color in both themes, so an ink X would disappear in Dark. The CSS keeps the X white (--color-cloud) in both themes. Pending decision."
+    },
+    {
+      "id": "lightbox-blur",
+      "status": "inference",
+      "text": "The Figma effect is a background blur of radius 12 (not a style, no token). The CSS uses blur(12px), as before. Figma blur radius and CSS blur() are not the same unit (Figma exports 12 as blur(6px) in its code output). Open item."
+    },
+    {
+      "id": "lightbox-scrim-dark",
+      "status": "documented",
+      "text": "Known accepted divergence D-05: the Dark value of Scrim Strong is #000000e0 in Figma and #0d0d0fe0 in the CSS (the same value in both themes). Not changed in this release."
+    },
+    {
+      "id": "lightbox-narrow",
+      "status": "documented",
+      "text": "The image height is limited to the viewport minus the overlay padding, the 40px of the close button on each side and room for a caption of three lines, so the close button always stays inside the viewport. Figma does not define narrow screens."
+    },
+    {
+      "id": "lightbox-no-gallery",
+      "status": "documented",
+      "text": "Figma has one image and no previous or next controls. They are not built."
+    },
+    {
+      "id": "lightbox-close-contrast",
+      "status": "measured",
+      "text": "The close fill is 1.46:1 and the stroke 1.79:1 against the scrim in Light (1.37 and 1.69 in Dark). The X, which identifies the button, is 10.2:1 and 13.04:1. The ring is 9.02:1 and 12.08:1."
+    }
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "Lightbox"
+  ]
+},
+{
+  "slug": "avatar",
+  "name": "Avatar",
+  "navGroup": "Overlays and data",
+  "figma": {
+    "pageId": "2413:748",
+    "sets": [
+      {
+        "name": "Avatar",
+        "id": "2413:755"
+      }
+    ]
+  },
+  "summary": "A circle with the initials of a person in three sizes (32, 40 and 56), or their photo.",
+  "whenToUse": [
+    "Identify a person next to their name or on their own.",
+    "Three sizes: Small (32), Medium (40) and Large (56).",
+    "For a photo, fill the circle with the image and do not render the initials (the Figma text)."
+  ],
+  "whenNotToUse": [
+    "An icon or a logo: use an icon or an image.",
+    "A status or a count: use a Badge."
+  ],
+  "properties": [
+    {
+      "name": "Size",
+      "type": "variant",
+      "options": [
+        "Small",
+        "Medium",
+        "Large"
+      ],
+      "default": "Small"
+    },
+    {
+      "name": "Initials",
+      "type": "text",
+      "default": "RM"
+    }
+  ],
+  "layout": {
+    "all": {
+      "shape": "circle, Radius/radius-pill",
+      "fill": "Border/Default/Default",
+      "initials": "centered",
+      "sizes": "32, 40 and 56"
+    }
+  },
+  "stateTokens": {
+    "Default": {
+      "default": {
+        "fill": "Border/Default/Default",
+        "text": "Text/Default/Default"
+      }
+    }
+  },
+  "anatomy": [
+    "Circle: --radius-pill, fill Border/Default/Default.",
+    "Initials: Small Body/SemiBold/body-xs, Medium Body/SemiBold/body-sm, Large Heading/H3. They are content, not generated.",
+    "Photo: the image fills the circle (object-fit: cover) and the initials are not rendered."
+  ],
+  "states": [
+    [
+      "Small",
+      "32 by 32, initials in Body/SemiBold/body-xs semibold.",
+      "--space-8, --fs-body-xs"
+    ],
+    [
+      "Medium",
+      "40 by 40, initials in Body/SemiBold/body-sm semibold.",
+      "--space-10, --fs-body-sm"
+    ],
+    [
+      "Large",
+      "56 by 56, initials in Heading/H3.",
+      "--fs-h3, --font-display"
+    ],
+    [
+      "Photo",
+      "An image fills the circle and the initials are not rendered.",
+      "--radius-pill"
+    ]
+  ],
+  "keyboard": [
+    [
+      "None",
+      "An Avatar is not interactive. If it is clickable, wrap it in a link or a button that has its own name."
+    ]
+  ],
+  "aria": [
+    "Initials with the name next to them: aria-hidden=\"true\", the name is already read.",
+    "Initials without the name next to them: role=\"img\" and aria-label with the name (one announcement of the name instead of the letters).",
+    "Photo with the name next to it: alt=\"\" (decorative).",
+    "Photo without the name next to it: alt is the name of the person."
+  ],
+  "accessibility": {
+    "contrastText": [
+      {
+        "case": "Initials (Text/Default/Default on Border/Default/Default)",
+        "light": 15.05,
+        "dark": 13.28
+      }
+    ],
+    "contrastNonText": [
+      {
+        "case": "Circle (Border/Default/Default) vs page",
+        "light": 1.29,
+        "dark": 1.28
+      }
+    ],
+    "targetSize": "Not interactive. 32, 40 and 56 are all above 24 by 24.",
+    "focus": "Not focusable.",
+    "note": "The initials version is decorative when the name is next to it (aria-hidden); otherwise it is role=\"img\" with an aria-label, which is announced once as the name. A photo has alt=\"\" when the name is next to it, and the name as alt when it is not.",
+    "meaning": "The Avatar never carries information alone: the name is always available, next to it or as its accessible name."
+  },
+  "example": {
+    "markup": "<span class=\"avatar avatar--small\" role=\"img\" aria-label=\"Renan Moura\">RM</span>\n<span class=\"avatar avatar--medium\" role=\"img\" aria-label=\"Renan Moura\">RM</span>\n<span class=\"avatar avatar--large\" role=\"img\" aria-label=\"Renan Moura\">RM</span>\n<span class=\"avatar avatar--medium\"><img class=\"avatar__image\" src=\"../../images/testmonial_avatars/sarah.jpg\" alt=\"Sarah Camêlo\"></span>\n<span class=\"avatar avatar--medium\" aria-hidden=\"true\">LL</span> Luiza Laus"
+  },
+  "essential": [
+    "when",
+    "whenNot",
+    "anatomy",
+    "states",
+    "keyboard",
+    "variants",
+    "notes"
+  ],
+  "classRoles": {
+    ".avatar": "The circle, Small by default: fill, initials and the pill radius.",
+    ".avatar--small": "Small, 32 by 32.",
+    ".avatar--medium": "Medium, 40 by 40.",
+    ".avatar--large": "Large, 56 by 56, Heading/H3.",
+    ".avatar__image": "A photo that fills the circle."
+  },
+  "knownGaps": [
+    {
+      "id": "avatar-site-usage",
+      "status": "documented",
+      "text": "The site has its own avatar rules: the testimonial card (40 by 40, same size and fill as Medium), the about page (56 with a 1.5px border, which Figma does not have) and the hero (115, outside the scale). They are unchanged; the site markup was not touched."
+    },
+    {
+      "id": "avatar-photo",
+      "status": "documented",
+      "text": "In Figma a photo is an image fill on the circle with the initials hidden. In code it is an <img class=\"avatar__image\"> inside the circle."
+    },
+    {
+      "id": "avatar-circle-contrast",
+      "status": "measured",
+      "text": "The circle (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark. The initials, which carry the information, are 15.05:1 and 13.28:1. The name is always available as text."
+    }
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "Avatar"
+  ]
+},
+{
+  "slug": "tag",
+  "name": "Tag",
+  "navGroup": "Overlays and data",
+  "scripts": [
+    "tag.js"
+  ],
+  "figma": {
+    "pageId": "2413:814",
+    "sets": [
+      {
+        "name": "Tag",
+        "id": "2413:839"
+      }
+    ]
+  },
+  "summary": "A pill of 28px that can be removed: a label and an optional X. The whole Tag is the button. It is not a Badge, which is static and shows a status.",
+  "whenToUse": [
+    "A removable value, such as an applied filter or a chosen option.",
+    "The whole Tag is the button; the X is a visual cue inside it.",
+    "If the Tag is not interactive, use a Badge (the Figma text)."
+  ],
+  "whenNotToUse": [
+    "A status or a count that does not change: use a Badge.",
+    "A navigation link: use a Link."
+  ],
+  "properties": [
+    {
+      "name": "State",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Hover",
+        "Focus",
+        "Disabled"
+      ],
+      "default": "Default"
+    },
+    {
+      "name": "Label",
+      "type": "text",
+      "default": "Tag"
+    },
+    {
+      "name": "Show dismiss",
+      "type": "boolean",
+      "default": "true"
+    }
+  ],
+  "layout": {
+    "all": {
+      "height": "28, border included (strokesIncludedInLayout true)",
+      "padding": "0 vertical, Spacing/space-3 horizontal",
+      "gap": "Spacing/space-1",
+      "radius": "Radius/radius-pill",
+      "border": "1px Border/Default/Default",
+      "dismiss": "14 by 14",
+      "width": "12 + content + 12 + 2 of border (67 for the label \"Tag\" with the dismiss icon)",
+      "focusRing": "75 by 36 around a 67 by 28 tag (4px outside each side), pill"
+    }
+  },
+  "stateTokens": {
+    "Default": {
+      "default": {
+        "fill": "Background/Default/Secondary",
+        "stroke": "Border/Default/Default",
+        "text": "Text/Default/Default, Body/Medium/body-sm medium",
+        "icon": "Icon/Color Secondary"
+      },
+      "hover": {
+        "fill": "Border/Default/Default"
+      },
+      "focus": "Default plus focus ring",
+      "disabled": {
+        "fill": "Background/Disabled/Default",
+        "stroke": "Border/Disabled/Default",
+        "text": "Text/Disabled/Default",
+        "icon": "Icon/Color Disabled"
+      }
+    }
+  },
+  "anatomy": [
+    "Pill: 28 high, radius pill, 1px border, padding 0 12, gap 4.",
+    "Label: Body/Medium/body-sm medium, Text/Default/Default.",
+    "Dismiss (optional): X 14px in the Icon/Color Secondary mode, a visual cue and not a second button."
+  ],
+  "states": [
+    [
+      "Default",
+      "Fill Background/Default/Secondary, border Border/Default/Default.",
+      "--color-bg-alt, --color-border"
+    ],
+    [
+      "Hover",
+      "Fill goes to Border/Default/Default.",
+      "--color-border"
+    ],
+    [
+      "Focus",
+      "Ring 2px with 2px gap around the whole Tag, following the pill.",
+      "--focus-ring-width, --focus-ring-gap, --color-border-focus-ring"
+    ],
+    [
+      "Disabled",
+      "Fill, border, text and icon from the Disabled tokens, no opacity. Uses the disabled attribute.",
+      "--color-bg-disabled-default, --color-border-disabled-default, --color-text-disabled-default, --icon-color-disabled"
+    ]
+  ],
+  "keyboard": [
+    [
+      "Enter and Space",
+      "Remove the Tag (the whole Tag is the button)."
+    ],
+    [
+      "Delete and Backspace",
+      "Remove the Tag when it has the focus (the Figma text)."
+    ],
+    [
+      "Tab",
+      "Moves between Tags. After one is removed, the focus goes to the next Tag, else the previous one, else the parent."
+    ]
+  ],
+  "aria": [
+    "The Tag is a <button type=\"button\">; the X is aria-hidden.",
+    "The accessible name is the visible label plus the action, for example aria-label=\"Remover filtro Design\".",
+    "js/tag.js fires a cancelable \"hope:tag-remove\" event before removing it, so the application can update its state.",
+    "Disabled uses the disabled attribute."
+  ],
+  "accessibility": {
+    "contrastText": [
+      {
+        "case": "Label (Text/Default/Default on the fill)",
+        "light": 18.15,
+        "dark": 15.17
+      },
+      {
+        "case": "Label on hover (on Border/Default/Default)",
+        "light": 15.05,
+        "dark": 13.28
+      },
+      {
+        "case": "Disabled label (exempt, inactive)",
+        "light": 2.41,
+        "dark": 2.48
+      }
+    ],
+    "contrastNonText": [
+      {
+        "case": "Border vs page (needs 3:1)",
+        "light": 1.29,
+        "dark": 1.28
+      },
+      {
+        "case": "Border vs the Tag fill",
+        "light": 1.21,
+        "dark": 1.14
+      },
+      {
+        "case": "Fill (Background/Default/Secondary) vs page",
+        "light": 1.07,
+        "dark": 1.12
+      },
+      {
+        "case": "Dismiss icon (Icon/Color Secondary) on the fill (needs 3:1)",
+        "light": 10.06,
+        "dark": 7.44
+      },
+      {
+        "case": "Focus ring vs page (needs 3:1)",
+        "light": 6.46,
+        "dark": 10.74
+      }
+    ],
+    "targetSize": "28 high: above WCAG 2.5.8 (24 by 24) and under 2.5.5 (44 by 44, AAA). Tags are separated by space in a list.",
+    "focus": "An outline of 2px with a 2px offset around the whole Tag, 75 by 36 around a 67 by 28 tag, following the pill (radius 18 in Figma).",
+    "note": "A <button> whose accessible name is the label plus the action (\"Remover filtro Design\"). Delete or Backspace removes it when it has the focus; a click does the same. Disabled uses the disabled attribute.",
+    "meaning": "The X is a cue inside the button, not a second control. A Tag that is not interactive is a Badge."
+  },
+  "example": {
+    "markup": "<button type=\"button\" class=\"tag\" data-tag-removable aria-label=\"Remover filtro Design\">\n  <span class=\"tag__label\">Design</span>\n  <svg class=\"icon tag__dismiss\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg>\n</button>\n<button type=\"button\" class=\"tag\" data-tag-removable aria-label=\"Remover filtro Pesquisa\">\n  <span class=\"tag__label\">Pesquisa</span>\n  <svg class=\"icon tag__dismiss\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg>\n</button>\n<button type=\"button\" class=\"tag\" disabled aria-label=\"Remover filtro Arquivado\">\n  <span class=\"tag__label\">Arquivado</span>\n  <svg class=\"icon tag__dismiss\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg>\n</button>"
+  },
+  "essential": [
+    "when",
+    "whenNot",
+    "anatomy",
+    "states",
+    "keyboard",
+    "variants",
+    "notes"
+  ],
+  "classRoles": {
+    ".tag": "The pill (a button): 28 high, border, fill and the label style.",
+    ".tag__label": "The label.",
+    ".tag__dismiss": "The 14px X, a visual cue."
+  },
+  "knownGaps": [
+    {
+      "id": "tag-border-contrast",
+      "status": "measured",
+      "text": "The Tag border (Border/Default/Default) is 1.29:1 against the page in Light and 1.28:1 in Dark, and 1.21:1 and 1.14:1 against the Tag fill; the fill is 1.07:1 and 1.12:1 against the page. All are under the 3:1 of WCAG 1.4.11. Implemented exactly as Figma, no color was changed. The decision is pending (together with the Alert and Toast borders)."
+    },
+    {
+      "id": "tag-no-static",
+      "status": "documented",
+      "text": "A Tag without the dismiss icon is still a button. A Tag that is not interactive is a Badge (the Figma text), so there is no non-interactive Tag."
+    },
+    {
+      "id": "tag-disabled-border",
+      "status": "documented",
+      "text": "The Disabled fill and border are the same color (Background/Disabled/Default and Border/Disabled/Default), as in Figma, so the Disabled Tag shows no separate edge."
+    },
+    {
+      "id": "tag-focus-border",
+      "status": "documented",
+      "text": "In the Figma Focus variant the border is drawn with the default stroke and the ring is a separate 75 by 36 frame. In code the ring is the outline of the button (offset 2, width 2), the same 4px outside each side."
+    }
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "Tag"
+  ]
+},
+{
+  "slug": "accordion",
+  "name": "Accordion",
+  "navGroup": "Overlays and data",
+  "scripts": [
+    "accordion.js"
+  ],
+  "figma": {
+    "pageId": "2413:898",
+    "sets": [
+      {
+        "name": "Accordion item",
+        "id": "2413:948"
+      }
+    ]
+  },
+  "summary": "A stack of items whose header opens and closes a panel of content. Each item has a title, a chevron and a bottom border; an open item shows its content.",
+  "whenToUse": [
+    "Content in short sections that the person opens only when needed, such as answers to common questions.",
+    "The list is composed of stacked items (the Figma text).",
+    "Items open independently."
+  ],
+  "whenNotToUse": [
+    "Content that has to be read in full: show it on the page.",
+    "Switching between views of the same object: use Tabs.",
+    "A list of actions: use a Menu."
+  ],
+  "properties": [
+    {
+      "name": "Open",
+      "type": "variant",
+      "options": [
+        "false",
+        "true"
+      ],
+      "default": "false"
+    },
+    {
+      "name": "State",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Hover",
+        "Focus",
+        "Disabled"
+      ],
+      "default": "Default"
+    },
+    {
+      "name": "Title",
+      "type": "text",
+      "default": "Accordion title"
+    },
+    {
+      "name": "Content",
+      "type": "text",
+      "default": "Content revealed when the item is open. Keep it scannable and relevant to the title."
+    }
+  ],
+  "layout": {
+    "item": {
+      "width": "fills the container (480 in the specimen)",
+      "padding": "Spacing/space-4",
+      "gap": "Spacing/space-2 between header and content",
+      "border": "bottom only, 1px Border/Default/Default, included in layout (closed item 54 = 16 + 21 + 16 + 1)",
+      "header": "title and chevron 20 at the right, gap Spacing/space-3",
+      "focusRing": "488 by 62 closed and 488 by 112 open around the whole item, square"
+    }
+  },
+  "stateTokens": {
+    "Closed": {
+      "default": {
+        "text": "Text/Default/Default, Body/SemiBold/body-sm semibold",
+        "stroke": "Border/Default/Default",
+        "icon": "Icon/Color Secondary"
+      },
+      "hover": {
+        "fill": "Background/Default/Secondary"
+      },
+      "focus": "Default plus a ring around the whole item",
+      "disabled": {
+        "text": "Text/Disabled/Default",
+        "icon": "Icon/Color Disabled"
+      }
+    },
+    "Open": {
+      "default": {
+        "text": "Content: Text/Default/Secondary, Body/Regular/body-sm; chevron rotated 180 degrees"
+      },
+      "hover": {
+        "fill": "Background/Default/Secondary"
+      },
+      "focus": "Default plus a ring around the whole item"
+    }
+  },
+  "anatomy": [
+    "Item: padding 16, gap 8, only a bottom border of 1px. The last item keeps its border.",
+    "Header: a button with the title (Body/SemiBold/body-sm semibold) and a CaretDown of 20px at the right, 12 apart.",
+    "Panel: the content (Body/Regular/body-sm, Text/Default/Secondary), hidden when closed."
+  ],
+  "states": [
+    [
+      "Closed",
+      "The panel has the hidden attribute, aria-expanded=\"false\", the chevron points down.",
+      "--icon-color-secondary"
+    ],
+    [
+      "Open",
+      "The panel shows, aria-expanded=\"true\", the chevron is rotated 180 degrees.",
+      "--color-text-2"
+    ],
+    [
+      "Hover",
+      "The whole item takes Background/Default/Secondary, open or closed.",
+      "--color-bg-alt"
+    ],
+    [
+      "Focus",
+      "A ring around the WHOLE item (4px outside each side), square, though the focus is on the header button.",
+      "--focus-ring-width, --focus-ring-gap, --color-border-focus-ring"
+    ],
+    [
+      "Disabled (closed only)",
+      "Title and chevron in the Disabled tokens, no opacity. Uses the disabled attribute.",
+      "--color-text-disabled-default, --icon-color-disabled"
+    ]
+  ],
+  "keyboard": [
+    [
+      "Enter and Space",
+      "On the header: open or close the panel."
+    ],
+    [
+      "Tab and Shift+Tab",
+      "Move between the headers (and into the content of an open item)."
+    ]
+  ],
+  "aria": [
+    "The header is a <button> with aria-expanded and aria-controls pointing at the panel. It sits inside a heading; the level is the author's.",
+    "The panel has role=\"region\" and aria-labelledby (the header) only when the list has 6 items or fewer; with more, both are omitted so the landmark list is not flooded. js/accordion.js applies the rule.",
+    "A closed panel uses the hidden attribute, so it is out of the accessibility tree.",
+    "Disabled uses the disabled attribute."
+  ],
+  "accessibility": {
+    "contrastText": [
+      {
+        "case": "Title (Text/Default/Default on the page)",
+        "light": 19.42,
+        "dark": 17.06
+      },
+      {
+        "case": "Title on hover (on Background/Default/Secondary)",
+        "light": 18.15,
+        "dark": 15.17
+      },
+      {
+        "case": "Content (Text/Default/Secondary on Background/Default/Secondary)",
+        "light": 10.06,
+        "dark": 7.44
+      },
+      {
+        "case": "Disabled title (exempt, inactive)",
+        "light": 3.12,
+        "dark": 3.19
+      }
+    ],
+    "contrastNonText": [
+      {
+        "case": "Chevron (Icon/Color Secondary) on the item (needs 3:1)",
+        "light": 10.06,
+        "dark": 7.44
+      },
+      {
+        "case": "Bottom border vs page (needs 3:1)",
+        "light": 1.29,
+        "dark": 1.28
+      },
+      {
+        "case": "Focus ring vs page (needs 3:1)",
+        "light": 6.46,
+        "dark": 10.74
+      }
+    ],
+    "targetSize": "The click target is the full item width and at least 54 high (the padding is part of the target): above 2.5.5 (44 by 44, AAA).",
+    "focus": "An outline of 2px with a 2px offset around the whole item, square: 488 by 62 closed and 488 by 112 open for a 480 wide item. Where :has() is not supported, a plain ring on the header button is used, so the focus is never invisible. The container must not set overflow, or the ring would be clipped.",
+    "note": "The header is a button with aria-expanded and aria-controls; Enter and Space toggle it. The panel is role=\"region\" with aria-labelledby only when there are 6 items or fewer. A closed panel is hidden with the hidden attribute.",
+    "meaning": "The state is carried by aria-expanded and by the chevron direction, not by color. The border is a separator and carries no information."
+  },
+  "example": {
+    "markup": "<div class=\"accordion\">\n    <div class=\"accordion__item\">\n      <h3 class=\"accordion__heading\">\n        <button type=\"button\" class=\"accordion__trigger\" id=\"acc-demo-1-trigger\" aria-expanded=\"true\" aria-controls=\"acc-demo-1-panel\">\n          <span class=\"accordion__title\">Como funciona a revisão?</span>\n          <svg class=\"icon accordion__chevron\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z\"/></svg>\n        </button>\n      </h3>\n      <div class=\"accordion__panel\" id=\"acc-demo-1-panel\" role=\"region\" aria-labelledby=\"acc-demo-1-trigger\">Cada entrega passa por uma revisão de design antes de seguir para o desenvolvimento.</div>\n    </div>\n    <div class=\"accordion__item\">\n      <h3 class=\"accordion__heading\">\n        <button type=\"button\" class=\"accordion__trigger\" id=\"acc-demo-2-trigger\" aria-expanded=\"false\" aria-controls=\"acc-demo-2-panel\">\n          <span class=\"accordion__title\">Quanto tempo leva?</span>\n          <svg class=\"icon accordion__chevron\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z\"/></svg>\n        </button>\n      </h3>\n      <div class=\"accordion__panel\" id=\"acc-demo-2-panel\" role=\"region\" aria-labelledby=\"acc-demo-2-trigger\" hidden>Em geral, de dois a cinco dias úteis, dependendo do tamanho da entrega.</div>\n    </div>\n    <div class=\"accordion__item\">\n      <h3 class=\"accordion__heading\">\n        <button type=\"button\" class=\"accordion__trigger\" id=\"acc-demo-3-trigger\" aria-expanded=\"false\" aria-controls=\"acc-demo-3-panel\">\n          <span class=\"accordion__title\">Posso pedir uma revisão extra?</span>\n          <svg class=\"icon accordion__chevron\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z\"/></svg>\n        </button>\n      </h3>\n      <div class=\"accordion__panel\" id=\"acc-demo-3-panel\" role=\"region\" aria-labelledby=\"acc-demo-3-trigger\" hidden>Sim, combine com a equipe antes da data de entrega.</div>\n    </div>\n    <div class=\"accordion__item\">\n      <h3 class=\"accordion__heading\">\n        <button type=\"button\" class=\"accordion__trigger\" id=\"acc-demo-4-trigger\" aria-expanded=\"false\" aria-controls=\"acc-demo-4-panel\" disabled>\n          <span class=\"accordion__title\">Itens arquivados</span>\n          <svg class=\"icon accordion__chevron\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z\"/></svg>\n        </button>\n      </h3>\n      <div class=\"accordion__panel\" id=\"acc-demo-4-panel\" role=\"region\" aria-labelledby=\"acc-demo-4-trigger\" hidden>Indisponível no momento.</div>\n    </div>\n</div>"
+  },
+  "essential": [
+    "when",
+    "whenNot",
+    "anatomy",
+    "states",
+    "keyboard",
+    "variants",
+    "notes"
+  ],
+  "classRoles": {
+    ".accordion": "The list: stacked items.",
+    ".accordion__item": "One item: padding 16, bottom border 1px, hover fill, focus ring on the whole item.",
+    ".accordion__heading": "The heading around the header button (the level is the author's).",
+    ".accordion__trigger": "The header button.",
+    ".accordion__title": "The title.",
+    ".accordion__chevron": "The 20px CaretDown, rotated when open.",
+    ".accordion__panel": "The content, hidden when closed."
+  },
+  "knownGaps": [
+    {
+      "id": "accordion-disabled-open",
+      "status": "documented",
+      "text": "Figma draws Disabled only for the closed item (7 variants). An open and disabled item is not designed; in code a disabled item should be closed."
+    },
+    {
+      "id": "accordion-no-motion",
+      "status": "documented",
+      "text": "Figma defines no height animation, so the panel appears and disappears at once and the chevron turns without a transition. There is nothing to remove under prefers-reduced-motion."
+    },
+    {
+      "id": "accordion-border-contrast",
+      "status": "measured",
+      "text": "The bottom border (Border/Default/Default) is 1.29:1 against the page in Light and 1.28:1 in Dark, and 1.21:1 and 1.14:1 against the hover fill, under the 3:1 of WCAG 1.4.11. It separates items and the title carries the information, so it is a documented gap. Implemented as Figma, the decision is pending."
+    },
+    {
+      "id": "accordion-focus-has",
+      "status": "documented",
+      "text": "The ring on the whole item uses :has(.accordion__trigger:focus-visible). Where :has() is not supported, a plain ring on the header button is used instead. The focused item is raised one layer (--z-raised) so the ring is not painted under the next item."
+    },
+    {
+      "id": "accordion-no-js",
+      "status": "documented",
+      "text": "Without JavaScript the items stay closed (the panels have the hidden attribute) and cannot be opened. The role=\"region\" rule by item count is applied by the script."
+    },
+    {
+      "id": "accordion-site",
+      "status": "documented",
+      "text": "The site has no accordion or FAQ pattern, so no page was aligned. design-system.html uses <details> for code blocks, which is a different pattern and was not changed."
+    }
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "AccordionItem"
   ]
 }
 ]

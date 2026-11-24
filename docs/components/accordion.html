@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <script>
+    (function () {
+      var KEY = 'hope-docs-theme';
+      var html = document.documentElement;
+      var mq = null;
+      try { mq = window.matchMedia('(prefers-color-scheme: dark)'); } catch (e) {}
+      var current = null; // in-memory choice, used when localStorage is blocked
+      function stored() {
+        if (current) return current;
+        try {
+          var v = localStorage.getItem(KEY);
+          return v === 'dark' || v === 'system' ? v : 'light';
+        } catch (e) { return 'light'; }
+      }
+      function resolve(choice) { return choice === 'system' ? (mq && mq.matches ? 'dark' : 'light') : choice; }
+      function apply(choice) { html.setAttribute('data-theme', resolve(choice)); }
+      window.hopeDocsTheme = {
+        get: stored,
+        set: function (choice) {
+          current = choice;
+          try { localStorage.setItem(KEY, choice); } catch (e) {}
+          apply(choice);
+        },
+        apply: apply,
+        mq: mq
+      };
+      apply(stored());
+    })();
+  </script>
+  <title>Accordion | Hope DS docs</title>
+  <link rel="icon" type="image/svg+xml" href="../../logos/logo-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/hope.css" />
+  <link rel="stylesheet" href="../docs.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top" role="banner">
+      <nav class="nav" role="navigation" aria-label="Docs navigation">
+        <a href="../index.html" class="nav__logo" aria-label="Hope DS docs home">
+          <img src="../../logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
+          <img src="../../logos/logo-dark-mode.svg" alt="Renan Moura" class="nav__logo-dark" />
+        </a>
+        <div class="nav__controls">
+          <div class="nav__links">
+            <a href="../index.html" class="nav__link">Overview</a>
+            <a href="../tokens.html" class="nav__link">Tokens</a>
+            <a href="../components/index.html" class="nav__link nav__link--active" aria-current="page">Components</a>
+            <a href="../../index.html" class="nav__link">Portfolio site</a>
+          </div>
+          <div class="docs-theme" role="group" aria-label="Theme">
+            <button type="button" class="docs-theme__btn" data-theme-choice="light" aria-pressed="false">Light</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="dark" aria-pressed="false">Dark</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="system" aria-pressed="false">System</button>
+          </div>
+          <button class="nav__hamburger" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconBurger" aria-hidden="true" focusable="false"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg>
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconClose" aria-hidden="true" focusable="false" style="display:none"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
+          </button>
+        </div>
+      </nav>
+      <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+        <a href="../index.html" class="nav__mobile-link">Overview</a>
+        <a href="../tokens.html" class="nav__mobile-link">Tokens</a>
+        <a href="../components/index.html" class="nav__mobile-link nav__link--active">Components</a>
+        <a href="../../index.html" class="nav__mobile-link">Portfolio site</a>
+      </div>
+    </header>
+
+  <main id="main" class="docs-main">
+    <div class="docs-ds-layout">
+        <aside class="docs-ds-sidebar">
+          <nav aria-label="Docs pages">
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Pages</p>
+              <a class="docs-ds-nav__link" href="../index.html">Overview</a>
+              <a class="docs-ds-nav__link" href="../tokens.html">Tokens</a>
+              <a class="docs-ds-nav__link" href="../components/index.html">Components</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Components</p>
+              <a class="docs-ds-nav__link" href="../components/button.html">Button</a>
+              <a class="docs-ds-nav__link" href="../components/badge.html">Badge</a>
+              <a class="docs-ds-nav__link" href="../components/link.html">Link</a>
+              <a class="docs-ds-nav__link" href="../components/separator.html">Separator</a>
+              <a class="docs-ds-nav__link" href="../components/input.html">Input</a>
+              <a class="docs-ds-nav__link" href="../components/textarea.html">Textarea</a>
+              <a class="docs-ds-nav__link" href="../components/select.html">Select</a>
+              <a class="docs-ds-nav__link" href="../components/checkbox.html">Checkbox</a>
+              <a class="docs-ds-nav__link" href="../components/radio.html">Radio</a>
+              <a class="docs-ds-nav__link" href="../components/switch.html">Switch</a>
+              <a class="docs-ds-nav__link" href="../components/alert.html">Alert</a>
+              <a class="docs-ds-nav__link" href="../components/toast.html">Toast</a>
+              <a class="docs-ds-nav__link" href="../components/banner.html">Banner</a>
+              <a class="docs-ds-nav__link" href="../components/empty-state.html">Empty state</a>
+              <a class="docs-ds-nav__link" href="../components/tooltip.html">Tooltip</a>
+              <a class="docs-ds-nav__link" href="../components/progress.html">Progress</a>
+              <a class="docs-ds-nav__link" href="../components/spinner.html">Spinner</a>
+              <a class="docs-ds-nav__link" href="../components/skeleton.html">Skeleton</a>
+              <a class="docs-ds-nav__link" href="../components/icon-button.html">Icon Button</a>
+              <a class="docs-ds-nav__link" href="../components/review.html">Review (temporary)</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Navigation</p>
+              <a class="docs-ds-nav__link" href="../components/tabs.html">Tabs</a>
+              <a class="docs-ds-nav__link" href="../components/breadcrumb.html">Breadcrumb</a>
+              <a class="docs-ds-nav__link" href="../components/pagination.html">Pagination</a>
+              <a class="docs-ds-nav__link" href="../components/menu.html">Menu</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Overlays and data</p>
+              <a class="docs-ds-nav__link" href="../components/table.html">Table</a>
+              <a class="docs-ds-nav__link" href="../components/modal.html">Modal</a>
+              <a class="docs-ds-nav__link" href="../components/popover.html">Popover</a>
+              <a class="docs-ds-nav__link" href="../components/lightbox.html">Lightbox</a>
+              <a class="docs-ds-nav__link" href="../components/avatar.html">Avatar</a>
+              <a class="docs-ds-nav__link" href="../components/tag.html">Tag</a>
+              <a class="docs-ds-nav__link" href="../components/accordion.html" aria-current="page">Accordion</a>
+            </div>
+          </nav>
+        </aside>
+        <div class="docs-ds-content">
+          <header class="docs-ds-head">
+            <h1 class="text-h1">Accordion</h1>
+            <p class="docs-ds-desc">A stack of items whose header opens and closes a panel of content. Each item has a title, a chevron and a bottom border; an open item shows its content.</p>
+          </header>
+
+          <section class="docs-ds-section" id="example" aria-labelledby="example-title">
+            <h2 class="text-label text-tertiary" id="example-title">Live example</h2>
+            <div class="docs-ds-card">
+              <div class="docs-ds-preview">
+                <!-- demo:start --><div class="accordion">
+                      <div class="accordion__item">
+                        <h3 class="accordion__heading">
+                          <button type="button" class="accordion__trigger" id="acc-demo-1-trigger" aria-expanded="true" aria-controls="acc-demo-1-panel">
+                            <span class="accordion__title">Como funciona a revisão?</span>
+                            <svg class="icon accordion__chevron" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg>
+                          </button>
+                        </h3>
+                        <div class="accordion__panel" id="acc-demo-1-panel" role="region" aria-labelledby="acc-demo-1-trigger">Cada entrega passa por uma revisão de design antes de seguir para o desenvolvimento.</div>
+                      </div>
+                      <div class="accordion__item">
+                        <h3 class="accordion__heading">
+                          <button type="button" class="accordion__trigger" id="acc-demo-2-trigger" aria-expanded="false" aria-controls="acc-demo-2-panel">
+                            <span class="accordion__title">Quanto tempo leva?</span>
+                            <svg class="icon accordion__chevron" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg>
+                          </button>
+                        </h3>
+                        <div class="accordion__panel" id="acc-demo-2-panel" role="region" aria-labelledby="acc-demo-2-trigger" hidden>Em geral, de dois a cinco dias úteis, dependendo do tamanho da entrega.</div>
+                      </div>
+                      <div class="accordion__item">
+                        <h3 class="accordion__heading">
+                          <button type="button" class="accordion__trigger" id="acc-demo-3-trigger" aria-expanded="false" aria-controls="acc-demo-3-panel">
+                            <span class="accordion__title">Posso pedir uma revisão extra?</span>
+                            <svg class="icon accordion__chevron" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg>
+                          </button>
+                        </h3>
+                        <div class="accordion__panel" id="acc-demo-3-panel" role="region" aria-labelledby="acc-demo-3-trigger" hidden>Sim, combine com a equipe antes da data de entrega.</div>
+                      </div>
+                      <div class="accordion__item">
+                        <h3 class="accordion__heading">
+                          <button type="button" class="accordion__trigger" id="acc-demo-4-trigger" aria-expanded="false" aria-controls="acc-demo-4-panel" disabled>
+                            <span class="accordion__title">Itens arquivados</span>
+                            <svg class="icon accordion__chevron" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg>
+                          </button>
+                        </h3>
+                        <div class="accordion__panel" id="acc-demo-4-panel" role="region" aria-labelledby="acc-demo-4-trigger" hidden>Indisponível no momento.</div>
+                      </div>
+                  </div><!-- demo:end -->
+              </div>
+            </div>
+            <details class="docs-ds-code">
+              <summary>HTML</summary>
+<pre class="docs-ds-code__block">&lt;div class=&quot;accordion&quot;&gt;
+    &lt;div class=&quot;accordion__item&quot;&gt;
+      &lt;h3 class=&quot;accordion__heading&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;accordion__trigger&quot; id=&quot;acc-demo-1-trigger&quot; aria-expanded=&quot;true&quot; aria-controls=&quot;acc-demo-1-panel&quot;&gt;
+          &lt;span class=&quot;accordion__title&quot;&gt;Como funciona a revisão?&lt;/span&gt;
+          &lt;svg class=&quot;icon accordion__chevron&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z&quot;/&gt;&lt;/svg&gt;
+        &lt;/button&gt;
+      &lt;/h3&gt;
+      &lt;div class=&quot;accordion__panel&quot; id=&quot;acc-demo-1-panel&quot; role=&quot;region&quot; aria-labelledby=&quot;acc-demo-1-trigger&quot;&gt;Cada entrega passa por uma revisão de design antes de seguir para o desenvolvimento.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;accordion__item&quot;&gt;
+      &lt;h3 class=&quot;accordion__heading&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;accordion__trigger&quot; id=&quot;acc-demo-2-trigger&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;acc-demo-2-panel&quot;&gt;
+          &lt;span class=&quot;accordion__title&quot;&gt;Quanto tempo leva?&lt;/span&gt;
+          &lt;svg class=&quot;icon accordion__chevron&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z&quot;/&gt;&lt;/svg&gt;
+        &lt;/button&gt;
+      &lt;/h3&gt;
+      &lt;div class=&quot;accordion__panel&quot; id=&quot;acc-demo-2-panel&quot; role=&quot;region&quot; aria-labelledby=&quot;acc-demo-2-trigger&quot; hidden&gt;Em geral, de dois a cinco dias úteis, dependendo do tamanho da entrega.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;accordion__item&quot;&gt;
+      &lt;h3 class=&quot;accordion__heading&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;accordion__trigger&quot; id=&quot;acc-demo-3-trigger&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;acc-demo-3-panel&quot;&gt;
+          &lt;span class=&quot;accordion__title&quot;&gt;Posso pedir uma revisão extra?&lt;/span&gt;
+          &lt;svg class=&quot;icon accordion__chevron&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z&quot;/&gt;&lt;/svg&gt;
+        &lt;/button&gt;
+      &lt;/h3&gt;
+      &lt;div class=&quot;accordion__panel&quot; id=&quot;acc-demo-3-panel&quot; role=&quot;region&quot; aria-labelledby=&quot;acc-demo-3-trigger&quot; hidden&gt;Sim, combine com a equipe antes da data de entrega.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;accordion__item&quot;&gt;
+      &lt;h3 class=&quot;accordion__heading&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;accordion__trigger&quot; id=&quot;acc-demo-4-trigger&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;acc-demo-4-panel&quot; disabled&gt;
+          &lt;span class=&quot;accordion__title&quot;&gt;Itens arquivados&lt;/span&gt;
+          &lt;svg class=&quot;icon accordion__chevron&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z&quot;/&gt;&lt;/svg&gt;
+        &lt;/button&gt;
+      &lt;/h3&gt;
+      &lt;div class=&quot;accordion__panel&quot; id=&quot;acc-demo-4-panel&quot; role=&quot;region&quot; aria-labelledby=&quot;acc-demo-4-trigger&quot; hidden&gt;Indisponível no momento.&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </details>
+          </section>
+
+          <section class="docs-ds-section" id="when" aria-labelledby="when-title">
+            <h2 class="text-label text-tertiary" id="when-title">When to use</h2>
+            <ul class="docs-ds-list"><li>Content in short sections that the person opens only when needed, such as answers to common questions.</li><li>The list is composed of stacked items (the Figma text).</li><li>Items open independently.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="when-not" aria-labelledby="when-not-title">
+            <h2 class="text-label text-tertiary" id="when-not-title">When not to use</h2>
+            <ul class="docs-ds-list"><li>Content that has to be read in full: show it on the page.</li><li>Switching between views of the same object: use Tabs.</li><li>A list of actions: use a Menu.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="anatomy" aria-labelledby="anatomy-title">
+            <h2 class="text-label text-tertiary" id="anatomy-title">Anatomy</h2>
+            <ul class="docs-ds-list"><li>Item: padding 16, gap 8, only a bottom border of 1px. The last item keeps its border.</li><li>Header: a button with the title (Body/SemiBold/body-sm semibold) and a CaretDown of 20px at the right, 12 apart.</li><li>Panel: the content (Body/Regular/body-sm, Text/Default/Secondary), hidden when closed.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="states" aria-labelledby="states-title">
+            <h2 class="text-label text-tertiary" id="states-title">States</h2>
+            <div class="data-table" role="region" aria-labelledby="accordion-states-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="accordion-states-caption">Accordion states, what changes in each and the tokens involved</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">State</th>
+        <th scope="col" class="data-table__head-cell">What changes</th>
+        <th scope="col" class="data-table__head-cell">Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header">Closed</th>
+        <td class="data-table__cell">The panel has the hidden attribute, aria-expanded=&quot;false&quot;, the chevron points down.</td>
+        <td class="data-table__cell"><code>--icon-color-secondary</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Open</th>
+        <td class="data-table__cell">The panel shows, aria-expanded=&quot;true&quot;, the chevron is rotated 180 degrees.</td>
+        <td class="data-table__cell"><code>--color-text-2</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Hover</th>
+        <td class="data-table__cell">The whole item takes Background/Default/Secondary, open or closed.</td>
+        <td class="data-table__cell"><code>--color-bg-alt</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Focus</th>
+        <td class="data-table__cell">A ring around the WHOLE item (4px outside each side), square, though the focus is on the header button.</td>
+        <td class="data-table__cell"><code>--focus-ring-width</code> <code>--focus-ring-gap</code> <code>--color-border-focus-ring</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Disabled (closed only)</th>
+        <td class="data-table__cell">Title and chevron in the Disabled tokens, no opacity. Uses the disabled attribute.</td>
+        <td class="data-table__cell"><code>--color-text-disabled-default</code> <code>--icon-color-disabled</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          </section>
+
+          <section class="docs-ds-section" id="keyboard" aria-labelledby="keyboard-title">
+            <h2 class="text-label text-tertiary" id="keyboard-title">Keyboard and ARIA</h2>
+            <div class="data-table" role="region" aria-labelledby="accordion-keyboard-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="accordion-keyboard-caption">Accordion keyboard interaction</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Key</th>
+        <th scope="col" class="data-table__head-cell">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header">Enter and Space</th>
+        <td class="data-table__cell">On the header: open or close the panel.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Tab and Shift+Tab</th>
+        <td class="data-table__cell">Move between the headers (and into the content of an open item).</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+            <ul class="docs-ds-list"><li>The header is a &lt;button&gt; with aria-expanded and aria-controls pointing at the panel. It sits inside a heading; the level is the author's.</li><li>The panel has role=&quot;region&quot; and aria-labelledby (the header) only when the list has 6 items or fewer; with more, both are omitted so the landmark list is not flooded. js/accordion.js applies the rule.</li><li>A closed panel uses the hidden attribute, so it is out of the accessibility tree.</li><li>Disabled uses the disabled attribute.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="variants" aria-labelledby="variants-title">
+            <h2 class="text-label text-tertiary" id="variants-title">Classes and tokens</h2>
+            <div class="data-table" role="region" aria-labelledby="accordion-variants-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="accordion-variants-caption">Accordion classes, what each is for and the tokens its rule uses</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Class</th>
+        <th scope="col" class="data-table__head-cell">Used for</th>
+        <th scope="col" class="data-table__head-cell">Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.accordion__item</code></th>
+        <td class="data-table__cell">One item: padding 16, bottom border 1px, hover fill, focus ring on the whole item.</td>
+        <td class="data-table__cell"><code>--space-2</code> <code>--space-4</code> <code>--font-body</code> <code>--border-width-normal</code> <code>--color-border</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          </section>
+
+          <section class="docs-ds-section" id="notes" aria-labelledby="notes-title">
+            <h2 class="text-label text-tertiary" id="notes-title">Code notes</h2>
+            <div class="data-table" role="region" aria-labelledby="accordion-notes-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="accordion-notes-caption">Accordion code notes, the status of each and the detail</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Note</th>
+        <th scope="col" class="data-table__head-cell">Status</th>
+        <th scope="col" class="data-table__head-cell">Detail</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>accordion-disabled-open</code></th>
+        <td class="data-table__cell">documented</td>
+        <td class="data-table__cell">Figma draws Disabled only for the closed item (7 variants). An open and disabled item is not designed; in code a disabled item should be closed.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>accordion-no-motion</code></th>
+        <td class="data-table__cell">documented</td>
+        <td class="data-table__cell">Figma defines no height animation, so the panel appears and disappears at once and the chevron turns without a transition. There is nothing to remove under prefers-reduced-motion.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>accordion-border-contrast</code></th>
+        <td class="data-table__cell">measured</td>
+        <td class="data-table__cell">The bottom border (Border/Default/Default) is 1.29:1 against the page in Light and 1.28:1 in Dark, and 1.21:1 and 1.14:1 against the hover fill, under the 3:1 of WCAG 1.4.11. It separates items and the title carries the information, so it is a documented gap. Implemented as Figma, the decision is pending.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>accordion-focus-has</code></th>
+        <td class="data-table__cell">documented</td>
+        <td class="data-table__cell">The ring on the whole item uses :has(.accordion__trigger:focus-visible). Where :has() is not supported, a plain ring on the header button is used instead. The focused item is raised one layer (--z-raised) so the ring is not painted under the next item.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>accordion-no-js</code></th>
+        <td class="data-table__cell">documented</td>
+        <td class="data-table__cell">Without JavaScript the items stay closed (the panels have the hidden attribute) and cannot be opened. The role=&quot;region&quot; rule by item count is applied by the script.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>accordion-site</code></th>
+        <td class="data-table__cell">documented</td>
+        <td class="data-table__cell">The site has no accordion or FAQ pattern, so no page was aligned. design-system.html uses &lt;details&gt; for code blocks, which is a different pattern and was not changed.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          </section>
+        </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconBurger = document.getElementById('iconBurger');
+      const iconClose = document.getElementById('iconClose');
+
+      const theme = window.hopeDocsTheme;
+      const choices = document.querySelectorAll('[data-theme-choice]');
+      function syncSwitch() {
+        const current = theme ? theme.get() : 'light';
+        choices.forEach(function (btn) {
+          btn.setAttribute('aria-pressed', String(btn.getAttribute('data-theme-choice') === current));
+        });
+      }
+      function setMenu(open) {
+        mobileMenu.classList.toggle('is-open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        iconBurger.style.display = open ? 'none' : 'block';
+        iconClose.style.display = open ? 'block' : 'none';
+      }
+
+      choices.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (theme) theme.set(btn.getAttribute('data-theme-choice'));
+          syncSwitch();
+        });
+      });
+      if (theme && theme.mq) {
+        const onChange = function () { if (theme.get() === 'system') theme.apply('system'); };
+        try { theme.mq.addEventListener('change', onChange); } catch (e) { try { theme.mq.addListener(onChange); } catch (e2) {} }
+      }
+      syncSwitch();
+
+      menuToggle.addEventListener('click', function () {
+        setMenu(!mobileMenu.classList.contains('is-open'));
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { setMenu(false); });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+          setMenu(false);
+          menuToggle.focus();
+        }
+      });
+    })();
+  </script>
+  <script src="../../js/accordion.js"></script>
+</body>
+</html>

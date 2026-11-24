@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <script>
+    (function () {
+      var KEY = 'hope-docs-theme';
+      var html = document.documentElement;
+      var mq = null;
+      try { mq = window.matchMedia('(prefers-color-scheme: dark)'); } catch (e) {}
+      var current = null; // in-memory choice, used when localStorage is blocked
+      function stored() {
+        if (current) return current;
+        try {
+          var v = localStorage.getItem(KEY);
+          return v === 'dark' || v === 'system' ? v : 'light';
+        } catch (e) { return 'light'; }
+      }
+      function resolve(choice) { return choice === 'system' ? (mq && mq.matches ? 'dark' : 'light') : choice; }
+      function apply(choice) { html.setAttribute('data-theme', resolve(choice)); }
+      window.hopeDocsTheme = {
+        get: stored,
+        set: function (choice) {
+          current = choice;
+          try { localStorage.setItem(KEY, choice); } catch (e) {}
+          apply(choice);
+        },
+        apply: apply,
+        mq: mq
+      };
+      apply(stored());
+    })();
+  </script>
+  <title>Lightbox | Hope DS docs</title>
+  <link rel="icon" type="image/svg+xml" href="../../logos/logo-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/hope.css" />
+  <link rel="stylesheet" href="../docs.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top" role="banner">
+      <nav class="nav" role="navigation" aria-label="Docs navigation">
+        <a href="../index.html" class="nav__logo" aria-label="Hope DS docs home">
+          <img src="../../logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
+          <img src="../../logos/logo-dark-mode.svg" alt="Renan Moura" class="nav__logo-dark" />
+        </a>
+        <div class="nav__controls">
+          <div class="nav__links">
+            <a href="../index.html" class="nav__link">Overview</a>
+            <a href="../tokens.html" class="nav__link">Tokens</a>
+            <a href="../components/index.html" class="nav__link nav__link--active" aria-current="page">Components</a>
+            <a href="../../index.html" class="nav__link">Portfolio site</a>
+          </div>
+          <div class="docs-theme" role="group" aria-label="Theme">
+            <button type="button" class="docs-theme__btn" data-theme-choice="light" aria-pressed="false">Light</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="dark" aria-pressed="false">Dark</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="system" aria-pressed="false">System</button>
+          </div>
+          <button class="nav__hamburger" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconBurger" aria-hidden="true" focusable="false"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg>
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconClose" aria-hidden="true" focusable="false" style="display:none"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
+          </button>
+        </div>
+      </nav>
+      <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+        <a href="../index.html" class="nav__mobile-link">Overview</a>
+        <a href="../tokens.html" class="nav__mobile-link">Tokens</a>
+        <a href="../components/index.html" class="nav__mobile-link nav__link--active">Components</a>
+        <a href="../../index.html" class="nav__mobile-link">Portfolio site</a>
+      </div>
+    </header>
+
+  <main id="main" class="docs-main">
+    <div class="docs-ds-layout">
+        <aside class="docs-ds-sidebar">
+          <nav aria-label="Docs pages">
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Pages</p>
+              <a class="docs-ds-nav__link" href="../index.html">Overview</a>
+              <a class="docs-ds-nav__link" href="../tokens.html">Tokens</a>
+              <a class="docs-ds-nav__link" href="../components/index.html">Components</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Components</p>
+              <a class="docs-ds-nav__link" href="../components/button.html">Button</a>
+              <a class="docs-ds-nav__link" href="../components/badge.html">Badge</a>
+              <a class="docs-ds-nav__link" href="../components/link.html">Link</a>
+              <a class="docs-ds-nav__link" href="../components/separator.html">Separator</a>
+              <a class="docs-ds-nav__link" href="../components/input.html">Input</a>
+              <a class="docs-ds-nav__link" href="../components/textarea.html">Textarea</a>
+              <a class="docs-ds-nav__link" href="../components/select.html">Select</a>
+              <a class="docs-ds-nav__link" href="../components/checkbox.html">Checkbox</a>
+              <a class="docs-ds-nav__link" href="../components/radio.html">Radio</a>
+              <a class="docs-ds-nav__link" href="../components/switch.html">Switch</a>
+              <a class="docs-ds-nav__link" href="../components/alert.html">Alert</a>
+              <a class="docs-ds-nav__link" href="../components/toast.html">Toast</a>
+              <a class="docs-ds-nav__link" href="../components/banner.html">Banner</a>
+              <a class="docs-ds-nav__link" href="../components/empty-state.html">Empty state</a>
+              <a class="docs-ds-nav__link" href="../components/tooltip.html">Tooltip</a>
+              <a class="docs-ds-nav__link" href="../components/progress.html">Progress</a>
+              <a class="docs-ds-nav__link" href="../components/spinner.html">Spinner</a>
+              <a class="docs-ds-nav__link" href="../components/skeleton.html">Skeleton</a>
+              <a class="docs-ds-nav__link" href="../components/icon-button.html">Icon Button</a>
+              <a class="docs-ds-nav__link" href="../components/review.html">Review (temporary)</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Navigation</p>
+              <a class="docs-ds-nav__link" href="../components/tabs.html">Tabs</a>
+              <a class="docs-ds-nav__link" href="../components/breadcrumb.html">Breadcrumb</a>
+              <a class="docs-ds-nav__link" href="../components/pagination.html">Pagination</a>
+              <a class="docs-ds-nav__link" href="../components/menu.html">Menu</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Overlays and data</p>
+              <a class="docs-ds-nav__link" href="../components/table.html">Table</a>
+              <a class="docs-ds-nav__link" href="../components/modal.html">Modal</a>
+              <a class="docs-ds-nav__link" href="../components/popover.html">Popover</a>
+              <a class="docs-ds-nav__link" href="../components/lightbox.html" aria-current="page">Lightbox</a>
+              <a class="docs-ds-nav__link" href="../components/avatar.html">Avatar</a>
+              <a class="docs-ds-nav__link" href="../components/tag.html">Tag</a>
+              <a class="docs-ds-nav__link" href="../components/accordion.html">Accordion</a>
+            </div>
+          </nav>
+        </aside>
+        <div class="docs-ds-content">
+          <header class="docs-ds-head">
+            <h1 class="text-h1">Lightbox</h1>
+            <p class="docs-ds-desc">A full-screen image viewer: a dark scrim with a blur, an image of up to 960px, an optional caption and a close button at the top-right corner of the panel. It sits at the same layer as the Modal.</p>
+          </header>
+
+          <section class="docs-ds-section" id="example" aria-labelledby="example-title">
+            <h2 class="text-label text-tertiary" id="example-title">Live example</h2>
+            <div class="docs-ds-card">
+              <div class="docs-ds-preview">
+                <!-- demo:start --><figure>
+                    <img data-lightbox src="../../images/case-thumbnails/dotz-thumb-light.png" alt="Miniatura do estudo de caso Dotz, com a tela inicial do aplicativo" width="320">
+                    <figcaption>Miniatura do estudo de caso Dotz.</figcaption>
+                  </figure><!-- demo:end -->
+              </div>
+            </div>
+            <details class="docs-ds-code">
+              <summary>HTML</summary>
+<pre class="docs-ds-code__block">&lt;figure&gt;
+  &lt;img data-lightbox src=&quot;../../images/case-thumbnails/dotz-thumb-light.png&quot; alt=&quot;Miniatura do estudo de caso Dotz, com a tela inicial do aplicativo&quot; width=&quot;320&quot;&gt;
+  &lt;figcaption&gt;Miniatura do estudo de caso Dotz.&lt;/figcaption&gt;
+&lt;/figure&gt;</pre>
+            </details>
+          </section>
+
+          <section class="docs-ds-section" id="when" aria-labelledby="when-title">
+            <h2 class="text-label text-tertiary" id="when-title">When to use</h2>
+            <ul class="docs-ds-list"><li>Looking at one image closely: screenshots, diagrams and case study figures.</li><li>The caption comes from the figcaption of the image.</li><li>The image needs a meaningful alt: the viewer reuses it.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="when-not" aria-labelledby="when-not-title">
+            <h2 class="text-label text-tertiary" id="when-not-title">When not to use</h2>
+            <ul class="docs-ds-list"><li>A decision or a form: use a Modal.</li><li>A gallery with navigation between images: it is not designed (Figma has one image).</li><li>Decorative images: do not make them zoomable.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="anatomy" aria-labelledby="anatomy-title">
+            <h2 class="text-label text-tertiary" id="anatomy-title">Anatomy</h2>
+            <ul class="docs-ds-list"><li>Overlay: full screen, Scrim Strong plus a 12px background blur, padding 24.</li><li>Panel: the image and the optional caption, 16 apart. The panel has no root border.</li><li>Image: up to 960 wide, radius 16, Shadow/lg.</li><li>Caption: Body/Regular/body-sm, white at 55%, centered, up to 520 wide.</li><li>Close button: 36 by 36 circle at the top-right corner of the panel, 40px above the image.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="states" aria-labelledby="states-title">
+            <h2 class="text-label text-tertiary" id="states-title">States</h2>
+            <div class="data-table" role="region" aria-labelledby="lightbox-states-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="lightbox-states-caption">Lightbox states, what changes in each and the tokens involved</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">State</th>
+        <th scope="col" class="data-table__head-cell">What changes</th>
+        <th scope="col" class="data-table__head-cell">Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header">Closed</th>
+        <td class="data-table__cell">The overlay has the hidden attribute.</td>
+        <td class="data-table__cell"><span class="docs-muted">none</span></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Open</th>
+        <td class="data-table__cell">The overlay fades in, the panel scales in, the page behind is inert and its scroll is locked.</td>
+        <td class="data-table__cell"><code>--color-bg-scrim-strong</code> <code>--z-modal</code> <code>--duration-slow</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Close button, hover</th>
+        <td class="data-table__cell">The fill goes from 12% to 22% white and the X to full opacity. Figma draws no hover.</td>
+        <td class="data-table__cell"><code>--color-cloud</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Close button, focus</th>
+        <td class="data-table__cell">A Solar ring (2px, 2px gap) following the pill radius. Figma draws no focus.</td>
+        <td class="data-table__cell"><code>--focus-ring-width</code> <code>--focus-ring-gap</code> <code>--color-solar</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          </section>
+
+          <section class="docs-ds-section" id="keyboard" aria-labelledby="keyboard-title">
+            <h2 class="text-label text-tertiary" id="keyboard-title">Keyboard and ARIA</h2>
+            <div class="data-table" role="region" aria-labelledby="lightbox-keyboard-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="lightbox-keyboard-caption">Lightbox keyboard interaction</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Key</th>
+        <th scope="col" class="data-table__head-cell">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header">Enter and Space</th>
+        <td class="data-table__cell">On a zoomable image: open the Lightbox. On the close button: close it.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Escape</th>
+        <td class="data-table__cell">Closes the Lightbox and returns the focus to the image.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Tab</th>
+        <td class="data-table__cell">The focus stays on the close button (the only control).</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+            <ul class="docs-ds-list"><li>The overlay has role=&quot;dialog&quot;, aria-modal=&quot;true&quot; and aria-label=&quot;Image preview&quot;.</li><li>A zoomable image has role=&quot;button&quot;, tabindex=&quot;0&quot; and an aria-label that starts with &quot;Zoom in&quot;.</li><li>The close button has an accessible name (aria-label).</li><li>The alt of the image is reused in the viewer; the caption is the text of the figcaption.</li><li>The page behind is inert and the scroll is locked while it is open.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="variants" aria-labelledby="variants-title">
+            <h2 class="text-label text-tertiary" id="variants-title">Classes and tokens</h2>
+            <div class="data-table" role="region" aria-labelledby="lightbox-variants-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="lightbox-variants-caption">Lightbox classes, what each is for and the tokens its rule uses</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Class</th>
+        <th scope="col" class="data-table__head-cell">Used for</th>
+        <th scope="col" class="data-table__head-cell">Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.lightbox</code></th>
+        <td class="data-table__cell">The overlay shell, layer 200. Built by js/lightbox.js.</td>
+        <td class="data-table__cell"><code>--z-modal</code> <code>--space-6</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.lightbox__backdrop</code></th>
+        <td class="data-table__cell">Scrim Strong plus the 12px blur.</td>
+        <td class="data-table__cell"><code>--color-bg-scrim-strong</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.lightbox__panel</code></th>
+        <td class="data-table__cell">Image and caption, up to 960 wide.</td>
+        <td class="data-table__cell"><code>--space-4</code> <code>--duration-slower</code> <code>--ease-out</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.lightbox__media</code></th>
+        <td class="data-table__cell"></td>
+        <td class="data-table__cell"><span class="docs-muted">none</span></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.lightbox__img</code></th>
+        <td class="data-table__cell">The image, radius 16 and Shadow/lg.</td>
+        <td class="data-table__cell"><code>--space-6</code> <code>--space-10</code> <code>--radius-lg</code> <code>--shadow-lg</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.lightbox__caption</code></th>
+        <td class="data-table__cell">The caption, from the figcaption.</td>
+        <td class="data-table__cell"><code>--font-body</code> <code>--fs-body-sm</code> <code>--color-cloud</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.lightbox__close</code></th>
+        <td class="data-table__cell">The 36px close button.</td>
+        <td class="data-table__cell"><code>--space-10</code> <code>--color-cloud</code> <code>--border-width-normal</code> <code>--radius-pill</code> <code>--duration-normal</code> <code>--ease-out</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          </section>
+
+          <section class="docs-ds-section" id="notes" aria-labelledby="notes-title">
+            <h2 class="text-label text-tertiary" id="notes-title">Code notes</h2>
+            <div class="data-table" role="region" aria-labelledby="lightbox-notes-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="lightbox-notes-caption">Lightbox code notes, the status of each and the detail</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Note</th>
+        <th scope="col" class="data-table__head-cell">Status</th>
+        <th scope="col" class="data-table__head-cell">Detail</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>lightbox-close-states</code></th>
+        <td class="data-table__cell">documented</td>
+        <td class="data-table__cell">Figma draws no Hover and no Focus for the close button. Hover is the one the repo already had (22% white fill, X at full opacity). Focus is the shared ring in Solar, because the focus color of the Light theme (Anchor) is 2.22:1 against this scrim.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>lightbox-close-icon-color</code></th>
+        <td class="data-table__cell">inference</td>
+        <td class="data-table__cell">Figma binds the X to Icon/Color Neutral, which is white in Light and ink in Dark. The scrim is the same dark color in both themes, so an ink X would disappear in Dark. The CSS keeps the X white (--color-cloud) in both themes. Pending decision.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>lightbox-blur</code></th>
+        <td class="data-table__cell">inference</td>
+        <td class="data-table__cell">The Figma effect is a background blur of radius 12 (not a style, no token). The CSS uses blur(12px), as before. Figma blur radius and CSS blur() are not the same unit (Figma exports 12 as blur(6px) in its code output). Open item.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>lightbox-scrim-dark</code></th>
+        <td class="data-table__cell">documented</td>
+        <td class="data-table__cell">Known accepted divergence D-05: the Dark value of Scrim Strong is #000000e0 in Figma and #0d0d0fe0 in the CSS (the same value in both themes). Not changed in this release.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>lightbox-narrow</code></th>
+        <td class="data-table__cell">documented</td>
+        <td class="data-table__cell">The image height is limited to the viewport minus the overlay padding, the 40px of the close button on each side and room for a caption of three lines, so the close button always stays inside the viewport. Figma does not define narrow screens.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>lightbox-no-gallery</code></th>
+        <td class="data-table__cell">documented</td>
+        <td class="data-table__cell">Figma has one image and no previous or next controls. They are not built.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>lightbox-close-contrast</code></th>
+        <td class="data-table__cell">measured</td>
+        <td class="data-table__cell">The close fill is 1.46:1 and the stroke 1.79:1 against the scrim in Light (1.37 and 1.69 in Dark). The X, which identifies the button, is 10.2:1 and 13.04:1. The ring is 9.02:1 and 12.08:1.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          </section>
+        </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconBurger = document.getElementById('iconBurger');
+      const iconClose = document.getElementById('iconClose');
+
+      const theme = window.hopeDocsTheme;
+      const choices = document.querySelectorAll('[data-theme-choice]');
+      function syncSwitch() {
+        const current = theme ? theme.get() : 'light';
+        choices.forEach(function (btn) {
+          btn.setAttribute('aria-pressed', String(btn.getAttribute('data-theme-choice') === current));
+        });
+      }
+      function setMenu(open) {
+        mobileMenu.classList.toggle('is-open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        iconBurger.style.display = open ? 'none' : 'block';
+        iconClose.style.display = open ? 'block' : 'none';
+      }
+
+      choices.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (theme) theme.set(btn.getAttribute('data-theme-choice'));
+          syncSwitch();
+        });
+      });
+      if (theme && theme.mq) {
+        const onChange = function () { if (theme.get() === 'system') theme.apply('system'); };
+        try { theme.mq.addEventListener('change', onChange); } catch (e) { try { theme.mq.addListener(onChange); } catch (e2) {} }
+      }
+      syncSwitch();
+
+      menuToggle.addEventListener('click', function () {
+        setMenu(!mobileMenu.classList.contains('is-open'));
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { setMenu(false); });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+          setMenu(false);
+          menuToggle.focus();
+        }
+      });
+    })();
+  </script>
+  <script src="../../js/lightbox.js"></script>
+</body>
+</html>

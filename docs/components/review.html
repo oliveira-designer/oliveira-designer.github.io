@@ -92,7 +92,6 @@
               <a class="docs-ds-nav__link" href="../components/badge.html">Badge</a>
               <a class="docs-ds-nav__link" href="../components/link.html">Link</a>
               <a class="docs-ds-nav__link" href="../components/separator.html">Separator</a>
-              <a class="docs-ds-nav__link" href="../components/table.html">Table</a>
               <a class="docs-ds-nav__link" href="../components/input.html">Input</a>
               <a class="docs-ds-nav__link" href="../components/textarea.html">Textarea</a>
               <a class="docs-ds-nav__link" href="../components/select.html">Select</a>
@@ -117,6 +116,16 @@
               <a class="docs-ds-nav__link" href="../components/pagination.html">Pagination</a>
               <a class="docs-ds-nav__link" href="../components/menu.html">Menu</a>
             </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Overlays and data</p>
+              <a class="docs-ds-nav__link" href="../components/table.html">Table</a>
+              <a class="docs-ds-nav__link" href="../components/modal.html">Modal</a>
+              <a class="docs-ds-nav__link" href="../components/popover.html">Popover</a>
+              <a class="docs-ds-nav__link" href="../components/lightbox.html">Lightbox</a>
+              <a class="docs-ds-nav__link" href="../components/avatar.html">Avatar</a>
+              <a class="docs-ds-nav__link" href="../components/tag.html">Tag</a>
+              <a class="docs-ds-nav__link" href="../components/accordion.html">Accordion</a>
+            </div>
           </nav>
         </aside>
         <div class="docs-ds-content">
@@ -128,7 +137,7 @@
 
           <aside class="docs-note docs-note--banner" role="note">
             <p><strong>Temporary page.</strong> It exists to review what is built and what is missing while the CSS is being restructured. It will be removed once the components are created. Nothing here is a design decision: coverage comes from <code>docs/data/components-map.json</code>, the inventory from <code>docs/data/figma-components-inventory.json</code>, and the stylesheets from <code>docs/data/css-sources.json</code>.</p>
-            <p>33 components, 196 Figma variants, 180 with a CSS class: 28 Complete, 0 Partial, 5 Not created.</p>
+            <p>33 components, 196 Figma variants, 196 with a CSS class: 33 Complete, 0 Partial, 0 Not created.</p>
           </aside>
 
           <section class="docs-group" id="group-primitives" aria-labelledby="group-primitives-title">
@@ -462,51 +471,38 @@
             <h2 class="text-h2" id="group-overlays-and-data-title">Overlays and data <span class="docs-muted">(9 components)</span></h2>
           <section class="docs-section docs-unit" id="unit-modal" aria-labelledby="unit-modal-title">
             <h3 class="text-h3" id="unit-modal-title">Modal</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--neutral">CSS 0 / 1</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-472" rel="noopener noreferrer">Figma node 2413:472</a></p>
-            <p class="docs-placeholder">Not created</p>
-            <h4 class="text-body docs-subhead">Missing variants</h4>
-            <p class="docs-section__desc">All 1 variant (other properties: ).</p>
+            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--success">CSS 1 / 1</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-472" rel="noopener noreferrer">Figma node 2413:472</a></p>
+            <p class="docs-section__desc">The 1 covered variants are rendered on <a href="modal.html">the Modal page</a>.</p>
           </section>
 
           <section class="docs-section docs-unit" id="unit-popover" aria-labelledby="unit-popover-title">
             <h3 class="text-h3" id="unit-popover-title">Popover</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--neutral">CSS 0 / 1</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-573" rel="noopener noreferrer">Figma node 2413:573</a></p>
-            <p class="docs-placeholder">Not created</p>
-            <h4 class="text-body docs-subhead">Missing variants</h4>
-            <p class="docs-section__desc">All 1 variant (other properties: ).</p>
+            <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--success">CSS 1 / 1</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-573" rel="noopener noreferrer">Figma node 2413:573</a></p>
+            <p class="docs-section__desc">The 1 covered variants are rendered on <a href="popover.html">the Popover page</a>.</p>
           </section>
 
           <section class="docs-section docs-unit" id="unit-lightbox" aria-labelledby="unit-lightbox-title">
             <h3 class="text-h3" id="unit-lightbox-title">Lightbox</h3>
             <p class="docs-badges"><span class="badge badge--anchor">1 Figma variant</span> <span class="badge badge--success">CSS 1 / 1</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2456-4" rel="noopener noreferrer">Figma node 2456:4</a></p>
-            <h4 class="text-body docs-subhead">Covered variants (1 of 1)</h4>
-            <div class="docs-demo-stack">
-            <p class="docs-placeholder docs-placeholder--info">Lightbox: the CSS exists (<code>.lightbox</code>) but this page does not render it. Added for the review page. CSS exists (css/components/lightbox.css) but it is a fixed full-screen modal driven by js/lightbox.js, so the review page does not render it.</p>
-            </div>
+            <p class="docs-section__desc">The 1 covered variants are rendered on <a href="lightbox.html">the Lightbox page</a>.</p>
           </section>
 
           <section class="docs-section docs-unit" id="unit-avatar" aria-labelledby="unit-avatar-title">
             <h3 class="text-h3" id="unit-avatar-title">Avatar</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">3 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 3</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-755" rel="noopener noreferrer">Figma node 2413:755</a></p>
-            <p class="docs-placeholder">Not created</p>
-            <h4 class="text-body docs-subhead">Missing variants</h4>
-            <p class="docs-section__desc">All 3 variants (Size: Small, Medium, Large; other properties: Initials).</p>
+            <p class="docs-badges"><span class="badge badge--anchor">3 Figma variants</span> <span class="badge badge--success">CSS 3 / 3</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-755" rel="noopener noreferrer">Figma node 2413:755</a></p>
+            <p class="docs-section__desc">The 3 covered variants are rendered on <a href="avatar.html">the Avatar page</a>.</p>
           </section>
 
           <section class="docs-section docs-unit" id="unit-tag" aria-labelledby="unit-tag-title">
             <h3 class="text-h3" id="unit-tag-title">Tag</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 4</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-839" rel="noopener noreferrer">Figma node 2413:839</a></p>
-            <p class="docs-placeholder">Not created</p>
-            <h4 class="text-body docs-subhead">Missing variants</h4>
-            <p class="docs-section__desc">All 4 variants (State: Default, Hover, Focus, Disabled; other properties: Label, Show dismiss).</p>
+            <p class="docs-badges"><span class="badge badge--anchor">4 Figma variants</span> <span class="badge badge--success">CSS 4 / 4</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-839" rel="noopener noreferrer">Figma node 2413:839</a></p>
+            <p class="docs-section__desc">The 4 covered variants are rendered on <a href="tag.html">the Tag page</a>.</p>
           </section>
 
           <section class="docs-section docs-unit" id="unit-accordion-item" aria-labelledby="unit-accordion-item-title">
             <h3 class="text-h3" id="unit-accordion-item-title">Accordion item</h3>
-            <p class="docs-badges"><span class="badge badge--anchor">7 Figma variants</span> <span class="badge badge--neutral">CSS 0 / 7</span> <span class="badge badge--neutral">Not created</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-948" rel="noopener noreferrer">Figma node 2413:948</a></p>
-            <p class="docs-placeholder">Not created</p>
-            <h4 class="text-body docs-subhead">Missing variants</h4>
-            <p class="docs-section__desc">All 7 variants (Open: false, true; State: Default, Hover, Focus, Disabled; other properties: Title, Content).</p>
+            <p class="docs-badges"><span class="badge badge--anchor">7 Figma variants</span> <span class="badge badge--success">CSS 7 / 7</span> <span class="badge badge--success">Complete</span> <a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-948" rel="noopener noreferrer">Figma node 2413:948</a></p>
+            <p class="docs-section__desc">The 7 covered variants are rendered on <a href="accordion.html">the Accordion item page</a>.</p>
           </section>
 
           <section class="docs-section docs-unit" id="unit-table" aria-labelledby="unit-table-title">
@@ -588,7 +584,7 @@
             <p class="docs-section__desc">These covered variants are hover or focus states. They stay live elements (interact with them): no mirrored state classes were added.</p>
             <ul class="docs-list"><li>Table: State: Focus</li></ul>
             <p class="docs-section__desc">CSS exists but this page does not render it:</p>
-            <ul class="docs-list"><li>Lightbox</li></ul>
+            <p class="docs-section__desc">None.</p>
           </section>
 
           <section class="docs-section" id="still-to-create" aria-labelledby="still-to-create-title">
@@ -829,8 +825,8 @@
         <th scope="row" class="data-table__row-header"><a href="#unit-modal">Modal</a></th>
         <td class="data-table__cell">Overlays and data</td>
         <td class="data-table__cell data-table__cell--end">1</td>
-        <td class="data-table__cell data-table__cell--end">0</td>
-        <td class="data-table__cell"><span class="badge badge--neutral">Not created</span></td>
+        <td class="data-table__cell data-table__cell--end">1</td>
+        <td class="data-table__cell"><span class="badge badge--success">Complete</span></td>
         <td class="data-table__cell">Button, Icon Button</td>
         <td class="data-table__cell"><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-472" rel="noopener noreferrer">2413:472</a></td>
       </tr>
@@ -838,8 +834,8 @@
         <th scope="row" class="data-table__row-header"><a href="#unit-popover">Popover</a></th>
         <td class="data-table__cell">Overlays and data</td>
         <td class="data-table__cell data-table__cell--end">1</td>
-        <td class="data-table__cell data-table__cell--end">0</td>
-        <td class="data-table__cell"><span class="badge badge--neutral">Not created</span></td>
+        <td class="data-table__cell data-table__cell--end">1</td>
+        <td class="data-table__cell"><span class="badge badge--success">Complete</span></td>
         <td class="data-table__cell"><span class="docs-muted">none</span></td>
         <td class="data-table__cell"><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-573" rel="noopener noreferrer">2413:573</a></td>
       </tr>
@@ -856,8 +852,8 @@
         <th scope="row" class="data-table__row-header"><a href="#unit-avatar">Avatar</a></th>
         <td class="data-table__cell">Overlays and data</td>
         <td class="data-table__cell data-table__cell--end">3</td>
-        <td class="data-table__cell data-table__cell--end">0</td>
-        <td class="data-table__cell"><span class="badge badge--neutral">Not created</span></td>
+        <td class="data-table__cell data-table__cell--end">3</td>
+        <td class="data-table__cell"><span class="badge badge--success">Complete</span></td>
         <td class="data-table__cell"><span class="docs-muted">none</span></td>
         <td class="data-table__cell"><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-755" rel="noopener noreferrer">2413:755</a></td>
       </tr>
@@ -865,8 +861,8 @@
         <th scope="row" class="data-table__row-header"><a href="#unit-tag">Tag</a></th>
         <td class="data-table__cell">Overlays and data</td>
         <td class="data-table__cell data-table__cell--end">4</td>
-        <td class="data-table__cell data-table__cell--end">0</td>
-        <td class="data-table__cell"><span class="badge badge--neutral">Not created</span></td>
+        <td class="data-table__cell data-table__cell--end">4</td>
+        <td class="data-table__cell"><span class="badge badge--success">Complete</span></td>
         <td class="data-table__cell">Badge</td>
         <td class="data-table__cell"><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-839" rel="noopener noreferrer">2413:839</a></td>
       </tr>
@@ -874,8 +870,8 @@
         <th scope="row" class="data-table__row-header"><a href="#unit-accordion-item">Accordion item</a></th>
         <td class="data-table__cell">Overlays and data</td>
         <td class="data-table__cell data-table__cell--end">7</td>
-        <td class="data-table__cell data-table__cell--end">0</td>
-        <td class="data-table__cell"><span class="badge badge--neutral">Not created</span></td>
+        <td class="data-table__cell data-table__cell--end">7</td>
+        <td class="data-table__cell"><span class="badge badge--success">Complete</span></td>
         <td class="data-table__cell"><span class="docs-muted">none</span></td>
         <td class="data-table__cell"><a href="https://www.figma.com/design/U6ThTndTKYSJKkd0XqaSdV?node-id=2413-948" rel="noopener noreferrer">2413:948</a></td>
       </tr>
@@ -910,8 +906,8 @@
         <th scope="row" class="data-table__row-header">Total</th>
         <td class="data-table__cell">33 components</td>
         <td class="data-table__cell data-table__cell--end">196</td>
-        <td class="data-table__cell data-table__cell--end">180</td>
-        <td class="data-table__cell">28 Complete, 0 Partial, 5 Not created</td>
+        <td class="data-table__cell data-table__cell--end">196</td>
+        <td class="data-table__cell">33 Complete, 0 Partial, 0 Not created</td>
         <td class="data-table__cell"><span class="docs-muted">suggestion, not a Figma fact</span></td>
         <td class="data-table__cell"></td>
       </tr>

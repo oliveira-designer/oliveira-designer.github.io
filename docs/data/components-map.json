@@ -464,7 +464,7 @@
       "base": ".lightbox",
       "stateMechanisms": {
         "hover": "close button :hover",
-        "focus": "close button :focus-visible",
+        "focus": "close button :focus-visible, Solar ring",
         "disabled": "not applicable"
       },
       "variants": [
@@ -475,7 +475,8 @@
           "renderable": false
         }
       ],
-      "note": "Added for the review page. CSS exists (css/components/lightbox.css) but it is a fixed full-screen modal driven by js/lightbox.js, so the review page does not render it."
+      "note": "CSS in css/components/lightbox.css, aligned to Figma in v2.13.0. It is a fixed full-screen viewer built and driven by js/lightbox.js, so it is demonstrated on its own page from an image and not rendered on the review page.",
+      "renderOnPage": "lightbox"
     },
     "Table": {
       "figmaVariants": 2,
@@ -1355,7 +1356,7 @@
           "state": "Default",
           "selector": ".tab",
           "rule": ".tab[aria-selected=\"true\"]",
-          "mechanism": "aria-selected=\"true\": SemiBold, Text/Default/Default, 1.5px bottom line"
+          "mechanism": "aria-selected=\"true\": Medium (same as the others), Text/Default/Default, 1.5px bottom line"
         },
         {
           "selected": "true",
@@ -1608,6 +1609,176 @@
         }
       ],
       "renderOnPage": "menu"
+    },
+    "Modal": {
+      "figmaVariants": 1,
+      "implemented": 1,
+      "base": ".modal",
+      "stateMechanisms": {
+        "hover": "not applicable (close button: Figma draws none)",
+        "focus": "close button :focus-visible, outline 2px with 2px offset, pill",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "selector": ".modal",
+          "rule": ".modal",
+          "mechanism": "panel: border, padding, radius, shadow and layer 200; the scrim is .modal-scrim (layer 100); the hidden attribute shows and hides it",
+          "renderable": false
+        }
+      ],
+      "renderOnPage": "modal",
+      "note": "A fixed dialog driven by js/modal.js, so the review page does not render it."
+    },
+    "Popover": {
+      "figmaVariants": 1,
+      "implemented": 1,
+      "base": ".popover",
+      "stateMechanisms": {
+        "hover": "not applicable",
+        "focus": "not applicable, the focus stays on the trigger",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "selector": ".popover",
+          "rule": ".popover",
+          "mechanism": "panel: border, padding, radius, shadow and layer 300; the hidden attribute shows and hides it",
+          "renderable": false
+        }
+      ],
+      "renderOnPage": "popover",
+      "note": "An absolutely placed panel opened by js/popover.js, so the review page does not render it."
+    },
+    "Avatar": {
+      "figmaVariants": 3,
+      "implemented": 3,
+      "base": ".avatar",
+      "stateMechanisms": {
+        "hover": "not applicable, not interactive",
+        "focus": "not applicable",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "size": "Small",
+          "selector": ".avatar.avatar--small",
+          "rule": ".avatar--small",
+          "mechanism": "32 by 32, Body/SemiBold/body-xs semibold"
+        },
+        {
+          "size": "Medium",
+          "selector": ".avatar.avatar--medium",
+          "rule": ".avatar--medium",
+          "mechanism": "40 by 40, Body/SemiBold/body-sm semibold"
+        },
+        {
+          "size": "Large",
+          "selector": ".avatar.avatar--large",
+          "rule": ".avatar--large",
+          "mechanism": "56 by 56, Heading/H3"
+        }
+      ],
+      "renderOnPage": "avatar"
+    },
+    "Tag": {
+      "figmaVariants": 4,
+      "implemented": 4,
+      "base": ".tag",
+      "stateMechanisms": {
+        "hover": "pseudo-class :hover",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset",
+        "disabled": "disabled attribute"
+      },
+      "variants": [
+        {
+          "state": "Default",
+          "selector": ".tag",
+          "rule": ".tag",
+          "mechanism": "base rule: 28 high, border, Background/Default/Secondary fill"
+        },
+        {
+          "state": "Hover",
+          "selector": ".tag",
+          "rule": ".tag:hover:not(:disabled)",
+          "mechanism": "pseudo-class :hover, fill Border/Default/Default"
+        },
+        {
+          "state": "Focus",
+          "selector": ".tag",
+          "rule": ".tag:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, outline 2px with 2px offset"
+        },
+        {
+          "state": "Disabled",
+          "selector": ".tag",
+          "rule": ".tag:disabled",
+          "mechanism": "disabled attribute, disabled tokens, no opacity"
+        }
+      ],
+      "renderOnPage": "tag"
+    },
+    "AccordionItem": {
+      "figmaVariants": 7,
+      "implemented": 7,
+      "base": ".accordion__item",
+      "stateMechanisms": {
+        "hover": "pseudo-class :hover on the item",
+        "focus": ":has(.accordion__trigger:focus-visible) on the item, outline 2px with 2px offset; the plain button ring as the fallback",
+        "disabled": "disabled attribute on the header button"
+      },
+      "variants": [
+        {
+          "open": "false",
+          "state": "Default",
+          "selector": ".accordion__item",
+          "rule": ".accordion__item",
+          "mechanism": "base rule: padding 16, bottom border 1px"
+        },
+        {
+          "open": "false",
+          "state": "Hover",
+          "selector": ".accordion__item",
+          "rule": ".accordion__item:hover:not(:has(.accordion__trigger:disabled))",
+          "mechanism": "pseudo-class :hover, fill Background/Default/Secondary"
+        },
+        {
+          "open": "false",
+          "state": "Focus",
+          "selector": ".accordion__item",
+          "rule": ".accordion__item:has(.accordion__trigger:focus-visible)",
+          "mechanism": ":has(:focus-visible), ring around the whole item"
+        },
+        {
+          "open": "false",
+          "state": "Disabled",
+          "selector": ".accordion__trigger",
+          "rule": ".accordion__trigger:disabled",
+          "mechanism": "disabled attribute, disabled tokens, no opacity"
+        },
+        {
+          "open": "true",
+          "state": "Default",
+          "selector": ".accordion__trigger",
+          "rule": ".accordion__trigger[aria-expanded=\"true\"] .accordion__chevron",
+          "mechanism": "aria-expanded=\"true\": chevron rotated 180 degrees, the panel is shown"
+        },
+        {
+          "open": "true",
+          "state": "Hover",
+          "selector": ".accordion__item",
+          "rule": ".accordion__item:hover:not(:has(.accordion__trigger:disabled))",
+          "mechanism": "pseudo-class :hover, fill Background/Default/Secondary"
+        },
+        {
+          "open": "true",
+          "state": "Focus",
+          "selector": ".accordion__item",
+          "rule": ".accordion__item:has(.accordion__trigger:focus-visible)",
+          "mechanism": ":has(:focus-visible), ring around the whole item"
+        }
+      ],
+      "renderOnPage": "accordion"
     }
   },
   "codeOnly": [

@@ -1,5 +1,5 @@
 ---
-version: v2.12.0
+version: v2.13.0
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -1090,11 +1090,20 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 ### Navegação no código (Lote 3, 2026-11-24)
 
-- **Tabs:** `css/components/tabs.css` (`.tabs`, `.tabs__list`, `.tab`, `.tabs__panel`) e `js/tabs.js`. Item de 40px com a linha inferior de 1,5px incluída na altura (o `strokesIncludedInLayout` do Figma é verdadeiro), linha-base de 1px sob a lista, texto SemiBold quando selecionado. `role=tablist`, `tab` e `tabpanel`, tabindex móvel, setas, Home e End, aba desabilitada pulada.
+- **Tabs:** `css/components/tabs.css` (`.tabs`, `.tabs__list`, `.tab`, `.tabs__panel`) e `js/tabs.js`. Item de 40px com a linha inferior de 1,5px incluída na altura (o `strokesIncludedInLayout` do Figma é verdadeiro), linha-base de 1px sob a lista, texto Medium também quando selecionado (v2.13.0). `role=tablist`, `tab` e `tabpanel`, tabindex móvel, setas, Home e End, aba desabilitada pulada.
 - **Breadcrumb:** `breadcrumb.css` (`.breadcrumb__list`, `__item`, `__link`, `__current`, `__separator`). O anel de foco envolve só o rótulo; o último item não leva separador; a página atual é texto com `aria-current="page"`.
 - **Pagination:** `pagination.css` (`.pagination__item`, `--ellipsis`). Itens de 36 por 36 com raio 12, atual com preenchimento escuro e `aria-current="page"`, Prev e Next desabilitados com `aria-disabled` e sem `href`, reticências decorativas.
 - **Menu:** `menu.css` (`.menu`, `.menu__item`, `--danger`, `.menu__divider`, `.menu__check`) e `js/menu.js`. Painel com borda incluída no layout (238 = 220 + 16 + 2), `--z-popover`, itens de 36px, opção escolhida com `menuitemradio` e check.
-- **Atual em três jeitos, de propósito:** Tabs marca com linha inferior e SemiBold, Pagination com preenchimento escuro, Menu com preenchimento claro, SemiBold e check.
+- **Atual em três jeitos, de propósito:** Tabs marca com linha inferior e cor do texto, Pagination com preenchimento escuro, Menu com preenchimento claro, SemiBold e check.
+
+### Sobreposições e dados no código (Lote 4, 2026-11-24)
+
+- **Modal:** `css/components/modal.css` (`.modal`, `__header`, `__title`, `__close`, `__body`, `__footer`, `.modal-scrim`) e `js/modal.js`. Painel de 480 com borda incluída no layout (430 de conteúdo), `--shadow-lg`, camadas `--z-modal-scrim` (100) e `--z-modal` (200). `role="dialog"`, `aria-modal`, foco preso, Esc fecha, página inerte, rolagem travada; o clique no scrim não fecha.
+- **Popover:** `popover.css` (`.popover-anchor`, `.popover`, `__title`, `__body`) e `js/popover.js`. Painel de 280, `--shadow-md`, `--z-popover`, abre abaixo do gatilho a 8px, sem seta.
+- **Lightbox:** alinhado ao Figma: imagem até 960 com `--shadow-lg`, legenda de 520, botão de fechar de 36 no canto da imagem, foco preso e página inerte.
+- **Avatar:** `avatar.css` (`.avatar`, `--small`, `--medium`, `--large`, `__image`), 32, 40 e 56.
+- **Tag:** `tag.css` (`.tag`, `__label`, `__dismiss`) e `js/tag.js`. Botão de 28 com borda incluída no layout; Delete ou Backspace remove. Sem versão não interativa: use o Badge.
+- **Accordion:** `accordion.css` (`.accordion`, `__item`, `__trigger`, `__chevron`, `__panel`) e `js/accordion.js`. Item com só a borda inferior, anel de foco em volta do item inteiro por `:has()`.
 
 ### Nomenclatura dos componentes no Figma
 
@@ -1102,9 +1111,8 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 ### Divergências conhecidas entre Figma, este arquivo e o código
 
-- **Case Callout e Lightbox:** foram removidos do Figma (sem uso lá), mas **continuam no código e neste arquivo** (`case-callout` em `css/site/case-callout.css`, `lightbox` em `css/components/lightbox.css` e `js/lightbox.js`). Decidir: recriar no Figma ou aceitar como componentes só de código.
+- **Case Callout e Lightbox:** os dois foram recriados no Figma em 13 de novembro de 2026 (GOVERNANCE v1.4.1). O Lightbox foi alinhado ao Figma na v2.13.0 (`css/components/lightbox.css` e `js/lightbox.js`); o Case Callout continua em `css/site/case-callout.css`.
 - **Resolvidas na v2.4:** Highlight Card passou a usar `--fs-h1` (32px) como no Figma; Space Mono foi removida (o `.brand-list li::before` usa `--font-body`); YAML com nomes em inglês (`anchor`, `success`, `border-base`...); entradas de botão refletem o CSS (preto como ação primária, Solar só na marca); badges senshi removidas (duplicavam `badge-success`/`warning`/`error`/`info`).
-- **Case Callout e Lightbox:** continuam no código e neste arquivo, mas foram removidos do Figma. Decisão adiada para a revisão geral.
 - **Ícones:** `Icon/Color` do Figma virou os tokens `--icon-color-*` e as classes `.icon--<papel>` (ver `DESIGN-IMPLEMENTATION.md`, seção 3b).
 
 ## Do's and Don'ts
@@ -1134,4 +1142,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.12.0 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.13.0 · novembro de 2026 · Renan Moura*

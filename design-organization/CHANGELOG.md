@@ -5,6 +5,34 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.13.0 · 24 de novembro de 2026 · Lote 4 (Sobreposições e dados): Modal, Popover, Avatar, Tag e Accordion, Lightbox alinhado ao Figma, mais correções do Lote 3 (MINOR)
+
+**Versão escolhida: MINOR (2.12.0 para 2.13.0).** Regra aplicada: seção 3 do `GOVERNANCE.md`, MINOR cobre "novo componente entra no DESIGN.md": entram Modal, Popover, Avatar, Tag e Accordion. O `--z-overlay` volta como alias deprecado, o que mantém a mudança em MINOR (a remoção de um token é a quebra de compatibilidade da regra MAJOR; o alias dá o caminho de deprecação). O GOVERNANCE passa a v1.7 (uma regra nova na seção 3). Decisão do Renan.
+
+**Adicionado**
+- `css/components/modal.css` e `js/modal.js`: painel de 480 com borda incluída no layout (430 de conteúdo), padding 24, gap 16, raio 16, `--shadow-lg`; scrim em `--z-modal-scrim` e painel em `--z-modal`, abaixo do Toast (`--z-notification`). `role="dialog"`, `aria-modal`, `aria-labelledby`, `aria-describedby`; o foco entra, fica preso, Esc fecha e devolve o foco ao gatilho; a página atrás fica inerte e a rolagem travada. O clique no scrim não fecha. Sem animação (o Figma não define). Em telas estreitas o painel mantém 24px de margem (`--space-6`).
+- `css/components/popover.css` e `js/popover.js`: painel de 280 com borda incluída, `--shadow-md`, `--z-popover`, abaixo do gatilho a 8px, alinhado ao início; vira para cima e para o fim só quando sairia da janela. Sem seta. Esc devolve o foco, o clique fora fecha sem mover o foco, não prende o foco. Sem papel para texto; `role="dialog"` sem `aria-modal` quando há conteúdo interativo.
+- `css/components/avatar.css`: círculo de 32, 40 e 56 (`.avatar--small|medium|large`), iniciais como conteúdo, foto com `object-fit: cover`. Decorativo com o nome ao lado; sem o nome, `role="img"` com `aria-label`.
+- `css/components/tag.css` e `js/tag.js`: botão de 28 com borda incluída (67 de largura com o rótulo "Tag" no Figma), X de 14 como pista visual, Delete ou Backspace remove e dispara `hope:tag-remove`. Sem versão não interativa: use o Badge.
+- `css/components/accordion.css` e `js/accordion.js`: item com só a borda inferior (54 fechado), anel de foco de 4px em volta do item inteiro por `:has()` com o anel do botão como alternativa, chevron girado 180 graus aberto, `role="region"` e `aria-labelledby` no painel só com 6 itens ou menos, painel fechado com `hidden`. Sem animação.
+- Seis páginas de docs pelo gerador genérico (Modal, Popover, Lightbox, Avatar, Tag, Accordion), com as seções novas Quando não usar, Anatomia, Estados, Teclado e ARIA e Notas de código, e o grupo "Overlays and data" no menu lateral (a Table passa para ele). Cobertura: 196 de 196 variantes com CSS (eram 180 de 196).
+
+**Alterado**
+- Tab selecionado usa o mesmo estilo de texto dos outros, `Body/Medium/body-sm medium` (as quatro variantes Selected mudaram no Figma). Sai o SemiBold de `.tab[aria-selected="true"]`; a seleção fica marcada pela linha inferior de 1,5px e pela cor do texto. A largura do rótulo é a mesma selecionado e não selecionado (medido no navegador). A comparação "Tabs, Pagination e Menu marcam o atual de jeitos diferentes" continua; o Tabs agora é "linha inferior e cor do texto".
+- GOVERNANCE v1.7 (MINOR): a seção 3 ganha a cláusula das mudanças no próprio GOVERNANCE.md (regra adicionada ou removida é MINOR; alinhamento do texto a uma regra já decidida, sem mudar a regra, é PATCH). A v1.6.1 continua PATCH. Nada mais mudou no arquivo.
+- Lightbox alinhado ao Figma: imagem até 960 com `--shadow-lg` (era uma sombra preta de 24 por 80 a 60%), legenda de 520, X do Phosphor de 20 a 80% no lugar do traço de 2,5px, botão de 36 com traço incluído, a imagem limitada para o botão ficar sempre dentro da janela, foco no botão de fechar ao abrir (antes o foco ficava na imagem, porque o botão estava com `visibility: hidden`), foco preso, página inerte, `<img data-lightbox>` além de `.case-section img`. Alteração visível nas três páginas de estudo de caso ao abrir uma imagem.
+- Escala de z-index: a tabela da seção 8 ganha Modal, Popover e Lightbox.
+
+**Descontinuado**
+- `--z-overlay`: alias de `--z-sticky` (`--z-overlay: var(--z-sticky)`), deprecado. Nada no repositório o usa. O próximo MAJOR pode removê-lo.
+
+**Corrigido**
+- Correção da nota da v2.12.0: ela diz que `--z-overlay` foi removido. Ele **não** foi removido em definitivo: volta como alias deprecado (acima), e a observação da v2.12.0 sobre MAJOR fica resolvida por essa decisão. A entrada da v2.12.0 não foi reescrita.
+- Caminhos dos ícones do Phosphor (CaretLeft, CaretRight, CaretDown, DotsThree, X, Check) conferidos contra `@phosphor-icons/core` 2.1.1 (peso Regular) e contra a geometria da biblioteca Phosphor do Figma (`u1vCsV29DxickSmAYiLquZ`): iguais, com diferença de no máximo 0,001 na caixa delimitadora em grade de 32. Nenhum caminho foi trocado por diferença visual; o DotsThree foi trocado pelo texto oficial (mesmos três círculos, renderização idêntica pixel a pixel).
+- Lacunas de contraste: entram a borda do Tag (1,29 e 1,28), a borda do Accordion, o painel do Modal no Dark (1,16) e o botão de fechar do Lightbox, medidas e documentadas; a decisão segue pendente. Nenhuma cor foi alterada.
+
+---
+
 ## v2.12.0 · 24 de novembro de 2026 · Lote 3 (Navegação): Tabs, Breadcrumb, Pagination e Menu, mais correções do Lote 2B (MINOR)
 
 **Versão escolhida: MINOR (2.11.0 para 2.12.0).** Regra aplicada: seção 3 do `GOVERNANCE.md`, MINOR cobre "novo componente entra no DESIGN.md": entram Tabs, Breadcrumb, Pagination e Menu. Decisão do Renan. Ponto de atenção: a remoção de `--z-overlay` encaixa literalmente em "quebra compatibilidade reversa de tokens" (MAJOR); ela tinha um único uso, migrado na mesma versão, e fica registrada como pergunta em aberto. Nenhuma regra do GOVERNANCE mudou.

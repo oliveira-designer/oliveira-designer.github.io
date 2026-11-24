@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.12.0 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.13.0 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.13.0 (MINOR, 24/11/2026)**: Lote 4 (Sobreposições e dados): Modal, Popover, Avatar, Tag e Accordion no CSS, Lightbox alinhado ao Figma, com `js/modal.js`, `js/popover.js`, `js/tag.js` e `js/accordion.js`. `--z-overlay` volta como alias deprecado de `--z-sticky`, o Tab selecionado usa o mesmo estilo de texto dos outros (Medium), GOVERNANCE v1.7. Detalhes no `CHANGELOG.md`.
 
 **Changelog v2.12.0 (MINOR, 24/11/2026)**: Lote 3 (Navegação): Tabs, Breadcrumb, Pagination e Menu no CSS, com `js/tabs.js` e `js/menu.js`. Header no `--z-sticky` e `--z-overlay` removido, rotação do Spinner linear, trilho do Progress em `--color-border-input`, deslocamentos internos dos campos e do polegar do Switch corrigidos pelo `strokesIncludedInLayout`, foco do Icon Button volta a ser redondo. Detalhes no `CHANGELOG.md`.
 
@@ -383,6 +385,21 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
 - Lua **nunca como cor de texto** — só fundo de badges ou destaques visuais
 - Ícones decorativos podem ignorar contraste; ícones funcionais não
 
+### Lacunas de contraste conhecidas (v2.13.0)
+
+Implementadas como no Figma, sem mudar cor; cada decisão está pendente. Medidas com a fórmula de luminância relativa da WCAG 2.2 sobre os tokens (Light, Dark).
+
+| Onde | Medida | Critério |
+|---|---|---|
+| Borda do Tag (`Border/Default/Default`) | 1,29 e 1,28 contra a página; 1,21 e 1,14 contra o preenchimento do Tag | 1.4.11 (3:1) |
+| Borda do Accordion item | 1,29 e 1,28 contra a página | 1.4.11 |
+| Borda do Popover e do Menu | 1,29 e 1,28 contra a página | 1.4.11 |
+| Borda do Alert (Info no Dark, Warning no Light) e do Toast | ver as páginas | 1.4.11 |
+| Painel do Modal no Dark | 1,16 contra o scrim sobre a página; borda 1,49 (no Light, 3,64 e 2,82) | 1.4.11 |
+| Preenchimento e traço do botão de fechar do Lightbox | 1,46 e 1,79 contra o scrim (o X, que identifica o botão, tem 10,2 e 13,04) | 1.4.11 |
+| Anel de foco do Lightbox | Solar, 9,02 e 12,08 contra o scrim; o Anchor do Light daria 2,22 | 2.4.11 / 1.4.11 |
+| Linha-base do Tabs, trilho do Spinner, Skeleton | 1,29 e 1,28 | 1.4.11 |
+
 ### Filosofia
 - **Solar** representa esperança e movimento — quente, luminoso, o novo dia
 - **Uso do Solar** (decidido em 13/11/2026): acento da marca e do logo, e também permitido em elementos Warning, no Banner e no Solar Badge. Não vira cor de UI funcional fora disso (o preto é a ação primária)
@@ -512,6 +529,8 @@ O Figma tem uma coleção com a variável `Icon/Color` e 10 modos. No CSS, cada 
 - `strokesIncludedInLayout: true` (o traço entra no tamanho, como a borda do CSS): a borda soma ao box e o padding **não** é descontado. Componentes lidos no Figma: **Alert, Toast, Tab, Tag e Accordion item**. Conferência: o Alert mede 105 (3 linhas de 20,8, mais 8 de espaço, mais 32 de padding, mais 2 de borda) e o Toast 69 (24 mais 43 mais 2), e o número só bate com a borda somada.
 - `strokesIncludedInLayout: true`, lido pelo Renan em 24/11/2026: **Input, Textarea, Select, Checkbox, Radio e Switch**, todos com tamanho externo fixo no Figma (Input 254 por 44, Textarea 96, caixa do Checkbox e do Radio 20, trilho do Switch 40 por 24). O tamanho externo não muda, mas o conteúdo começa em padding mais traço: o texto do campo fica a 13px da borda (12 mais 1), o ícone de 16px a 13px da direita e o polegar do Switch a 5,5px da borda (4 mais 1,5). Por isso o padding horizontal dos campos e a posição do polegar **não** descontam a borda (corrigido na v2.12.0; antes ficavam 1px e 1,5px mais perto da borda). O padding vertical do campo de uma linha continua descontado só para manter a altura externa de 44,8 com o texto centralizado. Marca do Checkbox (14 em 20) e ponto do Radio (8 em 20) são centralizados: sem diferença.
 
+- `strokesIncludedInLayout: true`, lido pelo Renan em 24/11/2026 para o Lote 4: **Modal, Popover, Tag e Accordion item**. O Modal tem 480 de largura externa (430 de conteúdo), o Popover 280 (246), a Tag 28 de altura (67 de largura com o rótulo "Tag" e o X) e o Accordion item fechado 54 de altura (16 mais 21 mais 16 mais 1 de borda); nada é descontado do padding. **Avatar** e o painel do **Lightbox** não têm borda na raiz.
+
 Componente novo: leia a propriedade primeiro, depois escolha entre descontar e não descontar.
 
 ---
@@ -592,15 +611,16 @@ Escala do Figma (`Hope · Primitives`, grupo `Z-index`), com camadas a cada 100 
   --z-base:         0;
   --z-raised:       1;    /* Cards em hover */
   --z-sticky:       10;   /* Figma z-sticky: header do site */
+  --z-overlay:      var(--z-sticky);  /* DEPRECADO (v2.13.0): nome antigo do header. Use --z-sticky. O próximo MAJOR pode removê-lo */
   --z-modal-scrim:  100;  /* Figma z-modal-scrim: backdrop de modal */
-  --z-modal:        200;  /* Figma z-modal: Modal, dialog */
+  --z-modal:        200;  /* Figma z-modal: Modal e Lightbox */
   --z-popover:      300;  /* Figma z-popover: Popover, Menu, painel do Select */
   --z-tooltip:      400;  /* Figma z-tooltip */
   --z-notification: 500;  /* Figma z-notification: Toast */
 }
 ```
 
-A escala final é: base 0, raised 1, sticky 10, modal-scrim 100, modal 200, popover 300, tooltip 400, notification 500. Na v2.12.0 o header do site passou a usar `--z-sticky` (era `--z-overlay`, 100, que empatava com o scrim do modal) e `--z-overlay` foi removido. Não existe `--z-max`: o skip link usa `--z-modal`, como em `css/reset.css`. Ficam fora da escala, de propósito, `z-index: 1` em `lightbox.css` (camada interna do componente) e `z-index: -1` em `sections.css`.
+A escala final é: base 0, raised 1, sticky 10, modal-scrim 100, modal 200, popover 300, tooltip 400, notification 500. Na v2.12.0 o header do site passou a usar `--z-sticky` (era `--z-overlay`, 100, que empatava com o scrim do modal). **Correção na v2.13.0:** o `--z-overlay` não foi removido; ele voltou como **alias deprecado** de `--z-sticky` (decisão do Renan: MINOR com caminho de deprecação, não MAJOR, porque a remoção de token é mudança incompatível pela seção 3 do GOVERNANCE). Nada no repositório o usa; o próximo MAJOR pode removê-lo. Camadas do Lote 4: o scrim do Modal em `--z-modal-scrim` (100), o painel do Modal e o Lightbox em `--z-modal` (200), o Popover em `--z-popover` (300, o mesmo nível do Menu) e o Toast em `--z-notification` (500, que fica acima de um Modal aberto). Não existe `--z-max`: o skip link usa `--z-modal`, como em `css/reset.css`. Ficam fora da escala, de propósito, `z-index: 1` em `lightbox.css` (camada interna do componente) e `z-index: -1` em `sections.css`.
 
 ---
 
@@ -1808,13 +1828,26 @@ type ButtonProps = {
     output.css       ← Tailwind (npm run build:css), carregado antes do hope.css
 ```
 
+**Lote 4, Sobreposições e dados (v2.13.0).** `css/components/` ganhou `modal.css`, `popover.css`, `avatar.css`, `tag.css` e `accordion.css`, e o `lightbox.css` foi alinhado ao Figma; `js/` ganhou `modal.js`, `popover.js`, `tag.js` e `accordion.js`, e o `lightbox.js` ganhou foco preso, página inerte e o foco no botão de fechar ao abrir (antes o foco ficava na imagem, porque o botão estava com `visibility: hidden`). O Modal e o Lightbox seguem a mesma abordagem (atributo `hidden`, foco devolvido ao gatilho, rolagem travada); o `<dialog>` nativo ficou como decisão em aberto no relatório.
+
+Valores do Figma usados no Lote 4 (Core, lidos em 24/11/2026):
+
+| Componente | Valores |
+|---|---|
+| Modal | largura 480 (borda incluída), padding 24, gap 16, raio 16, `Shadow/lg`, scrim `Background/Utilities/Scrim`, título `Heading/H3`, corpo `body-sm` Regular `Text/Default/Secondary`, X de 20 em `Icon/Color Secondary`, rodapé à direita com gap 12 |
+| Popover | largura 280 (borda incluída), padding 16, gap 8, raio 12, `Shadow/md`, título `body-sm` SemiBold, corpo `body-sm` Regular, camada 300 |
+| Lightbox | fundo `Scrim Strong` com blur de fundo 12, padding 24, imagem até 960 com raio 16 e `Shadow/lg`, legenda 520, botão de 36 com traço de 1px incluído, X de 20 a 80%, a 40px acima da imagem |
+| Avatar | círculo `--radius-pill`, preenchimento `Border/Default/Default`, 32 (`body-xs` SemiBold), 40 (`body-sm` SemiBold), 56 (`Heading/H3`) |
+| Tag | altura 28 com borda incluída, padding 0 e 12, gap 4, raio pill, X de 14, anel 75 por 36 |
+| Accordion item | largura do contêiner, padding 16, gap 8, só a borda inferior de 1px, título `body-sm` SemiBold, chevron de 20 girado 180 graus quando aberto, anel de 4px em volta do item inteiro |
+
 **Lote 3, Navegação (v2.12.0).** `css/components/` ganhou `tabs.css`, `breadcrumb.css`, `pagination.css` e `menu.css`; `js/` ganhou `tabs.js` e `menu.js`. O anel de foco global de `reset.css` (`a:focus-visible` e `button:focus-visible`, raio 4) vence a regra-base de um componente: cada componente repete o `border-radius` na sua regra `:focus-visible`.
 
 Valores do Figma usados no Lote 3 (Core, lidos em 24/11/2026):
 
 | Componente | Valores |
 |---|---|
-| Tab | altura 40 (inclui a linha de 1,5px), padding 0 e 16, gap 0, texto `body-sm` Medium e SemiBold quando selecionado, linha-base de 1px `Border/Default/Default` sob a lista (lista com 41), anel 88 por 48 quadrado |
+| Tab | altura 40 (inclui a linha de 1,5px), padding 0 e 16, gap 0, texto `body-sm` Medium, também quando selecionado (v2.13.0: antes SemiBold), linha-base de 1px `Border/Default/Default` sob a lista (lista com 41), anel 88 por 48 quadrado |
 | Breadcrumb item | gap 8, padding 0, rótulo `body-sm` Regular (Medium no atual), separador CaretRight de 14, anel 40 por 29 só em volta do rótulo, itens a 8 de distância |
 | Pagination item | 36 por 36, raio 12, número `body-sm` Medium, ícones de 20, itens a 4 de distância, anel 44 por 44 com raio externo 16 |
 | Menu item | altura 36, padding 0 e 12, gap 8, raio 8, check de 16, anel 228 por 44 com raio 12 |
@@ -2264,101 +2297,11 @@ Cartão de case glassmórfico com canvas de gradiente, chrome de paginação, pi
 
 ---
 
-### 25.5 `lightbox` — Modal de zoom de imagem
+### 25.5 `lightbox`: visualizador de imagem
 
-JS: adiciona `.is-open` para abrir; `.is-zoomable` nas imagens aciona cursor zoom-in.
+O CSS vive em `css/components/lightbox.css` (alinhado ao Figma na v2.13.0); não há mais uma cópia dele aqui. `js/lightbox.js` monta o DOM (`.lightbox`, `__backdrop`, `__panel`, `__media`, `__img`, `__caption`, `__close`) e abre a partir das imagens de `.case-section` e de qualquer `<img data-lightbox>`; `.is-zoomable` aciona o cursor de zoom.
 
-```css
-.is-zoomable { cursor: zoom-in; transition: opacity var(--duration-normal) var(--ease-out); }
-.is-zoomable:hover { opacity: 0.88; }
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-modal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-6);
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity    var(--duration-slow) var(--ease-out),
-    visibility 0s linear           var(--duration-slow);
-}
-.lightbox[hidden] { display: none; }
-.lightbox.is-open {
-  opacity: 1;
-  visibility: visible;
-  transition:
-    opacity    var(--duration-slow) var(--ease-out),
-    visibility 0s linear           0s;
-}
-.lightbox__backdrop {
-  position: absolute;
-  inset: 0;
-  background: var(--color-bg-scrim-strong);
-  -webkit-backdrop-filter: blur(12px);
-          backdrop-filter: blur(12px);
-}
-.lightbox__panel {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-4);
-  max-width: min(92vw, 1280px);
-  transform: scale(0.92) translateY(12px);
-  transition: transform var(--duration-slower) var(--ease-out);
-}
-.lightbox.is-open .lightbox__panel { transform: scale(1) translateY(0); }
-.lightbox__img {
-  display: block;
-  max-width: 100%;
-  max-height: 82vh;
-  width: auto;
-  height: auto;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.60);
-}
-.lightbox__caption {
-  font-family: var(--font-body);
-  font-size:   var(--fs-body-sm);
-  color:       rgba(255, 255, 255, 0.55);
-  text-align:  center;
-  max-width:   60ch;
-  line-height: 1.5;
-}
-.lightbox__close {
-  position: absolute;
-  top:   calc(-1 * var(--space-10));
-  right: 0;
-  display: grid;
-  place-items: center;
-  width:  36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.80);
-  cursor: pointer;
-  transition:
-    background var(--duration-normal) var(--ease-out),
-    color      var(--duration-normal) var(--ease-out);
-}
-.lightbox__close:hover {
-  background: rgba(255, 255, 255, 0.22);
-  color: var(--color-cloud);
-}
-.lightbox__close:focus-visible {
-  outline: 2px solid var(--color-solar);
-  outline-offset: 3px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .lightbox__panel { transform: none !important; transition: none !important; }
-}
-```
+Valores: camada `--z-modal`; fundo `--color-bg-scrim-strong` com `blur(12px)`; imagem até 960 com `--radius-lg` e `--shadow-lg`; legenda de até 520 em `body-sm`, branco a 55%; botão de fechar de 36 com traço de 1px incluído (branco a 12% e 18%), X de 20 a 80% em branco nos dois temas, a 40px acima do canto da imagem; anel de foco em Solar (o Anchor do Light dá 2,22:1 contra o scrim). Abre com fade e escala (movimento do repositório, não definido no Figma; a escala some em `prefers-reduced-motion`). Fecha com Esc, clique no fundo e o botão; o foco fica preso no botão e a página atrás fica inerte.
 
 ---
 
@@ -2535,5 +2478,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.12.0 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.13.0 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

@@ -447,6 +447,22 @@
   align-items: center;
 }
 
+/* Accordion demo: items fill the container, so the demo keeps the 480 of the Figma specimen. */
+.docs-ds-preview > .accordion {
+  flex: 1 1 100%;
+  max-width: 480px;
+}
+
+/* Popover demo: the panel is placed against its trigger and hangs below it, so the card must not clip it and needs room. */
+.docs-ds-card:has(.popover-anchor) {
+  overflow: visible;
+}
+
+.docs-ds-preview:has(.popover-anchor) {
+  align-items: flex-start;
+  min-height: 16rem;
+}
+
 /* Code disclosure: native <details>, the code stays in the DOM when collapsed. */
 .docs-ds-code > summary {
   display: inline-flex;
