@@ -362,16 +362,13 @@
   /* ----------------------------------------------------------
      Z-INDEX
      ---------------------------------------------------------- */
-  --z-base:    0;
-  --z-raised:  1;
-  --z-sticky:  10;
-  --z-overlay: 100;  /* in use by the site header; not the modal scrim, see --z-modal-scrim */
-  --z-modal:   200;  /* Figma Z-index/z-modal */
-
-  /* Figma Hope · Primitives, group Z-index. Layers keep gaps of 100: a new layer only needs a new number when it must
-     sit between two existing ones. --z-modal-scrim has the same value as --z-overlay but a different meaning (the
-     header and the modal scrim are different layers), so --z-overlay is not an alias. */
+  /* Figma Hope · Primitives, group Z-index. Above the sticky layer the layers keep gaps of 100, so a new layer only
+     needs a new number when it must sit between two existing ones. */
+  --z-base:          0;
+  --z-raised:        1;
+  --z-sticky:        10;   /* Figma Z-index/z-sticky: the site header */
   --z-modal-scrim:   100;  /* Figma Z-index/z-modal-scrim */
+  --z-modal:         200;  /* Figma Z-index/z-modal */
   --z-popover:       300;  /* Figma Z-index/z-popover: Popover, Menu and Select panels */
   --z-tooltip:       400;  /* Figma Z-index/z-tooltip */
   --z-notification:  500;  /* Figma Z-index/z-notification: Toast */
@@ -3360,7 +3357,7 @@ p { max-width: 70ch; }
   width: 100%;
   height: var(--space-2);
   overflow: hidden;
-  background-color: var(--color-border);
+  background-color: var(--color-border-input);
   border-radius: var(--radius-pill);
 }
 
@@ -3864,8 +3861,8 @@ p { max-width: 70ch; }
 /* ----------------------------------------------------------
    SPINNER
    Figma draws a ring (2.4px thick) with an arc of about 99 degrees from 12 o'clock. Hope's own CSS, not Material's.
-   Animation (Figma Info panel): a continuous turn per second in ease-in-out. Under prefers-reduced-motion the rotation
-   becomes an opacity pulse.
+   Animation (Figma Core, decided in v2.12.0): a continuous turn per second, LINEAR. ease-in-out is only for pulses.
+   Under prefers-reduced-motion the rotation becomes an opacity pulse in ease-in-out.
    ---------------------------------------------------------- */
 .spinner {
   display: inline-flex;
@@ -3881,7 +3878,7 @@ p { max-width: 70ch; }
   background: conic-gradient(from 0deg, var(--color-bg-neutral-default) 0deg 99deg, var(--color-border) 99deg 360deg);
   border-radius: 50%;
   mask: radial-gradient(farthest-side, transparent calc(100% - var(--spinner-thickness)), var(--color-bg-neutral-default) calc(100% - var(--spinner-thickness)));
-  animation: spinner-rotate 1s var(--ease-in-out) infinite;
+  animation: spinner-rotate 1s linear infinite;
 }
 
 @keyframes spinner-rotate {
@@ -4599,7 +4596,7 @@ html {
   height: var(--header-height);
   display: flex;
   align-items: center;
-  z-index: var(--z-overlay);
+  z-index: var(--z-sticky);
 
   /* Glassmorphism — light mode. Bg/border on the unified Material recipe. */
   background: var(--color-material-bg);

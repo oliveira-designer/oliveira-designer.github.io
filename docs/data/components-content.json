@@ -1305,9 +1305,9 @@
       {"case": "Value on the page", "light": 10.76, "dark": 8.37}
     ],
     "contrastNonText": [
-      {"case": "Fill vs track (needs 3:1)", "light": 15.05, "dark": 13.28},
+      {"case": "Fill vs track (needs 3:1)", "light": 6.23, "dark": 5.35},
       {"case": "Fill vs page", "light": 19.42, "dark": 17.06},
-      {"case": "Track vs page", "light": 1.29, "dark": 1.28}
+      {"case": "Track vs page (Border/Utilities/Input, needs 3:1)", "light": 3.12, "dark": 3.19}
     ],
     "note": "A div with role=\"progressbar\", aria-valuemin, aria-valuemax and aria-valuenow, named by the label (aria-labelledby) or by aria-label.",
     "meaning": "The visible value is hidden from assistive technology because the progressbar already reports it. The five Figma values have modifier classes (.progress__bar--0 to --100). Any other percentage is set with the --progress-value custom property on the bar, and the author keeps aria-valuenow in sync with it: CSS cannot read the ARIA attribute."
@@ -1321,7 +1321,6 @@
   "knownGaps": [
     {"id": "progress-native-element", "status": "measured", "text": "The native <progress> matched the geometry in Chromium, Firefox and WebKit, but Firefox draws the fill (::-moz-progress-bar) without honoring transitions: the fill jumped, while Chromium and WebKit animated. The component is therefore a div with role=\"progressbar\". Decision for the owner to confirm."},
     {"id": "progress-indeterminate-not-designed", "status": "documented", "text": "Figma has no indeterminate Progress. For a wait with no known percentage use Spinner."},
-    {"id": "progress-track-contrast", "status": "measured", "text": "The track (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark. The fill passes (19.42 and 17.06) and the value is also available as text and to assistive technology, so the track alone does not carry the information."},
     {"id": "progress-motion", "status": "inference", "text": "Figma defines no fill motion. The fill animates its width with the base duration and ease-in-out; the global reduced-motion rule removes it."},
     {"id": "progress-height-rounding", "status": "measured", "text": "The block measures 36.8 with the 13px label at line-height 1.6 and the 8px track plus Spacing/space-2; Figma shows 37."}
   ],
@@ -1331,7 +1330,7 @@
   "slug": "spinner",
   "name": "Spinner",
   "figma": {"pageId": "2409:231", "sets": [{"name": "Spinner", "id": "2409:232"}]},
-  "summary": "A 24 by 24 ring with an arc of about 99 degrees that turns once per second, for a wait with no known duration. One size.",
+  "summary": "A 24 by 24 ring with an arc of about 99 degrees that turns once per second in a linear rotation, for a wait with no known duration. One size.",
   "whenToUse": [
     "A short wait with no known percentage, such as loading a list."
   ],
@@ -1360,9 +1359,9 @@
     "accessibility"
   ],
   "knownGaps": [
-    {"id": "spinner-easing-observation", "status": "measured", "text": "Figma names ease-in-out for a full turn per second. Sampled in Chromium, Firefox and WebKit, the arc moves 3.2 degrees in the first 100ms, reaches 90.8 degrees at 400ms and 180 at 500ms, so it nearly stops at 12 o'clock once per turn. This follows the Figma curve; an observation for the owner, not a change."},
+    {"id": "spinner-easing-observation", "status": "documented", "text": "The rotation is linear, one turn per second (Figma Core, decided in v2.12.0). With ease-in-out over a full turn the arc nearly stopped at 12 o'clock once per turn, so the curve was changed. ease-in-out stays only on the pulses: the Spinner reduced-motion pulse and the Skeleton pulse."},
     {"id": "spinner-reduced-motion", "status": "inference", "text": "Under prefers-reduced-motion the ring pulses its opacity between 1 and 0.3 over 1.6s instead of turning. Figma does not name the replacement; the CSS overrides the global reduced-motion rule for this one animation, with !important, because a stopped spinner would look frozen."},
-    {"id": "spinner-track-contrast", "status": "measured", "text": "The ring track is 1.29:1 on the page in Light and 1.28:1 in Dark. The arc passes (19.42 and 17.06)."}
+    {"id": "spinner-track-contrast", "status": "measured", "text": "The ring track is 1.29:1 on the page in Light and 1.28:1 in Dark. The track is a guide: the arc carries the state and the busy state is announced through role=status. The arc passes (19.42 and 17.06)."}
   ],
   "unverified": []
 },
@@ -1402,7 +1401,7 @@
   "knownGaps": [
     {"id": "skeleton-duration", "status": "inference", "text": "Figma describes a soft pulse in ease-in-out but gives no duration. The CSS uses two periods of --duration-deliberate for a full cycle (opacity 1 to 0.5 and back). This is a reading of the data; the owner confirms or gives the value."},
     {"id": "skeleton-width", "status": "documented", "text": "Figma shows fixed widths (240, 160). The CSS is fluid: the width belongs to the layout, set on the piece or its container."},
-    {"id": "skeleton-contrast", "status": "measured", "text": "The fill is 1.29:1 on the page in Light and 1.28:1 in Dark. The pieces are decorative placeholders, so 1.4.11 does not require 3:1."}
+    {"id": "skeleton-contrast", "status": "measured", "text": "The fill is 1.29:1 on the page in Light and 1.28:1 in Dark. The pieces are decorative placeholders; whether 1.4.11 applies to them is contested in the literature and there is no normative text, so it stays a documented gap."}
   ],
   "unverified": []
 },
@@ -1457,7 +1456,7 @@
   ],
   "knownGaps": [
     {"id": "icon-button-class-name", "status": "inference", "text": "The class is .icon-btn with .icon-btn--primary and .icon-btn--ghost, not a .btn modifier. .btn brings a padding, a gap and a full width under 768px that a 44 by 44 circle would have to cancel one by one."},
-    {"id": "icon-button-icon-color", "status": "inference", "text": "Figma binds the icon color per state to Icon/Color roles that were not read variant by variant. The CSS uses --icon-color-neutral on Primary, --icon-color-secondary on Ghost (--icon-color-default on hover) and --icon-color-disabled when disabled. The owner confirms."},
+    {"id": "icon-button-icon-color", "status": "documented", "text": "In Figma the icon color is the Icon/Color variable with a mode set per variant: Primary Default, Hover and Focus use Neutral (called On Neutral in Core until the library update), Primary Disabled uses Disabled, Ghost Default and Focus use Secondary, Ghost Hover uses Default, Ghost Disabled uses Disabled. The CSS applies exactly these --icon-color-* roles, checked in the browser for every state, including hover on a disabled button."},
     {"id": "icon-button-disabled-contrast", "status": "measured", "text": "Disabled icons measure 2.41:1 (Primary, Light) and 3.12:1 (Ghost, Light). Inactive components are exempt from 1.4.3 and 1.4.11."},
     {"id": "icon-button-forced-colors", "status": "documented", "text": "Under forced colors the button gets a 1px ButtonText border (GrayText when disabled) so the Ghost button stays visible."}
   ],
