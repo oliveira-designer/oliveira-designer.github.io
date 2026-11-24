@@ -14,7 +14,8 @@
 
 /* ----------------------------------------------------------
    SWITCH
-   40x24 track with the 1.5px border drawn inside (border-box), 16px thumb 4px from the outer edge.
+   40x24 track (border-box) with the 1.5px stroke included in layout (strokesIncludedInLayout true): the thumb is 4px
+   from the stroke, so 5.5px from the outer edge horizontally, and centered vertically (4px from the top).
    Figma defines no motion: the thumb and colors use the same transition tokens as Button hover, and the global
    reduced-motion rule in tokens.css removes them.
    ---------------------------------------------------------- */
@@ -44,12 +45,13 @@
     border-color var(--duration-normal) var(--ease-out);
 }
 
-/* Thumb: the padding (4px) is measured from the outer edge, so the border is discounted. */
+/* Thumb: left is measured from the padding box, which already starts after the 1.5px border, so 4px here is 5.5px
+   from the outer edge. The top is 4px from the outer edge (centered), so the border is discounted there. */
 .switch__input::after {
   content: "";
   position: absolute;
   top: calc(var(--space-1) - var(--border-width-medium));
-  left: calc(var(--space-1) - var(--border-width-medium));
+  left: var(--space-1);
   width: var(--space-4);
   height: var(--space-4);
   background-color: var(--color-text-3);
@@ -63,7 +65,7 @@
 }
 
 .switch__input:checked::after {
-  translate: var(--space-4) 0;
+  translate: calc(var(--space-10) - 2 * var(--border-width-medium) - 2 * var(--space-1) - var(--space-4)) 0;  /* 40 - 3 - 8 - 16 = 13 */
   background-color: var(--color-text-neutral-default);
 }
 

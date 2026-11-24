@@ -837,7 +837,7 @@
     {
       "id": "switch-thumb-1x",
       "status": "inference",
-      "text": "The thumb is placed 4px from the outer edge assuming the 1.5px border. On a 1x screen the border is drawn as 1px, so the thumb sits 0.5px from that position."
+      "text": "Figma includes the 1.5px stroke in the layout, so the thumb sits 5.5px from the outer edge horizontally (4px padding plus the stroke) and 4px from the top (centered). On a 1x screen the border is drawn as 1px, so the thumb sits 0.5px closer to the edge than that."
     }
   ],
   "unverified": []

@@ -9,5 +9,6 @@
    ---------------------------------------------------------- */
 .textarea {
   min-height: var(--space-24);
+  padding-block: var(--space-3);  /* top aligned text: 12 + 1 stroke from the top edge, as in Figma */
   resize: vertical;
 }

@@ -63,7 +63,7 @@
 .field__icon {
   position: absolute;
   top: 50%;
-  right: var(--space-3);
+  right: calc(var(--space-3) + var(--border-width-normal));  /* Figma: 12 padding + 1 stroke from the edge */
   width: var(--space-4);
   height: var(--space-4);
   translate: 0 -50%;
@@ -78,9 +78,11 @@
 
 /* ----------------------------------------------------------
    CONTROL BOX (shared by .input, .textarea and .select)
-   A border drawn inside the box in Figma is discounted from the padding with a token in calc()
-   (DESIGN-IMPLEMENTATION.md, "Borda dentro da caixa"). --field-border-width is the border of the current
-   state (1px, 1.5px on Error), so the outer size never changes between states.
+   Figma strokesIncludedInLayout is true on these nodes (DESIGN-IMPLEMENTATION.md, "Borda dentro da caixa"): the outer
+   size is fixed (254 by 44, Textarea 96) and the content starts at padding + stroke, so the text sits 13px from the edge
+   (12 + 1). The inline padding is therefore NOT discounted. The block padding is discounted only to keep the 44.8
+   outer height of a centered single line (the text is centered, so its vertical position is the same).
+   --field-border-width is the border of the current state (1px, 1.5px on Error); the outer size never changes.
    ---------------------------------------------------------- */
 .input,
 .textarea,
@@ -90,7 +92,7 @@
   display: block;
   width: 100%;
   margin: 0;
-  padding: calc(var(--space-3) - var(--field-border-width));
+  padding: calc(var(--space-3) - var(--field-border-width)) var(--space-3);
   /* Browsers draw a 1.5px border as 1px on a 1x screen, which would shrink the Error box by 1px: the outer height
      is fixed instead (12 + 12 + one line of 160%), the text stays centered. Figma: 44px, rendered 44.8px. */
   min-height: calc(var(--space-6) + var(--fs-body-sm) * 1.6);
@@ -150,10 +152,10 @@
   color: var(--color-text-disabled-inverse);
 }
 
-/* Room for the 16px icon: padding 12 + icon 16 + gap 8. */
+/* Room for the 16px icon: padding 12 + icon 16 + gap 8 (the 1px stroke comes on top, as in Figma). */
 .field__control:has(.field__icon) > .input,
 .field__control:has(.field__icon) > .select {
-  padding-inline-end: calc(var(--space-3) + var(--space-4) + var(--space-2) - var(--field-border-width));
+  padding-inline-end: calc(var(--space-3) + var(--space-4) + var(--space-2));
 }
 
 @media (forced-colors: active) {

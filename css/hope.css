@@ -2481,7 +2481,7 @@ p { max-width: 70ch; }
 .field__icon {
   position: absolute;
   top: 50%;
-  right: var(--space-3);
+  right: calc(var(--space-3) + var(--border-width-normal));  /* Figma: 12 padding + 1 stroke from the edge */
   width: var(--space-4);
   height: var(--space-4);
   translate: 0 -50%;
@@ -2496,9 +2496,11 @@ p { max-width: 70ch; }
 
 /* ----------------------------------------------------------
    CONTROL BOX (shared by .input, .textarea and .select)
-   A border drawn inside the box in Figma is discounted from the padding with a token in calc()
-   (DESIGN-IMPLEMENTATION.md, "Borda dentro da caixa"). --field-border-width is the border of the current
-   state (1px, 1.5px on Error), so the outer size never changes between states.
+   Figma strokesIncludedInLayout is true on these nodes (DESIGN-IMPLEMENTATION.md, "Borda dentro da caixa"): the outer
+   size is fixed (254 by 44, Textarea 96) and the content starts at padding + stroke, so the text sits 13px from the edge
+   (12 + 1). The inline padding is therefore NOT discounted. The block padding is discounted only to keep the 44.8
+   outer height of a centered single line (the text is centered, so its vertical position is the same).
+   --field-border-width is the border of the current state (1px, 1.5px on Error); the outer size never changes.
    ---------------------------------------------------------- */
 .input,
 .textarea,
@@ -2508,7 +2510,7 @@ p { max-width: 70ch; }
   display: block;
   width: 100%;
   margin: 0;
-  padding: calc(var(--space-3) - var(--field-border-width));
+  padding: calc(var(--space-3) - var(--field-border-width)) var(--space-3);
   /* Browsers draw a 1.5px border as 1px on a 1x screen, which would shrink the Error box by 1px: the outer height
      is fixed instead (12 + 12 + one line of 160%), the text stays centered. Figma: 44px, rendered 44.8px. */
   min-height: calc(var(--space-6) + var(--fs-body-sm) * 1.6);
@@ -2568,10 +2570,10 @@ p { max-width: 70ch; }
   color: var(--color-text-disabled-inverse);
 }
 
-/* Room for the 16px icon: padding 12 + icon 16 + gap 8. */
+/* Room for the 16px icon: padding 12 + icon 16 + gap 8 (the 1px stroke comes on top, as in Figma). */
 .field__control:has(.field__icon) > .input,
 .field__control:has(.field__icon) > .select {
-  padding-inline-end: calc(var(--space-3) + var(--space-4) + var(--space-2) - var(--field-border-width));
+  padding-inline-end: calc(var(--space-3) + var(--space-4) + var(--space-2));
 }
 
 @media (forced-colors: active) {
@@ -3926,7 +3928,8 @@ p { max-width: 70ch; }
 
 /* ----------------------------------------------------------
    SWITCH
-   40x24 track with the 1.5px border drawn inside (border-box), 16px thumb 4px from the outer edge.
+   40x24 track (border-box) with the 1.5px stroke included in layout (strokesIncludedInLayout true): the thumb is 4px
+   from the stroke, so 5.5px from the outer edge horizontally, and centered vertically (4px from the top).
    Figma defines no motion: the thumb and colors use the same transition tokens as Button hover, and the global
    reduced-motion rule in tokens.css removes them.
    ---------------------------------------------------------- */
@@ -3956,12 +3959,13 @@ p { max-width: 70ch; }
     border-color var(--duration-normal) var(--ease-out);
 }
 
-/* Thumb: the padding (4px) is measured from the outer edge, so the border is discounted. */
+/* Thumb: left is measured from the padding box, which already starts after the 1.5px border, so 4px here is 5.5px
+   from the outer edge. The top is 4px from the outer edge (centered), so the border is discounted there. */
 .switch__input::after {
   content: "";
   position: absolute;
   top: calc(var(--space-1) - var(--border-width-medium));
-  left: calc(var(--space-1) - var(--border-width-medium));
+  left: var(--space-1);
   width: var(--space-4);
   height: var(--space-4);
   background-color: var(--color-text-3);
@@ -3975,7 +3979,7 @@ p { max-width: 70ch; }
 }
 
 .switch__input:checked::after {
-  translate: var(--space-4) 0;
+  translate: calc(var(--space-10) - 2 * var(--border-width-medium) - 2 * var(--space-1) - var(--space-4)) 0;  /* 40 - 3 - 8 - 16 = 13 */
   background-color: var(--color-text-neutral-default);
 }
 
@@ -4294,6 +4298,7 @@ p { max-width: 70ch; }
    ---------------------------------------------------------- */
 .textarea {
   min-height: var(--space-24);
+  padding-block: var(--space-3);  /* top aligned text: 12 + 1 stroke from the top edge, as in Figma */
   resize: vertical;
 }
 
