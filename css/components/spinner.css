@@ -14,8 +14,8 @@
 /* ----------------------------------------------------------
    SPINNER
    Figma draws a ring (2.4px thick) with an arc of about 99 degrees from 12 o'clock. Hope's own CSS, not Material's.
-   Animation (Figma Info panel): a continuous turn per second in ease-in-out. Under prefers-reduced-motion the rotation
-   becomes an opacity pulse.
+   Animation (Figma Core, decided in v2.12.0): a continuous turn per second, LINEAR. ease-in-out is only for pulses.
+   Under prefers-reduced-motion the rotation becomes an opacity pulse in ease-in-out.
    ---------------------------------------------------------- */
 .spinner {
   display: inline-flex;
@@ -31,7 +31,7 @@
   background: conic-gradient(from 0deg, var(--color-bg-neutral-default) 0deg 99deg, var(--color-border) 99deg 360deg);
   border-radius: 50%;
   mask: radial-gradient(farthest-side, transparent calc(100% - var(--spinner-thickness)), var(--color-bg-neutral-default) calc(100% - var(--spinner-thickness)));
-  animation: spinner-rotate 1s var(--ease-in-out) infinite;
+  animation: spinner-rotate 1s linear infinite;
 }
 
 @keyframes spinner-rotate {
