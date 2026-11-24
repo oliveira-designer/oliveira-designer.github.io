@@ -3,12 +3,12 @@
    npm run css:build. The behavior (Delete or Backspace removes, click removes) is in js/tag.js.
 
    Markup contract (docs/components/tag.html):
-     <button type="button" class="tag" data-tag-removable aria-label="Remover filtro Design">
+     <button type="button" class="tag" data-tag-removable aria-label="Remove filter Design">
        <span class="tag__label">Design</span>
        <svg class="icon tag__dismiss" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="..."/></svg>
      </button>
    The whole Tag is the button; the X is a visual cue inside it, not a second button. The accessible name is the visible label
-   plus the action ("Remover filtro Design"). A Tag that is not interactive is a Badge: do not use .tag for it. */
+   plus the action ("Remove filter Design"). A Tag that is not interactive is a Badge: do not use .tag for it. */
 
 /* ----------------------------------------------------------
    TAG
@@ -32,7 +32,9 @@
   white-space: nowrap;
   color: var(--color-text-1);
   background-color: var(--color-bg-alt);
-  border: var(--border-width-normal) solid var(--color-border);
+  /* Figma Border/Utilities/Input in Default, Hover and Focus (D-45): the Tag is interactive, so its edge follows the field
+     border (3:1 against the page) instead of Border/Default/Default (1.29:1). Disabled keeps its own border token below. */
+  border: var(--border-width-normal) solid var(--color-border-input);
   border-radius: var(--radius-pill);
   cursor: pointer;
   transition: background-color var(--duration-normal) var(--ease-out);

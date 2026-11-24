@@ -1383,8 +1383,8 @@
       "renderOnPage": "tabs"
     },
     "BreadcrumbItem": {
-      "figmaVariants": 4,
-      "implemented": 4,
+      "figmaVariants": 7,
+      "implemented": 7,
       "base": ".breadcrumb__item",
       "stateMechanisms": {
         "hover": "pseudo-class :hover on the link",
@@ -1415,6 +1415,24 @@
           "selector": ".breadcrumb__current",
           "rule": ".breadcrumb__current",
           "mechanism": "span with aria-current=\"page\", no link"
+        },
+        {
+          "type": "Ellipsis",
+          "selector": ".breadcrumb__ellipsis",
+          "rule": ".breadcrumb__ellipsis",
+          "mechanism": "button with the DotsThree icon, Icon/Color Secondary"
+        },
+        {
+          "type": "Ellipsis Hover",
+          "selector": ".breadcrumb__ellipsis",
+          "rule": ".breadcrumb__ellipsis:hover",
+          "mechanism": "pseudo-class :hover, Icon/Color Default"
+        },
+        {
+          "type": "Ellipsis Focus",
+          "selector": ".breadcrumb__ellipsis",
+          "rule": ".breadcrumb__ellipsis:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, square ring 24 by 24 around the icon"
         }
       ],
       "renderOnPage": "breadcrumb"

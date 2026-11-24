@@ -1,5 +1,5 @@
 /* Hope DS: css/components/breadcrumb.css
-   Figma: Core, Breadcrumb item (Type Link|Link Hover|Link Focus|Current), set 2413:51. Edit this file, then run:
+   Figma: Core, Breadcrumb item (Type Link|Link Hover|Link Focus|Current|Ellipsis|Ellipsis Hover|Ellipsis Focus), set 2413:51. Edit this file, then run:
    npm run css:build.
 
    Markup contract (docs/components/breadcrumb.html):
@@ -13,13 +13,28 @@
        </ol>
      </nav>
    The separator is a sibling of the link, never inside it, so the focus ring wraps the label only. The last item
-   (Current) has no separator in code: Figma draws one in the Current variant but marks it optional. */
+   (Current) has no separator in code: Figma draws one in the Current variant but marks it optional.
+
+   Collapsed path (Type=Ellipsis): the author decides which middle levels are hidden. The path always shows the first
+   level, the ellipsis and the current page; the hidden levels open in a Menu (css/components/menu.css, js/menu.js):
+     <li class="breadcrumb__item">
+       <div class="breadcrumb__collapse">
+         <button type="button" class="breadcrumb__ellipsis" aria-label="Show path" aria-haspopup="menu" aria-expanded="false" aria-controls="bc-menu">
+           <svg class="icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="..."/></svg>
+         </button>
+         <div class="menu" role="menu" id="bc-menu" aria-label="Hidden levels" hidden>
+           <a class="menu__item" role="menuitem" tabindex="-1" href="/projects"><span class="menu__label">Projects</span></a>
+         </div>
+       </div>
+       <svg class="icon breadcrumb__separator" ... aria-hidden="true">...</svg>
+     </li>
+   The ellipsis is a button, not a link. The panel hangs under it, aligned to its start, 8px away. */
 
 /* ----------------------------------------------------------
    BREADCRUMB
    Item: horizontal, gap 8 between label and separator, centered, padding 0. Items are 8 apart (Figma example).
-   Narrow screens: the list wraps. Collapsing the middle levels is documented in the docs (the Figma piece for an
-   ellipsis control does not exist), not coded.
+   Narrow screens: the list wraps. Collapsing is done by the author with the Ellipsis item below; there is no automatic
+   collapse by container width (known gap breadcrumb-auto-collapse).
    ---------------------------------------------------------- */
 .breadcrumb {
   font-family: var(--font-body);
@@ -72,6 +87,60 @@
   color: var(--color-text-1);
 }
 
+/* Ellipsis (Figma Type=Ellipsis, Ellipsis Hover, Ellipsis Focus): a button with DotsThree at 16px. Default uses Icon/Color in
+   the Secondary mode, Hover and Focus use the Default mode. No fill and no radius. */
+.breadcrumb__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 16px;  /* Figma: 16, no spacing token */
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  color: var(--icon-color-secondary);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+/* Two classes: icon.css loads after this file and its .icon sets 1em, so one class would lose. */
+.breadcrumb__ellipsis .icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.breadcrumb__ellipsis:hover {
+  color: var(--icon-color-default);
+}
+
+/* Focus: a square ring (radius 0) around the icon only, 24 by 24 (16 + 2px gap + 2px ring on each side), Border/Utilities/Focus Ring. */
+.breadcrumb__ellipsis:focus-visible {
+  color: var(--icon-color-default);
+  border-radius: 0;  /* reset.css sets radius-xs on button:focus-visible; the Figma ring has no radius */
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* The Menu panel hangs under the button, aligned to its start, 8px away, on the popover layer (the .menu rule sets
+   --z-popover). Its width is the specimen of the Menu (238), because the items fill the panel. */
+.breadcrumb__collapse {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb__collapse > .menu {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  width: 14.875rem;  /* 238, the Figma Menu specimen */
+  max-width: calc(100vw - 2 * var(--space-4));
+}
+
 /* Separator: CaretRight 14px. Figma paints it #5F5F6E, which is Icon/Color Tertiary. */
 /* Two classes: icon.css loads after this file and its .icon sets 1em, so one class would lose. */
 .breadcrumb__item .breadcrumb__separator {
@@ -87,5 +156,9 @@
   }
   .breadcrumb__current {
     color: CanvasText;
+  }
+  .breadcrumb__ellipsis {
+    forced-color-adjust: none;
+    color: ButtonText;
   }
 }

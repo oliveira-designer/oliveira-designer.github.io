@@ -93,6 +93,12 @@
   background-color: var(--color-bg-alt);
 }
 
+/* A link item (for example the hidden levels of a collapsed Breadcrumb): reset.css colors a:hover with the brand hover color,
+   but the item keeps its own text color. Danger and Disabled have their own rules and are left out. */
+a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
+  color: var(--color-text-1);
+}
+
 /* Focus: ring 228 by 44 around a 220 by 36 item (4px outside), radius 12 on the outer edge. The ring sits inside the
    8px panel padding, so the panel needs no overflow. */
 .menu__item:focus-visible {

@@ -42,7 +42,7 @@
   color: var(--color-text-2);
 }
 
-.docs-ds-content a:where(:not(.link, .btn, .alert__action, .toast__action, .breadcrumb__link, .pagination__item)) { /* components in the live demos keep their own colour */
+.docs-ds-content a:where(:not(.link, .btn, .alert__action, .toast__action, .breadcrumb__link, .pagination__item, .menu__item)) { /* components in the live demos keep their own colour */
   color: var(--color-text-brand-default);
   text-decoration: underline;
 }
@@ -623,6 +623,16 @@
 
 .docs-ds-preview > :is(.breadcrumb, .pagination) {
   flex: 1 1 100%;
+}
+
+/* Collapsed Breadcrumb demo: the Menu panel is placed against the ellipsis button and hangs below it, so the card must not clip it.
+   The static open example (panel not hidden) keeps room under it for the three items of the panel. */
+.docs-ds-card:has(.breadcrumb__collapse) {
+  overflow: visible;
+}
+
+.docs-ds-preview > .breadcrumb:has(.menu:not([hidden])) {
+  margin-bottom: 9rem;
 }
 
 /* Tabs example: the panel text uses the body-sm size of the list. */

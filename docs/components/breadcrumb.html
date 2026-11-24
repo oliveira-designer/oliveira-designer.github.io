@@ -131,7 +131,7 @@
         <div class="docs-ds-content">
           <header class="docs-ds-head">
             <h1 class="text-h1">Breadcrumb</h1>
-            <p class="docs-ds-desc">The path to the current page as a list of links, ending in the current page as plain text. 13px text with a 14px caret between items; the last item has no separator.</p>
+            <p class="docs-ds-desc">The path to the current page as a list of links, ending in the current page as plain text. 13px text with a 14px caret between items; the last item has no separator. On narrow screens the middle levels collapse into an ellipsis button that opens a Menu.</p>
           </header>
 
           <section class="docs-ds-section" id="example" aria-labelledby="example-title">
@@ -141,11 +141,11 @@
                 <!-- demo:start --><nav class="breadcrumb" aria-label="Breadcrumb">
                     <ol class="breadcrumb__list">
                       <li class="breadcrumb__item">
-                        <a class="breadcrumb__link" href="#inicio">Início</a>
+                        <a class="breadcrumb__link" href="#home">Home</a>
                         <svg aria-hidden="true" class="icon breadcrumb__separator" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
                       </li>
                       <li class="breadcrumb__item">
-                        <a class="breadcrumb__link" href="#projetos">Projetos</a>
+                        <a class="breadcrumb__link" href="#projects">Projects</a>
                         <svg aria-hidden="true" class="icon breadcrumb__separator" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
                       </li>
                       <li class="breadcrumb__item">
@@ -153,7 +153,53 @@
                         <svg aria-hidden="true" class="icon breadcrumb__separator" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
                       </li>
                       <li class="breadcrumb__item">
-                        <span class="breadcrumb__current" aria-current="page">Componentes</span>
+                        <span class="breadcrumb__current" aria-current="page">Components</span>
+                      </li>
+                    </ol>
+                  </nav>
+                  <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <ol class="breadcrumb__list">
+                      <li class="breadcrumb__item">
+                        <a class="breadcrumb__link" href="#home">Home</a>
+                        <svg aria-hidden="true" class="icon breadcrumb__separator" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+                      </li>
+                      <li class="breadcrumb__item">
+                        <div class="breadcrumb__collapse">
+                          <button type="button" class="breadcrumb__ellipsis" aria-label="Show path" aria-haspopup="menu" aria-expanded="false" aria-controls="breadcrumb-menu">
+                            <svg class="icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z"/></svg>
+                          </button>
+                          <div class="menu" role="menu" id="breadcrumb-menu" aria-label="Hidden levels" hidden>
+                            <a class="menu__item" role="menuitem" tabindex="-1" href="#projects"><span class="menu__label">Projects</span></a>
+                            <a class="menu__item" role="menuitem" tabindex="-1" href="#hope-ds"><span class="menu__label">Hope DS</span></a>
+                          </div>
+                        </div>
+                        <svg aria-hidden="true" class="icon breadcrumb__separator" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+                      </li>
+                      <li class="breadcrumb__item">
+                        <span class="breadcrumb__current" aria-current="page">Components</span>
+                      </li>
+                    </ol>
+                  </nav>
+                  <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <ol class="breadcrumb__list">
+                      <li class="breadcrumb__item">
+                        <a class="breadcrumb__link" href="#home">Home</a>
+                        <svg aria-hidden="true" class="icon breadcrumb__separator" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+                      </li>
+                      <li class="breadcrumb__item">
+                        <div class="breadcrumb__collapse">
+                          <button type="button" class="breadcrumb__ellipsis" aria-label="Show path" aria-haspopup="menu" aria-expanded="true">
+                            <svg class="icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z"/></svg>
+                          </button>
+                          <div class="menu" role="menu" aria-label="Hidden levels (static example)">
+                            <a class="menu__item" role="menuitem" tabindex="-1" href="#projects"><span class="menu__label">Projects</span></a>
+                            <a class="menu__item" role="menuitem" tabindex="-1" href="#hope-ds"><span class="menu__label">Hope DS</span></a>
+                          </div>
+                        </div>
+                        <svg aria-hidden="true" class="icon breadcrumb__separator" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg>
+                      </li>
+                      <li class="breadcrumb__item">
+                        <span class="breadcrumb__current" aria-current="page">Components</span>
                       </li>
                     </ol>
                   </nav><!-- demo:end -->
@@ -164,11 +210,11 @@
 <pre class="docs-ds-code__block">&lt;nav class=&quot;breadcrumb&quot; aria-label=&quot;Breadcrumb&quot;&gt;
   &lt;ol class=&quot;breadcrumb__list&quot;&gt;
     &lt;li class=&quot;breadcrumb__item&quot;&gt;
-      &lt;a class=&quot;breadcrumb__link&quot; href=&quot;#inicio&quot;&gt;Início&lt;/a&gt;
+      &lt;a class=&quot;breadcrumb__link&quot; href=&quot;#home&quot;&gt;Home&lt;/a&gt;
       &lt;svg aria-hidden=&quot;true&quot; class=&quot;icon breadcrumb__separator&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z&quot;/&gt;&lt;/svg&gt;
     &lt;/li&gt;
     &lt;li class=&quot;breadcrumb__item&quot;&gt;
-      &lt;a class=&quot;breadcrumb__link&quot; href=&quot;#projetos&quot;&gt;Projetos&lt;/a&gt;
+      &lt;a class=&quot;breadcrumb__link&quot; href=&quot;#projects&quot;&gt;Projects&lt;/a&gt;
       &lt;svg aria-hidden=&quot;true&quot; class=&quot;icon breadcrumb__separator&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z&quot;/&gt;&lt;/svg&gt;
     &lt;/li&gt;
     &lt;li class=&quot;breadcrumb__item&quot;&gt;
@@ -176,7 +222,53 @@
       &lt;svg aria-hidden=&quot;true&quot; class=&quot;icon breadcrumb__separator&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z&quot;/&gt;&lt;/svg&gt;
     &lt;/li&gt;
     &lt;li class=&quot;breadcrumb__item&quot;&gt;
-      &lt;span class=&quot;breadcrumb__current&quot; aria-current=&quot;page&quot;&gt;Componentes&lt;/span&gt;
+      &lt;span class=&quot;breadcrumb__current&quot; aria-current=&quot;page&quot;&gt;Components&lt;/span&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;
+&lt;nav class=&quot;breadcrumb&quot; aria-label=&quot;Breadcrumb&quot;&gt;
+  &lt;ol class=&quot;breadcrumb__list&quot;&gt;
+    &lt;li class=&quot;breadcrumb__item&quot;&gt;
+      &lt;a class=&quot;breadcrumb__link&quot; href=&quot;#home&quot;&gt;Home&lt;/a&gt;
+      &lt;svg aria-hidden=&quot;true&quot; class=&quot;icon breadcrumb__separator&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z&quot;/&gt;&lt;/svg&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;breadcrumb__item&quot;&gt;
+      &lt;div class=&quot;breadcrumb__collapse&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;breadcrumb__ellipsis&quot; aria-label=&quot;Show path&quot; aria-haspopup=&quot;menu&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;breadcrumb-menu&quot;&gt;
+          &lt;svg class=&quot;icon&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z&quot;/&gt;&lt;/svg&gt;
+        &lt;/button&gt;
+        &lt;div class=&quot;menu&quot; role=&quot;menu&quot; id=&quot;breadcrumb-menu&quot; aria-label=&quot;Hidden levels&quot; hidden&gt;
+          &lt;a class=&quot;menu__item&quot; role=&quot;menuitem&quot; tabindex=&quot;-1&quot; href=&quot;#projects&quot;&gt;&lt;span class=&quot;menu__label&quot;&gt;Projects&lt;/span&gt;&lt;/a&gt;
+          &lt;a class=&quot;menu__item&quot; role=&quot;menuitem&quot; tabindex=&quot;-1&quot; href=&quot;#hope-ds&quot;&gt;&lt;span class=&quot;menu__label&quot;&gt;Hope DS&lt;/span&gt;&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;svg aria-hidden=&quot;true&quot; class=&quot;icon breadcrumb__separator&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z&quot;/&gt;&lt;/svg&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;breadcrumb__item&quot;&gt;
+      &lt;span class=&quot;breadcrumb__current&quot; aria-current=&quot;page&quot;&gt;Components&lt;/span&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;
+&lt;nav class=&quot;breadcrumb&quot; aria-label=&quot;Breadcrumb&quot;&gt;
+  &lt;ol class=&quot;breadcrumb__list&quot;&gt;
+    &lt;li class=&quot;breadcrumb__item&quot;&gt;
+      &lt;a class=&quot;breadcrumb__link&quot; href=&quot;#home&quot;&gt;Home&lt;/a&gt;
+      &lt;svg aria-hidden=&quot;true&quot; class=&quot;icon breadcrumb__separator&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z&quot;/&gt;&lt;/svg&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;breadcrumb__item&quot;&gt;
+      &lt;div class=&quot;breadcrumb__collapse&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;breadcrumb__ellipsis&quot; aria-label=&quot;Show path&quot; aria-haspopup=&quot;menu&quot; aria-expanded=&quot;true&quot;&gt;
+          &lt;svg class=&quot;icon&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z&quot;/&gt;&lt;/svg&gt;
+        &lt;/button&gt;
+        &lt;div class=&quot;menu&quot; role=&quot;menu&quot; aria-label=&quot;Hidden levels (static example)&quot;&gt;
+          &lt;a class=&quot;menu__item&quot; role=&quot;menuitem&quot; tabindex=&quot;-1&quot; href=&quot;#projects&quot;&gt;&lt;span class=&quot;menu__label&quot;&gt;Projects&lt;/span&gt;&lt;/a&gt;
+          &lt;a class=&quot;menu__item&quot; role=&quot;menuitem&quot; tabindex=&quot;-1&quot; href=&quot;#hope-ds&quot;&gt;&lt;span class=&quot;menu__label&quot;&gt;Hope DS&lt;/span&gt;&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;svg aria-hidden=&quot;true&quot; class=&quot;icon breadcrumb__separator&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot;&gt;&lt;path d=&quot;M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z&quot;/&gt;&lt;/svg&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;breadcrumb__item&quot;&gt;
+      &lt;span class=&quot;breadcrumb__current&quot; aria-current=&quot;page&quot;&gt;Components&lt;/span&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/nav&gt;</pre>
@@ -185,7 +277,111 @@
 
           <section class="docs-ds-section" id="when" aria-labelledby="when-title">
             <h2 class="text-label text-tertiary" id="when-title">When to use</h2>
-            <ul class="docs-ds-list"><li>A hierarchy with two or more levels, so the user can climb back up.</li></ul>
+            <ul class="docs-ds-list"><li>A hierarchy with two or more levels, so the user can climb back up.</li><li>A long path on a narrow screen: collapse the middle levels into the Ellipsis. The path always shows the first level, the ellipsis and the current page, and the hidden levels open in a Menu.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="states" aria-labelledby="states-title">
+            <h2 class="text-label text-tertiary" id="states-title">States</h2>
+            <div class="data-table" role="region" aria-labelledby="breadcrumb-states-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="breadcrumb-states-caption">Breadcrumb states, what changes in each and the tokens involved</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">State</th>
+        <th scope="col" class="data-table__head-cell">What changes</th>
+        <th scope="col" class="data-table__head-cell">Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header">Link, default</th>
+        <td class="data-table__cell">Text/Default/Secondary, Regular, no underline.</td>
+        <td class="data-table__cell"><code>--color-text-2</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Link, hover</th>
+        <td class="data-table__cell">Text goes to Text/Default/Default.</td>
+        <td class="data-table__cell"><code>--color-text-1</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Link, focus</th>
+        <td class="data-table__cell">Text/Default/Default and a ring of 2px with a 2px gap around the label only, 40 by 29, no radius.</td>
+        <td class="data-table__cell"><code>--color-text-1</code> <code>--focus-ring-width</code> <code>--focus-ring-gap</code> <code>--color-border-focus-ring</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Current</th>
+        <td class="data-table__cell">Medium, Text/Default/Default, not a link and never focusable.</td>
+        <td class="data-table__cell"><code>--color-text-1</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Ellipsis, default</th>
+        <td class="data-table__cell">A button with the DotsThree icon at 16px in the Icon/Color Secondary mode, followed by the optional separator.</td>
+        <td class="data-table__cell"><code>--icon-color-secondary</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Ellipsis, hover</th>
+        <td class="data-table__cell">The icon goes to the Icon/Color Default mode. No fill.</td>
+        <td class="data-table__cell"><code>--icon-color-default</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Ellipsis, focus</th>
+        <td class="data-table__cell">The icon in the Default mode and a square ring (radius 0) around the icon only, 24 by 24: 2px stroke, 2px gap, Border/Utilities/Focus Ring.</td>
+        <td class="data-table__cell"><code>--icon-color-default</code> <code>--focus-ring-width</code> <code>--focus-ring-gap</code> <code>--color-border-focus-ring</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Ellipsis, menu open</th>
+        <td class="data-table__cell">The Menu panel hangs below the button, aligned to its start, 8px away, on the popover layer (300). The items are the hidden levels, as links.</td>
+        <td class="data-table__cell"><code>--space-2</code> <code>--z-popover</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          </section>
+
+          <section class="docs-ds-section" id="keyboard" aria-labelledby="keyboard-title">
+            <h2 class="text-label text-tertiary" id="keyboard-title">Keyboard and ARIA</h2>
+            <div class="data-table" role="region" aria-labelledby="breadcrumb-keyboard-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="breadcrumb-keyboard-caption">Breadcrumb keyboard interaction</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Key</th>
+        <th scope="col" class="data-table__head-cell">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header">Tab</th>
+        <td class="data-table__cell">Moves through the links and the ellipsis button in path order. The current page is not a tab stop.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Enter or Space (on the ellipsis)</th>
+        <td class="data-table__cell">Opens the Menu and moves the focus to its first item.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Arrow Down or Arrow Up (on the ellipsis)</th>
+        <td class="data-table__cell">Opens the Menu, on the first or the last item.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Arrow Down, Arrow Up, Home, End (in the Menu)</th>
+        <td class="data-table__cell">Move between the hidden levels, as in the Menu.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Enter (on a level)</th>
+        <td class="data-table__cell">Follows the link.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Escape</th>
+        <td class="data-table__cell">Closes the Menu and returns the focus to the ellipsis.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Tab (in the Menu)</th>
+        <td class="data-table__cell">Closes the Menu.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+            <ul class="docs-ds-list"><li>The path is a nav with aria-label=&quot;Breadcrumb&quot; containing an ordered list. The ellipsis is a button, not a link: it has aria-haspopup=&quot;menu&quot;, aria-expanded and aria-controls, and the accessible name &quot;Show path&quot;. The icon is decorative (aria-hidden).</li><li>The panel is a Menu (role=&quot;menu&quot;) with the hidden levels as links with role=&quot;menuitem&quot;. The current page keeps aria-current=&quot;page&quot;. The first level and the current page always stay visible.</li></ul>
           </section>
 
           <section class="docs-ds-section" id="variants" aria-labelledby="variants-title">
@@ -221,6 +417,21 @@
         <td class="data-table__cell"><code>.breadcrumb__current</code></td>
         <td class="data-table__cell"><code>--color-text-1</code></td>
       </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Ellipsis</th>
+        <td class="data-table__cell"><code>.breadcrumb__ellipsis</code></td>
+        <td class="data-table__cell"><code>--icon-color-secondary</code> <code>--duration-normal</code> <code>--ease-out</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Ellipsis Hover</th>
+        <td class="data-table__cell"><code>.breadcrumb__ellipsis</code></td>
+        <td class="data-table__cell"><code>--icon-color-default</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Ellipsis Focus</th>
+        <td class="data-table__cell"><code>.breadcrumb__ellipsis</code></td>
+        <td class="data-table__cell"><code>--icon-color-default</code> <code>--focus-ring-width</code> <code>--color-border-focus-ring</code> <code>--focus-ring-gap</code></td>
+      </tr>
     </tbody>
   </table>
 </div>
@@ -228,7 +439,7 @@
 
           <section class="docs-ds-section" id="accessibility" aria-labelledby="accessibility-title">
             <h2 class="text-label text-tertiary" id="accessibility-title">Accessibility</h2>
-            <p class="docs-ds-note">A nav with aria-label=&quot;Breadcrumb&quot; containing an ordered list; each item is an li. The separator is decorative: aria-hidden, so a screen reader reads the list as items, not as carets. The last item must not render a separator in code.</p>
+            <p class="docs-ds-note">A nav with aria-label=&quot;Breadcrumb&quot; containing an ordered list; each item is an li. The separator is decorative: aria-hidden, so a screen reader reads the list as items, not as carets. The last item must not render a separator in code. The ellipsis is a button with a Menu, not a link: it stands for the hidden middle levels, and the current page keeps aria-current=&quot;page&quot;. Collapse is decided by the author in the markup, there is no automatic collapse by width.</p>
           </section>
         </div>
     </div>
@@ -284,6 +495,6 @@
       });
     })();
   </script>
-  
+  <script src="../../js/menu.js"></script>
 </body>
 </html>

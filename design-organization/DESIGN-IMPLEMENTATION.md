@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.14.0 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.15.0 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.15.0 (MINOR, 24/11/2026)**: o `Breadcrumb item` do Figma Core ganhou o tipo Ellipsis (Default, Hover e Focus): 205 de 205 variantes com CSS (eram 202). O Ellipsis é um botão com o ícone `DotsThree` de 16px que abre o Menu com os níveis escondidos; o foco é um anel quadrado de 24 por 24. A borda do Tag passa de `Border/Default/Default` para `Border/Utilities/Input` em Default, Hover e Focus (D-45), 3,12 e 3,19 contra a página (era 1,29 e 1,28). As demos de Menu, Pagination e Tabs dos docs passam para inglês (D-15). MINOR pela cláusula "Expansão de escala (mais variantes)" da seção 3 do GOVERNANCE; o ajuste da borda do Tag (PATCH) entra no mesmo release.
 
 **Changelog v2.14.0 (MINOR, 24/11/2026)**: o `Menu item` do Figma Core tem 10 variantes (`Tone=Danger` com Focus, Selected e Disabled). Focus usa o mesmo anel e o texto continua `--color-text-danger-default`; Selected usa `--color-bg-alt`, SemiBold, texto Danger e check em `--icon-color-danger`; Disabled é igual ao Default Disabled. 202 de 202 variantes com CSS (eram 199). A seção "Code notes" deixou de ser renderizada nas páginas de componentes (D-44), os dados ficam. As demos das seis páginas do Lote 4 passam para inglês (D-15). MINOR pela cláusula "Expansão de escala (mais variantes)" da seção 3 do GOVERNANCE.
 
@@ -391,11 +393,11 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
 
 ### Lacunas de contraste conhecidas (v2.13.0)
 
-Implementadas como no Figma, sem mudar cor; aceitas pelo Renan em 24/11/2026 e registradas como lacunas medidas nos dados de cada componente, para reavaliar quando o dark mode entrar ou com uso real. A borda do Tag é a primeira a reavaliar (troca possível: `Border/Utilities/Input`). Medidas com a fórmula de luminância relativa da WCAG 2.2 sobre os tokens (Light, Dark).
+Implementadas como no Figma, sem mudar cor; aceitas pelo Renan em 24/11/2026 e registradas como lacunas medidas nos dados de cada componente, para reavaliar quando o dark mode entrar ou com uso real. A borda do Tag foi resolvida na v2.15.0 (D-45): passou para `Border/Utilities/Input`. Medidas com a fórmula de luminância relativa da WCAG 2.2 sobre os tokens (Light, Dark).
 
 | Onde | Medida | Critério |
 |---|---|---|
-| Borda do Tag (`Border/Default/Default`) | 1,29 e 1,28 contra a página; 1,21 e 1,14 contra o preenchimento do Tag | 1.4.11 (3:1) |
+| Borda do Tag | Resolvida na v2.15.0: `Border/Utilities/Input`, 3,12 e 3,19 contra a página (antes, com `Border/Default/Default`, 1,29 e 1,28); contra o preenchimento do Tag 2,91 e 2,83 | 1.4.11 (3:1) |
 | Borda do Accordion item | 1,29 e 1,28 contra a página | 1.4.11 |
 | Borda do Popover e do Menu | 1,29 e 1,28 contra a página | 1.4.11 |
 | Borda do Alert (Info no Dark, Warning no Light) e do Toast | ver as páginas | 1.4.11 |
@@ -1852,7 +1854,7 @@ Valores do Figma usados no Lote 3 (Core, lidos em 24/11/2026):
 | Componente | Valores |
 |---|---|
 | Tab | altura 40 (inclui a linha de 1,5px), padding 0 e 16, gap 0, texto `body-sm` Medium, também quando selecionado (v2.13.0: antes SemiBold), linha-base de 1px `Border/Default/Default` sob a lista (lista com 41), anel 88 por 48 quadrado |
-| Breadcrumb item | gap 8, padding 0, rótulo `body-sm` Regular (Medium no atual), separador CaretRight de 14, anel 40 por 29 só em volta do rótulo, itens a 8 de distância |
+| Breadcrumb item | gap 8, padding 0, rótulo `body-sm` Regular (Medium no atual), separador CaretRight de 14, anel 40 por 29 só em volta do rótulo, itens a 8 de distância; Ellipsis (v2.15.0): botão de 16 com `DotsThree`, `Icon/Color` Secondary no Default e Default no Hover e no Focus, anel quadrado de 24 por 24 |
 | Pagination item | 36 por 36, raio 12, número `body-sm` Medium, ícones de 20, itens a 4 de distância, anel 44 por 44 com raio externo 16 |
 | Menu item | altura 36, padding 0 e 12, gap 8, raio 8, check de 16, anel 228 por 44 com raio 12; Tone Default e Danger com cinco estados cada (10 variantes). Danger Focus, Selected e Disabled desde a v2.14.0 |
 | Menu (painel) | padding 8, gap 4, raio 12, borda de 1px, `Shadow/md`, 238 de largura no exemplo (220 + 16 + 2) |
@@ -2482,5 +2484,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.14.0 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.15.0 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*
