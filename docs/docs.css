@@ -42,7 +42,7 @@
   color: var(--color-text-2);
 }
 
-.docs-ds-content a:where(:not(.link, .btn, .alert__action, .toast__action)) { /* components in the live demos keep their own colour */
+.docs-ds-content a:where(:not(.link, .btn, .alert__action, .toast__action, .breadcrumb__link, .pagination__item)) { /* components in the live demos keep their own colour */
   color: var(--color-text-brand-default);
   text-decoration: underline;
 }
@@ -578,4 +578,41 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+}
+
+/* Navigation examples: Tabs take a readable width, the Menu panel uses the 238 of the Figma specimen, and the demo
+   trigger puts its open panel under itself in the document flow (positioning against the trigger is not coded). */
+.docs-ds-preview > .tabs {
+  flex: 1 1 100%;
+  max-width: 32rem;
+  align-self: flex-start;
+}
+
+.docs-ds-preview > .menu {
+  flex: none;
+  width: 14.875rem;
+  align-self: flex-start;
+}
+
+.docs-ds-preview > [data-menu] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  align-self: flex-start;
+}
+
+.docs-ds-preview > [data-menu] > .menu {
+  width: 14.875rem;
+}
+
+.docs-ds-preview > :is(.breadcrumb, .pagination) {
+  flex: 1 1 100%;
+}
+
+/* Tabs example: the panel text uses the body-sm size of the list. */
+.docs-ds-preview .tabs__panel p {
+  margin: var(--space-4) 0 0;
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+  color: var(--color-text-1);
 }

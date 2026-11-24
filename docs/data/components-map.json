@@ -1311,6 +1311,303 @@
         }
       ],
       "renderOnPage": "skeleton"
+    },
+    "Tab": {
+      "figmaVariants": 8,
+      "implemented": 8,
+      "base": ".tab",
+      "stateMechanisms": {
+        "hover": "pseudo-class :hover",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset",
+        "disabled": "aria-disabled=\"true\""
+      },
+      "variants": [
+        {
+          "selected": "false",
+          "state": "Default",
+          "selector": ".tab",
+          "rule": ".tab",
+          "mechanism": "base rule: Medium, Text/Default/Secondary, transparent 1.5px bottom border"
+        },
+        {
+          "selected": "false",
+          "state": "Hover",
+          "selector": ".tab",
+          "rule": ".tab:hover:not([aria-disabled=\"true\"])",
+          "mechanism": "pseudo-class :hover, text Text/Default/Default"
+        },
+        {
+          "selected": "false",
+          "state": "Focus",
+          "selector": ".tab",
+          "rule": ".tab:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, outline 2px with 2px offset"
+        },
+        {
+          "selected": "false",
+          "state": "Disabled",
+          "selector": ".tab",
+          "rule": ".tab[aria-disabled=\"true\"]",
+          "mechanism": "aria-disabled=\"true\", disabled tokens, no opacity"
+        },
+        {
+          "selected": "true",
+          "state": "Default",
+          "selector": ".tab",
+          "rule": ".tab[aria-selected=\"true\"]",
+          "mechanism": "aria-selected=\"true\": SemiBold, Text/Default/Default, 1.5px bottom line"
+        },
+        {
+          "selected": "true",
+          "state": "Hover",
+          "selector": ".tab",
+          "rule": ".tab:hover:not([aria-disabled=\"true\"])",
+          "mechanism": "pseudo-class :hover, text Text/Default/Default"
+        },
+        {
+          "selected": "true",
+          "state": "Focus",
+          "selector": ".tab",
+          "rule": ".tab:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, outline 2px with 2px offset"
+        },
+        {
+          "selected": "true",
+          "state": "Disabled",
+          "selector": ".tab",
+          "rule": ".tab[aria-disabled=\"true\"][aria-selected=\"true\"]",
+          "mechanism": "aria-disabled=\"true\", disabled tokens, no opacity"
+        }
+      ],
+      "renderOnPage": "tabs"
+    },
+    "BreadcrumbItem": {
+      "figmaVariants": 4,
+      "implemented": 4,
+      "base": ".breadcrumb__item",
+      "stateMechanisms": {
+        "hover": "pseudo-class :hover on the link",
+        "focus": "pseudo-class :focus-visible on the link only, outline 2px with 2px offset",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "type": "Link",
+          "selector": ".breadcrumb__link",
+          "rule": ".breadcrumb__link",
+          "mechanism": "base rule on the anchor"
+        },
+        {
+          "type": "Link Hover",
+          "selector": ".breadcrumb__link",
+          "rule": ".breadcrumb__link:hover",
+          "mechanism": "pseudo-class :hover"
+        },
+        {
+          "type": "Link Focus",
+          "selector": ".breadcrumb__link",
+          "rule": ".breadcrumb__link:focus-visible",
+          "mechanism": "pseudo-class :focus-visible"
+        },
+        {
+          "type": "Current",
+          "selector": ".breadcrumb__current",
+          "rule": ".breadcrumb__current",
+          "mechanism": "span with aria-current=\"page\", no link"
+        }
+      ],
+      "renderOnPage": "breadcrumb"
+    },
+    "PaginationItem": {
+      "figmaVariants": 14,
+      "implemented": 14,
+      "base": ".pagination__item",
+      "stateMechanisms": {
+        "hover": "pseudo-class :hover",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset",
+        "disabled": "aria-disabled=\"true\", no href"
+      },
+      "variants": [
+        {
+          "type": "Number",
+          "state": "Default",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item",
+          "mechanism": "base rule"
+        },
+        {
+          "type": "Number",
+          "state": "Hover",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item:hover:not([aria-disabled=\"true\"], [aria-current=\"page\"], .pagination__item--ellipsis)",
+          "mechanism": "pseudo-class :hover"
+        },
+        {
+          "type": "Number",
+          "state": "Focus",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, outline 2px with 2px offset"
+        },
+        {
+          "type": "Number",
+          "state": "Current",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item[aria-current=\"page\"]",
+          "mechanism": "aria-current=\"page\""
+        },
+        {
+          "type": "Number",
+          "state": "Disabled",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item[aria-disabled=\"true\"]",
+          "mechanism": "aria-disabled=\"true\", no opacity"
+        },
+        {
+          "type": "Prev",
+          "state": "Default",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item",
+          "mechanism": "base rule"
+        },
+        {
+          "type": "Prev",
+          "state": "Hover",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item:hover:not([aria-disabled=\"true\"], [aria-current=\"page\"], .pagination__item--ellipsis)",
+          "mechanism": "pseudo-class :hover"
+        },
+        {
+          "type": "Prev",
+          "state": "Focus",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item:focus-visible",
+          "mechanism": "pseudo-class :focus-visible"
+        },
+        {
+          "type": "Prev",
+          "state": "Disabled",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item[aria-disabled=\"true\"]",
+          "mechanism": "aria-disabled=\"true\", no href"
+        },
+        {
+          "type": "Next",
+          "state": "Default",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item",
+          "mechanism": "base rule"
+        },
+        {
+          "type": "Next",
+          "state": "Hover",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item:hover:not([aria-disabled=\"true\"], [aria-current=\"page\"], .pagination__item--ellipsis)",
+          "mechanism": "pseudo-class :hover"
+        },
+        {
+          "type": "Next",
+          "state": "Focus",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item:focus-visible",
+          "mechanism": "pseudo-class :focus-visible"
+        },
+        {
+          "type": "Next",
+          "state": "Disabled",
+          "selector": ".pagination__item",
+          "rule": ".pagination__item[aria-disabled=\"true\"]",
+          "mechanism": "aria-disabled=\"true\", no href"
+        },
+        {
+          "type": "Ellipsis",
+          "state": "Default",
+          "selector": ".pagination__item.pagination__item--ellipsis",
+          "rule": ".pagination__item--ellipsis",
+          "mechanism": "decorative span, not interactive"
+        }
+      ],
+      "renderOnPage": "pagination"
+    },
+    "MenuItem": {
+      "figmaVariants": 7,
+      "implemented": 7,
+      "base": ".menu__item",
+      "stateMechanisms": {
+        "hover": "pseudo-class :hover",
+        "focus": "pseudo-class :focus-visible, outline 2px with 2px offset",
+        "disabled": "aria-disabled=\"true\""
+      },
+      "variants": [
+        {
+          "tone": "Default",
+          "state": "Default",
+          "selector": ".menu__item",
+          "rule": ".menu__item",
+          "mechanism": "base rule"
+        },
+        {
+          "tone": "Default",
+          "state": "Hover",
+          "selector": ".menu__item",
+          "rule": ".menu__item:hover:not([aria-disabled=\"true\"])",
+          "mechanism": "pseudo-class :hover"
+        },
+        {
+          "tone": "Default",
+          "state": "Focus",
+          "selector": ".menu__item",
+          "rule": ".menu__item:focus-visible",
+          "mechanism": "pseudo-class :focus-visible, outline 2px with 2px offset"
+        },
+        {
+          "tone": "Default",
+          "state": "Selected",
+          "selector": ".menu__item",
+          "rule": ".menu__item[aria-checked=\"true\"]",
+          "mechanism": "aria-checked=\"true\""
+        },
+        {
+          "tone": "Default",
+          "state": "Disabled",
+          "selector": ".menu__item",
+          "rule": ".menu__item[aria-disabled=\"true\"]",
+          "mechanism": "aria-disabled=\"true\", no opacity"
+        },
+        {
+          "tone": "Danger",
+          "state": "Default",
+          "selector": ".menu__item.menu__item--danger",
+          "rule": ".menu__item--danger",
+          "mechanism": "modifier sets the text color"
+        },
+        {
+          "tone": "Danger",
+          "state": "Hover",
+          "selector": ".menu__item.menu__item--danger",
+          "rule": ".menu__item:hover:not([aria-disabled=\"true\"])",
+          "mechanism": "pseudo-class :hover, same fill as Default"
+        }
+      ],
+      "renderOnPage": "menu"
+    },
+    "Menu": {
+      "figmaVariants": 1,
+      "implemented": 1,
+      "base": ".menu",
+      "stateMechanisms": {
+        "hover": "not applicable",
+        "focus": "not applicable, the items take the focus",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "selector": ".menu",
+          "rule": ".menu",
+          "mechanism": "panel: border, padding, shadow and z-index"
+        }
+      ],
+      "renderOnPage": "menu"
     }
   },
   "codeOnly": [

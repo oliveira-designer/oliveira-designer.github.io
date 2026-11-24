@@ -236,7 +236,7 @@ function componentPage(comp) {
       return SECTIONS[s](comp);
     }),
   ].join(NL + NL);
-  return renderPage({ title: comp.name, activeHref: `components/${comp.slug}.html`, base: BASE, body });
+  return renderPage({ title: comp.name, activeHref: `components/${comp.slug}.html`, base: BASE, body, scripts: comp.scripts || [] });
 }
 
 function indexPage(components) {

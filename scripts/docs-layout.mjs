@@ -18,7 +18,7 @@ export const NAV = [
 const CONTENT_FILE = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'docs', 'data', 'components-content.json');
 const componentEntries = fs.existsSync(CONTENT_FILE) ? JSON.parse(fs.readFileSync(CONTENT_FILE, 'utf8')).components || [] : [];
 export const COMPONENT_PAGES = [
-  ...componentEntries.map((c) => ({ href: `components/${c.slug}.html`, label: c.name })),
+  ...componentEntries.map((c) => ({ href: `components/${c.slug}.html`, label: c.name, group: c.navGroup || null })),
   { href: 'components/review.html', label: 'Review (temporary)' },
 ];
 
@@ -116,6 +116,13 @@ export function header(activeHref, base = '') {
 // Side menu: the pattern of design-system.html (grouped links): Pages and Components.
 function sidebarDs(activeHref, base = '') {
   const link = (n) => `<a class="docs-ds-nav__link" href="${base}${n.href}"${n.href === activeHref ? ' aria-current="page"' : ''}>${n.label}</a>`;
+  // Components with a navGroup in components-content.json (for example Navigation) get their own labelled group.
+  const groupNames = [...new Set(COMPONENT_PAGES.filter((n) => n.group).map((n) => n.group))];
+  const navGroups = groupNames.map((g) => `
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">${esc(g)}</p>
+              ${COMPONENT_PAGES.filter((n) => n.group === g).map(link).join('\n              ')}
+            </div>`).join('');
   return `<aside class="docs-ds-sidebar">
           <nav aria-label="Docs pages">
             <div class="docs-ds-nav__group">
@@ -124,8 +131,8 @@ function sidebarDs(activeHref, base = '') {
             </div>
             <div class="docs-ds-nav__group">
               <p class="docs-ds-nav__label">Components</p>
-              ${COMPONENT_PAGES.map(link).join('\n              ')}
-            </div>
+              ${COMPONENT_PAGES.filter((n) => !n.group).map(link).join('\n              ')}
+            </div>${navGroups}
           </nav>
         </aside>`;
 }
@@ -183,7 +190,8 @@ const SCRIPT = `<script>
   </script>`;
 
 // stylesheets: optional list of repository-root-relative paths (for example from docs/data/css-sources.json).
-export function renderPage({ title, activeHref, body, base = '', stylesheets = null }) {
+export function renderPage({ title, activeHref, body, base = '', stylesheets = null, scripts = [] }) {
+  const scriptTags = scripts.map((s) => `<script src="${base}../js/${s}"></script>`).join('\n  ');
   const links = (stylesheets ? stylesheets.map((p) => `<link rel="stylesheet" href="${base}../${p}" />`) : STYLESHEETS.map((s) => `<link rel="stylesheet" href="${base}../css/${s}.css" />`)).join('\n  ');
   return `<!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -215,6 +223,7 @@ ${body}
   </main>
 
   ${SCRIPT}
+  ${scriptTags}
 </body>
 </html>
 `;

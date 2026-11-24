@@ -1464,6 +1464,251 @@
   "mapKeys": [
     "IconButton"
   ]
+},
+{
+  "slug": "tabs",
+  "name": "Tabs",
+  "navGroup": "Navigation",
+  "scripts": [
+    "tabs.js"
+  ],
+  "figma": {"pageId": "2412:3", "sets": [{"name": "Tab", "id": "2412:20"}]},
+  "summary": "A row of tab items that switches between panels of related content on the same page. Each item is 40px high; the selected one has a 1.5px bottom line and SemiBold text, and the whole list sits on a 1px baseline.",
+  "whenToUse": [
+    "Two to six panels of related content that share one page, each with a short label.",
+    "Different views of the same object, such as Overview, Activity and Settings."
+  ],
+  "whenNotToUse": [
+    "The items are page destinations: use navigation links, not Tabs.",
+    "More than six items or long labels: use a Menu or rethink the structure."
+  ],
+  "properties": [
+    {"name": "Selected", "type": "variant", "options": ["false", "true"], "default": "false"},
+    {"name": "State", "type": "variant", "options": ["Default", "Hover", "Focus", "Disabled"], "default": "Default"},
+    {"name": "Label", "type": "text", "default": "Tab label"}
+  ],
+  "layout": {
+    "all": {"height": "40, with the 1.5px bottom line included (strokesIncludedInLayout true)", "padding": "0 vertical, Spacing/space-4 horizontal", "gap": "0", "width": "follows the label (80 in Figma is the specimen)", "baseline": "1px Border/Default/Default under the whole list (the list is 41 high)", "focusRing": "88 by 48 around an 80 by 40 item, square corners"}
+  },
+  "stateTokens": {
+    "NotSelected": {"default": {"text": "Text/Default/Secondary"}, "hover": {"text": "Text/Default/Default"}, "focus": "Default plus focus ring", "disabled": {"text": "Text/Disabled/Default"}},
+    "Selected": {"default": {"text": "Text/Default/Default", "stroke": "Background/Neutral/Default 1.5px bottom"}, "hover": "same as Default", "focus": "Default plus focus ring", "disabled": {"text": "Text/Disabled/Default", "stroke": "Text/Disabled/Default 1.5px bottom"}}
+  },
+  "accessibility": {
+    "contrastText": [
+      {"case": "Not selected, Default (Text/Default/Secondary on the page)", "light": 10.76, "dark": 8.37},
+      {"case": "Hover and Selected (Text/Default/Default on the page)", "light": 19.42, "dark": 17.06},
+      {"case": "Disabled (exempt, inactive)", "light": 3.12, "dark": 3.19}
+    ],
+    "contrastNonText": [
+      {"case": "Selected line vs page (needs 3:1)", "light": 19.42, "dark": 17.06},
+      {"case": "Baseline (Border/Default/Default) vs page", "light": 1.29, "dark": 1.28},
+      {"case": "Focus ring vs page (needs 3:1)", "light": 6.46, "dark": 10.74}
+    ],
+    "targetSize": "40 high with a label wider than 24px: above 2.5.8 (24 by 24). Under 2.5.5 (44 by 44, AAA) in height.",
+    "focus": "An outline of 2px (--focus-ring-width) with a 2px offset (--focus-ring-gap) around the whole item, square: 88 by 48 around an 80 by 40 item.",
+    "note": "role=\"tablist\" with role=\"tab\" items (aria-selected, aria-controls) and role=\"tabpanel\" (aria-labelledby). Roving tabindex: only the selected tab is in the tab order. Left and Right move and activate (automatic activation, wrapping), Home and End jump to the first and last, disabled tabs (aria-disabled=\"true\") are skipped. Tab then moves into the panel.",
+    "meaning": "The selected tab is not shown by color alone: the weight changes to SemiBold and a bottom line appears. Tabs, Pagination and Menu mark the current item in three different ways on purpose: Tabs with a bottom line and SemiBold text, Pagination with a dark fill, Menu with a light fill, SemiBold text and a check. The panel is a tab stop (tabindex=\"0\") only when it has no focusable content. Without JavaScript the first panel is visible and the others stay hidden."
+  },
+  "example": {"markup": "<div class=\"tabs\">\n  <div class=\"tabs__list\" role=\"tablist\" aria-label=\"Seções do projeto\">\n    <button type=\"button\" class=\"tab\" role=\"tab\" id=\"tab-overview\" aria-selected=\"true\" aria-controls=\"panel-overview\" tabindex=\"0\">Visão geral</button>\n    <button type=\"button\" class=\"tab\" role=\"tab\" id=\"tab-activity\" aria-selected=\"false\" aria-controls=\"panel-activity\" tabindex=\"-1\">Atividade</button>\n    <button type=\"button\" class=\"tab\" role=\"tab\" id=\"tab-settings\" aria-selected=\"false\" aria-controls=\"panel-settings\" tabindex=\"-1\">Configurações</button>\n    <button type=\"button\" class=\"tab\" role=\"tab\" id=\"tab-archived\" aria-selected=\"false\" aria-disabled=\"true\" aria-controls=\"panel-archived\" tabindex=\"-1\">Arquivados</button>\n  </div>\n  <div class=\"tabs__panel\" role=\"tabpanel\" id=\"panel-overview\" aria-labelledby=\"tab-overview\">\n    <p>Resumo do projeto: objetivo, prazo e responsáveis.</p>\n  </div>\n  <div class=\"tabs__panel\" role=\"tabpanel\" id=\"panel-activity\" aria-labelledby=\"tab-activity\" hidden>\n    <p>Histórico das últimas alterações.</p>\n  </div>\n  <div class=\"tabs__panel\" role=\"tabpanel\" id=\"panel-settings\" aria-labelledby=\"tab-settings\" hidden>\n    <p>Preferências e permissões do projeto.</p>\n  </div>\n  <div class=\"tabs__panel\" role=\"tabpanel\" id=\"panel-archived\" aria-labelledby=\"tab-archived\" hidden>\n    <p>Itens arquivados.</p>\n  </div>\n</div>"},
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {"id": "tabs-label-width-shift", "status": "inference", "text": "Figma gives the selected label SemiBold and the others Medium, at a fixed 80 width. With a width that follows the label, a tab can grow a little when it is selected. Reserving the SemiBold width needs a data attribute on every tab and is not coded."},
+    {"id": "tabs-overflow", "status": "documented", "text": "Figma defines no behavior for more tabs than fit the width. The guidance is two to six short labels; the list does not scroll, because a scroll container would clip the 4px focus ring."},
+    {"id": "tabs-focus-state-selected-disabled", "status": "documented", "text": "A disabled tab has no focus variant in Figma. In code it is not focusable by arrow keys and keeps tabindex -1."},
+    {"id": "tabs-baseline-contrast", "status": "measured", "text": "The 1px baseline under the list (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark. The selected tab line passes (19.42 and 17.06) and the selection is also carried by the SemiBold weight, so the baseline alone does not carry the information."},
+    {"id": "tabs-line-1x", "status": "inference", "text": "On a 1x screen the browser draws the 1.5px bottom line as 1px. The height stays 40 because the border is part of the box, so nothing moves."},
+    {"id": "tabs-forced-colors", "status": "measured", "text": "Under forced colors the transparent bottom border would be drawn in a system color, so every border is set on purpose: Canvas when not selected, Highlight when selected, GrayText when disabled."}
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "Tab"
+  ]
+},
+{
+  "slug": "breadcrumb",
+  "name": "Breadcrumb",
+  "navGroup": "Navigation",
+  "figma": {"pageId": "2413:35", "sets": [{"name": "Breadcrumb item", "id": "2413:51"}]},
+  "summary": "The path to the current page as a list of links, ending in the current page as plain text. 13px text with a 14px caret between items; the last item has no separator.",
+  "whenToUse": [
+    "A hierarchy with two or more levels, so the user can climb back up."
+  ],
+  "whenNotToUse": [
+    "A flat site or a single level: there is nothing to climb.",
+    "A history of visited pages: a breadcrumb shows the hierarchy, not the path taken."
+  ],
+  "properties": [
+    {"name": "Type", "type": "variant", "options": ["Link", "Link Hover", "Link Focus", "Current"], "default": "Link"},
+    {"name": "Label", "type": "text", "default": "Page"},
+    {"name": "Show separator", "type": "boolean", "default": "true"}
+  ],
+  "layout": {
+    "all": {"gap": "Spacing/space-2 between the label and the separator, and between items (8)", "padding": "0", "separator": "CaretRight 14 by 14", "focusRing": "40 by 29 around the 32 by 21 label only (4px outside each side)"}
+  },
+  "stateTokens": {
+    "Link": {"default": {"text": "Text/Default/Secondary"}, "hover": {"text": "Text/Default/Default"}, "focus": {"text": "Text/Default/Default plus focus ring on the label"}},
+    "Current": {"default": {"text": "Text/Default/Default"}}
+  },
+  "accessibility": {
+    "contrastText": [
+      {"case": "Link (Text/Default/Secondary on the page)", "light": 10.76, "dark": 8.37},
+      {"case": "Hover, Focus and Current (Text/Default/Default on the page)", "light": 19.42, "dark": 17.06}
+    ],
+    "contrastNonText": [
+      {"case": "Separator (Icon/Color Tertiary, decorative)", "light": 6.27, "dark": 5.48},
+      {"case": "Focus ring vs page (needs 3:1)", "light": 6.46, "dark": 10.74}
+    ],
+    "targetSize": "The link is 20.8px high, under 24 by 24 (2.5.8, AA). It meets the spacing exception: the items are at least 8px apart, so a 24px circle centered on a link does not reach another target.",
+    "focus": "An outline of 2px with a 2px offset around the label only. The separator is a sibling of the link, never inside it, so the ring does not include it (D-30: :focus-visible on the link only).",
+    "note": "A nav with aria-label=\"Breadcrumb\" containing an ordered list; each item is an li. The current page is plain text with aria-current=\"page\", never a link and never focusable.",
+    "meaning": "The separator is decorative: aria-hidden, so a screen reader reads the list as items, not as carets. The last item must not render a separator in code."
+  },
+  "example": {"markup": "<nav class=\"breadcrumb\" aria-label=\"Breadcrumb\">\n  <ol class=\"breadcrumb__list\">\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#inicio\">Início</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#projetos\">Projetos</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#hope-ds\">Hope DS</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <span class=\"breadcrumb__current\" aria-current=\"page\">Componentes</span>\n    </li>\n  </ol>\n</nav>"},
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {"id": "breadcrumb-last-separator", "status": "documented", "text": "Figma still draws a separator in the Current variant but marks it optional (Show separator). In code the last item has no separator."},
+    {"id": "breadcrumb-narrow-collapse", "status": "documented", "text": "Figma says that on narrow screens the middle levels collapse. The CSS wraps the list onto more lines instead. Collapsing needs an ellipsis control that Figma does not draw (the Pagination Ellipsis is 36 by 36 and not interactive), so it is not coded and not invented: an open item for the design."},
+    {"id": "breadcrumb-separator-color", "status": "inference", "text": "The Figma separator is painted #5F5F6E, the value of Icon/Color Tertiary. The role binding in Core was not read; the CSS uses --icon-color-tertiary."},
+    {"id": "breadcrumb-target-size", "status": "measured", "text": "Each link is 20.8px high (32.7 by 20.8 for the first one). WCAG 2.5.8 is met through the spacing exception (the items are 8px apart); the focus ring is a 28.8px high area."}
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "BreadcrumbItem"
+  ]
+},
+{
+  "slug": "pagination",
+  "name": "Pagination",
+  "navGroup": "Navigation",
+  "figma": {"pageId": "2413:220", "sets": [{"name": "Pagination item", "id": "2413:261"}]},
+  "summary": "Page numbers, Previous and Next as 36 by 36 items with radius 12, and a non-interactive ellipsis for long sequences. The current page is a dark fill.",
+  "whenToUse": [
+    "A long list split into pages, with the number of pages known.",
+    "Use the ellipsis to collapse a long sequence: for example 1, ..., 4, 5, 6, ..., 20."
+  ],
+  "whenNotToUse": [
+    "Content that loads more as you scroll or a short list that fits on one page.",
+    "Steps of a process: use a stepper."
+  ],
+  "properties": [
+    {"name": "Type", "type": "variant", "options": ["Number", "Prev", "Next", "Ellipsis"], "default": "Number"},
+    {"name": "State", "type": "variant", "options": ["Default", "Hover", "Focus", "Current", "Disabled"], "default": "Default"},
+    {"name": "Number", "type": "text", "default": "1"}
+  ],
+  "layout": {
+    "all": {"size": "36 by 36", "radius": "Radius/radius-md", "gap": "Spacing/space-1 between items (4)", "icon": "20 by 20", "focusRing": "44 by 44, outer radius 16 (Radius/radius-lg)"}
+  },
+  "stateTokens": {
+    "Number": {"default": {"text": "Text/Default/Default"}, "hover": {"fill": "Background/Default/Secondary"}, "focus": "Default plus focus ring", "current": {"fill": "Background/Neutral/Default", "text": "Text/Neutral/Default"}, "disabled": {"text": "Text/Disabled/Default"}},
+    "PrevNext": {"default": {"icon": "Icon/Color Default"}, "hover": {"fill": "Background/Default/Secondary"}, "focus": "Default plus focus ring", "disabled": {"icon": "Icon/Color Disabled"}}
+  },
+  "accessibility": {
+    "contrastText": [
+      {"case": "Number (Text/Default/Default on the page)", "light": 19.42, "dark": 17.06},
+      {"case": "Current (Text/Neutral/Default on its fill)", "light": 19.42, "dark": 19.42},
+      {"case": "Disabled (exempt, inactive)", "light": 3.12, "dark": 3.19}
+    ],
+    "contrastNonText": [
+      {"case": "Current fill vs page (needs 3:1)", "light": 19.42, "dark": 17.06},
+      {"case": "Focus ring vs page (needs 3:1)", "light": 6.46, "dark": 10.74}
+    ],
+    "targetSize": "36 by 36 meets 2.5.8 (24 by 24, AA) and is under 2.5.5 (44 by 44, AAA). The items are 4px apart.",
+    "focus": "An outline of 2px with a 2px offset following the radius: 44 by 44 with an outer radius of 16.",
+    "note": "A nav with aria-label=\"Paginação\" (Portuguese, as in Figma) containing a ul of li. The current number has aria-current=\"page\". Number links may carry aria-label=\"Página 3\". Icon-only Previous and Next need aria-label (\"Página anterior\", \"Próxima página\").",
+    "meaning": "Disabled Previous on the first page and Next on the last: a link with aria-disabled=\"true\" and no href, so it is not focusable and cannot be activated (the same approach as the Hope Link). The Ellipsis is a decorative span with aria-hidden, not focusable. Tabs, Pagination and Menu mark the current item in three different ways on purpose: Tabs with a bottom line and SemiBold text, Pagination with a dark fill, Menu with a light fill, SemiBold text and a check."
+  },
+  "example": {"markup": "<nav class=\"pagination\" aria-label=\"Paginação\">\n  <ul class=\"pagination__list\">\n    <li><a class=\"pagination__item\" aria-disabled=\"true\" aria-label=\"Página anterior\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z\"/></svg></a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-1\" aria-label=\"Página 1\">1</a></li>\n    <li><span class=\"pagination__item pagination__item--ellipsis\" aria-hidden=\"true\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Zm136,0a12,12,0,1,0,12,12A12,12,0,0,0,196,116Z\"/></svg></span></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-4\" aria-label=\"Página 4\">4</a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-5\" aria-label=\"Página 5\" aria-current=\"page\">5</a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-6\" aria-label=\"Página 6\">6</a></li>\n    <li><span class=\"pagination__item pagination__item--ellipsis\" aria-hidden=\"true\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Zm136,0a12,12,0,1,0,12,12A12,12,0,0,0,196,116Z\"/></svg></span></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-20\" aria-label=\"Página 20\">20</a></li>\n    <li><a class=\"pagination__item\" href=\"#pagina-6\" aria-label=\"Próxima página\"><svg aria-hidden=\"true\" class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg></a></li>\n  </ul>\n</nav>"},
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {"id": "pagination-disabled-mechanism", "status": "documented", "text": "Disabled Prev and Next use aria-disabled=\"true\" without href on a link. If the items are built from buttons, use the disabled attribute instead and keep one choice per page."},
+    {"id": "pagination-figma-fixes", "status": "documented", "text": "Figma fixes made on 2026-11-24 by the owner: the Prev and Next Focus variants did not exist and now do (12 variants became 14), and the Disabled icon now uses the Icon/Color Disabled mode."},
+    {"id": "pagination-current-hover", "status": "inference", "text": "Figma has no hover for Current. The CSS keeps the dark fill on hover."},
+    {"id": "pagination-number-disabled", "status": "documented", "text": "Number has a Disabled variant in Figma (text Text/Disabled/Default). The CSS covers it with aria-disabled=\"true\"."}
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "PaginationItem"
+  ]
+},
+{
+  "slug": "menu",
+  "name": "Menu",
+  "navGroup": "Navigation",
+  "scripts": [
+    "menu.js"
+  ],
+  "figma": {"pageId": "2413:344", "sets": [{"name": "Menu item", "id": "2413:380"}, {"name": "Menu", "id": "2413:381"}]},
+  "summary": "A panel of actions or options opened from a trigger: 36px items, optional groups separated by a divider, a danger tone for destructive actions and a check on the chosen option.",
+  "whenToUse": [
+    "A short list of actions on an object, opened from a button.",
+    "The options of a Select (the same panel look).",
+    "Put destructive actions last, after a divider."
+  ],
+  "whenNotToUse": [
+    "Free content, a form or rich layout: use a Popover (Lote 4).",
+    "Page navigation: use links or Tabs."
+  ],
+  "properties": [
+    {"name": "Tone", "type": "variant", "options": ["Default", "Danger"], "default": "Default"},
+    {"name": "State", "type": "variant", "options": ["Default", "Hover", "Focus", "Selected", "Disabled"], "default": "Default"},
+    {"name": "Label", "type": "text", "default": "Menu item"}
+  ],
+  "layout": {
+    "item": {"height": 36, "padding": "0 vertical, Spacing/space-3 horizontal", "gap": "Spacing/space-2", "radius": "Radius/radius-sm", "check": "16 by 16 on the right", "focusRing": "228 by 44 around a 220 by 36 item, radius 12"},
+    "panel": {"size": "238 wide in the specimen = 220 item + 16 padding + 2 border (strokesIncludedInLayout true)", "padding": "Spacing/space-2", "gap": "Spacing/space-1", "radius": "Radius/radius-md", "border": "1px Border/Default/Default", "shadow": "Shadow/md", "layer": "Z-index/z-popover (300)"}
+  },
+  "stateTokens": {
+    "Default": {"default": {"text": "Text/Default/Default"}, "hover": {"fill": "Background/Default/Secondary"}, "focus": "Default plus focus ring", "selected": {"fill": "Background/Default/Secondary", "text": "Text/Default/Default SemiBold, check Icon/Color Default"}, "disabled": {"text": "Text/Disabled/Default"}},
+    "Danger": {"default": {"text": "Text/Danger/Default"}, "hover": {"fill": "Background/Default/Secondary"}}
+  },
+  "accessibility": {
+    "contrastText": [
+      {"case": "Item (Text/Default/Default on the panel)", "light": 19.42, "dark": 17.06},
+      {"case": "Item on hover or selected (on Background/Default/Secondary)", "light": 18.15, "dark": 15.17},
+      {"case": "Danger (Text/Danger/Default on the panel)", "light": 5.87, "dark": 6.88},
+      {"case": "Danger on hover (on Background/Default/Secondary)", "light": 5.48, "dark": 6.12},
+      {"case": "Disabled (exempt, inactive)", "light": 3.12, "dark": 3.19}
+    ],
+    "contrastNonText": [
+      {"case": "Panel border vs page (needs 3:1)", "light": 1.29, "dark": 1.28},
+      {"case": "Focus ring vs panel (needs 3:1)", "light": 6.46, "dark": 10.74}
+    ],
+    "targetSize": "36 high and as wide as the panel: meets 2.5.8 (24 by 24) and is under 2.5.5 (44 by 44, AAA) in height. The items are 4px apart.",
+    "focus": "An outline of 2px with a 2px offset: 228 by 44 around a 220 by 36 item, radius 12. It sits inside the 8px panel padding, so it is not clipped (the panel has no overflow).",
+    "note": "The trigger has aria-haspopup=\"menu\", aria-expanded and aria-controls. The panel has role=\"menu\"; items are role=\"menuitem\". A chosen option uses role=\"menuitemradio\" (or menuitemcheckbox) with aria-checked. Up and Down move the focus, Home and End jump, Escape closes and returns the focus to the trigger, Tab closes. Typeahead is out of scope. Disabled items use aria-disabled=\"true\" and are skipped.",
+    "meaning": "Selected in Figma means a chosen option, so it is menuitemradio with aria-checked=\"true\" and a visible check; it is not announced by color alone. Tabs, Pagination and Menu mark the current item in three different ways on purpose: Tabs with a bottom line and SemiBold text, Pagination with a dark fill, Menu with a light fill, SemiBold text and a check. The divider is a role=\"separator\". Danger is carried by the text and its position after the divider, not by color alone."
+  },
+  "example": {"markup": "<div data-menu>\n  <button type=\"button\" class=\"btn btn--secondary\" id=\"menu-account\" aria-haspopup=\"menu\" aria-expanded=\"false\" aria-controls=\"menu-account-panel\">Conta</button>\n  <div class=\"menu\" role=\"menu\" id=\"menu-account-panel\" aria-labelledby=\"menu-account\" hidden>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Perfil</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Configurações</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" aria-disabled=\"true\">\n    <span class=\"menu__label\">Cobrança</span>\n  </button>\n    <div class=\"menu__divider\" role=\"separator\"></div>\n  <button type=\"button\" class=\"menu__item menu__item--danger\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Sair</span>\n  </button>\n  </div>\n</div>\n<div class=\"menu\" role=\"menu\" aria-label=\"Ações da conta (exemplo estático)\">\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Perfil</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Configurações</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" aria-disabled=\"true\">\n    <span class=\"menu__label\">Cobrança</span>\n  </button>\n  <div class=\"menu__divider\" role=\"separator\"></div>\n  <button type=\"button\" class=\"menu__item menu__item--danger\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Sair</span>\n  </button>\n</div>\n<div class=\"menu\" role=\"menu\" aria-label=\"Escolha do idioma (exemplo estático)\">\n  <div role=\"group\" aria-label=\"Idioma\">\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"true\">\n    <span class=\"menu__label\">Português</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"false\">\n    <span class=\"menu__label\">English</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"false\">\n    <span class=\"menu__label\">Español</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  </div>\n</div>"},
+  "essential": [
+    "when",
+    "variants",
+    "accessibility"
+  ],
+  "knownGaps": [
+    {"id": "menu-positioning", "status": "documented", "text": "The CSS draws the panel. Placing it next to the trigger, flipping it near the viewport edge and typeahead are not coded. js/menu.js opens and closes it and handles the keys. The docs demo places the panel under the trigger in the document flow."},
+    {"id": "menu-danger-states", "status": "documented", "text": "Figma has no Danger Focus, Selected or Disabled. Focus uses the shared ring. They are not invented; an open item if the design needs them."},
+    {"id": "menu-select-parity", "status": "documented", "text": "Figma says Select uses this panel. The native <select> of the repo still opens the browser panel. Select was not changed in this lote."},
+    {"id": "menu-border-contrast", "status": "measured", "text": "The panel border (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark, under the 3:1 of WCAG 1.4.11. The shadow (Shadow/md) does not count as a boundary for that criterion."},
+    {"id": "menu-specimen-width", "status": "documented", "text": "The Figma panel is 238 wide because the specimen items are 220. In code the items fill the panel and the panel width is the author's; the docs demo uses 238."}
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "MenuItem",
+    "Menu"
+  ]
 }
 ]
 }

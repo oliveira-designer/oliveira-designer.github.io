@@ -110,6 +110,13 @@
               <a class="docs-ds-nav__link" href="components/icon-button.html">Icon Button</a>
               <a class="docs-ds-nav__link" href="components/review.html">Review (temporary)</a>
             </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label">Navigation</p>
+              <a class="docs-ds-nav__link" href="components/tabs.html">Tabs</a>
+              <a class="docs-ds-nav__link" href="components/breadcrumb.html">Breadcrumb</a>
+              <a class="docs-ds-nav__link" href="components/pagination.html">Pagination</a>
+              <a class="docs-ds-nav__link" href="components/menu.html">Menu</a>
+            </div>
           </nav>
         </aside>
         <div class="docs-ds-content">
@@ -247,7 +254,7 @@
               <p><strong>Reduced transparency:</strong> four tokens (<code>--blur-glass</code>, <code>--color-material-bg</code>, <code>--color-material-border</code>, <code>--color-material-border-hover</code>) are redefined under <code>prefers-reduced-transparency: reduce</code>. That is a user setting, not a theme, so the Light and Dark columns show the normal values and the override sits in its own column. It is not compared with Figma.</p>
               <p><strong>Composite values:</strong> <code>--border-*</code> and <code>--blur-glass</code> are shorthands, shown whole and marked composite. Comma and paren values (fonts, <code>clamp()</code>, <code>cubic-bezier()</code>, <code>rgba()</code>) are kept intact.</p>
               <p><strong>Not listed:</strong> <code>--resume-url</code> (URL string, not a design token).</p>
-              <p><strong>Unused:</strong> 57 tokens below are flagged because nothing outside <code>tokens.css</code> references them and no other token aliases them; the excluded URL token is also unused.</p>
+              <p><strong>Unused:</strong> 55 tokens below are flagged because nothing outside <code>tokens.css</code> references them and no other token aliases them; the excluded URL token is also unused.</p>
               <p><strong>SigmaMD:</strong> a Figma mode kept for display only; it is shown, never compared.</p>
             </div>
           </section>
@@ -2183,7 +2190,7 @@
         <td class="data-table__cell"><span class="badge badge--neutral">not in Figma</span></td>
       </tr>
       <tr id="shadow-md">
-        <th scope="row" class="data-table__row-header"><code>--shadow-md</code><span class="docs-token__meta"><span>shadow</span><span class="badge badge--solar">unused</span></span></th>
+        <th scope="row" class="data-table__row-header"><code>--shadow-md</code><span class="docs-token__meta"><span>shadow</span></span></th>
         <td class="data-table__cell"><span class="docs-value"><code>0 4px 12px rgba(13, 13, 15, 0.08)</code></span></td>
         <td class="data-table__cell"><span class="docs-value docs-value--muted"><code>0 4px 12px rgba(13, 13, 15, 0.08)</code></span></td>
         <td class="data-table__cell"><span class="docs-muted">not in Figma</span></td>
@@ -2352,7 +2359,7 @@
         <td class="data-table__cell"><span class="badge badge--neutral">not in Figma</span></td>
       </tr>
       <tr id="z-popover">
-        <th scope="row" class="data-table__row-header"><code>--z-popover</code><span class="docs-token__meta"><span>number</span><span class="badge badge--solar">unused</span></span><span class="docs-token__note">Figma Z-index/z-popover: Popover, Menu and Select panels</span></th>
+        <th scope="row" class="data-table__row-header"><code>--z-popover</code><span class="docs-token__meta"><span>number</span></span><span class="docs-token__note">Figma Z-index/z-popover: Popover, Menu and Select panels</span></th>
         <td class="data-table__cell data-table__cell--end"><span class="docs-value"><code>300</code></span></td>
         <td class="data-table__cell"><span class="docs-muted">not in Figma</span></td>
         <td class="data-table__cell"><span class="docs-muted">not compared</span></td>
@@ -2578,5 +2585,6 @@
       });
     })();
   </script>
+  
 </body>
 </html>
