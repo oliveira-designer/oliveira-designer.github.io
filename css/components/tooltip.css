@@ -3,18 +3,21 @@
    Edit this file, then run: npm run css:build
 
    Markup contract (docs/components/tooltip.html):
-     <button type="button" aria-describedby="tip-id">Trigger</button>
-     <div class="tooltip tooltip--top" role="tooltip" id="tip-id">
+     <button type="button" data-tooltip-trigger aria-describedby="tip-id">Trigger</button>
+     <div class="tooltip tooltip--top" role="tooltip" id="tip-id" data-placement="top" hidden>
        <span class="tooltip__bubble">Tooltip text</span>
        <span class="tooltip__arrow" aria-hidden="true"></span>
      </div>
    The placement says where the tooltip sits relative to its trigger: Top means the bubble is above the trigger and the
    arrow points down at it. The component is the bubble plus the arrow (84 by 40 for the sample text, 90 by 34 for the
-   sides). Positioning: a tooltip with data-anchor="<trigger id>" and data-placement="top|bottom|left|right" is placed against that
-   trigger by js/position.js (docs demos only), flipped near the viewport edge, and the tooltip--* class follows the side in use so the
-   arrow keeps pointing at the trigger. Not coded here (see the gaps in the docs data): showing and hiding on hover and focus, delay and
-   WCAG 1.4.13 (dismissible with Escape, hoverable, persistent). A tooltip never holds the only way to reach essential
-   information, because it does not appear on touch. */
+   sides). The behavior is js/tooltip.js: it shows 300 ms after mouse hover or keyboard focus on the trigger, hides at once when
+   hover and focus have both left, stays while the pointer is on the bubble (WCAG 1.4.13: hoverable, persistent, and Escape dismisses
+   it), and never shows on touch. Positioning is js/position.js: a tooltip with data-placement="top|bottom|left|right" (default top,
+   centered) is placed against its trigger 8px away (--space-2), flipped near the viewport edge, shifted to stay inside, and the
+   tooltip--* class follows the side in use. When the bubble is shifted the arrow keeps pointing at the center of the trigger:
+   js/position.js sets --tooltip-arrow-offset and the arrow below translates by it. A tooltip with data-anchor="<trigger id>" is the
+   always visible specimen of the docs. A tooltip never holds the only way to reach essential information, because it does not appear
+   on touch. */
 
 /* ----------------------------------------------------------
    TOOLTIP
@@ -29,10 +32,50 @@
   font-family: var(--font-body);
 }
 
-/* Placed against a trigger (docs demos): out of flow, as wide as its text, at the left and top that js/position.js sets. */
-.tooltip[data-anchor] {
+/* Placed against a trigger: out of flow, as wide as its text, at the left and top that js/position.js sets. */
+.tooltip[data-anchor],
+.tooltip[data-placement] {
   position: absolute;
   width: max-content;
+}
+
+.tooltip[hidden] {
+  display: none;
+}
+
+/* Hoverable bridge (WCAG 1.4.13): the 8px between the trigger and the tooltip belong to the tooltip, so the pointer can cross from
+   the trigger to the bubble without the tooltip losing hover. It is invisible and sits on the side that faces the trigger. */
+.tooltip[data-placement]::before {
+  content: "";
+  position: absolute;
+}
+
+.tooltip--top[data-placement]::before {
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: var(--space-2);
+}
+
+.tooltip--bottom[data-placement]::before {
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  height: var(--space-2);
+}
+
+.tooltip--left[data-placement]::before {
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: var(--space-2);
+}
+
+.tooltip--right[data-placement]::before {
+  top: 0;
+  right: 100%;
+  bottom: 0;
+  width: var(--space-2);
 }
 
 .tooltip--top { flex-direction: column; }
@@ -64,6 +107,18 @@
 
 .tooltip--bottom .tooltip__arrow {
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+/* The arrow follows the center of the trigger when the bubble was shifted: js/position.js sets --tooltip-arrow-offset (0 when the
+   bubble is centered on the trigger). Horizontal for Top and Bottom, vertical for Left and Right. */
+.tooltip--top .tooltip__arrow,
+.tooltip--bottom .tooltip__arrow {
+  transform: translateX(var(--tooltip-arrow-offset, 0px));
+}
+
+.tooltip--left .tooltip__arrow,
+.tooltip--right .tooltip__arrow {
+  transform: translateY(var(--tooltip-arrow-offset, 0px));
 }
 
 .tooltip--left .tooltip__arrow,

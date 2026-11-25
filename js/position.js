@@ -11,7 +11,8 @@
    The placement comes from the panel: data-placement="top|bottom|left|right" and data-align="start|center|end" (the names of the Figma
    Tooltip placements). "defaults" ({ placement, align }) fills in what the panel does not say: Popover, Menu and the Breadcrumb panel
    use bottom + start; the Tooltip uses top + center. The Tooltip classes tooltip--top|bottom|left|right follow the side in use, so
-   the arrow keeps pointing at the trigger after a flip.
+   the arrow keeps pointing at the trigger after a flip, and the custom property --tooltip-arrow-offset moves it along the bubble so
+   it keeps pointing at the center of the trigger after a shift (clamped clear of the rounded corners).
 
    Rules (the same on every component):
      - the offset between trigger and panel is --space-2 and the margin kept from the viewport edge is --space-4 (read from the tokens);
@@ -125,8 +126,32 @@
     panel.setAttribute('data-placement-actual', res.placement);
     if (panel.classList.contains('tooltip')) {
       SIDES.forEach(function (s) { panel.classList.toggle('tooltip--' + s, s === res.placement); });
+      arrowOffset(panel, trigger.getBoundingClientRect(), res, pr);
     }
     return res;
+  }
+
+  // Tooltip arrow: when the bubble was shifted to fit, the arrow keeps pointing at the center of the trigger. The offset (from the
+  // center of the bubble, along the cross axis) goes to the CSS custom property --tooltip-arrow-offset, which css/components/tooltip.css
+  // turns into a translate of the arrow. It is clamped so the arrow stays clear of the rounded corners of the bubble: half the bubble
+  // minus its radius minus half the arrow. data-arrow-clamped="true" marks the case where the trigger center is out of that range.
+  function arrowOffset(panel, t, res, pr) {
+    var bubble = panel.querySelector('.tooltip__bubble');
+    var arrow = panel.querySelector('.tooltip__arrow');
+    if (!bubble || !arrow) return;
+    var vertical = res.placement === 'top' || res.placement === 'bottom';
+    var panelCenter = vertical ? res.left + pr.width / 2 : res.top + pr.height / 2;
+    var triggerCenter = vertical ? (t.left + t.right) / 2 : (t.top + t.bottom) / 2;
+    var br = bubble.getBoundingClientRect();
+    var ar = arrow.getBoundingClientRect();
+    var radius = parseFloat(getComputedStyle(bubble).borderTopLeftRadius) || 0;
+    var limit = Math.max(0, (vertical ? br.width : br.height) / 2 - radius - (vertical ? ar.width : ar.height) / 2);
+    var off = triggerCenter - panelCenter;
+    var clamped = Math.abs(off) > limit + 0.01;
+    if (clamped) off = off < 0 ? -limit : limit;
+    panel.style.setProperty('--tooltip-arrow-offset', off + 'px');
+    if (clamped) panel.setAttribute('data-arrow-clamped', 'true');
+    else panel.removeAttribute('data-arrow-clamped');
   }
 
   function watch(panel, trigger, defaults) {
@@ -150,6 +175,8 @@
       panel.style.right = '';
       panel.style.bottom = '';
       panel.removeAttribute('data-placement-actual');
+      panel.style.removeProperty('--tooltip-arrow-offset');
+      panel.removeAttribute('data-arrow-clamped');
     };
   }
 
