@@ -67,10 +67,6 @@
   align-items: center;
   gap: var(--space-2);
   margin-top: var(--space-1);
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 400;
   color: var(--color-text-3);
 }
 
@@ -90,9 +86,6 @@
 }
 
 .docs-value__tag {
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-3);
 }
 
@@ -221,9 +214,6 @@
 }
 
 .docs-demo__label {
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-3);
 }
 
@@ -359,10 +349,6 @@
 .docs-ds-nav__group { margin-bottom: var(--space-6); }
 
 .docs-ds-nav__label {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
   padding: 0 var(--space-3);
   margin-bottom: var(--space-2);

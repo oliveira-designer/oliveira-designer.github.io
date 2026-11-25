@@ -9,7 +9,7 @@
 /* ===== css/tokens.css ===== */
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v2.15.0 · November 2026
+   v2.16.0 · November 2026
    Source of truth: Figma Foundation for VALUES; DESIGN.md +
    DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
@@ -688,13 +688,51 @@ p { max-width: 70ch; }
   line-height: 1.6;
 }
 
-.text-label {
+/* ----------------------------------------------------------
+   TWO LABEL STYLES (D-46, the only place where text-transform: uppercase is allowed; docs:check fails anywhere else)
+
+   1. Label, Figma Foundation Label/label-caps: 11px (--fs-label), Plus Jakarta Sans Regular 400, line height 140%,
+      letter-spacing 12% (0.12em), uppercase. Only for labels of up to three words: overlines, eyebrows, short field labels.
+      Acronyms and initialisms (HTML, UX, B2B2C) stay as written.
+   2. Sentence case, Figma Body/SemiBold/body-xs semibold: 11px (--fs-body-xs), weight 600, line height 160%, no tracking,
+      no transform. For everything longer than three words.
+
+   Use the utility class (.text-label, .text-body-xs-semibold) in new markup. The selector groups below give the same style to
+   the site classes that already existed, so their own rules only keep layout and color. There are no weight, line height or
+   tracking tokens in tokens.css, so 400, 600, 1.4, 1.6 and 0.12em are written here once and nowhere else.
+   A class goes to the sentence case group when any string it styles has more than three words, in any language the site
+   ships (a standalone "&" counts as a word, a dash or a colon does not).
+   ---------------------------------------------------------- */
+.text-label,
+.case-card__eyebrow,
+.case-section__number,
+.cs-figure--slot::after,
+.persona__meta dt,
+.persona__quotes-label,
+.case-hero__overline,
+.case-hero__meta dt,
+.case-phase-break__label,
+.case-section__body .team-section__title,
+.hero__overline,
+.section__overline {
   font-family: var(--font-body);
   font-size: var(--fs-label);
   font-weight: 400;
   line-height: 1.4;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.text-body-xs-semibold,
+.logo-strip__label,
+.persona__section-title,
+.case-callout__attribution {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-xs);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .text-mono {
@@ -1745,10 +1783,6 @@ p { max-width: 70ch; }
   gap: var(--space-1);
 }
 .case-card__eyebrow {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
 }
 .case-card__status {
@@ -2281,10 +2315,6 @@ p { max-width: 70ch; }
 
 .case-section__number {
   display: block;
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
   margin-bottom: var(--space-2);
 }
@@ -2691,10 +2721,6 @@ p { max-width: 70ch; }
 }
 .cs-figure--slot::after {
   content: 'Image';
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-3);
 }
 .cs-figure--slot img { display: none; }
@@ -3015,8 +3041,6 @@ p { max-width: 70ch; }
 
   font-family: var(--font-body);
   font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
 
   background: rgba(255, 255, 255, 0.70);
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -3434,10 +3458,6 @@ p { max-width: 70ch; }
 
 .logo-strip__label {
   text-align: center;
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-3);
   margin-bottom: var(--space-6);
 }
@@ -4063,10 +4083,6 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
 }
 
 .persona__meta dt {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
 }
 
@@ -4104,10 +4120,6 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
   margin-bottom: var(--space-4);
 }
@@ -4187,10 +4199,6 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
   margin-bottom: var(--space-5);
 }
@@ -6171,10 +6179,6 @@ html {
   }
 }
 .section__overline {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-3);
   margin-bottom: var(--space-3);
 }
@@ -6272,11 +6276,6 @@ html {
 
 .hero__overline {
   display: inline-block;
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-2);
   margin-bottom: var(--space-5);
 }
@@ -6702,8 +6701,6 @@ html {
 .about-block__label {
   font-family: var(--font-body);
   font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-3);
   margin-bottom: var(--space-2);
 }
@@ -6958,11 +6955,6 @@ html {
 
 .case-hero__overline {
   display: inline-block;
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-3);
   margin-bottom: var(--space-4);
 }
@@ -7010,10 +7002,6 @@ html {
 }
 
 .case-hero__meta dt {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
 }
 
@@ -7092,10 +7080,6 @@ html {
 }
 
 .case-phase-break__label {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
   white-space: nowrap;
   flex-shrink: 0;
@@ -7134,10 +7118,6 @@ html {
 .case-callout__attribution {
   display: block;
   margin-top: var(--space-5);
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-3);
 }
 
@@ -7170,8 +7150,6 @@ html {
 .case-toc__label {
   font-family: var(--font-body);
   font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
   padding: 0 var(--space-3);
   margin-bottom: var(--space-4);
@@ -7282,11 +7260,6 @@ html {
 
 /* Scoped to out-rank .case-section__body p (0,1,1), which would force body size and color */
 .case-section__body .team-section__title {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  line-height: 1.4;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
   margin-bottom: var(--space-6);
 }

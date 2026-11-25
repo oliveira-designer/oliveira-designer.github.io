@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.15.0 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.16.0 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.16.0 (MINOR, 24/11/2026)**: caixa alta híbrida (D-46). Dois estilos de rótulo: `Label/label-caps` (11px, 400, line height 140%, 0.12em, uppercase) só para rótulos de até três palavras, e `Body/SemiBold/body-xs semibold` (11px, 600, line height 160%, sem tracking) em caixa de frase para o que passa disso. As 22 regras de `text-transform: uppercase` viraram uma definição única em `css/reset.css` (um grupo de seletores e as classes `.text-label` e `.text-body-xs-semibold`); `docs:check` falha com caixa alta fora dela e com mais de três palavras em elemento com o estilo Label. Três regras que ninguém vê (`.header__status-badge`, `.case-toc__label`, `.about-block__label`) perderam a caixa alta e o tracking. A suíte de snapshots de estados abertos (Modal, Lightbox, Popover) entrou em `scripts/` (`npm run snapshots:open`). MINOR pela cláusula "Expansão de escala (mais tamanhos, mais variantes)" da seção 3 do GOVERNANCE (entra um estilo de texto novo no código e no DESIGN.md); lido só como regra de prosa seria PATCH.
 
 **Changelog v2.15.0 (MINOR, 24/11/2026)**: o `Breadcrumb item` do Figma Core ganhou o tipo Ellipsis (Default, Hover e Focus): 205 de 205 variantes com CSS (eram 202). O Ellipsis é um botão com o ícone `DotsThree` de 16px que abre o Menu com os níveis escondidos; o foco é um anel quadrado de 24 por 24. A borda do Tag passa de `Border/Default/Default` para `Border/Utilities/Input` em Default, Hover e Focus (D-45), 3,12 e 3,19 contra a página (era 1,29 e 1,28). As demos de Menu, Pagination e Tabs dos docs passam para inglês (D-15). MINOR pela cláusula "Expansão de escala (mais variantes)" da seção 3 do GOVERNANCE; o ajuste da borda do Tag (PATCH) entra no mesmo release.
 
@@ -1357,6 +1359,7 @@ Ver `css/components/spinner.css` (Lote 2B). Anel de 24px com arco de cerca de 99
   line-height: 1.6;
   color: var(--color-text-2);
 }
+/* Desde a v2.16.0 a definição do Label fica em css/reset.css (grupo de seletores com .text-label) e é o único lugar com text-transform: uppercase; o color abaixo é do exemplo. Rótulos com mais de 3 palavras usam .text-body-xs-semibold (Body/SemiBold/body-xs semibold). */
 .text-label {
   font-family: var(--font-body);
   font-size: var(--fs-label);
@@ -2484,5 +2487,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.15.0 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.16.0 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

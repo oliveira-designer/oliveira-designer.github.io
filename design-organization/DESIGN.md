@@ -1,5 +1,5 @@
 ---
-version: v2.15.0
+version: v2.16.0
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -230,7 +230,12 @@ typography:
     fontSize: 0.6875rem  # 11px fixo. Token --fs-label (fixo em 11px desde a v2.6.4, antes clamp(10px, 1vw, 11px))
     fontWeight: 400
     lineHeight: 1.4
-    letterSpacing: 0.12em  # Figma: 12%. Sempre uppercase. Classe pronta: .text-label (reset.css)
+    letterSpacing: 0.12em  # Figma: 12%. Sempre uppercase, só para rótulos de até 3 palavras (D-46). Classe pronta: .text-label (reset.css)
+  body-xs-semibold:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 0.6875rem  # 11px fixo. Figma Body/SemiBold/body-xs semibold. Token --fs-body-xs. Rótulos com mais de 3 palavras, em caixa de frase (D-46). Classe pronta: .text-body-xs-semibold (reset.css)
+    fontWeight: 600
+    lineHeight: 1.6
   metric:
     fontFamily: Plus Jakarta Sans
     fontSize: 1.375rem  # 22px. Usa o mesmo token de tamanho do h2 (--fs-h2). Não existe --fs-metric
@@ -695,7 +700,7 @@ Cada tema novo é apenas mais um conjunto de valores para os mesmos slots semân
 
 Uma fonte, um papel. Plus Jakarta Sans cobre tudo — display, headlines, body, UI, métricas, labels e code.
 
-**Plus Jakarta Sans** — sans-serif humanista e calorosa. Variable font (peso 200–800), disponível como `PlusJakartaSans-VariableFont_wght.ttf`. Labels técnicas (overline, metadata) usam `text-transform: uppercase` + `letter-spacing: 0.12em` (Label caps do Figma) para simular o registro técnico, sem precisar de uma face monoespaçada.
+**Plus Jakarta Sans** — sans-serif humanista e calorosa. Variable font (peso 200–800), disponível como `PlusJakartaSans-VariableFont_wght.ttf`. Labels técnicas curtas (overline, metadata, até três palavras) usam `text-transform: uppercase` + `letter-spacing: 0.12em` (Label caps do Figma) para simular o registro técnico, sem precisar de uma face monoespaçada. Rótulos mais longos usam a caixa de frase (regra da caixa alta, abaixo).
 
 **A escala tipográfica segue os estilos de texto do Figma Foundation** (decisão de 18/11/2026). Onde o Figma e este arquivo divergirem, vale o Figma.
 
@@ -711,7 +716,8 @@ Uma fonte, um papel. Plus Jakarta Sans cobre tudo — display, headlines, body, 
 | `body-sm` | Plus Jakarta Sans | Corpo em UI compacta, botões, 13px fixo (`--fs-body-sm`) |
 | `body-xl` | Plus Jakarta Sans | Lead (Body xl do Figma, -0.01em): case lead text (`.case-lead__text`), `clamp(16px, 1.7vw, 19px)` (fluido, extremos iguais ao Figma) |
 | `body-xs` | Plus Jakarta Sans | Texto mínimo, 11px fixo (`--fs-body-xs`) |
-| `label-caps` | Plus Jakarta Sans | Overline, metadata (uppercase, 400, 0.12em) |
+| `label-caps` | Plus Jakarta Sans | Overline, metadata de até 3 palavras (uppercase, 400, 0.12em) |
+| `body-xs-semibold` | Plus Jakarta Sans | Rótulo com mais de 3 palavras, em caixa de frase (11px, 600, sem tracking) |
 | `metric` | Plus Jakarta Sans | Números, métricas (+21%, +12%), 700 em Âncora/Solar, no tamanho do `--fs-h2` |
 | `code` | Plus Jakarta Sans | Code inline e blocks |
 
@@ -730,6 +736,7 @@ Valores de referência. Nos estilos fluidos o tamanho é o máximo: no código, 
 | Body sm | 13px | 160% | | | `--fs-body-sm` (13px fixo desde a v2.6.11; antes 12 a 13px) |
 | Body xs | 11px | 160% | | | `--fs-body-xs` (11px fixo) |
 | Label caps | 11px | 140% | 12%, uppercase | Regular | `--fs-label` (11px fixo) |
+| Body xs semibold | 11px | 160% | | SemiBold | `--fs-body-xs` (11px fixo), caixa de frase |
 | Metric | 22px | 140% | | Bold | `--fs-h2`, sem token próprio |
 
 **Token fluido documentado (v2.6.12).** `--fs-body-xl` é o **único token de texto de corpo fluido**: `clamp(16px, 1.7vw, 19px)`. O Figma mostra os dois extremos, Desktop 19px e Mobile 16px. O CSS interpola entre os dois: 16px até cerca de 941px de janela, depois cresce (1,7vw) até 19px em cerca de 1118px, e fica em 19px acima disso. Valores intermediários, como 17,408px em 1024px, são esperados e **não são divergência**. Único consumidor: `.case-lead__text` (peso 500, line height 1,7, tracking -0,01em), 8 instâncias nas 3 páginas de case (5 no `dotz`, 1 no `sb-home-redesign`, 2 no `cloud-cost-intelligence`) mais 1 no `dotz backup.html`. Display, H1 e H2 também são fluidos (`clamp()`), mas são títulos e não entram nesta nota. Fixá-lo em 19px traria de volta o lead grande demais no celular, rejeitado para os heróis (v2.6.6). Não é divergência do Figma: os extremos coincidem.
@@ -745,6 +752,7 @@ O `--fs-body-lg` (17px) não existia no Figma e foi removido na v2.6.5. Os texto
 ### Regras
 
 - **Plus Jakarta Sans**: tudo — display, headlines, body, UI, overlines, labels, métricas, code
+- **Caixa alta (D-46).** Dois estilos de rótulo, e só eles: `Label/label-caps` (11px, Regular 400, line height 140%, 0.12em, uppercase, `--fs-label`) para rótulos de **até três palavras**, e `Body/SemiBold/body-xs semibold` (11px, 600, line height 160%, sem tracking, sem transform) para tudo que passa de três palavras. Siglas e iniciais (HTML, UX, B2B2C) ficam como escritas nos dois. Uma classe vai para a caixa de frase se qualquer texto que ela estiliza tiver mais de três palavras, em qualquer idioma do site (um "&" sozinho conta como palavra, travessão e dois-pontos não). As duas definições ficam em `css/reset.css` (`.text-label`, `.text-body-xs-semibold` e os grupos de seletores), e é o único lugar com `text-transform: uppercase`. Não existem tokens de peso, line height ou tracking: 400, 600, 1.4, 1.6 e 0.12em estão escritos ali, uma vez. Aplicação: `npm run docs:check` falha com `text-transform: uppercase` fora da definição única (CSS, blocos e atributos `style` das páginas) e com texto de mais de três palavras em elemento com o estilo Label no HTML estático do site e dos docs; texto inserido por JavaScript ou por `content` do CSS não é visto, e fica por conta de quem escreve.
 - **Label caps é sempre Regular (400).** Não existe variante bold de label: overlines, metadata, números de seção e separadores de fase usam 400, 11px, uppercase, 0.12em. Hierarquia vem de posição, cor e tamanho, não de peso
 - **Itálico nunca** — ênfase é feita por peso (bold) ou cor (Âncora), nunca por inclinação
 - Métricas (+21%, +12%) sempre em Plus Jakarta Sans 700 com cor Âncora (light) ou Solar (dark), no tamanho `--fs-h2` e line height 1.4. Não existe `--fs-metric`
@@ -1142,4 +1150,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.15.0 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.16.0 · novembro de 2026 · Renan Moura*

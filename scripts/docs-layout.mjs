@@ -122,17 +122,17 @@ function sidebarDs(activeHref, base = '') {
   const groupNames = [...new Set(COMPONENT_PAGES.filter((n) => n.group).map((n) => n.group))].sort((a, b) => (GROUP_ORDER.indexOf(a) + 1 || 99) - (GROUP_ORDER.indexOf(b) + 1 || 99));
   const navGroups = groupNames.map((g) => `
             <div class="docs-ds-nav__group">
-              <p class="docs-ds-nav__label">${esc(g)}</p>
+              <p class="docs-ds-nav__label text-label">${esc(g)}</p>
               ${COMPONENT_PAGES.filter((n) => n.group === g).map(link).join('\n              ')}
             </div>`).join('');
   return `<aside class="docs-ds-sidebar">
           <nav aria-label="Docs pages">
             <div class="docs-ds-nav__group">
-              <p class="docs-ds-nav__label">Pages</p>
+              <p class="docs-ds-nav__label text-label">Pages</p>
               ${NAV.map(link).join('\n              ')}
             </div>
             <div class="docs-ds-nav__group">
-              <p class="docs-ds-nav__label">Components</p>
+              <p class="docs-ds-nav__label text-label">Components</p>
               ${COMPONENT_PAGES.filter((n) => !n.group).map(link).join('\n              ')}
             </div>${navGroups}
           </nav>

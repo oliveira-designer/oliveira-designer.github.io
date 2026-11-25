@@ -44,7 +44,7 @@ export function hopeTable({ id, caption, hidden = false, cols, rows }) {
    Model sections (css: docs/docs.css, .docs-ds-*)
    ------------------------------------------------------------------------ */
 export const modelSection = (id, title, inner) => `          <section class="docs-ds-section" id="${id}" aria-labelledby="${id}-title">
-            <h2 class="text-label text-tertiary" id="${id}-title">${title}</h2>
+            <h2 class="text-body-xs-semibold text-tertiary" id="${id}-title">${title}</h2>
             ${inner}
           </section>`;
 

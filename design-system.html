@@ -108,10 +108,6 @@
     }
     .ds-nav-group { margin-bottom: var(--space-6); }
     .ds-nav-group__label {
-      font-family: var(--font-body);
-      font-size: var(--fs-label);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
       color: var(--color-text-3);
       padding: 0 var(--space-3);
       margin-bottom: var(--space-2);
@@ -185,11 +181,7 @@
 
     /* Subsection label */
     .ds-sub {
-      font-size: var(--fs-body-sm);
-      font-weight: 600;
       color: var(--color-text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
       margin: var(--space-8) 0 var(--space-4);
     }
 
@@ -508,7 +500,7 @@
     <aside class="ds-sidebar">
       <nav aria-label="Design system sections">
         <div class="ds-nav-group">
-          <p class="ds-nav-group__label">Foundations</p>
+          <p class="ds-nav-group__label text-label">Foundations</p>
           <a href="#colors"     class="ds-nav-link">Colors</a>
           <a href="#typography" class="ds-nav-link">Typography</a>
           <a href="#spacing"    class="ds-nav-link">Spacing</a>
@@ -516,14 +508,14 @@
           <a href="#motion"     class="ds-nav-link">Motion</a>
         </div>
         <div class="ds-nav-group">
-          <p class="ds-nav-group__label">Components</p>
+          <p class="ds-nav-group__label text-label">Components</p>
           <a href="#buttons"  class="ds-nav-link">Buttons</a>
           <a href="#badges"   class="ds-nav-link">Badges</a>
           <a href="#comp-nav" class="ds-nav-link">Navigation</a>
           <a href="#cards"    class="ds-nav-link">Case Cards</a>
         </div>
         <div class="ds-nav-group">
-          <p class="ds-nav-group__label">Layout</p>
+          <p class="ds-nav-group__label text-label">Layout</p>
           <a href="#layout-grid"   class="ds-nav-link">Reading Grid</a>
           <a href="#content-grids" class="ds-nav-link">Content Grids</a>
         </div>
@@ -552,7 +544,7 @@
             under <code>[data-theme="dark"]</code>. Toggle the theme above to see them shift.
           </p>
 
-          <p class="ds-sub">Solar Family — warm, luminous, hopeful</p>
+          <p class="ds-sub text-body-xs-semibold">Solar Family — warm, luminous, hopeful</p>
           <div class="ds-swatches">
             <div class="ds-swatch">
               <div class="ds-swatch__chip" style="background:#FEF8E0"></div>
@@ -582,7 +574,7 @@
             </div>
           </div>
 
-          <p class="ds-sub">Anchor Family — cool, precise, structural</p>
+          <p class="ds-sub text-body-xs-semibold">Anchor Family — cool, precise, structural</p>
           <div class="ds-swatches">
             <div class="ds-swatch">
               <div class="ds-swatch__chip" style="background:#E8F0F9"></div>
@@ -612,7 +604,7 @@
             </div>
           </div>
 
-          <p class="ds-sub">Neutrals</p>
+          <p class="ds-sub text-body-xs-semibold">Neutrals</p>
           <div class="ds-swatches">
             <div class="ds-swatch">
               <div class="ds-swatch__chip" style="background:#FFFFFF; border-color: #E2E2E8;"></div>
@@ -646,7 +638,7 @@
             </div>
           </div>
 
-          <p class="ds-sub">Functional</p>
+          <p class="ds-sub text-body-xs-semibold">Functional</p>
           <div class="ds-swatches">
             <div class="ds-swatch">
               <div class="ds-swatch__chip" style="background:#4A9F6B"></div>
@@ -675,7 +667,7 @@
             </div>
           </div>
 
-          <p class="ds-sub">Semantic Surface Tokens — toggle theme to watch these adapt</p>
+          <p class="ds-sub text-body-xs-semibold">Semantic Surface Tokens — toggle theme to watch these adapt</p>
           <div class="ds-semantic-grid">
             <div class="ds-sem">
               <div class="ds-sem__dot" style="background: var(--color-bg)"></div>
@@ -727,8 +719,7 @@
             Display, h1, h2 and body-xl are fluid and use <code>clamp()</code>; h3, body, body-sm, body-xs and label are fixed. body-xl is the only fluid body-text token and its endpoints match Figma (Desktop 19px, Mobile 16px); values in between are expected. In the Figma size/* variables Mobile equals Desktop for h3, body, body-sm, label and body-xs; the lead is Desktop 19px and Mobile 16px (code syntax var(--fs-body-xl)); display, h1 and h2 stay responsive. One family: <code>Plus Jakarta Sans</code> drives
             everything — display headings (<code>--font-display</code>), body copy
             (<code>--font-body</code>), and technical micro-labels. Mono-style
-            labels simulate the technical register with <code>text-transform: uppercase</code> +
-            <code>letter-spacing: 0.12em</code> and weight 400 (Figma Label caps; labels are always Regular, there is no bold label variant). No typewriter face required.
+            labels use one of two styles (D-46): <code>Label/label-caps</code> (11px, weight 400, line height 140%, <code>letter-spacing: 0.12em</code>, uppercase) only for labels of up to three words, and the sentence case style <code>Body/SemiBold/body-xs semibold</code> (11px, weight 600, line height 160%, no tracking) for anything longer. Acronyms keep their capitals in both. No typewriter face required.
           </p>
           <div class="ds-type-scale">
 
@@ -825,10 +816,21 @@
               <div>
                 <span class="ds-type-row__token">--fs-label</span>
                 <span class="ds-type-row__clamp">11px (fixed)</span>
-                <span class="ds-type-row__family">Plus Jakarta Sans · --font-body · uppercase + tracking</span>
+                <span class="ds-type-row__family">Plus Jakarta Sans · --font-body · Label/label-caps · uppercase + tracking, up to 3 words</span>
               </div>
-              <div class="ds-type-row__sample" style="font-size:var(--fs-label);font-family:var(--font-body);font-weight:400;line-height:1.4;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-text-3);">
-                RAÍZEN · CASE STUDIES · B2B2C
+              <div class="ds-type-row__sample text-label" style="color:var(--color-text-3);">
+                Case studies
+              </div>
+            </div>
+
+            <div class="ds-type-row">
+              <div>
+                <span class="ds-type-row__token">--fs-body-xs</span>
+                <span class="ds-type-row__clamp">11px (fixed), weight 600</span>
+                <span class="ds-type-row__family">Plus Jakarta Sans · --font-body · Body/SemiBold/body-xs semibold · sentence case, over 3 words</span>
+              </div>
+              <div class="ds-type-row__sample text-body-xs-semibold" style="color:var(--color-text-3);">
+                Raízen · Case studies · B2B2C
               </div>
             </div>
 
@@ -861,14 +863,14 @@
           <div class="ds-section__title">Borders & Radius</div>
           <p class="ds-section__desc">Three border weights and six radius steps. The pill value (999px) is used for tags and the floating nav.</p>
 
-          <p class="ds-sub">Border weights</p>
+          <p class="ds-sub text-body-xs-semibold">Border weights</p>
           <div class="ds-kv-grid">
             <div class="ds-kv"><div class="ds-kv__key">--border-thin</div>   <div class="ds-kv__val">0.5px solid border</div></div>
             <div class="ds-kv"><div class="ds-kv__key">--border-normal</div> <div class="ds-kv__val">1px solid border</div></div>
             <div class="ds-kv"><div class="ds-kv__key">--border-strong</div> <div class="ds-kv__val">1px solid border-strong</div></div>
           </div>
 
-          <p class="ds-sub">Radius steps</p>
+          <p class="ds-sub text-body-xs-semibold">Radius steps</p>
           <div class="ds-radius-row">
             <div class="ds-radius-item">
               <div class="ds-radius-item__box" style="border-radius:4px"></div>
@@ -902,7 +904,7 @@
           <div class="ds-section__title">Motion Tokens</div>
           <p class="ds-section__desc">All transitions must use these duration + easing pairs. Reduced-motion is respected globally via <code>@media (prefers-reduced-motion)</code> in <code>tokens.css</code>.</p>
 
-          <p class="ds-sub">Durations</p>
+          <p class="ds-sub text-body-xs-semibold">Durations</p>
           <div class="ds-motion-grid">
             <div class="ds-motion-item"><div class="ds-motion-item__token">--duration-fast</div>   <div class="ds-motion-item__val">100ms</div></div>
             <div class="ds-motion-item"><div class="ds-motion-item__token">--duration-normal</div> <div class="ds-motion-item__val">150ms</div></div>
@@ -910,7 +912,7 @@
             <div class="ds-motion-item"><div class="ds-motion-item__token">--duration-slower</div> <div class="ds-motion-item__val">400ms</div></div>
           </div>
 
-          <p class="ds-sub">Easing curves</p>
+          <p class="ds-sub text-body-xs-semibold">Easing curves</p>
           <div class="ds-motion-grid">
             <div class="ds-motion-item"><div class="ds-motion-item__token">--ease-out</div>    <div class="ds-motion-item__val">cubic-bezier(0.16, 1, 0.3, 1)</div></div>
             <div class="ds-motion-item"><div class="ds-motion-item__token">--ease-in</div>     <div class="ds-motion-item__val">cubic-bezier(0.7, 0, 0.84, 0)</div></div>
@@ -1090,7 +1092,7 @@
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-pill);
   font-family: var(--font-body); font-size: 10px;
-  text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600;
+  font-weight: 600;
   background: rgba(255,255,255,0.70); border: 1px solid rgba(0,0,0,0.05);
   color: var(--color-text-2); backdrop-filter: blur(8px);
 }
@@ -1266,7 +1268,7 @@
             that appear inside the <code>.case-content</code> column — not the outer layout grid.
           </p>
 
-          <p class="ds-sub">challenges-grid · results-grid</p>
+          <p class="ds-sub text-body-xs-semibold">challenges-grid · results-grid</p>
 
           <details class="ds-code">
             <summary>CSS Spec</summary>
@@ -1298,7 +1300,7 @@
 }</pre>
           </details>
 
-          <p class="ds-sub">Live preview</p>
+          <p class="ds-sub text-body-xs-semibold">Live preview</p>
           <div class="ds-preview ds-preview--padded">
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-6);">
               <article class="skill-card">
@@ -1320,7 +1322,7 @@
             Modificador do <code>.case-card</code>. Shell glassmórfico, coluna de imagem full-bleed (sem caixa cinza, sem chrome de paginação, sem pill de ano) e CTA full-width. Empresa e ano ficam juntos numa linha só sob o título ("Cliente &bull; Ano"). Dark mode troca o acento Âncora → Solar e adiciona glow ring. Use apenas na <code>.cases-grid</code> da home.
           </p>
 
-          <p class="ds-sub">Live preview</p>
+          <p class="ds-sub text-body-xs-semibold">Live preview</p>
           <div class="ds-preview ds-preview--padded">
             <div style="max-width:340px;">
               <article class="case-card case-card--glass">
@@ -1362,7 +1364,7 @@
             Card com borda degradê (borda some em 80%, fundo some no bottom). Avatar circular (40px) + bloco de autoria acima de régua horizontal; texto de depoimento abaixo. Usado dentro do ticker de testemunhos.
           </p>
 
-          <p class="ds-sub">Live preview</p>
+          <p class="ds-sub text-body-xs-semibold">Live preview</p>
           <div class="ds-preview ds-preview--padded">
             <div style="max-width:420px;">
               <div class="testimonial-card">
@@ -1400,7 +1402,7 @@
             Ticker infinito de logos. Container externo faz clip; <code>.logo-strip__ticker</code> aplica máscara de fade nas bordas. Cada <code>.logo-strip__track</code> (duplicado via JS) preenche um viewport completo antes do loop. Logos em escala de cinza e dimmed por padrão; cor completa no hover. Keyframe <code>ticker-scroll</code> compartilhado — não renomear.
           </p>
 
-          <p class="ds-sub">Live preview</p>
+          <p class="ds-sub text-body-xs-semibold">Live preview</p>
           <div class="ds-preview ds-preview--padded" style="overflow:hidden;">
             <div class="logo-strip">
               <div class="logo-strip__label">Empresas com quem trabalhei</div>
@@ -1443,7 +1445,7 @@
             Card glassmórfico de resultado com chip de ícone Âncora (40×40), título em display e corpo em <code>fs-body-sm</code>. Dark mode: fundo Abismo + chip Solar dourado + glow ring no hover.
           </p>
 
-          <p class="ds-sub">Live preview</p>
+          <p class="ds-sub text-body-xs-semibold">Live preview</p>
           <div class="ds-preview ds-preview--padded">
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-6);max-width:560px;">
               <article class="result-card">
@@ -1480,7 +1482,7 @@
             Modal de zoom full-screen. Shell <code>.lightbox</code> cobre o viewport via <code>position:fixed</code>. Estado fechado: <code>opacity:0; visibility:hidden; scale(0.92)</code>. Estado aberto (<code>.is-open</code>): <code>opacity:1; scale(1)</code>. JS deve adicionar <code>.is-open</code> para abrir e <code>.is-zoomable</code> nas imagens que o ativam. <code>prefers-reduced-motion</code> remove o scale, mantém o fade.
           </p>
 
-          <p class="ds-sub">Tokens de classe</p>
+          <p class="ds-sub text-body-xs-semibold">Tokens de classe</p>
           <ul style="font-size:var(--fs-body-sm);line-height:2;color:var(--color-text-2);">
             <li><code>.is-zoomable</code> — cursor zoom-in; JS hook para abrir o lightbox</li>
             <li><code>.lightbox</code> — shell fixo, oculto por padrão</li>
@@ -1516,7 +1518,7 @@
             Modificador de <code>.skill-card</code>. Card de métrica com fundo alternativo, ícone, valor numérico grande (<code>fs-h2</code>, Plus Jakarta Sans 700) e descrição (<code>fs-body-sm</code>). Sprint 2: <code>background-color: var(--color-ink)</code> + inversão de tema escuro.
           </p>
 
-          <p class="ds-sub">Live preview</p>
+          <p class="ds-sub text-body-xs-semibold">Live preview</p>
           <div class="ds-preview ds-preview--padded">
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-6);max-width:480px;">
               <article class="skill-card skill-card--metric">
@@ -1553,7 +1555,7 @@
             Separador editorial de fase. Label mono uppercase à esquerda, <code>flex:1</code> régua horizontal à direita. Padding generoso no topo (<code>space-16</code>) cria separação visual do conteúdo anterior. Use para marcar transições entre fases narrativas dentro de um case.
           </p>
 
-          <p class="ds-sub">Live preview</p>
+          <p class="ds-sub text-body-xs-semibold">Live preview</p>
           <div class="ds-preview ds-preview--padded">
             <div class="case-phase-break">
               <span class="case-phase-break__label">Fase 02 — Descoberta</span>
@@ -1574,10 +1576,10 @@
         <section class="ds-section" id="case-callout">
           <div class="ds-section__title">case-callout</div>
           <p class="ds-section__desc">
-            Bloco editorial full-width para insights-chave. Texto grande em fonte display (<code>fs-h1</code>, Plus Jakarta Sans 700), max-width 820px; atribuição mono uppercase abaixo. Dark mode: texto vira Solar.
+            Bloco editorial full-width para insights-chave. Texto grande em fonte display (<code>fs-h1</code>, Plus Jakarta Sans 700), max-width 820px; atribuição em caixa de frase (Body/SemiBold/body-xs semibold) abaixo. Dark mode: texto vira Solar.
           </p>
 
-          <p class="ds-sub">Live preview</p>
+          <p class="ds-sub text-body-xs-semibold">Live preview</p>
           <div class="ds-preview ds-preview--padded">
             <div class="case-callout">
               <p class="case-callout__text">"O problema não era a interface. Era a ausência de um modelo mental compartilhado."</p>
@@ -1602,7 +1604,7 @@
             <strong>Não altere sem recalcular os três breakpoints.</strong>
           </p>
 
-          <p class="ds-sub">Margens por breakpoint</p>
+          <p class="ds-sub text-body-xs-semibold">Margens por breakpoint</p>
           <ul style="font-size:var(--fs-body-sm);line-height:2;color:var(--color-text-2);">
             <li><code>&lt;768px</code>: <code>margin-left: calc(-1 × var(--space-6))</code></li>
             <li><code>768–1023px</code>: <code>margin-left: calc(34ch − 50vw)</code></li>
@@ -1622,10 +1624,10 @@
         <section class="ds-section" id="header-status-badge">
           <div class="ds-section__title">header__status-badge + status-pulse</div>
           <p class="ds-section__desc">
-            Pílula frosted posicionada absolutamente abaixo do nav pill, à direita. Dot âmbar animado (<code>.status-pulse</code>, 6px, 2.4s ease-in-out) + label mono uppercase. Dark mode: fundo Abismo, texto opacidade reduzida.
+            Pílula frosted posicionada absolutamente abaixo do nav pill, à direita. Dot âmbar animado (<code>.status-pulse</code>, 6px, 2.4s ease-in-out) + label curto. Dark mode: fundo Abismo, texto opacidade reduzida.
           </p>
 
-          <p class="ds-sub">Live preview</p>
+          <p class="ds-sub text-body-xs-semibold">Live preview</p>
           <div class="ds-preview ds-preview--padded">
             <div style="position:relative;height:48px;display:flex;align-items:center;justify-content:flex-end;">
               <div class="header__status-badge" style="position:relative;top:auto;right:auto;">

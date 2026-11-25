@@ -249,7 +249,7 @@ O foco é **leitura**. Não é UI, não é catálogo — é texto bem composto.
 
 ✗ **H1 dentro do corpo.** O título é H1 do hero (seção 2). No corpo, máximo H2.
 
-✗ **Imagens sem caption.** Caption em Plus Jakarta Sans (label-caps) dá identidade editorial e ajuda contexto. Sempre tenha.
+✗ **Imagens sem caption.** Caption em Plus Jakarta Sans, em caixa de frase (`Body/SemiBold/body-xs semibold`; o `label-caps` só vale para rótulos de até três palavras e legendas passam disso), dá identidade editorial e ajuda contexto. Sempre tenha.
 
 ✗ **Blockquotes decorativos.** Blockquote é citação real (alguém disse algo) ou destaque de tese. Não é "frase legal centralizada".
 

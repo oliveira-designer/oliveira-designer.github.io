@@ -15,10 +15,6 @@
 }
 
 .case-phase-break__label {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
   white-space: nowrap;
   flex-shrink: 0;

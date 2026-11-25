@@ -166,7 +166,7 @@ function renderVariant(unit, v) {
 
 function demoBlock(label, html, caption) {
   return `            <div class="docs-demo">
-              <p class="docs-demo__label">${esc(label)}</p>
+              <p class="docs-demo__label text-body-xs-semibold">${esc(label)}</p>
               <div class="docs-demo__stage">
                 <!-- demo:start -->${html}<!-- demo:end -->
               </div>${caption ? `\n              <p class="docs-demo__caption">${esc(caption)}</p>` : ''}

@@ -37,11 +37,6 @@
 
 .case-hero__overline {
   display: inline-block;
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-3);
   margin-bottom: var(--space-4);
 }
@@ -89,10 +84,6 @@
 }
 
 .case-hero__meta dt {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
 }
 

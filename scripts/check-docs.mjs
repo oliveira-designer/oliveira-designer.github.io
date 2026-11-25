@@ -20,6 +20,8 @@
 //      classes exist in THOSE stylesheets.
 //   9. docs/data/components-content.json or components-code-notes.json is missing while component
 //      pages exist, or a slug in components-content.json has no docs/components/<slug>.html.
+//  12. text-transform: uppercase appears outside the single Label definition in css/reset.css (D-46), or a string styled with
+//      the Label style (the selectors of that rule) has more than three words in the static HTML of the site and the docs.
 //   6. docs/data/components-map.json names a CSS rule or class that is not in
 //      css/*.css, is internally inconsistent, or disagrees with
 //      docs/data/components-code-notes.json (counts differ: error).
@@ -329,6 +331,104 @@ if (new Set(headerValues).size > 1) {
       console.log(`components-map.json: ${total.impl} of ${total.figma} Figma variants have a CSS selector (${Object.entries(map.components || {}).map(([k, c]) => `${k} ${c.implemented}/${c.figmaVariants}`).join(', ')})`);
     }
   }
+}
+
+/* ---- 12. all caps (D-46): the Label style is the only place where text-transform: uppercase is allowed, and only for labels of up to three words ---- */
+{
+  const LABEL_RULE_FILE = 'css/reset.css';
+  const listFiles = (dir, ext, skip = () => false) => {
+    const out = [];
+    const walk = (d) => {
+      for (const n of fs.readdirSync(d)) {
+        const f = path.join(d, n);
+        if (skip(f)) continue;
+        if (fs.statSync(f).isDirectory()) walk(f);
+        else if (n.endsWith(ext)) out.push(f);
+      }
+    };
+    if (fs.existsSync(dir)) walk(dir);
+    return out;
+  };
+  const noComments = (t) => t.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
+  const UPPER = /text-transform\s*:\s*uppercase/g;
+
+  // (a) uppercase appears only in the Label definition (css/reset.css, once). Scope: css/ sources, docs/ (css and the style
+  // blocks and attributes of the pages), and the pages of the site that carry inline styles. css/hope.css and css/output.css
+  // (generated, the Tailwind .uppercase utility) are not scanned.
+  const cssFiles = [
+    ...listFiles(path.join(ROOT, 'css'), '.css', (f) => ['hope.css', 'output.css'].includes(path.basename(f))),
+    ...listFiles(DOCS, '.css'),
+  ];
+  let labelDefs = 0;
+  for (const f of cssFiles) {
+    const text = noComments(fs.readFileSync(f, 'utf8'));
+    for (const m of text.matchAll(UPPER)) {
+      if (rel(f) === LABEL_RULE_FILE) labelDefs += 1;
+      else errors.push(`${rel(f)}:${lineOf(text, m.index)}: text-transform: uppercase outside the Label definition in ${LABEL_RULE_FILE} (D-46); use the .text-label class or the Label selector group`);
+    }
+  }
+  if (labelDefs !== 1) errors.push(`${LABEL_RULE_FILE}: expected exactly one text-transform: uppercase (the Label definition), found ${labelDefs}`);
+
+  const htmlFiles = [
+    ...fs.readdirSync(ROOT).filter((n) => n.endsWith('.html')).map((n) => path.join(ROOT, n)),
+    ...listFiles(path.join(ROOT, 'case-studies'), '.html'),
+    ...listFiles(DOCS, '.html', (f) => f.includes(`${path.sep}docs${path.sep}case`)),
+  ];
+  for (const f of htmlFiles) {
+    const text = fs.readFileSync(f, 'utf8');
+    const styled = [...text.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => ({ body: noComments(m[1]), at: m.index }))
+      .concat([...text.matchAll(/\sstyle\s*=\s*"([^"]*)"/g)].map((m) => ({ body: m[1], at: m.index })));
+    for (const st of styled) if (UPPER.test(st.body)) { UPPER.lastIndex = 0; errors.push(`${rel(f)}:${lineOf(text, st.at)}: inline text-transform: uppercase (D-46); use the .text-label class`); } else UPPER.lastIndex = 0;
+  }
+
+  // (b) a string styled with the Label style has at most three words. The selectors are read from the Label rule in css/reset.css.
+  // A word is a token with a letter or a digit, or a standalone "&"; a dash or a colon is not a word. Static HTML only: text added
+  // by JavaScript or by CSS content is not seen (documented in DESIGN.md).
+  const resetCss = noComments(fs.readFileSync(path.join(ROOT, LABEL_RULE_FILE), 'utf8'));
+  const ruleRe = /([^{}]+)\{([^{}]*)\}/g;
+  let selectorList = '';
+  for (const m of resetCss.matchAll(ruleRe)) if (UPPER.test(m[2])) { selectorList = m[1]; UPPER.lastIndex = 0; break; } else UPPER.lastIndex = 0;
+  const labelSelectors = selectorList.split(',').map((x) => x.trim()).filter((x) => x && !x.includes('::')).map((sel) => {
+    const compounds = sel.split(/\s+/).map((c) => ({ tag: (/^[a-z][a-z0-9]*/i.exec(c) || [''])[0].toLowerCase(), classes: [...c.matchAll(/\.([\w-]+)/g)].map((x) => x[1]) }));
+    return { text: sel, target: compounds[compounds.length - 1], ancestors: compounds.slice(0, -1) };
+  });
+  const VOID = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
+  const wordCount = (t) => t.replace(/&amp;/g, '&').replace(/&[a-z#0-9]+;/gi, ' ').split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w) || w === '&').length;
+  let labelStrings = 0;
+  for (const f of htmlFiles) {
+    const text = fs.readFileSync(f, 'utf8').replace(/<!--[\s\S]*?-->/g, (m) => m.replace(/[^\n]/g, ' ')).replace(/<(script|style)[\s\S]*?<\/\1>/gi, (m) => m.replace(/[^\n]/g, ' '));
+    const stack = [];
+    const tokenRe = /<(\/?)([a-zA-Z][a-zA-Z0-9]*)([^>]*)>|([^<]+)/g;
+    let m;
+    while ((m = tokenRe.exec(text))) {
+      if (m[4] !== undefined) { for (const el of stack) el.text += m[4]; continue; }
+      const close = m[1] === '/'; const tag = m[2].toLowerCase();
+      if (!close) {
+        if (VOID.has(tag) || /\/\s*$/.test(m[3])) continue;
+        const cm = /\sclass\s*=\s*"([^"]*)"/.exec(m[3]);
+        stack.push({ tag, classes: cm ? cm[1].split(/\s+/) : [], text: '', line: lineOf(text, m.index) });
+      } else {
+        let i = stack.length - 1;
+        while (i >= 0 && stack[i].tag !== tag) i -= 1;
+        if (i < 0) continue;
+        const el = stack[i];
+        const anc = stack.slice(0, i);
+        stack.length = i;
+        for (const sel of labelSelectors) {
+          const t = sel.target;
+          if (t.tag && t.tag !== el.tag) continue;
+          if (!t.classes.every((c) => el.classes.includes(c))) continue;
+          if (!t.tag && !t.classes.length) continue;
+          if (!sel.ancestors.every((a) => anc.some((x) => (!a.tag || x.tag === a.tag) && a.classes.every((c) => x.classes.includes(c))))) continue;
+          labelStrings += 1;
+          const n = wordCount(el.text);
+          if (n > 3) errors.push(`${rel(f)}:${el.line}: Label style (${sel.text}) on a string of ${n} words ("${el.text.replace(/\s+/g, ' ').trim().slice(0, 60)}"); the limit is 3, use the sentence case style (.text-body-xs-semibold) (D-46)`);
+          break;
+        }
+      }
+    }
+  }
+  console.log(`all caps (D-46): one Label definition in ${LABEL_RULE_FILE}; ${labelStrings} Label strings checked for the three-word limit`);
 }
 
 /* ---- report: blocks without a demo ---- */

@@ -111,10 +111,6 @@
   gap: var(--space-1);
 }
 .case-card__eyebrow {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
 }
 .case-card__status {

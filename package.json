@@ -6,7 +6,8 @@
     "docs:check": "node scripts/check-docs.mjs",
     "docs:components": "node scripts/build-components-doc.mjs",
     "docs:review": "node scripts/build-review-page.mjs",
-    "css:build": "node scripts/build-css.mjs"
+    "css:build": "node scripts/build-css.mjs",
+    "snapshots:open": "node scripts/snapshot-open-states.mjs"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.3.0",

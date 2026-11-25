@@ -24,9 +24,5 @@
 .case-callout__attribution {
   display: block;
   margin-top: var(--space-5);
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-3);
 }

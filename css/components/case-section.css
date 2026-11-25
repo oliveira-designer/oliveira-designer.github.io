@@ -20,10 +20,6 @@
 
 .case-section__number {
   display: block;
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: var(--color-text-3);
   margin-bottom: var(--space-2);
 }

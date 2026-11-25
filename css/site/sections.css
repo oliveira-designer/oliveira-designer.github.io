@@ -75,10 +75,6 @@
   }
 }
 .section__overline {
-  font-family: var(--font-body);
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-text-3);
   margin-bottom: var(--space-3);
 }

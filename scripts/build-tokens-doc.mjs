@@ -661,7 +661,7 @@ function colorCell(value, muted) {
 function figmaColumn(t) {
   const f = t.figma;
   if (!f) return '<span class="docs-muted">not in Figma</span>';
-  return `<span class="docs-value">${f.comparison.map((r) => `<span class="docs-fig"><span class="docs-value__tag">${esc(r.mode)}</span> <code>${esc(r.figma)}</code></span>`).join('')}</span>`;
+  return `<span class="docs-value">${f.comparison.map((r) => `<span class="docs-fig"><span class="docs-value__tag text-label">${esc(r.mode)}</span> <code>${esc(r.figma)}</code></span>`).join('')}</span>`;
 }
 
 function cssColumn(t) {
@@ -671,7 +671,7 @@ function cssColumn(t) {
     const cls = r.ok === false ? (r.accepted ? ' docs-fig--accepted' : ' docs-fig--diff') : r.ok === null ? ' docs-fig--info' : '';
     const shown = r.css !== undefined && r.css !== null && r.css !== '' ? `<code>${esc(r.css)}</code>` : '<span class="docs-muted">not compared</span>';
     const note = r.note || r.accepted ? ` <span class="docs-muted">${r.note ? esc(r.note) : ''}${r.accepted ? `${r.note ? ', ' : ''}accepted` : ''}</span>` : '';
-    return `<span class="docs-fig${cls}"><span class="docs-value__tag">${esc(r.mode)}</span> ${shown}${note}</span>`;
+    return `<span class="docs-fig${cls}"><span class="docs-value__tag text-label">${esc(r.mode)}</span> ${shown}${note}</span>`;
   });
   return `<span class="docs-value">${lines.join('')}</span>`;
 }
@@ -682,7 +682,7 @@ function tokenRowHeader(t) {
   const rt = t.reducedTransparency
     ? `<span class="docs-token__note">Reduced transparency: Light ${esc(t.reducedTransparency.light)}${t.reducedTransparency.dark !== t.reducedTransparency.light ? `, Dark ${esc(t.reducedTransparency.dark)}` : ''}</span>`
     : '';
-  return `<code>${esc(t.name)}</code><span class="docs-token__meta"><span>${t.kind}</span>${unused}</span>${note}${rt}`;
+  return `<code>${esc(t.name)}</code><span class="docs-token__meta text-label"><span>${t.kind}</span>${unused}</span>${note}${rt}`;
 }
 
 // One Hope Table per token group. Color groups get Light and Dark columns (swatch and value together);
@@ -711,7 +711,7 @@ function figmaValuesCell(ft) {
     const color = ft.type === 'COLOR' ? parseColor(v) : null;
     const shown = ft.type === 'COLOR' ? colorHex(color) : ft.type === 'FLOAT' ? fmt(v) : v;
     const chip = color ? swatch(colorHex(color), mode) : '';
-    return `<span class="docs-fig${mode === 'SigmaMD' ? ' docs-fig--info' : ''}"><span class="docs-value__tag">${esc(mode)}</span> <code>${esc(shown)}</code>${chip ? ` ${chip}` : ''}</span>`;
+    return `<span class="docs-fig${mode === 'SigmaMD' ? ' docs-fig--info' : ''}"><span class="docs-value__tag text-label">${esc(mode)}</span> <code>${esc(shown)}</code>${chip ? ` ${chip}` : ''}</span>`;
   });
   return `<span class="docs-value">${parts.join('')}</span>`;
 }
@@ -762,7 +762,7 @@ function tokensBody(d) {
         `<code>${esc(a.cssName)}</code>`,
         esc(a.mode || 'all modes'),
         esc(a.kind === 'no-css-token' ? 'Figma code name not defined in tokens.css' : 'value differs'),
-        a.rows.length ? a.rows.map((r) => `<span class="docs-fig"><span class="docs-value__tag">${esc(r.mode)}</span> Figma <code>${esc(r.figma)}</code>, CSS <code>${esc(r.css)}</code></span>`).join('') : '<span class="docs-muted">see the table below</span>',
+        a.rows.length ? a.rows.map((r) => `<span class="docs-fig"><span class="docs-value__tag text-label">${esc(r.mode)}</span> Figma <code>${esc(r.figma)}</code>, CSS <code>${esc(r.css)}</code></span>`).join('') : '<span class="docs-muted">see the table below</span>',
         esc(a.reason),
         `${esc(a.decidedBy)}, ${esc(a.date)}`,
       ]);
@@ -837,7 +837,7 @@ function tokensBody(d) {
               cols: [{ label: 'Figma token' }, { label: 'cssName' }, { label: 'Modes (Figma value, CSS equivalent)' }, { label: 'Status' }],
               rows: d.figmaNoCssToken.map((e) => {
                 const lines = (e.icon || []).map(
-                  (r) => `<span class="docs-fig${r.ok === false ? ' docs-fig--diff' : ''}"><span class="docs-value__tag">${esc(r.mode)}</span> <code>${esc(r.figma)}</code> ${swatch(r.figma, '')}${r.cssName ? ` <span class="docs-muted"><code>${esc(r.cssName)}</code> ${r.css ? esc(r.css) : 'not defined'}${r.ok === false ? ', differs' : r.ok ? ', same' : ''}</span>` : ''}</span>`
+                  (r) => `<span class="docs-fig${r.ok === false ? ' docs-fig--diff' : ''}"><span class="docs-value__tag text-label">${esc(r.mode)}</span> <code>${esc(r.figma)}</code> ${swatch(r.figma, '')}${r.cssName ? ` <span class="docs-muted"><code>${esc(r.cssName)}</code> ${r.css ? esc(r.css) : 'not defined'}${r.ok === false ? ', differs' : r.ok ? ', same' : ''}</span>` : ''}</span>`
                 );
                 return [esc(e.name), `<code>${esc(e.cssName)}</code>`, lines.length ? `<span class="docs-value">${lines.join('')}</span>` : figmaValuesCell(e), e.accepted ? statusBadge('accepted', acceptedTitle(e.accepted)) : statusBadge('no-css-token')];
               }),
