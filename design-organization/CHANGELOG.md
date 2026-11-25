@@ -5,6 +5,22 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.17.2 · 25 de novembro de 2026 · Suíte de estados abertos: ruído medido, flags preventivos, ambiente impresso e modo `--control` (PATCH)
+
+**Versão escolhida: PATCH (2.17.1 para 2.17.2).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), PATCH cobre "Correção de bug" e "Melhoria de documentação sem mudança técnica": a mudança é só na ferramenta de verificação (`scripts/`), sem componente, token, valor nem regra do design system. O precedente é a v2.8.1, que também foi PATCH para mudanças só em `docs/` e `scripts/`. Se o Renan preferir que ferramenta de teste não ganhe versão, esta entrada vira nota sem número e as strings de versão voltam para 2.17.1 (só comentários de cabeçalho e de rodapé mudaram).
+
+**Alterado**
+- `scripts/snapshot-open-states.mjs` passa a abrir o navegador com `--font-render-hinting=none` e `--disable-gpu`. **São preventivos, não uma correção demonstrada.** O ruído do Prompt 32 (5 de 24 casos diferentes em `main` contra `main`, de 211 a 801 px) foi reproduzido e medido (janela de 15:41 a 16:30 de 25/11/2026, 43 casos ruidosos em 50 capturas, depois uma fração disso). A causa dessa janela **não foi identificada**. Descartados: animações, fontes, paralelismo, carga de CPU, escala do dispositivo, esperas, GPU sozinha, Chromium embutido. Com os dois flags, 5 pares seguidos de `main` contra `main` deram 0 px, mas ainda houve ruído raro depois (776 px em `modal-1280-light` e 2 px de 1 nível em `lightbox-375-light`, 3 ocorrências em 24 capturas com os dois flags). Os números e a lista completa estão em `scripts/README.md`.
+- Cada captura imprime e salva (`fingerprint.txt`) um bloco com navegador, Playwright, flags, SO, CPU e carga, memória, escala, GPU e Node. `--compare` avisa quando os dois conjuntos têm navegador ou flags diferentes.
+- Novo modo `--control --baseline <checkout> [--root <checkout>]`: captura a base duas vezes e o candidato uma, imprime o piso de ruído e marca como `INCONCLUSIVE` (nunca `REAL`) o caso que já variava na base. O ruído passa a ser detectado, não silencioso.
+- A captura agora falha com código 1 e mensagem se o navegador morrer ou se faltarem PNGs (antes um processo morto no meio deixava um conjunto incompleto sem erro claro).
+- `scripts/README.md`: o que se sabe do ruído, o que foi descartado, o que os flags são, o que "máquina parada" significa agora (não garante nada) e o limite de 500 px (que ficou como estava; a evidência mostra ruído de até 801 px em Light, então a regra "qualquer diferença em Light é REAL" pode dar falso positivo; decisão do Renan).
+
+**Verificação**
+- `ebd8d35` contra `33493c9` (D4 do Prompt 32): 5 execuções do par. Em 3 deu 0 px nos 24 casos (a ordem foi trocada em uma); em 2 apareceu a mesma variante de 2 px (1 nível) em `lightbox-375-light`, que não se repetiu depois e que também apareceu uma vez numa captura só da base. As 14 regras do Prompt 32 não explicam diferença nenhuma nessas páginas.
+
+---
+
 ## v2.17.1 · 25 de novembro de 2026 · Line height e letter-spacing alinhados pela triagem (PATCH)
 
 **Versão escolhida: PATCH (2.17.0 para 2.17.1).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), PATCH cobre "Ajuste de valor": são valores de `line-height` e `letter-spacing` de componentes que já existem, sem componente novo, sem token novo e sem mudança de regra. A decisão é a D-52 (triagem do Prompt 31). O Figma não mudou: nenhum estilo de texto novo.

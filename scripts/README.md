@@ -28,12 +28,55 @@ node scripts/snapshot-open-states.mjs --compare <dirA> <dirB> [--threshold N]
 Typical use: capture `main` (a worktree) and your branch, then compare the two folders. `--compare` prints, for each case, the
 number of differing pixels and their bounding box, marks the case `noise` or `REAL`, and exits 1 when any case is `REAL`.
 
-**Noise and the threshold.** Rendering the same commit twice is pixel-identical on a quiet machine (5 runs, 10 pairs, 24 cases:
-0 px everywhere). Under load (other browsers or builds running at the same time) a few scattered pixels can differ, only in Dark,
-up to 309 px in the runs seen. The default threshold is 500 px: a Dark case at or under it is `noise`; anything above it, any
-size difference, and any difference at all in a Light case is `REAL`. The smallest real difference seen (the 2.14.0 translated
-demo strings) was above the threshold by a wide margin, see the CHANGELOG v2.16.0 for the numbers. The limit of the rule: a
-change that touches fewer than 500 pixels, in Dark only, is not reported. On a quiet machine use `--threshold 0` to see every
-pixel.
+**`--control`: detect the noise instead of guessing it.**
+
+```
+node scripts/snapshot-open-states.mjs --control --baseline <checkout> [--root <checkout>] [--threshold N]
+```
+
+It captures the baseline twice and the candidate once (`--root`, default this working tree), prints the noise floor (baseline capture 1
+against baseline capture 2), then compares the candidate with the baseline. A case that is not identical between the two baseline captures
+cannot be judged: it is reported as `INCONCLUSIVE` with its floor and is never `REAL`. Exit code: 1 when a case is `REAL`, 3 when there is
+no `REAL` case but a difference landed in a noisy case, 0 otherwise. If the floor says "0 px in all cases", a difference below is a real
+difference at that moment. It costs three captures (about two and a half minutes). Repeat a pair that shows a difference before interpreting it.
+
+**Environment fingerprint.** Every capture prints, and saves in `fingerprint.txt` next to the PNGs, one block: browser and version, Playwright
+version, the browser flags, OS, CPU and a 400 ms load sample, free memory, device scale factor, the GPU renderer string and the Node version.
+It is there so that a change of browser, flags, scaling or load shows in the output. `--compare` warns when the two sets were captured with
+a different first line (browser and flags).
+
+**What is known about the noise (25 November 2026, measured on one machine).**
+
+- *What was seen.* Rendering the same commit twice was not always pixel-identical. Between 15:41 and 16:30 about 4 of the 24 cases differed
+  in a set of 5 captures (43 noisy cases in 50 captures, 0.86 per capture); from about 16:35 the rate was a few percent of that.
+  **The cause of that window was not identified.** The browser (Chrome 158.0.8127.38, installed before the first zero-noise runs of 24
+  November), Playwright (1.60.0), the OS build, the GPU drivers and the long-running processes (Figma, Chrome, VS Code) were the same before,
+  during and after it. The earlier runs that gave 0 px (Prompts 29 and 30) were not under a recorded fingerprint, so what they had in common
+  cannot be proven.
+- *Where it was.* Two kinds, each with a few fixed variants (the same pixel counts came back: 313, 602, 605, 611, 776, 778, 801 and so on):
+  glyph edges of small semibold text (the 11px section labels, the nav links, the buttons of the docs chrome) in the Modal and Popover pages;
+  and single pixels 1 level apart in the Lightbox thumbnail (a 2218 by 2686 PNG shown at most 960 px wide), mostly at 375 wide.
+- *Ruled out as the cause (no effect on the noise).* Animations, transitions, the text caret and the screenshot `animations` option; fonts
+  (Plus Jakarta Sans was loaded in all 120 logged captures); parallel pages; CPU load (up to 100% with six busy processes, the noise did
+  not grow); `deviceScaleFactor` and `--force-device-scale-factor=1`; `--disable-gpu` alone; the bundled Chromium (148) instead of Chrome;
+  waiting for two frames and 500 ms, waiting for the network, and decoding the images before the screenshot.
+- *Flags the suite now uses: `--font-render-hinting=none` and `--disable-gpu`. They are preventive and were not demonstrated to be a fix.*
+  Hinting off gave 0 noisy cases in the captures where it was tested (11 captures at 16:10 to 17:05, five of them inside the noisy window),
+  `--disable-lcd-text` also gave 0 (11 captures, not adopted), and with `--disable-gpu` the Lightbox thumbnail was identical in 40 of 40
+  captures (1 of 40 differed without it, 8 of 40 with GPU rasterization forced). But the sample is small, the baseline itself became quiet right after the noisy window, so the effect
+  was never shown against a baseline that was noisy at the same time, and the mechanism is not proven. With both flags on, 5 consecutive
+  pairs of `main` against `main` gave 0 px in all 24 cases, but rare noise was still seen afterwards: a text variant of 776 px in
+  `modal-1280-light` and a 2-px, 1-level variant in `lightbox-375-light`, in 3 of the 24 captures taken with both flags. Treat the suite as "much less noisy",
+  not "deterministic", and use `--control`.
+
+**What "quiet machine" means now.** Nothing measured says a quiet machine is more deterministic: the noise did not grow with CPU load or
+with parallel pages, and it changed over time with the load unchanged. Do not rely on it. Rely on the control and on repeating a pair that
+shows a difference.
+
+**The threshold.** The default threshold is 500 px: a Dark case at or under it is `noise`; anything above it, any size difference, and any
+difference at all in a Light case is `REAL`. These numbers were set from the first measurements, before the noise was understood. The noise
+seen later includes Light cases of up to 801 px, so on a noisy moment the rule can report a `REAL` that is only noise; `--control` avoids
+that by marking such cases `INCONCLUSIVE`. The smallest real difference seen (the 2.14.0 translated demo strings) was 2,323 px. Use
+`--threshold 0` to see every pixel.
 
 Outputs go to `.snapshots/` (listed in `.gitignore`) and are never committed.

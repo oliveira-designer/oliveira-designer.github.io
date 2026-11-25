@@ -5,19 +5,21 @@
 //   npm run snapshots:open                          captures the working tree into .snapshots/open/<timestamp>/
 //   node scripts/snapshot-open-states.mjs --out <dir> [--root <repo checkout>]
 //   node scripts/snapshot-open-states.mjs --compare <dirA> <dirB> [--threshold N]
+//   node scripts/snapshot-open-states.mjs --control --baseline <checkout> [--root <checkout>] [--threshold N]
 //
 // --root lets you capture another checkout (for example a git worktree of main) with this same script.
 // --compare writes nothing: it prints, for each case, the number of differing pixels and their bounding box, and marks the
 // case as NOISE or REAL (see the threshold below). It exits 1 when any case is REAL, so it can be used in a shell.
 //
-// Noise (documented): rendering the same commit twice is not always pixel-identical. Measured on one commit, 5 runs, 10 pairs of
-// runs (Prompt 29): see the numbers in design-organization/CHANGELOG.md v2.16.0. The default threshold is DEFAULT_THRESHOLD px
-// and a difference in a Light case is always REAL; both come from those measurements. The suite is not part of docs:check
-// (it needs a browser and takes minutes). Outputs go to .snapshots/ (listed in .gitignore, never committed).
+// Noise (documented in scripts/README.md): rendering the same commit twice is not always pixel-identical, and the rate changes with time for
+// a reason that was not identified. --control measures it (the baseline is captured twice) so it is detected, not silent. The default
+// threshold is DEFAULT_THRESHOLD px and a difference in a Light case is always REAL; both were set before this was understood, see the README.
+// The suite is not part of docs:check (it needs a browser and takes minutes). Outputs go to .snapshots/ (listed in .gitignore, never committed).
 //
 // Uses Playwright, which is already in devDependencies (npm install). If a Chromium build is missing, run: npx playwright install chromium
 
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -48,19 +50,56 @@ async function loadPlaywright() {
   }
 }
 
+// Rendering flags (Prompt 33). On the same commit, two captures were not always identical, in two ways:
+//  - a few glyphs of small semibold text (the 11px section labels, the nav links and the buttons of the docs chrome) came out in two slightly
+//    different ways;
+//  - the Lightbox thumbnail (a 2218 by 2686 PNG scaled down to the screen) came out in a second variant, 1 level apart on single pixels,
+//    mostly at 375 wide.
+// The two flags below are PREVENTIVE, not a proven fix: the cause of the noisy period was not identified (see scripts/README.md), the flags
+// were tested on small samples, and rare noise was still seen with both on. Use --control to see the noise floor of the moment.
+// The flags change the pixels (not what the page looks like to a person), so a set captured with other flags must not be compared with one
+// captured here: the fingerprint printed at the start (and saved next to the PNGs) names the flags.
+const BROWSER_ARGS = ['--font-render-hinting=none', '--disable-gpu'];
+
 async function launch(chromium) {
   for (const o of [{ channel: 'chrome' }, { channel: 'msedge' }, {}]) {
-    try { return await chromium.launch(o); } catch (e) { /* try the next one */ }
+    try { return { browser: await chromium.launch({ ...o, args: BROWSER_ARGS }), launchedWith: o.channel || 'bundled chromium' }; } catch (e) { /* try the next one */ }
   }
   console.error('No browser could be launched. Run: npx playwright install chromium');
   process.exit(2);
+}
+
+// One short block that says which environment produced a set of PNGs, so a change of browser, scaling or load shows in the output.
+async function fingerprint(browser, launchedWith) {
+  const pw = JSON.parse(fs.readFileSync(path.join(REPO, 'node_modules', 'playwright', 'package.json'), 'utf8')).version;
+  const cpus = os.cpus();
+  const t0 = cpus.map((c) => ({ ...c.times }));
+  await new Promise((r) => setTimeout(r, 400));
+  let busy = 0; let total = 0;
+  os.cpus().forEach((c, i) => { for (const k of Object.keys(c.times)) { const d = c.times[k] - t0[i][k]; total += d; if (k !== 'idle') busy += d; } });
+  const page = await browser.newPage();
+  const gpu = await page.evaluate(() => { try { const gl = document.createElement('canvas').getContext('webgl'); const ext = gl.getExtension('WEBGL_debug_renderer_info'); return ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : 'webgl without renderer info'; } catch (e) { return 'no webgl'; } });
+  const dpr = await page.evaluate(() => window.devicePixelRatio);
+  await page.close();
+  const lines = [
+    `browser: ${launchedWith} ${browser.version()}, Playwright ${pw}, args ${BROWSER_ARGS.join(' ')}, headless`,
+    `os: ${os.type()} ${os.release()} ${os.arch()}, cpu: ${cpus[0].model.trim()} x${cpus.length}, load ${Math.round((busy / total) * 100)}% (400 ms sample)`,
+    `memory: ${Math.round(os.freemem() / 1048576)} MB free of ${Math.round(os.totalmem() / 1048576)} MB, deviceScaleFactor ${dpr}, gpu: ${gpu}`,
+    `node: ${process.version}, cases: ${CASES.length} x ${WIDTHS.length} widths x ${THEMES.length} themes`,
+  ];
+  return lines.join('\n');
 }
 
 async function capture(outDir, root) {
   const { chromium } = await loadPlaywright();
   fs.mkdirSync(outDir, { recursive: true });
   const base = pathToFileURL(root + path.sep).href;
-  const browser = await launch(chromium);
+  const { browser, launchedWith } = await launch(chromium);
+  const fp = await fingerprint(browser, launchedWith);
+  console.log(`environment\n${fp.split('\n').map((l) => '  ' + l).join('\n')}`);
+  fs.writeFileSync(path.join(outDir, 'fingerprint.txt'), fp + '\n');
+  const expected = CASES.length * WIDTHS.length * THEMES.length;
+  try {
   for (const c of CASES) for (const w of WIDTHS) for (const theme of THEMES) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, reducedMotion: 'reduce' });
     const page = await ctx.newPage();
@@ -79,19 +118,24 @@ async function capture(outDir, root) {
     fs.writeFileSync(path.join(outDir, `open-${c.id}-${w}-${theme}.png`), await page.screenshot({ fullPage: c.full }));
     await ctx.close();
   }
+  } catch (e) {
+    console.error(`capture failed: ${e && e.message ? e.message : e}`);
+    await browser.close().catch(() => {});
+    process.exit(1);
+  }
   await browser.close();
-  console.log(`captured ${CASES.length * WIDTHS.length * THEMES.length} open-state snapshots in ${outDir}`);
+  const done = fs.readdirSync(outDir).filter((f) => f.endsWith('.png')).length;
+  if (done !== expected) { console.error(`capture incomplete: ${done} of ${expected} PNGs in ${outDir}`); process.exit(1); }
+  console.log(`captured ${expected} open-state snapshots in ${outDir}`);
 }
 
-async function compare(dirA, dirB, threshold) {
-  const { chromium } = await loadPlaywright();
-  const browser = await launch(chromium);
-  const page = await browser.newPage();
-  let real = 0;
+// Pixel difference of every PNG of dirA against the same name in dirB: [{ f, missing } | { f, size } | { f, n, box }].
+async function diffSets(page, dirA, dirB) {
+  const rows = [];
   const files = fs.readdirSync(dirA).filter((f) => f.endsWith('.png')).sort();
   for (const f of files) {
     const fb = path.join(dirB, f);
-    if (!fs.existsSync(fb)) { console.log(`${f}  MISSING in ${dirB}`); real += 1; continue; }
+    if (!fs.existsSync(fb)) { rows.push({ f, missing: true }); continue; }
     const r = await page.evaluate(async ([a, b]) => {
       const load = async (s) => createImageBitmap(await (await fetch('data:image/png;base64,' + s)).blob());
       const x = await load(a); const y = await load(b);
@@ -109,25 +153,85 @@ async function compare(dirA, dirB, threshold) {
       }
       return { n, box: n ? [x0, y0, x1, y1] : null };
     }, [fs.readFileSync(path.join(dirA, f)).toString('base64'), fs.readFileSync(fb).toString('base64')]);
-    let verdict = 'same';
-    let text = '0 px';
-    if (r.size) { verdict = 'REAL'; text = `size ${r.size[0]}x${r.size[1]} vs ${r.size[2]}x${r.size[3]}`; }
-    else if (r.n) {
-      text = `${r.n} px, box x${r.box[0]}-${r.box[2]} y${r.box[1]}-${r.box[3]}`;
-      verdict = (r.n > threshold || /-light\.png$/.test(f)) ? 'REAL' : 'noise';
-    }
-    if (verdict === 'REAL') real += 1;
-    console.log(`${f.padEnd(40)} ${verdict.padEnd(6)} ${text}`);
+    rows.push({ f, ...r });
+  }
+  return rows;
+}
+
+function verdictOf(r, threshold) {
+  if (r.missing) return { verdict: 'REAL', text: 'MISSING in the second set' };
+  if (r.size) return { verdict: 'REAL', text: `size ${r.size[0]}x${r.size[1]} vs ${r.size[2]}x${r.size[3]}` };
+  if (!r.n) return { verdict: 'same', text: '0 px' };
+  const text = `${r.n} px, box x${r.box[0]}-${r.box[2]} y${r.box[1]}-${r.box[3]}`;
+  return { verdict: (r.n > threshold || /-light\.png$/.test(r.f)) ? 'REAL' : 'noise', text };
+}
+
+function fingerprintLine(d) { const f = path.join(d, 'fingerprint.txt'); return fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n')[0] : null; }
+
+async function compare(dirA, dirB, threshold) {
+  const { chromium } = await loadPlaywright();
+  const { browser } = await launch(chromium);
+  const page = await browser.newPage();
+  for (const d of [dirA, dirB]) { const l = fingerprintLine(d); if (l) console.log(`${d}: ${l}`); }
+  if (fingerprintLine(dirA) && fingerprintLine(dirB) && fingerprintLine(dirA) !== fingerprintLine(dirB)) console.log('WARNING: the two sets were captured with different browsers or flags; differences may come from the browser, not from the code.');
+  const rows = await diffSets(page, dirA, dirB);
+  let real = 0;
+  for (const r of rows) {
+    const v = verdictOf(r, threshold);
+    if (v.verdict === 'REAL') real += 1;
+    console.log(`${r.f.padEnd(40)} ${v.verdict.padEnd(6)} ${v.text}`);
   }
   await browser.close();
-  console.log(`${real} REAL difference(s) of ${files.length} cases (threshold ${threshold} px; any Light difference counts as REAL)`);
+  console.log(`${real} REAL difference(s) of ${rows.length} cases (threshold ${threshold} px; any Light difference counts as REAL)`);
   process.exit(real ? 1 : 0);
 }
 
+// --control: capture the baseline twice and the candidate once, print the noise floor (baseline against itself), then compare the
+// candidate with the baseline. A case that is not identical between the two baseline captures cannot be judged: it is reported as
+// INCONCLUSIVE with its floor, not as REAL. Exit code: 1 when a case is REAL, 3 when there is no REAL case but a difference landed in a
+// noisy case, 0 otherwise.
+async function control(baselineRoot, candidateRoot, outDir, threshold) {
+  fs.mkdirSync(outDir, { recursive: true });
+  const dirs = { b1: path.join(outDir, 'baseline-1'), b2: path.join(outDir, 'baseline-2'), c: path.join(outDir, 'candidate') };
+  await capture(dirs.b1, baselineRoot);
+  await capture(dirs.b2, baselineRoot);
+  await capture(dirs.c, candidateRoot);
+  const { chromium } = await loadPlaywright();
+  const { browser } = await launch(chromium);
+  const page = await browser.newPage();
+  const floor = await diffSets(page, dirs.b1, dirs.b2);
+  const noisy = floor.filter((r) => r.missing || r.size || r.n > 0);
+  console.log('\nnoise floor (baseline capture 1 against baseline capture 2)');
+  if (!noisy.length) console.log('  0 px in all cases: the capture is deterministic at this moment, any difference below is a real difference');
+  else {
+    for (const r of noisy) console.log(`  ${r.f.padEnd(38)} ${r.n !== undefined ? r.n + ' px' : 'size or file mismatch'}`);
+    console.log(`  ${noisy.length} of ${floor.length} cases are noisy now (max ${Math.max(0, ...noisy.map((r) => r.n || 0))} px): the environment is not deterministic, read the results below with care`);
+  }
+  const floorOf = Object.fromEntries(floor.map((r) => [r.f, r.n || (r.missing || r.size ? Infinity : 0)]));
+  const rows = await diffSets(page, dirs.b1, dirs.c);
+  console.log('\ncandidate against baseline capture 1');
+  let real = 0; let inconclusive = 0;
+  for (const r of rows) {
+    const v = verdictOf(r, threshold);
+    let label = v.verdict;
+    if (v.verdict !== 'same' && floorOf[r.f] > 0) { label = 'INCONCLUSIVE'; inconclusive += 1; }
+    else if (v.verdict === 'REAL') real += 1;
+    console.log(`${r.f.padEnd(40)} ${label.padEnd(13)} ${v.text}${label === 'INCONCLUSIVE' ? `  (noisy in the control, floor ${floorOf[r.f]} px)` : ''}`);
+  }
+  await browser.close();
+  console.log(`${real} REAL, ${inconclusive} INCONCLUSIVE of ${rows.length} cases (threshold ${threshold} px; any Light difference counts as REAL; a noisy case is never REAL)`);
+  process.exit(real ? 1 : inconclusive ? 3 : 0);
+}
+
+const thr = () => (opt('--threshold') === undefined ? DEFAULT_THRESHOLD : Number(opt('--threshold')));
 if (args.includes('--compare')) {
   const i = args.indexOf('--compare');
-  const t = opt('--threshold');
-  await compare(args[i + 1], args[i + 2], t === undefined ? DEFAULT_THRESHOLD : Number(t));
+  await compare(args[i + 1], args[i + 2], thr());
+} else if (args.includes('--control')) {
+  const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const baseline = opt('--baseline');
+  if (!baseline) { console.error('--control needs --baseline <checkout>, for example a git worktree of main. --root <checkout> is the candidate (default: this working tree).'); process.exit(2); }
+  await control(path.resolve(baseline), path.resolve(opt('--root') || REPO), path.resolve(opt('--out') || path.join(REPO, '.snapshots', 'open', `${stamp}-control`)), thr());
 } else {
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
   await capture(path.resolve(opt('--out') || path.join(REPO, '.snapshots', 'open', stamp)), path.resolve(opt('--root') || REPO));
