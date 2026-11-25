@@ -15,6 +15,9 @@ Build and check scripts of the Hope design system. Run them from the repository 
 
 A closed Modal or Lightbox is invisible to a full-page snapshot, so this suite opens each demo with a click on its real trigger
 and captures it: Modal, destructive Modal, Lightbox and Popover, at 375, 768 and 1280 wide, in Light and Dark. That is 24 PNGs.
+Since 2.18.0 it also captures the Bottom Sheet and the destructive Bottom Sheet at 375 and 390 wide (a narrow-screen component), in Light and
+Dark: 8 more PNGs, 32 in all. A checkout whose page does not exist (a baseline from before 2.18.0) skips those cases and prints which ones, so
+`--control` against an older `main` still compares the 24 cases both have and lists the new ones as "only in the candidate".
 Nothing that ships changes: the demos, the CSS and the JavaScript are the real ones. It uses Playwright, which is already a
 devDependency (`npm install`; if a browser is missing, `npx playwright install chromium`).
 

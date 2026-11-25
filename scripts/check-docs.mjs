@@ -22,6 +22,7 @@
 //      pages exist, or a slug in components-content.json has no docs/components/<slug>.html.
 //  13. a typography token (--fw-*, --lh-*, --ls-*) is missing from css/tokens.css, differs from docs/data/figma-text-styles.json, or a
 //      var(--fw|lh|ls-*) used in the CSS or the page styles is not defined (D-48, D-49).
+//  14. an id attribute appears more than once in the same docs page (D housekeeping, 2.18.0).
 //  12. text-transform: uppercase appears outside the single Label definition in css/reset.css (D-46), or a string styled with
 //      the Label style (the selectors of that rule) has more than three words in the static HTML of the site and the docs.
 //   6. docs/data/components-map.json names a CSS rule or class that is not in
@@ -490,6 +491,17 @@ if (new Set(headerValues).size > 1) {
 const blocks = [...blockSource.keys()].sort();
 const withDemo = blocks.filter((b) => demoBlocks.has(b));
 const without = blocks.filter((b) => !demoBlocks.has(b));
+
+/* ---- 14. duplicate ids: an id attribute appears once per docs page (a repeated id breaks anchors and aria-labelledby) ---- */
+{
+  for (const file of pages) {
+    const text = fs.readFileSync(file, 'utf8').replace(/<!--[\s\S]*?-->/g, '').replace(/<(script|style)\b[\s\S]*?<\/\1>/g, '');
+    const seen = new Map();
+    for (const m of text.matchAll(/<[a-zA-Z][^<>]*?\sid="([^"]+)"/g)) seen.set(m[1], (seen.get(m[1]) || 0) + 1);
+    for (const [id, n] of seen) if (n > 1) errors.push(`${rel(file)}: id="${id}" appears ${n} times`);
+  }
+  console.log(`duplicate ids: ${pages.length} docs pages checked`);
+}
 
 console.log(`docs pages checked: ${pages.length} (${pages.filter(isComponentPage).length} component pages, ${demoCount} live demos)`);
 console.log(`CSS blocks (css/components + css/site): ${blocks.length}; with a demo: ${withDemo.length}; without: ${without.length}`);

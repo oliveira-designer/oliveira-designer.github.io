@@ -36,7 +36,12 @@ const CASES = [
   { id: 'modal-destructive', page: 'docs/components/modal.html', full: false, open: async (p) => { await p.click('[data-modal-open="modal-demo-destructive"]'); await p.waitForSelector('#modal-demo-destructive:not([hidden])'); } },
   { id: 'lightbox', page: 'docs/components/lightbox.html', full: false, open: async (p) => { await p.click('img[data-lightbox]'); await p.waitForSelector('.lightbox.is-open', { timeout: 3000 }); await p.waitForTimeout(150); } },
   { id: 'popover', page: 'docs/components/popover.html', full: true, open: async (p) => { await p.click('#popover-demo-trigger'); await p.waitForSelector('#popover-demo-panel:not([hidden])'); } },
+  // Bottom Sheet (2.18.0): a narrow-screen component, so 375 and 390 only. A checkout whose page does not exist yet (a baseline from
+  // before 2.18.0) skips these cases, so --control still compares the cases both checkouts have.
+  { id: 'bottom-sheet', page: 'docs/components/bottom-sheet.html', full: false, widths: [375, 390], open: async (p) => { await p.click('[data-bottom-sheet-open="sheet-demo"]'); await p.waitForSelector('#sheet-demo:not([hidden])'); } },
+  { id: 'bottom-sheet-destructive', page: 'docs/components/bottom-sheet.html', full: false, widths: [375, 390], open: async (p) => { await p.click('[data-bottom-sheet-open="sheet-demo-destructive"]'); await p.waitForSelector('#sheet-demo-destructive:not([hidden])'); } },
 ];
+const widthsOf = (c) => c.widths || WIDTHS;
 
 const args = process.argv.slice(2);
 const opt = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
@@ -85,7 +90,7 @@ async function fingerprint(browser, launchedWith) {
     `browser: ${launchedWith} ${browser.version()}, Playwright ${pw}, args ${BROWSER_ARGS.join(' ')}, headless`,
     `os: ${os.type()} ${os.release()} ${os.arch()}, cpu: ${cpus[0].model.trim()} x${cpus.length}, load ${Math.round((busy / total) * 100)}% (400 ms sample)`,
     `memory: ${Math.round(os.freemem() / 1048576)} MB free of ${Math.round(os.totalmem() / 1048576)} MB, deviceScaleFactor ${dpr}, gpu: ${gpu}`,
-    `node: ${process.version}, cases: ${CASES.length} x ${WIDTHS.length} widths x ${THEMES.length} themes`,
+    `node: ${process.version}, cases: ${CASES.length} (${CASES.reduce((n, c) => n + widthsOf(c).length, 0)} case-width pairs) x ${THEMES.length} themes`,
   ];
   return lines.join('\n');
 }
@@ -98,9 +103,11 @@ async function capture(outDir, root) {
   const fp = await fingerprint(browser, launchedWith);
   console.log(`environment\n${fp.split('\n').map((l) => '  ' + l).join('\n')}`);
   fs.writeFileSync(path.join(outDir, 'fingerprint.txt'), fp + '\n');
-  const expected = CASES.length * WIDTHS.length * THEMES.length;
+  const cases = CASES.filter((c) => fs.existsSync(path.join(root, c.page)));
+  for (const c of CASES) if (!cases.includes(c)) console.log(`skipped ${c.id}: ${c.page} does not exist in ${root}`);
+  const expected = cases.reduce((n, c) => n + widthsOf(c).length, 0) * THEMES.length;
   try {
-  for (const c of CASES) for (const w of WIDTHS) for (const theme of THEMES) {
+  for (const c of cases) for (const w of widthsOf(c)) for (const theme of THEMES) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, reducedMotion: 'reduce' });
     const page = await ctx.newPage();
     await page.addInitScript((th) => { try { localStorage.setItem('rm-theme', th); localStorage.setItem('hope-theme', th); } catch (e) { /* no storage */ } }, theme);
@@ -209,6 +216,8 @@ async function control(baselineRoot, candidateRoot, outDir, threshold) {
   }
   const floorOf = Object.fromEntries(floor.map((r) => [r.f, r.n || (r.missing || r.size ? Infinity : 0)]));
   const rows = await diffSets(page, dirs.b1, dirs.c);
+  const onlyCandidate = fs.readdirSync(dirs.c).filter((f) => f.endsWith('.png') && !fs.existsSync(path.join(dirs.b1, f)));
+  if (onlyCandidate.length) console.log(`\n${onlyCandidate.length} snapshot(s) exist only in the candidate (new cases, nothing to compare): ${onlyCandidate.join(', ')}`);
   console.log('\ncandidate against baseline capture 1');
   let real = 0; let inconclusive = 0;
   for (const r of rows) {
