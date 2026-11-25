@@ -209,7 +209,7 @@
 
           <section class="docs-ds-section" id="when-not" aria-labelledby="when-not-title">
             <h2 class="text-body-xs-semibold text-tertiary" id="when-not-title">When not to use</h2>
-            <ul class="docs-ds-list"><li>A wide screen: use the Modal.</li><li>Extra context tied to an element, or a small control: use a Popover, which does not block the page.</li><li>A list of actions on an object: use a Menu.</li><li>A long form or a flow with several steps: use a page.</li><li>A message the person must read and cannot dismiss (an error or a mandatory reading): not available yet, see the gap below.</li></ul>
+            <ul class="docs-ds-list"><li>A wide screen: use the Modal.</li><li>Extra context tied to an element, or a small control: use a Popover, which does not block the page.</li><li>A list of actions on an object: use a Menu.</li><li>A long form or a flow with several steps: use a page.</li><li>A message the person must read and cannot dismiss (an error or a mandatory reading): not available yet, see the gap below.</li><li>A Popover or a Menu inside it: the panel is clipped by the dialog (overflow hidden). Not supported until a real case reopens the question; the fixed strategy in js/position.js is the known option.</li></ul>
           </section>
 
           <section class="docs-ds-section" id="anatomy" aria-labelledby="anatomy-title">

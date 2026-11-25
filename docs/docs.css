@@ -479,12 +479,13 @@
 }
 
 /* Flip demo: a trigger pinned to the bottom right corner of the viewport, so the panel has no room below or to the right and has to
-   flip. It sits above the page content and below the modal layer. */
+   flip. It sits on the tooltip layer (400), later in the page than the always visible Tooltip specimens, so a specimen never covers
+   the trigger. */
 .docs-edge-demo {
   position: fixed;
   right: var(--space-4);
   bottom: var(--space-4);
-  z-index: var(--z-sticky);
+  z-index: var(--z-tooltip);
 }
 
 /* Code disclosure: native <details>, the code stays in the DOM when collapsed. */

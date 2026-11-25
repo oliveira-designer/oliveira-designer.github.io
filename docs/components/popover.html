@@ -183,7 +183,7 @@
 
           <section class="docs-ds-section" id="when-not" aria-labelledby="when-not-title">
             <h2 class="text-body-xs-semibold text-tertiary" id="when-not-title">When not to use</h2>
-            <ul class="docs-ds-list"><li>A decision that must be taken first: unlike a Popover, a Modal blocks the screen.</li><li>A list of actions or options: use a Menu.</li><li>A short label on hover or focus: use a Tooltip.</li></ul>
+            <ul class="docs-ds-list"><li>A decision that must be taken first: unlike a Popover, a Modal blocks the screen.</li><li>A list of actions or options: use a Menu.</li><li>A short label on hover or focus: use a Tooltip.</li><li>Inside a Modal or a Bottom Sheet: those have overflow hidden and the panel is clipped. The reopening trigger is the first real case of a Menu, Popover, combobox or date picker inside a dialog, and the fixed strategy in js/position.js is the known option.</li></ul>
           </section>
 
           <section class="docs-ds-section" id="anatomy" aria-labelledby="anatomy-title">

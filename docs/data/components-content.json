@@ -1249,14 +1249,15 @@
       }
     ]
   },
-  "summary": "Short text hint on a dark bubble with an arrow, in four placements: Top, Bottom, Left and Right. The bubble and the arrow are one piece. The docs demos place it against a trigger with js/position.js (positioned, trigger not coded); showing it on hover and focus is a separate, open item.",
+  "summary": "Short text hint on a dark bubble with an arrow, in four placements: Top, Bottom, Left and Right. It opens 300 ms after mouse hover or keyboard focus on its trigger, closes at once when hover and focus leave, can be reached by the pointer, and is dismissed with Escape. It never appears on touch. No Toggletip.",
   "whenToUse": [
     "A short label that explains an icon-only control, such as an Icon Button.",
     "A hint that repeats something the page already says: the tooltip is never the only place for essential information."
   ],
   "whenNotToUse": [
     "A link, a button or long content: use a Popover.",
-    "Anything a touch user needs: a tooltip does not appear on touch."
+    "Anything a touch user needs: a tooltip does not appear on touch (a Toggletip is a future component).",
+    "Essential information, an action or the only name of a control: the control keeps its own accessible name."
   ],
   "properties": [
     {
@@ -1301,15 +1302,16 @@
         "dark": 17.06
       }
     ],
-    "note": "The trigger points to the tooltip with aria-describedby and the tooltip has role=\"tooltip\".",
+    "note": "The trigger points to the tooltip with aria-describedby and the tooltip has role=\"tooltip\". The tooltip is hidden with the hidden attribute until it is shown. WCAG 1.4.13 on mouse and keyboard: dismissible with Escape, hoverable, persistent. Not tested with a screen reader.",
     "meaning": "The text is a hint, not the only name of the control: an icon-only control keeps its own accessible name (aria-label). A tooltip does not appear on touch, so it never holds the only way to reach essential information."
   },
   "example": {
-    "markup": "<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-top\" aria-describedby=\"tip-top\">Top</button>\n<div class=\"tooltip tooltip--top\" role=\"tooltip\" id=\"tip-top\" data-anchor=\"tip-trigger-top\" data-placement=\"top\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-bottom\" aria-describedby=\"tip-bottom\">Bottom</button>\n<div class=\"tooltip tooltip--bottom\" role=\"tooltip\" id=\"tip-bottom\" data-anchor=\"tip-trigger-bottom\" data-placement=\"bottom\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-left\" aria-describedby=\"tip-left\">Left</button>\n<div class=\"tooltip tooltip--left\" role=\"tooltip\" id=\"tip-left\" data-anchor=\"tip-trigger-left\" data-placement=\"left\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-right\" aria-describedby=\"tip-right\">Right</button>\n<div class=\"tooltip tooltip--right\" role=\"tooltip\" id=\"tip-right\" data-anchor=\"tip-trigger-right\" data-placement=\"right\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>"
+    "markup": "<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-live-top\" data-tooltip-trigger aria-describedby=\"tip-live-top-text\">Top</button>\n<div class=\"tooltip tooltip--top\" role=\"tooltip\" id=\"tip-live-top-text\" data-placement=\"top\" hidden>\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-live-bottom\" data-tooltip-trigger aria-describedby=\"tip-live-bottom-text\">Bottom</button>\n<div class=\"tooltip tooltip--bottom\" role=\"tooltip\" id=\"tip-live-bottom-text\" data-placement=\"bottom\" hidden>\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-live-left\" data-tooltip-trigger aria-describedby=\"tip-live-left-text\">Left</button>\n<div class=\"tooltip tooltip--left\" role=\"tooltip\" id=\"tip-live-left-text\" data-placement=\"left\" hidden>\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-live-right\" data-tooltip-trigger aria-describedby=\"tip-live-right-text\">Right</button>\n<div class=\"tooltip tooltip--right\" role=\"tooltip\" id=\"tip-live-right-text\" data-placement=\"right\" hidden>\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>"
   },
   "essential": [
     "when",
     "variants",
+    "behavior",
     "positioning",
     "accessibility"
   ],
@@ -1320,35 +1322,70 @@
       "text": "Resolved for the docs demos in v2.19.0: js/position.js places the tooltip against a trigger in the four placements, flips it near the viewport edge, swaps the tooltip--* class so the arrow follows, and shifts it to stay inside. Positioned, trigger not coded: no component page of the site uses it yet."
     },
     {
-      "id": "tooltip-hover-focus-behavior",
-      "status": "documented",
-      "text": "Showing and hiding on hover and focus, the delay, and the three conditions of WCAG 1.4.13 (dismissible with Escape without moving the pointer, hoverable, persistent until dismissed) need JavaScript and are not coded. Figma defines none of them."
-    },
-    {
       "id": "tooltip-size-rounding",
       "status": "measured",
       "text": "Measured in Chromium, Firefox and WebKit with Plus Jakarta Sans: 83.0 by 39.6 for Top and Bottom, 89 by 33.6 for Left and Right with the same text. Figma rounds to 84 by 40 and 90 by 34. The width follows the text."
     },
     {
+      "id": "tooltip-hover-focus-behavior",
+      "status": "resolved",
+      "text": "Resolved in v2.20.0 for mouse and keyboard, tested in Chromium: it shows 300 ms after hover or focus and hides at once, it is hoverable (the pointer crosses the gap), it stays while hover or focus stays, and Escape dismisses it without moving the focus and without closing a Modal or a Bottom Sheet. Open: touch (nothing is shown by design), screen readers (tooltip-screen-reader), Firefox, WebKit and the interactive or touch case (tooltip-toggletip)."
+    },
+    {
       "id": "tooltip-arrow-shift",
+      "status": "resolved",
+      "text": "Resolved in v2.20.0. The arrow keeps pointing at the center of the trigger when the bubble is shifted, through --tooltip-arrow-offset, clamped clear of the rounded corners. Figma wording is the source (to be published by Renan)."
+    },
+    {
+      "id": "tooltip-toggletip",
       "status": "documented",
-      "text": "When a centered tooltip is shifted to stay inside the viewport, the arrow stays centered on the bubble and no longer points at the center of the trigger. Figma does not define an arrow offset."
+      "text": "A Toggletip (touch, and content that can be interactive) is a future component. The Tooltip has no touch behavior and holds text only."
+    },
+    {
+      "id": "tooltip-screen-reader",
+      "status": "unverified",
+      "text": "Not tested with a screen reader. A hidden element that aria-describedby references is believed to still give the trigger its description, but this was not verified, so it is not claimed to work. Hiding uses the hidden attribute (display none)."
+    },
+    {
+      "id": "tooltip-delay-values",
+      "status": "documented",
+      "text": "The 300 ms delay to show and the immediate close (0 ms) are a product decision of Renan, with no standard behind them. Both are named constants in js/tooltip.js (SHOW_DELAY_MS, HIDE_DELAY_MS)."
+    },
+    {
+      "id": "tooltip-clipped-in-dialog",
+      "status": "measured",
+      "text": "Measured in Chromium (share of the bubble that is visible, sampled on a grid, 1280 and 390 wide). Modal close X: Top 40%, Bottom 100%, Left 100%, Right 18% at 1280 (at 390 Right flips to Left, 100%, and Top stays 40%). Icon Button in the Modal body: Top 91%, Bottom 91%, Left 9%, Right 100% at 1280 (at 390 all 100%, Left flips to Right). Icon Button in the Bottom Sheet body: 100% in all four placements at both widths (Left flips to Right). The dialog has overflow hidden and positioning measures against the viewport, so a bubble that sticks out of the dialog is cut. No layout or overflow was changed. Options: choose the placement per case (Bottom for the Modal close X), the fixed strategy in js/position.js, or a portal."
     }
   ],
   "unverified": [],
   "scripts": [
-    "position.js"
+    "position.js",
+    "tooltip.js"
   ],
   "positioning": [
-    "Four placements, the names of the Figma set: data-placement=\"top|bottom|left|right\". The Tooltip keeps its default of top, centered on the trigger (data-align=\"center\"). The offset to the trigger is 8px (--space-2), a code value: Figma does not define a distance.",
-    "Flip: if the preferred side does not fit in the viewport and the opposite side does, the tooltip goes to the opposite side and the class tooltip--top|bottom|left|right follows, so the arrow keeps pointing at the trigger. If neither fits, it stays on the side with more room.",
-    "Cross axis: a centered tooltip that would leave the viewport is shifted to stay 16px (--space-4) inside (start and end alignments flip first). The arrow stays centered on the bubble, so after a shift it no longer points at the center of the trigger (see tooltip-arrow-shift).",
-    "Today this is wired in the docs demos only (data-anchor names the trigger). The tooltip is positioned, the trigger is not coded: showing and hiding on hover and focus, the delay and WCAG 1.4.13 stay open (tooltip-hover-focus-behavior)."
+    "Four placements, the names of the Figma set: data-placement=\"top|bottom|left|right\". Default Top, centered on the trigger (data-align=\"center\"), 8px away (--space-2).",
+    "Flip: if the preferred side does not fit in the viewport and the opposite side does, the tooltip goes to the opposite side and the class tooltip--top|bottom|left|right follows. If neither fits, it stays on the side with more room.",
+    "Edges: if it still passes the screen edge, the bubble is shifted to stay 16px (--space-4) inside.",
+    "Arrow: when the bubble is shifted, the arrow keeps pointing at the center of the trigger, in all four placements. js/position.js sets the custom property --tooltip-arrow-offset (from the center of the bubble) and the CSS translates the arrow by it. The offset is clamped so the arrow stays clear of the rounded corners: half the bubble minus the bubble radius minus half the arrow. When the center of the trigger is out of that range, the arrow stops at the limit (data-arrow-clamped=\"true\")."
   ],
   "edgeDemo": {
-    "note": "The Flip demo trigger is pinned to the bottom right corner of the viewport (it stays there while you scroll) and its tooltip prefers the bottom: it flips to the top and, being centered, is shifted left to stay inside.",
-    "markup": "<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-edge\" aria-describedby=\"tip-edge\">Flip demo</button>\n<div class=\"tooltip tooltip--bottom\" role=\"tooltip\" id=\"tip-edge\" data-anchor=\"tip-trigger-edge\" data-placement=\"bottom\">\n  <span class=\"tooltip__bubble\">A longer tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>"
-  }
+    "note": "The Flip demo trigger is pinned to the bottom right corner of the viewport (it stays there while you scroll). Hover or focus it: the tooltip prefers the bottom, flips to the top and, being centered, is shifted left, with the arrow still pointing at the trigger.",
+    "markup": "<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-edge\" data-tooltip-trigger aria-describedby=\"tip-edge\">Flip demo</button>\n<div class=\"tooltip tooltip--bottom\" role=\"tooltip\" id=\"tip-edge\" data-placement=\"bottom\" hidden>\n  <span class=\"tooltip__bubble\">A longer tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>"
+  },
+  "specimens": {
+    "note": "The four placements as the specimen of the component, always visible and placed against a trigger by js/position.js (data-anchor). They show the shape; the live example above shows the behavior.",
+    "markup": "<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-top\" aria-describedby=\"tip-top\">Top</button>\n<div class=\"tooltip tooltip--top\" role=\"tooltip\" id=\"tip-top\" data-anchor=\"tip-trigger-top\" data-placement=\"top\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-bottom\" aria-describedby=\"tip-bottom\">Bottom</button>\n<div class=\"tooltip tooltip--bottom\" role=\"tooltip\" id=\"tip-bottom\" data-anchor=\"tip-trigger-bottom\" data-placement=\"bottom\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-left\" aria-describedby=\"tip-left\">Left</button>\n<div class=\"tooltip tooltip--left\" role=\"tooltip\" id=\"tip-left\" data-anchor=\"tip-trigger-left\" data-placement=\"left\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-right\" aria-describedby=\"tip-right\">Right</button>\n<div class=\"tooltip tooltip--right\" role=\"tooltip\" id=\"tip-right\" data-anchor=\"tip-trigger-right\" data-placement=\"right\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>"
+  },
+  "behavior": [
+    "Show: 300 ms after mouse or pen hover on the trigger, or after keyboard focus (:focus-visible) on it. The two delays are product decisions of the Hope DS, not values from a standard (gap tooltip-delay-values).",
+    "Hide: at once when neither the trigger nor the tooltip has hover or focus. The close waits only one task (setTimeout of 0 ms), so the pointer can go from the trigger to the bubble. There is no timeout while hover or focus stays.",
+    "Hoverable (WCAG 1.4.13): the pointer can cross the 8px between the trigger and the bubble because an invisible pseudo-element of the tooltip covers that gap. The close stays immediate.",
+    "Dismissible (WCAG 1.4.13): Escape hides it without moving the focus. The key is consumed, so a Modal or a Bottom Sheet that contains the trigger stays open: the first Escape closes only the tooltip and the second closes the dialog. After Escape the tooltip stays hidden until hover and focus have both left the trigger.",
+    "Touch: a tap shows nothing. Pointer events count only for mouse and pen, and the focus a tap gives a button is ignored because it does not match :focus-visible. Nothing essential may depend on a tooltip, because it never appears on touch.",
+    "Hidden state: the hidden attribute (display none), so the tooltip is out of the page flow and the accessibility tree while hidden. The trigger keeps aria-describedby. Whether a screen reader reads a hidden description once and not twice was not tested (gap tooltip-screen-reader).",
+    "No animation is added, so prefers-reduced-motion has nothing to change.",
+    "Inside a Modal or a Bottom Sheet the tooltip is positioned the same way and can be clipped by the dialog (overflow hidden). Measured on the Modal close X, an Icon Button in the Modal body and an Icon Button in the Bottom Sheet body: see the gap tooltip-clipped-in-dialog. Pick the placement that stays inside the dialog."
+  ]
 },
 {
   "slug": "progress",
@@ -1950,7 +1987,8 @@
   ],
   "whenNotToUse": [
     "Free content, a form or rich layout: use a Popover.",
-    "Page navigation: use links or Tabs."
+    "Page navigation: use links or Tabs.",
+    "Inside a Modal or a Bottom Sheet: those have overflow hidden and the panel is clipped. The reopening trigger is the first real case of a Menu, Popover, combobox or date picker inside a dialog, and the fixed strategy in js/position.js is the known option."
   ],
   "properties": [
     {
@@ -2184,7 +2222,8 @@
     "A list of actions on an object: use a Menu.",
     "A long form or a flow with several steps: use a page.",
     "Zooming an image: use a Lightbox.",
-    "A narrow or touch screen where the dialog should come from the bottom edge: use Bottom Sheet (same content, different shape)."
+    "A narrow or touch screen where the dialog should come from the bottom edge: use Bottom Sheet (same content, different shape).",
+    "A Popover or a Menu inside it: the panel is clipped by the dialog (overflow hidden). Not supported until a real case reopens the question; the fixed strategy in js/position.js is the known option."
   ],
   "properties": [
     {
@@ -2457,7 +2496,8 @@
     "Extra context tied to an element, or a small control: use a Popover, which does not block the page.",
     "A list of actions on an object: use a Menu.",
     "A long form or a flow with several steps: use a page.",
-    "A message the person must read and cannot dismiss (an error or a mandatory reading): not available yet, see the gap below."
+    "A message the person must read and cannot dismiss (an error or a mandatory reading): not available yet, see the gap below.",
+    "A Popover or a Menu inside it: the panel is clipped by the dialog (overflow hidden). Not supported until a real case reopens the question; the fixed strategy in js/position.js is the known option."
   ],
   "properties": [
     {
@@ -2724,7 +2764,8 @@
   "whenNotToUse": [
     "A decision that must be taken first: unlike a Popover, a Modal blocks the screen.",
     "A list of actions or options: use a Menu.",
-    "A short label on hover or focus: use a Tooltip."
+    "A short label on hover or focus: use a Tooltip.",
+    "Inside a Modal or a Bottom Sheet: those have overflow hidden and the panel is clipped. The reopening trigger is the first real case of a Menu, Popover, combobox or date picker inside a dialog, and the fixed strategy in js/position.js is the known option."
   ],
   "properties": [
     {
@@ -2900,8 +2941,8 @@
     },
     {
       "id": "position-clipped-in-dialog",
-      "status": "measured",
-      "text": "Measured in Chromium with the final CSS: a Popover or a positioned Menu opened inside the body of a Modal or a Bottom Sheet is clipped by the body (overflow-y: auto) and by the dialog (overflow: hidden). Popover: 0 of 63 sampled points of the panel visible in the Modal and in the Bottom Sheet, at 390 and 1280 wide; Menu: 34 of 63 (54%) in the Modal and 43 of 63 (68%) in the Bottom Sheet. The positioner measures against the viewport, not against the dialog, and there is no portal. Do not put a Popover or a Menu inside a Modal or a Bottom Sheet until a portal batch exists."
+      "status": "accepted",
+      "text": "Measured in Chromium with the final CSS: a Popover or a positioned Menu opened inside the body of a Modal or a Bottom Sheet is clipped by the body (overflow-y: auto) and by the dialog (overflow: hidden). Popover: 0 of 63 sampled points of the panel visible in the Modal and in the Bottom Sheet, at 390 and 1280 wide; Menu: 34 of 63 (54%) in the Modal and 43 of 63 (68%) in the Bottom Sheet. The positioner measures against the viewport, not against the dialog, and there is no portal. Accepted limitation (option C3, decided by Renan on 2026-11-25): Popover and Menu are not supported inside a Modal or a Bottom Sheet. No portal and no fixed strategy in this release. The trigger to reopen it is the first real case of a Menu, Popover, combobox or date picker inside a dialog; the fixed strategy in js/position.js is the known option."
     }
   ],
   "unverified": [],

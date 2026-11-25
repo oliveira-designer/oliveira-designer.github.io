@@ -246,7 +246,8 @@ const SECTIONS = {
   notes: (comp) => modelSection('notes', 'Code notes', notesTable(comp)),
   // Positioning rules (js/position.js) and, when the data has one, the flip demo: a trigger pinned to the bottom right corner of the
   // viewport, outside the demo markers because it needs the docs.css class .docs-edge-demo.
-  positioning: (comp) => modelSection('positioning', 'Positioning', list(comp.positioning || []) + (comp.edgeDemo ? `${NL}            <p class="docs-ds-note">${esc(comp.edgeDemo.note)}</p>${NL}            <div class="docs-edge-demo">${NL}${indentBlock(comp.edgeDemo.markup, '              ')}${NL}            </div>` : '')),
+  behavior: (comp) => modelSection('behavior', 'Behavior', list(comp.behavior || [])),
+  positioning: (comp) => modelSection('positioning', 'Positioning', list(comp.positioning || []) + (comp.specimens ? `${NL}            <p class="docs-ds-note">${esc(comp.specimens.note)}</p>${NL}            <div class="docs-ds-card">${NL}              <div class="docs-ds-preview">${NL}${indentBlock(comp.specimens.markup, '                ')}${NL}              </div>${NL}            </div>` : '') + (comp.edgeDemo ? `${NL}            <p class="docs-ds-note">${esc(comp.edgeDemo.note)}</p>${NL}            <div class="docs-edge-demo">${NL}${indentBlock(comp.edgeDemo.markup, '              ')}${NL}            </div>` : '')),
   variants: variantsSection,
   contract: (comp) => modelSection('contract', 'Markup contract', list(comp.contract || [])),
   accessibility: (comp) => modelSection('accessibility', 'Accessibility', `<p class="docs-ds-note">${esc(accessibilityText(comp))}</p>`),
