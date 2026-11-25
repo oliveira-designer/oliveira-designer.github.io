@@ -10,7 +10,9 @@
      </div>
    The placement says where the tooltip sits relative to its trigger: Top means the bubble is above the trigger and the
    arrow points down at it. The component is the bubble plus the arrow (84 by 40 for the sample text, 90 by 34 for the
-   sides). Not coded here (see the gaps in the docs data): positioning against the trigger, showing and hiding, delay and
+   sides). Positioning: a tooltip with data-anchor="<trigger id>" and data-placement="top|bottom|left|right" is placed against that
+   trigger by js/position.js (docs demos only), flipped near the viewport edge, and the tooltip--* class follows the side in use so the
+   arrow keeps pointing at the trigger. Not coded here (see the gaps in the docs data): showing and hiding on hover and focus, delay and
    WCAG 1.4.13 (dismissible with Escape, hoverable, persistent). A tooltip never holds the only way to reach essential
    information, because it does not appear on touch. */
 
@@ -25,6 +27,12 @@
   flex-direction: column;
   align-items: center;
   font-family: var(--font-body);
+}
+
+/* Placed against a trigger (docs demos): out of flow, as wide as its text, at the left and top that js/position.js sets. */
+.tooltip[data-anchor] {
+  position: absolute;
+  width: max-content;
 }
 
 .tooltip--top { flex-direction: column; }

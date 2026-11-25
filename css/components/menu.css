@@ -1,7 +1,7 @@
 /* Hope DS: css/components/menu.css
    Figma: Core, Menu (panel, 2413:381) and Menu item (Tone Default|Danger, State Default|Hover|Focus|Selected|Disabled,
    set 2413:380). Edit this file, then run: npm run css:build. The behavior (open and close, arrow keys, Escape) is in
-   js/menu.js. Positioning against the trigger, flipping and typeahead are not coded.
+   js/menu.js. Typeahead is not coded. Positioning against the trigger is opt-in (see .menu[data-placement] below).
 
    Markup contract (docs/components/menu.html):
      <button type="button" class="btn btn--secondary" id="m-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="m-panel">Conta</button>
@@ -36,6 +36,16 @@
 
 .menu[hidden] {
   display: none;
+}
+
+/* Opt-in positioning: a panel with data-placement (and optionally data-align) is placed against its trigger by js/position.js, below
+   and start-aligned by default, flipped near the viewport edge. Without the attribute the panel stays in flow as before. The width
+   comes from the content (the items fill the panel), never below the content and never past the viewport minus the margin. Static
+   fallback if the script does not run: absolute at its place in the flow, which is right under the trigger. */
+.menu[data-placement] {
+  position: absolute;
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--space-4));
 }
 
 /* Divider: 1px Border/Default/Default across the inner width. Destructive actions go after one. */

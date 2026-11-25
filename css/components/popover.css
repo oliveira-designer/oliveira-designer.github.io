@@ -1,6 +1,7 @@
 /* Hope DS: css/components/popover.css
    Figma: Core, Popover (component 2413:573, page "Popover"). Edit this file, then run: npm run css:build. The behavior (open and
-   close, aria-expanded, Escape, click outside, flip) is in js/popover.js.
+   close, aria-expanded, Escape, click outside, flip) is in js/popover.js,
+   which places the panel with js/position.js.
 
    Markup contract (docs/components/popover.html):
      <div class="popover-anchor">
@@ -26,7 +27,8 @@
    POPOVER PANEL
    Figma strokesIncludedInLayout is true: 280 is the outer width (246 of content + 32 of padding + 2 of border), so
    box-sizing is border-box. Placement: below the trigger, aligned to its start, 8px away (--space-2); Figma defines no
-   arrow and no placement. js/popover.js adds .popover--above and .popover--end when the panel would leave the viewport.
+   arrow and no placement. This is the CSS default (below, start, 8px). js/position.js replaces it with inline left and top while the
+   panel is open: it flips above when the panel does not fit below, aligns to the end or shifts when it would leave the viewport.
    ---------------------------------------------------------- */
 .popover {
   position: absolute;
@@ -49,16 +51,6 @@
 
 .popover[hidden] {
   display: none;
-}
-
-.popover--above {
-  top: auto;
-  bottom: calc(100% + var(--space-2));
-}
-
-.popover--end {
-  left: auto;
-  right: 0;
 }
 
 /* Title ("Show title"): Body/SemiBold/body-sm semibold, Text/Default/Default. */

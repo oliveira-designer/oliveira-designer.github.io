@@ -126,14 +126,17 @@
 }
 
 /* The Menu panel hangs under the button, aligned to its start, 8px away, on the popover layer (the .menu rule sets
-   --z-popover). Its width is the specimen of the Menu (238), because the items fill the panel. */
+   --z-popover). Its width is the specimen of the Menu (238), because the items fill the panel. This is the CSS default: with
+   data-placement on the panel (the docs markup has it) js/position.js flips it above near the bottom edge and keeps it inside the
+   viewport. The second selector keeps the 238 against the width of .menu[data-placement] in menu.css. */
 .breadcrumb__collapse {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.breadcrumb__collapse > .menu {
+.breadcrumb__collapse > .menu,
+.breadcrumb__collapse > .menu[data-placement] {
   position: absolute;
   top: calc(100% + var(--space-2));
   left: 0;

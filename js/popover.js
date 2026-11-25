@@ -3,13 +3,12 @@
    points at the panel. A click toggles it, Escape closes it and returns the focus to the trigger, a click outside closes it
    without moving the focus, and the focus leaving the panel for somewhere else closes it. It does not block the page and does
    not trap the focus (the Modal does). The panel sits right after the trigger in the DOM, so Tab goes into it.
-   Placement is CSS (below, aligned to the start, 8px away); when the panel would leave the viewport this script adds
-   .popover--above (flip up, only if there is room above) and .popover--end (align to the end). Escape calls
-   preventDefault, so a Modal that contains the Popover stays open. */
+   Placement is js/position.js (load it before this file): below the trigger, aligned to its start, --space-2 away, flipped above
+   when it does not fit, kept inside the viewport on the cross axis, recalculated on resize and on scroll while open. The panel
+   may say otherwise with data-placement and data-align. Without position.js the CSS default (below, start, 8px) applies.
+   Escape calls preventDefault, so a Modal that contains the Popover stays open. */
 (function () {
   'use strict';
-
-  var OFFSET = 8;  // same as --space-2, the gap in popover.css
 
   function init(trigger) {
     var panel = document.getElementById(trigger.getAttribute('aria-controls'));
@@ -17,22 +16,16 @@
 
     function isOpen() { return !panel.hasAttribute('hidden'); }
 
-    function place() {
-      panel.classList.remove('popover--above', 'popover--end');
-      var p = panel.getBoundingClientRect();
-      var t = trigger.getBoundingClientRect();
-      var vw = document.documentElement.clientWidth;
-      if (p.bottom > window.innerHeight && t.top >= p.height + OFFSET) panel.classList.add('popover--above');
-      if (p.right > vw && t.right - p.width >= 0) panel.classList.add('popover--end');
-    }
+    var stop = null;
 
     function open() {
       panel.removeAttribute('hidden');
       trigger.setAttribute('aria-expanded', 'true');
-      place();
+      if (window.HopePosition) stop = window.HopePosition.watch(panel, trigger, { placement: 'bottom', align: 'start' });
     }
 
     function close(returnFocus) {
+      if (stop) { stop(); stop = null; }
       panel.setAttribute('hidden', '');
       trigger.setAttribute('aria-expanded', 'false');
       if (returnFocus) trigger.focus();

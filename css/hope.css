@@ -9,7 +9,7 @@
 /* ===== css/tokens.css ===== */
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v2.18.0 · November 2026
+   v2.19.0 · November 2026
    Source of truth: Figma Foundation for VALUES; DESIGN.md +
    DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
@@ -1633,14 +1633,17 @@ p { max-width: 70ch; }
 }
 
 /* The Menu panel hangs under the button, aligned to its start, 8px away, on the popover layer (the .menu rule sets
-   --z-popover). Its width is the specimen of the Menu (238), because the items fill the panel. */
+   --z-popover). Its width is the specimen of the Menu (238), because the items fill the panel. This is the CSS default: with
+   data-placement on the panel (the docs markup has it) js/position.js flips it above near the bottom edge and keeps it inside the
+   viewport. The second selector keeps the 238 against the width of .menu[data-placement] in menu.css. */
 .breadcrumb__collapse {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.breadcrumb__collapse > .menu {
+.breadcrumb__collapse > .menu,
+.breadcrumb__collapse > .menu[data-placement] {
   position: absolute;
   top: calc(100% + var(--space-2));
   left: 0;
@@ -3725,7 +3728,7 @@ p { max-width: 70ch; }
 /* Hope DS: css/components/menu.css
    Figma: Core, Menu (panel, 2413:381) and Menu item (Tone Default|Danger, State Default|Hover|Focus|Selected|Disabled,
    set 2413:380). Edit this file, then run: npm run css:build. The behavior (open and close, arrow keys, Escape) is in
-   js/menu.js. Positioning against the trigger, flipping and typeahead are not coded.
+   js/menu.js. Typeahead is not coded. Positioning against the trigger is opt-in (see .menu[data-placement] below).
 
    Markup contract (docs/components/menu.html):
      <button type="button" class="btn btn--secondary" id="m-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="m-panel">Conta</button>
@@ -3760,6 +3763,16 @@ p { max-width: 70ch; }
 
 .menu[hidden] {
   display: none;
+}
+
+/* Opt-in positioning: a panel with data-placement (and optionally data-align) is placed against its trigger by js/position.js, below
+   and start-aligned by default, flipped near the viewport edge. Without the attribute the panel stays in flow as before. The width
+   comes from the content (the items fill the panel), never below the content and never past the viewport minus the margin. Static
+   fallback if the script does not run: absolute at its place in the flow, which is right under the trigger. */
+.menu[data-placement] {
+  position: absolute;
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--space-4));
 }
 
 /* Divider: 1px Border/Default/Default across the inner width. Destructive actions go after one. */
@@ -4435,7 +4448,8 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
 /* ===== css/components/popover.css ===== */
 /* Hope DS: css/components/popover.css
    Figma: Core, Popover (component 2413:573, page "Popover"). Edit this file, then run: npm run css:build. The behavior (open and
-   close, aria-expanded, Escape, click outside, flip) is in js/popover.js.
+   close, aria-expanded, Escape, click outside, flip) is in js/popover.js,
+   which places the panel with js/position.js.
 
    Markup contract (docs/components/popover.html):
      <div class="popover-anchor">
@@ -4461,7 +4475,8 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
    POPOVER PANEL
    Figma strokesIncludedInLayout is true: 280 is the outer width (246 of content + 32 of padding + 2 of border), so
    box-sizing is border-box. Placement: below the trigger, aligned to its start, 8px away (--space-2); Figma defines no
-   arrow and no placement. js/popover.js adds .popover--above and .popover--end when the panel would leave the viewport.
+   arrow and no placement. This is the CSS default (below, start, 8px). js/position.js replaces it with inline left and top while the
+   panel is open: it flips above when the panel does not fit below, aligns to the end or shifts when it would leave the viewport.
    ---------------------------------------------------------- */
 .popover {
   position: absolute;
@@ -4484,16 +4499,6 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
 
 .popover[hidden] {
   display: none;
-}
-
-.popover--above {
-  top: auto;
-  bottom: calc(100% + var(--space-2));
-}
-
-.popover--end {
-  left: auto;
-  right: 0;
 }
 
 /* Title ("Show title"): Body/SemiBold/body-sm semibold, Text/Default/Default. */
@@ -5912,7 +5917,9 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
      </div>
    The placement says where the tooltip sits relative to its trigger: Top means the bubble is above the trigger and the
    arrow points down at it. The component is the bubble plus the arrow (84 by 40 for the sample text, 90 by 34 for the
-   sides). Not coded here (see the gaps in the docs data): positioning against the trigger, showing and hiding, delay and
+   sides). Positioning: a tooltip with data-anchor="<trigger id>" and data-placement="top|bottom|left|right" is placed against that
+   trigger by js/position.js (docs demos only), flipped near the viewport edge, and the tooltip--* class follows the side in use so the
+   arrow keeps pointing at the trigger. Not coded here (see the gaps in the docs data): showing and hiding on hover and focus, delay and
    WCAG 1.4.13 (dismissible with Escape, hoverable, persistent). A tooltip never holds the only way to reach essential
    information, because it does not appear on touch. */
 
@@ -5927,6 +5934,12 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
   flex-direction: column;
   align-items: center;
   font-family: var(--font-body);
+}
+
+/* Placed against a trigger (docs demos): out of flow, as wide as its text, at the left and top that js/position.js sets. */
+.tooltip[data-anchor] {
+  position: absolute;
+  width: max-content;
 }
 
 .tooltip--top { flex-direction: column; }

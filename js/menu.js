@@ -2,7 +2,11 @@
    Progressive behavior for css/components/menu.css. A trigger with aria-haspopup="menu" and aria-controls points at a
    panel with role="menu". Up and Down move the focus (skipping aria-disabled items), Home and End jump, Escape closes
    and returns the focus to the trigger, Tab closes, a click outside closes. A menuitemradio or menuitemcheckbox updates
-   aria-checked. Typeahead and positioning against the trigger are out of scope. */
+   aria-checked. Typeahead is out of scope.
+   Positioning is opt-in: a panel with data-placement (and optionally data-align) is placed against the trigger by js/position.js (load it
+   before this file): below and start-aligned by default, flipped near the viewport edge, recalculated on resize and on scroll while open.
+   A panel without data-placement stays where the CSS puts it (in flow, or the Breadcrumb panel's own rule). Positioning never moves the
+   focus: the panel is placed first, then the focus goes to the first item. */
 (function () {
   'use strict';
 
@@ -16,16 +20,22 @@
       });
     }
 
+    var stop = null;
+    var positioned = panel.hasAttribute('data-placement');
+
     function isOpen() { return !panel.hasAttribute('hidden'); }
 
     function open(focusIndex) {
+      if (stop) { stop(); stop = null; }
       panel.removeAttribute('hidden');
       trigger.setAttribute('aria-expanded', 'true');
+      if (positioned && window.HopePosition) stop = window.HopePosition.watch(panel, trigger, { placement: 'bottom', align: 'start' });
       var list = items();
       if (list.length) (focusIndex === 'last' ? list[list.length - 1] : list[0]).focus();
     }
 
     function close(returnFocus) {
+      if (stop) { stop(); stop = null; }
       panel.setAttribute('hidden', '');
       trigger.setAttribute('aria-expanded', 'false');
       if (returnFocus) trigger.focus();
