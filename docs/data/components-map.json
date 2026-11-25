@@ -1669,6 +1669,26 @@
       "renderOnPage": "modal",
       "note": "A fixed dialog driven by js/modal.js, so the review page does not render it."
     },
+    "BottomSheet": {
+      "figmaVariants": 1,
+      "implemented": 1,
+      "base": ".bottom-sheet",
+      "stateMechanisms": {
+        "hover": "not applicable (the buttons are the Hope Button)",
+        "focus": "the Hope Button ring; the body takes :focus-visible when it scrolls",
+        "disabled": "not applicable"
+      },
+      "variants": [
+        {
+          "selector": ".bottom-sheet",
+          "rule": ".bottom-sheet",
+          "mechanism": "panel: full width on the bottom edge, border on three sides, radius on the top corners, shadow and layer 200; the scrim is .modal-scrim (layer 100); the hidden attribute shows and hides it",
+          "renderable": false
+        }
+      ],
+      "renderOnPage": "bottom-sheet",
+      "note": "A fixed dialog driven by js/bottom-sheet.js, so the review page does not render it."
+    },
     "Popover": {
       "figmaVariants": 1,
       "implemented": 1,

@@ -249,5 +249,27 @@
     "reason": "Not rendered on any shipped page: no shipped page loads js/auth.js, and .experience-item__logo-mono has no instance. Pending, not accepted; revisit when the gate ships (D-52)",
     "decidedBy": "Renan",
     "date": "2026-11-25"
+  },
+  {
+    "scope": "rule",
+    "name": "Alert and Toast border contrast",
+    "status": "accepted",
+    "figma": "Border/Default/Default on the Alert and on the Toast (all types)",
+    "css": "border: 1px solid var(--color-border): 1.29:1 on the page background in Light and 1.28:1 in Dark",
+    "rules": [
+      {
+        "selector": ".alert",
+        "file": "css/components/alert.css",
+        "value": "--color-border"
+      },
+      {
+        "selector": ".toast",
+        "file": "css/components/toast.css",
+        "value": "--color-border"
+      }
+    ],
+    "reason": "The border is under 3:1 against the page (D-42, D-54). The type is also carried by the icon glyph and the text, so the border is not the only cue, and neither component is interactive. Reading WCAG 1.4.11 as applying to this border is an inference (D-39), not a proven failure. The Tag moved to the field border (Border/Utilities/Input) in 2.15.0 because it is interactive; that is the precedent for when a bordered component must reach 3:1. No color was changed.",
+    "decidedBy": "Renan",
+    "date": "2026-11-25"
   }
 ]

@@ -881,9 +881,13 @@ function tokensBody(d) {
             </div>
           </section>`);
 
+  // A token row id is the token name without "--" (anchors like #header-height point at the token). A group whose id is the same
+  // text (the group "Header height" and the token --header-height) would repeat the id, so its section id gets a suffix.
+  const tokenRowIds = new Set(Object.keys(d.byName || {}).map((n) => n.slice(2)));
   for (const g of d.groups) {
+    const sectionId = tokenRowIds.has(g.id) ? `${g.id}-section` : g.id;
     parts.push(`
-          <section class="docs-section" id="${esc(g.id)}" aria-labelledby="${esc(g.id)}-title">
+          <section class="docs-section" id="${esc(sectionId)}" aria-labelledby="${esc(g.id)}-title">
             <h2 class="text-h2" id="${esc(g.id)}-title" title="${esc(g.raw)}">${esc(g.label)}</h2>${g.description ? `\n            <p class="docs-section__desc">${esc(g.description)}</p>` : ''}
             ${groupTable(g, d)}
           </section>`);

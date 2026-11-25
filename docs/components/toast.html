@@ -120,6 +120,7 @@
               <p class="docs-ds-nav__label text-label">Overlays and data</p>
               <a class="docs-ds-nav__link" href="../components/table.html">Table</a>
               <a class="docs-ds-nav__link" href="../components/modal.html">Modal</a>
+              <a class="docs-ds-nav__link" href="../components/bottom-sheet.html">Bottom Sheet</a>
               <a class="docs-ds-nav__link" href="../components/popover.html">Popover</a>
               <a class="docs-ds-nav__link" href="../components/lightbox.html">Lightbox</a>
               <a class="docs-ds-nav__link" href="../components/avatar.html">Avatar</a>
@@ -262,7 +263,7 @@
 
           <section class="docs-ds-section" id="accessibility" aria-labelledby="accessibility-title">
             <h2 class="text-body-xs-semibold text-tertiary" id="accessibility-title">Accessibility</h2>
-            <p class="docs-ds-note">Error uses role=&quot;alert&quot;, Warning, Info and Success use role=&quot;status&quot;. The dismiss button needs an accessible name, and the type never relies on color alone: the glyph and the text say it too. Live-region roles (alert, status) announce content that is inserted into the page. An Alert already present when the page loads needs no role to be read: apply the role when you inject the message. MDN: developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role and .../status_role.</p>
+            <p class="docs-ds-note">Error uses role=&quot;alert&quot;, Warning, Info and Success use role=&quot;status&quot;. The dismiss button needs an accessible name, and the type never relies on color alone: the glyph and the text say it too. Live-region roles (alert, status) announce content that is inserted into the page. An Alert already present when the page loads needs no role to be read: apply the role when you inject the message. MDN: developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role and .../status_role. Over an open Modal or Bottom Sheet the Toast stays visible and works by pointer, but the keyboard cannot reach it, because the overlay makes the rest of the page inert. State only what was verified: a Toast that appears before the overlay opens, or outside the inert region, is covered; whether a screen reader announces a Toast shown over an overlay was not tested.</p>
           </section>
         </div>
     </div>

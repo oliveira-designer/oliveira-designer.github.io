@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <script>
+    (function () {
+      var KEY = 'hope-docs-theme';
+      var html = document.documentElement;
+      var mq = null;
+      try { mq = window.matchMedia('(prefers-color-scheme: dark)'); } catch (e) {}
+      var current = null; // in-memory choice, used when localStorage is blocked
+      function stored() {
+        if (current) return current;
+        try {
+          var v = localStorage.getItem(KEY);
+          return v === 'dark' || v === 'system' ? v : 'light';
+        } catch (e) { return 'light'; }
+      }
+      function resolve(choice) { return choice === 'system' ? (mq && mq.matches ? 'dark' : 'light') : choice; }
+      function apply(choice) { html.setAttribute('data-theme', resolve(choice)); }
+      window.hopeDocsTheme = {
+        get: stored,
+        set: function (choice) {
+          current = choice;
+          try { localStorage.setItem(KEY, choice); } catch (e) {}
+          apply(choice);
+        },
+        apply: apply,
+        mq: mq
+      };
+      apply(stored());
+    })();
+  </script>
+  <title>Bottom Sheet | Hope DS docs</title>
+  <link rel="icon" type="image/svg+xml" href="../../logos/logo-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/hope.css" />
+  <link rel="stylesheet" href="../docs.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top" role="banner">
+      <nav class="nav" role="navigation" aria-label="Docs navigation">
+        <a href="../index.html" class="nav__logo" aria-label="Hope DS docs home">
+          <img src="../../logos/logo-light-mode.svg" alt="Renan Moura" class="nav__logo-light" />
+          <img src="../../logos/logo-dark-mode.svg" alt="Renan Moura" class="nav__logo-dark" />
+        </a>
+        <div class="nav__controls">
+          <div class="nav__links">
+            <a href="../index.html" class="nav__link">Overview</a>
+            <a href="../tokens.html" class="nav__link">Tokens</a>
+            <a href="../components/index.html" class="nav__link nav__link--active" aria-current="page">Components</a>
+            <a href="../../index.html" class="nav__link">Portfolio site</a>
+          </div>
+          <div class="docs-theme" role="group" aria-label="Theme">
+            <button type="button" class="docs-theme__btn" data-theme-choice="light" aria-pressed="false">Light</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="dark" aria-pressed="false">Dark</button>
+            <button type="button" class="docs-theme__btn" data-theme-choice="system" aria-pressed="false">System</button>
+          </div>
+          <button class="nav__hamburger" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconBurger" aria-hidden="true" focusable="false"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg>
+            <svg viewBox="0 0 256 256" fill="currentColor" id="iconClose" aria-hidden="true" focusable="false" style="display:none"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
+          </button>
+        </div>
+      </nav>
+      <div class="nav__mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+        <a href="../index.html" class="nav__mobile-link">Overview</a>
+        <a href="../tokens.html" class="nav__mobile-link">Tokens</a>
+        <a href="../components/index.html" class="nav__mobile-link nav__link--active">Components</a>
+        <a href="../../index.html" class="nav__mobile-link">Portfolio site</a>
+      </div>
+    </header>
+
+  <main id="main" class="docs-main">
+    <div class="docs-ds-layout">
+        <aside class="docs-ds-sidebar">
+          <nav aria-label="Docs pages">
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label text-label">Pages</p>
+              <a class="docs-ds-nav__link" href="../index.html">Overview</a>
+              <a class="docs-ds-nav__link" href="../tokens.html">Tokens</a>
+              <a class="docs-ds-nav__link" href="../components/index.html">Components</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label text-label">Components</p>
+              <a class="docs-ds-nav__link" href="../components/button.html">Button</a>
+              <a class="docs-ds-nav__link" href="../components/badge.html">Badge</a>
+              <a class="docs-ds-nav__link" href="../components/link.html">Link</a>
+              <a class="docs-ds-nav__link" href="../components/separator.html">Separator</a>
+              <a class="docs-ds-nav__link" href="../components/input.html">Input</a>
+              <a class="docs-ds-nav__link" href="../components/textarea.html">Textarea</a>
+              <a class="docs-ds-nav__link" href="../components/select.html">Select</a>
+              <a class="docs-ds-nav__link" href="../components/checkbox.html">Checkbox</a>
+              <a class="docs-ds-nav__link" href="../components/radio.html">Radio</a>
+              <a class="docs-ds-nav__link" href="../components/switch.html">Switch</a>
+              <a class="docs-ds-nav__link" href="../components/alert.html">Alert</a>
+              <a class="docs-ds-nav__link" href="../components/toast.html">Toast</a>
+              <a class="docs-ds-nav__link" href="../components/banner.html">Banner</a>
+              <a class="docs-ds-nav__link" href="../components/empty-state.html">Empty state</a>
+              <a class="docs-ds-nav__link" href="../components/tooltip.html">Tooltip</a>
+              <a class="docs-ds-nav__link" href="../components/progress.html">Progress</a>
+              <a class="docs-ds-nav__link" href="../components/spinner.html">Spinner</a>
+              <a class="docs-ds-nav__link" href="../components/skeleton.html">Skeleton</a>
+              <a class="docs-ds-nav__link" href="../components/icon-button.html">Icon Button</a>
+              <a class="docs-ds-nav__link" href="../components/review.html">Review (temporary)</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label text-label">Navigation</p>
+              <a class="docs-ds-nav__link" href="../components/tabs.html">Tabs</a>
+              <a class="docs-ds-nav__link" href="../components/breadcrumb.html">Breadcrumb</a>
+              <a class="docs-ds-nav__link" href="../components/pagination.html">Pagination</a>
+              <a class="docs-ds-nav__link" href="../components/menu.html">Menu</a>
+            </div>
+            <div class="docs-ds-nav__group">
+              <p class="docs-ds-nav__label text-label">Overlays and data</p>
+              <a class="docs-ds-nav__link" href="../components/table.html">Table</a>
+              <a class="docs-ds-nav__link" href="../components/modal.html">Modal</a>
+              <a class="docs-ds-nav__link" href="../components/bottom-sheet.html" aria-current="page">Bottom Sheet</a>
+              <a class="docs-ds-nav__link" href="../components/popover.html">Popover</a>
+              <a class="docs-ds-nav__link" href="../components/lightbox.html">Lightbox</a>
+              <a class="docs-ds-nav__link" href="../components/avatar.html">Avatar</a>
+              <a class="docs-ds-nav__link" href="../components/tag.html">Tag</a>
+              <a class="docs-ds-nav__link" href="../components/accordion.html">Accordion</a>
+            </div>
+          </nav>
+        </aside>
+        <div class="docs-ds-content">
+          <header class="docs-ds-head">
+            <h1 class="text-h1">Bottom Sheet</h1>
+            <p class="docs-ds-desc">A modal panel anchored to the bottom edge of the screen, for narrow and touch screens: a grabber, a title, a short body and a required footer with the actions stacked at full width. It blocks the page until the person decides.</p>
+          </header>
+
+          <section class="docs-ds-section" id="example" aria-labelledby="example-title">
+            <h2 class="text-body-xs-semibold text-tertiary" id="example-title">Live example</h2>
+            <div class="docs-ds-card">
+              <div class="docs-ds-preview">
+                <!-- demo:start --><button type="button" class="btn btn--secondary" data-bottom-sheet-open="sheet-demo">Open bottom sheet</button>
+                  <button type="button" class="btn btn--secondary" data-bottom-sheet-open="sheet-demo-destructive">Open destructive bottom sheet</button>
+                  <div class="bottom-sheet" role="dialog" aria-modal="true" id="sheet-demo" aria-labelledby="sheet-demo-title" aria-describedby="sheet-demo-body" hidden>
+                    <div class="bottom-sheet__handle"><span class="bottom-sheet__grabber" aria-hidden="true"></span></div>
+                    <div class="bottom-sheet__content">
+                      <div class="bottom-sheet__header">
+                        <h2 class="bottom-sheet__title" id="sheet-demo-title">Publish changes?</h2>
+                      </div>
+                      <p class="bottom-sheet__body" id="sheet-demo-body">The changes become visible to the whole team. You can undo the publication later.</p>
+                    </div>
+                    <div class="bottom-sheet__footer">
+                      <button type="button" class="btn btn--primary" data-bottom-sheet-close>Publish</button>
+                      <button type="button" class="btn btn--secondary" data-bottom-sheet-close>Cancel</button>
+                    </div>
+                  </div>
+                  <div class="bottom-sheet" role="dialog" aria-modal="true" id="sheet-demo-destructive" aria-labelledby="sheet-demo-destructive-title" aria-describedby="sheet-demo-destructive-body" hidden>
+                    <div class="bottom-sheet__handle"><span class="bottom-sheet__grabber" aria-hidden="true"></span></div>
+                    <div class="bottom-sheet__content">
+                      <div class="bottom-sheet__header">
+                        <h2 class="bottom-sheet__title" id="sheet-demo-destructive-title">Delete project?</h2>
+                      </div>
+                      <p class="bottom-sheet__body" id="sheet-demo-destructive-body">The project and all its files will be deleted. This action cannot be undone.</p>
+                    </div>
+                    <div class="bottom-sheet__footer">
+                      <button type="button" class="btn btn--destructive" data-bottom-sheet-close>Delete</button>
+                      <button type="button" class="btn btn--secondary" data-bottom-sheet-close data-bottom-sheet-initial-focus>Cancel</button>
+                    </div>
+                  </div><!-- demo:end -->
+              </div>
+            </div>
+            <details class="docs-ds-code">
+              <summary>HTML</summary>
+<pre class="docs-ds-code__block">&lt;button type=&quot;button&quot; class=&quot;btn btn--secondary&quot; data-bottom-sheet-open=&quot;sheet-demo&quot;&gt;Open bottom sheet&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn--secondary&quot; data-bottom-sheet-open=&quot;sheet-demo-destructive&quot;&gt;Open destructive bottom sheet&lt;/button&gt;
+&lt;div class=&quot;bottom-sheet&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; id=&quot;sheet-demo&quot; aria-labelledby=&quot;sheet-demo-title&quot; aria-describedby=&quot;sheet-demo-body&quot; hidden&gt;
+  &lt;div class=&quot;bottom-sheet__handle&quot;&gt;&lt;span class=&quot;bottom-sheet__grabber&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;bottom-sheet__content&quot;&gt;
+    &lt;div class=&quot;bottom-sheet__header&quot;&gt;
+      &lt;h2 class=&quot;bottom-sheet__title&quot; id=&quot;sheet-demo-title&quot;&gt;Publish changes?&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;bottom-sheet__body&quot; id=&quot;sheet-demo-body&quot;&gt;The changes become visible to the whole team. You can undo the publication later.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;bottom-sheet__footer&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn--primary&quot; data-bottom-sheet-close&gt;Publish&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn--secondary&quot; data-bottom-sheet-close&gt;Cancel&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;bottom-sheet&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; id=&quot;sheet-demo-destructive&quot; aria-labelledby=&quot;sheet-demo-destructive-title&quot; aria-describedby=&quot;sheet-demo-destructive-body&quot; hidden&gt;
+  &lt;div class=&quot;bottom-sheet__handle&quot;&gt;&lt;span class=&quot;bottom-sheet__grabber&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;bottom-sheet__content&quot;&gt;
+    &lt;div class=&quot;bottom-sheet__header&quot;&gt;
+      &lt;h2 class=&quot;bottom-sheet__title&quot; id=&quot;sheet-demo-destructive-title&quot;&gt;Delete project?&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;bottom-sheet__body&quot; id=&quot;sheet-demo-destructive-body&quot;&gt;The project and all its files will be deleted. This action cannot be undone.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;bottom-sheet__footer&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn--destructive&quot; data-bottom-sheet-close&gt;Delete&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn--secondary&quot; data-bottom-sheet-close data-bottom-sheet-initial-focus&gt;Cancel&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </details>
+          </section>
+
+          <section class="docs-ds-section" id="when" aria-labelledby="when-title">
+            <h2 class="text-body-xs-semibold text-tertiary" id="when-title">When to use</h2>
+            <ul class="docs-ds-list"><li>A short decision on a narrow or touch screen: confirm, cancel, choose.</li><li>Keep it short and about a single decision.</li><li>A destructive confirmation uses the destructive Button as the main action, and the focus starts on Cancel.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="when-not" aria-labelledby="when-not-title">
+            <h2 class="text-body-xs-semibold text-tertiary" id="when-not-title">When not to use</h2>
+            <ul class="docs-ds-list"><li>A wide screen: use the Modal.</li><li>Extra context tied to an element, or a small control: use a Popover, which does not block the page.</li><li>A list of actions on an object: use a Menu.</li><li>A long form or a flow with several steps: use a page.</li><li>A message the person must read and cannot dismiss (an error or a mandatory reading): not available yet, see the gap below.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="anatomy" aria-labelledby="anatomy-title">
+            <h2 class="text-body-xs-semibold text-tertiary" id="anatomy-title">Anatomy</h2>
+            <ul class="docs-ds-list"><li>Scrim: a full-screen layer behind the panel (--color-bg-scrim), the same as the Modal. A click on it does not close the sheet.</li><li>Panel: the dialog, as wide as the screen and anchored to its bottom edge, with a border on three sides, a radius of 16 on the top corners and Shadow/lg.</li><li>Grabber row: a 32 by 4 bar in Border/Utilities/Input. It is decorative (aria-hidden), not focusable and not a button.</li><li>Content: the title (Heading/H2) and the supporting text (Body/Regular/body-sm, Text/Default/Secondary). There is no close X.</li><li>Footer (required): the primary Button on top and the secondary Button below, both at full width.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="states" aria-labelledby="states-title">
+            <h2 class="text-body-xs-semibold text-tertiary" id="states-title">States</h2>
+            <div class="data-table" role="region" aria-labelledby="bottom-sheet-states-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="bottom-sheet-states-caption">Bottom Sheet states, what changes in each and the tokens involved</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">State</th>
+        <th scope="col" class="data-table__head-cell">What changes</th>
+        <th scope="col" class="data-table__head-cell">Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header">Closed</th>
+        <td class="data-table__cell">The dialog and the scrim have the hidden attribute. Nothing is rendered.</td>
+        <td class="data-table__cell"><span class="docs-muted">none</span></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Open</th>
+        <td class="data-table__cell">The scrim covers the page, the sheet sits on the bottom edge, the page behind is inert and its scroll is locked.</td>
+        <td class="data-table__cell"><code>--color-bg-scrim</code> <code>--z-modal-scrim</code> <code>--z-modal</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Dragging</th>
+        <td class="data-table__cell">While a pointer drags the grabber row or the title, the panel follows it down (never above its resting place). It has no transition: it moves with the pointer and goes back at once.</td>
+        <td class="data-table__cell"><span class="docs-muted">none</span></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Short screen</th>
+        <td class="data-table__cell">The panel is as tall as its content up to the screen minus 16px; the body scrolls, the grabber row, the title and the footer stay in view.</td>
+        <td class="data-table__cell"><code>--space-4</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Home indicator</th>
+        <td class="data-table__cell">The bottom padding adds env(safe-area-inset-bottom), which is 0 unless the page has viewport-fit=cover.</td>
+        <td class="data-table__cell"><code>--space-6</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          </section>
+
+          <section class="docs-ds-section" id="keyboard" aria-labelledby="keyboard-title">
+            <h2 class="text-body-xs-semibold text-tertiary" id="keyboard-title">Keyboard and ARIA</h2>
+            <div class="data-table" role="region" aria-labelledby="bottom-sheet-keyboard-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="bottom-sheet-keyboard-caption">Bottom Sheet keyboard interaction</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Key</th>
+        <th scope="col" class="data-table__head-cell">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header">Tab and Shift+Tab</th>
+        <td class="data-table__cell">Move through the controls of the sheet. The focus wraps from the last to the first and cannot leave the sheet.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Escape</th>
+        <td class="data-table__cell">Closes the sheet and returns the focus to the trigger.</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Enter and Space</th>
+        <td class="data-table__cell">Activate the focused button (the primary action or Cancel).</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Swipe down (pointer)</th>
+        <td class="data-table__cell">Drag the grabber row or the title down: past 30% of the height, or a fast flick, it closes like Cancel. It is an enhancement: the sheet works without any drag.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+            <ul class="docs-ds-list"><li>The panel has role=&quot;dialog&quot; and aria-modal=&quot;true&quot;.</li><li>aria-labelledby points at the title and aria-describedby at the body.</li><li>The grabber is decorative: aria-hidden=&quot;true&quot;, not focusable. The swipe down is not announced; Cancel is the way out that does not depend on a gesture.</li><li>The focus moves into the sheet on open (to the first control, or to the element with data-bottom-sheet-initial-focus) and returns to the trigger on close. In a destructive confirmation, put data-bottom-sheet-initial-focus on Cancel, because the primary action comes first in the DOM.</li><li>The page behind is inert and the scroll is locked while the sheet is open.</li><li>When the body scrolls it gets tabindex=&quot;0&quot;, so the keyboard can scroll it.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="variants" aria-labelledby="variants-title">
+            <h2 class="text-body-xs-semibold text-tertiary" id="variants-title">Classes and tokens</h2>
+            <div class="data-table" role="region" aria-labelledby="bottom-sheet-variants-caption" tabindex="0">
+  <table class="data-table__grid">
+    <caption class="data-table__caption" id="bottom-sheet-variants-caption">Bottom Sheet classes, what each is for and the tokens its rule uses</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="data-table__head-cell">Class</th>
+        <th scope="col" class="data-table__head-cell">Used for</th>
+        <th scope="col" class="data-table__head-cell">Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.bottom-sheet</code></th>
+        <td class="data-table__cell">The dialog panel: full width, anchored to the bottom, border on three sides, radius on the top corners, shadow, layer 200.</td>
+        <td class="data-table__cell"><code>--z-modal</code> <code>--space-5</code> <code>--space-4</code> <code>--space-2</code> <code>--space-6</code> <code>--font-body</code> <code>--color-bg</code> <code>--border-width-normal</code> <code>--color-border</code> <code>--radius-lg</code> <code>--shadow-lg</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.bottom-sheet__handle</code></th>
+        <td class="data-table__cell">The grabber row, 16 high, a drag region.</td>
+        <td class="data-table__cell"><code>--space-4</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.bottom-sheet__grabber</code></th>
+        <td class="data-table__cell">The 32 by 4 bar, decorative.</td>
+        <td class="data-table__cell"><code>--space-8</code> <code>--space-1</code> <code>--color-border-input</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.bottom-sheet__content</code></th>
+        <td class="data-table__cell">Holds the title and the body.</td>
+        <td class="data-table__cell"><code>--space-4</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.bottom-sheet__header</code></th>
+        <td class="data-table__cell">Holds the title, a drag region.</td>
+        <td class="data-table__cell"><code>--space-3</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.bottom-sheet__title</code></th>
+        <td class="data-table__cell">The title, Heading/H2.</td>
+        <td class="data-table__cell"><code>--font-display</code> <code>--fs-h2</code> <code>--fw-bold</code> <code>--lh-130</code> <code>--ls-tight</code> <code>--color-text-1</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.bottom-sheet__body</code></th>
+        <td class="data-table__cell">The supporting text, scrolls on a short screen.</td>
+        <td class="data-table__cell"><code>--space-1</code> <code>--fs-body-sm</code> <code>--fw-regular</code> <code>--lh-160</code> <code>--color-text-2</code></td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header"><code>.bottom-sheet__footer</code></th>
+        <td class="data-table__cell">The required column of actions, primary first.</td>
+        <td class="data-table__cell"><code>--space-3</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          </section>
+        </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconBurger = document.getElementById('iconBurger');
+      const iconClose = document.getElementById('iconClose');
+
+      const theme = window.hopeDocsTheme;
+      const choices = document.querySelectorAll('[data-theme-choice]');
+      function syncSwitch() {
+        const current = theme ? theme.get() : 'light';
+        choices.forEach(function (btn) {
+          btn.setAttribute('aria-pressed', String(btn.getAttribute('data-theme-choice') === current));
+        });
+      }
+      function setMenu(open) {
+        mobileMenu.classList.toggle('is-open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        iconBurger.style.display = open ? 'none' : 'block';
+        iconClose.style.display = open ? 'block' : 'none';
+      }
+
+      choices.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (theme) theme.set(btn.getAttribute('data-theme-choice'));
+          syncSwitch();
+        });
+      });
+      if (theme && theme.mq) {
+        const onChange = function () { if (theme.get() === 'system') theme.apply('system'); };
+        try { theme.mq.addEventListener('change', onChange); } catch (e) { try { theme.mq.addListener(onChange); } catch (e2) {} }
+      }
+      syncSwitch();
+
+      menuToggle.addEventListener('click', function () {
+        setMenu(!mobileMenu.classList.contains('is-open'));
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { setMenu(false); });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+          setMenu(false);
+          menuToggle.focus();
+        }
+      });
+    })();
+  </script>
+  <script src="../../js/overlay.js"></script>
+  <script src="../../js/bottom-sheet.js"></script>
+</body>
+</html>

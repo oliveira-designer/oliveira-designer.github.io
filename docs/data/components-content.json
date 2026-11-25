@@ -972,7 +972,8 @@
     "Short feedback after an action, such as \"Saved\" or \"Message sent\"."
   ],
   "whenNotToUse": [
-    "A message that must stay until read: use Alert."
+    "A message that must stay until read: use Alert.",
+    "An essential action or the only copy of a message while a Modal or Bottom Sheet is open: the Toast is informational there. Tab does not reach it (the page is inert), so put anything the person must act on inside the dialog."
   ],
   "properties": [
     {
@@ -984,7 +985,7 @@
         "Error",
         "Info"
       ],
-      "default": "Default"
+      "default": "Info"
     },
     {
       "name": "Message",
@@ -1036,7 +1037,7 @@
     "contrastText": [],
     "contrastNonText": [],
     "note": "Error uses role=\"alert\", Warning, Info and Success use role=\"status\".",
-    "meaning": "The dismiss button needs an accessible name, and the type never relies on color alone: the glyph and the text say it too. Live-region roles (alert, status) announce content that is inserted into the page. An Alert already present when the page loads needs no role to be read: apply the role when you inject the message. MDN: developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role and .../status_role."
+    "meaning": "The dismiss button needs an accessible name, and the type never relies on color alone: the glyph and the text say it too. Live-region roles (alert, status) announce content that is inserted into the page. An Alert already present when the page loads needs no role to be read: apply the role when you inject the message. MDN: developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alert_role and .../status_role. Over an open Modal or Bottom Sheet the Toast stays visible and works by pointer, but the keyboard cannot reach it, because the overlay makes the rest of the page inert. State only what was verified: a Toast that appears before the overlay opens, or outside the inert region, is covered; whether a screen reader announces a Toast shown over an overlay was not tested."
   },
   "example": {
     "markup": "<div class=\"toast toast--success\" role=\"status\">\n  <span class=\"toast__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z\"/></svg></span>\n  <div class=\"toast__content\">\n    <p class=\"toast__message\">Message</p>\n    <p class=\"toast__description\">Short supporting text.</p>\n  </div>\n  <a class=\"toast__action\" href=\"#example\">Undo</a>\n  <button type=\"button\" class=\"toast__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>\n<div class=\"toast toast--warning\" role=\"status\">\n  <span class=\"toast__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z\"/></svg></span>\n  <div class=\"toast__content\">\n    <p class=\"toast__message\">Message</p>\n    <p class=\"toast__description\">Short supporting text.</p>\n  </div>\n  <a class=\"toast__action\" href=\"#example\">Undo</a>\n  <button type=\"button\" class=\"toast__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>\n<div class=\"toast toast--error\" role=\"alert\">\n  <span class=\"toast__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z\"/></svg></span>\n  <div class=\"toast__content\">\n    <p class=\"toast__message\">Message</p>\n    <p class=\"toast__description\">Short supporting text.</p>\n  </div>\n  <a class=\"toast__action\" href=\"#example\">Undo</a>\n  <button type=\"button\" class=\"toast__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>\n<div class=\"toast toast--info\" role=\"status\">\n  <span class=\"toast__icon\" aria-hidden=\"true\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z\"/></svg></span>\n  <div class=\"toast__content\">\n    <p class=\"toast__message\">Message</p>\n    <p class=\"toast__description\">Short supporting text.</p>\n  </div>\n  <a class=\"toast__action\" href=\"#example\">Undo</a>\n  <button type=\"button\" class=\"toast__dismiss\" aria-label=\"Dismiss\"><svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg></button>\n</div>"
@@ -1072,6 +1073,7 @@
       "status": "measured",
       "text": "The Toast border (Border/Default/Default) is 1.29:1 on the page background in Light and 1.28:1 in Dark, under the 3:1 of WCAG 1.4.11. The shadow (Shadow/lg) does not count as a boundary for that criterion. The text and icons pass."
     },
+    {"id": "toast-over-overlay-screen-reader", "status": "unverified", "text": "Whether a screen reader announces a Toast shown over an open Modal or Bottom Sheet was not tested. Verified in the browser: the Toast stays visible above the scrim (layer 500 over 200), a pointer can reach it, and Tab does not."},
     {"id": "toast-dismiss-target-size", "status": "measured", "text": "The dismiss button is 16 by 16 as in Figma. A transparent ::after grows the hit area to 24 by 24 (WCAG 2.5.8). The action sits about 12px from the dismiss, so the grown area (4px beyond the button) does not overlap the action."}
   ],
   "unverified": []
@@ -1772,7 +1774,8 @@
     "Extra context tied to an element, or a small control: use a Popover, which does not block the page.",
     "A list of actions on an object: use a Menu.",
     "A long form or a flow with several steps: use a page.",
-    "Zooming an image: use a Lightbox."
+    "Zooming an image: use a Lightbox.",
+    "A narrow or touch screen where the dialog should come from the bottom edge: use Bottom Sheet (same content, different shape)."
   ],
   "properties": [
     {
@@ -2010,6 +2013,270 @@
   "unverified": [],
   "mapKeys": [
     "Modal"
+  ]
+},
+{
+  "slug": "bottom-sheet",
+  "name": "Bottom Sheet",
+  "navGroup": "Overlays and data",
+  "scripts": [
+    "overlay.js",
+    "bottom-sheet.js"
+  ],
+  "figma": {
+    "pageId": "2602:132",
+    "sets": [
+      {
+        "name": "Bottom Sheet",
+        "id": "2602:134"
+      }
+    ]
+  },
+  "summary": "A modal panel anchored to the bottom edge of the screen, for narrow and touch screens: a grabber, a title, a short body and a required footer with the actions stacked at full width. It blocks the page until the person decides.",
+  "whenToUse": [
+    "A short decision on a narrow or touch screen: confirm, cancel, choose.",
+    "Keep it short and about a single decision.",
+    "A destructive confirmation uses the destructive Button as the main action, and the focus starts on Cancel."
+  ],
+  "whenNotToUse": [
+    "A wide screen: use the Modal.",
+    "Extra context tied to an element, or a small control: use a Popover, which does not block the page.",
+    "A list of actions on an object: use a Menu.",
+    "A long form or a flow with several steps: use a page.",
+    "A message the person must read and cannot dismiss (an error or a mandatory reading): not available yet, see the gap below."
+  ],
+  "properties": [
+    {
+      "name": "Title",
+      "type": "text",
+      "default": "Sheet title"
+    },
+    {
+      "name": "Body",
+      "type": "text",
+      "default": "Supporting text that explains what happens next. Keep it short and about a single decision."
+    }
+  ],
+  "layout": {
+    "panel": {
+      "width": "the screen width (390 in the Figma specimen: 340 of content + 48 of padding + 2 of side border, strokesIncludedInLayout true)",
+      "padding": "8 top (Spacing/space-2), 24 right, bottom and left (Spacing/space-6)",
+      "gap": "Spacing/space-5 between the grabber row, the content and the footer",
+      "radius": "Radius/radius-lg on the top corners only, 0 at the bottom",
+      "border": "1px Border/Default/Default on the top, left and right, none at the bottom",
+      "shadow": "Shadow/lg",
+      "layers": "Z-index/z-modal-scrim (100) for the scrim, Z-index/z-modal (200) for the panel, below the Toast (500)"
+    },
+    "grabber": {
+      "row": "16 high, content centered",
+      "bar": "32 by 4, radius 2, Border/Utilities/Input, decorative"
+    },
+    "content": {
+      "gap": "Spacing/space-4",
+      "title": "Heading/H2",
+      "body": "Body/Regular/body-sm"
+    },
+    "footer": {
+      "layout": "a column, gap Spacing/space-3",
+      "buttons": "Primary on top and Secondary below, Button Medium (45 high) at full width, required"
+    }
+  },
+  "stateTokens": {
+    "Panel": {
+      "default": {
+        "fill": "Background/Default/Default",
+        "stroke": "Border/Default/Default"
+      }
+    },
+    "Scrim": {
+      "default": {
+        "fill": "Background/Utilities/Scrim"
+      }
+    },
+    "Grabber": {
+      "default": {
+        "fill": "Border/Utilities/Input"
+      }
+    },
+    "Title": {
+      "default": {
+        "text": "Text/Default/Default, Heading/H2"
+      }
+    },
+    "Body": {
+      "default": {
+        "text": "Text/Default/Secondary, Body/Regular/body-sm"
+      }
+    }
+  },
+  "anatomy": [
+    "Scrim: a full-screen layer behind the panel (--color-bg-scrim), the same as the Modal. A click on it does not close the sheet.",
+    "Panel: the dialog, as wide as the screen and anchored to its bottom edge, with a border on three sides, a radius of 16 on the top corners and Shadow/lg.",
+    "Grabber row: a 32 by 4 bar in Border/Utilities/Input. It is decorative (aria-hidden), not focusable and not a button.",
+    "Content: the title (Heading/H2) and the supporting text (Body/Regular/body-sm, Text/Default/Secondary). There is no close X.",
+    "Footer (required): the primary Button on top and the secondary Button below, both at full width."
+  ],
+  "states": [
+    [
+      "Closed",
+      "The dialog and the scrim have the hidden attribute. Nothing is rendered.",
+      "none"
+    ],
+    [
+      "Open",
+      "The scrim covers the page, the sheet sits on the bottom edge, the page behind is inert and its scroll is locked.",
+      "--color-bg-scrim, --z-modal-scrim, --z-modal"
+    ],
+    [
+      "Dragging",
+      "While a pointer drags the grabber row or the title, the panel follows it down (never above its resting place). It has no transition: it moves with the pointer and goes back at once.",
+      "none"
+    ],
+    [
+      "Short screen",
+      "The panel is as tall as its content up to the screen minus 16px; the body scrolls, the grabber row, the title and the footer stay in view.",
+      "--space-4"
+    ],
+    [
+      "Home indicator",
+      "The bottom padding adds env(safe-area-inset-bottom), which is 0 unless the page has viewport-fit=cover.",
+      "--space-6"
+    ]
+  ],
+  "keyboard": [
+    [
+      "Tab and Shift+Tab",
+      "Move through the controls of the sheet. The focus wraps from the last to the first and cannot leave the sheet."
+    ],
+    [
+      "Escape",
+      "Closes the sheet and returns the focus to the trigger."
+    ],
+    [
+      "Enter and Space",
+      "Activate the focused button (the primary action or Cancel)."
+    ],
+    [
+      "Swipe down (pointer)",
+      "Drag the grabber row or the title down: past 30% of the height, or a fast flick, it closes like Cancel. It is an enhancement: the sheet works without any drag."
+    ]
+  ],
+  "aria": [
+    "The panel has role=\"dialog\" and aria-modal=\"true\".",
+    "aria-labelledby points at the title and aria-describedby at the body.",
+    "The grabber is decorative: aria-hidden=\"true\", not focusable. The swipe down is not announced; Cancel is the way out that does not depend on a gesture.",
+    "The focus moves into the sheet on open (to the first control, or to the element with data-bottom-sheet-initial-focus) and returns to the trigger on close. In a destructive confirmation, put data-bottom-sheet-initial-focus on Cancel, because the primary action comes first in the DOM.",
+    "The page behind is inert and the scroll is locked while the sheet is open.",
+    "When the body scrolls it gets tabindex=\"0\", so the keyboard can scroll it."
+  ],
+  "accessibility": {
+    "contrastText": [
+      {
+        "case": "Title (Text/Default/Default on the panel)",
+        "light": 19.42,
+        "dark": 17.06
+      },
+      {
+        "case": "Body (Text/Default/Secondary on the panel)",
+        "light": 10.76,
+        "dark": 8.37
+      }
+    ],
+    "contrastNonText": [
+      {
+        "case": "Grabber (Border/Utilities/Input) vs the panel (decorative, 3:1 shown for reference)",
+        "light": 3.12,
+        "dark": 3.19
+      },
+      {
+        "case": "Panel border vs the panel",
+        "light": 1.29,
+        "dark": 1.28
+      },
+      {
+        "case": "Panel border vs the scrim over the page",
+        "light": 2.82,
+        "dark": 1.49
+      },
+      {
+        "case": "Panel vs the scrim over the page",
+        "light": 3.64,
+        "dark": 1.16
+      }
+    ],
+    "targetSize": "The footer buttons are 45 high and full width (the Button Medium), above WCAG 2.5.8.",
+    "focus": "The focus moves into the sheet on open and is trapped there. The buttons take the shared ring (2px, offset 2px).",
+    "note": "role=\"dialog\" with aria-modal=\"true\", aria-labelledby on the title and aria-describedby on the body. Tab cycles inside the sheet, Escape closes it, and the focus returns to the trigger. The page behind is inert and its scroll is locked. A click on the scrim does not close the sheet. With viewport-fit=cover on the page the bottom padding adds the safe-area inset so the buttons clear the home indicator; no page of this site sets it today, so the inset is 0 here. The swipe down is a pointer gesture and has no keyboard or screen-reader equivalent beyond the Cancel button and Escape, which is why it is never the only way out.",
+    "meaning": "A Bottom Sheet interrupts the person on purpose, so it has to be answered: the Cancel button and Escape are the ways out, and the swipe down is only a reinforcement, so the grabber is decorative and nothing depends on a gesture. The destructive action is carried by the destructive Button and its label, not by color alone."
+  },
+  "example": {
+    "markup": "<button type=\"button\" class=\"btn btn--secondary\" data-bottom-sheet-open=\"sheet-demo\">Open bottom sheet</button>\n<button type=\"button\" class=\"btn btn--secondary\" data-bottom-sheet-open=\"sheet-demo-destructive\">Open destructive bottom sheet</button>\n<div class=\"bottom-sheet\" role=\"dialog\" aria-modal=\"true\" id=\"sheet-demo\" aria-labelledby=\"sheet-demo-title\" aria-describedby=\"sheet-demo-body\" hidden>\n  <div class=\"bottom-sheet__handle\"><span class=\"bottom-sheet__grabber\" aria-hidden=\"true\"></span></div>\n  <div class=\"bottom-sheet__content\">\n    <div class=\"bottom-sheet__header\">\n      <h2 class=\"bottom-sheet__title\" id=\"sheet-demo-title\">Publish changes?</h2>\n    </div>\n    <p class=\"bottom-sheet__body\" id=\"sheet-demo-body\">The changes become visible to the whole team. You can undo the publication later.</p>\n  </div>\n  <div class=\"bottom-sheet__footer\">\n    <button type=\"button\" class=\"btn btn--primary\" data-bottom-sheet-close>Publish</button>\n    <button type=\"button\" class=\"btn btn--secondary\" data-bottom-sheet-close>Cancel</button>\n  </div>\n</div>\n<div class=\"bottom-sheet\" role=\"dialog\" aria-modal=\"true\" id=\"sheet-demo-destructive\" aria-labelledby=\"sheet-demo-destructive-title\" aria-describedby=\"sheet-demo-destructive-body\" hidden>\n  <div class=\"bottom-sheet__handle\"><span class=\"bottom-sheet__grabber\" aria-hidden=\"true\"></span></div>\n  <div class=\"bottom-sheet__content\">\n    <div class=\"bottom-sheet__header\">\n      <h2 class=\"bottom-sheet__title\" id=\"sheet-demo-destructive-title\">Delete project?</h2>\n    </div>\n    <p class=\"bottom-sheet__body\" id=\"sheet-demo-destructive-body\">The project and all its files will be deleted. This action cannot be undone.</p>\n  </div>\n  <div class=\"bottom-sheet__footer\">\n    <button type=\"button\" class=\"btn btn--destructive\" data-bottom-sheet-close>Delete</button>\n    <button type=\"button\" class=\"btn btn--secondary\" data-bottom-sheet-close data-bottom-sheet-initial-focus>Cancel</button>\n  </div>\n</div>"
+  },
+  "essential": [
+    "when",
+    "whenNot",
+    "anatomy",
+    "states",
+    "keyboard",
+    "variants",
+    "notes"
+  ],
+  "classRoles": {
+    ".bottom-sheet": "The dialog panel: full width, anchored to the bottom, border on three sides, radius on the top corners, shadow, layer 200.",
+    ".modal-scrim": "The full-screen scrim behind the panel (the Modal scrim), layer 100. Created by js/bottom-sheet.js.",
+    ".bottom-sheet__handle": "The grabber row, 16 high, a drag region.",
+    ".bottom-sheet__grabber": "The 32 by 4 bar, decorative.",
+    ".bottom-sheet__content": "Holds the title and the body.",
+    ".bottom-sheet__header": "Holds the title, a drag region.",
+    ".bottom-sheet__title": "The title, Heading/H2.",
+    ".bottom-sheet__body": "The supporting text, scrolls on a short screen.",
+    ".bottom-sheet__footer": "The required column of actions, primary first."
+  },
+  "knownGaps": [
+    {
+      "id": "bottom-sheet-non-dismissible",
+      "status": "documented",
+      "text": "A mode where the person must act, for blocking or error cases: no gesture, no Escape, only the primary action. It needs a Figma decision (a property for the secondary action) and is not built."
+    },
+    {
+      "id": "bottom-sheet-detents",
+      "status": "documented",
+      "text": "Intermediate heights (detents) are not part of the component. The sheet is as tall as its content, up to the screen."
+    },
+    {
+      "id": "bottom-sheet-action-list",
+      "status": "documented",
+      "text": "List content (a sheet of actions) is a future evolution. Today the body is free content and the footer has two buttons."
+    },
+    {
+      "id": "bottom-sheet-dark-edge-contrast",
+      "status": "measured",
+      "text": "In Dark the panel against the scrim over the page is 1.16:1 and its border against the scrim 1.49:1, under 3:1 (WCAG 1.4.11 reading is an inference, D-39). In Light they are 3.64:1 and 2.82:1. The shadow does not count as a boundary. Same family as the Modal (D-43). No color was changed."
+    },
+    {
+      "id": "bottom-sheet-border-contrast",
+      "status": "measured",
+      "text": "The panel border (Border/Default/Default) against the panel is 1.29:1 in Light and 1.28:1 in Dark. The panel is separated from the page by the scrim, the shadow and its position at the screen edge."
+    },
+    {
+      "id": "bottom-sheet-safe-area",
+      "status": "documented",
+      "text": "The bottom padding includes env(safe-area-inset-bottom). No page of the site sets viewport-fit=cover, so the inset is 0 today and was not verified on a device with a home indicator."
+    },
+    {
+      "id": "bottom-sheet-wide-screens",
+      "status": "measured",
+      "text": "On a wide screen the panel keeps the Figma rule (the screen width) and spans the whole width. Use the Modal there. No inset or maximum width was invented."
+    },
+    {
+      "id": "bottom-sheet-title-size",
+      "status": "measured",
+      "text": "The Figma specimen shows the title at 22px (the Desktop value of size/h2, no variable mode set on the frame). The CSS uses --fs-h2, which is the Mobile value (18px) on a 390 wide screen. Renan decides if the specimen or the token wins."
+    }
+  ],
+  "unverified": [],
+  "mapKeys": [
+    "BottomSheet"
   ]
 },
 {

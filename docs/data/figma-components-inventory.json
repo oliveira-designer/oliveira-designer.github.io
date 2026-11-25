@@ -27,6 +27,7 @@
 {"group": "Navigation", "page": "Menu", "pageId": "2413:344", "name": "Menu item", "id": "2413:380", "variants": 10, "props": {"Tone": ["Default", "Danger"], "State": ["Default", "Hover", "Focus", "Selected", "Disabled"], "other": ["Label"]}, "buildAfter": []},
 {"group": "Navigation", "page": "Menu", "pageId": "2413:344", "name": "Menu", "id": "2413:381", "variants": 1, "props": {"other": []}, "buildAfter": ["Menu item"]},
 {"group": "Overlays and data", "page": "Modal", "pageId": "2413:471", "name": "Modal", "id": "2413:472", "variants": 1, "props": {"other": []}, "buildAfter": ["Button", "Icon Button"]},
+{"group": "Overlays and data", "page": "Bottom Sheet", "pageId": "2602:132", "name": "Bottom Sheet", "id": "2602:134", "variants": 1, "props": {"other": ["Title", "Body"]}, "buildAfter": ["Button", "Modal"]},
 {"group": "Overlays and data", "page": "Popover", "pageId": "2413:572", "name": "Popover", "id": "2413:573", "variants": 1, "props": {"other": []}, "buildAfter": []},
 {"group": "Overlays and data", "page": "Lightbox", "pageId": "2456:3", "name": "Lightbox", "id": "2456:4", "variants": 1, "props": {"other": []}, "buildAfter": [], "note": "A lightbox section already exists in css/components/lightbox.css."},
 {"group": "Overlays and data", "page": "Lightbox", "pageId": "2456:3", "name": "Lightbox close", "id": "2570:1148", "variants": 3, "props": {"State": ["Default", "Hover", "Focus"], "other": []}, "buildAfter": [], "note": "Added 2026-11-24 (component set on the Lightbox page). The close button of the Lightbox; no Disabled."},

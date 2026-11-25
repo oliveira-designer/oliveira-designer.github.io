@@ -75,6 +75,7 @@ const MAP_KEY = {
   'Table Header Cell': 'TableHeaderCell',
   'Table Cell': 'TableCell',
   Modal: 'Modal',
+  'Bottom Sheet': 'BottomSheet',
   Popover: 'Popover',
   Avatar: 'Avatar',
   Tag: 'Tag',

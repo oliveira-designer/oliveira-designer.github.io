@@ -120,6 +120,7 @@
               <p class="docs-ds-nav__label text-label">Overlays and data</p>
               <a class="docs-ds-nav__link" href="components/table.html">Table</a>
               <a class="docs-ds-nav__link" href="components/modal.html">Modal</a>
+              <a class="docs-ds-nav__link" href="components/bottom-sheet.html">Bottom Sheet</a>
               <a class="docs-ds-nav__link" href="components/popover.html">Popover</a>
               <a class="docs-ds-nav__link" href="components/lightbox.html">Lightbox</a>
               <a class="docs-ds-nav__link" href="components/avatar.html">Avatar</a>
@@ -227,7 +228,7 @@
           </section>
 
           <section class="docs-section" id="accepted" aria-labelledby="accepted-title">
-            <h2 class="text-h2" id="accepted-title">Accepted divergences (18)</h2>
+            <h2 class="text-h2" id="accepted-title">Accepted divergences (19)</h2>
             <p class="docs-section__desc">Listed in <code>docs/data/accepted-divergences.json</code>. Accepting a divergence never hides the values: they stay in the token tables. A stale entry no longer matches any divergence and can be removed.</p>
             <div class="data-table" role="region" aria-labelledby="accepted-caption" tabindex="0">
   <table class="data-table__grid">
@@ -385,6 +386,14 @@
         <td class="data-table__cell"><span class="badge badge--solar">pending</span> value differs</td>
         <td class="data-table__cell"><span class="docs-fig">Figma <code>Body 175%, Body sm 160%, Body xs 0%</code>, CSS <code>line-height 1.65, 1.4, 1.5 and letter-spacing 0.05em (literals and --lh-140)</code></span><span class="docs-fig"><code>.auth-gate__subtitle</code> line-height 1.65 <span class="docs-muted">css/auth.css</span></span><span class="docs-fig"><code>.auth-gate__error</code> line-height --lh-140 <span class="docs-muted">css/auth.css</span></span><span class="docs-fig"><code>.auth-gate__input</code> line-height 1.5 <span class="docs-muted">css/auth.css</span></span><span class="docs-fig"><code>.experience-item__logo-mono</code> letter-spacing 0.05em <span class="docs-muted">css/site/about-experience.css</span></span></td>
         <td class="data-table__cell">Not rendered on any shipped page: no shipped page loads js/auth.js, and .experience-item__logo-mono has no instance. Pending, not accepted; revisit when the gate ships (D-52)</td>
+        <td class="data-table__cell">Renan, 2026-11-25</td>
+      </tr>
+      <tr>
+        <th scope="row" class="data-table__row-header">Alert and Toast border contrast</th>
+        <td class="data-table__cell">not a token</td>
+        <td class="data-table__cell">rule value differs</td>
+        <td class="data-table__cell"><span class="docs-fig">Figma <code>Border/Default/Default on the Alert and on the Toast (all types)</code>, CSS <code>border: 1px solid var(--color-border): 1.29:1 on the page background in Light and 1.28:1 in Dark</code></span><span class="docs-fig"><code>.alert</code> --color-border <span class="docs-muted">css/components/alert.css</span></span><span class="docs-fig"><code>.toast</code> --color-border <span class="docs-muted">css/components/toast.css</span></span></td>
+        <td class="data-table__cell">The border is under 3:1 against the page (D-42, D-54). The type is also carried by the icon glyph and the text, so the border is not the only cue, and neither component is interactive. Reading WCAG 1.4.11 as applying to this border is an inference (D-39), not a proven failure. The Tag moved to the field border (Border/Utilities/Input) in 2.15.0 because it is interactive; that is the precedent for when a bordered component must reach 3:1. No color was changed.</td>
         <td class="data-table__cell">Renan, 2026-11-25</td>
       </tr>
     </tbody>
@@ -2270,7 +2279,7 @@
 </div>
           </section>
 
-          <section class="docs-section" id="header-height" aria-labelledby="header-height-title">
+          <section class="docs-section" id="header-height-section" aria-labelledby="header-height-title">
             <h2 class="text-h2" id="header-height-title" title="HEADER HEIGHT: fixed height of the sticky site header">Header height</h2>
             <p class="docs-section__desc">Kept as an explicit token (not left to content auto-sizing) so anything that needs to line up flush against the header's bottom edge, like the Featured Projects sticky section header, can reference the exact same value instead of guessing at it</p>
             <div class="data-table" role="region" aria-labelledby="tokens-header-height-caption" tabindex="0">
