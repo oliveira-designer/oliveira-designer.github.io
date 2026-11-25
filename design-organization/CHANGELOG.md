@@ -5,6 +5,42 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.19.0 · 25 de novembro de 2026 · Posicionador compartilhado para Menu, Popover, painel do Breadcrumb e Tooltip (MINOR)
+
+**Versão escolhida: MINOR (2.18.0 para 2.19.0).** Cláusula citada da seção 3 do `GOVERNANCE.md` (v1.7): a seção "MINOR (v1.X.0)", cujo subtítulo é "adição funcional" e, por analogia, o item "Expansão de escala (mais tamanhos, mais variantes)". Nenhum dos quatro itens do MINOR cobre literalmente a mudança (não há componente novo, família de tokens nem cor nova). PATCH foi descartado porque o item "Correção de bug" só cobriria a inversão do Popover; a API nova por atributo (`data-placement`, `data-align`), o módulo novo `js/position.js` e o modo posicionado opt-in do Menu são adição funcional, não refinamento. Se Renan ler a seção de outro modo, a alternativa é PATCH.
+
+**Adicionado**
+- `js/position.js`: um posicionador para os quatro componentes. API por atributo, com os nomes do Tooltip no Figma: `data-placement="top|bottom|left|right"` e `data-align="start|center|end"`. Padrão de Popover, Menu e painel do Breadcrumb: `bottom` mais `start`; o Tooltip: `top` centralizado. Distância `--space-2` e margem da viewport `--space-4`, lidas dos tokens (nada de 8 fixo). Colisão: inverte quando o lado preferido não cabe e o oposto cabe; se nenhum cabe, fica no lado com mais espaço; no eixo cruzado inverte o alinhamento (start para end) quando resolve e, senão, desloca para dentro. Recalcula ao abrir, no resize e na rolagem de qualquer ancestral (listener em captura) enquanto aberto; os listeners saem ao fechar. Não move o foco, não anima, não usa camada superior nem ancoragem nativa, e a escala `--z-*` não mudou.
+- Menu: posicionamento opt-in por `data-placement` (`.menu[data-placement]`: absoluto, `width: max-content`, máximo da viewport menos `--space-4` dos dois lados). Sem o atributo o painel segue no fluxo, exatamente como antes (a demo no fluxo e o exemplo estático não mudaram).
+- Tooltip: `.tooltip[data-anchor]` (absoluto, largura do texto) posicionado contra o gatilho nas demos dos docs, nas quatro posições, com inversão; a classe `tooltip--*` troca junto, então a seta continua apontando para o gatilho. Posicionado, gatilho não codificado: `tooltip-hover-focus-behavior` segue aberta (o comportamento do Tooltip vira lote próprio).
+- Docs: seção "Positioning" em Menu, Popover, Breadcrumb e Tooltip (o gerador ganhou a seção `positioning` e o campo `edgeDemo`), demos de inversão (um gatilho fixo no canto inferior direito da viewport, classe `.docs-edge-demo` em `docs/docs.css`, fora das marcas de demo), demo do Menu posicionado e as quatro posições do Tooltip. Regra de Posicionamento no `DESIGN.md`.
+- Lacunas: `menu-positioning` fechada (com a nota do opt-in), `menu-typeahead` (separada da anterior), `menu-viewport-width`, `popover-placement` fechada, `tooltip-positioning` fechada para as demos, `tooltip-arrow-shift`, `position-scroll-clipping`, `position-native-anchor-future`, `position-toast-layering`, `position-clipped-in-dialog` (medida), `modal-floating-panels` e `bottom-sheet-floating-panels`. Não criei lacuna nova para o Breadcrumb: ele não tinha uma de "sem inversão".
+
+**Alterado**
+- `js/popover.js`: deixou de medir sozinho (`OFFSET = 8` fixo, só inversão vertical e alinhamento ao fim, só ao abrir) e usa o posicionador. Sem `position.js` vale o CSS padrão (abaixo, início, 8px).
+- `css/components/popover.css`: as classes `.popover--above` e `.popover--end` saíram (nada as adiciona mais). Nenhuma página do site as usava.
+- `css/components/breadcrumb.css`: o painel mantém posição em CSS e os 238px; ganhou o seletor com `[data-placement]` para não perder a largura para o `.menu[data-placement]`. A marcação do docs ganhou `data-placement="bottom"` no painel.
+- Docs de Menu, Popover, Breadcrumb e Tooltip carregam `position.js` antes dos scripts do componente.
+
+**Medido (Chromium, Light, 390 e 1280 de largura; 56 verificações, 56 passaram)**
+- Posição padrão: Popover, Menu posicionado e painel do Breadcrumb a 8,00px abaixo do gatilho e com a borda esquerda igual à do gatilho (diferença 0).
+- Rolagem de 60px com o painel aberto: o painel acompanha, distância 8,00 e gatilho deslocado 60.
+- Inversão por rolagem com o painel aberto (gatilho a 24px do fim da viewport): os três passam a `top`, a 8,00px acima do gatilho; ao voltar ao topo voltam para `bottom`.
+- Gatilho no canto inferior direito: Popover vira para cima, alinha ao fim (borda direita igual à do gatilho) e fica a pelo menos 16px da borda; Menu vira para cima e, como cabe alinhado ao início, não alinha ao fim (largura do conteúdo 94px contra 102px do gatilho); Tooltip passa de `bottom` para `top`, a classe troca e o balão é deslocado para dentro.
+- Borda esquerda (gatilho a 4px): Popover e Menu ficam a 16px da borda.
+- Resize com o painel aberto (1280 para 390 e 390 para 1280): o painel continua a 8px do gatilho e dentro da viewport.
+- Tooltip, quatro posições: a 8,0px do gatilho e centralizado (tolerância 1,2px), com a classe certa; inversões medidas: `top` na borda de cima vira `bottom`, `left` na borda esquerda vira `right`, `right` na borda direita vira `left`, `bottom` na borda de baixo vira `top`, todos dentro da margem de 16px.
+- Primeira execução dos testes: 6 reprovações, todas de montagem do teste (a página não rolava o bastante para levar o gatilho ao fim da viewport). Depois de corrigir a montagem, a inversão por rolagem foi medida e passou; o código não mudou entre as duas execuções.
+- Teclado (Enter, ArrowDown e ArrowUp no gatilho, setas, Home, End, Esc com retorno do foco, Tab, Space, clique fora), Menu no fluxo e reticência do Breadcrumb: saída idêntica à da `main`. O Menu posicionado se comporta como o do fluxo; só mudam o rótulo do gatilho e o próximo foco do Tab, que segue a ordem do DOM.
+- Painéis dentro do Modal e do Bottom Sheet (corpo com `overflow` e diálogo com `overflow: hidden`): Popover com 0 de 63 pontos amostrados visíveis nos dois, em 390 e 1280; Menu com 34 de 63 (54%) no Modal e 43 de 63 (68%) no Bottom Sheet. Sem portal; registrado como `position-clipped-in-dialog`.
+- Suíte de estados abertos com `--control` contra a `main` (duas rodadas, 32 casos cada): Popover REAL em 1280, 375 e 768 (tamanho da página 2554 contra 2869, 4183 contra 4500, 2729 contra 3002): é o componente tocado, a página ganhou a seção Positioning e a demo de inversão. Rodada 1: 7 REAL e 3 INCONCLUSIVE; rodada 2 (repetição do par): 6 REAL e 1 INCONCLUSIVE. Em componente não tocado: `modal-destructive-1280-light` deu REAL de 583 px na rodada 1 e igual (0 px) na rodada 2; `bottom-sheet-390-light` deu REAL de 354 px na rodada 1 e igual na 2; `bottom-sheet-375-light` deu 0 px na rodada 1 e REAL de 377 px na rodada 2. As páginas `modal.html` e `bottom-sheet.html` e os CSS e JS do Modal e do Bottom Sheet são idênticos aos da `main`. Na rodada 1 o próprio controle (`main` contra `main`) mostrou 377 px em `bottom-sheet-375-light` (o mesmo número) e 752 px em `modal-1280-dark`. Concluo que é ruído, mas é inferência apoiada nisso, não prova.
+
+**Não verificado**
+- Firefox e WebKit (só Chromium); aparelho de toque; leitor de tela.
+- Tema Dark nos testes de posição (a posição não depende de cor; só o Light foi medido).
+
+---
+
 ## v2.18.0 · 25 de novembro de 2026 · Bottom Sheet, regra de uso do Toast sobre overlays e faxina dos docs (MINOR)
 
 **Versão escolhida: MINOR (2.17.2 para 2.18.0).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), MINOR cobre "Novo componente". O Figma Core ganhou o componente `Bottom Sheet` (`2602:134`, exemplo `2602:175`); o inventário passa de 205 para 206 variantes, 206 de 206 com CSS. Os três testes da seção 9 estão registrados lá (D-55: componente separado do Modal, escopo mínimo, gesto entregue agora).

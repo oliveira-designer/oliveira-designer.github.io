@@ -397,6 +397,8 @@ Vale o preço? Aplique os três testes. Se passou, vale.
 
 ### Registro dos testes aplicados
 
+**Posicionador compartilhado (v2.19.0).** Não é componente novo, então os três testes não se aplicam ao módulo; o registro é de reuso e de teste. Reuso: um `js/position.js` serve Menu, Popover, painel do Breadcrumb e Tooltip, em vez de quatro lógicas. Testes no navegador (Chromium, 390 e 1280 de largura, Light): posição padrão, inversão vertical por rolagem com o painel aberto, borda direita e esquerda, os quatro lados e a inversão do Tooltip, resize e rolagem com o painel aberto, e o teclado do Menu e da reticência do Breadcrumb (Enter, setas, Home, End, Esc, Tab, retorno do foco) idêntico ao da `main`. Painéis dentro do Modal e do Bottom Sheet: cortados, registrado como lacuna. Números no `CHANGELOG.md`.
+
 **Bottom Sheet (v2.18.0, D-55).** Teste 1: o Modal cobre o conteúdo, mas não a forma (ancorada na borda inferior, sem X, gesto de deslizar); estender o Modal com uma variante mudaria anatomia e comportamento, então o Modal não cobre 80% do uso em tela estreita e de toque. Teste 2: a diferença não é só visual (anatomia sem X, rodapé em coluna, gesto de fechar, foco inicial próprio). Teste 3: reuso real em tela estreita e de toque, em qualquer confirmação que hoje usaria o Modal; o Figma Core já tem o componente (`2602:134`). Passou nos três. Escopo mínimo: o mesmo conteúdo do Modal; modo sem dispensa, alturas intermediárias e lista de ações ficam como lacunas documentadas.
 
 ---
