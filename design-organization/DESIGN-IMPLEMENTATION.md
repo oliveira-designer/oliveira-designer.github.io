@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.17.2 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.18.0 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.18.0 (MINOR, 25/11/2026)**: componente novo Bottom Sheet (`css/components/bottom-sheet.css`, `js/bottom-sheet.js`, página `docs/components/bottom-sheet.html`, 206 de 206 variantes com CSS), regra de uso do Toast sobre Modal e Bottom Sheet, comentário do cabeçalho do `toast.css` e valor padrão do Toast nos dados dos docs corrigidos (o Figma removeu o tipo Default na v2.11.0), divergência aceita da borda do Alert e do Toast, id duplicado `header-height` em `docs/tokens.html` corrigido e verificação de ids duplicados no `docs:check`. Detalhes no `CHANGELOG.md`.
 
 **Changelog v2.17.2 (PATCH, 25/11/2026)**: só a suíte de estados abertos (`scripts/snapshot-open-states.mjs` e `scripts/README.md`): flags de renderização preventivos, impressão do ambiente e modo `--control`. Nenhum componente, token ou valor mudou.
 
@@ -2499,5 +2501,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.17.2 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.18.0 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

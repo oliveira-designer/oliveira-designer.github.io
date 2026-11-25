@@ -1,5 +1,5 @@
 ---
-version: v2.17.2
+version: v2.18.0
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -1095,7 +1095,7 @@ Esta seção espelha o que mudou no Figma (Hope DS | Foundation e Core Component
 
 ### Componentes novos no Figma (sem CSS ainda)
 
-Feedback: Tooltip, Progress, Spinner, Skeleton. Navegação: Tabs, Breadcrumb, Pagination, Menu. Overlays e dados: Modal, Popover, Avatar, Tag, Accordion.
+Feedback: Tooltip, Progress, Spinner, Skeleton. Navegação: Tabs, Breadcrumb, Pagination, Menu. Overlays e dados: Modal, Bottom Sheet, Popover, Avatar, Tag, Accordion.
 
 Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados no código, em lotes por família (GOVERNANCE v1.6). O Card genérico fica de fora por decisão. A Table já está no código (v2.8.0).
 
@@ -1116,6 +1116,7 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 - **Alert:** `css/components/alert.css` (`.alert` com `--info`, `--success`, `--warning` e `--error`, mais `__icon`, `__content`, `__title`, `__description`, `__action` e `__dismiss`). Preenchimento e borda por tipo, ícone de status de 20px na cor do tipo, dismiss de 16px. Error com `role="alert"`, Warning, Info e Success com `role="status"` (regiões vivas anunciam conteúdo inserido dinamicamente). A borda não é descontada do padding: o Figma inclui o traço no layout (105 de altura).
 - **Toast:** `toast.css` (`.toast` com `--success`, `--warning`, `--error` e `--info`; Info é o tipo padrão). Mesma borda e fundo em todos os tipos, sombra `--shadow-lg`, camada 500. O tipo vem do glifo e da cor do ícone. A região de posicionamento, o auto-dismiss e o movimento não estão no código.
+- **Toast sobre Modal ou Bottom Sheet:** o Toast que aparece com um overlay aberto é só informativo. A camada 500 o deixa visível acima do scrim (200) e o ponteiro o alcança, mas o Tab não chega nele, porque a página fica inerte enquanto o overlay está aberto. Não ponha nele uma ação essencial: ela fica dentro do diálogo. Verificado no navegador: visibilidade, ponteiro e Tab. Não testado: se um leitor de tela anuncia um Toast mostrado sobre um overlay (lacuna `toast-over-overlay-screen-reader`).
 - **Banner:** `banner.css`. `.banner` é o Notice do Figma (fundo Accent/Secondary, sem borda). O `.banner--wip` fica como modificador legado do site, para a página de case não mudar.
 - **Empty state:** `empty-state.css` (`.empty-state`, `__icon`, `__title`, `__description`), com o Button Primary do Hope como ação. O nível do título é escolha de quem usa.
 
@@ -1139,6 +1140,7 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 ### Sobreposições e dados no código (Lote 4, 2026-11-24)
 
 - **Modal:** `css/components/modal.css` (`.modal`, `__header`, `__title`, `__close`, `__body`, `__footer`, `.modal-scrim`) e `js/modal.js`. Painel de 480 com borda incluída no layout (430 de conteúdo), `--shadow-lg`, camadas `--z-modal-scrim` (100) e `--z-modal` (200). Em tela estreita a largura é `min(480px, 100% - 32px)`, o corpo rola e o cabeçalho e o rodapé ficam fixos (v2.13.1). O X segue o Icon Button Ghost (hover com `--color-bg-alt`). `role="dialog"`, `aria-modal`, foco preso, Esc fecha, página inerte, rolagem travada; o clique no scrim não fecha. A parte comum com o Lightbox está em `js/overlay.js`.
+- **Bottom Sheet:** `css/components/bottom-sheet.css` (`.bottom-sheet`, `__handle`, `__grabber`, `__content`, `__header`, `__title`, `__body`, `__footer`), `js/bottom-sheet.js` e `js/overlay.js`. Folha ancorada na borda inferior, com a largura da tela, borda de 1px em cima e nas laterais, raio `--radius-lg` só nos cantos de cima, `--shadow-lg`, camada `--z-modal` (200) sobre o mesmo scrim do Modal. O conteúdo é o do Modal (título, corpo, rodapé com dois botões em coluna, o principal em cima); não tem X. Fecha pelo botão secundário, por Esc ou por deslizar para baixo (reforço, nunca o único caminho): arrasto só pelo grabber e pelo título, fecha além de 30% da altura ou por velocidade, `pointercancel` volta ao repouso. O clique no scrim não fecha. Em confirmação destrutiva, `data-bottom-sheet-initial-focus` no Cancelar. Em tela larga use o Modal. Lacunas: `bottom-sheet-non-dismissible`, `bottom-sheet-detents`, `bottom-sheet-action-list`.
 - **Popover:** `popover.css` (`.popover-anchor`, `.popover`, `__title`, `__body`) e `js/popover.js`. Painel de 280, `--shadow-md`, `--z-popover`, abre abaixo do gatilho a 8px, sem seta.
 - **Lightbox:** alinhado ao Figma: imagem até 960 com `--shadow-lg`, legenda de 520, blur de fundo `blur(6px)` (o raio do Figma, 12, equivale ao dobro do CSS), botão de fechar de 36 no canto da imagem com os estados do componente `Lightbox close` (Default, Hover, Focus em `--color-border-accent-default`), foco preso e página inerte pelo `js/overlay.js`.
 - **Avatar:** `avatar.css` (`.avatar`, `--small`, `--medium`, `--large`, `__image`), 32, 40 e 56.
@@ -1182,4 +1184,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.17.2 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.18.0 · novembro de 2026 · Renan Moura*

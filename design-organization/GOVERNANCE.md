@@ -395,6 +395,10 @@ Cada componente do sistema custa:
 
 Vale o preço? Aplique os três testes. Se passou, vale.
 
+### Registro dos testes aplicados
+
+**Bottom Sheet (v2.18.0, D-55).** Teste 1: o Modal cobre o conteúdo, mas não a forma (ancorada na borda inferior, sem X, gesto de deslizar); estender o Modal com uma variante mudaria anatomia e comportamento, então o Modal não cobre 80% do uso em tela estreita e de toque. Teste 2: a diferença não é só visual (anatomia sem X, rodapé em coluna, gesto de fechar, foco inicial próprio). Teste 3: reuso real em tela estreita e de toque, em qualquer confirmação que hoje usaria o Modal; o Figma Core já tem o componente (`2602:134`). Passou nos três. Escopo mínimo: o mesmo conteúdo do Modal; modo sem dispensa, alturas intermediárias e lista de ações ficam como lacunas documentadas.
+
 ---
 
 ## 10. Princípios de governança em uma frase

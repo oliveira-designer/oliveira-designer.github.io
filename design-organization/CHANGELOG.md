@@ -5,6 +5,42 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.18.0 · 25 de novembro de 2026 · Bottom Sheet, regra de uso do Toast sobre overlays e faxina dos docs (MINOR)
+
+**Versão escolhida: MINOR (2.17.2 para 2.18.0).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), MINOR cobre "Novo componente". O Figma Core ganhou o componente `Bottom Sheet` (`2602:134`, exemplo `2602:175`); o inventário passa de 205 para 206 variantes, 206 de 206 com CSS. Os três testes da seção 9 estão registrados lá (D-55: componente separado do Modal, escopo mínimo, gesto entregue agora).
+
+**Adicionado**
+- `css/components/bottom-sheet.css`: `.bottom-sheet` ancorado na borda inferior, largura da tela, padding 8 24 24, gap 20, borda de 1px em cima e nas laterais (sem borda embaixo), raio `--radius-lg` só nos cantos de cima, `--shadow-lg`, camada `--z-modal` sobre o scrim do Modal. Grabber de 32 por 4 (`--color-border-input`, decorativo, `aria-hidden`), título em H2, corpo em `body-sm`, rodapé em coluna com dois botões Medium de largura total, o principal em cima. Sem X e sem movimento de abertura (o Figma não define). O corpo rola e o resto fica fixo em tela baixa. O padding inferior soma `env(safe-area-inset-bottom)`.
+- `js/bottom-sheet.js`: abre por `data-bottom-sheet-open`, fecha por `data-bottom-sheet-close`, cria o scrim (o `.modal-scrim` do Modal), move o diálogo para o fim do `<body>` e usa o `js/overlay.js` (página inerte, rolagem travada, foco preso, Esc, retorno do foco). Clique no scrim não fecha. Foco inicial no primeiro focável ou no elemento com `data-bottom-sheet-initial-focus` (usado no Cancelar da confirmação destrutiva).
+- Deslizar para baixo: eventos de ponteiro com `setPointerCapture`, arrasto só pelo grabber e pelo título (`touch-action: none` só ali), nunca acima do repouso; fecha além de 30% da altura, ou com velocidade acima de 0,5 px/ms e ao menos 24px de curso; `pointercancel` volta ao repouso; fecha pelo mesmo caminho do botão e do Esc. É reforço do Cancelar, nunca o único caminho.
+- Página `docs/components/bottom-sheet.html` (grupo "Overlays and data", depois do Modal, demos em inglês) e entradas em `components-content.json`, `components-map.json`, `components-code-notes.json` e `figma-components-inventory.json`.
+- Lacunas documentadas: `bottom-sheet-non-dismissible`, `bottom-sheet-detents`, `bottom-sheet-action-list` (evoluções futuras, fora do escopo mínimo), `bottom-sheet-wide-screens`, `bottom-sheet-title-size`, `bottom-sheet-dark-edge-contrast`, `bottom-sheet-border-contrast` e `bottom-sheet-safe-area`.
+- Suíte de estados abertos: casos `bottom-sheet` e `bottom-sheet-destructive` em 375 e 390, Light e Dark (8 PNGs, 32 no total). Checkout sem a página pula os casos.
+- `docs:check`: verificação 14, id duplicado na mesma página dos docs. Provada: falhou na `docs/tokens.html` antiga (`id="header-height"` duas vezes) e passa depois da correção.
+- Regra de uso do Toast sobre Modal ou Bottom Sheet (docs do Toast e `DESIGN.md`): é só informativo, o Tab não chega nele (a página fica inerte), a ação essencial fica dentro do diálogo. Lacuna `toast-over-overlay-screen-reader` (se o leitor de tela anuncia um Toast sobre um overlay não foi testado).
+- Divergência aceita em `accepted-divergences.json` (escopo `rule`): borda do Alert e do Toast a 1,29:1 em Light e 1,28:1 em Dark (D-42, D-54), porque o tipo também vem do ícone e do texto e os componentes não são interativos; ler a 1.4.11 como aplicável a essa borda é inferência (D-39). Decisão de Renan, 25/11/2026. Nenhuma cor mudou.
+
+**Alterado**
+- Docs do Modal: frase em "When not to use" apontando o Bottom Sheet para tela estreita e de toque. Nenhuma mudança no CSS do Modal.
+
+**Corrigido**
+- `css/components/toast.css`: o comentário do cabeçalho dizia "Type Default|Success|Warning|Error|Info"; o Figma removeu o Default na v2.11.0. Agora "Type Success|Warning|Error|Info". O mesmo valor padrão velho (`Default`) no dado do Toast nos docs passou a `Info`. O `DESIGN-IMPLEMENTATION.md` não tinha o texto velho.
+- `docs/tokens.html`: `id="header-height"` aparecia na seção e na linha do token `--header-height`. O gerador (`scripts/build-tokens-doc.mjs`) agora dá `header-height-section` à seção quando o id coincide com o de um token; a âncora do token continua `#header-height`.
+
+**Medido (Light e Dark)**
+- Título 19,42 e 17,06; corpo 10,76 e 8,37; grabber contra o painel 3,12 e 3,19; borda contra o painel 1,29 e 1,28; painel contra o scrim 3,64 e 1,16; borda contra o scrim 2,82 e 1,49. Em Dark o painel e a borda contra o scrim ficam abaixo de 3:1 (mesma família do Modal, D-43); registrado como lacuna, sem mudar cor.
+
+**Divergência que precisa da decisão de Renan**
+- Título: o specimen do Figma mostra 22px (valor Desktop de `size/h2`, sem modo de variável no frame); o CSS usa `--fs-h2`, que em 390 de largura vale 18px (Mobile). Registrado como `bottom-sheet-title-size`. Não escolhi.
+
+**Verificação**
+- `css:build`, `docs:tokens`, `docs:components`, `docs:review` e `docs:check` passam.
+- Estilos computados de 6 páginas vivas em 3 larguras e 2 temas contra a `main`: 36 casos, 17.084 estados de elemento, 0 diferenças.
+- Teclado do Modal e do Lightbox (24 checagens) idêntico na `main` e no branch.
+- Suíte de estados abertos com `--control` contra a `main`: piso de ruído 0 px em todos os casos; Lightbox e Popover iguais; Modal igual em 375 e 8 casos do Modal (768 e 1280, Light e Dark, comum e destrutivo) com 4.297 a 4.576 px de diferença, todos na área de texto da página atrás do scrim, causada pela frase nova em "When not to use" do Modal (conferido olhando as duas imagens: o painel é idêntico). Os 8 casos novos do Bottom Sheet não têm baseline.
+
+---
+
 ## v2.17.2 · 25 de novembro de 2026 · Suíte de estados abertos: ruído medido, flags preventivos, ambiente impresso e modo `--control` (PATCH)
 
 **Versão escolhida: PATCH (2.17.1 para 2.17.2).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), PATCH cobre "Correção de bug" e "Melhoria de documentação sem mudança técnica": a mudança é só na ferramenta de verificação (`scripts/`), sem componente, token, valor nem regra do design system. O precedente é a v2.8.1, que também foi PATCH para mudanças só em `docs/` e `scripts/`. Se o Renan preferir que ferramenta de teste não ganhe versão, esta entrada vira nota sem número e as strings de versão voltam para 2.17.1 (só comentários de cabeçalho e de rodapé mudaram).
