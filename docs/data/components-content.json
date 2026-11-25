@@ -1240,8 +1240,16 @@
 {
   "slug": "tooltip",
   "name": "Tooltip",
-  "figma": {"pageId": "2409:65", "sets": [{"name": "Tooltip", "id": "2409:82"}]},
-  "summary": "Short text hint on a dark bubble with an arrow, in four placements: Top, Bottom, Left and Right. The bubble and the arrow are one piece; the CSS draws the piece, not the positioning against its trigger.",
+  "figma": {
+    "pageId": "2409:65",
+    "sets": [
+      {
+        "name": "Tooltip",
+        "id": "2409:82"
+      }
+    ]
+  },
+  "summary": "Short text hint on a dark bubble with an arrow, in four placements: Top, Bottom, Left and Right. The bubble and the arrow are one piece. The docs demos place it against a trigger with js/position.js (positioned, trigger not coded); showing it on hover and focus is a separate, open item.",
   "whenToUse": [
     "A short label that explains an icon-only control, such as an Icon Button.",
     "A hint that repeats something the page already says: the tooltip is never the only place for essential information."
@@ -1251,35 +1259,96 @@
     "Anything a touch user needs: a tooltip does not appear on touch."
   ],
   "properties": [
-    {"name": "Placement", "type": "variant", "options": ["Top", "Bottom", "Left", "Right"], "default": "Top"},
-    {"name": "Text", "type": "text", "default": "Tooltip text"}
+    {
+      "name": "Placement",
+      "type": "variant",
+      "options": [
+        "Top",
+        "Bottom",
+        "Left",
+        "Right"
+      ],
+      "default": "Top"
+    },
+    {
+      "name": "Text",
+      "type": "text",
+      "default": "Tooltip text"
+    }
   ],
   "layout": {
-    "all": {"size": "84 by 40 (Top, Bottom) and 90 by 34 (Left, Right) with the sample text", "padding": "Spacing/space-2 vertical, Spacing/space-3 horizontal", "radius": "Radius/radius-sm", "arrow": "12 by 6 (Top, Bottom) or 6 by 12 (Left, Right), gap 0", "layer": "Z-index/z-tooltip (400)"}
+    "all": {
+      "size": "84 by 40 (Top, Bottom) and 90 by 34 (Left, Right) with the sample text",
+      "padding": "Spacing/space-2 vertical, Spacing/space-3 horizontal",
+      "radius": "Radius/radius-sm",
+      "arrow": "12 by 6 (Top, Bottom) or 6 by 12 (Left, Right), gap 0",
+      "layer": "Z-index/z-tooltip (400)"
+    }
   },
   "stateTokens": {},
   "accessibility": {
     "contrastText": [
-      {"case": "Text on the bubble", "light": 19.42, "dark": 19.42}
+      {
+        "case": "Text on the bubble",
+        "light": 19.42,
+        "dark": 19.42
+      }
     ],
     "contrastNonText": [
-      {"case": "Bubble vs page (needs 3:1 only if the bubble alone carries meaning)", "light": 19.42, "dark": 17.06}
+      {
+        "case": "Bubble vs page (needs 3:1 only if the bubble alone carries meaning)",
+        "light": 19.42,
+        "dark": 17.06
+      }
     ],
     "note": "The trigger points to the tooltip with aria-describedby and the tooltip has role=\"tooltip\".",
     "meaning": "The text is a hint, not the only name of the control: an icon-only control keeps its own accessible name (aria-label). A tooltip does not appear on touch, so it never holds the only way to reach essential information."
   },
-  "example": {"markup": "<div class=\"tooltip tooltip--top\" role=\"tooltip\" id=\"tip-top\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<div class=\"tooltip tooltip--bottom\" role=\"tooltip\" id=\"tip-bottom\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<div class=\"tooltip tooltip--left\" role=\"tooltip\" id=\"tip-left\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<div class=\"tooltip tooltip--right\" role=\"tooltip\" id=\"tip-right\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>"},
+  "example": {
+    "markup": "<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-top\" aria-describedby=\"tip-top\">Top</button>\n<div class=\"tooltip tooltip--top\" role=\"tooltip\" id=\"tip-top\" data-anchor=\"tip-trigger-top\" data-placement=\"top\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-bottom\" aria-describedby=\"tip-bottom\">Bottom</button>\n<div class=\"tooltip tooltip--bottom\" role=\"tooltip\" id=\"tip-bottom\" data-anchor=\"tip-trigger-bottom\" data-placement=\"bottom\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-left\" aria-describedby=\"tip-left\">Left</button>\n<div class=\"tooltip tooltip--left\" role=\"tooltip\" id=\"tip-left\" data-anchor=\"tip-trigger-left\" data-placement=\"left\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>\n<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-right\" aria-describedby=\"tip-right\">Right</button>\n<div class=\"tooltip tooltip--right\" role=\"tooltip\" id=\"tip-right\" data-anchor=\"tip-trigger-right\" data-placement=\"right\">\n  <span class=\"tooltip__bubble\">Tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>"
+  },
   "essential": [
     "when",
     "variants",
+    "positioning",
     "accessibility"
   ],
   "knownGaps": [
-    {"id": "tooltip-positioning", "status": "documented", "text": "The CSS draws the bubble and the arrow. Placing the tooltip next to its trigger, flipping it near the viewport edge and keeping it inside the screen need positioning logic and are not coded."},
-    {"id": "tooltip-hover-focus-behavior", "status": "documented", "text": "Showing and hiding on hover and focus, the delay, and the three conditions of WCAG 1.4.13 (dismissible with Escape without moving the pointer, hoverable, persistent until dismissed) need JavaScript and are not coded. Figma defines none of them."},
-    {"id": "tooltip-size-rounding", "status": "measured", "text": "Measured in Chromium, Firefox and WebKit with Plus Jakarta Sans: 83.0 by 39.6 for Top and Bottom, 89 by 33.6 for Left and Right with the same text. Figma rounds to 84 by 40 and 90 by 34. The width follows the text."}
+    {
+      "id": "tooltip-positioning",
+      "status": "resolved",
+      "text": "Resolved for the docs demos in v2.19.0: js/position.js places the tooltip against a trigger in the four placements, flips it near the viewport edge, swaps the tooltip--* class so the arrow follows, and shifts it to stay inside. Positioned, trigger not coded: no component page of the site uses it yet."
+    },
+    {
+      "id": "tooltip-hover-focus-behavior",
+      "status": "documented",
+      "text": "Showing and hiding on hover and focus, the delay, and the three conditions of WCAG 1.4.13 (dismissible with Escape without moving the pointer, hoverable, persistent until dismissed) need JavaScript and are not coded. Figma defines none of them."
+    },
+    {
+      "id": "tooltip-size-rounding",
+      "status": "measured",
+      "text": "Measured in Chromium, Firefox and WebKit with Plus Jakarta Sans: 83.0 by 39.6 for Top and Bottom, 89 by 33.6 for Left and Right with the same text. Figma rounds to 84 by 40 and 90 by 34. The width follows the text."
+    },
+    {
+      "id": "tooltip-arrow-shift",
+      "status": "documented",
+      "text": "When a centered tooltip is shifted to stay inside the viewport, the arrow stays centered on the bubble and no longer points at the center of the trigger. Figma does not define an arrow offset."
+    }
   ],
-  "unverified": []
+  "unverified": [],
+  "scripts": [
+    "position.js"
+  ],
+  "positioning": [
+    "Four placements, the names of the Figma set: data-placement=\"top|bottom|left|right\". The Tooltip keeps its default of top, centered on the trigger (data-align=\"center\"). The offset to the trigger is 8px (--space-2), a code value: Figma does not define a distance.",
+    "Flip: if the preferred side does not fit in the viewport and the opposite side does, the tooltip goes to the opposite side and the class tooltip--top|bottom|left|right follows, so the arrow keeps pointing at the trigger. If neither fits, it stays on the side with more room.",
+    "Cross axis: a centered tooltip that would leave the viewport is shifted to stay 16px (--space-4) inside (start and end alignments flip first). The arrow stays centered on the bubble, so after a shift it no longer points at the center of the trigger (see tooltip-arrow-shift).",
+    "Today this is wired in the docs demos only (data-anchor names the trigger). The tooltip is positioned, the trigger is not coded: showing and hiding on hover and focus, the delay and WCAG 1.4.13 stay open (tooltip-hover-focus-behavior)."
+  ],
+  "edgeDemo": {
+    "note": "The Flip demo trigger is pinned to the bottom right corner of the viewport (it stays there while you scroll) and its tooltip prefers the bottom: it flips to the top and, being centered, is shifted left to stay inside.",
+    "markup": "<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-edge\" aria-describedby=\"tip-edge\">Flip demo</button>\n<div class=\"tooltip tooltip--bottom\" role=\"tooltip\" id=\"tip-edge\" data-anchor=\"tip-trigger-edge\" data-placement=\"bottom\">\n  <span class=\"tooltip__bubble\">A longer tooltip text</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>"
+  }
 },
 {
   "slug": "progress",
@@ -1536,8 +1605,19 @@
   "slug": "breadcrumb",
   "name": "Breadcrumb",
   "navGroup": "Navigation",
-  "scripts": ["menu.js"],
-  "figma": {"pageId": "2413:35", "sets": [{"name": "Breadcrumb item", "id": "2413:51"}]},
+  "scripts": [
+    "position.js",
+    "menu.js"
+  ],
+  "figma": {
+    "pageId": "2413:35",
+    "sets": [
+      {
+        "name": "Breadcrumb item",
+        "id": "2413:51"
+      }
+    ]
+  },
   "summary": "The path to the current page as a list of links, ending in the current page as plain text. 13px text with a 14px caret between items; the last item has no separator. On narrow screens the middle levels collapse into an ellipsis button that opens a Menu.",
   "whenToUse": [
     "A hierarchy with two or more levels, so the user can climb back up.",
@@ -1548,76 +1628,239 @@
     "A history of visited pages: a breadcrumb shows the hierarchy, not the path taken."
   ],
   "properties": [
-    {"name": "Type", "type": "variant", "options": ["Link", "Link Hover", "Link Focus", "Current", "Ellipsis", "Ellipsis Hover", "Ellipsis Focus"], "default": "Link"},
-    {"name": "Label", "type": "text", "default": "Page"},
-    {"name": "Show separator", "type": "boolean", "default": "true"}
+    {
+      "name": "Type",
+      "type": "variant",
+      "options": [
+        "Link",
+        "Link Hover",
+        "Link Focus",
+        "Current",
+        "Ellipsis",
+        "Ellipsis Hover",
+        "Ellipsis Focus"
+      ],
+      "default": "Link"
+    },
+    {
+      "name": "Label",
+      "type": "text",
+      "default": "Page"
+    },
+    {
+      "name": "Show separator",
+      "type": "boolean",
+      "default": "true"
+    }
   ],
   "layout": {
-    "all": {"gap": "Spacing/space-2 between the label and the separator, and between items (8)", "padding": "0", "separator": "CaretRight 14 by 14", "focusRing": "40 by 29 around the 32 by 21 label only (4px outside each side); Ellipsis: 24 by 24 square (radius 0) around the 16px icon", "ellipsis": "DotsThree 16 by 16, a button, then the optional separator (gap 8)"}
+    "all": {
+      "gap": "Spacing/space-2 between the label and the separator, and between items (8)",
+      "padding": "0",
+      "separator": "CaretRight 14 by 14",
+      "focusRing": "40 by 29 around the 32 by 21 label only (4px outside each side); Ellipsis: 24 by 24 square (radius 0) around the 16px icon",
+      "ellipsis": "DotsThree 16 by 16, a button, then the optional separator (gap 8)"
+    }
   },
   "stateTokens": {
-    "Link": {"default": {"text": "Text/Default/Secondary"}, "hover": {"text": "Text/Default/Default"}, "focus": {"text": "Text/Default/Default plus focus ring on the label"}},
-    "Current": {"default": {"text": "Text/Default/Default"}},
-    "Ellipsis": {"default": {"icon": "Icon/Color Secondary"}, "hover": {"icon": "Icon/Color Default"}, "focus": {"icon": "Icon/Color Default plus a square focus ring 24 by 24"}}
+    "Link": {
+      "default": {
+        "text": "Text/Default/Secondary"
+      },
+      "hover": {
+        "text": "Text/Default/Default"
+      },
+      "focus": {
+        "text": "Text/Default/Default plus focus ring on the label"
+      }
+    },
+    "Current": {
+      "default": {
+        "text": "Text/Default/Default"
+      }
+    },
+    "Ellipsis": {
+      "default": {
+        "icon": "Icon/Color Secondary"
+      },
+      "hover": {
+        "icon": "Icon/Color Default"
+      },
+      "focus": {
+        "icon": "Icon/Color Default plus a square focus ring 24 by 24"
+      }
+    }
   },
   "accessibility": {
     "contrastText": [
-      {"case": "Link (Text/Default/Secondary on the page)", "light": 10.76, "dark": 8.37},
-      {"case": "Hover, Focus and Current (Text/Default/Default on the page)", "light": 19.42, "dark": 17.06}
+      {
+        "case": "Link (Text/Default/Secondary on the page)",
+        "light": 10.76,
+        "dark": 8.37
+      },
+      {
+        "case": "Hover, Focus and Current (Text/Default/Default on the page)",
+        "light": 19.42,
+        "dark": 17.06
+      }
     ],
     "contrastNonText": [
-      {"case": "Separator (Icon/Color Tertiary, decorative)", "light": 6.27, "dark": 5.48},
-      {"case": "Ellipsis, Default (Icon/Color Secondary on the page, needs 3:1)", "light": 10.76, "dark": 8.37},
-      {"case": "Ellipsis, Hover and Focus (Icon/Color Default on the page)", "light": 19.42, "dark": 17.06},
-      {"case": "Ellipsis focus ring vs page (needs 3:1)", "light": 6.46, "dark": 10.74},
-      {"case": "Focus ring vs page (needs 3:1)", "light": 6.46, "dark": 10.74}
+      {
+        "case": "Separator (Icon/Color Tertiary, decorative)",
+        "light": 6.27,
+        "dark": 5.48
+      },
+      {
+        "case": "Ellipsis, Default (Icon/Color Secondary on the page, needs 3:1)",
+        "light": 10.76,
+        "dark": 8.37
+      },
+      {
+        "case": "Ellipsis, Hover and Focus (Icon/Color Default on the page)",
+        "light": 19.42,
+        "dark": 17.06
+      },
+      {
+        "case": "Ellipsis focus ring vs page (needs 3:1)",
+        "light": 6.46,
+        "dark": 10.74
+      },
+      {
+        "case": "Focus ring vs page (needs 3:1)",
+        "light": 6.46,
+        "dark": 10.74
+      }
     ],
     "targetSize": "The ellipsis button is 16 by 16 (its square focus ring is 24 by 24), under 24 by 24 (2.5.8, AA); it meets the same spacing exception, because the items are at least 8px apart. The link is 20.8px high, under 24 by 24 (2.5.8, AA). It meets the spacing exception: the items are at least 8px apart, so a 24px circle centered on a link does not reach another target.",
     "focus": "An outline of 2px with a 2px offset around the label only. The separator is a sibling of the link, never inside it, so the ring does not include it (D-30: :focus-visible on the link only).",
     "note": "A nav with aria-label=\"Breadcrumb\" containing an ordered list; each item is an li. The current page is plain text with aria-current=\"page\", never a link and never focusable.",
     "meaning": "The separator is decorative: aria-hidden, so a screen reader reads the list as items, not as carets. The last item must not render a separator in code. The ellipsis is a button with a Menu, not a link: it stands for the hidden middle levels, and the current page keeps aria-current=\"page\". Collapse is decided by the author in the markup, there is no automatic collapse by width."
   },
-  "example": {"markup": "<nav class=\"breadcrumb\" aria-label=\"Breadcrumb\">\n  <ol class=\"breadcrumb__list\">\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#home\">Home</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#projects\">Projects</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#hope-ds\">Hope DS</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <span class=\"breadcrumb__current\" aria-current=\"page\">Components</span>\n    </li>\n  </ol>\n</nav>\n<nav class=\"breadcrumb\" aria-label=\"Breadcrumb\">\n  <ol class=\"breadcrumb__list\">\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#home\">Home</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <div class=\"breadcrumb__collapse\">\n        <button type=\"button\" class=\"breadcrumb__ellipsis\" aria-label=\"Show path\" aria-haspopup=\"menu\" aria-expanded=\"false\" aria-controls=\"breadcrumb-menu\">\n          <svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z\"/></svg>\n        </button>\n        <div class=\"menu\" role=\"menu\" id=\"breadcrumb-menu\" aria-label=\"Hidden levels\" hidden>\n          <a class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" href=\"#projects\"><span class=\"menu__label\">Projects</span></a>\n          <a class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" href=\"#hope-ds\"><span class=\"menu__label\">Hope DS</span></a>\n        </div>\n      </div>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <span class=\"breadcrumb__current\" aria-current=\"page\">Components</span>\n    </li>\n  </ol>\n</nav>\n<nav class=\"breadcrumb\" aria-label=\"Breadcrumb\">\n  <ol class=\"breadcrumb__list\">\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#home\">Home</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <div class=\"breadcrumb__collapse\">\n        <button type=\"button\" class=\"breadcrumb__ellipsis\" aria-label=\"Show path\" aria-haspopup=\"menu\" aria-expanded=\"true\">\n          <svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z\"/></svg>\n        </button>\n        <div class=\"menu\" role=\"menu\" aria-label=\"Hidden levels (static example)\">\n          <a class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" href=\"#projects\"><span class=\"menu__label\">Projects</span></a>\n          <a class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" href=\"#hope-ds\"><span class=\"menu__label\">Hope DS</span></a>\n        </div>\n      </div>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <span class=\"breadcrumb__current\" aria-current=\"page\">Components</span>\n    </li>\n  </ol>\n</nav>"},
+  "example": {
+    "markup": "<nav class=\"breadcrumb\" aria-label=\"Breadcrumb\">\n  <ol class=\"breadcrumb__list\">\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#home\">Home</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#projects\">Projects</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#hope-ds\">Hope DS</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <span class=\"breadcrumb__current\" aria-current=\"page\">Components</span>\n    </li>\n  </ol>\n</nav>\n<nav class=\"breadcrumb\" aria-label=\"Breadcrumb\">\n  <ol class=\"breadcrumb__list\">\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#home\">Home</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <div class=\"breadcrumb__collapse\">\n        <button type=\"button\" class=\"breadcrumb__ellipsis\" aria-label=\"Show path\" aria-haspopup=\"menu\" aria-expanded=\"false\" aria-controls=\"breadcrumb-menu\">\n          <svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z\"/></svg>\n        </button>\n        <div class=\"menu\" role=\"menu\" id=\"breadcrumb-menu\" aria-label=\"Hidden levels\" data-placement=\"bottom\" data-align=\"start\" hidden>\n          <a class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" href=\"#projects\"><span class=\"menu__label\">Projects</span></a>\n          <a class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" href=\"#hope-ds\"><span class=\"menu__label\">Hope DS</span></a>\n        </div>\n      </div>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <span class=\"breadcrumb__current\" aria-current=\"page\">Components</span>\n    </li>\n  </ol>\n</nav>\n<nav class=\"breadcrumb\" aria-label=\"Breadcrumb\">\n  <ol class=\"breadcrumb__list\">\n    <li class=\"breadcrumb__item\">\n      <a class=\"breadcrumb__link\" href=\"#home\">Home</a>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <div class=\"breadcrumb__collapse\">\n        <button type=\"button\" class=\"breadcrumb__ellipsis\" aria-label=\"Show path\" aria-haspopup=\"menu\" aria-expanded=\"true\">\n          <svg class=\"icon\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z\"/></svg>\n        </button>\n        <div class=\"menu\" role=\"menu\" aria-label=\"Hidden levels (static example)\">\n          <a class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" href=\"#projects\"><span class=\"menu__label\">Projects</span></a>\n          <a class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" href=\"#hope-ds\"><span class=\"menu__label\">Hope DS</span></a>\n        </div>\n      </div>\n      <svg aria-hidden=\"true\" class=\"icon breadcrumb__separator\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>\n    </li>\n    <li class=\"breadcrumb__item\">\n      <span class=\"breadcrumb__current\" aria-current=\"page\">Components</span>\n    </li>\n  </ol>\n</nav>"
+  },
   "essential": [
     "when",
     "states",
+    "positioning",
     "keyboard",
     "variants",
     "accessibility"
   ],
   "states": [
-    ["Link, default", "Text/Default/Secondary, Regular, no underline.", "--color-text-2"],
-    ["Link, hover", "Text goes to Text/Default/Default.", "--color-text-1"],
-    ["Link, focus", "Text/Default/Default and a ring of 2px with a 2px gap around the label only, 40 by 29, no radius.", "--color-text-1, --focus-ring-width, --focus-ring-gap, --color-border-focus-ring"],
-    ["Current", "Medium, Text/Default/Default, not a link and never focusable.", "--color-text-1"],
-    ["Ellipsis, default", "A button with the DotsThree icon at 16px in the Icon/Color Secondary mode, followed by the optional separator.", "--icon-color-secondary"],
-    ["Ellipsis, hover", "The icon goes to the Icon/Color Default mode. No fill.", "--icon-color-default"],
-    ["Ellipsis, focus", "The icon in the Default mode and a square ring (radius 0) around the icon only, 24 by 24: 2px stroke, 2px gap, Border/Utilities/Focus Ring.", "--icon-color-default, --focus-ring-width, --focus-ring-gap, --color-border-focus-ring"],
-    ["Ellipsis, menu open", "The Menu panel hangs below the button, aligned to its start, 8px away, on the popover layer (300). The items are the hidden levels, as links.", "--space-2, --z-popover"]
+    [
+      "Link, default",
+      "Text/Default/Secondary, Regular, no underline.",
+      "--color-text-2"
+    ],
+    [
+      "Link, hover",
+      "Text goes to Text/Default/Default.",
+      "--color-text-1"
+    ],
+    [
+      "Link, focus",
+      "Text/Default/Default and a ring of 2px with a 2px gap around the label only, 40 by 29, no radius.",
+      "--color-text-1, --focus-ring-width, --focus-ring-gap, --color-border-focus-ring"
+    ],
+    [
+      "Current",
+      "Medium, Text/Default/Default, not a link and never focusable.",
+      "--color-text-1"
+    ],
+    [
+      "Ellipsis, default",
+      "A button with the DotsThree icon at 16px in the Icon/Color Secondary mode, followed by the optional separator.",
+      "--icon-color-secondary"
+    ],
+    [
+      "Ellipsis, hover",
+      "The icon goes to the Icon/Color Default mode. No fill.",
+      "--icon-color-default"
+    ],
+    [
+      "Ellipsis, focus",
+      "The icon in the Default mode and a square ring (radius 0) around the icon only, 24 by 24: 2px stroke, 2px gap, Border/Utilities/Focus Ring.",
+      "--icon-color-default, --focus-ring-width, --focus-ring-gap, --color-border-focus-ring"
+    ],
+    [
+      "Ellipsis, menu open",
+      "The Menu panel hangs below the button, aligned to its start, 8px away, on the popover layer (300). The items are the hidden levels, as links.",
+      "--space-2, --z-popover"
+    ]
   ],
   "keyboard": [
-    ["Tab", "Moves through the links and the ellipsis button in path order. The current page is not a tab stop."],
-    ["Enter or Space (on the ellipsis)", "Opens the Menu and moves the focus to its first item."],
-    ["Arrow Down or Arrow Up (on the ellipsis)", "Opens the Menu, on the first or the last item."],
-    ["Arrow Down, Arrow Up, Home, End (in the Menu)", "Move between the hidden levels, as in the Menu."],
-    ["Enter (on a level)", "Follows the link."],
-    ["Escape", "Closes the Menu and returns the focus to the ellipsis."],
-    ["Tab (in the Menu)", "Closes the Menu."]
+    [
+      "Tab",
+      "Moves through the links and the ellipsis button in path order. The current page is not a tab stop."
+    ],
+    [
+      "Enter or Space (on the ellipsis)",
+      "Opens the Menu and moves the focus to its first item."
+    ],
+    [
+      "Arrow Down or Arrow Up (on the ellipsis)",
+      "Opens the Menu, on the first or the last item."
+    ],
+    [
+      "Arrow Down, Arrow Up, Home, End (in the Menu)",
+      "Move between the hidden levels, as in the Menu."
+    ],
+    [
+      "Enter (on a level)",
+      "Follows the link."
+    ],
+    [
+      "Escape",
+      "Closes the Menu and returns the focus to the ellipsis."
+    ],
+    [
+      "Tab (in the Menu)",
+      "Closes the Menu."
+    ]
   ],
   "aria": [
     "The path is a nav with aria-label=\"Breadcrumb\" containing an ordered list. The ellipsis is a button, not a link: it has aria-haspopup=\"menu\", aria-expanded and aria-controls, and the accessible name \"Show path\". The icon is decorative (aria-hidden).",
     "The panel is a Menu (role=\"menu\") with the hidden levels as links with role=\"menuitem\". The current page keeps aria-current=\"page\". The first level and the current page always stay visible."
   ],
   "knownGaps": [
-    {"id": "breadcrumb-last-separator", "status": "documented", "text": "Figma still draws a separator in the Current variant but marks it optional (Show separator). In code the last item has no separator."},
-    {"id": "breadcrumb-narrow-collapse", "status": "resolved", "text": "Resolved in v2.15.0. Figma Core now has the Ellipsis (Default, Hover, Focus). The collapsed path is coded as an ellipsis button that opens the Menu; the author decides which levels are hidden."},
-    {"id": "breadcrumb-auto-collapse", "status": "documented", "text": "Collapse is author-driven. Automatic collapse by container width is not built. It looks feasible with a small script: a ResizeObserver on the nav moves middle items into the Menu panel (as links) until the list fits, always keeping the first item and the current page, and rebuilds on resize. The cost is a second source of truth for the markup and a layout measurement per resize, so it waits for a real need."},
-    {"id": "breadcrumb-separator-color", "status": "inference", "text": "The Figma separator is painted #5F5F6E, the value of Icon/Color Tertiary. The role binding in Core was not read; the CSS uses --icon-color-tertiary."},
-    {"id": "breadcrumb-target-size", "status": "measured", "text": "Each link is 20.8px high (32.7 by 20.8 for the first one). WCAG 2.5.8 is met through the spacing exception (the items are 8px apart); the focus ring is a 28.8px high area."}
+    {
+      "id": "breadcrumb-last-separator",
+      "status": "documented",
+      "text": "Figma still draws a separator in the Current variant but marks it optional (Show separator). In code the last item has no separator."
+    },
+    {
+      "id": "breadcrumb-narrow-collapse",
+      "status": "resolved",
+      "text": "Resolved in v2.15.0. Figma Core now has the Ellipsis (Default, Hover, Focus). The collapsed path is coded as an ellipsis button that opens the Menu; the author decides which levels are hidden."
+    },
+    {
+      "id": "breadcrumb-auto-collapse",
+      "status": "documented",
+      "text": "Collapse is author-driven. Automatic collapse by container width is not built. It looks feasible with a small script: a ResizeObserver on the nav moves middle items into the Menu panel (as links) until the list fits, always keeping the first item and the current page, and rebuilds on resize. The cost is a second source of truth for the markup and a layout measurement per resize, so it waits for a real need."
+    },
+    {
+      "id": "breadcrumb-separator-color",
+      "status": "inference",
+      "text": "The Figma separator is painted #5F5F6E, the value of Icon/Color Tertiary. The role binding in Core was not read; the CSS uses --icon-color-tertiary."
+    },
+    {
+      "id": "breadcrumb-target-size",
+      "status": "measured",
+      "text": "Each link is 20.8px high (32.7 by 20.8 for the first one). WCAG 2.5.8 is met through the spacing exception (the items are 8px apart); the focus ring is a 28.8px high area."
+    }
   ],
   "unverified": [],
   "mapKeys": [
     "BreadcrumbItem"
+  ],
+  "positioning": [
+    "Default placement is below the trigger and aligned to its start (data-placement=\"bottom\", data-align=\"start\"). The offset between trigger and panel is 8px (--space-2), read from the token.",
+    "The Ellipsis panel is the Menu panel: it keeps its CSS position (absolute, below the button, 8px away) and its 238px width, and has data-placement=\"bottom\" so js/position.js flips it above near the bottom edge and keeps it inside the viewport.",
+    "Flip: if the preferred side does not fit in the viewport and the opposite side does, the panel goes to the opposite side. If neither fits, it stays on the side with more room.",
+    "Cross axis: if the panel would leave the viewport, the alignment flips (start to end) when that makes it fit; otherwise the panel is shifted to stay inside, 16px (--space-4) from the edge.",
+    "The position is calculated when the panel opens, on window resize and on a scroll of any ancestor while it is open. The listeners are removed on close. Positioning never moves the focus and adds no animation.",
+    "Layering is not changed: the panel stays in normal flow layering on its --z-* layer, so a Popover or Menu never covers a Toast (layer 500). Native CSS anchor positioning and the Popover API are not used (see the gap position-native-anchor-future)."
   ]
 },
 {
@@ -1683,9 +1926,22 @@
   "name": "Menu",
   "navGroup": "Navigation",
   "scripts": [
+    "position.js",
     "menu.js"
   ],
-  "figma": {"pageId": "2413:344", "sets": [{"name": "Menu item", "id": "2413:380"}, {"name": "Menu", "id": "2413:381"}]},
+  "figma": {
+    "pageId": "2413:344",
+    "sets": [
+      {
+        "name": "Menu item",
+        "id": "2413:380"
+      },
+      {
+        "name": "Menu",
+        "id": "2413:381"
+      }
+    ]
+  },
   "summary": "A panel of actions or options opened from a trigger: 36px items, optional groups separated by a divider, a danger tone for destructive actions and a check on the chosen option.",
   "whenToUse": [
     "A short list of actions on an object, opened from a button.",
@@ -1697,55 +1953,208 @@
     "Page navigation: use links or Tabs."
   ],
   "properties": [
-    {"name": "Tone", "type": "variant", "options": ["Default", "Danger"], "default": "Default"},
-    {"name": "State", "type": "variant", "options": ["Default", "Hover", "Focus", "Selected", "Disabled"], "default": "Default"},
-    {"name": "Label", "type": "text", "default": "Menu item"}
+    {
+      "name": "Tone",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Danger"
+      ],
+      "default": "Default"
+    },
+    {
+      "name": "State",
+      "type": "variant",
+      "options": [
+        "Default",
+        "Hover",
+        "Focus",
+        "Selected",
+        "Disabled"
+      ],
+      "default": "Default"
+    },
+    {
+      "name": "Label",
+      "type": "text",
+      "default": "Menu item"
+    }
   ],
   "layout": {
-    "item": {"height": 36, "padding": "0 vertical, Spacing/space-3 horizontal", "gap": "Spacing/space-2", "radius": "Radius/radius-sm", "check": "16 by 16 on the right", "focusRing": "228 by 44 around a 220 by 36 item, radius 12"},
-    "panel": {"size": "238 wide in the specimen = 220 item + 16 padding + 2 border (strokesIncludedInLayout true)", "padding": "Spacing/space-2", "gap": "Spacing/space-1", "radius": "Radius/radius-md", "border": "1px Border/Default/Default", "shadow": "Shadow/md", "layer": "Z-index/z-popover (300)"}
+    "item": {
+      "height": 36,
+      "padding": "0 vertical, Spacing/space-3 horizontal",
+      "gap": "Spacing/space-2",
+      "radius": "Radius/radius-sm",
+      "check": "16 by 16 on the right",
+      "focusRing": "228 by 44 around a 220 by 36 item, radius 12"
+    },
+    "panel": {
+      "size": "238 wide in the specimen = 220 item + 16 padding + 2 border (strokesIncludedInLayout true)",
+      "padding": "Spacing/space-2",
+      "gap": "Spacing/space-1",
+      "radius": "Radius/radius-md",
+      "border": "1px Border/Default/Default",
+      "shadow": "Shadow/md",
+      "layer": "Z-index/z-popover (300)"
+    }
   },
   "stateTokens": {
-    "Default": {"default": {"text": "Text/Default/Default"}, "hover": {"fill": "Background/Default/Secondary"}, "focus": "Default plus focus ring", "selected": {"fill": "Background/Default/Secondary", "text": "Text/Default/Default SemiBold, check Icon/Color Default"}, "disabled": {"text": "Text/Disabled/Default"}},
-    "Danger": {"default": {"text": "Text/Danger/Default"}, "hover": {"fill": "Background/Default/Secondary"}, "focus": "Danger Default plus the same focus ring as Default (Border/Utilities/Focus Ring)", "selected": {"fill": "Background/Default/Secondary", "text": "Text/Danger/Default SemiBold, check Icon/Color in the Danger mode"}, "disabled": {"text": "Text/Disabled/Default, identical to Default Disabled"}}
+    "Default": {
+      "default": {
+        "text": "Text/Default/Default"
+      },
+      "hover": {
+        "fill": "Background/Default/Secondary"
+      },
+      "focus": "Default plus focus ring",
+      "selected": {
+        "fill": "Background/Default/Secondary",
+        "text": "Text/Default/Default SemiBold, check Icon/Color Default"
+      },
+      "disabled": {
+        "text": "Text/Disabled/Default"
+      }
+    },
+    "Danger": {
+      "default": {
+        "text": "Text/Danger/Default"
+      },
+      "hover": {
+        "fill": "Background/Default/Secondary"
+      },
+      "focus": "Danger Default plus the same focus ring as Default (Border/Utilities/Focus Ring)",
+      "selected": {
+        "fill": "Background/Default/Secondary",
+        "text": "Text/Danger/Default SemiBold, check Icon/Color in the Danger mode"
+      },
+      "disabled": {
+        "text": "Text/Disabled/Default, identical to Default Disabled"
+      }
+    }
   },
   "accessibility": {
     "contrastText": [
-      {"case": "Item (Text/Default/Default on the panel)", "light": 19.42, "dark": 17.06},
-      {"case": "Item on hover or selected (on Background/Default/Secondary)", "light": 18.15, "dark": 15.17},
-      {"case": "Danger (Text/Danger/Default on the panel)", "light": 5.87, "dark": 6.88},
-      {"case": "Danger on hover (on Background/Default/Secondary)", "light": 5.48, "dark": 6.12},
-      {"case": "Danger Focus (Text/Danger/Default on the panel, same as Default)", "light": 5.87, "dark": 6.88},
-      {"case": "Danger Selected, text and check (on Background/Default/Secondary)", "light": 5.48, "dark": 6.12},
-      {"case": "Disabled (exempt, inactive)", "light": 3.12, "dark": 3.19}
+      {
+        "case": "Item (Text/Default/Default on the panel)",
+        "light": 19.42,
+        "dark": 17.06
+      },
+      {
+        "case": "Item on hover or selected (on Background/Default/Secondary)",
+        "light": 18.15,
+        "dark": 15.17
+      },
+      {
+        "case": "Danger (Text/Danger/Default on the panel)",
+        "light": 5.87,
+        "dark": 6.88
+      },
+      {
+        "case": "Danger on hover (on Background/Default/Secondary)",
+        "light": 5.48,
+        "dark": 6.12
+      },
+      {
+        "case": "Danger Focus (Text/Danger/Default on the panel, same as Default)",
+        "light": 5.87,
+        "dark": 6.88
+      },
+      {
+        "case": "Danger Selected, text and check (on Background/Default/Secondary)",
+        "light": 5.48,
+        "dark": 6.12
+      },
+      {
+        "case": "Disabled (exempt, inactive)",
+        "light": 3.12,
+        "dark": 3.19
+      }
     ],
     "contrastNonText": [
-      {"case": "Panel border vs page (needs 3:1)", "light": 1.29, "dark": 1.28},
-      {"case": "Focus ring vs panel (needs 3:1)", "light": 6.46, "dark": 10.74}
+      {
+        "case": "Panel border vs page (needs 3:1)",
+        "light": 1.29,
+        "dark": 1.28
+      },
+      {
+        "case": "Focus ring vs panel (needs 3:1)",
+        "light": 6.46,
+        "dark": 10.74
+      }
     ],
     "targetSize": "36 high and as wide as the panel: meets 2.5.8 (24 by 24) and is under 2.5.5 (44 by 44, AAA) in height. The items are 4px apart.",
     "focus": "An outline of 2px with a 2px offset: 228 by 44 around a 220 by 36 item, radius 12. It sits inside the 8px panel padding, so it is not clipped (the panel has no overflow).",
     "note": "The trigger has aria-haspopup=\"menu\", aria-expanded and aria-controls. The panel has role=\"menu\"; items are role=\"menuitem\". A chosen option uses role=\"menuitemradio\" (or menuitemcheckbox) with aria-checked. Up and Down move the focus, Home and End jump, Escape closes and returns the focus to the trigger, Tab closes. Typeahead is out of scope. Disabled items use aria-disabled=\"true\" and are skipped.",
     "meaning": "Selected in Figma means a chosen option, so it is menuitemradio with aria-checked=\"true\" and a visible check; it is not announced by color alone. Tabs, Pagination and Menu mark the current item in three different ways on purpose: Tabs with a bottom line and text color, Pagination with a dark fill, Menu with a light fill, SemiBold text and a check. The divider is a role=\"separator\". Danger is carried by the text and its position after the divider, not by color alone. Danger has the same five states as Default (10 variants). Measured contrast, Light and Dark: Danger text on the panel, also in Focus, 5.87 and 6.88; Danger Selected text and check on the Background/Default/Secondary fill, 5.48 and 6.12; Danger Disabled is the same as Default Disabled and exempt."
   },
-  "example": {"markup": "<div data-menu>\n  <button type=\"button\" class=\"btn btn--secondary\" id=\"menu-account\" aria-haspopup=\"menu\" aria-expanded=\"false\" aria-controls=\"menu-account-panel\">Account</button>\n  <div class=\"menu\" role=\"menu\" id=\"menu-account-panel\" aria-labelledby=\"menu-account\" hidden>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Profile</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Settings</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" aria-disabled=\"true\">\n    <span class=\"menu__label\">Billing</span>\n  </button>\n    <div class=\"menu__divider\" role=\"separator\"></div>\n  <button type=\"button\" class=\"menu__item menu__item--danger\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Sign out</span>\n  </button>\n  </div>\n</div>\n<div class=\"menu\" role=\"menu\" aria-label=\"Account actions (static example)\">\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Profile</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Settings</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" aria-disabled=\"true\">\n    <span class=\"menu__label\">Billing</span>\n  </button>\n  <div class=\"menu__divider\" role=\"separator\"></div>\n  <button type=\"button\" class=\"menu__item menu__item--danger\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Sign out</span>\n  </button>\n</div>\n<div class=\"menu\" role=\"menu\" aria-label=\"Language choice (static example)\">\n  <div role=\"group\" aria-label=\"Language\">\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"true\">\n    <span class=\"menu__label\">Português</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"false\">\n    <span class=\"menu__label\">English</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"false\">\n    <span class=\"menu__label\">Español</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  </div>\n</div>"},
+  "example": {
+    "markup": "<div data-menu>\n  <button type=\"button\" class=\"btn btn--secondary\" id=\"menu-positioned\" aria-haspopup=\"menu\" aria-expanded=\"false\" aria-controls=\"menu-positioned-panel\">Account (positioned)</button>\n  <div class=\"menu\" role=\"menu\" id=\"menu-positioned-panel\" aria-labelledby=\"menu-positioned\" data-placement=\"bottom\" data-align=\"start\" hidden>\n    <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n      <span class=\"menu__label\">Profile</span>\n    </button>\n    <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n      <span class=\"menu__label\">Settings</span>\n    </button>\n    <div class=\"menu__divider\" role=\"separator\"></div>\n    <button type=\"button\" class=\"menu__item menu__item--danger\" role=\"menuitem\" tabindex=\"-1\">\n      <span class=\"menu__label\">Sign out</span>\n    </button>\n  </div>\n</div>\n<div data-menu>\n  <button type=\"button\" class=\"btn btn--secondary\" id=\"menu-account\" aria-haspopup=\"menu\" aria-expanded=\"false\" aria-controls=\"menu-account-panel\">Account</button>\n  <div class=\"menu\" role=\"menu\" id=\"menu-account-panel\" aria-labelledby=\"menu-account\" hidden>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Profile</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Settings</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" aria-disabled=\"true\">\n    <span class=\"menu__label\">Billing</span>\n  </button>\n    <div class=\"menu__divider\" role=\"separator\"></div>\n  <button type=\"button\" class=\"menu__item menu__item--danger\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Sign out</span>\n  </button>\n  </div>\n</div>\n<div class=\"menu\" role=\"menu\" aria-label=\"Account actions (static example)\">\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Profile</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Settings</span>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\" aria-disabled=\"true\">\n    <span class=\"menu__label\">Billing</span>\n  </button>\n  <div class=\"menu__divider\" role=\"separator\"></div>\n  <button type=\"button\" class=\"menu__item menu__item--danger\" role=\"menuitem\" tabindex=\"-1\">\n    <span class=\"menu__label\">Sign out</span>\n  </button>\n</div>\n<div class=\"menu\" role=\"menu\" aria-label=\"Language choice (static example)\">\n  <div role=\"group\" aria-label=\"Language\">\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"true\">\n    <span class=\"menu__label\">Português</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"false\">\n    <span class=\"menu__label\">English</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  <button type=\"button\" class=\"menu__item\" role=\"menuitemradio\" tabindex=\"-1\" aria-checked=\"false\">\n    <span class=\"menu__label\">Español</span>\n    <svg aria-hidden=\"true\" class=\"icon menu__check\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/></svg>\n  </button>\n  </div>\n</div>"
+  },
   "essential": [
     "when",
+    "positioning",
     "variants",
     "accessibility"
   ],
   "knownGaps": [
-    {"id": "menu-positioning", "status": "documented", "text": "The CSS draws the panel. Placing it next to the trigger, flipping it near the viewport edge and typeahead are not coded. js/menu.js opens and closes it and handles the keys. The docs demo places the panel under the trigger in the document flow."},
-    {"id": "menu-danger-states", "status": "resolved", "text": "Figma Core now has the three Danger states (Focus, Selected, Disabled), so the set has 10 variants. Danger Disabled is the same as Default Disabled: it exists only so a Tone switch never lands on a missing combination. Danger Selected is rarely used, because a destructive action seldom stays selected."},
-    {"id": "menu-select-parity", "status": "documented", "text": "Figma says Select uses this panel. The native <select> of the repo still opens the browser panel. Select was not changed in this lote."},
-    {"id": "menu-border-contrast", "status": "measured", "text": "The panel border (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark, under the 3:1 of WCAG 1.4.11. The shadow (Shadow/md) does not count as a boundary for that criterion. Implemented as in Figma, no color changed.", "acceptedBy": "Renan", "date": "2026-11-24", "reevaluate": "when dark mode lands, or with real use"},
-    {"id": "menu-specimen-width", "status": "documented", "text": "The Figma panel is 238 wide because the specimen items are 220. In code the items fill the panel and the panel width is the author's; the docs demo uses 238."}
+    {
+      "id": "menu-positioning",
+      "status": "resolved",
+      "text": "Resolved in v2.19.0 for panels that opt in. A panel with data-placement is placed against the trigger by js/position.js (below and start-aligned by default, 8px away, flipped near the viewport edge, shifted to stay inside, recalculated on resize and scroll). A panel without the attribute stays in flow exactly as before, so the in-flow demo and the static example are unchanged. Typeahead is a separate gap (menu-typeahead)."
+    },
+    {
+      "id": "menu-typeahead",
+      "status": "documented",
+      "text": "Typeahead (jumping to an item by typing its first letters) is not coded."
+    },
+    {
+      "id": "menu-danger-states",
+      "status": "resolved",
+      "text": "Figma Core now has the three Danger states (Focus, Selected, Disabled), so the set has 10 variants. Danger Disabled is the same as Default Disabled: it exists only so a Tone switch never lands on a missing combination. Danger Selected is rarely used, because a destructive action seldom stays selected."
+    },
+    {
+      "id": "menu-select-parity",
+      "status": "documented",
+      "text": "Figma says Select uses this panel. The native <select> of the repo still opens the browser panel. Select was not changed in this lote."
+    },
+    {
+      "id": "menu-border-contrast",
+      "status": "measured",
+      "text": "The panel border (Border/Default/Default) is 1.29:1 on the page in Light and 1.28:1 in Dark, under the 3:1 of WCAG 1.4.11. The shadow (Shadow/md) does not count as a boundary for that criterion. Implemented as in Figma, no color changed.",
+      "acceptedBy": "Renan",
+      "date": "2026-11-24",
+      "reevaluate": "when dark mode lands, or with real use"
+    },
+    {
+      "id": "menu-specimen-width",
+      "status": "documented",
+      "text": "The Figma panel is 238 wide because the specimen items are 220. In code the items fill the panel and the panel width is the author's; the docs demo uses 238."
+    },
+    {
+      "id": "menu-viewport-width",
+      "status": "documented",
+      "text": "A positioned panel is as wide as its content, capped at the viewport minus 16px on each side. A very long label wraps inside the item at that cap. The Breadcrumb panel keeps its own 238px."
+    }
   ],
   "unverified": [],
   "mapKeys": [
     "MenuItem",
     "Menu"
-  ]
+  ],
+  "positioning": [
+    "Default placement is below the trigger and aligned to its start (data-placement=\"bottom\", data-align=\"start\"). The offset between trigger and panel is 8px (--space-2), read from the token.",
+    "Positioning is opt-in: a panel with data-placement is placed by js/position.js. Without it the panel stays in flow exactly as before (the static example and the first demo).",
+    "Flip: if the preferred side does not fit in the viewport and the opposite side does, the panel goes to the opposite side. If neither fits, it stays on the side with more room.",
+    "Cross axis: if the panel would leave the viewport, the alignment flips (start to end) when that makes it fit; otherwise the panel is shifted to stay inside, 16px (--space-4) from the edge.",
+    "The position is calculated when the panel opens, on window resize and on a scroll of any ancestor while it is open. The listeners are removed on close. Positioning never moves the focus and adds no animation.",
+    "Layering is not changed: the panel stays in normal flow layering on its --z-* layer, so a Popover or Menu never covers a Toast (layer 500). Native CSS anchor positioning and the Popover API are not used (see the gap position-native-anchor-future).",
+    "Width comes from the content (the items fill the panel), with no minimum tied to the trigger, and never past the viewport minus 16px on each side."
+  ],
+  "edgeDemo": {
+    "note": "The Flip demo trigger is pinned to the bottom right corner of the viewport (it stays there while you scroll), so the panel has no room under it and none on its right: it flips above and aligns to the end.",
+    "markup": "<div data-menu>\n  <button type=\"button\" class=\"btn btn--secondary\" id=\"menu-edge\" aria-haspopup=\"menu\" aria-expanded=\"false\" aria-controls=\"menu-edge-panel\">Flip demo</button>\n  <div class=\"menu\" role=\"menu\" id=\"menu-edge-panel\" aria-labelledby=\"menu-edge\" data-placement=\"bottom\" data-align=\"start\" hidden>\n    <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n      <span class=\"menu__label\">Profile</span>\n    </button>\n    <button type=\"button\" class=\"menu__item\" role=\"menuitem\" tabindex=\"-1\">\n      <span class=\"menu__label\">Settings</span>\n    </button>\n  </div>\n</div>"
+  }
 },
 {
   "slug": "modal",
@@ -2008,6 +2417,11 @@
       "id": "modal-scrim-name",
       "status": "documented",
       "text": "The Figma Info text said the scrim was \"Overlay\" by mistake. It is Background/Utilities/Scrim (--color-bg-scrim)."
+    },
+    {
+      "id": "modal-floating-panels",
+      "status": "measured",
+      "text": "A Popover or a Menu opened inside the Modal body is clipped by the body and the dialog (see position-clipped-in-dialog on the Popover). No portal was added."
     }
   ],
   "unverified": [],
@@ -2272,6 +2686,11 @@
       "id": "bottom-sheet-title-size",
       "status": "measured",
       "text": "The Figma specimen shows the title at 22px (the Desktop value of size/h2, no variable mode set on the frame). The CSS uses --fs-h2, which is the Mobile value (18px) on a 390 wide screen. Renan decides if the specimen or the token wins."
+    },
+    {
+      "id": "bottom-sheet-floating-panels",
+      "status": "measured",
+      "text": "A Popover or a Menu opened inside the Bottom Sheet body is clipped by the body and the dialog (see position-clipped-in-dialog on the Popover). No portal was added."
     }
   ],
   "unverified": [],
@@ -2284,6 +2703,7 @@
   "name": "Popover",
   "navGroup": "Overlays and data",
   "scripts": [
+    "position.js",
     "popover.js"
   ],
   "figma": {
@@ -2371,7 +2791,7 @@
     ],
     [
       "Flipped",
-      "When it does not fit below the trigger it opens above (only when there is room above). Code addition beyond the Figma text: near the right edge it aligns to the end of the trigger.",
+      "When it does not fit below the trigger it opens above, and when it would leave the viewport on a side it aligns to the end or shifts. Code addition beyond the Figma text.",
       ".popover--above, .popover--end"
     ]
   ],
@@ -2428,6 +2848,7 @@
     "whenNot",
     "anatomy",
     "states",
+    "positioning",
     "keyboard",
     "variants",
     "notes"
@@ -2435,16 +2856,14 @@
   "classRoles": {
     ".popover-anchor": "Wrapper of the trigger and the panel, the panel is placed against it.",
     ".popover": "The panel: 280 wide, border, radius 12, Shadow/md, layer 300.",
-    ".popover--above": "Opens above the trigger (added by js/popover.js when there is no room below).",
-    ".popover--end": "Aligns the panel to the end of the trigger (added by js/popover.js near the right edge).",
     ".popover__title": "The optional title.",
     ".popover__body": "The supporting text."
   },
   "knownGaps": [
     {
       "id": "popover-placement",
-      "status": "documented",
-      "text": "Same as the Figma Info text: no arrow (only the Tooltip has one), the panel opens below the trigger, aligned to its start, 8px away (--space-2), and flips above when it does not fit. The code flips only when there is room above; otherwise it stays below. Near the right edge it aligns to the end of the trigger (an addition, not in Figma). No other placement and no collision handling beyond that. Open item."
+      "status": "resolved",
+      "text": "Resolved in v2.19.0. Same as the Figma Info text (no arrow, below the trigger, start-aligned, 8px away, flips above when it does not fit), now through js/position.js: the panel flips when the opposite side fits, keeps the side with more room when neither fits, aligns to the end or shifts on the cross axis, and is recalculated on resize and on scroll while open. Figma defines no other placement; data-placement and data-align accept the four sides as a code addition."
     },
     {
       "id": "popover-role",
@@ -2463,12 +2882,43 @@
       "acceptedBy": "Renan",
       "date": "2026-11-24",
       "reevaluate": "when dark mode lands, or with real use"
+    },
+    {
+      "id": "position-scroll-clipping",
+      "status": "measured",
+      "text": "The panel is positioned inside its offset parent, with no portal. An ancestor with overflow other than visible clips it, and a Popover or Menu opened inside a Modal or a Bottom Sheet is clipped by the dialog (see position-clipped-in-dialog). The positioner does not detect clipping. Shared by Menu, Popover, the Breadcrumb panel and Tooltip."
+    },
+    {
+      "id": "position-native-anchor-future",
+      "status": "documented",
+      "text": "Native CSS anchor positioning and the Popover API were not used: browser support is not settled (sources disagree on Firefox), and the top layer ignores z-index, which would break the --z-* scale. Revisit when support settles and the layering question has an answer."
+    },
+    {
+      "id": "position-toast-layering",
+      "status": "documented",
+      "text": "Layering is documented, not changed: Menu and Popover on 300, Tooltip on 400, Toast on 500. A panel therefore never covers a Toast. Opening a Toast over an open panel is the same case as over a Modal (see toast-over-overlay-screen-reader)."
+    },
+    {
+      "id": "position-clipped-in-dialog",
+      "status": "measured",
+      "text": "Measured in Chromium with the final CSS: a Popover or a positioned Menu opened inside the body of a Modal or a Bottom Sheet is clipped by the body (overflow-y: auto) and by the dialog (overflow: hidden). Popover: 0 of 63 sampled points of the panel visible in the Modal and in the Bottom Sheet, at 390 and 1280 wide; Menu: 34 of 63 (54%) in the Modal and 43 of 63 (68%) in the Bottom Sheet. The positioner measures against the viewport, not against the dialog, and there is no portal. Do not put a Popover or a Menu inside a Modal or a Bottom Sheet until a portal batch exists."
     }
   ],
   "unverified": [],
   "mapKeys": [
     "Popover"
-  ]
+  ],
+  "positioning": [
+    "Default placement is below the trigger and aligned to its start (data-placement=\"bottom\", data-align=\"start\"). The offset between trigger and panel is 8px (--space-2), read from the token.",
+    "Flip: if the preferred side does not fit in the viewport and the opposite side does, the panel goes to the opposite side. If neither fits, it stays on the side with more room.",
+    "Cross axis: if the panel would leave the viewport, the alignment flips (start to end) when that makes it fit; otherwise the panel is shifted to stay inside, 16px (--space-4) from the edge.",
+    "The position is calculated when the panel opens, on window resize and on a scroll of any ancestor while it is open. The listeners are removed on close. Positioning never moves the focus and adds no animation.",
+    "Layering is not changed: the panel stays in normal flow layering on its --z-* layer, so a Popover or Menu never covers a Toast (layer 500). Native CSS anchor positioning and the Popover API are not used (see the gap position-native-anchor-future)."
+  ],
+  "edgeDemo": {
+    "note": "The Flip demo trigger is pinned to the bottom right corner of the viewport (it stays there while you scroll), so the panel has no room under it and none on its right: it flips above and aligns to the end.",
+    "markup": "<div class=\"popover-anchor\">\n  <button type=\"button\" class=\"btn btn--secondary\" id=\"popover-edge-trigger\" data-popover-trigger aria-expanded=\"false\" aria-controls=\"popover-edge-panel\">Flip demo</button>\n  <div class=\"popover\" id=\"popover-edge-panel\" hidden>\n    <p class=\"popover__title\">Flipped panel</p>\n    <p class=\"popover__body\">There is no room below or to the right, so the panel opens above and aligns to the end.</p>\n  </div>\n</div>"
+  }
 },
 {
   "slug": "lightbox",

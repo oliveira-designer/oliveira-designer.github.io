@@ -169,7 +169,7 @@
                           <button type="button" class="breadcrumb__ellipsis" aria-label="Show path" aria-haspopup="menu" aria-expanded="false" aria-controls="breadcrumb-menu">
                             <svg class="icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z"/></svg>
                           </button>
-                          <div class="menu" role="menu" id="breadcrumb-menu" aria-label="Hidden levels" hidden>
+                          <div class="menu" role="menu" id="breadcrumb-menu" aria-label="Hidden levels" data-placement="bottom" data-align="start" hidden>
                             <a class="menu__item" role="menuitem" tabindex="-1" href="#projects"><span class="menu__label">Projects</span></a>
                             <a class="menu__item" role="menuitem" tabindex="-1" href="#hope-ds"><span class="menu__label">Hope DS</span></a>
                           </div>
@@ -238,7 +238,7 @@
         &lt;button type=&quot;button&quot; class=&quot;breadcrumb__ellipsis&quot; aria-label=&quot;Show path&quot; aria-haspopup=&quot;menu&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;breadcrumb-menu&quot;&gt;
           &lt;svg class=&quot;icon&quot; viewBox=&quot;0 0 256 256&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z&quot;/&gt;&lt;/svg&gt;
         &lt;/button&gt;
-        &lt;div class=&quot;menu&quot; role=&quot;menu&quot; id=&quot;breadcrumb-menu&quot; aria-label=&quot;Hidden levels&quot; hidden&gt;
+        &lt;div class=&quot;menu&quot; role=&quot;menu&quot; id=&quot;breadcrumb-menu&quot; aria-label=&quot;Hidden levels&quot; data-placement=&quot;bottom&quot; data-align=&quot;start&quot; hidden&gt;
           &lt;a class=&quot;menu__item&quot; role=&quot;menuitem&quot; tabindex=&quot;-1&quot; href=&quot;#projects&quot;&gt;&lt;span class=&quot;menu__label&quot;&gt;Projects&lt;/span&gt;&lt;/a&gt;
           &lt;a class=&quot;menu__item&quot; role=&quot;menuitem&quot; tabindex=&quot;-1&quot; href=&quot;#hope-ds&quot;&gt;&lt;span class=&quot;menu__label&quot;&gt;Hope DS&lt;/span&gt;&lt;/a&gt;
         &lt;/div&gt;
@@ -337,6 +337,11 @@
     </tbody>
   </table>
 </div>
+          </section>
+
+          <section class="docs-ds-section" id="positioning" aria-labelledby="positioning-title">
+            <h2 class="text-body-xs-semibold text-tertiary" id="positioning-title">Positioning</h2>
+            <ul class="docs-ds-list"><li>Default placement is below the trigger and aligned to its start (data-placement=&quot;bottom&quot;, data-align=&quot;start&quot;). The offset between trigger and panel is 8px (--space-2), read from the token.</li><li>The Ellipsis panel is the Menu panel: it keeps its CSS position (absolute, below the button, 8px away) and its 238px width, and has data-placement=&quot;bottom&quot; so js/position.js flips it above near the bottom edge and keeps it inside the viewport.</li><li>Flip: if the preferred side does not fit in the viewport and the opposite side does, the panel goes to the opposite side. If neither fits, it stays on the side with more room.</li><li>Cross axis: if the panel would leave the viewport, the alignment flips (start to end) when that makes it fit; otherwise the panel is shifted to stay inside, 16px (--space-4) from the edge.</li><li>The position is calculated when the panel opens, on window resize and on a scroll of any ancestor while it is open. The listeners are removed on close. Positioning never moves the focus and adds no animation.</li><li>Layering is not changed: the panel stays in normal flow layering on its --z-* layer, so a Popover or Menu never covers a Toast (layer 500). Native CSS anchor positioning and the Popover API are not used (see the gap position-native-anchor-future).</li></ul>
           </section>
 
           <section class="docs-ds-section" id="keyboard" aria-labelledby="keyboard-title">
@@ -496,6 +501,7 @@
       });
     })();
   </script>
+  <script src="../../js/position.js"></script>
   <script src="../../js/menu.js"></script>
 </body>
 </html>

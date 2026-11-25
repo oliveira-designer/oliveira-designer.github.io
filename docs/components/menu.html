@@ -140,6 +140,21 @@
             <div class="docs-ds-card">
               <div class="docs-ds-preview">
                 <!-- demo:start --><div data-menu>
+                    <button type="button" class="btn btn--secondary" id="menu-positioned" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-positioned-panel">Account (positioned)</button>
+                    <div class="menu" role="menu" id="menu-positioned-panel" aria-labelledby="menu-positioned" data-placement="bottom" data-align="start" hidden>
+                      <button type="button" class="menu__item" role="menuitem" tabindex="-1">
+                        <span class="menu__label">Profile</span>
+                      </button>
+                      <button type="button" class="menu__item" role="menuitem" tabindex="-1">
+                        <span class="menu__label">Settings</span>
+                      </button>
+                      <div class="menu__divider" role="separator"></div>
+                      <button type="button" class="menu__item menu__item--danger" role="menuitem" tabindex="-1">
+                        <span class="menu__label">Sign out</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div data-menu>
                     <button type="button" class="btn btn--secondary" id="menu-account" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-account-panel">Account</button>
                     <div class="menu" role="menu" id="menu-account-panel" aria-labelledby="menu-account" hidden>
                     <button type="button" class="menu__item" role="menuitem" tabindex="-1">
@@ -193,6 +208,21 @@
             <details class="docs-ds-code">
               <summary>HTML</summary>
 <pre class="docs-ds-code__block">&lt;div data-menu&gt;
+  &lt;button type=&quot;button&quot; class=&quot;btn btn--secondary&quot; id=&quot;menu-positioned&quot; aria-haspopup=&quot;menu&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;menu-positioned-panel&quot;&gt;Account (positioned)&lt;/button&gt;
+  &lt;div class=&quot;menu&quot; role=&quot;menu&quot; id=&quot;menu-positioned-panel&quot; aria-labelledby=&quot;menu-positioned&quot; data-placement=&quot;bottom&quot; data-align=&quot;start&quot; hidden&gt;
+    &lt;button type=&quot;button&quot; class=&quot;menu__item&quot; role=&quot;menuitem&quot; tabindex=&quot;-1&quot;&gt;
+      &lt;span class=&quot;menu__label&quot;&gt;Profile&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;menu__item&quot; role=&quot;menuitem&quot; tabindex=&quot;-1&quot;&gt;
+      &lt;span class=&quot;menu__label&quot;&gt;Settings&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class=&quot;menu__divider&quot; role=&quot;separator&quot;&gt;&lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;menu__item menu__item--danger&quot; role=&quot;menuitem&quot; tabindex=&quot;-1&quot;&gt;
+      &lt;span class=&quot;menu__label&quot;&gt;Sign out&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div data-menu&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn--secondary&quot; id=&quot;menu-account&quot; aria-haspopup=&quot;menu&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;menu-account-panel&quot;&gt;Account&lt;/button&gt;
   &lt;div class=&quot;menu&quot; role=&quot;menu&quot; id=&quot;menu-account-panel&quot; aria-labelledby=&quot;menu-account&quot; hidden&gt;
   &lt;button type=&quot;button&quot; class=&quot;menu__item&quot; role=&quot;menuitem&quot; tabindex=&quot;-1&quot;&gt;
@@ -247,6 +277,25 @@
           <section class="docs-ds-section" id="when" aria-labelledby="when-title">
             <h2 class="text-body-xs-semibold text-tertiary" id="when-title">When to use</h2>
             <ul class="docs-ds-list"><li>A short list of actions on an object, opened from a button.</li><li>The options of a Select (the same panel look).</li><li>Put destructive actions last, after a divider.</li></ul>
+          </section>
+
+          <section class="docs-ds-section" id="positioning" aria-labelledby="positioning-title">
+            <h2 class="text-body-xs-semibold text-tertiary" id="positioning-title">Positioning</h2>
+            <ul class="docs-ds-list"><li>Default placement is below the trigger and aligned to its start (data-placement=&quot;bottom&quot;, data-align=&quot;start&quot;). The offset between trigger and panel is 8px (--space-2), read from the token.</li><li>Positioning is opt-in: a panel with data-placement is placed by js/position.js. Without it the panel stays in flow exactly as before (the static example and the first demo).</li><li>Flip: if the preferred side does not fit in the viewport and the opposite side does, the panel goes to the opposite side. If neither fits, it stays on the side with more room.</li><li>Cross axis: if the panel would leave the viewport, the alignment flips (start to end) when that makes it fit; otherwise the panel is shifted to stay inside, 16px (--space-4) from the edge.</li><li>The position is calculated when the panel opens, on window resize and on a scroll of any ancestor while it is open. The listeners are removed on close. Positioning never moves the focus and adds no animation.</li><li>Layering is not changed: the panel stays in normal flow layering on its --z-* layer, so a Popover or Menu never covers a Toast (layer 500). Native CSS anchor positioning and the Popover API are not used (see the gap position-native-anchor-future).</li><li>Width comes from the content (the items fill the panel), with no minimum tied to the trigger, and never past the viewport minus 16px on each side.</li></ul>
+            <p class="docs-ds-note">The Flip demo trigger is pinned to the bottom right corner of the viewport (it stays there while you scroll), so the panel has no room under it and none on its right: it flips above and aligns to the end.</p>
+            <div class="docs-edge-demo">
+<div data-menu>
+                <button type="button" class="btn btn--secondary" id="menu-edge" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-edge-panel">Flip demo</button>
+                <div class="menu" role="menu" id="menu-edge-panel" aria-labelledby="menu-edge" data-placement="bottom" data-align="start" hidden>
+                  <button type="button" class="menu__item" role="menuitem" tabindex="-1">
+                    <span class="menu__label">Profile</span>
+                  </button>
+                  <button type="button" class="menu__item" role="menuitem" tabindex="-1">
+                    <span class="menu__label">Settings</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </section>
 
           <section class="docs-ds-section" id="variants" aria-labelledby="variants-title">
@@ -340,6 +389,7 @@
       });
     })();
   </script>
+  <script src="../../js/position.js"></script>
   <script src="../../js/menu.js"></script>
 </body>
 </html>

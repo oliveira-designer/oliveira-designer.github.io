@@ -449,6 +449,44 @@
   min-height: 16rem;
 }
 
+/* Positioned demos (Menu with data-placement, Tooltip with data-anchor): the panels are placed by js/position.js, so the card must not
+   clip them and the demo needs room around the triggers (a Left or Right tooltip sits beside its trigger). */
+.docs-ds-card:has(.menu[data-placement]),
+.docs-ds-card:has([data-anchor]) {
+  overflow: visible;
+}
+
+.docs-ds-preview:has(.menu[data-placement]) {
+  align-items: flex-start;
+  min-height: 16rem;
+}
+
+.docs-ds-preview:has([data-anchor]) {
+  justify-content: center;
+  gap: var(--space-16) var(--space-20);
+  padding: var(--space-16) var(--space-12);
+}
+
+/* On a narrow screen the four triggers stack in one column, small and centered, so the Left and Right tooltips have room beside them. */
+@media (max-width: 640px) {
+  .docs-ds-preview:has([data-anchor]) {
+    flex-direction: column;
+    align-items: center;
+  }
+  .docs-ds-preview:has([data-anchor]) > .btn {
+    width: auto;
+  }
+}
+
+/* Flip demo: a trigger pinned to the bottom right corner of the viewport, so the panel has no room below or to the right and has to
+   flip. It sits above the page content and below the modal layer. */
+.docs-edge-demo {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: var(--z-sticky);
+}
+
 /* Code disclosure: native <details>, the code stays in the DOM when collapsed. */
 .docs-ds-code > summary {
   display: inline-flex;

@@ -132,26 +132,30 @@
         <div class="docs-ds-content">
           <header class="docs-ds-head">
             <h1 class="text-h1">Tooltip</h1>
-            <p class="docs-ds-desc">Short text hint on a dark bubble with an arrow, in four placements: Top, Bottom, Left and Right. The bubble and the arrow are one piece; the CSS draws the piece, not the positioning against its trigger.</p>
+            <p class="docs-ds-desc">Short text hint on a dark bubble with an arrow, in four placements: Top, Bottom, Left and Right. The bubble and the arrow are one piece. The docs demos place it against a trigger with js/position.js (positioned, trigger not coded); showing it on hover and focus is a separate, open item.</p>
           </header>
 
           <section class="docs-ds-section" id="example" aria-labelledby="example-title">
             <h2 class="text-body-xs-semibold text-tertiary" id="example-title">Live example</h2>
             <div class="docs-ds-card">
               <div class="docs-ds-preview">
-                <!-- demo:start --><div class="tooltip tooltip--top" role="tooltip" id="tip-top">
+                <!-- demo:start --><button type="button" class="btn btn--secondary" id="tip-trigger-top" aria-describedby="tip-top">Top</button>
+                  <div class="tooltip tooltip--top" role="tooltip" id="tip-top" data-anchor="tip-trigger-top" data-placement="top">
                     <span class="tooltip__bubble">Tooltip text</span>
                     <span class="tooltip__arrow" aria-hidden="true"></span>
                   </div>
-                  <div class="tooltip tooltip--bottom" role="tooltip" id="tip-bottom">
+                  <button type="button" class="btn btn--secondary" id="tip-trigger-bottom" aria-describedby="tip-bottom">Bottom</button>
+                  <div class="tooltip tooltip--bottom" role="tooltip" id="tip-bottom" data-anchor="tip-trigger-bottom" data-placement="bottom">
                     <span class="tooltip__bubble">Tooltip text</span>
                     <span class="tooltip__arrow" aria-hidden="true"></span>
                   </div>
-                  <div class="tooltip tooltip--left" role="tooltip" id="tip-left">
+                  <button type="button" class="btn btn--secondary" id="tip-trigger-left" aria-describedby="tip-left">Left</button>
+                  <div class="tooltip tooltip--left" role="tooltip" id="tip-left" data-anchor="tip-trigger-left" data-placement="left">
                     <span class="tooltip__bubble">Tooltip text</span>
                     <span class="tooltip__arrow" aria-hidden="true"></span>
                   </div>
-                  <div class="tooltip tooltip--right" role="tooltip" id="tip-right">
+                  <button type="button" class="btn btn--secondary" id="tip-trigger-right" aria-describedby="tip-right">Right</button>
+                  <div class="tooltip tooltip--right" role="tooltip" id="tip-right" data-anchor="tip-trigger-right" data-placement="right">
                     <span class="tooltip__bubble">Tooltip text</span>
                     <span class="tooltip__arrow" aria-hidden="true"></span>
                   </div><!-- demo:end -->
@@ -159,19 +163,23 @@
             </div>
             <details class="docs-ds-code">
               <summary>HTML</summary>
-<pre class="docs-ds-code__block">&lt;div class=&quot;tooltip tooltip--top&quot; role=&quot;tooltip&quot; id=&quot;tip-top&quot;&gt;
+<pre class="docs-ds-code__block">&lt;button type=&quot;button&quot; class=&quot;btn btn--secondary&quot; id=&quot;tip-trigger-top&quot; aria-describedby=&quot;tip-top&quot;&gt;Top&lt;/button&gt;
+&lt;div class=&quot;tooltip tooltip--top&quot; role=&quot;tooltip&quot; id=&quot;tip-top&quot; data-anchor=&quot;tip-trigger-top&quot; data-placement=&quot;top&quot;&gt;
   &lt;span class=&quot;tooltip__bubble&quot;&gt;Tooltip text&lt;/span&gt;
   &lt;span class=&quot;tooltip__arrow&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
 &lt;/div&gt;
-&lt;div class=&quot;tooltip tooltip--bottom&quot; role=&quot;tooltip&quot; id=&quot;tip-bottom&quot;&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn--secondary&quot; id=&quot;tip-trigger-bottom&quot; aria-describedby=&quot;tip-bottom&quot;&gt;Bottom&lt;/button&gt;
+&lt;div class=&quot;tooltip tooltip--bottom&quot; role=&quot;tooltip&quot; id=&quot;tip-bottom&quot; data-anchor=&quot;tip-trigger-bottom&quot; data-placement=&quot;bottom&quot;&gt;
   &lt;span class=&quot;tooltip__bubble&quot;&gt;Tooltip text&lt;/span&gt;
   &lt;span class=&quot;tooltip__arrow&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
 &lt;/div&gt;
-&lt;div class=&quot;tooltip tooltip--left&quot; role=&quot;tooltip&quot; id=&quot;tip-left&quot;&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn--secondary&quot; id=&quot;tip-trigger-left&quot; aria-describedby=&quot;tip-left&quot;&gt;Left&lt;/button&gt;
+&lt;div class=&quot;tooltip tooltip--left&quot; role=&quot;tooltip&quot; id=&quot;tip-left&quot; data-anchor=&quot;tip-trigger-left&quot; data-placement=&quot;left&quot;&gt;
   &lt;span class=&quot;tooltip__bubble&quot;&gt;Tooltip text&lt;/span&gt;
   &lt;span class=&quot;tooltip__arrow&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
 &lt;/div&gt;
-&lt;div class=&quot;tooltip tooltip--right&quot; role=&quot;tooltip&quot; id=&quot;tip-right&quot;&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn--secondary&quot; id=&quot;tip-trigger-right&quot; aria-describedby=&quot;tip-right&quot;&gt;Right&lt;/button&gt;
+&lt;div class=&quot;tooltip tooltip--right&quot; role=&quot;tooltip&quot; id=&quot;tip-right&quot; data-anchor=&quot;tip-trigger-right&quot; data-placement=&quot;right&quot;&gt;
   &lt;span class=&quot;tooltip__bubble&quot;&gt;Tooltip text&lt;/span&gt;
   &lt;span class=&quot;tooltip__arrow&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
 &lt;/div&gt;</pre>
@@ -219,6 +227,19 @@
     </tbody>
   </table>
 </div>
+          </section>
+
+          <section class="docs-ds-section" id="positioning" aria-labelledby="positioning-title">
+            <h2 class="text-body-xs-semibold text-tertiary" id="positioning-title">Positioning</h2>
+            <ul class="docs-ds-list"><li>Four placements, the names of the Figma set: data-placement=&quot;top|bottom|left|right&quot;. The Tooltip keeps its default of top, centered on the trigger (data-align=&quot;center&quot;). The offset to the trigger is 8px (--space-2), a code value: Figma does not define a distance.</li><li>Flip: if the preferred side does not fit in the viewport and the opposite side does, the tooltip goes to the opposite side and the class tooltip--top|bottom|left|right follows, so the arrow keeps pointing at the trigger. If neither fits, it stays on the side with more room.</li><li>Cross axis: a centered tooltip that would leave the viewport is shifted to stay 16px (--space-4) inside (start and end alignments flip first). The arrow stays centered on the bubble, so after a shift it no longer points at the center of the trigger (see tooltip-arrow-shift).</li><li>Today this is wired in the docs demos only (data-anchor names the trigger). The tooltip is positioned, the trigger is not coded: showing and hiding on hover and focus, the delay and WCAG 1.4.13 stay open (tooltip-hover-focus-behavior).</li></ul>
+            <p class="docs-ds-note">The Flip demo trigger is pinned to the bottom right corner of the viewport (it stays there while you scroll) and its tooltip prefers the bottom: it flips to the top and, being centered, is shifted left to stay inside.</p>
+            <div class="docs-edge-demo">
+<button type="button" class="btn btn--secondary" id="tip-trigger-edge" aria-describedby="tip-edge">Flip demo</button>
+              <div class="tooltip tooltip--bottom" role="tooltip" id="tip-edge" data-anchor="tip-trigger-edge" data-placement="bottom">
+                <span class="tooltip__bubble">A longer tooltip text</span>
+                <span class="tooltip__arrow" aria-hidden="true"></span>
+              </div>
+            </div>
           </section>
 
           <section class="docs-ds-section" id="accessibility" aria-labelledby="accessibility-title">
@@ -279,6 +300,6 @@
       });
     })();
   </script>
-  
+  <script src="../../js/position.js"></script>
 </body>
 </html>
