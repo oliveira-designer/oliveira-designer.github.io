@@ -28,8 +28,8 @@
 .field__label {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 600;
-  line-height: 1.6;
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-160);
   color: var(--color-text-1);
 }
 
@@ -42,14 +42,14 @@
   margin: 0;
   font-family: var(--font-body);
   font-size: var(--fs-body-xs);
-  font-weight: 400;
-  line-height: 1.6;
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-160);
   color: var(--color-text-3);
 }
 
 /* Error: the helper text carries the message, in Danger and Medium weight. The label does not change. */
 .field:has([aria-invalid="true"]) .field__help {
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   color: var(--color-text-danger-default);
 }
 
@@ -98,8 +98,8 @@
   min-height: calc(var(--space-6) + var(--fs-body-sm) * 1.6);
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 400;
-  line-height: 1.6;
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-160);
   color: var(--color-text-1);
   background-color: var(--color-bg);
   border: var(--field-border-width) solid var(--field-border-color);

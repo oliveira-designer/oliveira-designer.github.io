@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.16.0 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.17.0 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.17.0 (MINOR, 24/11/2026)**: tokens de tipografia para peso (`--fw-regular|medium|semibold|bold`), line height (`--lh-110|120|130|140|160|170|175`, nomeado pelo valor) e letter-spacing (`--ls-tighter|tight|normal|widest`), com os valores dos estilos de texto do Figma. Os 230 literais que batiam exatamente passaram para os tokens, sem mudança visual (estilos computados idênticos em todas as páginas do site). Line height e letter-spacing não são variáveis do Figma (o Figma lê uma variável numérica nessas propriedades como pixels), então o valor canônico vem dos estilos de texto, registrado em `docs/data/figma-text-styles.json` e comparado na página de tokens; a divergência estrutural está em `accepted-divergences.json` (D-49). MINOR pela cláusula "Nova família de tokens" da seção 3 do GOVERNANCE.
 
 **Changelog v2.16.0 (MINOR, 24/11/2026)**: caixa alta híbrida (D-46). Dois estilos de rótulo: `Label/label-caps` (11px, 400, line height 140%, 0.12em, uppercase) só para rótulos de até três palavras, e `Body/SemiBold/body-xs semibold` (11px, 600, line height 160%, sem tracking) em caixa de frase para o que passa disso. As 22 regras de `text-transform: uppercase` viraram uma definição única em `css/reset.css` (um grupo de seletores e as classes `.text-label` e `.text-body-xs-semibold`); `docs:check` falha com caixa alta fora dela e com mais de três palavras em elemento com o estilo Label. Três regras que ninguém vê (`.header__status-badge`, `.case-toc__label`, `.about-block__label`) perderam a caixa alta e o tracking. A suíte de snapshots de estados abertos (Modal, Lightbox, Popover) entrou em `scripts/` (`npm run snapshots:open`). MINOR pela cláusula "Expansão de escala (mais tamanhos, mais variantes)" da seção 3 do GOVERNANCE (entra um estilo de texto novo no código e no DESIGN.md); lido só como regra de prosa seria PATCH.
 
@@ -237,8 +239,14 @@ A escala segue os estilos de texto do Figma Foundation (decisão de 18/11/2026).
   --fs-body-xl:  clamp(16px, 1.7vw, 19px);
   --fs-body-xs:  11px;
   --fs-label:    11px;
+
+  --fw-regular: 400;  --fw-medium: 500;  --fw-semibold: 600;  --fw-bold: 700;
+  --lh-110: 1.1;  --lh-120: 1.2;  --lh-130: 1.3;  --lh-140: 1.4;  --lh-160: 1.6;  --lh-170: 1.7;  --lh-175: 1.75;
+  --ls-tighter: -0.02em;  --ls-tight: -0.01em;  --ls-normal: 0;  --ls-widest: 0.12em;
 }
 ```
+
+Os valores de peso, line height e letter-spacing da tabela acima têm token desde a v2.17.0 (`--fw-*`, `--lh-*`, `--ls-*`, em `tokens.css`; ver a seção de tipografia do `DESIGN.md`). Os literais que não batem com nenhum token (por exemplo `line-height: 1.65` ou `letter-spacing: 0.08em`) ficam como estão e são divergências candidatas: não foram trocados.
 
 **`--fs-body` é 16px fixo** (Figma Body, v2.6.8). Antes era fluido, de 14 a 16px.
 
@@ -2487,5 +2495,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.16.0 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.17.0 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

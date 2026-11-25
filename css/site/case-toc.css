@@ -52,8 +52,8 @@
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 500;
-  line-height: 1.4;
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-140);
   color: var(--color-text-2);
   transition:
     color            var(--duration-normal) var(--ease-out),
@@ -65,7 +65,7 @@
   content: counter(toc-counter, decimal-leading-zero);
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   color: var(--color-text-3);
   flex-shrink: 0;
   transition: color var(--duration-normal) var(--ease-out);
@@ -87,7 +87,7 @@
 /* Active — capsule pill tint, high-contrast text, no left bar */
 .case-toc__link.is-active {
   color: var(--color-text-1);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   background-color: rgba(28, 95, 168, 0.08);
 }
 /* Uses --color-accent (Anchor light / Solar dark). Dark mode is currently
@@ -98,7 +98,7 @@
    let it slide back in unreviewed. */
 .case-toc__link.is-active::before {
   color: var(--color-accent);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
 }
 
 [data-theme="dark"] .case-toc__link.is-active {

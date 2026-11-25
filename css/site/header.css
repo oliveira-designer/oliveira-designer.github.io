@@ -117,13 +117,13 @@ html {
 .nav__link {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   color: var(--color-text-2);
   padding: var(--space-1) 0;
   transition: color var(--duration-normal) var(--ease-out);
 }
 .nav__link:hover   { color: var(--color-text-1); }
-.nav__link--active { color: var(--color-text-1); font-weight: 600; }
+.nav__link--active { color: var(--color-text-1); font-weight: var(--fw-semibold); }
 
 /* Theme toggle — all breakpoints */
 .nav__theme-toggle {
@@ -251,7 +251,7 @@ html {
   align-items: center;
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   color: var(--color-text-2);
   padding: var(--space-3) var(--space-4);
   min-height: 44px;
@@ -269,5 +269,5 @@ html {
 }
 .nav__mobile-link--active {
   color: var(--color-text-1);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }

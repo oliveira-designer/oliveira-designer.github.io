@@ -117,16 +117,16 @@
   font-family: var(--font-body);
   font-style: italic;
   text-transform: none;
-  letter-spacing: 0;
+  letter-spacing: var(--ls-normal);
 }
 
 /* Project title */
 .case-card__title {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-130);
+  letter-spacing: var(--ls-tight);
   color: var(--color-text-1);
 }
 
@@ -139,7 +139,7 @@
 .case-card__tag {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-pill);
   color: var(--color-text-2);
@@ -156,7 +156,7 @@
 .case-card__lead {
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  line-height: 1.70;
+  line-height: var(--lh-170);
   color: var(--color-text-2);
   margin-top: auto;
 }
@@ -177,15 +177,15 @@
 .metric__value {
   font-family: var(--font-body);
   font-size: var(--fs-h2);
-  font-weight: 700;
-  line-height: 1.4;
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-140);
   color: var(--color-accent);
 }
 .metric__label {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   color: var(--color-text-3);
-  line-height: 1.4;
+  line-height: var(--lh-140);
 }
 
 /* Footer — sits naturally after metrics, no extra push needed */
@@ -195,7 +195,7 @@
 .case-card__action {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   color: var(--color-text-3);
   text-decoration: none;
   letter-spacing: 0.02em;
@@ -481,13 +481,13 @@
 /* ── Title — bold, pipe-separated ───────────────────────────────────── */
 .case-card--glass .case-card__title {
   font-size:      var(--fs-h2);
-  letter-spacing: -0.01em;
-  line-height:    1.3;
+  letter-spacing: var(--ls-tight);
+  line-height:    var(--lh-130);
 }
 .case-card__title-sep {
   margin:      0 calc(var(--space-2) + 2px);
   color:       var(--color-text-3);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
 }
 
 /* ── Meta line — muted mono (client · year · discipline) ────────────── */
@@ -516,7 +516,7 @@
 .case-card--glass .case-card__lead {
   margin-top:  0;    /* override the base margin-top:auto */
   font-size:   var(--fs-body);
-  line-height: 1.75;
+  line-height: var(--lh-175);
   color:       var(--color-text-1);
 }
 /* Clamped to a fixed number of lines, desktop only, matching the card's

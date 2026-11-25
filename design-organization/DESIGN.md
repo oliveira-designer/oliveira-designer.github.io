@@ -1,5 +1,5 @@
 ---
-version: v2.16.0
+version: v2.17.0
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -749,6 +749,34 @@ Valores de referência. Nos estilos fluidos o tamanho é o máximo: no código, 
 
 O `--fs-body-lg` (17px) não existia no Figma e foi removido na v2.6.5. Os textos que o usavam (`.hero__body` e `.case-hero__subtitle`) passaram a `--fs-body-xl` na v2.6.5 e, em seguida, a `--fs-body` na v2.6.6 (decisão de 18/11/2026: o lead de 19px ficou grande demais no hero). Essas duas regras usam Body, não Body lg, de propósito.
 
+### Tokens de peso, line height e letter-spacing (v2.17.0)
+
+Peso, line height e letter-spacing são tokens em `css/tokens.css`, na área de tipografia ao lado dos `--fs-*`. Os valores não mudam com o tema. A tabela dos estilos de texto do Figma (lida em 24/11/2026) está em `docs/data/figma-text-styles.json`, e a página de tokens dos docs compara com ela.
+
+| Token | CSS | Figma |
+|---|---|---|
+| `--fw-regular` | `400` | variável `weight/regular` (estilo "Regular") |
+| `--fw-medium` | `500` | variável `weight/medium` (estilo "Medium") |
+| `--fw-semibold` | `600` | variável `weight/semibold` (estilo "SemiBold") |
+| `--fw-bold` | `700` | variável `weight/bold` (estilo "Bold") |
+| `--lh-110` | `1.1` | 110% (Display) |
+| `--lh-120` | `1.2` | 120% (Heading/H1) |
+| `--lh-130` | `1.3` | 130% (Heading/H2) |
+| `--lh-140` | `1.4` | 140% (Heading/H3, Label/label-caps, Metric) |
+| `--lh-160` | `1.6` | 160% (Body xs, Body sm, Link xs e Link sm) |
+| `--lh-170` | `1.7` | 170% (Body lg, Body xl) |
+| `--lh-175` | `1.75` | 175% (Body) |
+| `--ls-tighter` | `-0.02em` | -2% (Display) |
+| `--ls-tight` | `-0.01em` | -1% (Heading/H1, Heading/H2, Body xl) |
+| `--ls-normal` | `0` | 0% (todos os outros) |
+| `--ls-widest` | `0.12em` | 12% (Label/label-caps) |
+
+**Conversão de unidades.** O Figma guarda line height e letter-spacing em porcentagem; o CSS usa razão sem unidade no line height (160% é `1.6`) e `em` no letter-spacing (12% é `0.12em`). A comparação da página de tokens converte as unidades antes de decidir se os valores são iguais.
+
+**Nomes.** O peso usa nomes semânticos, como Polaris, Shoelace e Red Hat. O letter-spacing usa uma escada semântica (Tailwind, Polaris, Shoelace); `widest` entra no lugar de `wide` porque 12% passa do maior valor do Tailwind (10%) e os extremos podem crescer sem renomear. O line height é nomeado pelo valor (Polaris e o Codex da Wikimedia fazem assim) porque vários estilos compartilham o mesmo valor e nomes por papel seriam arbitrários. Os prefixos seguem o `--fs-*`.
+
+**Lacuna conhecida (D-48, D-49).** Line height e letter-spacing não são variáveis do Figma porque o Figma lê uma variável numérica ligada a essas propriedades como pixels; os valores canônicos ficam nos estilos de texto. Quando o Figma passar a aceitar porcentagem em variáveis, criar variáveis com estes nomes e ligar os estilos; o CSS continua o mesmo. Só o peso é variável de verdade. A divergência estrutural está registrada em `docs/data/accepted-divergences.json`. O `docs:check` confere que cada token existe com o valor da tabela e que todo `var(--fw-*)`, `var(--lh-*)` e `var(--ls-*)` usado no CSS resolve para um token definido.
+
 ### Regras
 
 - **Plus Jakarta Sans**: tudo — display, headlines, body, UI, overlines, labels, métricas, code
@@ -1150,4 +1178,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.16.0 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.17.0 · novembro de 2026 · Renan Moura*

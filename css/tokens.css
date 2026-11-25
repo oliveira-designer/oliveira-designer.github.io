@@ -1,6 +1,6 @@
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v2.16.0 · November 2026
+   v2.17.0 · November 2026
    Source of truth: Figma Foundation for VALUES; DESIGN.md +
    DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
@@ -263,6 +263,29 @@
   --fs-body-xl: clamp(16px, 1.7vw, 19px);   /* Figma Body xl (size/lead, 19px Desktop / 16px Mobile, tracking -1%): case lead text. Figma "Body lg" (19px, no tracking) exists only in Figma, kept on purpose without a CSS token */
   --fs-body-xs: 11px;                       /* Figma Body xs: fixed, not fluid */
   --fs-label:   11px;                       /* Figma Label caps: fixed, not fluid */
+
+  /* Weight. Figma variables weight/regular|medium|semibold|bold (bound to the text styles through fontStyle). Not themed. */
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  /* Line height, named by value (D-48). Figma keeps line height as a percentage inside the text styles: a numeric variable
+     bound to it is read as pixels, so there is no Figma variable. 110% is 1.1 here, and so on. Not themed. */
+  --lh-110: 1.1;   /* Display */
+  --lh-120: 1.2;   /* Heading/H1 */
+  --lh-130: 1.3;   /* Heading/H2 */
+  --lh-140: 1.4;   /* Heading/H3, Label/label-caps, Metric */
+  --lh-160: 1.6;   /* Body xs, Body sm, Link */
+  --lh-170: 1.7;   /* Body lg, Body xl */
+  --lh-175: 1.75;  /* Body */
+
+  /* Letter spacing, a semantic ladder (D-48, D-49). Figma keeps it as a percentage inside the text styles (no variable, same
+     reason as line height). -2% is -0.02em here, 12% is 0.12em. Not themed. */
+  --ls-tighter: -0.02em;  /* Display */
+  --ls-tight:   -0.01em;  /* Heading/H1, Heading/H2, Body xl */
+  --ls-normal:  0;        /* every other style */
+  --ls-widest:  0.12em;   /* Label/label-caps */
 
   /* ----------------------------------------------------------
      SPACING — 4px base scale

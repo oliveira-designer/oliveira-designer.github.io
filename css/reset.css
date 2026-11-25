@@ -31,7 +31,7 @@ html {
 body {
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  line-height: 1.75;
+  line-height: var(--lh-175);
   color: var(--color-text-1);
   background-color: var(--color-bg);
   transition:
@@ -124,7 +124,7 @@ p { max-width: 70ch; }
   color: var(--color-text-1);
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   border: var(--border-strong);
@@ -153,44 +153,44 @@ p { max-width: 70ch; }
 .text-display {
   font-family: var(--font-display);
   font-size: var(--fs-display);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-110);
+  letter-spacing: var(--ls-tighter);
 }
 
 .text-h1 {
   font-family: var(--font-display);
   font-size: var(--fs-h1);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-120);
+  letter-spacing: var(--ls-tight);
 }
 
 .text-h2 {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-130);
+  letter-spacing: var(--ls-tight);
 }
 
 .text-h3 {
   font-family: var(--font-body);
   font-size: var(--fs-h3);
-  font-weight: 700;
-  line-height: 1.4;
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-140);
 }
 
 .text-body {
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  line-height: 1.75;
+  line-height: var(--lh-175);
 }
 
 .text-body-sm {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  line-height: 1.6;
+  line-height: var(--lh-160);
 }
 
 /* ----------------------------------------------------------
@@ -203,8 +203,9 @@ p { max-width: 70ch; }
       no transform. For everything longer than three words.
 
    Use the utility class (.text-label, .text-body-xs-semibold) in new markup. The selector groups below give the same style to
-   the site classes that already existed, so their own rules only keep layout and color. There are no weight, line height or
-   tracking tokens in tokens.css, so 400, 600, 1.4, 1.6 and 0.12em are written here once and nowhere else.
+   the site classes that already existed, so their own rules only keep layout and color. Weight, line height and tracking use
+   the tokens --fw-*, --lh-* and --ls-* (tokens.css, D-48): Label is --fw-regular, --lh-140 and --ls-widest, sentence case is
+   --fw-semibold, --lh-160 and --ls-normal.
    A class goes to the sentence case group when any string it styles has more than three words, in any language the site
    ships (a standalone "&" counts as a word, a dash or a colon does not).
    ---------------------------------------------------------- */
@@ -222,9 +223,9 @@ p { max-width: 70ch; }
 .section__overline {
   font-family: var(--font-body);
   font-size: var(--fs-label);
-  font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: 0.12em;
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-140);
+  letter-spacing: var(--ls-widest);
   text-transform: uppercase;
 }
 
@@ -234,9 +235,9 @@ p { max-width: 70ch; }
 .case-callout__attribution {
   font-family: var(--font-body);
   font-size: var(--fs-body-xs);
-  font-weight: 600;
-  line-height: 1.6;
-  letter-spacing: 0;
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-160);
+  letter-spacing: var(--ls-normal);
   text-transform: none;
 }
 

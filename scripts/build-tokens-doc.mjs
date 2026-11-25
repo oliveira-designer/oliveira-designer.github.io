@@ -39,6 +39,7 @@ const TOKENS_CSS = path.join(ROOT, 'css', 'tokens.css');
 const OUT_DIR = path.join(ROOT, 'docs');
 const FIGMA_JSON = path.join(OUT_DIR, 'data', 'figma-tokens.json');
 const ACCEPTED_JSON = path.join(OUT_DIR, 'data', 'accepted-divergences.json');
+const TEXT_STYLES_JSON = path.join(OUT_DIR, 'data', 'figma-text-styles.json');
 
 /* Short labels for the sidebar and page headings. Keyed by the slug of the raw
    banner text in tokens.css. The raw banner text stays available as a tooltip.
@@ -501,6 +502,49 @@ function loadFigma() {
   return raw;
 }
 
+// Figma text styles snapshot (docs/data/figma-text-styles.json). Line height and letter spacing are percentages inside the Figma text
+// styles (Figma cannot bind a percentage to a variable), so the Figma value of --lh-* and --ls-* is read from here, not from
+// figma-tokens.json. Shape: { source, styles[], weights{}, tokens{} }. The file is refreshed by Claude, never by hand.
+function loadTextStyles() {
+  if (!fs.existsSync(TEXT_STYLES_JSON)) return null;
+  let raw;
+  try {
+    raw = JSON.parse(fs.readFileSync(TEXT_STYLES_JSON, 'utf8'));
+  } catch (err) {
+    throw new MalformedData(`docs/data/figma-text-styles.json is not valid JSON: ${err.message}`);
+  }
+  const errors = [];
+  if (!raw || typeof raw !== 'object' || !raw.source || !raw.source.readAt) errors.push('source.readAt is required');
+  if (!Array.isArray(raw && raw.styles) || !raw.styles.length) errors.push('"styles" must be a non-empty array');
+  else raw.styles.forEach((st, i) => {
+    if (!st || typeof st.name !== 'string' || !Array.isArray(st.weights) || !Number.isFinite(st.lineHeightPct) || !Number.isFinite(st.letterSpacingPct)) errors.push(`styles[${i}]: name, weights, lineHeightPct and letterSpacingPct are required`);
+  });
+  if (!raw || !raw.tokens || typeof raw.tokens !== 'object') errors.push('"tokens" must be an object');
+  else for (const [k, v] of Object.entries(raw.tokens)) if (!/^--(lh|ls)-[a-z0-9]+$/.test(k) || !['line-height', 'letter-spacing'].includes(v.property) || !Number.isFinite(v.percent)) errors.push(`tokens.${k}: needs a --lh-* or --ls-* name, a property and a percent`);
+  if (!raw || !raw.weights || typeof raw.weights !== 'object') errors.push('"weights" must be an object');
+  if (errors.length) throw new MalformedData(`docs/data/figma-text-styles.json is malformed:\n  ${errors.join('\n  ')}`);
+  return raw;
+}
+
+// --lh-* and --ls-* have no Figma variable. The Figma value is the percentage of the text styles that use it; units are normalized
+// before comparing: percent to a unitless ratio for line height (160% is 1.6), percent to em for letter spacing (12% is 0.12em).
+function compareTextStyleToken(ct, ts) {
+  const def = ts.tokens[ct.name];
+  const prop = def.property;
+  const users = ts.styles.filter((st) => (prop === 'line-height' ? st.lineHeightPct : st.letterSpacingPct) === def.percent).map((st) => st.name);
+  const v = (ct.light || '').trim();
+  const num = parseFloat(v);
+  const unitOk = prop === 'line-height' ? /^[0-9]*\.?[0-9]+$/.test(v) : (v === '0' || /em$/.test(v));
+  const cssPct = Number.isFinite(num) && unitOk ? Math.round(num * 100 * 1000) / 1000 : null;
+  const ok = cssPct !== null && Math.abs(cssPct - def.percent) < 0.001;
+  const norm = prop === 'line-height' ? fmt(def.percent / 100) : (def.percent === 0 ? '0' : `${fmt(def.percent / 100)}em`);
+  return {
+    status: ok ? 'match' : 'mismatch',
+    rows: [{ mode: 'Text styles', figma: `${def.percent}%`, css: v, ok, note: `${norm}; ${users.length ? users.join(', ') : 'no text style uses this value'}` }],
+    users,
+  };
+}
+
 // Accepted divergences that are not tokens (an effect value, for example a blur radius): entries with scope "effect", a name
 // instead of a cssName, and the two values as text. They are shown in the Accepted divergences table, never matched to a token.
 let ACCEPTED_EFFECTS = [];
@@ -599,6 +643,12 @@ function compareToken(ft, ct, rootPx) {
       const c = cssFloat(ct, mode, rootPx);
       if (!c) rows.push({ mode, figma: fmt(fv), css: ct.light, ok: null, note: 'CSS value has no comparable length' });
       else rows.push({ mode, figma: fmt(fv), css: fmt(c.n), ok: Math.abs(c.n - fv) < 0.01, note: c.how });
+    } else if (/^weight\//.test(ft.name)) {
+      // weight/regular|medium|semibold|bold: the Figma value is the style name, the CSS value is the number.
+      const W = { Regular: 400, Medium: 500, SemiBold: 600, Bold: 700 };
+      const want = W[fv];
+      const got = Number((ct.light || '').trim());
+      rows.push({ mode, figma: want === undefined ? fv : `${fv} (${want})`, css: ct.light, ok: want !== undefined && Number.isFinite(got) ? got === want : null, note: 'style name to number' });
     } else {
       const c = firstFamily(ct.light);
       rows.push({ mode, figma: fv, css: c, ok: c === fv, note: 'first family' });
@@ -904,6 +954,7 @@ async function main() {
 
   // Figma comparison
   const accepted = loadAccepted();
+  const textStyles = loadTextStyles();
   const usedAccepted = new Set();
   const acceptedItems = [];
   const findAccepted = (cssName, mode) => {
@@ -965,6 +1016,30 @@ async function main() {
           summary.accepted++;
         }
       } else summary.uncompared++;
+    }
+    // --lh-* and --ls-*: no Figma variable, compared with the text styles snapshot (docs/data/figma-text-styles.json).
+    if (textStyles) {
+      for (const name of Object.keys(textStyles.tokens)) {
+        const ct = byName[name];
+        if (!ct || ct.figma) continue;
+        const def = textStyles.tokens[name];
+        const cmp = compareTextStyleToken(ct, textStyles);
+        ct.figma = { collection: 'Text styles', name: `${def.property} ${def.percent}%`, type: 'PERCENT', modes: { 'Text styles': `${def.percent}%` }, refs: null, comparison: cmp.rows, usedBy: cmp.users };
+        const acc = findAccepted(name, undefined);
+        if (cmp.status === 'mismatch') {
+          ct.status = 'mismatch';
+          summary.mismatch++;
+          mismatches.push({ token: name, figmaName: ct.figma.name, mode: 'Text styles', figma: cmp.rows[0].figma, css: cmp.rows[0].css, note: cmp.rows[0].note });
+        } else if (acc) {
+          ct.status = 'accepted';
+          ct.acceptedTitle = acceptedTitle(acc);
+          acceptedItems.push({ ...acc, kind: 'structural', figmaName: ct.figma.name, rows: cmp.rows.map((x) => ({ mode: x.mode, figma: x.figma, css: x.css })) });
+          summary.accepted++;
+        } else {
+          ct.status = 'match';
+          summary.match++;
+        }
+      }
     }
     summary.cssOnly = Object.values(byName).filter((t) => t.status === 'css-only').length;
   }

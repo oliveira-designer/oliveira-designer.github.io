@@ -13,5 +13,71 @@
     "reason": "Equivalent rendering: the Figma blur radius is double the CSS blur radius, so Figma 12 is CSS blur(6px) (Figma's own code export gives blur(6px)). Source: Figma forum answers on blur in Dev Mode, not the official docs. No blur token matches, so the value is a literal.",
     "decidedBy": "Renan",
     "date": "2026-11-24"
+  },
+  {
+    "cssName": "--lh-110",
+    "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
+  },
+  {
+    "cssName": "--lh-120",
+    "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
+  },
+  {
+    "cssName": "--lh-130",
+    "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
+  },
+  {
+    "cssName": "--lh-140",
+    "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
+  },
+  {
+    "cssName": "--lh-160",
+    "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
+  },
+  {
+    "cssName": "--lh-170",
+    "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
+  },
+  {
+    "cssName": "--lh-175",
+    "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
+  },
+  {
+    "cssName": "--ls-tighter",
+    "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
+  },
+  {
+    "cssName": "--ls-tight",
+    "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
+  },
+  {
+    "cssName": "--ls-normal",
+    "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
+  },
+  {
+    "cssName": "--ls-widest",
+    "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
+    "decidedBy": "Renan",
+    "date": "2026-11-24"
   }
 ]

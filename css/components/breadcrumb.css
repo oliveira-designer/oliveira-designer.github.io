@@ -50,7 +50,7 @@
   list-style: none;
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  line-height: 1.6;
+  line-height: var(--lh-160);
 }
 
 .breadcrumb__item {
@@ -62,7 +62,7 @@
 /* Link: Default text Text/Default/Secondary (Regular), Hover and Focus text Text/Default/Default. No underline in Figma. */
 .breadcrumb__link {
   display: block;
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   color: var(--color-text-2);
   text-decoration: none;
   transition: color var(--duration-normal) var(--ease-out);
@@ -83,7 +83,7 @@
 /* Current: Medium, Text/Default/Default, not a link, never focusable. */
 .breadcrumb__current {
   display: block;
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   color: var(--color-text-1);
 }
 

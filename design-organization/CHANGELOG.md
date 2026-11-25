@@ -5,6 +5,27 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.17.0 · 24 de novembro de 2026 · Tokens de peso, line height e letter-spacing (MINOR)
+
+**Versão escolhida: MINOR (2.16.0 para 2.17.0).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), MINOR cobre "Nova família de tokens (motion, theme, etc.)": entram três famílias, `--fw-*`, `--lh-*` e `--ls-*`. Nenhum valor muda (os tokens têm os valores que já estavam escritos como literais), então não se aplica PATCH como "Ajuste de valor". Nenhum componente novo. O `figma-tokens.json` não foi editado.
+
+**Adicionado**
+- `css/tokens.css`, ao lado dos `--fs-*`: peso `--fw-regular` 400, `--fw-medium` 500, `--fw-semibold` 600, `--fw-bold` 700; line height nomeado pelo valor, `--lh-110` 1.1, `--lh-120` 1.2, `--lh-130` 1.3, `--lh-140` 1.4, `--lh-160` 1.6, `--lh-170` 1.7, `--lh-175` 1.75; letter-spacing em escada semântica, `--ls-tighter` -0.02em, `--ls-tight` -0.01em, `--ls-normal` 0, `--ls-widest` 0.12em. Sem variantes dark (os valores não mudam com o tema). Nomes e valores decididos em D-48 e D-49.
+- `docs/data/figma-text-styles.json`: retrato dos 30 estilos de texto do Figma Foundation lidos em 24/11/2026 (família, pesos, line height e letter-spacing em porcentagem), mais o mapa de cada token para a porcentagem do Figma. É atualizado pelo Claude, não à mão.
+- Página de tokens dos docs: as três famílias aparecem no grupo Typography. Para line height e letter-spacing a coluna Figma mostra a porcentagem lida nos estilos de texto (por exemplo 160%) e a comparação converte as unidades antes de decidir (porcentagem para razão no line height, porcentagem para `em` no letter-spacing). Para peso, a comparação mapeia o nome do estilo para o número (Regular para 400) e entra em ação quando o `figma-tokens.json` for atualizado com o code syntax das variáveis `weight/*`; até lá os pesos aparecem como "CSS only".
+- `accepted-divergences.json`: 11 entradas estruturais (as sete `--lh-*` e as quatro `--ls-*`), motivo: não há variável no Figma porque o Figma lê uma variável numérica ligada a essas propriedades como pixels (D-49), decisão do Renan em 24/11/2026. Os pesos ficam fora da lista, porque são variáveis de verdade.
+- `docs:check`, verificação 13: falha se um token da tabela faltar em `tokens.css`, se o valor for diferente do retrato dos estilos de texto, se um estilo tiver line height ou letter-spacing sem token, ou se um `var(--fw-*)`, `var(--lh-*)` ou `var(--ls-*)` usado no CSS ou nos estilos das páginas não resolver para um token definido. Não há verificação que proíba literais.
+- `DESIGN.md`: seção de tokens de peso, line height e letter-spacing (tabelas, regra de conversão, raciocínio dos nomes e a lacuna conhecida). `DESIGN-IMPLEMENTATION.md`: parágrafo de changelog e o bloco de tokens de tipografia.
+
+**Alterado**
+- 230 literais de `font-weight`, `line-height` e `letter-spacing` que batiam exatamente com um token passaram a usar o token, em 48 arquivos: `css/reset.css` (incluindo as definições Label e caixa de frase da v2.16.0), componentes, site, `docs/docs.css` e os blocos de estilo e atributos `style` do `design-system.html`. Resultado medido: nenhuma diferença nos estilos computados (17.084 estados de elementos nas seis páginas do site, três larguras, dois temas, com `::before` e `::after`). Os literais que não batem com nenhum token (por exemplo 1.65, 1.5, 1.8, 0.08em) e os valores `inherit`, `normal` e `1` ficaram como estão; os que divergem do estilo do Figma foram listados como divergências candidatas no relatório, sem mudança.
+- As tabelas "Variants and tokens" das páginas de componentes passam a listar os tokens `--fw-*` e `--lh-*` que as regras agora usam (15 páginas mudaram, só nessas células).
+
+**Pendente fora do repositório**
+- O Figma ganhou, do lado dele, o code syntax nas quatro variáveis de peso e a descrição de cada um dos 30 estilos com o line height, o letter-spacing e o nome planejado do token. O Renan precisa publicar o Foundation. Depois disso, o `figma-tokens.json` precisa ser atualizado (pelo Claude) para a comparação de peso passar a valer. A limitação de line height e letter-spacing está documentada no `DESIGN.md`.
+
+---
+
 ## v2.16.0 · 24 de novembro de 2026 · Caixa alta híbrida (D-46), regra aplicada pelo `docs:check` e suíte de estados abertos em `scripts/` (MINOR)
 
 **Versão escolhida: MINOR (2.15.0 para 2.16.0).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), MINOR cobre "Expansão de escala (mais tamanhos, mais variantes)": entra um estilo de texto novo no código (`.text-body-xs-semibold`, o `Body/SemiBold/body-xs semibold` do Figma) e no DESIGN.md (`body-xs-semibold`). Não é óbvio: a seção 3 também lista em PATCH "Adição de exemplo ou regra ao prosa do DESIGN.md" e "Ajuste de valor" (a troca de caixa alta por caixa de frase e o line height de 140% nos rótulos são ajustes de valor). Escolhi MINOR por causa do estilo novo e da regra aplicada por verificação; o Renan decide. Não entra componente novo e não entra token novo: não existem tokens de peso, line height ou tracking, então 400, 600, 1.4, 1.6 e 0.12em ficam escritos uma vez em `css/reset.css`. O `figma-tokens.json` não foi tocado.

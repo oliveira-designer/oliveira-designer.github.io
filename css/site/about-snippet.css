@@ -31,6 +31,6 @@
 .about-block__text {
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  line-height: 1.75;
+  line-height: var(--lh-175);
   color: var(--color-text-2);
 }

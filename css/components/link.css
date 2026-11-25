@@ -16,9 +16,9 @@
   padding: 0;
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 400;
-  line-height: 1.6;
-  letter-spacing: 0;
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-160);
+  letter-spacing: var(--ls-normal);
   color: var(--color-text-1);
   text-decoration: underline;
 }
@@ -29,13 +29,13 @@
 
 .link:hover {
   color: var(--color-text-1);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
 }
 
 /* Square ring (no radius), 2px with a 2px gap, as in the other components. */
 .link:focus-visible {
   color: var(--color-text-1);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
   outline-offset: var(--focus-ring-gap);
   border-radius: 0;
@@ -46,7 +46,7 @@
 .link[aria-disabled="true"],
 .link[aria-disabled="true"]:hover {
   color: var(--color-text-disabled-default);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   cursor: not-allowed;
   pointer-events: none;
 }

@@ -69,9 +69,9 @@
 .about-bridge__headline {
   font-family: var(--font-display);
   font-size: var(--fs-h1);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-120);
+  letter-spacing: var(--ls-tight);
   color: var(--color-text-1);
 }
 
@@ -79,7 +79,7 @@
   font-family: var(--font-body);
   font-size: var(--fs-body);
   color: var(--color-text-2);
-  line-height: 1.75;
+  line-height: var(--lh-175);
   max-width: 500px;
 }
 

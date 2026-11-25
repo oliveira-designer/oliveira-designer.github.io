@@ -39,7 +39,7 @@
   border-spacing: 0;
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  line-height: 1.6;
+  line-height: var(--lh-160);
   color: var(--color-text-1);
 }
 
@@ -47,7 +47,7 @@
 .data-table__caption {
   padding: var(--space-3) var(--space-4);
   text-align: start;
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   color: var(--color-text-2);
   border-bottom: var(--border-width-normal) solid var(--color-border);
 }
@@ -76,17 +76,17 @@
 
 .data-table__head-cell {
   background-color: var(--color-bg-alt);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   color: var(--color-text-1);
 }
 
 .data-table__row-header {
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   color: var(--color-text-1);
 }
 
 .data-table__cell {
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   color: var(--color-text-1);
 }
 

@@ -1,0 +1,41 @@
+{
+  "source": {
+    "file": "Hope DS | Foundation",
+    "fileKey": "zFWoSVDJDdZwKmuLJMCs8M",
+    "readAt": "2026-11-24",
+    "note": "Snapshot of the 30 Figma text styles taken on 2026-11-24 (values from D-48 and D-49). It is refreshed by Claude through the Figma MCP, not by hand. Figma keeps line height and letter spacing as percentages inside the text styles because a numeric variable bound to them is read as pixels, so these values have no Figma variable. Weights are real variables (weight/regular|medium|semibold|bold)."
+  },
+  "styles": [
+    { "name": "Display", "weights": ["Bold"], "lineHeightPct": 110, "letterSpacingPct": -2 },
+    { "name": "Heading/H1", "weights": ["Bold"], "lineHeightPct": 120, "letterSpacingPct": -1 },
+    { "name": "Heading/H2", "weights": ["Bold"], "lineHeightPct": 130, "letterSpacingPct": -1 },
+    { "name": "Heading/H3", "weights": ["Bold"], "lineHeightPct": 140, "letterSpacingPct": 0 },
+    { "name": "Body xs", "weights": ["Regular", "Medium", "SemiBold", "Bold"], "lineHeightPct": 160, "letterSpacingPct": 0 },
+    { "name": "Body sm", "weights": ["Regular", "Medium", "SemiBold", "Bold"], "lineHeightPct": 160, "letterSpacingPct": 0 },
+    { "name": "Body", "weights": ["Regular", "Medium", "SemiBold", "Bold"], "lineHeightPct": 175, "letterSpacingPct": 0 },
+    { "name": "Body lg", "weights": ["Regular", "Medium", "SemiBold", "Bold"], "lineHeightPct": 170, "letterSpacingPct": 0 },
+    { "name": "Body xl", "weights": ["Regular", "Medium", "SemiBold", "Bold"], "lineHeightPct": 170, "letterSpacingPct": -1 },
+    { "name": "Label/label-caps", "weights": ["Regular"], "lineHeightPct": 140, "letterSpacingPct": 12 },
+    { "name": "Link xs and Link sm", "weights": ["Regular", "Bold"], "lineHeightPct": 160, "letterSpacingPct": 0 },
+    { "name": "Metric", "weights": ["Bold"], "lineHeightPct": 140, "letterSpacingPct": 0 }
+  ],
+  "weights": {
+    "--fw-regular": { "figmaVariable": "weight/regular", "style": "Regular", "value": 400 },
+    "--fw-medium": { "figmaVariable": "weight/medium", "style": "Medium", "value": 500 },
+    "--fw-semibold": { "figmaVariable": "weight/semibold", "style": "SemiBold", "value": 600 },
+    "--fw-bold": { "figmaVariable": "weight/bold", "style": "Bold", "value": 700 }
+  },
+  "tokens": {
+    "--lh-110": { "property": "line-height", "percent": 110 },
+    "--lh-120": { "property": "line-height", "percent": 120 },
+    "--lh-130": { "property": "line-height", "percent": 130 },
+    "--lh-140": { "property": "line-height", "percent": 140 },
+    "--lh-160": { "property": "line-height", "percent": 160 },
+    "--lh-170": { "property": "line-height", "percent": 170 },
+    "--lh-175": { "property": "line-height", "percent": 175 },
+    "--ls-tighter": { "property": "letter-spacing", "percent": -2 },
+    "--ls-tight": { "property": "letter-spacing", "percent": -1 },
+    "--ls-normal": { "property": "letter-spacing", "percent": 0 },
+    "--ls-widest": { "property": "letter-spacing", "percent": 12 }
+  }
+}

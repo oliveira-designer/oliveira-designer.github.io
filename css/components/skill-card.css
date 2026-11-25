@@ -44,14 +44,14 @@
 .skill-card__title {
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--color-text-1);
-  line-height: 1.4;
+  line-height: var(--lh-140);
 }
 .skill-card__body {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  line-height: 1.7;
+  line-height: var(--lh-170);
   color: var(--color-text-2);
 }
 
@@ -64,7 +64,7 @@
 
   font-family: var(--font-body);
   font-size: var(--fs-body-sm) !important;
-  line-height: 1.7;
+  line-height: var(--lh-170);
 
   background-color: var(--color-bg-alt);
   color: var(--color-text-3) !important;
@@ -96,9 +96,9 @@
 .skill-card--metric .metric-value {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--color-text-2);
-  line-height: 1.4;
+  line-height: var(--lh-140);
   margin: 0;
 }
 

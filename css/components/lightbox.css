@@ -101,7 +101,7 @@
   margin: 0;
   font-family: var(--font-body);
   font-size:   var(--fs-body-sm);
-  line-height: 1.6;
+  line-height: var(--lh-160);
   text-align:  center;
   color:       color-mix(in srgb, var(--color-cloud) 55%, transparent);
 }

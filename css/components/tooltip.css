@@ -37,8 +37,8 @@
   align-items: center;
   padding: var(--space-2) var(--space-3);
   font-size: var(--fs-body-xs);
-  font-weight: 500;
-  line-height: 1.6;
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-160);
   white-space: nowrap;
   color: var(--color-text-neutral-default);
   background-color: var(--color-bg-neutral-default);

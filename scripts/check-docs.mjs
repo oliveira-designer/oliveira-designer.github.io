@@ -20,6 +20,8 @@
 //      classes exist in THOSE stylesheets.
 //   9. docs/data/components-content.json or components-code-notes.json is missing while component
 //      pages exist, or a slug in components-content.json has no docs/components/<slug>.html.
+//  13. a typography token (--fw-*, --lh-*, --ls-*) is missing from css/tokens.css, differs from docs/data/figma-text-styles.json, or a
+//      var(--fw|lh|ls-*) used in the CSS or the page styles is not defined (D-48, D-49).
 //  12. text-transform: uppercase appears outside the single Label definition in css/reset.css (D-46), or a string styled with
 //      the Label style (the selectors of that rule) has more than three words in the static HTML of the site and the docs.
 //   6. docs/data/components-map.json names a CSS rule or class that is not in
@@ -429,6 +431,59 @@ if (new Set(headerValues).size > 1) {
     }
   }
   console.log(`all caps (D-46): one Label definition in ${LABEL_RULE_FILE}; ${labelStrings} Label strings checked for the three-word limit`);
+}
+
+/* ---- 13. typography tokens (D-48, D-49): --fw-*, --lh-*, --ls-* exist with the values of the Figma text styles snapshot ---- */
+{
+  const TS_FILE = path.join(DOCS, 'data', 'figma-text-styles.json');
+  if (!fs.existsSync(TS_FILE)) {
+    errors.push('docs/data/figma-text-styles.json is missing (the typography token check reads it)');
+  } else {
+    let ts = null;
+    try {
+      ts = JSON.parse(fs.readFileSync(TS_FILE, 'utf8'));
+    } catch (err) {
+      errors.push(`docs/data/figma-text-styles.json is not valid JSON: ${err.message}`);
+    }
+    if (ts) {
+      const tokensCss = stripCss(readCss('css/tokens.css'));
+      const declared = new Map();
+      for (const m of tokensCss.matchAll(/(?:^|[;{\s])(--[a-z0-9-]+)\s*:\s*([^;}]+)/g)) if (!declared.has(m[1])) declared.set(m[1], m[2].trim());
+      const ratio = (p) => String(Math.round(p) / 100);
+      const em = (p) => (p === 0 ? '0' : `${Math.round(p) / 100}em`);
+      const expect = [];
+      for (const [name, w] of Object.entries(ts.weights || {})) expect.push([name, String(w.value), `${w.figmaVariable} (${w.style})`]);
+      for (const [name, t] of Object.entries(ts.tokens || {})) expect.push([name, t.property === 'line-height' ? ratio(t.percent) : em(t.percent), `${t.percent}% ${t.property}`]);
+      for (const [name, want, what] of expect) {
+        if (!declared.has(name)) errors.push(`css/tokens.css: ${name} is missing (Figma ${what}, expected ${want})`);
+        else if (declared.get(name) !== want) errors.push(`css/tokens.css: ${name} is ${declared.get(name)} but the Figma text styles snapshot says ${what}, which is ${want}`);
+      }
+      // every line height and letter spacing used by a text style has a token, so a new Figma value cannot slip in without one
+      const lhPct = new Set(Object.values(ts.tokens || {}).filter((t) => t.property === 'line-height').map((t) => t.percent));
+      const lsPct = new Set(Object.values(ts.tokens || {}).filter((t) => t.property === 'letter-spacing').map((t) => t.percent));
+      for (const st of ts.styles || []) {
+        if (!lhPct.has(st.lineHeightPct)) errors.push(`docs/data/figma-text-styles.json: ${st.name} has line height ${st.lineHeightPct}% and no --lh-* token for it`);
+        if (!lsPct.has(st.letterSpacingPct)) errors.push(`docs/data/figma-text-styles.json: ${st.name} has letter spacing ${st.letterSpacingPct}% and no --ls-* token for it`);
+      }
+      // every var(--fw-*), var(--lh-*), var(--ls-*) in the CSS sources, docs.css and the page styles resolves to a defined token
+      const files = [...CSS_SOURCES.map((f) => path.join(ROOT, f)), path.join(DOCS, 'docs.css')];
+      const used = new Set();
+      const scanVars = (text, where) => {
+        for (const m of text.matchAll(/var\(\s*(--(?:fw|lh|ls)-[a-z0-9-]+)/g)) {
+          used.add(m[1]);
+          if (!declared.has(m[1])) errors.push(`${where}: var(${m[1]}) is not defined in css/tokens.css`);
+        }
+      };
+      for (const f of files) if (fs.existsSync(f)) scanVars(stripCss(fs.readFileSync(f, 'utf8')), rel(f));
+      const pagesToScan = [...fs.readdirSync(ROOT).filter((n) => n.endsWith('.html')).map((n) => path.join(ROOT, n)), ...pages].filter((f) => typeof f === 'string' && fs.existsSync(f));
+      for (const f of new Set(pagesToScan)) {
+        const text = fs.readFileSync(f, 'utf8');
+        for (const m of text.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)) scanVars(m[1], rel(f));
+        for (const m of text.matchAll(/\sstyle\s*=\s*"([^"]*)"/g)) scanVars(m[1], rel(f));
+      }
+      console.log(`typography tokens (D-48, D-49): ${expect.length} tokens checked against the text styles snapshot of ${ts.source && ts.source.readAt}; ${used.size} distinct var(--fw|lh|ls-*) used, all defined`);
+    }
+  }
 }
 
 /* ---- report: blocks without a demo ---- */

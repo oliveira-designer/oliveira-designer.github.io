@@ -10,10 +10,10 @@
   align-items: center;
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   padding: var(--space-1) var(--space-3);  /* Figma: 4px 12px */
   border-radius: var(--radius-pill);
-  line-height: 1.6;                         /* Figma: 160%, one line is 29px high */
+  line-height: var(--lh-160);                         /* Figma: 160%, one line is 29px high */
 }
 
 .badge--neutral {

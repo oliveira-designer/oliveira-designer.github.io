@@ -47,8 +47,8 @@
   padding: 0 var(--space-4);
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 500;
-  line-height: 1.6;
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-160);
   white-space: nowrap;
   color: var(--color-text-2);
   background: none;

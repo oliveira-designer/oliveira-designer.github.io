@@ -62,7 +62,7 @@
 .experience-item__logo-mono {
   font-family: var(--font-body);
   font-size: var(--fs-label);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   letter-spacing: 0.05em;
   color: var(--color-text-3);
   user-select: none;
@@ -77,9 +77,9 @@
 .experience-item__company {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--color-text-1);
-  line-height: 1.3;
+  line-height: var(--lh-130);
 }
 
 .experience-item__role {

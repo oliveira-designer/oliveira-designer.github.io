@@ -38,8 +38,8 @@
   align-items: flex-start;
   justify-content: space-between;
   font-size: var(--fs-body-sm);
-  font-weight: 500;
-  line-height: 1.6;
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-160);
   white-space: nowrap;
 }
 

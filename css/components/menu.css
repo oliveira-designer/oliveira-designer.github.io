@@ -63,8 +63,8 @@
   padding: 0 var(--space-3);
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 400;
-  line-height: 1.6;
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-160);
   text-align: left;
   color: var(--color-text-1);
   background-color: transparent;
@@ -109,7 +109,7 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
 
 /* Selected (a chosen option): Background/Default/Secondary, SemiBold, check visible. */
 .menu__item[aria-checked="true"] {
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   background-color: var(--color-bg-alt);
 }
 

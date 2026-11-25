@@ -32,13 +32,13 @@
 .testimonial-card__quote {
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  line-height: 1.75;
+  line-height: var(--lh-175);
   color: var(--color-text-2);
 }
 
 .testimonial-card__quote strong {
   color: var(--color-text-1);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 .testimonial-card__avatar {
   width: 40px;
@@ -53,7 +53,7 @@
 .testimonial-card__name {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .testimonial-card__profile-link {

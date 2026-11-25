@@ -27,9 +27,9 @@
 .footer__heading {
   font-family: var(--font-display);
   font-size: var(--fs-h1);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-120);
+  letter-spacing: var(--ls-tight);
   color: var(--color-text-neutral-default);
 }
 
@@ -74,7 +74,7 @@
   gap: 0.35em;
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  line-height: 1.6;
+  line-height: var(--lh-160);
   color: var(--color-text-neutral-default);
 }
 

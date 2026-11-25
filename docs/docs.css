@@ -74,7 +74,7 @@
   display: block;
   margin-top: var(--space-1);
   font-size: var(--fs-body-xs);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   color: var(--color-text-3);
 }
 
@@ -162,7 +162,7 @@
 
 .docs-fig--diff code {
   color: var(--color-text-danger-default);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .docs-fig--info {
@@ -193,7 +193,7 @@
 
 .docs-fig--accepted code {
   color: var(--color-text-info-default);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 /* ---- Component pages ---- */
@@ -248,7 +248,7 @@
 
 .docs-subhead {
   margin-top: var(--space-2);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--color-text-1);
 }
 
@@ -282,7 +282,7 @@
 .docs-row--total th,
 .docs-row--total td {
   background: var(--color-bg-alt);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--color-text-1);
 }
 
@@ -301,8 +301,8 @@
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-pill);
   font-size: var(--fs-body-xs);
-  font-weight: 600;
-  line-height: 1.4;
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-140);
   color: var(--color-text-2);
   transition:
     color            var(--duration-normal) var(--ease-out),
@@ -373,7 +373,7 @@
   background: var(--color-bg-alt);
 }
 
-.docs-ds-nav__link[aria-current="page"] { font-weight: 600; }
+.docs-ds-nav__link[aria-current="page"] { font-weight: var(--fw-semibold); }
 
 .docs-ds-content {
   min-width: 0;
@@ -469,7 +469,7 @@
 }
 
 .docs-ds-code > summary::-webkit-details-marker { display: none; }
-.docs-ds-code > summary::before { content: '</> '; font-weight: 700; }
+.docs-ds-code > summary::before { content: '</> '; font-weight: var(--fw-bold); }
 .docs-ds-code > summary:hover { color: var(--color-text-1); }
 
 .docs-ds-code > summary:focus-visible {
@@ -485,7 +485,7 @@
 .docs-ds-code__block {
   font-family: var(--font-body);
   font-size: var(--fs-label);
-  line-height: 1.6;
+  line-height: var(--lh-160);
   white-space: pre;
   overflow-x: auto;
   margin: 0;
@@ -540,7 +540,7 @@
   padding: 0;
   margin-bottom: var(--space-2);
   font-size: var(--fs-body-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--color-text-1);
 }
 
@@ -625,6 +625,6 @@
 .docs-ds-preview .tabs__panel p {
   margin: var(--space-4) 0 0;
   font-size: var(--fs-body-sm);
-  line-height: 1.6;
+  line-height: var(--lh-160);
   color: var(--color-text-1);
 }
