@@ -1,0 +1,166 @@
+/* Hope DS: css/components/bottom-sheet.css
+   Figma: Core, Bottom Sheet (component 2602:134, page "Bottom Sheet", example on the scrim 2602:175). Edit this file, then run:
+   npm run css:build. The behavior (open and close, swipe down, initial focus) is in js/bottom-sheet.js; the focus trap, Escape,
+   inert page, scroll lock and focus return are shared with the Modal in js/overlay.js.
+
+   Markup contract (docs/components/bottom-sheet.html):
+     <button type="button" class="btn btn--secondary" data-bottom-sheet-open="sheet-confirm">Open</button>
+     <div class="bottom-sheet" role="dialog" aria-modal="true" id="sheet-confirm" aria-labelledby="sheet-confirm-title" aria-describedby="sheet-confirm-body" hidden>
+       <div class="bottom-sheet__handle"><span class="bottom-sheet__grabber" aria-hidden="true"></span></div>
+       <div class="bottom-sheet__content">
+         <div class="bottom-sheet__header"><h2 class="bottom-sheet__title" id="sheet-confirm-title">Title</h2></div>
+         <p class="bottom-sheet__body" id="sheet-confirm-body">Supporting text.</p>
+       </div>
+       <div class="bottom-sheet__footer">
+         <button type="button" class="btn btn--primary" data-bottom-sheet-close>Confirm</button>            (the primary comes first, as in Figma)
+         <button type="button" class="btn btn--secondary" data-bottom-sheet-close>Cancel</button>
+       </div>
+     </div>
+   There is no close X: the secondary button, Escape and the swipe down close it. For a destructive confirmation, put
+   data-bottom-sheet-initial-focus on the Cancel button (the primary comes first in the DOM, so the focus would otherwise start on it).
+   js/bottom-sheet.js creates the scrim (the same .modal-scrim of the Modal) and moves the dialog to the end of <body>. A click on the
+   scrim does not close the sheet: it is for decisions. */
+
+/* ----------------------------------------------------------
+   BOTTOM SHEET PANEL
+   Figma strokesIncludedInLayout is true on the panel, as in the Modal: the box is content + padding + border and nothing is
+   discounted (390 wide = 340 of content + 48 of padding + 2 of side border; 278 high in the specimen = 8 + 16 + 20 + 87 + 20 + 102
+   + 24 + 1 of top border). The border is 1px on the top, left and right and none at the bottom, which is the screen edge.
+   Layer Z-index/z-modal (200), above the Modal scrim (100) and below the Toast (500). Anchored to the bottom edge of the viewport.
+   No motion: Figma defines none, so the panel appears and disappears at once. The only movement is the swipe down (js/bottom-sheet.js
+   sets a transform while a finger or the pointer drags it), so nothing needs a reduced-motion override.
+   Narrow height: the panel is as tall as its content up to the viewport minus 16px; then the BODY scrolls and the grabber row, the
+   title and the footer stay in view (the same rule as the Modal).
+   ---------------------------------------------------------- */
+.bottom-sheet {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-modal);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  max-height: calc(100dvh - var(--space-4));
+  /* Figma: 8 top, 24 sides, 24 bottom. The bottom also clears the home indicator where the page has viewport-fit=cover (env() is
+     0 otherwise). */
+  padding: var(--space-2) var(--space-6) calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
+  overflow: hidden;
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  border: var(--border-width-normal) solid var(--color-border);
+  border-bottom-width: 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: var(--shadow-lg);
+}
+
+.bottom-sheet[hidden] {
+  display: none;
+}
+
+/* The dialog gets the focus when it has nothing focusable: no ring on the panel itself. */
+.bottom-sheet:focus {
+  outline: none;
+}
+
+/* Grabber row: 16 high, content centered. The row and the title are the only places where a drag starts, so scrolling the body
+   never moves the sheet (touch-action: none lets the pointer events through instead of the browser scrolling or zooming there). */
+.bottom-sheet__handle {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--space-4);
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Grabber: 32 by 4, radius 2, Border/Utilities/Input. Decorative (aria-hidden), not focusable, not a button. */
+.bottom-sheet__grabber {
+  display: block;
+  width: var(--space-8);
+  height: var(--space-1);
+  background-color: var(--color-border-input);
+  border-radius: calc(var(--space-1) / 2);
+}
+
+/* Content: title and body, gap 16. It takes the space left by the footer and the grabber row; the body scrolls inside it. */
+.bottom-sheet__content {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.bottom-sheet__header {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Title: Heading/H2 (display font, Bold, --fs-h2, line height 130%, tracking -1%), Text/Default/Default. */
+.bottom-sheet__title {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-130);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-text-1);
+}
+
+/* Body: Body/Regular/body-sm, Text/Default/Secondary, the same as the Modal. It scrolls when the content passes the height of the
+   screen (js/bottom-sheet.js gives it tabindex="0" then, so the keyboard can scroll it). */
+.bottom-sheet__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  /* The scroll box would clip the focus ring (4px) of a link or control inside the body: 4px of padding give it room and the
+     same negative margin keeps the layout where Figma has it. */
+  margin: calc(var(--space-1) * -1);
+  padding: var(--space-1);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-160);
+  color: var(--color-text-2);
+}
+
+.bottom-sheet__body:focus-visible {
+  border-radius: var(--radius-xs);
+  outline: var(--focus-ring-width) solid var(--color-border-focus-ring);
+  outline-offset: var(--focus-ring-gap);
+}
+
+/* Footer (required, there is no "Show footer"): a column, gap 12, two Buttons Medium at full width, the primary on top. Fixed while
+   the body scrolls. */
+.bottom-sheet__footer {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.bottom-sheet__footer .btn {
+  width: 100%;
+}
+
+/* Forced colors: the border is the only edge of the panel. */
+@media (forced-colors: active) {
+  .bottom-sheet {
+    border-color: CanvasText;
+  }
+  .bottom-sheet__grabber {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+  }
+}
