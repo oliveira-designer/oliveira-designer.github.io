@@ -106,6 +106,6 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   color: var(--color-text-3);
-  line-height: 1.8;
+  line-height: var(--lh-170);
   margin: 0;
 }

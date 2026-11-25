@@ -79,5 +79,175 @@
     "reason": "Structural difference (D-49). There is no Figma variable: Figma reads a numeric variable bound to line height or letter spacing as pixels, so it cannot hold a percentage. The canonical value lives in the text styles (docs/data/figma-text-styles.json) and the percentage equals the CSS value after unit conversion. Revisit when Figma supports percentages in variables: create variables with these names and bind the styles; the CSS stays the same.",
     "decidedBy": "Renan",
     "date": "2026-11-24"
+  },
+  {
+    "scope": "rule",
+    "name": "Compact UI text at 140%",
+    "status": "accepted",
+    "figma": "Body sm line-height 160%",
+    "css": "line-height: var(--lh-140) (1.4)",
+    "rules": [
+      {
+        "selector": ".metric__label",
+        "file": "css/components/case-card.css",
+        "value": "--lh-140"
+      },
+      {
+        "selector": ".figure-balanced figcaption",
+        "file": "css/components/cs-figure.css",
+        "value": "--lh-140"
+      },
+      {
+        "selector": ".case-toc__link",
+        "file": "css/site/case-toc.css",
+        "value": "--lh-140"
+      },
+      {
+        "selector": ".case-section__results-legend",
+        "file": "css/components/cs-figure.css",
+        "value": "--lh-140 (was 1.5, snapped in 2.17.1)"
+      },
+      {
+        "selector": ".experience-item__company",
+        "file": "css/site/about-experience.css",
+        "value": "--lh-140 (was --lh-130, snapped in 2.17.1)"
+      },
+      {
+        "selector": ".experience-item__highlight",
+        "file": "css/site/about-experience.css",
+        "value": "--lh-140 (was 1.45, snapped in 2.17.1)"
+      },
+      {
+        "selector": ".team-card__name",
+        "file": "css/site/case-teams.css",
+        "value": "--lh-140 (was 1.35, snapped in 2.17.1)"
+      }
+    ],
+    "reason": "Short UI text (labels, captions, links, names) was designed denser than running text; the difference to Figma is 2.6 px per line at 13px. Revisit if a Figma component needs this text. (D-52)",
+    "decidedBy": "Renan",
+    "date": "2026-11-25"
+  },
+  {
+    "scope": "rule",
+    "name": "Documentation chrome at 140%",
+    "status": "accepted",
+    "figma": "Body xs SemiBold line-height 160%",
+    "css": "line-height: var(--lh-140) (1.4)",
+    "rules": [
+      {
+        "selector": ".docs-theme__btn",
+        "file": "docs/docs.css",
+        "value": "--lh-140"
+      }
+    ],
+    "reason": "Documentation chrome, not product. (D-52)",
+    "decidedBy": "Renan",
+    "date": "2026-11-25"
+  },
+  {
+    "scope": "rule",
+    "name": "Airy body text at 170%",
+    "status": "accepted",
+    "figma": "Body sm line-height 160%",
+    "css": "line-height: var(--lh-170) (1.7)",
+    "rules": [
+      {
+        "selector": ".persona .persona__section li",
+        "file": "css/components/persona.css",
+        "value": "--lh-170 (was 1.65, snapped in 2.17.1)"
+      },
+      {
+        "selector": ".persona__goal-card",
+        "file": "css/components/persona.css",
+        "value": "--lh-170 (was 1.65, snapped in 2.17.1)"
+      },
+      {
+        "selector": ".persona__quote p",
+        "file": "css/components/persona.css",
+        "value": "--lh-170 (was 1.65, snapped in 2.17.1)"
+      },
+      {
+        "selector": ".result-card__body",
+        "file": "css/components/result-card.css",
+        "value": "--lh-170"
+      },
+      {
+        "selector": ".skill-card__body",
+        "file": "css/components/skill-card.css",
+        "value": "--lh-170"
+      },
+      {
+        "selector": ".small-note",
+        "file": "css/components/skill-card.css",
+        "value": "--lh-170"
+      },
+      {
+        "selector": ".skill-card--metric .metric-desc",
+        "file": "css/components/skill-card.css",
+        "value": "--lh-170 (was 1.8, snapped in 2.17.1)"
+      }
+    ],
+    "reason": "Running text in cards and lists was designed more open; 170% already exists as a Figma value for Body lg and Body xl, and forcing 160% shortens pages by 10 to 78 px. Revisit if a Figma component needs this text. (D-52)",
+    "decidedBy": "Renan",
+    "date": "2026-11-25"
+  },
+  {
+    "scope": "rule",
+    "name": "Small secondary text at 11px with positive tracking",
+    "status": "accepted",
+    "figma": "Body xs letter-spacing 0%",
+    "css": "letter-spacing: 0.06em to 0.08em (literals)",
+    "rules": [
+      {
+        "selector": ".experience-item__dates",
+        "file": "css/site/about-experience.css",
+        "value": "0.08em"
+      },
+      {
+        "selector": ".footer__copy",
+        "file": "css/site/footer.css",
+        "value": "0.06em"
+      },
+      {
+        "selector": ".logo-strip__item > span (inline style)",
+        "file": "design-system.html",
+        "value": "0.08em"
+      }
+    ],
+    "reason": "Intentional small secondary text. It is not uppercase, so it does not use --ls-widest (D-46 reserves 12% for uppercase labels of up to three words). (D-52)",
+    "decidedBy": "Renan",
+    "date": "2026-11-25"
+  },
+  {
+    "scope": "rule",
+    "name": "Waiting for the auth gate",
+    "status": "pending",
+    "figma": "Body 175%, Body sm 160%, Body xs 0%",
+    "css": "line-height 1.65, 1.4, 1.5 and letter-spacing 0.05em (literals and --lh-140)",
+    "rules": [
+      {
+        "selector": ".auth-gate__subtitle",
+        "file": "css/auth.css",
+        "value": "line-height 1.65"
+      },
+      {
+        "selector": ".auth-gate__error",
+        "file": "css/auth.css",
+        "value": "line-height --lh-140"
+      },
+      {
+        "selector": ".auth-gate__input",
+        "file": "css/auth.css",
+        "value": "line-height 1.5"
+      },
+      {
+        "selector": ".experience-item__logo-mono",
+        "file": "css/site/about-experience.css",
+        "value": "letter-spacing 0.05em"
+      }
+    ],
+    "reason": "Not rendered on any shipped page: no shipped page loads js/auth.js, and .experience-item__logo-mono has no instance. Pending, not accepted; revisit when the gate ships (D-52)",
+    "decidedBy": "Renan",
+    "date": "2026-11-25"
   }
 ]

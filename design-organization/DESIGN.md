@@ -1,5 +1,5 @@
 ---
-version: v2.17.0
+version: v2.17.1
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -777,6 +777,10 @@ Peso, line height e letter-spacing são tokens em `css/tokens.css`, na área de 
 
 **Lacuna conhecida (D-48, D-49).** Line height e letter-spacing não são variáveis do Figma porque o Figma lê uma variável numérica ligada a essas propriedades como pixels; os valores canônicos ficam nos estilos de texto. Quando o Figma passar a aceitar porcentagem em variáveis, criar variáveis com estes nomes e ligar os estilos; o CSS continua o mesmo. Só o peso é variável de verdade. A divergência estrutural está registrada em `docs/data/accepted-divergences.json`. O `docs:check` confere que cada token existe com o valor da tabela e que todo `var(--fw-*)`, `var(--lh-*)` e `var(--ls-*)` usado no CSS resolve para um token definido.
 
+#### Densidades documentadas de line height e tracking pequeno (v2.17.1, D-52)
+
+Além dos 160% do Figma, o Body sm e o Body xs têm no código duas densidades documentadas, as duas com tokens que já existem: **compacta** (`--lh-140`, 140%) para texto curto de interface (rótulos, legendas, links, nomes) e **arejada** (`--lh-170`, 170%, o mesmo valor que o Figma já tem para Body lg e Body xl) para texto corrido em cards e listas. O Body de 16px segue o Figma (`--lh-175`). O Figma não foi alterado: cada estilo novo se multiplicaria pelos pesos (cerca de cinco estilos a mais) para uma diferença visual de 2 a 3 px por linha. O texto pequeno de 11px com tracking positivo (`.experience-item__dates`, `.footer__copy` e os logos do showcase) é uma exceção documentada: não é uppercase, então não usa `--ls-widest` (D-46). Quatro regras esperam o auth gate (`.auth-gate__subtitle`, `.auth-gate__error`, `.auth-gate__input` e `.experience-item__logo-mono`): nenhuma página entregue carrega `js/auth.js`, e elas ficam como estão. Todas estão registradas em `docs/data/accepted-divergences.json` (com status "pending" para as do auth gate). Rever quando um componente do Figma precisar desse texto ou quando o auth gate for entregue.
+
 ### Regras
 
 - **Plus Jakarta Sans**: tudo — display, headlines, body, UI, overlines, labels, métricas, code
@@ -1178,4 +1182,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.17.0 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.17.1 · novembro de 2026 · Renan Moura*

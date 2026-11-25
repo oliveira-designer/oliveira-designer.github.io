@@ -106,7 +106,7 @@
   gap: var(--space-3);
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  line-height: var(--lh-170);
+  line-height: var(--lh-175);
   color: var(--color-text-2);
 }
 

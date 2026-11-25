@@ -13,7 +13,8 @@
 //   docs/index.html         regenerated so it shares the exact same chrome
 //
 // Accepted divergences: docs/data/accepted-divergences.json is an optional array
-// of { cssName, mode (optional), reason, decidedBy, date }. A mismatch (token and
+// of { cssName, mode (optional), reason, decidedBy, date }. Entries with scope "effect" (a value that is not a token) and scope "rule"
+// (a pattern that covers a list of rules, with status accepted or pending) are shown in the same table and never matched to a token. A mismatch (token and
 // mode) or a Figma token missing from tokens.css that is listed there gets status
 // "accepted": own badge, reason on hover and in the summary, counted separately,
 // values always shown. An entry that no longer matches any divergence is "stale":
@@ -549,6 +550,11 @@ function compareTextStyleToken(ct, ts) {
 // instead of a cssName, and the two values as text. They are shown in the Accepted divergences table, never matched to a token.
 let ACCEPTED_EFFECTS = [];
 
+// Accepted divergences that are about a rule, not a token (D-52): entries with scope "rule", a pattern name, the Figma value and the CSS
+// value as text, the list of rules the pattern covers, a status ("accepted", or "pending" for rules that wait for something) and the
+// usual reason, decidedBy and date. One entry can cover many rules. They are shown in the Accepted divergences table.
+let ACCEPTED_RULES = [];
+
 function loadAccepted() {
   if (!fs.existsSync(ACCEPTED_JSON)) return [];
   let raw;
@@ -565,6 +571,15 @@ function loadAccepted() {
       if (typeof e.date === 'string' && !/^\d{4}-\d{2}-\d{2}$/.test(e.date)) errors.push(`[effect ${i}]: date must be YYYY-MM-DD`);
     });
     raw = raw.filter((e) => !(e && e.scope === 'effect'));
+    ACCEPTED_RULES = raw.filter((e) => e && e.scope === 'rule');
+    ACCEPTED_RULES.forEach((e, i) => {
+      for (const k of ['name', 'figma', 'css', 'reason', 'decidedBy', 'date', 'status']) if (!(typeof e[k] === 'string' && e[k].trim())) errors.push(`[rule ${i}]: ${k} is required`);
+      if (typeof e.date === 'string' && !/^\d{4}-\d{2}-\d{2}$/.test(e.date)) errors.push(`[rule ${i}]: date must be YYYY-MM-DD`);
+      if (e.status && !['accepted', 'pending'].includes(e.status)) errors.push(`[rule ${i}]: status must be accepted or pending`);
+      if (!Array.isArray(e.rules) || !e.rules.length) errors.push(`[rule ${i}]: rules must be a non-empty array`);
+      else e.rules.forEach((r, j) => { for (const k of ['selector', 'file', 'value']) if (!(r && typeof r[k] === 'string' && r[k].trim())) errors.push(`[rule ${i}].rules[${j}]: ${k} is required`); });
+    });
+    raw = raw.filter((e) => !(e && e.scope === 'rule'));
   }
   if (!Array.isArray(raw)) errors.push('top level must be an array');
   else {
@@ -807,7 +822,7 @@ function tokensBody(d) {
         : '\n            <p class="docs-section__desc">None.</p>'
     }
           </section>`);
-    if (d.acceptedItems.length || d.staleAccepted.length || ACCEPTED_EFFECTS.length) {
+    if (d.acceptedItems.length || d.staleAccepted.length || ACCEPTED_EFFECTS.length || ACCEPTED_RULES.length) {
       const accRows = d.acceptedItems.map((a) => [
         `<code>${esc(a.cssName)}</code>`,
         esc(a.mode || 'all modes'),
@@ -824,6 +839,14 @@ function tokensBody(d) {
         esc(a.reason),
         `${esc(a.decidedBy)}, ${esc(a.date)}`,
       ]);
+      const ruleRows = ACCEPTED_RULES.map((a) => [
+        esc(a.name),
+        'not a token',
+        a.status === 'pending' ? '<span class="badge badge--solar">pending</span> value differs' : 'rule value differs',
+        `<span class="docs-fig">Figma <code>${esc(a.figma)}</code>, CSS <code>${esc(a.css)}</code></span>${a.rules.map((r) => `<span class="docs-fig"><code>${esc(r.selector)}</code> ${esc(r.value)} <span class="docs-muted">${esc(r.file)}</span></span>`).join('')}`,
+        esc(a.reason),
+        `${esc(a.decidedBy)}, ${esc(a.date)}`,
+      ]);
       const staleRows = d.staleAccepted.map((a) => [
         `<code>${esc(a.cssName)}</code>`,
         esc(a.mode || 'all modes'),
@@ -834,12 +857,12 @@ function tokensBody(d) {
       ]);
       parts.push(`
           <section class="docs-section" id="accepted" aria-labelledby="accepted-title">
-            <h2 class="text-h2" id="accepted-title">Accepted divergences (${d.acceptedItems.length + ACCEPTED_EFFECTS.length}${d.staleAccepted.length ? `, ${d.staleAccepted.length} stale` : ''})</h2>
+            <h2 class="text-h2" id="accepted-title">Accepted divergences (${d.acceptedItems.length + ACCEPTED_EFFECTS.length + ACCEPTED_RULES.length}${d.staleAccepted.length ? `, ${d.staleAccepted.length} stale` : ''})</h2>
             <p class="docs-section__desc">Listed in <code>docs/data/accepted-divergences.json</code>. Accepting a divergence never hides the values: they stay in the token tables. A stale entry no longer matches any divergence and can be removed.</p>
             ${hopeTable({
               id: 'accepted-caption', caption: 'Accepted divergences', hidden: true,
               cols: [{ label: 'Token' }, { label: 'Mode' }, { label: 'Divergence' }, { label: 'Values' }, { label: 'Reason' }, { label: 'Decided' }],
-              rows: [...accRows, ...effectRows, ...staleRows],
+              rows: [...accRows, ...effectRows, ...ruleRows, ...staleRows],
             })}
           </section>`);
     }

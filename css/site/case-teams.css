@@ -49,7 +49,7 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   color: var(--color-text-2);
-  line-height: 1.35;
+  line-height: var(--lh-140);
 }
 
 /* "My squad" emphasis — icon + label in brand accent */

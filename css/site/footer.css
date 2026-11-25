@@ -36,7 +36,7 @@
 .footer__lede {
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  line-height: 1.65;
+  line-height: var(--lh-175);
   color: var(--color-text-neutral-default);
   max-width: 42ch;
 }

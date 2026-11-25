@@ -5,6 +5,23 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.17.1 · 25 de novembro de 2026 · Line height e letter-spacing alinhados pela triagem (PATCH)
+
+**Versão escolhida: PATCH (2.17.0 para 2.17.1).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), PATCH cobre "Ajuste de valor": são valores de `line-height` e `letter-spacing` de componentes que já existem, sem componente novo, sem token novo e sem mudança de regra. A decisão é a D-52 (triagem do Prompt 31). O Figma não mudou: nenhum estilo de texto novo.
+
+**Alterado**
+- Body de 16px alinhado ao Figma, `--lh-175` (175%): `.case-card__lead` (só o elemento que a regra governa; `.case-card--glass .case-card__lead` fica como está), `.case-section__body ul li` e `.footer__lede`.
+- Densidade compacta, `--lh-140`: `.case-section__results-legend` (1.5), `.experience-item__company` (`--lh-130`), `.experience-item__highlight` (1.45) e `.team-card__name` (1.35).
+- Densidade arejada, `--lh-170`: `.persona__section li`, `.persona__goal-card` e `.persona__quote p` (1.65) e `.skill-card--metric .metric-desc` (1.8).
+- Os dois `ul` com `line-height: 2` do `design-system.html` (inline, linhas 1486 e 1608) passam para `var(--lh-160)`, o valor do Figma, dentro do mesmo estilo inline.
+- `letter-spacing` de `.case-card__action` (0.02em) e `.case-card__meta` (0.01em) passa para `--ls-normal` (0).
+
+**Registrado (sem mudança de valor)**
+- `docs/data/accepted-divergences.json` ganha entradas com `scope: "rule"`, uma por padrão e com a lista de regras: texto compacto de interface em 140%, o botão do tema dos docs em 140%, texto arejado em 170%, texto pequeno de 11px com tracking positivo (`.experience-item__dates`, `.footer__copy` e os logos do showcase) e as quatro regras que esperam o auth gate (status "pending": `.auth-gate__subtitle`, `.auth-gate__error`, `.auth-gate__input` e `.experience-item__logo-mono`). As 11 entradas estruturais da v2.17.0 continuam válidas. A página de tokens mostra as novas na tabela de divergências aceitas.
+- `DESIGN.md`: subseção "Densidades documentadas de line height e tracking pequeno" na seção de tokens de tipografia, com o motivo de o Figma não ganhar estilos novos e quando rever.
+
+---
+
 ## v2.17.0 · 24 de novembro de 2026 · Tokens de peso, line height e letter-spacing (MINOR)
 
 **Versão escolhida: MINOR (2.16.0 para 2.17.0).** Regra aplicada: seção 3 do `GOVERNANCE.md` (v1.7), MINOR cobre "Nova família de tokens (motion, theme, etc.)": entram três famílias, `--fw-*`, `--lh-*` e `--ls-*`. Nenhum valor muda (os tokens têm os valores que já estavam escritos como literais), então não se aplica PATCH como "Ajuste de valor". Nenhum componente novo. O `figma-tokens.json` não foi editado.

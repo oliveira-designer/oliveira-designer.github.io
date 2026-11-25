@@ -79,7 +79,7 @@
   font-size: var(--fs-body-sm);
   font-weight: var(--fw-bold);
   color: var(--color-text-1);
-  line-height: var(--lh-130);
+  line-height: var(--lh-140);
 }
 
 .experience-item__role {
@@ -93,7 +93,7 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   color: var(--color-text-3);
-  line-height: 1.45;
+  line-height: var(--lh-140);
   margin-top: var(--space-1);
 }
 

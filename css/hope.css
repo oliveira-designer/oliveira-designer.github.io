@@ -9,7 +9,7 @@
 /* ===== css/tokens.css ===== */
 /* ============================================================
    HOPE DESIGN SYSTEM — tokens.css
-   v2.17.0 · November 2026
+   v2.17.1 · November 2026
    Source of truth: Figma Foundation for VALUES; DESIGN.md +
    DESIGN-IMPLEMENTATION.md for prose and rules (GOVERNANCE.md §7)
    ============================================================ */
@@ -1852,7 +1852,7 @@ p { max-width: 70ch; }
 .case-card__lead {
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  line-height: var(--lh-170);
+  line-height: var(--lh-175);
   color: var(--color-text-2);
   margin-top: auto;
 }
@@ -1894,7 +1894,7 @@ p { max-width: 70ch; }
   font-weight: var(--fw-medium);
   color: var(--color-text-3);
   text-decoration: none;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--ls-normal);
   display: inline-block;
   transition: color var(--duration-normal) var(--ease-out);
 }
@@ -2190,7 +2190,7 @@ p { max-width: 70ch; }
 .case-card__meta {
   font-family:    var(--font-body);
   font-size:      var(--fs-body-sm);
-  letter-spacing: 0.01em;
+  letter-spacing: var(--ls-normal);
   color:          var(--color-text-3);
   margin-top:     calc(-1 * var(--space-1));
 }
@@ -2425,7 +2425,7 @@ p { max-width: 70ch; }
   gap: var(--space-3);
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  line-height: var(--lh-170);
+  line-height: var(--lh-175);
   color: var(--color-text-2);
 }
 
@@ -2724,7 +2724,7 @@ p { max-width: 70ch; }
   font-family: var(--font-body);
   font-size:   var(--fs-body-sm);
   color:       var(--color-text-3);
-  line-height: 1.5;
+  line-height: var(--lh-140);
   text-align:  center;
   /* Visually centered under the three cards */
   width: 100%;
@@ -4167,7 +4167,7 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
   gap: var(--space-2);
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  line-height: 1.65;
+  line-height: var(--lh-170);
   color: var(--color-text-2);
 }
 
@@ -4204,7 +4204,7 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   font-weight: var(--fw-bold);
-  line-height: 1.65;
+  line-height: var(--lh-170);
   color: var(--color-text-2);
   text-align: left;
 }
@@ -4258,7 +4258,7 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
 .persona__quote p {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
-  line-height: 1.65;
+  line-height: var(--lh-170);
   color: var(--color-text-2);
   font-style: italic;
   max-width: none;
@@ -4895,7 +4895,7 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   color: var(--color-text-3);
-  line-height: 1.8;
+  line-height: var(--lh-170);
   margin: 0;
 }
 
@@ -6774,7 +6774,7 @@ html {
 .footer__lede {
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  line-height: 1.65;
+  line-height: var(--lh-175);
   color: var(--color-text-neutral-default);
   max-width: 42ch;
 }
@@ -7322,7 +7322,7 @@ html {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   color: var(--color-text-2);
-  line-height: 1.35;
+  line-height: var(--lh-140);
 }
 
 /* "My squad" emphasis — icon + label in brand accent */
@@ -7472,7 +7472,7 @@ html {
   font-size: var(--fs-body-sm);
   font-weight: var(--fw-bold);
   color: var(--color-text-1);
-  line-height: var(--lh-130);
+  line-height: var(--lh-140);
 }
 
 .experience-item__role {
@@ -7486,7 +7486,7 @@ html {
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   color: var(--color-text-3);
-  line-height: 1.45;
+  line-height: var(--lh-140);
   margin-top: var(--space-1);
 }
 
