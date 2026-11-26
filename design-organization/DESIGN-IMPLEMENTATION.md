@@ -1,6 +1,6 @@
 # DESIGN-IMPLEMENTATION.md
 # Hope Design System — Implementação técnica detalhada
-# Versão 2.20.0 · Baseado no Brandbook V2.2 · 2026
+# Versão 2.20.1 · Baseado no Brandbook V2.2 · 2026
 
 Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` segue o formato Google Labs (YAML front matter + prosa curta para agentes), este documento contém o **CSS completo e detalhado** para implementação humana.
 
@@ -8,6 +8,8 @@ Este arquivo é o **companion técnico do DESIGN.md**. Enquanto o `DESIGN.md` se
 - `DESIGN.md` — fonte da verdade dos tokens
 - `PATTERNS.md` — anatomias de página que combinam os componentes deste arquivo
 - `GOVERNANCE.md` — regras de evolução e quando criar componente novo
+
+**Changelog v2.20.1 (PATCH, 26/11/2026)**: o Tooltip inverte e desloca contra o ancestral mais próximo que corta, cruzado com a viewport (opção `clip` do `js/position.js`, passada só pelo Tooltip), então não é mais cortado dentro do Modal e do Bottom Sheet. Menu, Popover e painel do Breadcrumb não mudaram. Detalhes no `CHANGELOG.md`.
 
 **Changelog v2.20.0 (MINOR, 25/11/2026)**: Tooltip com gatilho de verdade (`js/tooltip.js`: abre 300 ms depois do hover do mouse ou do foco de teclado, fecha ao sair, é hoverable, Esc dispensa sem fechar o diálogo, sem comportamento de toque), seta que acompanha o centro do gatilho quando o balão é deslocado (`--tooltip-arrow-offset`, posta pelo `js/position.js`), regra dos diálogos (Popover e Menu não são suportados dentro de Modal e Bottom Sheet) e medida do corte do Tooltip dentro dos diálogos. Detalhes no `CHANGELOG.md`.
 
@@ -2505,5 +2507,5 @@ Sprint 2 spec: `background-color: var(--color-ink)`. Dark mode inverte para fund
 
 ---
 
-*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.20.0 · novembro de 2026*
+*Hope Design System · DESIGN-IMPLEMENTATION.md · v2.20.1 · novembro de 2026*
 *Renan Moura · renanmoura.framer.website*

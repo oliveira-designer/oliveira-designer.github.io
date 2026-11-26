@@ -5,6 +5,37 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.20.1 · 26 de novembro de 2026 · Tooltip inverte contra o contêiner que corta (PATCH)
+
+**Versão escolhida: PATCH (2.20.0 para 2.20.1).** Cláusula citada da seção 3 do `GOVERNANCE.md` (v1.7): em "PATCH (v1.1.X)", cujo subtítulo é "refinamento", o item "Correção de bug". O balão do Tooltip cortado pelo `overflow: hidden` do Modal e do Bottom Sheet (40%, 18% e 9% visíveis em três casos medidos na v2.20.0) é um defeito de comportamento. Os exemplos que o `GOVERNANCE.md` dá para esse item são contraste WCAG, token órfão e typo, então aplico a cláusula por analogia, sem casamento literal. Não há componente novo, módulo novo, token novo nem atributo novo para quem escreve a marcação: a opção `clip` do `js/position.js` é interna e só o Tooltip a passa. Se Renan entender que mudar o comportamento de posição de um componente é adição funcional, a alternativa é MINOR (2.21.0).
+
+**Alterado**
+- `js/position.js`: a opção `clip: true` (nos padrões que o Tooltip passa e no `TOOLTIP_DEFAULTS` das demos `data-anchor`). O retângulo da inversão e do deslocamento passa a ser a viewport cruzada com a caixa de preenchimento de cada ancestral que corta o painel (`overflow`, `overflow-x` ou `overflow-y` diferente de `visible`), com a mesma margem de `--space-4` na borda do contêiner. Os ancestrais que contam são os da cadeia de blocos contêineres do painel: de um elemento absoluto vai-se ao pai posicionado (`offsetParent`), dos demais ao pai, um elemento fixo encerra a busca, e `<body>` e `<html>` ficam com a viewport. Por isso, num Tooltip dentro do corpo que rola do Modal, quem corta é o diálogo, não o corpo (o painel absoluto tem o Modal como bloco contêiner). `compute()` aceita limites `{ left, top, width, height }` (left e top valem 0 por padrão, o que reproduz o cálculo anterior). Se nenhum lado cabe, vale a regra de antes: o lado com mais espaço.
+- `js/tooltip.js`: passa `clip: true`.
+- Docs do Tooltip: a regra do contêiner que corta na seção Positioning, um especime vivo em um quadro com `overflow: hidden` (`.docs-clip-frame` em `docs/docs.css`; o gerador ganhou o campo `clipFrame`) e o texto de Behavior sobre os diálogos. `DESIGN.md`: uma regra curta do Tooltip, mantido o texto C3 de Popover e Menu.
+- Lacuna `tooltip-clipped-in-dialog` fechada só para o que foi medido (abaixo), com o que continua aberto escrito nela.
+
+**Não alterado (provado)**
+- Menu, Popover, painel do Breadcrumb: os 56 casos de posição rodados na `main` (2.20.0) e no branch dão as mesmas linhas, com os mesmos valores numéricos (retângulos do painel e do gatilho). Eles não passam `clip`, e `compute()` sem `left` e `top` reproduz o cálculo anterior.
+- Nenhum `overflow`, layout ou CSS do Modal e do Bottom Sheet mudou.
+
+**Medido (Chromium, Light, 1280 e 390 de largura)**
+- Tabela do Prompt 36 repetida (parcela visível do balão, amostrada em grade, com a posição usada): 24 de 24 casos com 100% visível. Antes: X do Modal em Top 40% e em Right 18% (1280), Icon Button no corpo do Modal em Left 9% (1280). Agora o X do Modal pedindo Top usa Bottom e pedindo Right usa Left, e o Icon Button no corpo do Modal pedindo Left usa Right; os demais ficam na posição pedida (Left no Icon Button do Bottom Sheet também inverte para Right, como antes). A seta fica a 0,0 px do centro do gatilho nos 24 casos, sem nenhum caso com limite.
+- Corpo do Modal que rola (viewport de 520 px de altura, `scrollHeight` 1217 contra `clientHeight` 347): gatilho no meio do corpo, Top, 100%; gatilho a 20 px da borda de baixo do corpo, Top, 100%; com o Bottom pedido nesse mesmo gatilho, o balão vai abaixo, 100% visível, e cobre 16,1 px do rodapé do Modal (medido, não alterado); rolagem de 30 px do corpo com o tooltip aberto por foco: o gatilho andou 30 px e o tooltip o acompanhou a 8 px; gatilho meio fora do corpo, embaixo (Top, 100%) e em cima (Bottom, 100%): o tooltip continua ligado ao gatilho e inteiro, por cima do diálogo (observado, não alterado).
+- Quadro com `overflow: hidden`: o especime pede Top, o gatilho fica a 8 px da borda de cima do quadro, e ele usa Bottom, 100% visível, em 1280 e em 390.
+- Regressão: os 38 testes do Tooltip da v2.20.0 (tempo 305,1 ms com o mouse e 318,3 ms com o teclado, fechamento 0,8 ms, hoverable, teclado, toque, seta a 1 px onde não há limite, inversões e bordas) e o Esc dentro de Modal e Bottom Sheet passam; o teclado do Menu e do Breadcrumb é idêntico ao da `main`.
+
+**Escolhas**
+- Margem na borda do contêiner: `--space-4`, a mesma da viewport. Nenhum caso medido ficou sem posição válida por causa disso, então não a reduzi. Um contêiner sem lado que caiba (não medido) cai na regra do lado com mais espaço.
+- Interpretei "o ancestral mais próximo que corta" como os ancestrais do painel, na cadeia de blocos contêineres, porque são eles que de fato cortam o balão. Usar os ancestrais do gatilho teria dado o corpo do Modal (menor que o diálogo) como limite sem que ele corte o balão.
+- Não escondi o tooltip quando o gatilho sai do corpo que rola: ele fica ligado ao gatilho; só registrei o que acontece.
+
+**Não verificado**
+- Firefox, WebKit, toque real, leitor de tela e tema Dark (só Chromium e Light).
+- Contêiner sem nenhum lado que caiba; contêiner que corta mas não é o bloco contêiner do painel em casos mais complexos (transform no meio da cadeia, `overflow: clip`).
+
+---
+
 ## v2.20.0 · 25 de novembro de 2026 · Tooltip com gatilho, seta que acompanha o gatilho e regra dos diálogos (MINOR)
 
 **Versão escolhida: MINOR (2.19.0 para 2.20.0).** Cláusula citada da seção 3 do `GOVERNANCE.md` (v1.7): a seção "MINOR (v1.X.0)", cujo subtítulo é "adição funcional". Nenhum dos quatro itens do MINOR cobre literalmente a mudança (não há componente novo, família de tokens nem cor nova). A mudança acrescenta comportamento de gatilho e um módulo novo (`js/tooltip.js`) a um componente que já existia; PATCH (itens "Correção de bug", "Ajuste de valor", "Melhoria de documentação sem mudança técnica", "Adição de exemplo ou regra ao prosa do DESIGN.md") cobriria só a seta e as frases de documentação. Mesma leitura da v2.19.0; se Renan ler a seção de outro modo, a alternativa é PATCH.
