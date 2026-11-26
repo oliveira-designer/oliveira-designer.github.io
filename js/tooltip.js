@@ -28,7 +28,7 @@
 
   var SHOW_DELAY_MS = 300;
   var HIDE_DELAY_MS = 0;   // 0: the close is not delayed on purpose, it only waits one task (see update())
-  var DEFAULTS = { placement: 'top', align: 'center' };
+  var DEFAULTS = { placement: 'top', align: 'center', clip: true };  // clip: the flip measures against the nearest clipping container (js/position.js)
 
   var lastWasTouch = false;
   document.addEventListener('pointerdown', function (e) { lastWasTouch = e.pointerType === 'touch'; }, true);

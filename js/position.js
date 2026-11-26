@@ -5,7 +5,8 @@
    normal layering, so the --z-* scale holds (a panel never covers a Toast). It adds no animation.
 
    API (window.HopePosition):
-     HopePosition.compute(panelSize, triggerRect, opts, viewport)  pure: { left, top, placement, align } in viewport coordinates
+     HopePosition.compute(panelSize, triggerRect, opts, bounds)    pure: { left, top, placement, align } in viewport coordinates;
+                                                                  bounds is { left, top, width, height } (left and top default to 0)
      HopePosition.place(panel, trigger, defaults)                  measures and sets left and top once; returns the placement used
      HopePosition.watch(panel, trigger, defaults)                  place() now, again on resize and on a scroll of any ancestor; returns stop()
    The placement comes from the panel: data-placement="top|bottom|left|right" and data-align="start|center|end" (the names of the Figma
@@ -14,8 +15,15 @@
    the arrow keeps pointing at the trigger after a flip, and the custom property --tooltip-arrow-offset moves it along the bubble so
    it keeps pointing at the center of the trigger after a shift (clamped clear of the rounded corners).
 
+   Clipping container (option clip: true in "defaults", passed by the Tooltip only): the bounds are the viewport intersected with the
+   padding box of every ancestor that clips the panel (computed overflow, overflow-x or overflow-y other than visible), so the flip and
+   the shift keep the bubble inside the nearest container that would cut it, attached to its trigger. The ancestors that clip are the
+   ones in the containing block chain of the panel: from the panel, an absolutely positioned element goes to its offset parent, any
+   other one to its parent, a fixed one stops the walk; <body> and <html> are left to the viewport. The same margin is kept from the
+   edge of that container. Menu, Popover and the Breadcrumb panel do not pass the option and keep the viewport as their only bounds.
+
    Rules (the same on every component):
-     - the offset between trigger and panel is --space-2 and the margin kept from the viewport edge is --space-4 (read from the tokens);
+     - the offset between trigger and panel is --space-2 and the margin kept from the bounds is --space-4 (read from the tokens);
      - if the preferred side does not fit and the opposite side does, flip; if neither fits, keep the side with more room;
      - on the cross axis the alignment flips (start to end) when that makes it fit, otherwise the panel is shifted to stay inside;
      - the panel is placed relative to its offset parent, so it scrolls with the page like any in-flow panel;
@@ -43,11 +51,13 @@
     var side = opts.placement;
 
     // Free room beyond the trigger on a side, after the offset and the viewport margin.
+    var vl = vp.left || 0;
+    var vt = vp.top || 0;
     function room(s) {
-      if (s === 'bottom') return vp.height - t.bottom - margin - offset;
-      if (s === 'top') return t.top - margin - offset;
-      if (s === 'right') return vp.width - t.right - margin - offset;
-      return t.left - margin - offset;
+      if (s === 'bottom') return vt + vp.height - t.bottom - margin - offset;
+      if (s === 'top') return t.top - vt - margin - offset;
+      if (s === 'right') return vl + vp.width - t.right - margin - offset;
+      return t.left - vl - margin - offset;
     }
     function need(s) { return s === 'top' || s === 'bottom' ? h : w; }
     function fits(s) { return room(s) >= need(s); }
@@ -64,8 +74,8 @@
     var size2 = vertical ? w : h;
     var a0 = vertical ? t.left : t.top;
     var a1 = vertical ? t.right : t.bottom;
-    var min = margin;
-    var max = (vertical ? vp.width : vp.height) - margin;
+    var min = (vertical ? vl : vt) + margin;
+    var max = (vertical ? vl + vp.width : vt + vp.height) - margin;
     function pos(al) {
       if (al === 'end') return a1 - size2;
       if (al === 'center') return a0 + (a1 - a0 - size2) / 2;
@@ -100,6 +110,36 @@
     return { x: r.left + op.clientLeft - op.scrollLeft, y: r.top + op.clientTop - op.scrollTop };
   }
 
+  function clips(cs) {
+    return cs.overflowX !== 'visible' || cs.overflowY !== 'visible';
+  }
+
+  // The bounds for the flip and the shift: the viewport, or with clip: true the viewport intersected with the padding box of each
+  // ancestor that clips the panel (see the header). Returns { left, top, width, height } in viewport coordinates.
+  function boundsOf(panel, clip) {
+    var l = 0;
+    var t = 0;
+    var r = document.documentElement.clientWidth;
+    var b = document.documentElement.clientHeight;
+    if (clip) {
+      var cur = panel;
+      while (cur) {
+        var pos = getComputedStyle(cur).position;
+        var next = pos === 'fixed' ? null : pos === 'absolute' ? cur.offsetParent : cur.parentElement;
+        if (!next || next === document.body || next === document.documentElement) break;
+        if (clips(getComputedStyle(next))) {
+          var nr = next.getBoundingClientRect();
+          l = Math.max(l, nr.left + next.clientLeft);
+          t = Math.max(t, nr.top + next.clientTop);
+          r = Math.min(r, nr.left + next.clientLeft + next.clientWidth);
+          b = Math.min(b, nr.top + next.clientTop + next.clientHeight);
+        }
+        cur = next;
+      }
+    }
+    return { left: l, top: t, width: Math.max(0, r - l), height: Math.max(0, b - t) };
+  }
+
   function pick(value, list, fallback) {
     return list.indexOf(value) >= 0 ? value : fallback;
   }
@@ -118,7 +158,7 @@
       { width: pr.width, height: pr.height },
       trigger.getBoundingClientRect(),
       { placement: placement, align: align, offset: token('--space-2'), margin: token('--space-4') },
-      { width: document.documentElement.clientWidth, height: document.documentElement.clientHeight }
+      boundsOf(panel, defaults.clip)
     );
     var o = originOf(panel);
     panel.style.left = (res.left - o.x) + 'px';
@@ -183,7 +223,7 @@
   window.HopePosition = { compute: compute, place: place, watch: watch };
 
   // Declarative panels that are always visible (the Tooltip demos): data-anchor names the trigger.
-  var TOOLTIP_DEFAULTS = { placement: 'top', align: 'center' };
+  var TOOLTIP_DEFAULTS = { placement: 'top', align: 'center', clip: true };
   function anchored(fn) {
     Array.prototype.forEach.call(document.querySelectorAll('[data-anchor][data-placement]'), function (panel) {
       var trigger = document.getElementById(panel.getAttribute('data-anchor'));
