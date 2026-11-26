@@ -1,5 +1,5 @@
 ---
-version: v2.20.1
+version: v2.20.2
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -781,6 +781,17 @@ Peso, line height e letter-spacing são tokens em `css/tokens.css`, na área de 
 
 Além dos 160% do Figma, o Body sm e o Body xs têm no código duas densidades documentadas, as duas com tokens que já existem: **compacta** (`--lh-140`, 140%) para texto curto de interface (rótulos, legendas, links, nomes) e **arejada** (`--lh-170`, 170%, o mesmo valor que o Figma já tem para Body lg e Body xl) para texto corrido em cards e listas. O Body de 16px segue o Figma (`--lh-175`). O Figma não foi alterado: cada estilo novo se multiplicaria pelos pesos (cerca de cinco estilos a mais) para uma diferença visual de 2 a 3 px por linha. O texto pequeno de 11px com tracking positivo (`.experience-item__dates`, `.footer__copy` e os logos do showcase) é uma exceção documentada: não é uppercase, então não usa `--ls-widest` (D-46). Quatro regras esperam o auth gate (`.auth-gate__subtitle`, `.auth-gate__error`, `.auth-gate__input` e `.experience-item__logo-mono`): nenhuma página entregue carrega `js/auth.js`, e elas ficam como estão. Todas estão registradas em `docs/data/accepted-divergences.json` (com status "pending" para as do auth gate). Rever quando um componente do Figma precisar desse texto ou quando o auth gate for entregue.
 
+#### Verificação dos literais tipográficos (v2.20.2)
+
+O `npm run docs:check` (verificação 15) falha quando um peso, uma altura de linha ou um tracking é escrito como valor solto em vez de token. Ele lê `font-weight`, `line-height` e `letter-spacing`, e o peso e a altura de linha dentro do shorthand `font`, nas fontes de `css/`, em `docs/*.css`, nos blocos `<style>` e nos atributos `style` das páginas (o mesmo escopo da verificação de caixa alta).
+
+- **Passa:** o token da própria propriedade (`var(--fw-*)` em `font-weight`, `var(--lh-*)` em `line-height`, `var(--ls-*)` em `letter-spacing`) e as palavras neutras (`inherit`, `initial`, `unset`, `normal`, `line-height: 1`, `letter-spacing: 0`, `font: inherit`).
+- **Falha, com o token a usar na mensagem:** um literal igual ao valor de um token (`600`, `1.4`, `0.12em`, `140%`, `bold`), inclusive dentro do `font`; e um token em outra propriedade (`--lh-140` em `font-weight`).
+- **Literal que não é igual a nenhum token:** passa só se `docs/data/accepted-divergences.json` tiver uma entrada `scope: "rule"` com o arquivo, o seletor, a `property` e o valor, comparado como número (`.08em` e `0.08em` são o mesmo valor). Em estilo inline vale o arquivo e a tag, e a regra leva um `count`: uma ocorrência a mais ou a menos falha. As entradas `pending` passam, mas saem numa lista à parte na saída do comando, para não sumirem.
+- **Não é lido:** `css/hope.css` e `css/output.css` (gerados) e `css/preflight-nomono.css`, a cópia local do preflight do Tailwind 4.3.0, que fica idêntica à original e é ressincronizada a cada upgrade. Os arquivos que ficam de fora saem impressos na saída (lista `TYPO_VENDORED` em `scripts/check-docs.mjs`).
+
+Limites. A verificação não vê valores definidos por JavaScript, por `content` ou por uma custom property definida com literal e usada em outro lugar (um `var(--x)` que não é token tipográfico passa sem ser seguido). Não olha exemplos de código escritos como texto nas páginas. Não olha `font-size`. E não decide se um literal aceito é o certo diante do Figma: isso é decisão humana, registrada em `accepted-divergences.json`.
+
 ### Regras
 
 - **Plus Jakarta Sans**: tudo — display, headlines, body, UI, overlines, labels, métricas, code
@@ -1185,4 +1196,4 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.20.1 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.20.2 · novembro de 2026 · Renan Moura*

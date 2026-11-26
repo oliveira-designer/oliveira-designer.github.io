@@ -8,7 +8,7 @@ Build and check scripts of the Hope design system. Run them from the repository 
 | `npm run docs:tokens` | Generates `docs/tokens.html`, `docs/index.html` and `docs/data/tokens.json`. |
 | `npm run docs:components` | Generates the component pages in `docs/components/` from `docs/data/*.json`. |
 | `npm run docs:review` | Generates `docs/components/review.html` (the variant inventory). |
-| `npm run docs:check` | Checks the docs against the real CSS, including the all caps rule (D-46). Fails on errors. |
+| `npm run docs:check` | Checks the docs against the real CSS, including the all caps rule (D-46) and the typography literals (D-52). Fails on errors. |
 | `npm run snapshots:open` | Open-state snapshots of the Modal, Lightbox and Popover demos (below). Not part of `docs:check`. |
 
 ## Open-state snapshots (`snapshot-open-states.mjs`)
@@ -83,3 +83,12 @@ that by marking such cases `INCONCLUSIVE`. The smallest real difference seen (th
 `--threshold 0` to see every pixel.
 
 Outputs go to `.snapshots/` (listed in `.gitignore`) and are never committed.
+
+## Firefox screenshots do not show `backdrop-filter`
+
+Firefox screenshots, both Playwright's and Firefox's own `--screenshot`, do not include `backdrop-filter`. Measured in Prompt 39 on the
+Lightbox (Firefox 150, headed): the Playwright screenshot changed 0 pixels between the real 6px blur and no filter, while an OS capture of
+the same window changed 124,773 (Chromium's screenshot: 125,907). The blur is drawn on screen. For Firefox, verify these effects by the
+computed value or by an OS capture. The explanation, a capture path that bypasses WebRender (Mozilla bug 1657997, as cited by the
+[BrowserStack Percy note](https://www.browserstack.com/docs/percy/common-issue/firefox-backdrop-filter-effects)), is a supported
+hypothesis, not proven here.

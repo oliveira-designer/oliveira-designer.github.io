@@ -23,6 +23,10 @@
 //  13. a typography token (--fw-*, --lh-*, --ls-*) is missing from css/tokens.css, differs from docs/data/figma-text-styles.json, or a
 //      var(--fw|lh|ls-*) used in the CSS or the page styles is not defined (D-48, D-49).
 //  14. an id attribute appears more than once in the same docs page (D housekeeping, 2.18.0).
+//  15. a font-weight, line-height or letter-spacing (or the weight or line height inside a font shorthand) in the css/ sources, docs/*.css, the
+//      style blocks and the style attributes of the pages is a literal equal to a typography token (use the token), a token of another property,
+//      or a literal that equals no token and has no scope "rule" entry (with property) in docs/data/accepted-divergences.json (D-52). Pending entries
+//      pass and are listed. css/preflight-nomono.css (vendored Tailwind preflight) is not scanned, and is printed as such.
 //  12. text-transform: uppercase appears outside the single Label definition in css/reset.css (D-46), or a string styled with
 //      the Label style (the selectors of that rule) has more than three words in the static HTML of the site and the docs.
 //   6. docs/data/components-map.json names a CSS rule or class that is not in
@@ -501,6 +505,243 @@ const without = blocks.filter((b) => !demoBlocks.has(b));
     for (const [id, n] of seen) if (n > 1) errors.push(`${rel(file)}: id="${id}" appears ${n} times`);
   }
   console.log(`duplicate ids: ${pages.length} docs pages checked`);
+}
+
+/* ---- 15. typography literals (D-52): font-weight, line-height and letter-spacing use a --fw-*, --lh-* or --ls-* token, or an accepted literal ---- */
+{
+  // Vendored files, not scanned (same treatment as the generated css/hope.css and css/output.css, which are not scanned either).
+  // css/preflight-nomono.css is the local copy of the Tailwind 4.3.0 preflight: it must stay identical to upstream and is re-synced on
+  // every Tailwind upgrade, so its literals (line-height 1.5, font-weight bolder, ...) are not ours to change or to accept.
+  const TYPO_VENDORED = ['css/preflight-nomono.css'];
+  const TYPO_GENERATED = ['css/hope.css', 'css/output.css'];
+  const PROPS = ['font-weight', 'line-height', 'letter-spacing'];
+  const PFX = { 'font-weight': 'fw', 'line-height': 'lh', 'letter-spacing': 'ls' };
+
+  const listTypoFiles = (dir, ext, skip = () => false) => {
+    const out = [];
+    const walkDir = (d) => {
+      for (const n of fs.readdirSync(d)) {
+        const f = path.join(d, n);
+        if (skip(f)) continue;
+        if (fs.statSync(f).isDirectory()) walkDir(f);
+        else if (n.endsWith(ext)) out.push(f);
+      }
+    };
+    if (fs.existsSync(dir)) walkDir(dir);
+    return out;
+  };
+  // Same scope as verification 12: css/ sources, docs/*.css, and the style blocks and style attributes of the root pages,
+  // case-studies/ and docs/ (not docs/case).
+  for (const v of TYPO_VENDORED) if (!fs.existsSync(path.join(ROOT, v))) errors.push(`${v}: listed as vendored in the typography literals check (15) but the file does not exist`);
+  const typoCss = [
+    ...listTypoFiles(path.join(ROOT, 'css'), '.css', (f) => TYPO_GENERATED.some((g) => rel(f) === g) || TYPO_VENDORED.some((g) => rel(f) === g)),
+    ...listTypoFiles(DOCS, '.css'),
+  ];
+  const typoHtml = [
+    ...fs.readdirSync(ROOT).filter((n) => n.endsWith('.html')).map((n) => path.join(ROOT, n)),
+    ...listTypoFiles(path.join(ROOT, 'case-studies'), '.html'),
+    ...listTypoFiles(DOCS, '.html', (f) => f.includes(`${path.sep}docs${path.sep}case`)),
+  ];
+
+  // Blank comments, strings and url() with spaces of the same length (newlines kept): braces and semicolons inside them are inert.
+  const mask = (t) => t
+    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '))
+    .replace(/"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'/g, (m) => m.replace(/[^\n]/g, ' '))
+    .replace(/url\([^)]*\)/gi, (m) => m.replace(/[^\n]/g, ' '));
+  const WATCHED = new Set([...PROPS, 'font']);
+
+  // Declarations of a CSS text with their selector. Descriptors of @font-face (font-weight: 200 800) are not declarations of use.
+  const cssDecls = (text, baseLine) => {
+    const t = mask(text);
+    const out = [];
+    const stack = [];
+    let buf = '';
+    let bufAt = -1;
+    const flush = () => {
+      const b = buf; const at = bufAt;
+      buf = ''; bufAt = -1;
+      if (!stack.length || at < 0) return;
+      const ci = b.indexOf(':');
+      if (ci < 0) return;
+      const prop = b.slice(0, ci).trim().toLowerCase();
+      if (!WATCHED.has(prop) || stack.some((s) => /^@font-face\b/i.test(s))) return;
+      const sel = [...stack].reverse().find((s) => !s.startsWith('@')) || '';
+      out.push({ prop, value: b.slice(ci + 1).trim().replace(/\s+/g, ' '), line: baseLine + t.slice(0, at).split('\n').length - 1, selector: sel.replace(/\s+/g, ' ') });
+    };
+    for (let i = 0; i < t.length; i += 1) {
+      const c = t[i];
+      if (c === '{') { stack.push(buf.trim().replace(/\s+/g, ' ')); buf = ''; bufAt = -1; }
+      else if (c === '}') { flush(); stack.pop(); }
+      else if (c === ';') flush();
+      else { if (bufAt < 0 && !/\s/.test(c)) bufAt = i; buf += c; }
+    }
+    flush();
+    return out;
+  };
+  const htmlDecls = (text) => {
+    const clean = text
+      .replace(/<!--[\s\S]*?-->/g, (m) => m.replace(/[^\n]/g, ' '))
+      .replace(/<script\b[\s\S]*?<\/script>/gi, (m) => m.replace(/[^\n]/g, ' '));
+    const lineAt = (i) => clean.slice(0, i).split('\n').length;
+    const out = [];
+    for (const m of clean.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)) {
+      for (const d of cssDecls(m[1], lineAt(m.index + m[0].indexOf('>') + 1))) out.push({ ...d, origin: 'style block' });
+    }
+    const noStyle = clean.replace(/<style\b[\s\S]*?<\/style>/gi, (m) => m.replace(/[^\n]/g, ' '));
+    for (const m of noStyle.matchAll(/<([a-zA-Z][a-zA-Z0-9-]*)\b([^>]*?)\sstyle\s*=\s*"([^"]*)"/g)) {
+      for (const part of mask(m[3]).split(';')) {
+        const ci = part.indexOf(':');
+        if (ci < 0) continue;
+        const prop = part.slice(0, ci).trim().toLowerCase();
+        if (WATCHED.has(prop)) out.push({ prop, value: part.slice(ci + 1).trim().replace(/\s+/g, ' '), line: lineAt(m.index), selector: '(inline style)', tag: m[1].toLowerCase(), origin: 'inline style' });
+      }
+    }
+    return out;
+  };
+  const decls = [];
+  for (const f of typoCss) for (const d of cssDecls(fs.readFileSync(f, 'utf8'), 1)) decls.push({ ...d, file: rel(f), origin: 'css' });
+  for (const f of typoHtml) for (const d of htmlDecls(fs.readFileSync(f, 'utf8'))) decls.push({ ...d, file: rel(f) });
+
+  // Token values from css/tokens.css (verification 13 checks them against the Figma snapshot).
+  const tokenText = mask(readCss('css/tokens.css'));
+  const tokenDecl = new Map();
+  for (const m of tokenText.matchAll(/(?:^|[;{\s])(--[a-z0-9-]+)\s*:\s*([^;}]+)/g)) if (!tokenDecl.has(m[1])) tokenDecl.set(m[1], m[2].trim());
+  const tokenNum = (name, raw) => (name.startsWith('--ls-') ? (raw === '0' ? 0 : Number(raw.replace(/em$/, ''))) : Number(raw));
+  const tokens = { 'font-weight': [], 'line-height': [], 'letter-spacing': [] };
+  for (const [name, raw] of tokenDecl) for (const p of PROPS) if (name.startsWith(`--${PFX[p]}-`)) tokens[p].push({ name, n: tokenNum(name, raw) });
+  const same = (a, b) => Math.abs(a - b) < 1e-9;
+
+  // Numbers with an optional unit: "0.08em" and ".08em" are the same value.
+  const parseNum = (s) => {
+    const m = /^(-?\d*\.?\d+)(em|rem|px|%|ch)?$/i.exec(String(s).trim());
+    return m ? { n: Number(m[1]), unit: (m[2] || '').toLowerCase() } : null;
+  };
+  const CSS_WIDE = new Set(['inherit', 'initial', 'unset', 'revert', 'revert-layer']);
+  // group: a token of its own property, w token of another property, b neutral, o var() of a custom property that is not a typography
+  // token (not followed: limit documented in DESIGN.md), c literal equal to a token, d literal equal to no token.
+  const classify = (prop, raw) => {
+    const v = raw.replace(/\s*!important\s*$/i, '').trim().toLowerCase();
+    const only = /^var\(\s*(--[a-z0-9-]+)\s*(?:,[^()]*)?\)$/.exec(v);
+    if (only) {
+      if (/^--(fw|lh|ls|fs)-/.test(only[1])) return only[1].startsWith(`--${PFX[prop]}-`) ? { group: 'a', token: only[1] } : { group: 'w', token: only[1] };
+      return { group: 'o' };
+    }
+    if (/var\(/.test(v)) return { group: 'o' };
+    if (CSS_WIDE.has(v) || v === 'normal') return { group: 'b' };
+    let n = null;
+    if (prop === 'font-weight') n = v === 'bold' ? 700 : parseNum(v) && !parseNum(v).unit ? parseNum(v).n : null;
+    else if (prop === 'line-height') { const p = parseNum(v); if (p && !p.unit) n = p.n; else if (p && p.unit === '%') n = p.n / 100; }
+    else { const p = parseNum(v); if (p && (p.unit === 'em' || p.n === 0)) n = p.n; if (p && p.n === 0) return { group: 'b' }; }
+    if (prop === 'line-height' && n === 1 && /^1(\.0+)?$/.test(v)) return { group: 'b' };
+    if (n === null) return { group: 'd' };
+    const hit = tokens[prop].find((t) => same(t.n, n));
+    return hit ? { group: 'c', token: hit.name } : { group: 'd' };
+  };
+  // font shorthand: [style] [variant] [weight] [stretch] size[/line-height] family. Only the weight and the line-height are checked.
+  const fontParts = (value) => {
+    const v = value.replace(/\s*!important\s*$/i, '').trim();
+    if (CSS_WIDE.has(v.toLowerCase()) || /^(caption|icon|menu|message-box|small-caption|status-bar)$/i.test(v)) return { neutral: true };
+    const toks = [];
+    let depth = 0; let cur = '';
+    for (const ch of v.replace(/\s*\/\s*/g, '/')) {
+      if (ch === '(') depth += 1;
+      if (ch === ')') depth -= 1;
+      if (/\s/.test(ch) && depth === 0) { if (cur) toks.push(cur); cur = ''; } else cur += ch;
+    }
+    if (cur) toks.push(cur);
+    const PRE = /^(italic|oblique|normal|small-caps|bold|bolder|lighter|(ultra|extra|semi)-(condensed|expanded)|condensed|expanded)$/i;
+    let si = -1;
+    for (let i = 0; i < toks.length; i += 1) {
+      const t = toks[i];
+      if (PRE.test(t) || /^\d{1,4}(\.\d+)?$/.test(t)) continue;
+      const head = t.split('/')[0];
+      if (/^(xx-small|x-small|small|medium|large|x-large|xx-large|xxx-large|smaller|larger)$/i.test(head) || /^-?\d*\.?\d+(px|em|rem|%|vw|vh|pt|ch|ex)$/i.test(head) || /^(calc|clamp|min|max|var)\(/i.test(head)) si = i;
+      break;
+    }
+    if (si < 0) return { neutral: false, unparsed: true };
+    const sizeTok = toks[si];
+    return {
+      neutral: false,
+      lh: sizeTok.includes('/') ? sizeTok.slice(sizeTok.indexOf('/') + 1) : null,
+      weight: toks.slice(0, si).find((t) => /^(bold|bolder|lighter)$/i.test(t) || /^\d{1,4}(\.\d+)?$/.test(t) || /^var\(/i.test(t)) || null,
+    };
+  };
+  const uses = [];
+  for (const d of decls) {
+    if (d.prop !== 'font') { uses.push({ ...d, shorthand: false, cls: classify(d.prop, d.value) }); continue; }
+    const p = fontParts(d.value);
+    if (p.neutral || p.unparsed) { uses.push({ ...d, shorthand: true, cls: { group: p.neutral ? 'b' : 'o' } }); continue; }
+    if (p.weight) uses.push({ ...d, prop: 'font-weight', value: p.weight, shorthand: true, cls: classify('font-weight', p.weight) });
+    if (p.lh) uses.push({ ...d, prop: 'line-height', value: p.lh, shorthand: true, cls: classify('line-height', p.lh) });
+    if (!p.weight && !p.lh) uses.push({ ...d, shorthand: true, cls: { group: 'b' } });
+  }
+
+  // Accepted literals: scope "rule" entries of docs/data/accepted-divergences.json whose rules carry an explicit "property".
+  // A rule matches a declaration by file, selector (or, for "(inline style)", the tag of the last compound), property and value,
+  // compared as numbers. A rule with "count" must match exactly that many declarations.
+  const acceptedRules = [];
+  const acceptedFile = path.join(DOCS, 'data', 'accepted-divergences.json');
+  if (fs.existsSync(acceptedFile)) {
+    let list = [];
+    try { list = JSON.parse(fs.readFileSync(acceptedFile, 'utf8')); } catch (err) { errors.push(`docs/data/accepted-divergences.json is not valid JSON: ${err.message}`); }
+    const normSel = (s) => s.replace(/\s+/g, ' ').replace(/\s*([>+~,])\s*/g, '$1').trim();
+    for (const e of list) {
+      if (e.scope !== 'rule') continue;
+      for (const r of e.rules || []) {
+        if (!r.property) continue;
+        if (!PROPS.includes(r.property)) { errors.push(`docs/data/accepted-divergences.json: "${e.name}": rule ${r.selector} has property "${r.property}"; allowed: ${PROPS.join(', ')}`); continue; }
+        const lit = String(r.value || '').replace(/\(.*?\)/g, ' ').replace(/^(font-weight|line-height|letter-spacing)\b/, ' ').replace(/--[a-z0-9-]+/g, ' ');
+        const values = [...lit.matchAll(/-?\d*\.?\d+(?:em|rem|px|%)?/g)].map((m) => parseNum(m[0])).filter(Boolean);
+        const inline = /\(inline style\)\s*$/.test(r.selector);
+        const selector = normSel(r.selector.replace(/\s*\(inline style\)\s*$/, ''));
+        const last = selector.split(/[\s>+~]+/).filter(Boolean).pop() || '';
+        acceptedRules.push({ entry: e.name, status: e.status, file: r.file, selector, inline, tag: (/^[a-z][a-z0-9-]*/i.exec(last) || [''])[0].toLowerCase(), prop: r.property, values, count: r.count, matched: [], normSel });
+      }
+    }
+  }
+  const covering = (u) => {
+    const p = parseNum(u.value.replace(/\s*!important\s*$/i, ''));
+    if (!p) return null;
+    for (const a of acceptedRules) {
+      if (a.file !== u.file || a.prop !== u.prop || !a.values.some((x) => same(x.n, p.n) && x.unit === p.unit)) continue;
+      if (a.inline) { if (u.origin === 'inline style' && (!a.tag || a.tag === u.tag)) return a; }
+      else if (u.origin !== 'inline style' && u.selector.split(',').map(a.normSel).includes(a.selector)) return a;
+    }
+    return null;
+  };
+
+  const tally = { a: 0, b: 0, o: 0, accepted: 0, pending: 0 };
+  const pendingList = [];
+  for (const u of uses) {
+    const where = `${u.file}:${u.line}: ${u.selector}: ${u.prop}${u.shorthand ? ' (in the font shorthand)' : ''}: ${u.value}`;
+    const g = u.cls.group;
+    if (g === 'a') tally.a += 1;
+    else if (g === 'b') tally.b += 1;
+    else if (g === 'o') tally.o += 1;
+    else if (g === 'w') errors.push(`${where} uses ${u.cls.token}, a token of another property; use a --${PFX[u.prop]}-* token (D-52)`);
+    else if (g === 'c') errors.push(`${where} equals ${u.cls.token}; use var(${u.cls.token}) (D-52)`);
+    else {
+      const a = covering(u);
+      if (!a) errors.push(`${where} equals no token and has no accepted entry; add a scope "rule" entry with this file, selector, property and value to docs/data/accepted-divergences.json, or use a token (D-52)`);
+      else {
+        a.matched.push(u);
+        if (a.status === 'pending') { tally.pending += 1; pendingList.push(`${u.file}:${u.line} ${u.selector} ${u.prop}: ${u.value} (${a.entry})`); } else tally.accepted += 1;
+      }
+    }
+  }
+  for (const a of acceptedRules) {
+    if (a.count !== undefined && a.matched.length !== a.count) {
+      errors.push(`docs/data/accepted-divergences.json: "${a.entry}": ${a.file} ${a.selector} (${a.prop} ${a.values.map((x) => x.n + x.unit).join(', ')}) is expected ${a.count} time(s), found ${a.matched.length} (${a.matched.map((m) => `line ${m.line}`).join(', ') || 'none'})`);
+    }
+  }
+  const unmatched = acceptedRules.filter((a) => a.values.length && !a.matched.length);
+  console.log(`typography literals (D-52): ${uses.length} uses of font-weight, line-height and letter-spacing checked in ${typoCss.length + typoHtml.length} files; token ${tally.a}, neutral ${tally.b}, var() of other properties not followed ${tally.o}, accepted literals ${tally.accepted}, pending literals ${tally.pending}`);
+  console.log(`  not scanned, vendored: ${TYPO_VENDORED.join(', ')} (Tailwind 4.3.0 preflight, re-synced on upgrade); not scanned, generated: ${TYPO_GENERATED.join(', ')}`);
+  if (pendingList.length) {
+    console.log(`  pending, not accepted (${pendingList.length}):`);
+    for (const p of pendingList) console.log(`    ${p}`);
+  }
+  for (const a of unmatched) console.log(`  notice: the accepted rule ${a.file} ${a.selector} (${a.prop}) matches no declaration any more; update or remove it in accepted-divergences.json`);
 }
 
 console.log(`docs pages checked: ${pages.length} (${pages.filter(isComponentPage).length} component pages, ${demoCount} live demos)`);

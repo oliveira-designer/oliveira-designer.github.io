@@ -5,6 +5,33 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.20.2 · 26 de novembro de 2026 · Verificação dos literais de peso, line height e letter-spacing, e nota sobre o Firefox (PATCH)
+
+**Versão escolhida: PATCH (2.20.1 para 2.20.2).** Cláusulas citadas da seção 3 do `GOVERNANCE.md` (v1.7), em "PATCH (v1.1.X)", cujo subtítulo é "refinamento": "Melhoria de documentação sem mudança técnica" (a nota do Firefox em `scripts/README.md` e a subseção do `DESIGN.md`) e "Adição de exemplo ou regra ao prosa do DESIGN.md" (a regra da verificação, escrita no `DESIGN.md`). Nenhuma cláusula nomeia uma verificação nova em `scripts/`, então não há correspondência literal para ela: ela não muda componente, token, valor nem regra do design system, só passa a falhar o que já era regra (D-52). O precedente é a v2.17.2, também PATCH para mudança só em `scripts/` e nos docs, e antes dela a v2.8.1. Não é MINOR porque nenhum item da lista do MINOR (componente novo, família de tokens, cor, expansão de escala) se aplica. Se o Renan preferir que ferramenta de verificação não ganhe versão, esta entrada vira nota sem número e as strings de versão voltam para 2.20.1.
+
+**Adicionado**
+- `scripts/check-docs.mjs`, verificação 15. Lê `font-weight`, `line-height` e `letter-spacing`, e o peso e a altura de linha do shorthand `font`, no mesmo escopo da verificação 12 (fontes de `css/`, `docs/*.css`, `<style>` e `style` das páginas). Falha em: literal igual ao valor de um token (a mensagem diz o token), token de outra propriedade, e literal que não é igual a nenhum token e não tem entrada `scope: "rule"` com arquivo, seletor, `property` e valor (comparado como número). Entradas `pending` passam e saem numa lista à parte. Estilo inline casa por arquivo e tag, com `count`. Fora do escopo, e impressos na saída: `css/hope.css` e `css/output.css` (gerados) e `css/preflight-nomono.css` (preflight do Tailwind 4.3.0 vendorizado, lista `TYPO_VENDORED`; decisão do Renan).
+- `docs/data/accepted-divergences.json`: o campo `property` nas 7 regras das duas entradas que cobrem literais (a de tracking pequeno aceita e a do portão de autenticação pendente) e `count: 8` na regra do estilo inline de `design-system.html`. Os textos de `value` não mudaram.
+- `scripts/README.md`: a nota de que as capturas do Firefox (do Playwright e do próprio `--screenshot`) não incluem `backdrop-filter`: 0 pixels mudaram na captura contra 124.773 numa captura do sistema da mesma janela (Prompt 39). A explicação, um caminho de captura que não passa pelo WebRender, é hipótese apoiada, não provada.
+- `DESIGN.md`: a subseção "Verificação dos literais tipográficos" com as regras e os limites.
+
+**Não alterado (provado)**
+- Nenhum CSS, JavaScript, token ou página mudou. O `git diff` contra a `main` só tem `scripts/`, `docs/data/accepted-divergences.json` e `design-organization/`. Nenhum literal do CSS é igual a um token (grupo vazio), então não havia o que trocar. Por isso **não rodei** a comparação do estilo computado (método do Prompt 30) nem a suíte de estados abertos: sem mudança de CSS não há o que comparar.
+
+**Medido**
+- Levantamento antes da verificação (470 declarações de `font-weight`, `line-height`, `letter-spacing`, `font` e `font-size` em 70 arquivos CSS e 41 HTML): token 247, neutro 12, literal igual a token 0, literal sem token 17 (4 no preflight, 3 pendentes, 2 aceitos em CSS e 8 aceitos inline), token em outra propriedade 0.
+- Com a verificação: 268 usos conferidos em 110 arquivos, token 247, neutros 8, literais aceitos 10, pendentes 3, 0 erros. `npm run docs:check` passa.
+- Testes da verificação numa cópia da árvore fora do repositório (a cópia passava antes), com uma violação deliberada de cada tipo: 13 erros, todos esperados (token na propriedade errada, literal igual a token, literal sem token e sem entrada em CSS e inline, `font` com literal, `0.07em` no lugar do `0.06em` aceito, e uma ocorrência inline a mais). `font: inherit`, `line-height: 1` e `letter-spacing: 0` passaram, e as três entradas `pending` passaram e saíram na lista. A cópia foi apagada.
+
+**Backlog (não alterado)**
+- `font-size` sem token (a verificação não o exige): `css/components/brand-list.css:16` (`14px`) e `:31` (`12px`), `css/components/header-status-badge.css:22` (`10px`), e o composto `max(16px, var(--fs-body))` em `css/auth.css:235`. Os três literais do preflight do Tailwind (`1em`, `80%`, `75%`) são vendorizados.
+- Os blocos de código do `DESIGN-IMPLEMENTATION.md` citam valores de CSS e boa parte já não bate com o CSS atual (levantamento da seção 5 do Prompt 40, no relatório); não foi construído nada.
+
+**Escolhas**
+- Um literal aceito só cobre o que tem `property` na regra. As regras sem `property` (as que listam um token) continuam sem cobrir literal nenhum.
+- A verificação ignora comentários HTML e o conteúdo de `<script>` ao ler estilos inline, o que a verificação 12 não faz. É um pouco mais estrita contra falso positivo, e não mudou nenhum resultado medido.
+- Uma regra aceita que já não casa com nenhuma declaração imprime um aviso, não falha.
+
 ## v2.20.1 · 26 de novembro de 2026 · Tooltip inverte contra o contêiner que corta (PATCH)
 
 **Versão escolhida: PATCH (2.20.0 para 2.20.1).** Cláusula citada da seção 3 do `GOVERNANCE.md` (v1.7): em "PATCH (v1.1.X)", cujo subtítulo é "refinamento", o item "Correção de bug". O balão do Tooltip cortado pelo `overflow: hidden` do Modal e do Bottom Sheet (40%, 18% e 9% visíveis em três casos medidos na v2.20.0) é um defeito de comportamento. Os exemplos que o `GOVERNANCE.md` dá para esse item são contraste WCAG, token órfão e typo, então aplico a cláusula por analogia, sem casamento literal. Não há componente novo, módulo novo, token novo nem atributo novo para quem escreve a marcação: a opção `clip` do `js/position.js` é interna e só o Tooltip a passa. Se Renan entender que mudar o comportamento de posição de um componente é adição funcional, a alternativa é MINOR (2.21.0).

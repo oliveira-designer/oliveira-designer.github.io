@@ -201,17 +201,21 @@
       {
         "selector": ".experience-item__dates",
         "file": "css/site/about-experience.css",
+        "property": "letter-spacing",
         "value": "0.08em"
       },
       {
         "selector": ".footer__copy",
         "file": "css/site/footer.css",
+        "property": "letter-spacing",
         "value": "0.06em"
       },
       {
         "selector": ".logo-strip__item > span (inline style)",
         "file": "design-system.html",
-        "value": "0.08em"
+        "property": "letter-spacing",
+        "value": "0.08em",
+        "count": 8
       }
     ],
     "reason": "Intentional small secondary text. It is not uppercase, so it does not use --ls-widest (D-46 reserves 12% for uppercase labels of up to three words). (D-52)",
@@ -228,21 +232,25 @@
       {
         "selector": ".auth-gate__subtitle",
         "file": "css/auth.css",
+        "property": "line-height",
         "value": "line-height 1.65"
       },
       {
         "selector": ".auth-gate__error",
         "file": "css/auth.css",
+        "property": "line-height",
         "value": "line-height --lh-140"
       },
       {
         "selector": ".auth-gate__input",
         "file": "css/auth.css",
+        "property": "line-height",
         "value": "line-height 1.5"
       },
       {
         "selector": ".experience-item__logo-mono",
         "file": "css/site/about-experience.css",
+        "property": "letter-spacing",
         "value": "letter-spacing 0.05em"
       }
     ],
