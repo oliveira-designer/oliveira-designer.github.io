@@ -1,6 +1,6 @@
 # Hope DS: diário de decisões (material de case)
 
-Versão 0.38 · 2026-11-26 · Rascunho vivo, uso interno (Renan e agentes)
+Versão 0.39 · 2026-11-26 · Rascunho vivo, uso interno (Renan e agentes)
 
 ## Como ler este documento
 
@@ -614,6 +614,12 @@ Versão 0.38 · 2026-11-26 · Rascunho vivo, uso interno (Renan e agentes)
 - **Não verificado:** Firefox, WebKit, Dark, toque real e leitor de tela; um contêiner em que nenhum lado caiba (cai na regra antiga, sem medida); cadeias incomuns de ancestrais (`transform` no meio, `overflow: clip`). Um ponto que o Code levantou e que merece atenção: no especímen do frame com o frame abaixo da dobra, a primeira colocação deu Top com 0% visível durante uma rolagem suave (limites vazios porque a viewport não cobre o frame) e se acertou para Bottom a 100% quando a rolagem parou, pelo ouvinte de rolagem. Só o estado final foi conferido. Num gatilho real isso não aparece com a abertura por foco ou hover, que o traz para a viewport, mas esse raciocínio é meu e não foi medido. [Registrado: relatório; a ressalva sobre gatilho real é Inferência]
 - **Figma (Core, 2026-11-26), só texto:** o Info e a descrição do conjunto Tooltip receberam a regra do diálogo ("dentro de Modal ou Bottom Sheet a inversão também respeita as bordas do diálogo, com a mesma margem de 16px (--space-4)..., continua ligado ao próprio gatilho", mais o aviso de que perto da borda inferior de um diálogo com rodapé o balão pode cobrir parte do rodapé). Falta publicar o Core. [Registrado: execução minha]
 - **Pendências novas:** Renan decide a versão (2.20.1 PATCH ou 2.21.0 MINOR), faz o git da `hope-feedback-o` e publica o Core; commita o case log. Depois, o passe opcional de verificação em outros navegadores e no toque real (nunca testado desde o Prompt 33) e o Prompt 38 (verificação contra literais). [Registrado]
+
+### D-63 Versão 2.20.1 e abertura do passe de verificação (Prompt 38)
+- **Decisão de versão (Renan, 2026-11-26):** PATCH 2.20.1, como recomendei (correção de um comportamento da 2.20.0, sem componente novo nem família de tokens; leitura por analogia da cláusula "Correção de bug"). Renan fez o git da `hope-feedback-o`, publicou o Core com a regra do Tooltip em diálogo e commitou o case log. [Registrado]
+- **Estado do ciclo de overlays e posicionamento:** Lotes A, B e C fechados (D-56, D-58 a D-62). Ficam abertas as lacunas `tooltip-screen-reader`, `tooltip-delay-values`, `tooltip-toggletip` e `position-clipped-in-dialog` (aceita, com gatilho de reabertura). [Registrado]
+- **Passe opcional, aceito por Renan:** Prompt 38, só medição, sem mudar produto e sem commit. Matriz Chromium, Firefox e WebKit por Light e Dark por 1280 e 390, reaproveitando as suítes dos Prompts 35 a 37; medições específicas (descrição acessível do Tooltip oculto, foco por teclado, toque emulado, recursos de CSS como `:has()` e `color-mix`, borda hairline, posições fracionárias); passada visual em Dark. Fica fora e manual: toque real em aparelho, leitor de tela real e `viewport-fit=cover`. Duas coisas que eu não sei: se o Firefox e o WebKit estão instalados no Playwright do Renan, e onde moram as suítes do Code (podem estar fora do repositório). A seção 0 do prompt manda reportar as duas. [Registrado: decisão; as incógnitas são minhas]
+- **Verificação contra literais:** passa a ser o Prompt 39. [Registrado]
 
 ## Pendências para o case
 
