@@ -478,6 +478,24 @@
   }
 }
 
+/* Clip frame (Tooltip page): a box with overflow hidden that holds a trigger and its always visible tooltip, to show that the flip
+   measures against the nearest clipping container and not against the viewport. */
+.docs-clip-frame {
+  position: relative;
+  height: 9rem;
+  max-width: 28rem;
+  overflow: hidden;
+  border: var(--border-normal);
+  border-radius: var(--radius-md);
+}
+
+.docs-clip-frame > .btn {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-8);
+  width: auto;
+}
+
 /* Flip demo: a trigger pinned to the bottom right corner of the viewport, so the panel has no room below or to the right and has to
    flip. It sits on the tooltip layer (400), later in the page than the always visible Tooltip specimens, so a specimen never covers
    the trigger. */

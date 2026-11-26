@@ -1353,8 +1353,8 @@
     },
     {
       "id": "tooltip-clipped-in-dialog",
-      "status": "measured",
-      "text": "Measured in Chromium (share of the bubble that is visible, sampled on a grid, 1280 and 390 wide). Modal close X: Top 40%, Bottom 100%, Left 100%, Right 18% at 1280 (at 390 Right flips to Left, 100%, and Top stays 40%). Icon Button in the Modal body: Top 91%, Bottom 91%, Left 9%, Right 100% at 1280 (at 390 all 100%, Left flips to Right). Icon Button in the Bottom Sheet body: 100% in all four placements at both widths (Left flips to Right). The dialog has overflow hidden and positioning measures against the viewport, so a bubble that sticks out of the dialog is cut. No layout or overflow was changed. Options: choose the placement per case (Bottom for the Modal close X), the fixed strategy in js/position.js, or a portal."
+      "status": "resolved",
+      "text": "Resolved in v2.20.1 for what was measured, in Chromium: with the flip measured against the nearest clipping container, the share of the bubble that is visible is 100% in every case of the Prompt 36 table (Modal close X, Icon Button in the Modal body and Icon Button in the Bottom Sheet body, four requested placements each, 1280 and 390 wide; the Prompt 36 values were 40%, 18% and 9% in three of them), and 100% for a trigger in the middle of a scrolling Modal body, 20px above its bottom edge, with the body scrolled 30px while the tooltip is open (it follows the trigger at 8px), and half scrolled out above or below the body. The arrow stays at 0.0 px from the trigger center in all of them. Still open: Popover and Menu in dialogs (accepted limitation C3, position-clipped-in-dialog); a container with no side that fits (the side with more room is kept, not measured); a bubble placed below a trigger at the bottom of a scrolling body covers up to 16.1 px of the Modal footer (measured, not changed); a trigger half scrolled out of the body keeps its tooltip, attached and fully visible, over the dialog (observed, not changed); Firefox, WebKit, Dark, touch and screen readers were not tested."
     }
   ],
   "unverified": [],
@@ -1366,6 +1366,7 @@
     "Four placements, the names of the Figma set: data-placement=\"top|bottom|left|right\". Default Top, centered on the trigger (data-align=\"center\"), 8px away (--space-2).",
     "Flip: if the preferred side does not fit in the viewport and the opposite side does, the tooltip goes to the opposite side and the class tooltip--top|bottom|left|right follows. If neither fits, it stays on the side with more room.",
     "Edges: if it still passes the screen edge, the bubble is shifted to stay 16px (--space-4) inside.",
+    "Clipping container: the flip and the shift measure against the viewport intersected with the nearest ancestor that clips the tooltip (computed overflow, overflow-x or overflow-y other than visible), with the same 16px margin (--space-4), so the bubble stays inside that container and attached to its trigger. The ancestors that count are the ones in the containing block chain of the tooltip. Menu, Popover and the Breadcrumb panel do not do this: they measure against the viewport only (and are not supported inside a Modal or a Bottom Sheet). If no side fits, the side with more room is kept.",
     "Arrow: when the bubble is shifted, the arrow keeps pointing at the center of the trigger, in all four placements. js/position.js sets the custom property --tooltip-arrow-offset (from the center of the bubble) and the CSS translates the arrow by it. The offset is clamped so the arrow stays clear of the rounded corners: half the bubble minus the bubble radius minus half the arrow. When the center of the trigger is out of that range, the arrow stops at the limit (data-arrow-clamped=\"true\")."
   ],
   "edgeDemo": {
@@ -1384,8 +1385,12 @@
     "Touch: a tap shows nothing. Pointer events count only for mouse and pen, and the focus a tap gives a button is ignored because it does not match :focus-visible. Nothing essential may depend on a tooltip, because it never appears on touch.",
     "Hidden state: the hidden attribute (display none), so the tooltip is out of the page flow and the accessibility tree while hidden. The trigger keeps aria-describedby. Whether a screen reader reads a hidden description once and not twice was not tested (gap tooltip-screen-reader).",
     "No animation is added, so prefers-reduced-motion has nothing to change.",
-    "Inside a Modal or a Bottom Sheet the tooltip is positioned the same way and can be clipped by the dialog (overflow hidden). Measured on the Modal close X, an Icon Button in the Modal body and an Icon Button in the Bottom Sheet body: see the gap tooltip-clipped-in-dialog. Pick the placement that stays inside the dialog."
-  ]
+    "Inside a Modal or a Bottom Sheet the tooltip flips and shifts to stay inside the dialog (the nearest container that clips it), so it is not cut and stays attached to its trigger. It can cover part of the dialog, for example the footer when it is placed below a trigger at the bottom of a scrolling body."
+  ],
+  "clipFrame": {
+    "note": "A frame with overflow hidden. The always visible tooltip prefers Top, but the trigger sits near the top edge of the frame, so it flips to Bottom to stay inside the frame (against the viewport alone it would fit above and be cut by the frame).",
+    "markup": "<button type=\"button\" class=\"btn btn--secondary\" id=\"tip-trigger-clip\" aria-describedby=\"tip-clip\">Near the top edge</button>\n<div class=\"tooltip tooltip--top\" role=\"tooltip\" id=\"tip-clip\" data-anchor=\"tip-trigger-clip\" data-placement=\"top\">\n  <span class=\"tooltip__bubble\">Stays inside the frame</span>\n  <span class=\"tooltip__arrow\" aria-hidden=\"true\"></span>\n</div>"
+  }
 },
 {
   "slug": "progress",
