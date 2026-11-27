@@ -1209,6 +1209,8 @@ Convenções que o código segue hoje, verificadas em `css/`, `js/` e nos arquiv
 - Trate o monogram (ícone solar isolado) como mark — funciona sozinho em favicon e avatar
 - No YAML, use kebab simples (`case-card-glass`). No CSS, use BEM com `--` (`case-card--glass`). São convenções diferentes para o mesmo componente — YAML não suporta `--` em chaves.
 - Use o logo claro (`logo-light-mode.svg`) sobre fundos claros (`--color-cloud`, `#FFFFFF`, e `--color-surface`, `#F7F7F9`) e o escuro (`logo-dark-mode.svg`) sobre fundos escuros (`--color-abyss`, `#1A1A2E`, e `--color-ink`, `#0D0D0F`). O header do site troca os dois com o tema (`.nav__logo-light` e `.nav__logo-dark`), e o logo em `<img>` leva `alt="Renan Moura"`
+- Reserve ao redor do logo uma área de proteção igual à altura do ícone solar, nos quatro lados: nenhum elemento gráfico, texto ou borda entra nela (Brandbook, cap. 06)
+- Respeite os tamanhos mínimos do logo (Brandbook, cap. 06). No digital: logo completo com 120 px de largura, ícone sozinho com 24 px (favicon) e ícone como avatar com 32 px recomendado. Em impressão: logo completo com 25 mm, ícone com 8 mm, e 20 mm recomendado em cartão de visita ou currículo
 - Dê `alt` a toda `<img>` (decorativa: `alt=""`) e nome acessível a todo `<button>` e `<a>` (texto visível ou `aria-label`). Link diz o destino ("Ver case Shell Box"), não "clique aqui"
 - Mantenha os headings em ordem hierárquica, sem pular de H1 para H4
 - Deixe o skip link (`a.skip-link`, em `css/reset.css`) como primeiro elemento do `<body>`, apontando para `#main`. Exceção conhecida: `design-system.html` ainda não tem skip link
@@ -1221,6 +1223,7 @@ Convenções que o código segue hoje, verificadas em `css/`, `js/` e nos arquiv
 - Não anime propriedades que causam reflow (width, height, padding, margin)
 - Não use cor como único indicador de estado (erro = cor + ícone + texto)
 - Não distorça, espelhe ou recrie o logo — sempre use o SVG oficial
+- Não comprima o logo completo em pouco espaço: abaixo do tamanho mínimo, use só o ícone (Brandbook, cap. 06)
 
 ---
 
