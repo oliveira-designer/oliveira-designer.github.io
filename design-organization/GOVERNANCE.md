@@ -1,6 +1,8 @@
 # GOVERNANCE.md
 # Hope Design System — Regras de Evolução
-# Versão 1.7 · novembro de 2026
+# Versão 1.8 · novembro de 2026
+
+**Changelog v1.8 (MINOR, 27/11/2026)**: o `DESIGN-IMPLEMENTATION.md` deixa de existir (decisão de Renan em 26/11/2026: o CSS em `css/` é a fonte, e as regras que só o arquivo tinha foram para o `DESIGN.md`). Saem a regra que mandava anexar o arquivo ao agente (seção 5, e o template de prompt passa a anexar `DESIGN.md`, `GOVERNANCE.md` e o CSS do componente) e o nível 3 da precedência da seção 7 (o `PATTERNS.md` passa a ser o 3). Uma regra é removida, por isso MINOR, pela cláusula da v1.7. Nenhuma outra regra mudou.
 
 **Changelog v1.7 (MINOR, 24/11/2026)**: a seção 3 ganha uma cláusula para mudanças no próprio GOVERNANCE.md: regra adicionada ou removida é MINOR; alinhamento do texto a uma regra já decidida, sem mudar a regra, é PATCH. Entra uma regra, por isso MINOR. A v1.6.1 continua classificada como PATCH. Decisão de Renan.
 
@@ -125,7 +127,7 @@ Cadência: contínua. Quando algo melhora, atualize.
 ### Mudanças no próprio GOVERNANCE.md
 
 A mesma escala vale para este documento:
-- **MINOR:** uma regra é adicionada ou removida (a v1.6 removeu o "teste do projeto real"; esta cláusula entrou na v1.7).
+- **MINOR:** uma regra é adicionada ou removida (a v1.6 removeu o "teste do projeto real"; esta cláusula entrou na v1.7; a v1.8 removeu uma regra de contexto do agente e um nível da precedência).
 - **PATCH:** o texto é alinhado a uma regra já decidida, sem mudar a regra (a v1.6.1 reescreveu três trechos que ainda diziam o contrário da v1.6).
 
 ### Changelog
@@ -292,8 +294,7 @@ Conforme o sistema cresce, as fontes podem divergir: o Figma diz uma coisa, o CS
 
 1. **Brandbook V2.2**: fundação da marca, raramente muda
 2. **DESIGN.md**: tokens, componentes e regras em prosa, validável por linter
-3. **DESIGN-IMPLEMENTATION.md**: implementação detalhada, deriva do DESIGN.md
-4. **PATTERNS.md**: anatomias de página, consome componentes do DESIGN.md
+3. **PATTERNS.md**: anatomias de página, consome componentes do DESIGN.md
 
 O item mais alto prevalece. O mais baixo é atualizado, ou o mais alto é atualizado de forma explícita, com changelog. Esta lista resolve prosa e regra, **nunca valor**: valor vai ao Figma.
 
@@ -428,7 +429,6 @@ Vale o preço? Aplique os três testes. Se passou, vale.
 /hope/
 ├── brandbook-v2.2.pdf          ← Fundação (raramente muda)
 ├── DESIGN.md                    ← Fonte da verdade técnica (Google Labs spec)
-├── DESIGN-IMPLEMENTATION.md     ← Implementação CSS detalhada
 ├── PATTERNS.md                  ← Anatomias de página
 ├── GOVERNANCE.md                ← Este arquivo
 ├── CHANGELOG.md                 ← (opcional — pode viver no DESIGN.md)
@@ -533,4 +533,4 @@ Componente sem decisão fica numa seção "Em revisão", com o nome sufixado `(l
 
 ---
 
-*Hope Design System · GOVERNANCE.md · v1.7 · novembro de 2026 · Renan Moura*
+*Hope Design System · GOVERNANCE.md · v1.8 · novembro de 2026 · Renan Moura*

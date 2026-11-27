@@ -5,6 +5,47 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.20.3 · 27 de novembro de 2026 · Itálico removido, regras do DESIGN-IMPLEMENTATION migradas e o arquivo removido (PATCH)
+
+**Versão escolhida: PATCH (2.20.2 para 2.20.3).** Cláusulas citadas da seção 3 do `GOVERNANCE.md` (v1.7), em "PATCH (v1.1.X)", cujo subtítulo é "refinamento": "Correção de bug" (os dois usos de itálico contrariavam a regra "Itálico nunca" do `DESIGN.md`), "Melhoria de documentação sem mudança técnica" (as regras migradas e os ponteiros) e "Adição de exemplo ou regra ao prosa do DESIGN.md" (as subseções novas). Nenhuma cláusula nomeia a remoção de um documento, então a classificação é uma leitura por analogia, como na v2.20.2; os precedentes são a v2.20.2 e a v2.17.2. Renan decidiu em 26/11/2026, a partir da auditoria do Prompt 41, e concordou com o PATCH. O `GOVERNANCE.md` vai de 1.7 para 1.8 (MINOR) pela sua própria cláusula "uma regra é adicionada ou removida": saem a regra de anexar o arquivo ao agente e um nível da precedência.
+
+**Alterado (commit 1 de 3, CSS)**
+- `css/components/case-card.css`: `.case-card__status` perde `font-style: italic` (nenhum elemento do HTML ou do JavaScript usa a classe). `css/components/persona.css`: `.persona__quote p` perde `font-style: italic` (seis citações em `case-studies/dotz.html`). As duas regras continuam com as outras declarações. `css/hope.css` regenerado. (O prompt apontava `css/site/persona.css`; a regra mora em `css/components/persona.css`.)
+
+**Migrado para o `DESIGN.md` e o `GOVERNANCE.md` (commit 2 de 3)**
+- `DESIGN.md`, Shapes: a subseção "Borda dentro da caixa" (ler `strokesIncludedInLayout` antes de decidir, descontar a borda do padding com `calc()` quando o traço não entra no tamanho, largura de borda por estado com custom property e `min-height`, nunca `box-shadow: inset` para borda, e as larguras soltas). A conferência por componente fica nos comentários do CSS de cada um. A mesma regra ganha um ponteiro na seção 12.3 do `GOVERNANCE.md`.
+- `DESIGN.md`, Overview: uma linha de tom de voz. Do's and Don'ts: fundos do logo, `alt` e nome acessível, ordem dos headings e skip link como primeiro elemento do `<body>`. Components: uso de ícones, ao lado da linha da Phosphor. Subseção nova "Nomenclatura no código".
+- `css/tokens.css`: o comentário do `--color-bg-scrim-strong` diz para não escrever o `rgba` à mão. O comentário da escala de z-index já trazia a razão dos degraus de 100 e não precisou de mudança.
+- Ponteiros trocados: `DESIGN.md` (6), `GOVERNANCE.md` (contexto do agente, template de prompt, papéis, lista de fontes canônicas, checklist do componente novo), `PATTERNS.md` (3) e os comentários de `alert.css`, `badge.css`, `field.css` e `tokens.css`. `css/hope.css` e as duas saídas geradas do comentário de token (`docs/tokens.html` e `docs/data/tokens.json`) regenerados.
+
+**Removido (commit 3 de 3)**
+- `design-organization/DESIGN-IMPLEMENTATION.md`. Nada o lia (nenhum script, verificação, CI ou hook). No `GOVERNANCE.md`: o nível 3 da precedência, a linha da árvore de arquivos, e a versão 1.8. Nenhuma regra dizia para atualizar o arquivo a cada release. O `vercel.json` não muda: o cabeçalho `noindex` continua cobrindo os demais arquivos de `design-organization/`.
+- Descartado de propósito: o CSS em bloco das seções 4 a 19 e 25, as classes que nunca foram implementadas (`.btn--tertiary`, `.badge--error`, `.card`, `.container--sm` e outras), a tabela de contraste (seção 3, derivada dos valores dos tokens) e as tabelas de valores dos Lotes 3 e 4 (seção 23, o Figma é canônico para valores).
+- **Para recuperar o arquivo inteiro:** `git show a69105b:design-organization/DESIGN-IMPLEMENTATION.md`. `a69105b` é o último commit em que ele existe.
+
+**Não escrito (não verificável ou contrariado pelo código)**
+- Tamanhos mínimos do logo (120 px de largura e 24 px o ícone): o header usa 28 px de altura, cerca de 101 px de largura, abaixo dos 120 px. Área de proteção: não aparece no código. As duas regras precisam ser conferidas com o Brandbook, que tem precedência. `aria-label` no SVG inline do logo: nenhuma página usa o logo em SVG inline, todas usam `<img alt>`.
+- "Lucide recomendada" (a biblioteca é a Phosphor), setas como assinatura da marca (sem suporte no código nem no `DESIGN.md`), `data-state` como convenção de estado (o código usa `.is-*` e `data-state` não existe), sufixo `-dark` nos tokens do CSS (o CSS usa `[data-theme="dark"]`), prefixo `is` ou `has` em booleanos do JavaScript (o código usa `opened`), "componentes carregam função, não aparência" (existem `.case-card--glass`, `.btn--ghost` e `.badge--anchor`), Icon Button entre os componentes com `strokesIncludedInLayout: false` (o CSS fixa 44 por 44 em `border-box`), PascalCase para componentes React (não há React) e os prefixos `get` e `is` em funções.
+- O `DESIGN.md` dizia "sem token CSS ainda" para Stroke/medium e Stroke/accent, mas `--border-width-medium` e `--border-width-accent` existem: corrigido na tabela da escala de stroke.
+
+**Medido**
+- Itálico, antes de editar: `font-style: italic` em três lugares fora do arquivo removido: `case-card.css:118`, `persona.css:224` e `design-system.html:219` (`.ds-swatch__note`). Nenhum `<em>`, `<i>`, `<cite>`, `<dfn>`, `<var>` ou `<address>` em HTML, JavaScript ou dados. O utilitário `.italic` do `css/output.css` (Tailwind, gerado) existe e nenhum HTML o usa.
+- Estilo computado de todos os elementos, com `::before` e `::after`, contra a `a524e7e`, nas seis páginas do site, em 1280, 768 e 390, Light e Dark (36 execuções, Chromium), com controle base contra base: a única diferença é `font-style` em 7 elementos por execução de `dotz.html` (os parágrafos das citações e um `strong`), 42 no total. Nenhuma propriedade resolvida pelo layout mudou e nenhuma altura de página mudou. Em 3 execuções o controle também variou (0,06 px de largura nos mesmos elementos, ruído de renderização do texto): 19 diferenças ali coincidem com o controle e nenhuma toca `font-style`.
+- Commit 2: os cinco arquivos de CSS alterados (`alert.css`, `badge.css`, `field.css`, `tokens.css` e `hope.css`) são idênticos aos do commit 1 depois de remover os comentários.
+- `box-shadow: inset` em cores forçadas, no Chromium: com `forced-colors: active` o `box-shadow` inset calcula `none` e a `border` fica.
+- Contagens para a convenção de estado: `.is-visible` 7, `.is-active` 4, `.is-open` 3 e `.is-zoomable` 2 nos seletores do CSS (sem comentários, sem arquivos gerados); `data-state` em nenhum arquivo.
+- Acessibilidade nas 41 páginas (6 do site e 35 dos docs): skip link como primeiro elemento do `<body>` em 40, e `design-system.html` não tem; nenhuma `<img>` sem `alt`, nenhum botão sem nome, nenhum salto de heading; um link `href="#"` sem nome em `design-system.html`. Ícones (256 SVGs nas 6 páginas do site e nas 33 dos componentes): 253 na grade `0 0 256 256`, três em `0 0 24 24` (`sb-home-redesign.html`), 229 com `aria-hidden` e 27 sem `aria-hidden` e sem nome.
+
+**Backlog (não alterado)**
+- `design-system.html`: `font-style: italic` em `.ds-swatch__note` (linha 219, estilo da própria página, fora dos dois usos decididos), sem skip link, com um link sem nome.
+- `.skill-card--metric`: o CSS usa `--color-bg-alt` e Renan decidiu que o CSS está certo. O comentário do YAML em `DESIGN.md` (no bloco `skill-card-metric` do YAML) ainda diz "Sprint 2 spec: background-color: var(--color-ink)" e "dark mode inverts to light background", e o YAML logo abaixo diz `background-alt`. Não foi alterado.
+- Os 27 SVGs de ícone sem `aria-hidden` e os três em outra grade, nas páginas de case.
+
+**Escolhas**
+- O prompt pedia três nomes de classe de estado e o código tem quatro: `.is-zoomable` também entra na lista.
+- `.persona__quote p` e `.case-card__status` foram os dois usos de itálico decididos. `design-system.html:219` e o utilitário `.italic` do Tailwind ficaram como estavam, por não estarem na lista.
+- Verificar o pedido de lint do `DESIGN.md` não foi possível: o projeto não tem comando para ele e o pacote não está instalado (`node_modules/@google` não existe), e nada foi instalado.
+
 ## v2.20.2 · 26 de novembro de 2026 · Verificação dos literais de peso, line height e letter-spacing, e nota sobre o Firefox (PATCH)
 
 **Versão escolhida: PATCH (2.20.1 para 2.20.2).** Cláusulas citadas da seção 3 do `GOVERNANCE.md` (v1.7), em "PATCH (v1.1.X)", cujo subtítulo é "refinamento": "Melhoria de documentação sem mudança técnica" (a nota do Firefox em `scripts/README.md` e a subseção do `DESIGN.md`) e "Adição de exemplo ou regra ao prosa do DESIGN.md" (a regra da verificação, escrita no `DESIGN.md`). Nenhuma cláusula nomeia uma verificação nova em `scripts/`, então não há correspondência literal para ela: ela não muda componente, token, valor nem regra do design system, só passa a falhar o que já era regra (D-52). O precedente é a v2.17.2, também PATCH para mudança só em `scripts/` e nos docs, e antes dela a v2.8.1. Não é MINOR porque nenhum item da lista do MINOR (componente novo, família de tokens, cor, expansão de escala) se aplica. Se o Renan preferir que ferramenta de verificação não ganhe versão, esta entrada vira nota sem número e as strings de versão voltam para 2.20.1.
