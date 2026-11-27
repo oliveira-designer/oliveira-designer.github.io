@@ -475,8 +475,8 @@ components:
     backgroundColor: "{colors.bg-scrim-strong}"
 
   # --- skill-card--metric ---
-  # Dark-bg metric card. Sprint 2 spec: background-color: var(--color-ink);
-  # dark mode inverts to light background.
+  # Card de métrica. O fundo é --color-bg-alt (css/components/skill-card.css): --color-surface
+  # (#F7F7F9) no Light e --color-night-800 (#242438) no Dark. Não é o ink (#0D0D0F).
   skill-card-metric:
     backgroundColor: "{colors.background-alt}"
     rounded: "{rounded.md}"
@@ -937,7 +937,7 @@ Valores do Figma (Stroke/*) e o token CSS equivalente:
 No Figma a borda pode ser desenhada dentro da caixa (stroke inside) e entrar, ou não, na conta do tamanho do componente. No CSS a borda soma ao box. Por isso, antes de codificar a borda de um componente, é preciso saber como o Figma a trata.
 
 - **Leia a propriedade `strokesIncludedInLayout` do nó no Figma antes de decidir.** Ela diz se o traço entra na conta do tamanho. Não deduza pela aritmética das alturas nem pela aparência.
-- **`false` (o traço não entra no tamanho):** a borda do CSS soma ao box, então ela é descontada do padding, com a largura dentro de `calc()`: `padding: calc(var(--space-3) - var(--border-width-normal))`. Lido assim no Figma: Button e Badge.
+- **`false` (o traço não entra no tamanho):** a borda do CSS soma ao box, então ela é descontada do padding, com a largura dentro de `calc()`: `padding: calc(var(--space-3) - var(--border-width-normal))`. Lido no Figma Core em 23/11/2026: Button, Icon Button e Badge. O CSS do Icon Button é outro fato: ele fixa 44 por 44 em `border-box` (`css/components/icon-button.css`), então a borda de 1px do Primary Disabled não precisa de desconto no padding.
 - **`true` (o traço entra no tamanho):** a borda soma ao box e o padding não é descontado. Lido assim: Alert, Toast, Tab, Tag, Accordion item, Modal, Popover, Bottom Sheet, o painel do Menu, Input, Textarea, Select, Checkbox, Radio e Switch.
 - **Sem borda na raiz:** Avatar e o painel do Lightbox.
 - **Onde está a conferência de cada componente:** no comentário de cabeçalho do seu CSS em `css/components/` (por exemplo `alert.css`, `modal.css`, `field.css`, `button.css`), com as medidas que fecham a conta.
