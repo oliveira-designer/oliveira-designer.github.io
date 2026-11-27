@@ -5,6 +5,31 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.20.5 · 27 de novembro de 2026 · Ícones decorativos do design-system.html, script design:lint e inventário de font-size (PATCH)
+
+**Versão escolhida: PATCH (2.20.4 para 2.20.5), uma leitura por analogia.** Cláusulas da seção 3 do `GOVERNANCE.md` (v1.8), em "PATCH (v1.1.X)", cujo subtítulo é "refinamento": "Correção de bug (contraste WCAG, token órfão, typo)" para o `aria-hidden` nos quatro ícones decorativos (um defeito de acessibilidade, que a lista de exemplos da cláusula não nomeia), e "Melhoria de documentação sem mudança técnica" para o script `design:lint` e a linha no `scripts/README.md`. Nenhuma cláusula nomeia um script de verificação novo; o precedente é a v2.17.2 (só `scripts/`, PATCH). Nenhum token, valor, componente ou regra do design system mudou. O `GOVERNANCE.md` não foi tocado.
+
+**Alterado**
+- `design-system.html`: `aria-hidden="true"` nos quatro ícones dos cards `result-card` e `skill-card--metric` (linhas 1452, 1459, 1525 e 1532 antes da mudança). Todos decorativos: cada um fica num chip ao lado de título ou valor e texto visíveis que carregam o sentido. Nada de estilo mudou.
+- `package.json`: o script `design:lint`, que roda `@google/design.md` 0.4.0 em `design-organization/DESIGN.md` por `npm exec`, sem entrar nas dependências. Usa o alias `designmd`: no Windows o `npx` com o bin `design.md` (com ponto) termina sem imprimir nada. `scripts/README.md` ganhou a linha do script.
+
+**Medido**
+- `design-system.html`, estilo computado de todos os elementos, com `::before` e `::after`, servido por HTTP, em 1366 e 390, Light e Dark, com controle base contra base (Chromium): 4 execuções, 2.896 elementos, 2.004.032 propriedades comparadas, 0 diferenças, 0 no controle, altura da página igual.
+- axe-core 4.14.1 em `design-system.html`, antes e depois: Light 5 regras e 11 nós, Dark 4 regras e 5 nós, nas duas larguras, sem mudança. O axe não marca os ícones sem `aria-hidden`; o `aria-hidden` evita que leitores de tela os anunciem. As regras que continuam abertas ficam como estavam: `aria-required-parent` (crítica) e `aria-allowed-role` no `.case-card[role="listitem"]`, `color-contrast` em notas do Solar e itens do `logo-strip` (só no Light), `landmark-banner-is-top-level` e `region`.
+- `npm run design:lint` no `DESIGN.md`: 0 erros, 78 avisos, 1 informação. 70 são `orphaned-tokens` (tokens de cor que nenhum componente referencia, entre eles os sufixados `-dark`, que o `DESIGN.md` já documenta como esperados), 6 são `contrast-ratio` (`button-secondary`, `button-ghost`, `button-disabled`, `card-description`, `card-meta` e `input-placeholder`), 1 é `typography.code.note` (propriedade `note` que o formato não reconhece) e 1 é o mapa `motion` (parece mapa de tokens, mas não é chave do esquema e será ignorado por `export`). A informação é o resumo: 144 cores, 12 escalas de tipografia, 6 níveis de raio, 9 tokens de espaçamento e 37 componentes. Nenhum achado foi corrigido.
+- Inventário de `font-size` em `css/` (fontes, sem o `hope.css` gerado): 135 usos em 69 arquivos, 125 com `--fs-*`, 3 com `inherit` ou `medium`, 1 composto e 6 literais. Três dos literais (`1em`, `80%`, `75%`) estão no preflight vendorizado do Tailwind. Nenhum literal tem token exato: nada foi trocado.
+
+**Não alterado (decisões para Renan)**
+- `css/components/brand-list.css:16` (`.brand-list`, 14px, usado em `case-studies/dotz.html`) e `:31` (o `→` do `li::before`, 12px): sem token exato (o mais próximo é `--fs-body-sm`, 13px) e sem estilo de texto do Figma nesses tamanhos.
+- `css/components/header-status-badge.css:22` (`.header__status-badge`, 10px, usado em `index.html`, `about.html` e `design-system.html`): o token mais próximo é `--fs-body-xs` ou `--fs-label`, 11px, um pixel acima. Trocar mudaria o desenho.
+- `css/auth.css:235` (`.auth-gate__input`, `max(16px, var(--fs-body))`): hoje calcula 16px, o mesmo valor de `--fs-body`, mas o comentário diz que o piso de 16px evita o zoom automático do iOS Safari no foco. Trocar por `var(--fs-body)` tiraria o piso se o token mudasse. A página do portão (`js/auth.js`) não é carregada por nenhuma página publicada.
+- A verificação de literais do `docs:check` (D-52) não cobre `font-size`, e estender faria os quatro itens acima falharem sem uma decisão.
+- `design-system.html`: o link `a.case-card__visual` (linha 1328) não tem texto, mas já está com `aria-hidden="true"` e `tabindex="-1"`, e o axe não o marca. Não dei nome a ele; ver a pergunta no relatório.
+
+**Escolhas**
+- Os "27 ícones e 1 link" de contagens anteriores eram de todas as páginas: em `design-system.html` são 4 ícones e 1 link.
+- O `design:lint` usa a versão fixa 0.4.0, porque o formato está em `alpha` e muda.
+
 ## v2.20.4 · 27 de novembro de 2026 · Regras de logo do Brandbook, logo do header em 130 por 36 e três correções (PATCH)
 
 **Versão escolhida: PATCH (2.20.3 para 2.20.4).** Cláusulas citadas da seção 3 do `GOVERNANCE.md` (v1.8), em "PATCH (v1.1.X)", cujo subtítulo é "refinamento": "Melhoria de documentação sem mudança técnica" (as regras de logo, o comentário do `skill-card-metric` e a nota do Icon Button), "Ajuste de valor" (o logo do header de 28 para 36 px de altura, alinhado ao Figma) e "Adição de exemplo ou regra ao prosa do DESIGN.md" (as regras do Brandbook). Nenhuma cláusula descreve exatamente alinhar um valor do código ao Figma depois de uma medição, então a leitura é por analogia com "Ajuste de valor", como nas versões 2.20.2 e 2.20.3. Renan decidiu os itens.
