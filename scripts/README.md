@@ -9,6 +9,7 @@ Build and check scripts of the Hope design system. Run them from the repository 
 | `npm run docs:components` | Generates the component pages in `docs/components/` from `docs/data/*.json`. |
 | `npm run docs:review` | Generates `docs/components/review.html` (the variant inventory). |
 | `npm run docs:check` | Checks the docs against the real CSS, including the all caps rule (D-46) and the typography literals (D-52). Fails on errors. |
+| `npm run design:lint` | Lints `design-organization/DESIGN.md` with `@google/design.md` 0.4.0 (alpha format), run through `npm exec` so nothing is added to the dependencies (needs network the first time). Exit code 1 only when it finds errors; warnings do not fail it. It uses the `designmd` alias: on Windows, `npx` with the dotted `design.md` bin prints nothing. |
 | `npm run snapshots:open` | Open-state snapshots of the Modal, Lightbox and Popover demos (below). Not part of `docs:check`. |
 
 ## Open-state snapshots (`snapshot-open-states.mjs`)

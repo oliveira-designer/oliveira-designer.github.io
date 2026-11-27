@@ -4,6 +4,7 @@
     "build:css": "tailwindcss -i ./css/tailwind.css -o ./css/output.css",
     "docs:tokens": "node scripts/build-tokens-doc.mjs",
     "docs:check": "node scripts/check-docs.mjs",
+    "design:lint": "npm exec --yes --package=@google/design.md@0.4.0 -- designmd lint design-organization/DESIGN.md",
     "docs:components": "node scripts/build-components-doc.mjs",
     "docs:review": "node scripts/build-review-page.mjs",
     "css:build": "node scripts/build-css.mjs",
