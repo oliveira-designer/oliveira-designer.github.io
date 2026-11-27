@@ -84,9 +84,11 @@ html {
   transition: opacity var(--duration-normal) var(--ease-out);
 }
 .nav__logo:hover { opacity: 0.7; }
+/* Figma Portfolio Components, Header (6:1016), node "logo-light-mode 1": 130 by 36. The Brandbook (chapter 06) sets 120 px as the
+   minimum width of the full logo. A literal, not a token: it is the size of one asset, not a step of the spacing scale. */
 .nav__logo img {
-  height: 28px !important;
-  width: auto !important;
+  height: 36px !important;
+  width: 130px !important;
 }
 
 /* Logo visibility — light/dark swap */
