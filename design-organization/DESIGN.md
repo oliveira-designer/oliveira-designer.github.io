@@ -499,14 +499,6 @@ components:
   cs-figure-full-bleed:
     backgroundColor: "transparent"
 
-  # --- header__status-badge + status-pulse ---
-  # Frosted pill below nav pill at right. Animated amber dot (2.4s pulse).
-  # Dark mode: Abismo fill, reduced opacity text.
-  header-status-badge:
-    backgroundColor: "rgba(255,255,255,0.70)"
-    rounded: "{rounded.pill}"
-    padding: "{spacing.xs} {spacing.sm}"
-
   # --- Atmospheric hero (uso restrito a quebras conceituais) ---
   hero-atmospheric:
     backgroundColor: "{colors.abyss}"

@@ -998,8 +998,6 @@
             <code>.container</code> uses, with an enforced 80px minimum gutter on each side.
             The preview container uses
             <code>transform: translate(0)</code> to pin the fixed-position header within the frame.
-            The <code>.header__status-badge</code> micro-component hangs below the bar via
-            <code>position: absolute; top: calc(100% + var(--space-2))</code>.
           </p>
 
           <div class="ds-component">
@@ -1026,11 +1024,6 @@
                     </button>
                   </div>
                 </nav>
-                <!-- Status badge micro-component -->
-                <div class="header__status-badge" role="status" aria-label="Portfolio status">
-                  <span class="status-pulse" aria-hidden="true"></span>
-                  Portfolio under construction
-                </div>
               </header>
             </div>
 
@@ -1073,41 +1066,7 @@
     &lt;a href="resume.pdf" class="nav__mobile-link"&gt;Resume&lt;/a&gt;
   &lt;/div&gt;
 
-  &lt;!-- Status badge — position:absolute anchored below pill right edge --&gt;
-  &lt;div class="header__status-badge" role="status" aria-label="Portfolio status"&gt;
-    &lt;span class="status-pulse" aria-hidden="true"&gt;&lt;/span&gt;
-    Portfolio under construction
-  &lt;/div&gt;
-
-&lt;/header&gt;
-
-&lt;!-- CSS spec (in css/components/header-status-badge.css) --&gt;
-&lt;!--
-.header__status-badge {
-  position: absolute;
-  top: calc(100% + var(--space-2));
-  right: var(--space-6);
-  display: flex; align-items: center; gap: var(--space-2);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
-  font-family: var(--font-body); font-size: 10px;
-  font-weight: 600;
-  background: rgba(255,255,255,0.70); border: 1px solid rgba(0,0,0,0.05);
-  color: var(--color-text-2); backdrop-filter: blur(8px);
-}
-[data-theme="dark"] .header__status-badge {
-  background: rgba(26,26,46,0.60); border-color: rgba(255,255,255,0.08);
-  color: var(--color-text-3);
-}
-.status-pulse {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--color-amber);
-  animation: status-pulse 2.4s ease-in-out infinite;
-}
-@keyframes status-pulse {
-  0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
-}
---&gt;</pre>
+&lt;/header&gt;</pre>
             </details>
           </div>
         </section>
@@ -1616,33 +1575,6 @@
   &lt;img src="..." alt="Descrição da imagem"&gt;
   &lt;figcaption&gt;Legenda opcional&lt;/figcaption&gt;
 &lt;/figure&gt;</pre>
-          </details>
-        </section>
-
-        <!-- ─── STATUS BADGE ──────────────────────────────────── -->
-        <section class="ds-section" id="header-status-badge">
-          <div class="ds-section__title">header__status-badge + status-pulse</div>
-          <p class="ds-section__desc">
-            Pílula frosted posicionada absolutamente abaixo do nav pill, à direita. Dot âmbar animado (<code>.status-pulse</code>, 6px, 2.4s ease-in-out) + label curto. Dark mode: fundo Abismo, texto opacidade reduzida.
-          </p>
-
-          <p class="ds-sub text-body-xs-semibold">Live preview</p>
-          <div class="ds-preview ds-preview--padded">
-            <div style="position:relative;height:48px;display:flex;align-items:center;justify-content:flex-end;">
-              <div class="header__status-badge" style="position:relative;top:auto;right:auto;">
-                <span class="status-pulse"></span>
-                <span>Disponível para projetos</span>
-              </div>
-            </div>
-          </div>
-
-          <details class="ds-code">
-            <summary>Estrutura HTML</summary>
-<pre class="ds-code__block">&lt;!-- Dentro de .site-header (position:relative) --&gt;
-&lt;div class="header__status-badge"&gt;
-  &lt;span class="status-pulse" aria-hidden="true"&gt;&lt;/span&gt;
-  &lt;span&gt;Disponível para projetos&lt;/span&gt;
-&lt;/div&gt;</pre>
           </details>
         </section>
 
