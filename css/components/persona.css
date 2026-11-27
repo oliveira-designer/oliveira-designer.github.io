@@ -221,6 +221,5 @@
   font-size: var(--fs-body-sm);
   line-height: var(--lh-170);
   color: var(--color-text-2);
-  font-style: italic;
   max-width: none;
 }

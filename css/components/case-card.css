@@ -115,7 +115,6 @@
 }
 .case-card__status {
   font-family: var(--font-body);
-  font-style: italic;
   text-transform: none;
   letter-spacing: var(--ls-normal);
 }

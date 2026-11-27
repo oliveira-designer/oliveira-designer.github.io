@@ -1982,7 +1982,6 @@ p { max-width: 70ch; }
 }
 .case-card__status {
   font-family: var(--font-body);
-  font-style: italic;
   text-transform: none;
   letter-spacing: var(--ls-normal);
 }
@@ -4441,7 +4440,6 @@ a.menu__item:hover:not(.menu__item--danger, [aria-disabled="true"]) {
   font-size: var(--fs-body-sm);
   line-height: var(--lh-170);
   color: var(--color-text-2);
-  font-style: italic;
   max-width: none;
 }
 
