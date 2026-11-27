@@ -1,5 +1,5 @@
 ---
-version: v2.20.5
+version: v2.20.6
 name: Hope
 description: >
   Design system pessoal de Renan Moura. Tradução técnica do Brandbook V2.2
@@ -784,7 +784,9 @@ O `npm run docs:check` (verificação 15) falha quando um peso, uma altura de li
 - **Literal que não é igual a nenhum token:** passa só se `docs/data/accepted-divergences.json` tiver uma entrada `scope: "rule"` com o arquivo, o seletor, a `property` e o valor, comparado como número (`.08em` e `0.08em` são o mesmo valor). Em estilo inline vale o arquivo e a tag, e a regra leva um `count`: uma ocorrência a mais ou a menos falha. As entradas `pending` passam, mas saem numa lista à parte na saída do comando, para não sumirem.
 - **Não é lido:** `css/hope.css` e `css/output.css` (gerados) e `css/preflight-nomono.css`, a cópia local do preflight do Tailwind 4.3.0, que fica idêntica à original e é ressincronizada a cada upgrade. Os arquivos que ficam de fora saem impressos na saída (lista `TYPO_VENDORED` em `scripts/check-docs.mjs`).
 
-Limites. A verificação não vê valores definidos por JavaScript, por `content` ou por uma custom property definida com literal e usada em outro lugar (um `var(--x)` que não é token tipográfico passa sem ser seguido). Não olha exemplos de código escritos como texto nas páginas. Não olha `font-size`. E não decide se um literal aceito é o certo diante do Figma: isso é decisão humana, registrada em `accepted-divergences.json`.
+Limites. A verificação não vê valores definidos por JavaScript, por `content` ou por uma custom property definida com literal e usada em outro lugar (um `var(--x)` que não é token tipográfico passa sem ser seguido). Não olha exemplos de código escritos como texto nas páginas. E não decide se um literal aceito é o certo diante do Figma: isso é decisão humana, registrada em `accepted-divergences.json`.
+
+**Verificação do `font-size` (v2.20.6).** A verificação 16 do `docs:check` lê todo `font-size` das mesmas fontes (e o tamanho dentro do shorthand `font`). Passa: `var(--fs-*)`, as palavras `inherit`, `initial`, `unset`, `revert` e `revert-layer`, e um `var()` de outra custom property (não seguido). Falha: um literal em `px` ou `rem` igual ao valor de um `--fs-*` (a mensagem diz o token; vale também cada ponta de um `clamp()`), um literal ou expressão (`max(16px, var(--fs-body))`) que não é igual a nenhum token e não tem entrada `scope: "rule"` com `property: "font-size"` e o valor exato em `docs/data/accepted-divergences.json`, qualquer outra palavra-chave (`smaller`, `medium`), e um `--fs-*` sozinho como valor de outra propriedade. Hoje há um literal aceito: o `max(16px, var(--fs-body))` do `.auth-gate__input` em `css/auth.css` (D-70). Não vê texto inserido por JavaScript, `content` no CSS nem um `--fs-*` dentro de `calc()` (o `min-height` de `css/components/field.css`).
 
 ### Regras
 
@@ -1223,4 +1225,4 @@ Convenções que o código segue hoje, verificadas em `css/`, `js/` e nos arquiv
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 
-*Hope Design System · v2.20.5 · novembro de 2026 · Renan Moura*
+*Hope Design System · v2.20.6 · novembro de 2026 · Renan Moura*
