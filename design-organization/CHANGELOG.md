@@ -5,6 +5,32 @@ Formato definido em `GOVERNANCE.md` (seção 3). Este arquivo é o changelog sep
 
 ---
 
+## v2.20.4 · 27 de novembro de 2026 · Regras de logo do Brandbook, logo do header em 130 por 36 e três correções (PATCH)
+
+**Versão escolhida: PATCH (2.20.3 para 2.20.4).** Cláusulas citadas da seção 3 do `GOVERNANCE.md` (v1.8), em "PATCH (v1.1.X)", cujo subtítulo é "refinamento": "Melhoria de documentação sem mudança técnica" (as regras de logo, o comentário do `skill-card-metric` e a nota do Icon Button), "Ajuste de valor" (o logo do header de 28 para 36 px de altura, alinhado ao Figma) e "Adição de exemplo ou regra ao prosa do DESIGN.md" (as regras do Brandbook). Nenhuma cláusula descreve exatamente alinhar um valor do código ao Figma depois de uma medição, então a leitura é por analogia com "Ajuste de valor", como nas versões 2.20.2 e 2.20.3. Renan decidiu os itens.
+
+**Alterado**
+- `DESIGN.md`, Do's and Don'ts (commit 1 de 4, `4363cec`): as regras do Brandbook, cap. 06 ("Espaçamento e tamanhos", lido em 27/11/2026): área de proteção igual à altura do ícone solar nos quatro lados, tamanhos mínimos no digital (logo completo 120 px de largura, ícone 24 px como favicon, ícone como avatar 32 px recomendado) e em impressão (25 mm, 8 mm e 20 mm recomendado em cartão de visita ou currículo), e abaixo do mínimo usar só o ícone. O texto não diz que o site cumpre as regras.
+- `css/site/header.css` (commit 2 de 4, `82b82f1`): `.nav__logo img` vai de 28 px de altura (cerca de 101 px de largura, abaixo dos 120 px do Brandbook) para 130 por 36, o tamanho do nó `logo-light-mode 1` do componente `Header` no Figma (Portfolio Components, `6:1016`). Literal com comentário apontando o nó, sem token. O Figma guarda valores (D-01) e o Brandbook guarda identidade, então o código andou até o Figma. `css/hope.css` regenerado.
+- Commit 3 de 4 (`5ca3a1e`): o comentário do `skill-card-metric` no `DESIGN.md` agora diz o que o código faz (`--color-bg-alt`, que é `--color-surface` `#F7F7F9` no Light e `--color-night-800` `#242438` no Dark); `font-style: italic` removido de `.ds-swatch__note` em `design-system.html`; Icon Button volta para a lista do Figma na subseção "Borda dentro da caixa" (`strokesIncludedInLayout` falso em Button, Icon Button e Badge, lido no Figma Core em 23/11/2026), e o fato do CSS (44 por 44 em `border-box`) fica numa frase à parte. Nenhum CSS foi alterado por causa do `skill-card`.
+
+**Onde o logo aparece (antes de mudar)**
+- Só em `.nav__logo` (`logo-light-mode.svg` e `logo-dark-mode.svg`, um visível por tema): 101,1 por 28 px em 1280, 768 e 390, nas 41 páginas medidas (6 do site e 35 dos docs). Nenhum outro uso de logo completo, nem no rodapé. O favicon usa `logo-icon.svg`, com o tamanho decidido pelo navegador. Nada abaixo de 120 px de largura sobrou fora do que foi alterado.
+
+**Medido**
+- Header em 1280, 768 e 390, antes e depois, nas seis páginas do site, Light e Dark (36 execuções): altura 64 px nas 36, sem quebra de linha no nav, sem overflow horizontal, altura da página igual. A menor folga entre o logo e o item seguinte depois da mudança é 136,6 px (em 768); em 390 o logo de 130 px convive com o hambúrguer com 192 px de folga.
+- Estilo computado de todos os elementos, com `::before` e `::after`, contra o commit 1, nas seis páginas, 3 larguras, Light e Dark, com controle base contra base (Chromium): 0 falhas e 0 diferenças no controle. As diferenças esperadas são o link do logo e as duas imagens (3 elementos em cada uma das 36 execuções), mais o `margin-inline-start` automático de `.nav__controls`, que absorve os 28,9 px (130 menos 101,1). Todo o resto são diferenças de no máximo 0,11 px na largura de elementos de texto, sem mudança de altura de página.
+- Recortes do header antes e depois, abertos em `index.html` e em `case-studies/dotz.html`, em 1280 e em 390: o logo maior, o header, os links e o hambúrguer nos mesmos lugares.
+- `design-system.html`, estilo computado só nessa página (1280, 768, 390, Light e Dark, com controle): a única diferença é `font-style` nos dois `span.ds-swatch__note` de cada execução (12 no total); nenhuma propriedade resolvida pelo layout, nenhuma altura de página. Em 1280 Light o controle variou em 8 elementos (largura em sub-pixel) e nenhum tem a ver com `font-style`.
+- `--color-bg-alt` no `.skill-card--metric` de `dotz.html`: `rgb(247, 247, 249)` no Light e `rgb(36, 36, 56)` no Dark.
+
+**Não verificado**
+- As regras do Brandbook são regras de identidade que só o Brandbook confirma; elas foram escritas como foram lidas. O código só foi verificado nesta versão para o logo do header (130 por 36, acima dos 120 px). O ícone de 24 px do favicon e o avatar de 32 px recomendado não foram medidos.
+
+**Escolhas**
+- O prompt falava em 28 px de altura e cerca de 101 px de largura, e foi o que a medição deu. Usei 130 por 36 literal, com largura explícita de 130 px em vez de `auto`, como no nó do Figma (a razão do arquivo daria 129,98 px).
+- O `GOVERNANCE.md` não mudou (continua na 1.8): nenhuma regra dele foi adicionada ou removida.
+
 ## v2.20.3 · 27 de novembro de 2026 · Itálico removido, regras do DESIGN-IMPLEMENTATION migradas e o arquivo removido (PATCH)
 
 **Versão escolhida: PATCH (2.20.2 para 2.20.3).** Cláusulas citadas da seção 3 do `GOVERNANCE.md` (v1.7), em "PATCH (v1.1.X)", cujo subtítulo é "refinamento": "Correção de bug" (os dois usos de itálico contrariavam a regra "Itálico nunca" do `DESIGN.md`), "Melhoria de documentação sem mudança técnica" (as regras migradas e os ponteiros) e "Adição de exemplo ou regra ao prosa do DESIGN.md" (as subseções novas). Nenhuma cláusula nomeia a remoção de um documento, então a classificação é uma leitura por analogia, como na v2.20.2; os precedentes são a v2.20.2 e a v2.17.2. Renan decidiu em 26/11/2026, a partir da auditoria do Prompt 41, e concordou com o PATCH. O `GOVERNANCE.md` vai de 1.7 para 1.8 (MINOR) pela sua própria cláusula "uma regra é adicionada ou removida": saem a regra de anexar o arquivo ao agente e um nível da precedência.
