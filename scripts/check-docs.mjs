@@ -27,6 +27,9 @@
 //      style blocks and the style attributes of the pages is a literal equal to a typography token (use the token), a token of another property,
 //      or a literal that equals no token and has no scope "rule" entry (with property) in docs/data/accepted-divergences.json (D-52). Pending entries
 //      pass and are listed. css/preflight-nomono.css (vendored Tailwind preflight) is not scanned, and is printed as such.
+//  16. a font-size in the same files (and the size inside a font shorthand) is a literal equal to a --fs-* token value (use the token), is
+//      not a --fs-* token, a CSS-wide keyword or a var() of another custom property and has no scope "rule" entry with property "font-size" in
+//      docs/data/accepted-divergences.json, is any other keyword, or a --fs-* token is used in a property other than font-size (D-70).
 //  12. text-transform: uppercase appears outside the single Label definition in css/reset.css (D-46), or a string styled with
 //      the Label style (the selectors of that rule) has more than three words in the static HTML of the site and the docs.
 //   6. docs/data/components-map.json names a CSS rule or class that is not in
@@ -564,7 +567,7 @@ const without = blocks.filter((b) => !demoBlocks.has(b));
       const ci = b.indexOf(':');
       if (ci < 0) return;
       const prop = b.slice(0, ci).trim().toLowerCase();
-      if (!WATCHED.has(prop) || stack.some((s) => /^@font-face\b/i.test(s))) return;
+      if (stack.some((s) => /^@font-face\b/i.test(s))) return;
       const sel = [...stack].reverse().find((s) => !s.startsWith('@')) || '';
       out.push({ prop, value: b.slice(ci + 1).trim().replace(/\s+/g, ' '), line: baseLine + t.slice(0, at).split('\n').length - 1, selector: sel.replace(/\s+/g, ' ') });
     };
@@ -593,14 +596,16 @@ const without = blocks.filter((b) => !demoBlocks.has(b));
         const ci = part.indexOf(':');
         if (ci < 0) continue;
         const prop = part.slice(0, ci).trim().toLowerCase();
-        if (WATCHED.has(prop)) out.push({ prop, value: part.slice(ci + 1).trim().replace(/\s+/g, ' '), line: lineAt(m.index), selector: '(inline style)', tag: m[1].toLowerCase(), origin: 'inline style' });
+        if (prop) out.push({ prop, value: part.slice(ci + 1).trim().replace(/\s+/g, ' '), line: lineAt(m.index), selector: '(inline style)', tag: m[1].toLowerCase(), origin: 'inline style' });
       }
     }
     return out;
   };
-  const decls = [];
-  for (const f of typoCss) for (const d of cssDecls(fs.readFileSync(f, 'utf8'), 1)) decls.push({ ...d, file: rel(f), origin: 'css' });
-  for (const f of typoHtml) for (const d of htmlDecls(fs.readFileSync(f, 'utf8'))) decls.push({ ...d, file: rel(f) });
+  // Every declaration of the scanned files; 15 keeps the watched typography properties, 16 the font-size ones and the --fs-* uses.
+  const allDecls = [];
+  for (const f of typoCss) for (const d of cssDecls(fs.readFileSync(f, 'utf8'), 1)) allDecls.push({ ...d, file: rel(f), origin: 'css' });
+  for (const f of typoHtml) for (const d of htmlDecls(fs.readFileSync(f, 'utf8'))) allDecls.push({ ...d, file: rel(f) });
+  const decls = allDecls.filter((d) => WATCHED.has(d.prop));
 
   // Token values from css/tokens.css (verification 13 checks them against the Figma snapshot).
   const tokenText = mask(readCss('css/tokens.css'));
@@ -653,7 +658,7 @@ const without = blocks.filter((b) => !demoBlocks.has(b));
     let si = -1;
     for (let i = 0; i < toks.length; i += 1) {
       const t = toks[i];
-      if (PRE.test(t) || /^\d{1,4}(\.\d+)?$/.test(t)) continue;
+      if (PRE.test(t) || /^\d{1,4}(\.\d+)?$/.test(t) || /^var\(\s*--fw-/i.test(t)) continue;
       const head = t.split('/')[0];
       if (/^(xx-small|x-small|small|medium|large|x-large|xx-large|xxx-large|smaller|larger)$/i.test(head) || /^-?\d*\.?\d+(px|em|rem|%|vw|vh|pt|ch|ex)$/i.test(head) || /^(calc|clamp|min|max|var)\(/i.test(head)) si = i;
       break;
@@ -662,6 +667,7 @@ const without = blocks.filter((b) => !demoBlocks.has(b));
     const sizeTok = toks[si];
     return {
       neutral: false,
+      size: sizeTok.split('/')[0],
       lh: sizeTok.includes('/') ? sizeTok.slice(sizeTok.indexOf('/') + 1) : null,
       weight: toks.slice(0, si).find((t) => /^(bold|bolder|lighter)$/i.test(t) || /^\d{1,4}(\.\d+)?$/.test(t) || /^var\(/i.test(t)) || null,
     };
@@ -680,6 +686,7 @@ const without = blocks.filter((b) => !demoBlocks.has(b));
   // A rule matches a declaration by file, selector (or, for "(inline style)", the tag of the last compound), property and value,
   // compared as numbers. A rule with "count" must match exactly that many declarations.
   const acceptedRules = [];
+  const fsRules = [];
   const acceptedFile = path.join(DOCS, 'data', 'accepted-divergences.json');
   if (fs.existsSync(acceptedFile)) {
     let list = [];
@@ -689,7 +696,14 @@ const without = blocks.filter((b) => !demoBlocks.has(b));
       if (e.scope !== 'rule') continue;
       for (const r of e.rules || []) {
         if (!r.property) continue;
-        if (!PROPS.includes(r.property)) { errors.push(`docs/data/accepted-divergences.json: "${e.name}": rule ${r.selector} has property "${r.property}"; allowed: ${PROPS.join(', ')}`); continue; }
+        if (r.property === 'font-size') {
+          const inlineFs = /\(inline style\)\s*$/.test(r.selector);
+          const selectorFs = normSel(r.selector.replace(/\s*\(inline style\)\s*$/, ''));
+          const lastFs = selectorFs.split(/[\s>+~]+/).filter(Boolean).pop() || '';
+          fsRules.push({ entry: e.name, status: e.status, file: r.file, selector: selectorFs, inline: inlineFs, tag: (/^[a-z][a-z0-9-]*/i.exec(lastFs) || [''])[0].toLowerCase(), text: String(r.value || '').toLowerCase().replace(/\s+/g, ''), count: r.count, matched: [], normSel });
+          continue;
+        }
+        if (!PROPS.includes(r.property)) { errors.push(`docs/data/accepted-divergences.json: "${e.name}": rule ${r.selector} has property "${r.property}"; allowed: ${[...PROPS, 'font-size'].join(', ')}`); continue; }
         const lit = String(r.value || '').replace(/\(.*?\)/g, ' ').replace(/^(font-weight|line-height|letter-spacing)\b/, ' ').replace(/--[a-z0-9-]+/g, ' ');
         const values = [...lit.matchAll(/-?\d*\.?\d+(?:em|rem|px|%)?/g)].map((m) => parseNum(m[0])).filter(Boolean);
         const inline = /\(inline style\)\s*$/.test(r.selector);
@@ -742,6 +756,66 @@ const without = blocks.filter((b) => !demoBlocks.has(b));
     for (const p of pendingList) console.log(`    ${p}`);
   }
   for (const a of unmatched) console.log(`  notice: the accepted rule ${a.file} ${a.selector} (${a.prop}) matches no declaration any more; update or remove it in accepted-divergences.json`);
+
+  /* ---- 16. font-size (D-70): a --fs-* token, a CSS-wide keyword, or an accepted literal ---- */
+  {
+    // Every value a --fs-* token can take: the px numbers in its declarations, media overrides and clamp() bounds included.
+    const fsTokens = [];
+    for (const m of tokenText.matchAll(/(?:^|[;{\s])(--fs-[a-z0-9-]+)\s*:\s*([^;}]+)/g)) {
+      for (const n of m[2].matchAll(/(-?\d*\.?\d+)px/g)) fsTokens.push({ name: m[1], px: Number(n[1]) });
+    }
+    const namesFor = (px) => [...new Set(fsTokens.filter((x) => Math.abs(x.px - px) < 1e-9).map((x) => x.name))];
+    const fsUses = [];
+    for (const d of allDecls) {
+      if (d.prop === 'font-size') fsUses.push({ ...d, shorthand: false });
+      else if (d.prop === 'font') {
+        const p = fontParts(d.value);
+        if (!p.neutral && !p.unparsed && p.size) fsUses.push({ ...d, shorthand: true, value: p.size });
+      }
+    }
+    const tallyFs = { token: 0, wide: 0, other: 0, accepted: 0, pending: 0 };
+    const pendingFs = [];
+    const keywordsSeen = new Set();
+    for (const u of fsUses) {
+      const where = `${u.file}:${u.line}: ${u.selector}: font-size${u.shorthand ? ' (in the font shorthand)' : ''}: ${u.value}`;
+      const v = u.value.replace(/\s*!important\s*$/i, '').trim().toLowerCase();
+      const only = /^var\(\s*(--[a-z0-9-]+)\s*(?:,[^()]*)?\)$/.exec(v);
+      if (only) {
+        if (only[1].startsWith('--fs-')) tallyFs.token += 1; else tallyFs.other += 1;
+        continue;
+      }
+      if (CSS_WIDE.has(v)) { tallyFs.wide += 1; keywordsSeen.add(v); continue; }
+      if (/^[a-z][a-z-]*$/.test(v)) {
+        errors.push(`${where} is a keyword that is not neutral (only ${[...CSS_WIDE].join(', ')} pass); ask the owner whether to use a --fs-* token or add an accepted entry (D-70)`);
+        continue;
+      }
+      const px = /^(-?\d*\.?\d+)(px|rem)$/.exec(v);
+      if (px) {
+        const n = Number(px[1]) * (px[2] === 'rem' ? 16 : 1);
+        const names = namesFor(n);
+        if (names.length) { errors.push(`${where} equals ${names.join(' and ')}; use var(${names[0]}) (D-70)`); continue; }
+      }
+      const norm = v.replace(/\s+/g, '');
+      const a = fsRules.find((r) => r.file === u.file && r.text === norm && (r.inline ? u.origin === 'inline style' && (!r.tag || r.tag === u.tag) : u.origin !== 'inline style' && u.selector.split(',').map(r.normSel).includes(r.selector)));
+      if (!a) { errors.push(`${where} equals no --fs-* token and has no accepted entry; add a scope "rule" entry with this file, selector, property "font-size" and the exact value to docs/data/accepted-divergences.json, or use a token (D-70)`); continue; }
+      a.matched.push(u);
+      if (a.status === 'pending') { tallyFs.pending += 1; pendingFs.push(`${u.file}:${u.line} ${u.selector} font-size: ${u.value} (${a.entry})`); } else tallyFs.accepted += 1;
+    }
+    for (const a of fsRules) {
+      if (a.count !== undefined && a.matched.length !== a.count) errors.push(`docs/data/accepted-divergences.json: "${a.entry}": ${a.file} ${a.selector} (font-size ${a.text}) is expected ${a.count} time(s), found ${a.matched.length}`);
+      if (!a.matched.length) console.log(`  notice: the accepted rule ${a.file} ${a.selector} (font-size) matches no declaration any more; update or remove it in accepted-divergences.json`);
+    }
+    // A --fs-* token is for font-size. Like 15, only a value that is the token itself is read: a token inside calc() (field.css min-height) is not followed. 15 already reports the three typography properties; custom properties pass through.
+    let misuse = 0;
+    for (const d of allDecls) {
+      if (d.prop === 'font-size' || d.prop === 'font' || d.prop.startsWith('--') || PROPS.includes(d.prop)) continue;
+      const m = /^var\(\s*(--fs-[a-z0-9-]+)\s*(?:,[^()]*)?\)$/.exec(d.value.replace(/\s*!important\s*$/i, '').trim());
+      if (m) { misuse += 1; errors.push(`${d.file}:${d.line}: ${d.selector}: ${d.prop}: ${d.value} uses ${m[1]}, a font-size token, in another property (D-70)`); }
+    }
+    console.log(`font-size (D-70): ${fsUses.length} uses checked; token ${tallyFs.token}, CSS-wide keywords ${tallyFs.wide} (${[...keywordsSeen].join(', ') || 'none'}), var() of other properties not followed ${tallyFs.other}, accepted literals ${tallyFs.accepted}, pending literals ${tallyFs.pending}, --fs-* in another property ${misuse}`);
+    console.log(`  not scanned, vendored: ${TYPO_VENDORED.join(', ')}; not scanned, generated: ${TYPO_GENERATED.join(', ')}`);
+    for (const p of pendingFs) console.log(`    pending, not accepted: ${p}`);
+  }
 }
 
 console.log(`docs pages checked: ${pages.length} (${pages.filter(isComponentPage).length} component pages, ${demoCount} live demos)`);
