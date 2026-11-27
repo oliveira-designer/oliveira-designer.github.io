@@ -8,7 +8,7 @@
 
 **Changelog v1.1**: métricas do Case Study passam a citar Plus Jakarta Sans. Nenhum padrão depende dos componentes Case Callout e Lightbox; o `callout-anchor` citado no padrão Article é outro componente e continua válido.
 
-Este arquivo documenta **estruturas de página reutilizáveis** para o portfólio de Renan Moura. Não são componentes (esses estão em `DESIGN.md` e `DESIGN-IMPLEMENTATION.md`) — são **anatomias completas de página** que combinam componentes em ordens específicas para servir um propósito narrativo.
+Este arquivo documenta **estruturas de página reutilizáveis** para o portfólio de Renan Moura. Não são componentes (esses estão em `DESIGN.md`, em `css/components/` e em `docs/components/`) — são **anatomias completas de página** que combinam componentes em ordens específicas para servir um propósito narrativo.
 
 ## Como ler este arquivo
 
@@ -281,11 +281,11 @@ Esses talvez nunca apareçam. E se aparecerem, será quando você construir o pr
 ## Mapa de relação com outros arquivos
 
 - **DESIGN.md** define **tokens e componentes** — os átomos que esses padrões usam
-- **DESIGN-IMPLEMENTATION.md** define **CSS dos componentes** — como cada átomo é construído
+- **`css/components/`** define o **CSS dos componentes**, como cada átomo é construído, e `docs/components/` mostra cada um
 - **GOVERNANCE.md** define **regras de evolução** — quando criar padrão novo, quando recusar
 - **PATTERNS.md** (este arquivo) define **anatomias de página** — como combinar átomos em páginas inteiras
 
-Hierarquia de precedência para prosa e regras (GOVERNANCE.md seção 7): Brandbook V2.2 → DESIGN.md → DESIGN-IMPLEMENTATION.md → PATTERNS.md. Valores de token e de componente vêm do Figma.
+Hierarquia de precedência para prosa e regras (GOVERNANCE.md seção 7): Brandbook V2.2 → DESIGN.md → PATTERNS.md. Valores de token e de componente vêm do Figma.
 
 Se um padrão aqui conflitar com algo no DESIGN.md, o DESIGN.md vence. Padrões aqui usam componentes, não os redefinem.
 

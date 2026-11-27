@@ -18,7 +18,7 @@
 /* ----------------------------------------------------------
    ALERT
    The border is NOT discounted from the padding here. Figma property strokesIncludedInLayout is true on this node
-   (DESIGN-IMPLEMENTATION.md, "Borda dentro da caixa"), so the box is content + padding + border, as in CSS; the frame
+   (DESIGN.md, Shapes, "Borda dentro da caixa"), so the box is content + padding + border, as in CSS; the frame
    is 105 high with three lines (3 x 20.8 + 8 + 32 + 2). Fill, border and icon color come from the type.
    ---------------------------------------------------------- */
 .alert {

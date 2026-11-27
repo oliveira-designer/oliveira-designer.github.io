@@ -78,7 +78,7 @@
 
 /* ----------------------------------------------------------
    CONTROL BOX (shared by .input, .textarea and .select)
-   Figma strokesIncludedInLayout is true on these nodes (DESIGN-IMPLEMENTATION.md, "Borda dentro da caixa"): the outer
+   Figma strokesIncludedInLayout is true on these nodes (DESIGN.md, Shapes, "Borda dentro da caixa"): the outer
    size is fixed (254 by 44, Textarea 96) and the content starts at padding + stroke, so the text sits 13px from the edge
    (12 + 1). The inline padding is therefore NOT discounted. The block padding is discounted only to keep the 44.8
    outer height of a centered single line (the text is centered, so its vertical position is the same).

@@ -541,6 +541,8 @@ A interface evoca clareza editorial e precisão técnica. Uma única tipografia 
 - Pergunta antes de resposta
 - Estrutura antes de estética
 
+**Tom de voz** (Brandbook V2.2): direta, técnica, detalhista, confiante, com calor, esperançosa e lúdica.
+
 ## Colors
 
 A paleta é organizada em quatro famílias nomeadas. Cada cor tem papel — não é apenas hex code.
@@ -879,7 +881,7 @@ O sistema é flat por princípio. Sombras existem mas são usadas com parcimôni
 
 Hierarquia de profundidade (z-index):
 
-- Base: 0 · Raised: 1 · Sticky (header do site): 10 · Modal backdrop: 100 · Modal: 200 · Popover: 300 · Tooltip: 400 · Notification (Toast): 500. Detalhes na seção 8 do DESIGN-IMPLEMENTATION.
+- Base: 0 · Raised: 1 · Sticky (header do site): 10 · Modal backdrop: 100 · Modal: 200 · Popover: 300 · Tooltip: 400 · Notification (Toast): 500. Valores em `css/tokens.css` (grupo Z-index) e na página de tokens dos docs (`docs/tokens.html`).
 
 Hover em cards: borda muda para Âncora + sombra `md`. Sem `transform: translateY` em cards (cria expectativa de drag).
 
@@ -924,11 +926,24 @@ Valores do Figma (Stroke/*) e o token CSS equivalente:
 |-------|-------|-----------|
 | Stroke/hairline | 0.8px | `--border-thin` |
 | Stroke/thin | 1px | `--border-normal` (também usado pelo `--border-strong`) |
-| Stroke/medium | 1.5px | sem token CSS ainda |
+| Stroke/medium | 1.5px | `--border-width-medium` (largura solta, para `calc()`) |
 | Stroke/thick | 2.4px | sem token CSS ainda |
-| Stroke/accent | 3px | sem token CSS ainda |
+| Stroke/accent | 3px | `--border-width-accent` (largura solta, para `calc()`) |
 
 **Deslocamento de nome proposital:** o "thin" do CSS é o "hairline" do Figma. Foi mantido assim para não invalidar as 33 referências existentes a `--border-thin`. A força do `--border-strong` vem da cor (`--color-border-strong`); o Figma não tem uma variável ligando "strong" ao Stroke/medium (1.5px).
+
+### Borda dentro da caixa
+
+No Figma a borda pode ser desenhada dentro da caixa (stroke inside) e entrar, ou não, na conta do tamanho do componente. No CSS a borda soma ao box. Por isso, antes de codificar a borda de um componente, é preciso saber como o Figma a trata.
+
+- **Leia a propriedade `strokesIncludedInLayout` do nó no Figma antes de decidir.** Ela diz se o traço entra na conta do tamanho. Não deduza pela aritmética das alturas nem pela aparência.
+- **`false` (o traço não entra no tamanho):** a borda do CSS soma ao box, então ela é descontada do padding, com a largura dentro de `calc()`: `padding: calc(var(--space-3) - var(--border-width-normal))`. Lido assim no Figma: Button e Badge.
+- **`true` (o traço entra no tamanho):** a borda soma ao box e o padding não é descontado. Lido assim: Alert, Toast, Tab, Tag, Accordion item, Modal, Popover, Bottom Sheet, o painel do Menu, Input, Textarea, Select, Checkbox, Radio e Switch.
+- **Sem borda na raiz:** Avatar e o painel do Lightbox.
+- **Onde está a conferência de cada componente:** no comentário de cabeçalho do seu CSS em `css/components/` (por exemplo `alert.css`, `modal.css`, `field.css`, `button.css`), com as medidas que fecham a conta.
+- **Borda que muda de largura entre estados** (campo: 1px, e 1,5px no Error): uma custom property por componente guarda a largura do estado (`--field-border-width`, em `field.css`) e o padding é calculado a partir dela, para a caixa externa não mudar de tamanho. O `min-height` fixa a altura externa.
+- **Nunca use `box-shadow: inset` para desenhar borda.** No modo de cores forçadas do Windows (alto contraste) o `box-shadow` é removido e a borda real continua. Medido no Chromium com `forced-colors: active`: o `box-shadow` inset calcula `none` e a `border` fica.
+- **Larguras soltas para usar dentro de `calc()`,** porque um atalho como `--border-normal` não entra numa conta: `--border-width-normal` (1px), `--border-width-medium` (1,5px) e `--border-width-accent` (3px).
 
 ## Motion
 
@@ -1095,6 +1110,7 @@ Esta seção espelha o que mudou no Figma (Hope DS | Foundation e Core Component
   - Light, texto de sucesso: `success-deep` (#2A7347), 5,77:1 sobre branco (antes 3,25:1). Aplicado no `.badge--success`.
   - Light, texto de warning: era `warning-deep` (#94540A, 5,94:1), passou a `dusk` (#8B6914) na v2.6, 4,78:1 sobre Aurora. Dark, texto de info: `info-light` (#B89EDB).
 - **Cor de ícone (`--icon-color`):** no Figma, os ícones Phosphor usam uma variável única `Icon/Color` (coleção `Hope · Icon`, 10 modos que apontam para tokens de texto). O modo é definido no contêiner do ícone, nunca na instância. No CSS ainda não há equivalente; os SVGs herdam `currentColor`, então definir `color` no contêiner basta.
+- **Uso de ícones:** a biblioteca é a Phosphor (grade `0 0 256 256`, `fill="currentColor"`); não misture outra biblioteca na mesma interface. Ícone decorativo leva `aria-hidden="true"`; ícone funcional (botão só com ícone) leva `aria-label` no botão, e o Icon Button já o exige. A cor vem de `currentColor`, e a classe `.icon--<papel>` fixa um papel. Exceções conhecidas nas páginas de case: ícones de métrica e de título sem `aria-hidden`, e três ícones em outra grade (`0 0 24 24`) em `case-studies/sb-home-redesign.html`.
 
 ### Figma sync v2.6 (13 de novembro de 2026)
 
@@ -1108,7 +1124,7 @@ Esta seção espelha o que mudou no Figma (Hope DS | Foundation e Core Component
 
 Feedback: Tooltip, Progress, Spinner, Skeleton. Navegação: Tabs, Breadcrumb, Pagination, Menu. Overlays e dados: Modal, Bottom Sheet, Popover, Avatar, Tag, Accordion.
 
-Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados no código, em lotes por família (GOVERNANCE v1.6). O Card genérico fica de fora por decisão. A Table já está no código (v2.8.0).
+Entram neste arquivo e em `css/components/` quando forem implementados no código, em lotes por família (GOVERNANCE v1.6). O Card genérico fica de fora por decisão. A Table já está no código (v2.8.0).
 
 ### Componentes primitivos no código (Lote 0, 2026-11-21)
 
@@ -1121,7 +1137,7 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 - **Input, Textarea e Select:** `css/components/field.css` (o que os três compartilham: `.field`, `.field__label`, `.field__control`, `.field__icon`, `.field__help` e a caixa do controle), mais `input.css`, `textarea.css` e `select.css` (`.input`, `.textarea`, `.select`). Estados: Hover (`:hover`), Focus (`:focus-visible`, anel de 2px com 2px de espaço), Error (`aria-invalid="true"`, borda de 1,5px em Danger, o texto do valor não muda) e Disabled (atributo `disabled`, sem `opacity`). Eixo Value: Empty é o placeholder (ou a opção vazia do Select), Filled é a cor própria do controle. O Select é o `<select>` nativo com `appearance: none` e um CaretDown de 16px; o painel de opções é o do navegador (o Menu não está no código).
 - **Checkbox, Radio e Switch:** `checkbox.css`, `radio.css` e `switch.css` (`.checkbox`, `.radio`, `.switch`, com `__input`, `__text`, `__label` e `__help`). Controles nativos com `appearance: none`. O Switch não tem Error. O hover vale com o ponteiro sobre o rótulo inteiro (inferência, o Figma define só no controle).
 - **Tokens novos:** `--border-width-medium` (1,5px, Figma Stroke/medium) e `--color-border-input` (Figma Border/Utilities/Input: Night/400 no Light e Night/500 no Dark; o `--color-border` do campo media 1,29:1 e não passava de 3:1).
-- **Regra da borda dentro da caixa:** ver `DESIGN-IMPLEMENTATION.md`, seção 5.
+- **Regra da borda dentro da caixa:** ver Shapes, "Borda dentro da caixa", neste arquivo.
 
 ### Mensagens no código (Lote 2A, 2026-11-23)
 
@@ -1138,7 +1154,7 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 - **Spinner:** `spinner.css` (`.spinner`, `__ring`). Anel de 24px com arco de cerca de 99 graus, uma volta por segundo; em `prefers-reduced-motion` vira um pulso de opacidade. `role="status"` com texto visualmente oculto escrito por quem usa.
 - **Skeleton:** `skeleton.css` (`.skeleton--text|title|avatar|block`). Pulso de opacidade (duração inferida, o Figma não informa), container com `aria-busy`.
 - **Icon Button:** `icon-button.css` (`.icon-btn--primary|ghost`), 44 por 44, `aria-label` obrigatório. Não é modificador de `.btn`: o `.btn` traz padding, gap e largura total abaixo de 768px.
-- **Escala de z-index:** ver `DESIGN-IMPLEMENTATION.md`, seção 8.
+- **Escala de z-index:** ver `css/tokens.css` (grupo Z-index) e `docs/tokens.html`.
 
 ### Navegação no código (Lote 3, 2026-11-24)
 
@@ -1163,11 +1179,23 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 `State=Active` virou `State=Focus` (Input, Textarea, Select); propriedade `Text` virou `Label` (Link, Header Link); `Description` virou `Helper text` (Input, Textarea, Select); `Input Field` virou `Input`; Banner `Type=Warning` virou `Type=Notice`. Regras completas na seção 12 do `GOVERNANCE.md`.
 
+### Nomenclatura no código
+
+Convenções que o código segue hoje, verificadas em `css/`, `js/` e nos arquivos do repositório.
+
+- **Classes CSS:** BEM em kebab-case, `bloco__elemento--modificador`: `.btn--primary`, `.case-card__title`, `.nav__link--active`. Não há classe em camelCase nem variante com hífen simples (`.btn-primary`).
+- **Estado:** o estado nativo usa pseudo-classe (`:hover`, `:focus-visible`, `:disabled`) e atributo ARIA (`[aria-disabled="true"]`, `[aria-selected="true"]`, `[aria-current="page"]`). O estado que o JavaScript liga e desliga usa classe `.is-*`: `.is-visible` (7 ocorrências nos seletores do CSS), `.is-active` (4), `.is-open` (3) e `.is-zoomable` (2). Não existe classe `.has-*`.
+- **Custom properties:** `--categoria-nome-variante` em kebab-case. A categoria diz o tipo, não o uso: `--color-solar`, não `--accent-yellow`. As categorias que existem em `css/tokens.css` são `color`, `space`, `icon`, `z`, `fs`, `lh`, `ls`, `fw`, `radius`, `duration`, `ease`, `border`, `gap`, `shadow`, `blur`, `font` e `focus`, mais três tokens isolados (`resume`, `header` e `content`). Peso, line height e letter-spacing estão em "Tokens de peso, line height e letter-spacing".
+- **Tema escuro:** no CSS não há sufixo nos nomes: `[data-theme="dark"]` redefine os mesmos tokens. No YAML deste arquivo os tokens do tema escuro levam o sufixo `-dark` (por exemplo `bg-scrim-strong-dark`).
+- **Arquivos:** CSS e JS em kebab-case minúsculo (`css/components/case-card.css`, `js/bottom-sheet.js`); prosa do Hope em maiúsculas (`DESIGN.md`, `GOVERNANCE.md`, `PATTERNS.md`, `CHANGELOG.md`); assets visuais em kebab-case (`logos/logo-light-mode.svg`); fontes mantêm o nome do publisher (`PlusJakartaSans-VariableFont_wght.ttf`).
+- **JavaScript:** variáveis e funções em camelCase (nenhum identificador com sublinhado em `js/`).
+- **O que o código evita hoje:** classe em camelCase, variante com hífen simples, abreviação inventada (`.btn-prm`), numeração sem semântica (`.heading-1`), nome em duas línguas (`--cor-solar`) e mistura de convenções no mesmo arquivo.
+
 ### Divergências conhecidas entre Figma, este arquivo e o código
 
 - **Case Callout e Lightbox:** os dois foram recriados no Figma em 13 de novembro de 2026 (GOVERNANCE v1.4.1). O Lightbox foi alinhado ao Figma na v2.13.0 (`css/components/lightbox.css` e `js/lightbox.js`); o Case Callout continua em `css/site/case-callout.css`.
 - **Resolvidas na v2.4:** Highlight Card passou a usar `--fs-h1` (32px) como no Figma; Space Mono foi removida (o `.brand-list li::before` usa `--font-body`); YAML com nomes em inglês (`anchor`, `success`, `border-base`...); entradas de botão refletem o CSS (preto como ação primária, Solar só na marca); badges senshi removidas (duplicavam `badge-success`/`warning`/`error`/`info`).
-- **Ícones:** `Icon/Color` do Figma virou os tokens `--icon-color-*` e as classes `.icon--<papel>` (ver `DESIGN-IMPLEMENTATION.md`, seção 3b).
+- **Ícones:** `Icon/Color` do Figma virou os tokens `--icon-color-*` e as classes `.icon--<papel>` (ver `css/tokens.css`, `docs/tokens.html` e `css/components/icon.css`).
 
 ## Do's and Don'ts
 
@@ -1180,6 +1208,10 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 - Respeite `prefers-reduced-motion` em todas as animações
 - Trate o monogram (ícone solar isolado) como mark — funciona sozinho em favicon e avatar
 - No YAML, use kebab simples (`case-card-glass`). No CSS, use BEM com `--` (`case-card--glass`). São convenções diferentes para o mesmo componente — YAML não suporta `--` em chaves.
+- Use o logo claro (`logo-light-mode.svg`) sobre fundos claros (`--color-cloud`, `#FFFFFF`, e `--color-surface`, `#F7F7F9`) e o escuro (`logo-dark-mode.svg`) sobre fundos escuros (`--color-abyss`, `#1A1A2E`, e `--color-ink`, `#0D0D0F`). O header do site troca os dois com o tema (`.nav__logo-light` e `.nav__logo-dark`), e o logo em `<img>` leva `alt="Renan Moura"`
+- Dê `alt` a toda `<img>` (decorativa: `alt=""`) e nome acessível a todo `<button>` e `<a>` (texto visível ou `aria-label`). Link diz o destino ("Ver case Shell Box"), não "clique aqui"
+- Mantenha os headings em ordem hierárquica, sem pular de H1 para H4
+- Deixe o skip link (`a.skip-link`, em `css/reset.css`) como primeiro elemento do `<body>`, apontando para `#main`. Exceção conhecida: `design-system.html` ainda não tem skip link
 
 ### ✗ Don't
 
@@ -1192,7 +1224,7 @@ Entram neste arquivo e no `DESIGN-IMPLEMENTATION.md` quando forem implementados 
 
 ---
 
-**Implementação completa:** ver `DESIGN-IMPLEMENTATION.md` para CSS detalhado, classes utilitárias, estados de loading/empty/error, navegação, mídia, conteúdo editorial e regras de acessibilidade.
+**Implementação completa:** o CSS está em `css/` (a fonte da verdade) e cada componente tem a sua página em `docs/components/`.
 
 **Logos:** `logo-light-mode.svg`, `logo-dark-mode.svg`, `logo-icon.svg` — todos no diretório `/logos`.
 

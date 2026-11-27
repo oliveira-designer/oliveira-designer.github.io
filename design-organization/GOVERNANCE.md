@@ -20,7 +20,7 @@
 
 **Changelog v1.1**: Adicionada seção 9 (Quando criar componente novo) — quatro testes de validação, sinais para extensão via variante vs componente novo, anti-padrões e custo declarado. Renumerada seções 10 (Princípios) e 11 (Mapa).
 
-Este documento define **como o Hope evolui**. Não é sobre o que ele é hoje — para isso, leia `DESIGN.md` e `DESIGN-IMPLEMENTATION.md`. Este documento é sobre como ele continua sendo coerente ao longo do tempo, conforme novos componentes, temas, produtos e colaboradores aparecem.
+Este documento define **como o Hope evolui**. Não é sobre o que ele é hoje — para isso, leia `DESIGN.md` e o CSS em `css/`. Este documento é sobre como ele continua sendo coerente ao longo do tempo, conforme novos componentes, temas, produtos e colaboradores aparecem.
 
 A regra central é simples: **toda mudança no Hope deve ser uma decisão consciente, não um acidente**. Governance é o que garante isso.
 
@@ -200,13 +200,13 @@ O Hope foi construído **em parceria com Claude**. Outros agentes (ChatGPT, Curs
 
 **O agente propõe, o humano decide.** Mesmo agentes muito capazes têm vieses (excesso de "soluções completas", linguagem genérica, complexidade desnecessária). Trate sugestões como propostas, não como decisões.
 
-**Contexto antes de execução.** Antes de pedir mudança no Hope, dê ao agente os arquivos relevantes: `DESIGN.md`, `DESIGN-IMPLEMENTATION.md`, `GOVERNANCE.md`. Sem isso, o agente vai gerar algo plausível mas desconectado.
+**Contexto antes de execução.** Antes de pedir mudança no Hope, dê ao agente os arquivos relevantes: `DESIGN.md`, `GOVERNANCE.md` e o CSS do componente em questão (`css/components/<nome>.css`). Sem isso, o agente vai gerar algo plausível mas desconectado.
 
 **Critique antes de aceitar.** Quando um agente entrega algo, peça que ele mesmo critique o próprio trabalho. Foi exatamente o que disparou as evoluções da v1.1 — Claude identificou os próprios gaps quando provocado.
 
 ### Divisão de trabalho típica
 
-**Claude (este projeto):** estruturação, validação, decisões técnicas, manutenção do DESIGN.md e DESIGN-IMPLEMENTATION.md, análise crítica.
+**Claude (este projeto):** estruturação, validação, decisões técnicas, manutenção do DESIGN.md, análise crítica.
 
 **ChatGPT (consultoria):** prompts de geração, redação editorial, estruturas conceituais, segunda opinião.
 
@@ -231,7 +231,7 @@ Quando pedir a um agente para modificar o Hope, use este template como base:
 ```
 Contexto:
 Estou trabalhando no Hope Design System (marca pessoal Renan Moura).
-Arquivos relevantes em anexo: DESIGN.md, DESIGN-IMPLEMENTATION.md, GOVERNANCE.md.
+Arquivos relevantes em anexo: DESIGN.md, GOVERNANCE.md e o CSS do componente (css/components/<nome>.css).
 
 Problema:
 [Descreva o problema concreto, não a solução desejada]
@@ -284,7 +284,7 @@ Conforme o sistema cresce, as fontes podem divergir: o Figma diz uma coisa, o CS
 ### Quem é canônico para quê
 
 - **Figma** (Hope DS | Foundation e as bibliotecas de componentes publicadas) é canônico para **valores** de token e de componente: cores, tamanhos, espaçamento, raio, line height, tracking, pesos e os valores dos estilos de texto.
-- **Este repositório** é canônico para **prosa, regras e changelog**: `DESIGN.md`, `DESIGN-IMPLEMENTATION.md`, `PATTERNS.md`, `GOVERNANCE.md` e `CHANGELOG.md`.
+- **Este repositório** é canônico para **prosa, regras e changelog**: `DESIGN.md`, `PATTERNS.md`, `GOVERNANCE.md` e `CHANGELOG.md`.
 - **Cópias derivadas, nunca editadas como fonte:** os documentos dos projetos, o arquivo `hope-context.md` do Drive, `hope-demo.html`, `design-system.html` e o CSS do site no que toca a valores (o CSS espelha o Figma). Valor errado numa cópia se corrige na fonte ou pelo ciclo abaixo, nunca só na cópia.
 - **O Brandbook V2.2** segue acima de tudo nas decisões de identidade (tese, posicionamento, arquétipos, acentos primários). Se o Figma contradisser o Brandbook numa decisão de identidade, o Brandbook vence e o Figma é corrigido.
 
@@ -389,7 +389,7 @@ Exemplo legítimo: `breadcrumb` não é variante de nada. Anatomia própria (lis
 
 Cada componente do sistema custa:
 - Documentação no DESIGN.md (entrada YAML + parágrafo na prosa)
-- Implementação no DESIGN-IMPLEMENTATION.md (CSS completo, estados, responsivo)
+- Implementação em `css/components/` e a página do componente em `docs/components/` (CSS completo, estados, responsivo)
 - Manutenção em todas as fases futuras (mudou paleta? mudou tipografia? precisa atualizar)
 - Carga cognitiva permanente (mais uma coisa para lembrar)
 
@@ -488,6 +488,7 @@ Dentro de um componente, estes valores vêm de variável ou estilo, nunca de nú
 - cor (fill e stroke): variável semântica. Texto de status usa o token semântico (por exemplo `Text/Positive/Secondary`), não o primitivo;
 - raio: variável;
 - padding e gap: variável `space-N`. Valores fora da escala (por exemplo 10) não existem; arredondar para o degrau mais próximo e documentar;
+- borda: ler a propriedade `strokesIncludedInLayout` do nó antes de codificar; a regra de descontar ou não a borda do padding está em "Borda dentro da caixa", no `DESIGN.md` (Shapes);
 - texto: estilo de texto da biblioteca;
 - ícone: variável `Icon/Color` pelo modo do contêiner (ver 12.4).
 
