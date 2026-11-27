@@ -1475,7 +1475,7 @@ p { max-width: 70ch; }
   flex-direction: column;
   gap: 16px;
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: var(--fs-body-sm);
   font-weight: var(--fw-regular);
   line-height: var(--lh-140);
   color: var(--color-ink);
@@ -1490,7 +1490,7 @@ p { max-width: 70ch; }
 .brand-list li::before {
   content: "→";
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: var(--fs-body-sm);
   color: var(--color-anchor);
   margin-top: 2px;
   flex-shrink: 0;
